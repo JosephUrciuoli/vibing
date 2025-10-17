@@ -118,7 +118,19 @@ def now_strings() -> tuple[str, str]:
     return human_est, iso_z
 
 
-def write_reasoning_log(counter_value: int, human_est: str, iso_z: str, dry_run: bool) -> Path:
+def write_reasoning_log(
+    *,
+    mode: str,
+    model: str,
+    human_est: str,
+    iso_z: str,
+    dry_run: bool,
+    applied_strategy: str,
+    snippet_chars: int,
+    validation_ok: bool,
+    usage: dict | None,
+    counter_value: int | None,
+) -> Path:
     REASONING_DIR.mkdir(parents=True, exist_ok=True)
     log_path = REASONING_DIR / f"run-{iso_z}.md"
     prompt_path = REPO_ROOT / "agents" / "prompts" / "webmaster.md"
@@ -126,18 +138,35 @@ def write_reasoning_log(counter_value: int, human_est: str, iso_z: str, dry_run:
     if prompt_path.exists():
         prompt_text = read_text(prompt_path)
     log = []
-    log.append(f"# Vibing run — {human_est}")
+    log.append(f"# Vibing Webmaster run — {human_est}")
     log.append("")
-    log.append("## Prompt")
+    log.append("## Task")
+    log.append("")
+    log.append("Incrementally beautify the editable section using only HTML/CSS; include a single span#last-updated.")
+    log.append("")
+    log.append("## Prompt (current)")
     log.append("")
     log.append("" if not prompt_text else prompt_text)
     log.append("")
-    log.append("## Output")
+    log.append("## Result")
     log.append("")
-    log.append(f"Counter incremented to {counter_value}.")
+    log.append("- Applied: aesthetic snippet")
+    log.append(f"- Snippet size: {snippet_chars} chars")
+    if counter_value is not None:
+        log.append(f"- Counter (for deterministic mode): {counter_value}")
     log.append("")
     log.append("## Meta")
     log.append("")
+    log.append(f"- mode: {mode}")
+    log.append(f"- model: {model}")
+    log.append(f"- validation_ok: {validation_ok}")
+    log.append(f"- strategy: {applied_strategy}")
+    if usage is not None:
+        # openai usage keys vary; print raw
+        try:
+            log.append(f"- usage: {json.dumps(usage)}")
+        except Exception:
+            log.append("- usage: (unavailable)")
     log.append(f"- dry_run: {dry_run}")
     log.append(f"- timestamp_est: {human_est}")
     log.append(f"- timestamp_utc: {iso_z}")
@@ -150,7 +179,7 @@ def load_prompt() -> str:
     return read_text(prompt_path) if prompt_path.exists() else ""
 
 
-def call_llm_generate_content(model: str, system_prompt: str, user_prompt: str) -> str:
+def call_llm_generate_content(model: str, system_prompt: str, user_prompt: str) -> tuple[str, dict | None]:
     if OpenAI is None:
         raise RuntimeError(
             "OpenAI SDK not installed. Run: pip install -r agents/requirements.txt"
@@ -169,7 +198,18 @@ def call_llm_generate_content(model: str, system_prompt: str, user_prompt: str) 
         max_tokens=MAX_TOKENS_DEFAULT,
     )
     text = resp.choices[0].message.content or ""
-    return text.strip()
+    usage = getattr(resp, "usage", None)
+    # usage may be pydantic model; try to coerce to dict
+    usage_dict = None
+    if usage is not None:
+        try:
+            usage_dict = usage.model_dump()  # type: ignore[attr-defined]
+        except Exception:
+            try:
+                usage_dict = dict(usage)
+            except Exception:
+                usage_dict = None
+    return text.strip(), usage_dict
 
 
 def parse_counter_from_text(text: str) -> int | None:
@@ -229,6 +269,10 @@ def run(mode: str, dry_run: bool, model: str) -> None:
     human_est, iso_z = now_strings()
     prompt_text = load_prompt()
 
+    usage_info: dict | None = None
+    applied_strategy = ""
+    validation_ok = False
+
     if mode == "llm":
         # Ask the model to incrementally beautify the current editable section using only HTML/CSS.
         current_inner = extract_editable_inner(read_text(DOCS_INDEX))
@@ -247,13 +291,15 @@ def run(mode: str, dry_run: bool, model: str) -> None:
             "4) Make incremental improvements; tasteful, accessible, and visually pleasing.\n"
             "5) Keep text appropriate; no profanity or sensitive content.\n\n"
             f"Here is the current editable inner HTML (between markers):\n---\n{current_inner}\n---\n"
-            "Return ONLY the new inner HTML to replace the section, without surrounding comments."
+            "Return ONLY the new inner HTML to replace the section, without surrounding comments, code fences, or full-page tags."
         )
         try:
-            candidate = call_llm_generate_content(model=model, system_prompt=system_prompt, user_prompt=user_prompt)
+            candidate, usage_info = call_llm_generate_content(model=model, system_prompt=system_prompt, user_prompt=user_prompt)
             candidate = candidate.strip()
             candidate = enforce_basic_safety(candidate)
             candidate = validate_fragment(candidate)
+            validation_ok = True
+            applied_strategy = "llm"
             new_content = candidate
         except Exception as e:
             # Minimal tasteful fallback block when LLM fails
@@ -265,6 +311,7 @@ def run(mode: str, dry_run: bool, model: str) -> None:
                 "<span id=\"last-updated\"></span>"
                 "</div>"
             )
+            applied_strategy = f"fallback ({e})"
             print(f"LLM error, used fallback aesthetic block: {e}")
     else:
         # Deterministic mode keeps a minimal aesthetic block with a counter for continuity
@@ -274,6 +321,8 @@ def run(mode: str, dry_run: bool, model: str) -> None:
             f"<span id=\"last-updated\"></span>"
             f"</div>"
         )
+        applied_strategy = "counter"
+        validation_ok = True
 
     html = read_text(DOCS_INDEX)
     html = replace_editable_section(html, new_content)
@@ -282,7 +331,18 @@ def run(mode: str, dry_run: bool, model: str) -> None:
     # Persist state value chosen
     state["counter"] = next_counter
 
-    log_path = write_reasoning_log(state["counter"], human_est, iso_z, dry_run)
+    log_path = write_reasoning_log(
+        mode=mode,
+        model=model,
+        human_est=human_est,
+        iso_z=iso_z,
+        dry_run=dry_run,
+        applied_strategy=applied_strategy,
+        snippet_chars=len(new_content),
+        validation_ok=validation_ok,
+        usage=usage_info,
+        counter_value=state["counter"] if mode != "llm" else None,
+    )
 
     if dry_run:
         print("Dry run complete. No files were modified.")

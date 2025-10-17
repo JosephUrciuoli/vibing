@@ -8,13 +8,13 @@ This project prioritizes:
 - **Autonomy**: No human intervention; optionally use PRs with auto‑merge to keep a visible history.
 
 
-### What v1 does
+### What it does
 - Hosts a single static HTML page (`docs/index.html`) via GitHub Pages.
-- On a schedule (default: every 5 minutes for testing), the agent:
-  - Generates new text (“content creator” role) with no external data sources.
-  - Updates a designated text box and the “last updated” timestamp on the page (“site editor” role).
-  - Commits the change (directly to `main` or via PR, configurable).
-  - Writes a markdown log of the prompts, outputs, timestamps, and summary to `agent-reasoning/`.
+- On a schedule (hourly by default), the agent:
+  - Uses OpenAI (`gpt-4o` by default) to incrementally beautify the editable section using only HTML/CSS.
+  - Ensures exactly one `span#last-updated` is present and updates it to the current EST time.
+  - Validates the snippet (no code fences/full-page tags/forbidden tags) before applying.
+  - Commits changes to `main` and writes a detailed markdown log to `agent-reasoning/`.
 
 
 ### Architecture
@@ -58,8 +58,7 @@ Both modes are supported; the default can be set in config (to be introduced in 
 
 
 ### Schedule and timezones
-- **Testing cadence**: `*/5 * * * *` (every 5 minutes). GitHub Actions does not guarantee true 1‑minute runs.
-- **Production cadence**: hourly (e.g., `0 * * * *`).
+- **Cadence**: hourly (`0 * * * *`).
 - **Timezone**: Cron uses UTC. The agent will render the “last updated” timestamp on the page in EST for display.
 
 
@@ -194,8 +193,8 @@ Options:
 - `--message "..."`: custom commit message (default: `chore(site): deploy`)
 
 
-### Local agent (counter demo)
-Run the local agent to increment a counter and update the page:
+### Local agent
+Run the local agent to improve aesthetics and update the page:
 
 ```bash
 python agents/run.py
@@ -205,10 +204,10 @@ Flags:
 - `--dry-run`: compute but do not modify files
 
 Outputs:
-- Updates the content between `<!-- BEGIN_EDITABLE -->` and `<!-- END_EDITABLE -->` to "Counter: N"
+- Updates the content between `<!-- BEGIN_EDITABLE -->` and `<!-- END_EDITABLE -->` with a validated HTML/CSS snippet
 - Replaces `#last-updated` text with an EST timestamp
-- Writes a log to `agent-reasoning/run-<timestamp>.md`
-- Persists counter in `agents/state.json`
+- Writes a log to `agent-reasoning/run-<timestamp>.md` (includes mode, model, validation status, usage)
+- Persists counter in `agents/state.json` for deterministic mode only
 
 
 ### LLM mode (OpenAI)
@@ -231,7 +230,7 @@ Notes:
 
 
 ### Automation via GitHub Actions
-This repository includes `.github/workflows/agent.yml` which runs the agent on a schedule (attempts every minute; GitHub may run ~every 5 minutes). Default model: `gpt-4o`.
+This repository includes `.github/workflows/agent.yml` which runs the agent hourly. Default model: `gpt-4o`.
 
 Configure secret:
 - Go to Settings → Secrets and variables → Actions → New repository secret

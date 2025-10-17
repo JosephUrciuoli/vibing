@@ -10,6 +10,7 @@ Guidance:
 - Favor tasteful typography, spacing, soft borders, gentle gradients, and accessible contrast.
 - Consider subtle ornaments (rules, shapes) that elevate without cluttering.
 - Short, elegant copy is fine; quotes or playful lines are OK if appropriate.
+- Be boldly creative within elegance—each run should refine or surprise in a cohesive way.
 
 Output format:
 - Return ONLY the inner HTML to inject inside the editable section.
