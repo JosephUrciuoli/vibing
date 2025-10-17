@@ -232,7 +232,7 @@ def enforce_basic_safety(html_fragment: str) -> str:
     return html_fragment
 
 
-FORBIDDEN_TAGS = ["script", "link", "iframe", "object", "embed"]
+FORBIDDEN_TAGS = ["link", "iframe", "object", "embed"]
 
 
 def validate_fragment(fragment: str) -> str:

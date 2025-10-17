@@ -6,6 +6,8 @@ Constraints:
 - Include a <span id="last-updated"></span> element somewhere tasteful in the returned snippet.
 - Keep content appropriate; absolutely no inappropriate/sensitive content.
 - Do not modify anything outside the editable section.
+ - Return a fragment only: never include <!doctype>, <html>, <head>, or <body>.
+ - If you include <style> or <script>, keep them inline and scoped only to elements in your snippet.
 
 Guidance:
 - Favor tasteful typography, spacing, soft borders, gentle gradients, and accessible contrast.
@@ -22,6 +24,7 @@ Must haves
 
 Output format:
 - Return ONLY the inner HTML to inject inside the editable section.
+ - Do not include the editable markers themselves.
 
 Final check before you answer:
 - Ensure the returned snippet is valid HTML (properly nested/closed tags, valid attributes).
