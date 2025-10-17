@@ -11,8 +11,8 @@ This project prioritizes:
 ### What it does
 - Hosts a single static HTML page (`docs/index.html`) via GitHub Pages.
 - On a schedule (hourly by default), the agent:
-  - Uses OpenAI (`gpt-4o` by default) to incrementally beautify the editable section using only HTML/CSS.
-  - Creativity controls: `TEMPERATURE` (default 0.6), `MAX_TOKENS` (default 4096), and an internal iteration counter that nudges bigger changes over time.
+- Uses OpenAI (`gpt-5` by default) to incrementally beautify the editable section using only HTML/CSS.
+  - Creativity controls: `TEMPERATURE` (default 0.6), and an internal iteration counter that nudges bigger changes over time.
   - Ensures exactly one `span#last-updated` is present and updates it to the current EST time.
   - Validates the snippet (no code fences/full-page tags/forbidden tags) before applying.
   - Commits changes to `main` and writes a detailed markdown log to `agent-reasoning/`.
@@ -222,17 +222,17 @@ export OPENAI_API_KEY=sk-... # or use a manager like direnv
 Run with the LLM (default mode):
 
 ```bash
-python agents/run.py --mode llm --model gpt-4o
+python agents/run.py --mode llm --model gpt-5
 ```
 
 Notes:
 - The prompt lives at `agents/prompts/webmaster.md`.
 - The agent requests an HTML/CSS snippet and validates it (no code fences/full-page tags/forbidden tags; must include a single `span#last-updated`). If invalid, it falls back to a safe minimal snippet.
-- Tune creativity and size with env vars: `TEMPERATURE=0.6`, `MAX_TOKENS=4096`.
+- Tune creativity and size with env vars: `TEMPERATURE=0.6`.
 
 
 ### Automation via GitHub Actions
-This repository includes `.github/workflows/agent.yml` which runs the agent hourly. Default model: `gpt-4o`.
+This repository includes `.github/workflows/agent.yml` which runs the agent hourly. Default model: `gpt-5`.
 
 Configure secret:
 - Go to Settings → Secrets and variables → Actions → New repository secret

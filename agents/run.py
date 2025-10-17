@@ -22,7 +22,6 @@ DOCS_INDEX = REPO_ROOT / "docs" / "index.html"
 STATE_FILE = REPO_ROOT / "agents" / "state.json"
 REASONING_DIR = REPO_ROOT / "agent-reasoning"
 
-MAX_TOKENS_DEFAULT = int(os.getenv("MAX_TOKENS", "4096"))
 TEMPERATURE_DEFAULT = float(os.getenv("TEMPERATURE", "0.6"))
 
 BEGIN_MARKER = "<!-- BEGIN_EDITABLE -->"
@@ -196,7 +195,6 @@ def call_llm_generate_content(model: str, system_prompt: str, user_prompt: str, 
             {"role": "user", "content": user_prompt},
         ],
         temperature=temperature,
-        max_tokens=MAX_TOKENS_DEFAULT,
     )
     text = resp.choices[0].message.content or ""
     usage = getattr(resp, "usage", None)
@@ -369,7 +367,7 @@ def parse_args() -> argparse.Namespace:
         default="llm",
         help="Use OpenAI LLM ('llm') or deterministic counter ('counter')",
     )
-    p.add_argument("--model", default=os.getenv("MODEL", "gpt-4o"), help="OpenAI model name")
+    p.add_argument("--model", default=os.getenv("MODEL", "gpt-5"), help="OpenAI model name")
     p.add_argument("--dry-run", action="store_true", help="Compute without writing files")
     return p.parse_args()
 
