@@ -281,7 +281,7 @@ def parse_args() -> argparse.Namespace:
         default="llm",
         help="Use OpenAI LLM ('llm') or deterministic counter ('counter')",
     )
-    p.add_argument("--model", default=os.getenv("MODEL", "gpt-4o-mini"), help="OpenAI model name")
+    p.add_argument("--model", default=os.getenv("MODEL", "gpt-4o"), help="OpenAI model name")
     p.add_argument("--dry-run", action="store_true", help="Compute without writing files")
     return p.parse_args()
 

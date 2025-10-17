@@ -222,7 +222,7 @@ export OPENAI_API_KEY=sk-... # or use a manager like direnv
 Run with the LLM (default mode):
 
 ```bash
-python agents/run.py --mode llm --model gpt-4o-mini
+python agents/run.py --mode llm --model gpt-4o
 ```
 
 Notes:
@@ -231,7 +231,7 @@ Notes:
 
 
 ### Automation via GitHub Actions
-This repository includes `.github/workflows/agent.yml` which runs the agent on a schedule (attempts every minute; GitHub may run ~every 5 minutes).
+This repository includes `.github/workflows/agent.yml` which runs the agent on a schedule (attempts every minute; GitHub may run ~every 5 minutes). Default model: `gpt-4o`.
 
 Configure secret:
 - Go to Settings → Secrets and variables → Actions → New repository secret
