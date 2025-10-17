@@ -1,0 +1,184 @@
+## Vibing — Autonomous AI Webmaster (GitHub Pages + GitHub Actions)
+
+Vibing is a tiny, cheap, fully autonomous “AI webmaster.” On a schedule, an agent updates a static website by editing files in this repo and committing the changes. Each run saves a human‑readable reasoning log in `agent-reasoning/` for audit/history.
+
+This project prioritizes:
+- **All‑GitHub**: GitHub Pages for hosting + GitHub Actions for the agent.
+- **Simple + cheap**: Python agent using OpenAI `gpt-4o-mini`.
+- **Autonomy**: No human intervention; optionally use PRs with auto‑merge to keep a visible history.
+
+
+### What v1 does
+- Hosts a single static HTML page (`docs/index.html`) via GitHub Pages.
+- On a schedule (default: every 5 minutes for testing), the agent:
+  - Generates new text (“content creator” role) with no external data sources.
+  - Updates a designated text box and the “last updated” timestamp on the page (“site editor” role).
+  - Commits the change (directly to `main` or via PR, configurable).
+  - Writes a markdown log of the prompts, outputs, timestamps, and summary to `agent-reasoning/`.
+
+
+### Architecture
+- **Hosting**: GitHub Pages (source: `main`, folder: `docs/`).
+- **Execution**: GitHub Actions scheduled workflow (cron). Minimum reliable cadence is ~5 minutes.
+- **Agent**: Python script that:
+  - Calls OpenAI `gpt-4o-mini`.
+  - Implements two prompts/roles: `content creator` and `site editor`.
+  - Edits `docs/index.html` within a constrained section.
+  - Writes commit/PR via `GITHUB_TOKEN`.
+  - Saves a detailed run log in `agent-reasoning/`.
+- **Secrets**: `OPENAI_API_KEY` stored as a GitHub Repository Secret.
+
+
+### Repository layout (planned)
+```
+.
+├── docs/
+│   └── index.html                  # Static site, edited by the agent
+├── agent/
+│   ├── prompts/
+│   │   ├── content_creator.md      # Prompt for content generation
+│   │   └── site_editor.md          # Prompt for safe/page-scoped editing
+│   ├── run.py                      # Main entrypoint for the agent (Python)
+│   └── config.yaml                 # Configs: mode, schedule docs, targets
+├── agent-reasoning/
+│   └── (created at runtime)        # One .md per run with logs
+└── .github/
+    └── workflows/
+        └── agent.yml               # Scheduled workflow
+```
+
+Note: This README ships first. The directories/files above will be added in subsequent commits.
+
+
+### Modes of operation
+- **Direct push (no PR)**: Fastest, “hands off.” Uses `GITHUB_TOKEN` with `contents: write`.
+- **PR flow (recommended for visibility)**: The workflow opens a PR per run; optional auto‑merge keeps it zero‑touch while preserving reviewable history.
+
+Both modes are supported; the default can be set in config (to be introduced in `agent/config.yaml`).
+
+
+### Schedule and timezones
+- **Testing cadence**: `*/5 * * * *` (every 5 minutes). GitHub Actions does not guarantee true 1‑minute runs.
+- **Production cadence**: hourly (e.g., `0 * * * *`).
+- **Timezone**: Cron uses UTC. The agent will render the “last updated” timestamp on the page in EST for display.
+
+
+### Content: scope and tone
+- **No external data sources** in v1; content is purely model‑generated.
+- **Tone**: Profanity is allowed by design for this project. Be aware that generated content may be offensive; this repository and site are public.
+- **Length**: Prefer short, punchy updates (1–2 sentences) to keep diffs compact.
+
+
+### Secrets and permissions
+- Add a repository secret: `OPENAI_API_KEY`.
+- The workflow uses the built‑in `GITHUB_TOKEN` with appropriate permissions:
+  - `contents: write` (for commits)
+  - `pull-requests: write` (if using PR mode)
+- A separate GitHub PAT is optional and only needed if you prefer a dedicated bot user.
+
+
+### Commit message format
+`chore(agent): update content — run 2025-10-17 09:00 EST`
+
+
+### Run logs (`agent-reasoning/`)
+Each run writes a markdown file, e.g. `agent-reasoning/run-2025-10-17T14-00-00Z.md`, including:
+- Prompts used (content + editor)
+- Model + parameters
+- Generated content
+- File change summary (what section of `docs/index.html` changed)
+- Timestamps (UTC + EST)
+- Token usage and rough cost estimate
+- Exit status
+
+
+### Setup
+1) **Create a public GitHub repo** and push this project.
+
+2) **Add secrets**
+   - Settings → Security → Secrets and variables → Actions → New repository secret:
+     - Name: `OPENAI_API_KEY`
+     - Value: your OpenAI key
+
+3) **Enable GitHub Pages**
+   - Settings → Pages → Build and deployment → Source: `Deploy from a branch`
+   - Branch: `main` — Folder: `/docs`
+
+4) **Set workflow permissions**
+   - Settings → Actions → General → Workflow permissions:
+     - Enable `Read and write permissions`
+     - Check `Allow GitHub Actions to create and approve pull requests` (if using PR mode)
+
+5) **Configure schedule/mode (coming in code)**
+   - Defaults: 5‑minute cadence (testing), PR mode off unless configured.
+   - You’ll be able to change cron and mode in `agent/config.yaml`.
+
+6) **Visit your site** once `docs/index.html` exists and Pages is enabled:
+   - `https://<your-username>.github.io/<your-repo>/`
+
+
+### Local development (optional, once code lands)
+#### Option A — Docker (recommended)
+1) Ensure Docker is installed and running.
+2) From the repo root, run:
+   ```bash
+   docker compose up --build
+   ```
+3) Visit `http://localhost:8080` to view the site. Edits to files under `docs/` hot‑reload.
+
+To stop:
+```bash
+docker compose down
+```
+
+#### Option B — Simple local file preview
+You can also open `docs/index.html` directly in a browser. Some features (like relative includes, if any later) may require a local server.
+
+#### Option C — Python (will be used by the agent later)
+- Requirements: Python 3.11+, `pipx` or `pip`.
+- Once the agent is added:
+  - `pip install -r agent/requirements.txt`
+  - `python agent/run.py --once --mode=direct` (writes to `docs/index.html` and logs)
+
+
+### Roadmap (near‑term)
+- Scaffold `docs/index.html` with a clearly scoped, editable content area.
+- Add prompts and Python agent (`agent/run.py`).
+- Add scheduled workflow (`.github/workflows/agent.yml`).
+- Implement config for mode (direct vs PR) and schedule.
+- Record detailed run logs in `agent-reasoning/`.
+- Switch cadence to hourly after initial testing.
+
+
+### Notes
+- This repository intentionally allows profane content. Consider adding disclaimers or access warnings if you later share the site broadly.
+- No analytics in v1.
+
+
+### License
+Choose a license (e.g., MIT) and add it as `LICENSE`.
+
+
+### GitHub Pages automation (gh CLI)
+Prereqs:
+- Install GitHub CLI and login: `gh auth login`
+- Ensure you are in the repo root and have your changes committed
+
+Run:
+```bash
+bash scripts/setup_github_pages.sh --public
+```
+
+Optional flags:
+```bash
+bash scripts/setup_github_pages.sh --repo yourname/vibing --public --force
+```
+
+What it does:
+- Creates (or connects) the GitHub repo
+- Pushes `main`
+- Enables GitHub Pages from `main` → `/docs`
+- Grants Actions write + PR approval permissions
+- Outputs the Pages URL
+
+
