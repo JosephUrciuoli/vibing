@@ -22,6 +22,7 @@ DOCS_INDEX = REPO_ROOT / "docs" / "index.html"
 STATE_FILE = REPO_ROOT / "agents" / "state.json"
 REASONING_DIR = REPO_ROOT / "agent-reasoning"
 
+MAX_TOKENS_DEFAULT = int(os.getenv("MAX_TOKENS", "4096"))
 
 BEGIN_MARKER = "<!-- BEGIN_EDITABLE -->"
 END_MARKER = "<!-- END_EDITABLE -->"
@@ -165,7 +166,7 @@ def call_llm_generate_content(model: str, system_prompt: str, user_prompt: str) 
             {"role": "user", "content": user_prompt},
         ],
         temperature=0.2,
-        max_tokens=64,
+        max_tokens=MAX_TOKENS_DEFAULT,
     )
     text = resp.choices[0].message.content or ""
     return text.strip()
@@ -193,6 +194,27 @@ def enforce_basic_safety(html_fragment: str) -> str:
         if term in lowered:
             raise RuntimeError(f"Generated content contained forbidden term: {term}")
     return html_fragment
+
+
+FORBIDDEN_TAGS = ["script", "link", "iframe", "object", "embed"]
+
+
+def validate_fragment(fragment: str) -> str:
+    # Disallow code fences and surrounding HTML/BODY/HEAD or DOCTYPE
+    if "```" in fragment:
+        raise RuntimeError("Fragment must not contain markdown code fences.")
+    lowered = fragment.lower()
+    if any(tag in lowered for tag in ("<!doctype", "<html", "<head", "<body")):
+        raise RuntimeError("Return only the inner HTML for the editable section, not a full page.")
+    # Require exactly one last-updated span
+    count_updated = len(re.findall(r"<span\s+id=\"last-updated\"[^>]*>", fragment, flags=re.IGNORECASE))
+    if count_updated != 1:
+        raise RuntimeError("Fragment must include exactly one <span id=\"last-updated\"></span>.")
+    # Forbid dangerous tags
+    for tag in FORBIDDEN_TAGS:
+        if re.search(rf"<\s*{tag}[^>]*>", lowered):
+            raise RuntimeError(f"Forbidden tag found: <{tag}>")
+    return fragment
 
 
 def run(mode: str, dry_run: bool, model: str) -> None:
@@ -231,6 +253,7 @@ def run(mode: str, dry_run: bool, model: str) -> None:
             candidate = call_llm_generate_content(model=model, system_prompt=system_prompt, user_prompt=user_prompt)
             candidate = candidate.strip()
             candidate = enforce_basic_safety(candidate)
+            candidate = validate_fragment(candidate)
             new_content = candidate
         except Exception as e:
             # Minimal tasteful fallback block when LLM fails
