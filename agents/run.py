@@ -22,8 +22,6 @@ DOCS_INDEX = REPO_ROOT / "docs" / "index.html"
 STATE_FILE = REPO_ROOT / "agents" / "state.json"
 REASONING_DIR = REPO_ROOT / "agent-reasoning"
 
-TEMPERATURE_DEFAULT = float(os.getenv("TEMPERATURE", "0.6"))
-
 BEGIN_MARKER = "<!-- BEGIN_EDITABLE -->"
 END_MARKER = "<!-- END_EDITABLE -->"
 
@@ -179,7 +177,7 @@ def load_prompt() -> str:
     return read_text(prompt_path) if prompt_path.exists() else ""
 
 
-def call_llm_generate_content(model: str, system_prompt: str, user_prompt: str, *, temperature: float) -> tuple[str, dict | None]:
+def call_llm_generate_content(model: str, system_prompt: str, user_prompt: str) -> tuple[str, dict | None]:
     if OpenAI is None:
         raise RuntimeError(
             "OpenAI SDK not installed. Run: pip install -r agents/requirements.txt"
@@ -194,7 +192,6 @@ def call_llm_generate_content(model: str, system_prompt: str, user_prompt: str, 
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
         ],
-        temperature=temperature,
     )
     text = resp.choices[0].message.content or ""
     usage = getattr(resp, "usage", None)
@@ -296,7 +293,7 @@ def run(mode: str, dry_run: bool, model: str) -> None:
             f"Here is the current editable inner HTML (between markers):\n---\n{current_inner}\n---\n"
         )
         try:
-            candidate, usage_info = call_llm_generate_content(model=model, system_prompt=system_prompt, user_prompt=user_prompt, temperature=TEMPERATURE_DEFAULT)
+            candidate, usage_info = call_llm_generate_content(model=model, system_prompt=system_prompt, user_prompt=user_prompt)
             candidate = strip_code_fences(candidate.strip())
             candidate = enforce_basic_safety(candidate)
             candidate = validate_fragment(candidate)
