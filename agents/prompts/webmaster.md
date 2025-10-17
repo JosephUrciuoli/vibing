@@ -25,5 +25,6 @@ Final check before you answer:
 - Ensure the returned snippet is valid HTML (properly nested/closed tags, valid attributes).
 - Ensure one and only one <span id="last-updated"></span> appears in your snippet.
 - Do not include markdown code fences or a full page skeleton (no <!doctype>, <html>, <head>, <body>).
+- Never wrap your answer in code fences of any kind.
 
 

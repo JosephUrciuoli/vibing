@@ -242,6 +242,7 @@ FORBIDDEN_TAGS = ["script", "link", "iframe", "object", "embed"]
 
 def validate_fragment(fragment: str) -> str:
     # Disallow code fences and surrounding HTML/BODY/HEAD or DOCTYPE
+    # Code fences should have been stripped earlier; if still present, treat as invalid
     if "```" in fragment:
         raise RuntimeError("Fragment must not contain markdown code fences.")
     lowered = fragment.lower()
@@ -258,6 +259,20 @@ def validate_fragment(fragment: str) -> str:
     return fragment
 
 
+def strip_code_fences(text: str) -> str:
+    """Remove surrounding markdown code fences if present and return inner content.
+    Supports ```html ...``` or bare ``` ... ``` fences.
+    """
+    # Full fenced block from start to end
+    m = re.match(r"^```[a-zA-Z0-9_-]*\s*\n([\s\S]*?)\n```\s*$", text.strip())
+    if m:
+        return m.group(1).strip()
+    # Sometimes model adds fences only at start or end; strip them greedily
+    text = re.sub(r"^```[a-zA-Z0-9_-]*\s*\n", "", text)
+    text = re.sub(r"\n```\s*$", "", text)
+    return text.strip()
+
+
 def run(mode: str, dry_run: bool, model: str) -> None:
     if not DOCS_INDEX.exists():
         print(f"Missing {DOCS_INDEX}. Create the site first.", file=sys.stderr)
@@ -269,7 +284,6 @@ def run(mode: str, dry_run: bool, model: str) -> None:
     next_counter = prev_counter + 1
 
     human_est, iso_z = now_strings()
-    prompt_text = load_prompt()
 
     usage_info: dict | None = None
     applied_strategy = ""
@@ -278,27 +292,14 @@ def run(mode: str, dry_run: bool, model: str) -> None:
     if mode == "llm":
         # Ask the model to incrementally beautify the current editable section using only HTML/CSS.
         current_inner = extract_editable_inner(read_text(DOCS_INDEX))
-        system_prompt = (
-            "You are the Vibing Webmaster. Your job: improve the aesthetics of the"
-            " editable section using ONLY inline HTML and CSS (no external libs)."
-            " Preserve a <span id=\"last-updated\"></span> element somewhere in the"
-            " returned markup so the system can fill it. Strictly avoid any"
-            " inappropriate content."
-        )
+        system_prompt = load_prompt()
         user_prompt = (
-            "Requirements:\n"
-            "1) Use only HTML/CSS in the returned snippet; no JS or external libraries.\n"
-            "2) Include a <span id=\"last-updated\"></span> element somewhere aesthetically integrated.\n"
-            "3) Keep it self-contained; do not modify outside the editable section.\n"
-            "4) Make bold, incremental improvements; be more aggressive each run while remaining tasteful, accessible, and cohesive.\n"
-            "5) Keep text appropriate; no profanity or sensitive content.\n\n"
             f"Iteration: {iteration}.\n"
             f"Here is the current editable inner HTML (between markers):\n---\n{current_inner}\n---\n"
-            "Return ONLY the new inner HTML to replace the section, without surrounding comments, code fences, or full-page tags."
         )
         try:
             candidate, usage_info = call_llm_generate_content(model=model, system_prompt=system_prompt, user_prompt=user_prompt, temperature=TEMPERATURE_DEFAULT)
-            candidate = candidate.strip()
+            candidate = strip_code_fences(candidate.strip())
             candidate = enforce_basic_safety(candidate)
             candidate = validate_fragment(candidate)
             validation_ok = True
