@@ -182,3 +182,51 @@ What it does:
 - Outputs the Pages URL
 
 
+### Deploy updates (CLI)
+Commit and push site changes quickly:
+
+```bash
+bash scripts/deploy.sh --message "update homepage copy"
+```
+
+Options:
+- `--all`: commit all changes in the repo, not just `docs/`
+- `--message "..."`: custom commit message (default: `chore(site): deploy`)
+
+
+### Local agent (counter demo)
+Run the local agent to increment a counter and update the page:
+
+```bash
+python agents/run.py
+```
+
+Flags:
+- `--dry-run`: compute but do not modify files
+
+Outputs:
+- Updates the content between `<!-- BEGIN_EDITABLE -->` and `<!-- END_EDITABLE -->` to "Counter: N"
+- Replaces `#last-updated` text with an EST timestamp
+- Writes a log to `agent-reasoning/run-<timestamp>.md`
+- Persists counter in `agents/state.json`
+
+
+### LLM mode (OpenAI)
+Install dependencies and set your API key:
+
+```bash
+pip install -r agents/requirements.txt
+export OPENAI_API_KEY=sk-... # or use a manager like direnv
+```
+
+Run with the LLM (default mode):
+
+```bash
+python agents/run.py --mode llm --model gpt-4o-mini
+```
+
+Notes:
+- The prompt lives at `agents/prompts/webmaster.md`.
+- The agent asks the model to output a single line like `Counter: N`. If parsing fails, it falls back to the deterministic counter.
+
+

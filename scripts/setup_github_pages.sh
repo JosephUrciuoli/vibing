@@ -137,14 +137,23 @@ main() {
       -f "source[path]=/docs" >/dev/null
   fi
 
-  # Set Actions workflow permissions
-  echo "Setting Actions workflow permissions (write + PR approvals)..."
+  # Set Actions permissions: ensure Actions is enabled and allow all actions
+  echo "Setting Actions permissions (enabled + allowed_actions)..."
   gh api \
     --method PUT \
     -H "Accept: application/vnd.github+json" \
     "/repos/$owner/$name/actions/permissions" \
-    -f default_workflow_permissions=write \
-    -f can_approve_pull_request_reviews=true >/dev/null
+    -F enabled=true \
+    -F allowed_actions=all >/dev/null
+
+  # Set default workflow permissions and PR approval capability
+  echo "Setting default workflow permissions (write + PR approvals)..."
+  gh api \
+    --method PUT \
+    -H "Accept: application/vnd.github+json" \
+    "/repos/$owner/$name/actions/permissions/workflow" \
+    -F default_workflow_permissions=write \
+    -F can_approve_pull_request_reviews=true >/dev/null
 
   # Fetch Pages URL
   local pages_url
