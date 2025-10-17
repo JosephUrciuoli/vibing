@@ -230,3 +230,20 @@ Notes:
 - The agent asks the model to output a single line like `Counter: N`. If parsing fails, it falls back to the deterministic counter.
 
 
+### Automation via GitHub Actions
+This repository includes `.github/workflows/agent.yml` which runs the agent on a schedule (attempts every minute; GitHub may run ~every 5 minutes).
+
+Configure secret:
+- Go to Settings → Secrets and variables → Actions → New repository secret
+- Name: `OPENAI_API_KEY`
+- Value: your OpenAI key
+
+What it does on each run:
+1. Checks out the repo
+2. Installs Python deps (`agents/requirements.txt`)
+3. Runs `python agents/run.py --mode llm --model gpt-4o-mini`
+4. Stages `docs/`, `agents/state.json`, `agent-reasoning/`
+5. Commits with `chore(agent): update content — run <EST time>` if there are changes
+6. Pushes to `main` (GitHub Pages deploys automatically from `/docs`)
+
+
