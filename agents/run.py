@@ -23,6 +23,7 @@ STATE_FILE = REPO_ROOT / "agents" / "state.json"
 REASONING_DIR = REPO_ROOT / "agent-reasoning"
 
 MAX_TOKENS_DEFAULT = int(os.getenv("MAX_TOKENS", "4096"))
+TEMPERATURE_DEFAULT = float(os.getenv("TEMPERATURE", "0.6"))
 
 BEGIN_MARKER = "<!-- BEGIN_EDITABLE -->"
 END_MARKER = "<!-- END_EDITABLE -->"
@@ -179,7 +180,7 @@ def load_prompt() -> str:
     return read_text(prompt_path) if prompt_path.exists() else ""
 
 
-def call_llm_generate_content(model: str, system_prompt: str, user_prompt: str) -> tuple[str, dict | None]:
+def call_llm_generate_content(model: str, system_prompt: str, user_prompt: str, *, temperature: float) -> tuple[str, dict | None]:
     if OpenAI is None:
         raise RuntimeError(
             "OpenAI SDK not installed. Run: pip install -r agents/requirements.txt"
@@ -194,7 +195,7 @@ def call_llm_generate_content(model: str, system_prompt: str, user_prompt: str) 
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
         ],
-        temperature=0.2,
+        temperature=temperature,
         max_tokens=MAX_TOKENS_DEFAULT,
     )
     text = resp.choices[0].message.content or ""
@@ -264,6 +265,7 @@ def run(mode: str, dry_run: bool, model: str) -> None:
 
     state = load_state()
     prev_counter = int(state.get("counter", 0))
+    iteration = int(state.get("iteration", 0)) + 1
     next_counter = prev_counter + 1
 
     human_est, iso_z = now_strings()
@@ -288,13 +290,14 @@ def run(mode: str, dry_run: bool, model: str) -> None:
             "1) Use only HTML/CSS in the returned snippet; no JS or external libraries.\n"
             "2) Include a <span id=\"last-updated\"></span> element somewhere aesthetically integrated.\n"
             "3) Keep it self-contained; do not modify outside the editable section.\n"
-            "4) Make incremental improvements; tasteful, accessible, and visually pleasing.\n"
+            "4) Make bold, incremental improvements; be more aggressive each run while remaining tasteful, accessible, and cohesive.\n"
             "5) Keep text appropriate; no profanity or sensitive content.\n\n"
+            f"Iteration: {iteration}.\n"
             f"Here is the current editable inner HTML (between markers):\n---\n{current_inner}\n---\n"
             "Return ONLY the new inner HTML to replace the section, without surrounding comments, code fences, or full-page tags."
         )
         try:
-            candidate, usage_info = call_llm_generate_content(model=model, system_prompt=system_prompt, user_prompt=user_prompt)
+            candidate, usage_info = call_llm_generate_content(model=model, system_prompt=system_prompt, user_prompt=user_prompt, temperature=TEMPERATURE_DEFAULT)
             candidate = candidate.strip()
             candidate = enforce_basic_safety(candidate)
             candidate = validate_fragment(candidate)
@@ -330,6 +333,7 @@ def run(mode: str, dry_run: bool, model: str) -> None:
 
     # Persist state value chosen
     state["counter"] = next_counter
+    state["iteration"] = iteration
 
     log_path = write_reasoning_log(
         mode=mode,

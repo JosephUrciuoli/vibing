@@ -12,6 +12,7 @@ This project prioritizes:
 - Hosts a single static HTML page (`docs/index.html`) via GitHub Pages.
 - On a schedule (hourly by default), the agent:
   - Uses OpenAI (`gpt-4o` by default) to incrementally beautify the editable section using only HTML/CSS.
+  - Creativity controls: `TEMPERATURE` (default 0.6), `MAX_TOKENS` (default 4096), and an internal iteration counter that nudges bigger changes over time.
   - Ensures exactly one `span#last-updated` is present and updates it to the current EST time.
   - Validates the snippet (no code fences/full-page tags/forbidden tags) before applying.
   - Commits changes to `main` and writes a detailed markdown log to `agent-reasoning/`.
@@ -226,7 +227,8 @@ python agents/run.py --mode llm --model gpt-4o
 
 Notes:
 - The prompt lives at `agents/prompts/webmaster.md`.
-- The agent asks the model to output a single line like `Counter: N`. If parsing fails, it falls back to the deterministic counter.
+- The agent requests an HTML/CSS snippet and validates it (no code fences/full-page tags/forbidden tags; must include a single `span#last-updated`). If invalid, it falls back to a safe minimal snippet.
+- Tune creativity and size with env vars: `TEMPERATURE=0.6`, `MAX_TOKENS=4096`.
 
 
 ### Automation via GitHub Actions
