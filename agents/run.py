@@ -63,7 +63,7 @@ def replace_editable_section(html: str, new_inner_html: str) -> str:
     )
     replacement = (
         BEGIN_MARKER
-        + "\n      <section id=\"content\">\n        "
+        + "\n      <section id=\"content\">\n"
         + new_inner_html
         + "\n      </section>\n      "
         + END_MARKER
@@ -90,6 +90,21 @@ def replace_last_updated_span(html: str, last_updated_text: str) -> str:
         # If the span doesn't exist, do nothing; page will fallback to its script
         return html
     return pattern.sub(_repl, html, count=1)
+
+
+def extract_editable_inner(html: str) -> str:
+    """Return the current inner HTML between the editable markers (without wrapper)."""
+    pattern = re.compile(
+        re.escape(BEGIN_MARKER) + r"([\s\S]*?)" + re.escape(END_MARKER), re.MULTILINE
+    )
+    m = pattern.search(html)
+    if not m:
+        return ""
+    inner = m.group(1)
+    # Optionally strip outer <section id="content"> if present
+    inner = re.sub(r"^\s*<section[^>]*>\s*", "", inner)
+    inner = re.sub(r"\s*</section>\s*$", "", inner)
+    return inner.strip()
 
 
 def now_strings() -> tuple[str, str]:
@@ -153,8 +168,7 @@ def call_llm_generate_content(model: str, system_prompt: str, user_prompt: str) 
         max_tokens=64,
     )
     text = resp.choices[0].message.content or ""
-    # Normalize to single line plain text
-    return " ".join(text.strip().split())
+    return text.strip()
 
 
 def parse_counter_from_text(text: str) -> int | None:
@@ -165,6 +179,20 @@ def parse_counter_from_text(text: str) -> int | None:
         return int(match.group(1))
     except Exception:
         return None
+
+
+SAFE_BLOCKLIST = [
+    # basic safety pass; not exhaustive, but avoid obvious inappropriate terms
+    "porn", "nsfw", "nude", "racist", "sex", "violence", "gore",
+]
+
+
+def enforce_basic_safety(html_fragment: str) -> str:
+    lowered = html_fragment.lower()
+    for term in SAFE_BLOCKLIST:
+        if term in lowered:
+            raise RuntimeError(f"Generated content contained forbidden term: {term}")
+    return html_fragment
 
 
 def run(mode: str, dry_run: bool, model: str) -> None:
@@ -180,27 +208,49 @@ def run(mode: str, dry_run: bool, model: str) -> None:
     prompt_text = load_prompt()
 
     if mode == "llm":
-        # Instruct the LLM to emit a one-line counter string. Provide prior context.
+        # Ask the model to incrementally beautify the current editable section using only HTML/CSS.
+        current_inner = extract_editable_inner(read_text(DOCS_INDEX))
         system_prompt = (
-            "You are the Vibing Webmaster. Emit a single line of plain text only."
+            "You are the Vibing Webmaster. Your job: improve the aesthetics of the"
+            " editable section using ONLY inline HTML and CSS (no external libs)."
+            " Preserve a <span id=\"last-updated\"></span> element somewhere in the"
+            " returned markup so the system can fill it. Strictly avoid any"
+            " inappropriate content."
         )
         user_prompt = (
-            f"Previous counter: {prev_counter}. Increment by 1 and output exactly one"
-            f" line, plain text, in the format 'Counter: <number>'. Do not add"
-            f" extra words.\n\nProject prompt:\n{prompt_text}"
+            "Requirements:\n"
+            "1) Use only HTML/CSS in the returned snippet; no JS or external libraries.\n"
+            "2) Include a <span id=\"last-updated\"></span> element somewhere aesthetically integrated.\n"
+            "3) Keep it self-contained; do not modify outside the editable section.\n"
+            "4) Make incremental improvements; tasteful, accessible, and visually pleasing.\n"
+            "5) Keep text appropriate; no profanity or sensitive content.\n\n"
+            f"Here is the current editable inner HTML (between markers):\n---\n{current_inner}\n---\n"
+            "Return ONLY the new inner HTML to replace the section, without surrounding comments."
         )
         try:
-            new_content = call_llm_generate_content(model=model, system_prompt=system_prompt, user_prompt=user_prompt)
-            parsed = parse_counter_from_text(new_content)
-            if parsed is not None and parsed >= 0:
-                next_counter = parsed
+            candidate = call_llm_generate_content(model=model, system_prompt=system_prompt, user_prompt=user_prompt)
+            candidate = candidate.strip()
+            candidate = enforce_basic_safety(candidate)
+            new_content = candidate
         except Exception as e:
-            # Fallback to deterministic counter if LLM fails
-            new_content = f"Counter: {next_counter}"
-            print(f"LLM error, falling back to counter: {e}")
+            # Minimal tasteful fallback block when LLM fails
+            new_content = (
+                "<div style=\"padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);"
+                "border:1px solid rgba(255,255,255,0.12);\">"
+                "<h2 style=\"margin:0 0 8px 0;\">A Small, Gentle Refresh</h2>"
+                "<p style=\"margin:0 0 12px 0;opacity:0.85;\">Subtle textures, soft borders, and a calm palette.</p>"
+                "<span id=\"last-updated\"></span>"
+                "</div>"
+            )
+            print(f"LLM error, used fallback aesthetic block: {e}")
     else:
-        # Pure deterministic mode
-        new_content = f"Counter: {next_counter}"
+        # Deterministic mode keeps a minimal aesthetic block with a counter for continuity
+        new_content = (
+            f"<div style=\"padding:16px;border-radius:12px;border:1px dashed rgba(255,255,255,0.25);\">"
+            f"<div style=\"font-size:18px;margin-bottom:8px;\">Counter: {next_counter}</div>"
+            f"<span id=\"last-updated\"></span>"
+            f"</div>"
+        )
 
     html = read_text(DOCS_INDEX)
     html = replace_editable_section(html, new_content)
