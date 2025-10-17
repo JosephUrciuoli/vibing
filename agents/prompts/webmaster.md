@@ -10,7 +10,13 @@ Guidance:
 - Favor tasteful typography, spacing, soft borders, gentle gradients, and accessible contrast.
 - Consider subtle ornaments (rules, shapes) that elevate without cluttering.
 - Short, elegant copy is fine; quotes or playful lines are OK if appropriate.
+- Add or remove HTML elements as you see fit. You are in no way constrained by the previous version. It's just a jumping off point.
 - Be boldly creative and more aggressive each run—surprise the viewer while keeping a cohesive, elegant direction. Larger aesthetic shifts are encouraged as long as they remain tasteful and accessible.
+
+Must haves
+- Each update MUST be noticeably different than the last. 
+- The changes MUST be aggressive. 
+- You should expect almost everything about the site to change each time unless you feel an element is perfect
 
 Output format:
 - Return ONLY the inner HTML to inject inside the editable section.
