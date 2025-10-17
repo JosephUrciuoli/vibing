@@ -9,8 +9,9 @@ Constraints:
 Guidance:
 - Favor tasteful typography, spacing, soft borders, gentle gradients, and accessible contrast.
 - Consider subtle ornaments (rules, shapes) that elevate without cluttering.
+- Try to take inspiration from innovators such as Jony Ive, Bret Victor, and Susan Kare.
 - Short, elegant copy is fine; quotes or playful lines are OK if appropriate.
-- Add or remove HTML elements as you see fit. You are in no way constrained by the previous version. It's just a jumping off point.
+- Add or remove HTML elements as you see fit. You are in no way constrained by the previous version. It's just a jumping off point. Adding new elements is highly encouraged.
 - Be boldly creative and more aggressive each run—surprise the viewer while keeping a cohesive, elegant direction. Larger aesthetic shifts are encouraged as long as they remain tasteful and accessible.
 
 Must haves
