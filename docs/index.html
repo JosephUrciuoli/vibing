@@ -73,7 +73,385 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-10-17 16:40:57 EST</span></div>
+<section id="v23-celestia" aria-label="Quiet Momentum">
+  <style>
+    /* Scoped styles to this snippet only */
+    #v23-celestia {
+      --bg-0: #070b12;
+      --bg-1: #0b1322;
+      --bg-2: #0f1b31;
+      --txt: #eaf2ff;
+      --muted: #b7c7e6;
+      --acc-1: #86b9ff;
+      --acc-2: #c6a6ff;
+      --acc-3: #7ef0ff;
+      --card: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.14);
+      --ring: rgba(134,185,255,0.5);
+      --shadow: 0 12px 40px -24px rgba(0,0,0,0.8);
+      --radius: 18px;
+      position: relative;
+      color: var(--txt);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+
+    #v23-celestia .frame {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      padding: 36px 28px 20px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background:
+        radial-gradient(1200px 800px at var(--mx,50%) var(--my,50%), rgba(134,185,255,0.15), transparent 40%),
+        linear-gradient(140deg, var(--bg-1), var(--bg-0) 45%, var(--bg-2));
+      box-shadow: var(--shadow);
+      isolation: isolate;
+      transition: background 600ms ease, border-color 300ms ease;
+    }
+
+    /* Soft aurora wash */
+    #v23-celestia .frame::before {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      background: radial-gradient(closest-side, rgba(135,206,250,0.20), rgba(199,146,255,0.18), rgba(126,240,255,0.18), transparent 70%);
+      filter: blur(40px) saturate(120%);
+      animation: v23-drift 22s linear infinite;
+      transform-origin: 60% 40%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes v23-drift {
+      0% { transform: translate3d(0,0,0) rotate(0deg) scale(1); }
+      50% { transform: translate3d(2%, -2%, 0) rotate(180deg) scale(1.06); }
+      100% { transform: translate3d(0,0,0) rotate(360deg) scale(1); }
+    }
+
+    /* Subtle grid texture */
+    #v23-celestia .frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02) 1px, transparent 1px, transparent 24px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02) 1px, transparent 1px, transparent 24px);
+      mix-blend-mode: overlay;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Dawn theme */
+    #v23-celestia .frame[data-theme="dawn"] {
+      --bg-0: #100a12;
+      --bg-1: #1a1030;
+      --bg-2: #2a1840;
+      --acc-1: #ffb3a7;
+      --acc-2: #ffc877;
+      --acc-3: #c9a6ff;
+      --ring: rgba(255,184,120,0.55);
+      background:
+        radial-gradient(1200px 800px at var(--mx,50%) var(--my,50%), rgba(255,184,120,0.12), transparent 40%),
+        linear-gradient(145deg, var(--bg-1), var(--bg-0) 45%, var(--bg-2));
+    }
+    #v23-celestia .frame[data-theme="dawn"]::before {
+      background: radial-gradient(closest-side, rgba(255,184,120,0.20), rgba(255,150,214,0.18), rgba(201,166,255,0.18), transparent 70%);
+    }
+
+    #v23-celestia .hero {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    #v23-celestia .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+    #v23-celestia .kicker .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--acc-1), var(--acc-3));
+      box-shadow: 0 0 12px rgba(134,185,255,0.8);
+    }
+
+    #v23-celestia h1 {
+      margin: 0;
+      font-size: clamp(28px, 4.6vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--acc-1), var(--acc-2), var(--acc-3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.06);
+    }
+    #v23-celestia .sub {
+      margin: 2px 0 0 0;
+      font-size: clamp(14px, 1.8vw, 16px);
+      color: var(--muted);
+      opacity: 0.95;
+    }
+
+    #v23-celestia .grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 14px 0 12px;
+    }
+    @media (max-width: 740px) {
+      #v23-celestia .grid { grid-template-columns: 1fr; }
+    }
+
+    #v23-celestia .card {
+      position: relative;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px) saturate(115%);
+      -webkit-backdrop-filter: blur(8px) saturate(115%);
+      padding: 18px 16px;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 200ms ease, border-color 300ms ease, box-shadow 300ms ease, background 300ms ease;
+    }
+    #v23-celestia .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(400px 220px at var(--px, 50%) var(--py, 50%), rgba(134,185,255,0.20), transparent 60%);
+      opacity: 0;
+      transition: opacity 200ms ease;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+    #v23-celestia .card:hover::before { opacity: 1; }
+    #v23-celestia .card:hover {
+      transform: translateY(-6px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+      border-color: rgba(255,255,255,0.22);
+      box-shadow: 0 18px 60px -26px rgba(0,0,0,0.9), 0 0 0 1px rgba(134,185,255,0.18) inset;
+    }
+    #v23-celestia .card:focus-within {
+      outline: none;
+      box-shadow: 0 20px 64px -24px rgba(0,0,0,0.92), 0 0 0 2px var(--ring) inset;
+    }
+
+    #v23-celestia .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      margin: 0 0 8px;
+    }
+    #v23-celestia .label .emoji {
+      font-size: 18px;
+      filter: drop-shadow(0 2px 8px rgba(255,255,255,0.12));
+    }
+    #v23-celestia .card p {
+      margin: 0 0 12px 0;
+      color: var(--muted);
+      font-size: 14.5px;
+      line-height: 1.5;
+    }
+
+    #v23-celestia .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+      color: var(--txt);
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform 160ms ease, background 200ms ease, border-color 200ms ease;
+      will-change: transform;
+    }
+    #v23-celestia .chip:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.28);
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+    }
+    #v23-celestia .chip:focus-visible {
+      outline: 2px solid var(--ring);
+      outline-offset: 2px;
+    }
+
+    #v23-celestia .meta {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+    #v23-celestia .meta .mode {
+      margin-right: auto;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+      color: var(--txt);
+      padding: 8px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 12.5px;
+      transition: background 200ms ease, border-color 200ms ease, transform 160ms ease;
+    }
+    #v23-celestia .meta .mode:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.28); }
+    #v23-celestia .meta .mode:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+    #v23-celestia .meta .spacer { flex: 1; }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      #v23-celestia .frame::before { animation: none; }
+      #v23-celestia .card, #v23-celestia .chip { transition: none; }
+    }
+  </style>
+
+  <div class="frame" data-theme="night" role="region" aria-label="Interactive gradient showcase">
+    <div class="hero">
+      <div class="kicker"><span class="dot" aria-hidden="true"></span> Quiet Momentum</div>
+      <h1>Interfaces that breathe—softly, deliberately.</h1>
+      <p class="sub">Structure with soul. Clean lines, gentle motion, generous space.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card c1" tabindex="0" aria-label="Stillness card">
+        <div class="label"><span class="emoji" aria-hidden="true">🌙</span> Stillness</div>
+        <p>Reduce noise. Let essentials glow. Clarity earns calm.</p>
+        <button class="chip" type="button" aria-label="Try stillness">Try <span aria-hidden="true">→</span></button>
+      </article>
+
+      <article class="card c2" tabindex="0" aria-label="Focus card">
+        <div class="label"><span class="emoji" aria-hidden="true">🎛️</span> Focus</div>
+        <p>Hierarchy that guides the eye. Friction turned into flow.</p>
+        <button class="chip" type="button" aria-label="Try focus">Try <span aria-hidden="true">→</span></button>
+      </article>
+
+      <article class="card c3" tabindex="0" aria-label="Flow card">
+        <div class="label"><span class="emoji" aria-hidden="true">⟡</span> Flow</div>
+        <p>Micro-interactions that respond, not shout. Motion with meaning.</p>
+        <button class="chip" type="button" aria-label="Try flow">Try <span aria-hidden="true">→</span></button>
+      </article>
+    </div>
+
+    <div class="meta">
+      <button class="mode" type="button" aria-pressed="false" title="Toggle dawn/night mood">Switch to Dawn</button>
+      <span class="spacer"></span>
+      <span id="last-updated">Last updated: 2025-10-17 16:49:56 EST</span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.querySelector('#v23-celestia');
+      const frame = root.querySelector('.frame');
+      const cards = root.querySelectorAll('.card');
+      const modeBtn = root.querySelector('.mode');
+      const last = root.querySelector('#last-updated');
+
+      // Last updated time
+      try {
+        const d = new Date();
+        const fmt = new Intl.DateTimeFormat([], {
+          weekday: 'short',
+          year: 'numeric',
+          month: 'short',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          timeZoneName: 'short'
+        });
+        last.textContent = 'Last updated: ' + fmt.format(d);
+      } catch {
+        last.textContent = 'Last updated: ' + new Date().toLocaleString();
+      }
+
+      // Parallax glow following cursor/touch
+      const updateFrameMouse = (x, y) => {
+        const rect = frame.getBoundingClientRect();
+        const px = ((x - rect.left) / rect.width) * 100;
+        const py = ((y - rect.top) / rect.height) * 100;
+        frame.style.setProperty('--mx', px + '%');
+        frame.style.setProperty('--my', py + '%');
+      };
+      frame.addEventListener('pointermove', (e) => updateFrameMouse(e.clientX, e.clientY));
+      frame.addEventListener('pointerleave', () => {
+        frame.style.removeProperty('--mx');
+        frame.style.removeProperty('--my');
+      });
+
+      // Card tilt and sheen
+      const clamp = (n, min, max) => Math.min(Math.max(n, min), max);
+      cards.forEach((card) => {
+        card.addEventListener('pointermove', (e) => {
+          const r = card.getBoundingClientRect();
+          const x = e.clientX - r.left;
+          const y = e.clientY - r.top;
+          const nx = x / r.width;
+          const ny = y / r.height;
+          const rx = clamp((0.5 - ny) * 10, -8, 8);
+          const ry = clamp((nx - 0.5) * 10, -8, 8);
+          card.style.setProperty('--rx', rx + 'deg');
+          card.style.setProperty('--ry', ry + 'deg');
+          card.style.setProperty('--px', x + 'px');
+          card.style.setProperty('--py', y + 'px');
+          card.style.transform = `translateY(-6px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        });
+        card.addEventListener('pointerleave', () => {
+          card.style.removeProperty('--rx');
+          card.style.removeProperty('--ry');
+          card.style.removeProperty('--px');
+          card.style.removeProperty('--py');
+          card.style.transform = '';
+        });
+      });
+
+      // Theme toggle (Night <-> Dawn)
+      modeBtn.addEventListener('click', () => {
+        const isDawn = frame.getAttribute('data-theme') === 'dawn';
+        if (isDawn) {
+          frame.setAttribute('data-theme', 'night');
+          modeBtn.textContent = 'Switch to Dawn';
+          modeBtn.setAttribute('aria-pressed', 'false');
+        } else {
+          frame.setAttribute('data-theme', 'dawn');
+          modeBtn.textContent = 'Switch to Night';
+          modeBtn.setAttribute('aria-pressed', 'true');
+        }
+      });
+
+      // Keyboard affordance for card focus sheen
+      cards.forEach((card) => {
+        card.addEventListener('focus', () => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--px', r.width * 0.5 + 'px');
+          card.style.setProperty('--py', r.height * 0.3 + 'px');
+        });
+        card.addEventListener('blur', () => {
+          card.style.removeProperty('--px');
+          card.style.removeProperty('--py');
+        });
+      });
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
