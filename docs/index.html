@@ -73,7 +73,370 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-10-18 16:17:12 EST</span></div>
+<section class="v47-atelier" data-theme="dusk" aria-label="Studio 47 — Quiet Momentum">
+  <style>
+    .v47-atelier {
+      --speed: 1;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+      --fg: 0 0% 98%;
+      --muted: 0 0% 82%;
+      --a1: 278 92% 66%;
+      --a2: 195 92% 62%;
+      --bg-top: 244 35% 8%;
+      --bg-bottom: 260 35% 11%;
+      --surface-rgb: 255,255,255;
+      --surface-a: 0.08;
+      --line-a: 0.18;
+
+      position: relative;
+      isolation: isolate;
+      border-radius: var(--radius);
+      padding: clamp(24px, 5vw, 48px);
+      color: hsl(var(--fg));
+      background: linear-gradient(180deg, hsl(var(--bg-top)), hsl(var(--bg-bottom)));
+      overflow: hidden;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    .v47-atelier[data-theme="dawn"]{
+      --fg: 240 20% 12%;
+      --muted: 240 8% 35%;
+      --a1: 18 90% 54%;
+      --a2: 265 85% 58%;
+      --bg-top: 220 45% 96%;
+      --bg-bottom: 260 50% 92%;
+      --surface-rgb: 0,0,0;
+      --surface-a: 0.04;
+      --line-a: 0.10;
+      --shadow: 0 8px 20px rgba(25,20,50,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+    .v47-atelier .veil {
+      position: absolute;
+      inset: -12%;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(70vmax 70vmax at 8% 10%, hsl(var(--a1) / 0.12), transparent 55%),
+        radial-gradient(60vmax 60vmax at 92% 24%, hsl(var(--a2) / 0.10), transparent 55%);
+    }
+    .v47-atelier .grid {
+      position: absolute;
+      inset: -1px;
+      background:
+        linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.03) 20%, transparent 100%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 32px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 32px);
+      mask: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+      mix-blend-mode: overlay;
+      border-radius: inherit;
+    }
+    .v47-atelier .blob {
+      position: absolute;
+      width: 60vmax;
+      height: 60vmax;
+      filter: blur(80px) saturate(120%);
+      opacity: 0.7;
+      transform: translateZ(0);
+      will-change: transform;
+    }
+    .v47-atelier .b1 {
+      top: -10vmax; left: -10vmax;
+      background: radial-gradient(circle at 30% 30%, hsl(var(--a1) / 0.85), transparent 60%);
+      animation: drift1 calc(65s / var(--speed)) linear infinite;
+    }
+    .v47-atelier .b2 {
+      bottom: -15vmax; right: -15vmax;
+      background: radial-gradient(circle at 70% 70%, hsl(var(--a2) / 0.8), transparent 60%);
+      animation: drift2 calc(80s / var(--speed)) linear infinite;
+    }
+    .v47-atelier .ring {
+      position: absolute;
+      width: 70vmin; height: 70vmin;
+      border-radius: 50%;
+      left: 50%; top: 50%;
+      transform: translate(-50%,-50%);
+      background:
+        conic-gradient(from 0deg, hsl(var(--a1) / 0.0), hsl(var(--a1) / 0.4), hsl(var(--a2) / 0.0));
+      mask: radial-gradient(closest-side, transparent 64%, black 65% 100%);
+      filter: blur(10px);
+      opacity: 0.5;
+      animation: spin calc(120s / var(--speed)) linear infinite;
+    }
+    .v47-atelier .r2 {
+      width: 85vmin; height: 85vmin; opacity: 0.35; animation-duration: calc(180s / var(--speed));
+    }
+
+    .v47-atelier .wrap{ position: relative; z-index: 2; max-width: 1000px; margin: 0 auto; }
+    .v47-atelier .brand {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 16px; user-select: none;
+    }
+    .v47-atelier .brand .glyph{
+      width: 36px; height: 36px; border-radius: 10px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, hsl(var(--a1)), hsl(var(--a2)));
+      color: white; font-weight: 800; font-size: 0.95rem; letter-spacing: 0.4px;
+      box-shadow: 0 6px 18px hsl(var(--a2)/0.35), inset 0 1px 0 rgba(255,255,255,0.5);
+    }
+    .v47-atelier .brand .word{
+      font-weight: 700; letter-spacing: 0.4px; color: hsl(var(--muted));
+      text-transform: uppercase; font-size: 0.85rem;
+    }
+
+    .v47-atelier .card{
+      position: relative;
+      border-radius: calc(var(--radius) + 6px);
+      background: rgba(var(--surface-rgb), var(--surface-a));
+      border: 1px solid rgba(var(--surface-rgb), var(--line-a));
+      box-shadow: var(--shadow);
+      padding: clamp(20px, 3.6vw, 40px);
+      overflow: hidden;
+      transform: perspective(1200px) rotateX(var(--tiltX, 0deg)) rotateY(var(--tiltY, 0deg));
+      transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+      backdrop-filter: blur(10px) saturate(120%);
+    }
+    .v47-atelier .card::after{
+      content:"";
+      position:absolute; inset:0;
+      background: radial-gradient(350px 220px at var(--shineX, 50%) var(--shineY, 50%), rgba(255,255,255,0.16), transparent 60%);
+      pointer-events:none; opacity: 0; transition: opacity 300ms ease;
+    }
+    .v47-atelier .card:hover::after{ opacity: 1; }
+    .v47-atelier h1{
+      margin: 0 0 10px 0;
+      font-size: clamp(28px, 6vw, 56px); line-height: 1.02;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, hsl(var(--a1)), hsl(var(--a2)));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .v47-atelier .sub{
+      margin: 0 0 20px 0;
+      font-size: clamp(14px, 1.4vw, 18px);
+      color: hsl(var(--muted));
+      max-width: 56ch;
+    }
+
+    .v47-atelier .pillars{
+      display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px;
+      margin: 4px 0 22px 0; padding: 0; list-style: none;
+    }
+    .v47-atelier .pillars li{
+      padding: 10px 12px; border-radius: 12px;
+      border: 1px dashed rgba(var(--surface-rgb), calc(var(--line-a) * 0.9));
+      background: rgba(var(--surface-rgb), calc(var(--surface-a) * 0.8));
+      font-weight: 600; font-size: 0.95rem; color: hsl(var(--fg) / 0.95);
+      display: grid; grid-template-columns: 18px 1fr; align-items: center; gap: 8px;
+    }
+    .v47-atelier .pillars li::before{
+      content:""; width: 10px; height: 10px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, hsl(var(--a1)), hsl(var(--a2)));
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.12);
+      display: inline-block;
+    }
+
+    .v47-atelier .cta{ display:flex; gap: 12px; flex-wrap: wrap; margin: 6px 0 12px 0; }
+    .v47-atelier .btn{
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+      appearance: none; border: 0; cursor: pointer;
+      padding: 12px 18px; border-radius: 999px; font-weight: 700;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 200ms ease, color 200ms ease, border-color 200ms ease;
+      will-change: transform;
+    }
+    .v47-atelier .btn-primary{
+      background: linear-gradient(120deg, hsl(var(--a1)), hsl(var(--a2)));
+      color: #fff; box-shadow: 0 8px 18px hsl(var(--a2)/0.35);
+    }
+    .v47-atelier .btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 12px 26px hsl(var(--a2)/0.4); }
+    .v47-atelier .btn-ghost{
+      background: rgba(var(--surface-rgb), calc(var(--surface-a) * 0.8));
+      color: hsl(var(--fg)); border: 1px solid rgba(var(--surface-rgb), var(--line-a));
+    }
+    .v47-atelier .btn-ghost:hover{ transform: translateY(-1px); }
+
+    .v47-atelier .controls{
+      display:flex; align-items:center; gap: 12px; margin: 4px 0 8px 0; flex-wrap: wrap;
+      color: hsl(var(--muted));
+      font-size: 0.92rem;
+    }
+    .v47-atelier .controls label{ display:flex; align-items:center; gap: 10px; }
+    .v47-atelier input[type="range"]{
+      width: 170px; accent-color: hsl(var(--a1));
+      --thumb: hsl(var(--a1)); --track: rgba(var(--surface-rgb), 0.25);
+      height: 24px; background: transparent;
+    }
+    .v47-atelier input[type="range"]::-webkit-slider-runnable-track{
+      height: 6px; border-radius: 999px; background: var(--track);
+      border: 1px solid rgba(var(--surface-rgb), var(--line-a));
+    }
+    .v47-atelier input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance: none; appearance: none; margin-top: -7px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff, var(--thumb));
+      box-shadow: 0 4px 12px hsl(var(--a2)/0.35), 0 0 0 3px rgba(255,255,255,0.5) inset;
+      border: 0;
+    }
+    .v47-atelier input[type="range"]::-moz-range-track{
+      height: 6px; border-radius: 999px; background: var(--track);
+      border: 1px solid rgba(var(--surface-rgb), var(--line-a));
+    }
+    .v47-atelier input[type="range"]::-moz-range-thumb{
+      width: 20px; height: 20px; border-radius: 50%; border: 0;
+      background: radial-gradient(circle at 35% 35%, #fff, var(--thumb));
+      box-shadow: 0 4px 12px hsl(var(--a2)/0.35), 0 0 0 3px rgba(255,255,255,0.5) inset;
+    }
+    .v47-atelier .range-value{ font-variant-numeric: tabular-nums; color: hsl(var(--fg)); font-weight: 700; }
+
+    .v47-atelier .meta{
+      margin-top: 8px; display:flex; justify-content: space-between; align-items:center;
+      gap: 12px; flex-wrap: wrap; font-size: 0.85rem; color: hsl(var(--muted));
+    }
+    .v47-atelier .hint{ opacity: 0.85; }
+
+    .v47-atelier[data-paused] *{ animation-play-state: paused !important; }
+
+    @keyframes drift1 {
+      0% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(8vmax, -2vmax) scale(1.08); }
+      100% { transform: translate(0,0) scale(1); }
+    }
+    @keyframes drift2 {
+      0% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(-6vmax, 3vmax) scale(1.06); }
+      100% { transform: translate(0,0) scale(1); }
+    }
+    @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+    @media (max-width: 720px){
+      .v47-atelier .pillars{ grid-template-columns: 1fr; }
+      .v47-atelier .range-value{ display:none; }
+    }
+  </style>
+
+  <div class="veil" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="grid"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="brand">
+      <span class="glyph">47</span>
+      <span class="word">Studio</span>
+    </div>
+
+    <div class="card" id="hero-card" tabindex="0" aria-label="Interactive showcase card">
+      <h1>Quiet Momentum</h1>
+      <p class="sub">Elegance in motion. Soft gradients, measured rhythm, and a calm interface that rewards curiosity.</p>
+
+      <ul class="pillars" aria-label="Principles">
+        <li>Soft focus</li>
+        <li>Measured rhythm</li>
+        <li>Elegant contrast</li>
+      </ul>
+
+      <div class="cta">
+        <button class="btn btn-primary" type="button" aria-label="Create a moment">Create a moment</button>
+        <button class="btn btn-ghost" id="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme to dawn">Dawn</button>
+      </div>
+
+      <div class="controls">
+        <label for="motion-range">Motion</label>
+        <input id="motion-range" type="range" min="10" max="200" value="100" aria-label="Adjust motion speed">
+        <span class="range-value" id="motion-val">1.00x</span>
+      </div>
+
+      <div class="meta">
+        <span class="hint">Tip: move your pointer; press Space to pause.</span>
+        <span id="last-updated">Last updated: 2025-10-18 17:14:02 EST</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const root = document.currentScript.closest('.v47-atelier');
+      if(!root) return;
+      const card = root.querySelector('#hero-card');
+      const primary = root.querySelector('.btn-primary');
+      const range = root.querySelector('#motion-range');
+      const rval = root.querySelector('#motion-val');
+      const themeBtn = root.querySelector('#theme-toggle');
+      const updated = root.querySelector('#last-updated');
+      const hint = root.querySelector('.hint');
+
+      function setUpdated(){
+        try{
+          const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          const t = new Date().toLocaleString([], {year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit'});
+          updated.textContent = 'Last updated: ' + t + ' ' + tz;
+        }catch(e){
+          updated.textContent = 'Last updated: ' + new Date().toLocaleString();
+        }
+      }
+      setUpdated();
+
+      // Tilt and shine
+      card.addEventListener('pointermove', (e)=>{
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+        const rx = (0.5 - y) * 12;
+        const ry = (x - 0.5) * 14;
+        card.style.setProperty('--tiltX', rx.toFixed(2) + 'deg');
+        card.style.setProperty('--tiltY', ry.toFixed(2) + 'deg');
+        card.style.setProperty('--shineX', (x*100).toFixed(1) + '%');
+        card.style.setProperty('--shineY', (y*100).toFixed(1) + '%');
+      }, {passive:true});
+      card.addEventListener('pointerleave', ()=>{
+        card.style.setProperty('--tiltX','0deg');
+        card.style.setProperty('--tiltY','0deg');
+      });
+
+      // Motion control
+      function setSpeed(v){
+        const speed = Math.max(0.1, v/100);
+        root.style.setProperty('--speed', speed.toFixed(2));
+        rval.textContent = speed.toFixed(2) + 'x';
+      }
+      setSpeed(range.value);
+      range.addEventListener('input', (e)=> setSpeed(e.target.value));
+
+      // Theme toggle
+      themeBtn.addEventListener('click', ()=>{
+        const dusk = root.getAttribute('data-theme') === 'dusk';
+        root.setAttribute('data-theme', dusk ? 'dawn' : 'dusk');
+        themeBtn.textContent = dusk ? 'Dusk' : 'Dawn';
+        themeBtn.setAttribute('aria-pressed', (!dusk).toString());
+        themeBtn.setAttribute('aria-label', 'Toggle theme to ' + (dusk ? 'dusk' : 'dawn'));
+      });
+
+      // Pause/play with Space
+      root.addEventListener('keydown', (e)=>{
+        if(e.code === 'Space'){
+          e.preventDefault();
+          const paused = root.toggleAttribute('data-paused');
+          hint.textContent = paused ? 'Paused • Press Space to play.' : 'Tip: move your pointer; press Space to pause.';
+        }
+      });
+
+      // Subtle magnetic primary button
+      root.addEventListener('pointermove', (e)=>{
+        const r = primary.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width/2);
+        const dy = e.clientY - (r.top + r.height/2);
+        const dist = Math.hypot(dx, dy);
+        const max = 80;
+        const str = Math.max(0, (max - Math.min(dist, max)) / max);
+        primary.style.transform = 'translate(' + (dx*0.05*str).toFixed(1) + 'px,' + (dy*0.05*str).toFixed(1) + 'px)';
+      }, {passive:true});
+      root.addEventListener('pointerleave', ()=>{ primary.style.transform = 'translate(0,0)'; });
+
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
