@@ -73,7 +73,420 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-10-18 19:14:52 EST</span></div>
+<section id="aurora-atelier" data-theme="nocturne" aria-label="Aurora Studio">
+  <style>
+    /* Scoped to #aurora-atelier only */
+    #aurora-atelier {
+      --ink: #e9eefc;
+      --muted: #b7c3e0;
+      --glass: rgba(255,255,255,0.06);
+      --line: rgba(255,255,255,0.15);
+      --c1: #6ea3ff;
+      --c2: #6cffe0;
+      --c3: #b58cff;
+      --radius: 22px;
+      --mx: 0;
+      --my: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--ink);
+      letter-spacing: 0.2px;
+    }
+    #aurora-atelier[data-theme="dawn"] {
+      --c1: #ff9fbf;
+      --c2: #ffd479;
+      --c3: #b1f7ff;
+    }
+    #aurora-atelier[data-theme="lagoon"] {
+      --c1: #36d1dc;
+      --c2: #5b86e5;
+      --c3: #b3ffab;
+    }
+    #aurora-atelier[data-theme="nocturne"] {
+      --c1: #7a9cff;
+      --c2: #3ae8c4;
+      --c3: #c39bff;
+    }
+
+    #aurora-atelier .shell {
+      position: relative;
+      border-radius: var(--radius);
+      padding: 28px 28px 24px;
+      background:
+        linear-gradient(180deg, rgba(16,19,35,0.92), rgba(10,12,22,0.94)),
+        radial-gradient(1200px 600px at 80% -20%, rgba(255,255,255,0.06), transparent 60%);
+      border: 1px solid var(--line);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      overflow: hidden;
+      isolation: isolate;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Subtle grid texture */
+    #aurora-atelier .shell::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background:
+        repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,0.04) 38px 39px),
+        repeating-linear-gradient(0deg, transparent 0 38px, rgba(255,255,255,0.035) 38px 39px);
+      opacity: 0.35;
+      mask: radial-gradient(120% 90% at 50% 40%, #000 70%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* Aurora glows */
+    #aurora-atelier .glow {
+      position: absolute;
+      filter: blur(40px) saturate(120%);
+      opacity: 0.75;
+      transform: translate(calc(var(--mx)*10px), calc(var(--my)*10px));
+      mix-blend-mode: screen;
+      will-change: transform, opacity;
+    }
+    #aurora-atelier .g1 {
+      width: 420px; height: 420px; top: -120px; left: -80px;
+      background: radial-gradient(closest-side, var(--c1), transparent 65%);
+      animation: floatA 14s ease-in-out infinite;
+    }
+    #aurora-atelier .g2 {
+      width: 520px; height: 520px; bottom: -160px; right: -120px;
+      background: radial-gradient(closest-side, var(--c2), transparent 65%);
+      animation: floatB 18s ease-in-out infinite;
+    }
+    #aurora-atelier .g3 {
+      width: 360px; height: 360px; top: 20%; right: 20%;
+      background: radial-gradient(closest-side, var(--c3), transparent 70%);
+      opacity: 0.55;
+      animation: floatC 20s ease-in-out infinite;
+    }
+    @keyframes floatA { 0%,100% { transform: translate(-6px, 2px); } 50% { transform: translate(10px, -8px); } }
+    @keyframes floatB { 0%,100% { transform: translate(8px, -4px); } 50% { transform: translate(-10px, 10px); } }
+    @keyframes floatC { 0%,100% { transform: translate(-4px, -8px); } 50% { transform: translate(8px, 8px); } }
+
+    /* Diagonal shine sweep */
+    #aurora-atelier .shine {
+      position: absolute;
+      inset: -30%;
+      background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+      transform: translate3d(-20%, -20%, 0) rotate(8deg);
+      animation: sweep 9s linear infinite;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+    @keyframes sweep {
+      0% { transform: translate3d(-45%, -45%, 0) rotate(8deg); }
+      50% { transform: translate3d(0%, 0%, 0) rotate(8deg); }
+      100% { transform: translate3d(45%, 45%, 0) rotate(8deg); }
+    }
+
+    /* Header */
+    #aurora-atelier .top {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 2;
+      margin-bottom: 16px;
+    }
+    #aurora-atelier .edition {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      padding: 10px 12px;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+      user-select: none;
+    }
+    #aurora-atelier .edition .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--c2));
+      box-shadow: 0 0 10px var(--c2), 0 0 22px var(--c2);
+    }
+
+    /* Title + sub */
+    #aurora-atelier .hero {
+      position: relative;
+      z-index: 2;
+      margin: 8px 0 16px;
+    }
+    #aurora-atelier .hero h1 {
+      margin: 0 0 8px 0;
+      font-size: clamp(28px, 4.2vw, 46px);
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 6px 22px rgba(58, 232, 196, 0.12));
+    }
+    #aurora-atelier .hero p {
+      margin: 0;
+      font-size: clamp(14px, 1.4vw, 16px);
+      color: var(--muted);
+      max-width: 56ch;
+    }
+
+    /* Controls */
+    #aurora-atelier .controls {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 18px 0 6px;
+      align-items: center;
+    }
+    #aurora-atelier .cta {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.3s ease, color 0.3s ease;
+      will-change: transform;
+    }
+    #aurora-atelier .cta.primary {
+      color: #0d1328;
+      background: linear-gradient(135deg, var(--c2), var(--c1));
+      box-shadow:
+        0 10px 28px rgba(0,0,0,0.35),
+        0 8px 24px color-mix(in oklab, var(--c2) 40%, transparent);
+    }
+    #aurora-atelier .cta.primary:hover { transform: translateY(-1px); }
+    #aurora-atelier .cta.ghost {
+      color: var(--ink);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+    }
+    #aurora-atelier .cta.ghost:hover { transform: translateY(-1px); }
+
+    /* Theme picks */
+    #aurora-atelier .theme {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+    }
+    #aurora-atelier .swatch {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: inset 0 0 0 1.5px rgba(0,0,0,0.25), 0 0 14px rgba(255,255,255,0.06);
+      cursor: pointer;
+      outline: none;
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    #aurora-atelier .swatch:focus-visible { box-shadow: 0 0 0 3px rgba(255,255,255,0.3); }
+    #aurora-atelier .swatch:hover { transform: translateY(-1px) scale(1.03); }
+    #aurora-atelier .swatch[data-theme="dawn"] { background: conic-gradient(from 200deg, #ffd479, #ff9fbf, #ffd479); }
+    #aurora-atelier .swatch[data-theme="nocturne"] { background: conic-gradient(from 200deg, #7a9cff, #c39bff, #3ae8c4, #7a9cff); }
+    #aurora-atelier .swatch[data-theme="lagoon"] { background: conic-gradient(from 200deg, #36d1dc, #5b86e5, #b3ffab, #36d1dc); }
+
+    /* Chips */
+    #aurora-atelier .chips {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0 8px;
+    }
+    #aurora-atelier .chip {
+      font-size: 12px;
+      color: var(--ink);
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* Meter ring */
+    #aurora-atelier .meter {
+      position: relative;
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      background:
+        conic-gradient(from calc((var(--t,0))*1deg), var(--c1), var(--c2), var(--c3), var(--c1));
+      padding: 2px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+    #aurora-atelier .meter::after {
+      content: "";
+      position: absolute; inset: 6px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      backdrop-filter: blur(2px);
+    }
+
+    /* Footer */
+    #aurora-atelier .meta {
+      position: relative;
+      z-index: 2;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    #aurora-atelier .stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    #aurora-atelier .stamp .tick {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--c2);
+      box-shadow: 0 0 0 0 rgba(58,232,196,0.9);
+      animation: pulse 2.2s ease-out infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(58,232,196,0.55); }
+      70% { box-shadow: 0 0 0 10px rgba(58,232,196,0); }
+      100% { box-shadow: 0 0 0 0 rgba(58,232,196,0); }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      #aurora-atelier .glow,
+      #aurora-atelier .shine { animation: none !important; }
+      #aurora-atelier .cta,
+      #aurora-atelier .swatch { transition: none !important; }
+      #aurora-atelier .stamp .tick { animation: none !important; }
+    }
+  </style>
+
+  <div class="shell" role="region" aria-label="Interactive Aurora Card">
+    <div class="glow g1" aria-hidden="true"></div>
+    <div class="glow g2" aria-hidden="true"></div>
+    <div class="glow g3" aria-hidden="true"></div>
+    <div class="shine" aria-hidden="true"></div>
+
+    <div class="top">
+      <div class="edition"><span class="dot" aria-hidden="true"></span> Edition 50</div>
+      <div class="theme" aria-label="Color theme">
+        <button class="swatch" data-theme="nocturne" aria-label="Nocturne theme"></button>
+        <button class="swatch" data-theme="dawn" aria-label="Dawn theme"></button>
+        <button class="swatch" data-theme="lagoon" aria-label="Lagoon theme"></button>
+      </div>
+    </div>
+
+    <div class="hero">
+      <h1>Hushed Aurora</h1>
+      <p>Quiet gradients, weightless motion, and type that breathes. Move your cursor—let the color follow.</p>
+    </div>
+
+    <div class="controls">
+      <button class="cta primary" aria-label="Begin experience">Begin</button>
+      <button class="cta ghost" aria-label="Let it drift">Drift</button>
+      <div aria-hidden="true" style="flex:1 1 auto;"></div>
+      <div class="meter" title="Ambient ring"></div>
+    </div>
+
+    <div class="chips" aria-label="Highlights">
+      <span class="chip">Soft focus</span>
+      <span class="chip">Accessible contrast</span>
+      <span class="chip">Live parallax</span>
+      <span class="chip">Calm micro‑motion</span>
+    </div>
+
+    <div class="meta">
+      <span class="stamp"><span class="tick" aria-hidden="true"></span> Refreshed <span id="last-updated">Last updated: 2025-10-18 21:26:40 EST</span></span>
+      <span aria-hidden="true">“Less, but better.”</span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('aurora-atelier');
+      const stamp = document.getElementById('last-updated');
+      const meter = root.querySelector('.meter');
+
+      // Update timestamp
+      try {
+        const now = new Date();
+        const formatter = new Intl.DateTimeFormat(undefined, {
+          dateStyle: 'medium',
+          timeStyle: 'short'
+        });
+        stamp.textContent = formatter.format(now);
+      } catch (e) {
+        stamp.textContent = new Date().toLocaleString();
+      }
+
+      // Theme switching
+      root.querySelectorAll('.swatch').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const theme = btn.getAttribute('data-theme');
+          root.setAttribute('data-theme', theme);
+        }, { passive: true });
+      });
+
+      // Parallax and meter tick
+      let raf = null, t = 0;
+      function loop() {
+        t = (t + 0.8) % 360;
+        meter.style.setProperty('--t', t);
+        raf = requestAnimationFrame(loop);
+      }
+      raf = requestAnimationFrame(loop);
+
+      function onMove(e) {
+        const r = root.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+        root.style.setProperty('--mx', (x * 2 - 1).toFixed(3));
+        root.style.setProperty('--my', (y * 2 - 1).toFixed(3));
+      }
+      root.addEventListener('pointermove', onMove);
+
+      // Respect reduced motion
+      const m = window.matchMedia('(prefers-reduced-motion: reduce)');
+      function handleMotionPref() {
+        if (m.matches) {
+          if (raf) cancelAnimationFrame(raf);
+          raf = null;
+        } else if (!raf) {
+          raf = requestAnimationFrame(loop);
+        }
+      }
+      m.addEventListener ? m.addEventListener('change', handleMotionPref) : m.addListener(handleMotionPref);
+      handleMotionPref();
+
+      // Buttons micro-interaction
+      root.querySelectorAll('.cta').forEach(b => {
+        b.addEventListener('click', () => {
+          b.animate([
+            { transform: 'scale(1)' },
+            { transform: 'scale(0.98)' },
+            { transform: 'scale(1)' }
+          ], { duration: 140, easing: 'ease-out' });
+        }, { passive: true });
+      });
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
