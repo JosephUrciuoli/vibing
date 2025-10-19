@@ -73,7 +73,396 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-10-19 04:19:53 EST</span></div>
+<section class="v56-scene" aria-label="Quiet kinetic showcase">
+  <style>
+    .v56-scene {
+      --h: 268; /* base hue */
+      --sat: 72%;
+      --bg-1: hsl(var(--h), calc(var(--sat) - 22%), 10%);
+      --bg-2: hsl(calc(var(--h) + 24), calc(var(--sat) - 30%), 16%);
+      --fg: #f4f6ff;
+      --muted: rgba(255,255,255,0.72);
+      --glass: rgba(255,255,255,0.06);
+      --line: rgba(255,255,255,0.12);
+      --glow-1: hsla(calc(var(--h) + 20), 95%, 65%, 0.75);
+      --glow-2: hsla(calc(var(--h) - 30), 95%, 65%, 0.55);
+      --glow-3: hsla(calc(var(--h) + 60), 95%, 65%, 0.40);
+      --radius: 20px;
+      --ease: cubic-bezier(.2,.7,.2,1);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--fg);
+      letter-spacing: 0.01em;
+    }
+    .v56-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      padding: 28px 28px 20px;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, var(--bg-2), transparent 60%),
+        radial-gradient(900px 600px at 110% 20%, var(--bg-1), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.03),
+        0 10px 30px rgba(0,0,0,0.35),
+        0 40px 80px rgba(0,0,0,0.25);
+      transform-style: preserve-3d;
+      will-change: transform;
+      backdrop-filter: blur(3px);
+      isolation: isolate;
+    }
+    /* Subtle animated aurora field */
+    .v56-aurora,
+    .v56-aurora::before,
+    .v56-aurora::after {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      filter: blur(50px) saturate(120%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    .v56-aurora {
+      background:
+        radial-gradient(40% 30% at 20% 30%, var(--glow-1), transparent 60%),
+        radial-gradient(35% 30% at 80% 40%, var(--glow-2), transparent 60%),
+        radial-gradient(45% 35% at 50% 80%, var(--glow-3), transparent 60%);
+      animation: v56-drift 24s var(--ease) infinite alternate;
+      opacity: 0.75;
+    }
+    .v56-aurora::before {
+      background:
+        radial-gradient(35% 35% at 30% 70%, var(--glow-2), transparent 60%),
+        radial-gradient(50% 40% at 70% 20%, var(--glow-1), transparent 60%);
+      animation: v56-drift2 32s ease-in-out infinite alternate;
+      opacity: 0.6;
+    }
+    .v56-aurora::after {
+      background:
+        radial-gradient(50% 45% at 60% 60%, var(--glow-3), transparent 60%),
+        radial-gradient(30% 35% at 20% 10%, var(--glow-2), transparent 60%);
+      animation: v56-drift3 40s ease-in-out infinite alternate;
+      opacity: 0.5;
+    }
+
+    /* Glass header with logo + controls */
+    .v56-head {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+    .v56-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+    .v56-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: conic-gradient(from 210deg, var(--glow-1), var(--glow-2), var(--glow-3), var(--glow-1));
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.15) inset,
+        0 0 24px rgba(255,255,255,0.25),
+        0 8px 18px rgba(0,0,0,0.35);
+      position: relative;
+    }
+    .v56-mark::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 50%;
+      background: radial-gradient(80% 80% at 30% 25%, rgba(255,255,255,0.7), rgba(255,255,255,0.05) 40%, transparent 70%);
+      filter: blur(0.2px);
+      mix-blend-mode: screen;
+    }
+    .v56-title {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--fg);
+      opacity: 0.95;
+    }
+    .v56-controls {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .v56-btn {
+      -webkit-tap-highlight-color: transparent;
+      appearance: none;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      color: var(--fg);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: transform .15s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+      backdrop-filter: blur(2px);
+    }
+    .v56-btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.2); }
+    .v56-btn:active { transform: translateY(0); }
+    .v56-btn.primary {
+      border-color: rgba(255,255,255,0.22);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03)),
+        radial-gradient(120% 120% at 0% 0%, rgba(255,255,255,0.15), transparent 60%);
+    }
+
+    /* Hero */
+    .v56-hero {
+      position: relative;
+      z-index: 2;
+      text-align: left;
+      padding: 8px 0 10px;
+      transform: translateZ(30px);
+    }
+    .v56-hero h1 {
+      margin: 0 0 6px 0;
+      font-size: clamp(30px, 5.2vw, 58px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      text-shadow:
+        0 1px 0 rgba(0,0,0,0.4),
+        0 10px 30px rgba(0,0,0,0.25);
+    }
+    .v56-hero p {
+      margin: 0 0 14px 0;
+      font-size: clamp(14px, 1.6vw, 18px);
+      color: var(--muted);
+      max-width: 60ch;
+    }
+
+    /* Chips */
+    .v56-chips {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .v56-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: color-mix(in oklab, white 6%, transparent);
+      border: 1px solid var(--line);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 10px 18px rgba(0,0,0,0.25);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      color: var(--fg);
+      opacity: 0.94;
+      transition: transform .25s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+      backdrop-filter: blur(2px);
+    }
+    .v56-chip i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,0.2) 40%, transparent 60%), var(--glow-1);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.2) inset, 0 0 8px rgba(255,255,255,0.25);
+      flex: 0 0 auto;
+    }
+    .v56-chip:hover { transform: translateY(-2px); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+
+    /* Progress ribbon */
+    .v56-ribbon {
+      position: absolute;
+      left: 0; right: 0; top: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.65), transparent);
+      opacity: 0.65;
+      overflow: hidden;
+    }
+    .v56-ribbon::before {
+      content: "";
+      position: absolute; left: -30%;
+      top: 0; bottom: 0; width: 30%;
+      background: linear-gradient(90deg, transparent, var(--glow-1), transparent);
+      filter: blur(1px);
+      animation: v56-scan 6s linear infinite;
+    }
+
+    /* Footer */
+    .v56-foot {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(255,255,255,0.12);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .v56-hint {
+      opacity: 0.8;
+    }
+
+    /* Motion + interactions */
+    @keyframes v56-drift {
+      0%   { transform: translate(-4%, -2%) scale(1.02) rotate(0.2deg); }
+      100% { transform: translate(4%, 3%)   scale(1.06) rotate(-0.2deg); }
+    }
+    @keyframes v56-drift2 {
+      0%   { transform: translate(3%, -4%) scale(1.05) }
+      100% { transform: translate(-3%, 4%) scale(1.08) }
+    }
+    @keyframes v56-drift3 {
+      0%   { transform: translate(-6%, 2%) scale(1.03) }
+      100% { transform: translate(6%, -2%) scale(1.07) }
+    }
+    @keyframes v56-scan {
+      0%   { left: -30%; }
+      100% { left: 100%; }
+    }
+
+    /* Toggle calm mode */
+    .v56-scene.is-calm .v56-aurora,
+    .v56-scene.is-calm .v56-aurora::before,
+    .v56-scene.is-calm .v56-aurora::after,
+    .v56-scene.is-calm .v56-ribbon::before {
+      animation-play-state: paused !important;
+      opacity: 0.4;
+    }
+
+    /* Tilt effect receivers */
+    .v56-tilt {
+      transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+      transition: transform .4s var(--ease);
+    }
+    .v56-scene.is-tilting .v56-tilt { transition: transform .06s linear; }
+
+    /* Reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .v56-aurora, .v56-aurora::before, .v56-aurora::after,
+      .v56-ribbon::before { animation: none !important; }
+      .v56-tilt { transition: none !important; }
+    }
+
+    /* Responsive niceties */
+    @media (max-width: 520px) {
+      .v56-controls { gap: 6px; }
+      .v56-btn { padding: 7px 10px; font-size: 12px; }
+      .v56-wrap { padding: 22px 18px 16px; }
+    }
+  </style>
+
+  <div class="v56-wrap v56-tilt">
+    <div class="v56-ribbon" aria-hidden="true"></div>
+    <div class="v56-aurora" aria-hidden="true"></div>
+
+    <div class="v56-head">
+      <div class="v56-brand">
+        <span class="v56-mark" aria-hidden="true"></span>
+        <span class="v56-title">Silent Kinetics</span>
+      </div>
+      <div class="v56-controls">
+        <button class="v56-btn primary" id="v56-randomize" type="button" aria-label="Randomize color">Randomize</button>
+        <button class="v56-btn" id="v56-toggle" type="button" aria-pressed="false" aria-label="Toggle calm mode">Calm Mode</button>
+      </div>
+    </div>
+
+    <div class="v56-hero">
+      <h1>Interfaces that breathe</h1>
+      <p>Graceful motion, lucid type, and color that hums. A tiny playground for restraint and warmth.</p>
+      <div class="v56-chips" aria-label="Design principles">
+        <div class="v56-chip"><i></i>Soft gradients</div>
+        <div class="v56-chip"><i></i>Purposeful motion</div>
+        <div class="v56-chip"><i></i>Accessible contrast</div>
+        <div class="v56-chip"><i></i>Calm surfaces</div>
+        <div class="v56-chip"><i></i>Tactile spacing</div>
+        <div class="v56-chip"><i></i>Subtle depth</div>
+      </div>
+    </div>
+
+    <div class="v56-foot">
+      <span class="v56-hint">Tip: move your pointer to tilt; randomize to explore hues.</span>
+      <span id="last-updated">Last updated: 2025-10-19 05:15:47 EST</span>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const root = document.currentScript.closest('.v56-scene');
+      const wrap = root.querySelector('.v56-wrap');
+      const toggle = root.querySelector('#v56-toggle');
+      const randomize = root.querySelector('#v56-randomize');
+      const updated = root.querySelector('#last-updated');
+
+      // Last updated timestamp
+      try {
+        const d = new Date();
+        const opts = { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' };
+        updated.textContent = 'Last updated: ' + d.toLocaleString(undefined, opts);
+      } catch(e) { updated.textContent = 'Last updated: just now'; }
+
+      // Calm mode toggle
+      toggle.addEventListener('click', () => {
+        const isCalm = root.classList.toggle('is-calm');
+        toggle.setAttribute('aria-pressed', String(isCalm));
+        toggle.textContent = isCalm ? 'Lively Mode' : 'Calm Mode';
+      });
+
+      // Randomize hue palette
+      function setHue(h) {
+        root.style.setProperty('--h', String(h));
+        // Gentle sat pulse for variety
+        const sat = 62 + Math.round(18 * Math.random());
+        root.style.setProperty('--sat', sat + '%');
+      }
+      randomize.addEventListener('click', () => setHue(Math.floor(Math.random() * 360)));
+
+      // Pointer tilt
+      let ticking = false;
+      const rect = () => wrap.getBoundingClientRect();
+      function onMove(e) {
+        const r = rect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        const max = 6; // degrees
+        const rx = (y * -max).toFixed(2) + 'deg';
+        const ry = (x *  max).toFixed(2) + 'deg';
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            wrap.style.setProperty('--rx', rx);
+            wrap.style.setProperty('--ry', ry);
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+      function resetTilt() {
+        wrap.style.setProperty('--rx', '0deg');
+        wrap.style.setProperty('--ry', '0deg');
+        root.classList.remove('is-tilting');
+      }
+      wrap.addEventListener('pointerenter', () => root.classList.add('is-tilting'));
+      wrap.addEventListener('pointermove', onMove);
+      wrap.addEventListener('pointerleave', resetTilt);
+      wrap.addEventListener('touchend', resetTilt, {passive: true});
+
+      // Initial subtle randomization for freshness
+      setHue(200 + Math.floor(Math.random() * 120));
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
