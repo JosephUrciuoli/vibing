@@ -74,121 +74,112 @@
     <!-- BEGIN_EDITABLE -->
       <section id="content">
 <style>
-  /* Daybreak Studio — Iteration 53 (scoped to #solstice-lab) */
+  /* Orbital Garden — Iteration 54 (scoped to #solstice-lab) */
   #solstice-lab {
-    --bg: #f7faff;
-    --ink: #141a2b;
-    --muted: #5f6c8c;
-    --line: rgba(20, 30, 60, 0.14);
-    --a1: #ffb65a; /* dawn orange */
-    --a2: #ff6aa7; /* pink */
-    --a3: #5bc7ff; /* sky */
+    --bg: #07151d;
+    --ink: #eaf7ff;
+    --muted: #a6c2ce;
+    --line: rgba(255,255,255,0.14);
+    --p1: #57ffd5; /* aqua mint */
+    --p2: #7aa6ff; /* sky */
+    --p3: #ff88c8; /* blossom */
     --rx: 0deg;
     --ry: 0deg;
-    --elev: 0px;
-    --glow: 32; /* 0–64 */
-    --pause-anim: running;
+    --pause: running;
+    --speed: 1;
     color: var(--ink);
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
   }
-  #solstice-lab[data-theme="twilight"] {
-    --bg: #0f1426;
-    --ink: #e9eeff;
+  #solstice-lab[data-theme="midnight"] {
+    --bg: #0a0f25;
+    --ink: #eef1ff;
     --muted: #b6c0dc;
-    --line: rgba(255,255,255,0.14);
-    --a1: #6ac8ff;
-    --a2: #9f7bff;
-    --a3: #ffd36a;
-  }
-  #solstice-lab[data-theme="mono"] {
-    --bg: #111113;
-    --ink: #f4f4f7;
-    --muted: #bdbdcc;
     --line: rgba(255,255,255,0.16);
-    --a1: #ffffff;
-    --a2: #c8c8c8;
-    --a3: #8b8b8b;
+    --p1: #7af0ff;
+    --p2: #9b7bff;
+    --p3: #ffd36a;
+  }
+  #solstice-lab[data-theme="paper"] {
+    --bg: #f7f8fb;
+    --ink: #12131a;
+    --muted: #5b6172;
+    --line: rgba(20,30,60,0.14);
+    --p1: #2f87ff;
+    --p2: #ff5a9a;
+    --p3: #ffb84a;
   }
 
-  #solstice-lab .canvas {
+  #solstice-lab .frame {
     position: relative;
-    border-radius: 26px;
-    padding: clamp(18px, 3vw, 28px);
+    border-radius: 28px;
     overflow: hidden;
-    background:
-      radial-gradient(160% 120% at 10% 0%, color-mix(in oklab, var(--a3) 14%, transparent), transparent 50%) no-repeat,
-      radial-gradient(160% 120% at 100% 100%, color-mix(in oklab, var(--a2) 12%, transparent), transparent 55%) no-repeat,
-      linear-gradient(180deg, color-mix(in oklab, var(--bg) 96%, #fff 4%), var(--bg));
     border: 1px solid var(--line);
+    padding: clamp(18px, 3vw, 28px);
+    background:
+      radial-gradient(140% 120% at 20% 0%, color-mix(in oklab, var(--p2) 14%, transparent), transparent 60%),
+      radial-gradient(140% 120% at 100% 80%, color-mix(in oklab, var(--p3) 12%, transparent), transparent 60%),
+      linear-gradient(180deg, color-mix(in oklab, var(--bg) 96%, #fff 4%), var(--bg));
     box-shadow:
       0 40px 100px rgba(0,0,0,0.35),
       inset 0 1px 0 rgba(255,255,255,0.08);
-    transform: rotateX(var(--rx)) rotateY(var(--ry)) translateZ(var(--elev));
     transform-style: preserve-3d;
-    backdrop-filter: saturate(110%) blur(2px);
   }
 
-  /* Soft sheen that drifts */
-  #solstice-lab .sheen {
+  /* drifting aurora veil */
+  #solstice-lab .veil {
     pointer-events: none;
     position: absolute;
-    inset: -30%;
-    background: conic-gradient(from 0deg, rgba(255,255,255,0.07), transparent 30% 70%, rgba(255,255,255,0.05));
-    filter: blur(24px);
-    animation: orbit 28s linear infinite;
-    animation-play-state: var(--pause-anim);
+    inset: -40%;
+    background: conic-gradient(from 0deg,
+      rgba(255,255,255,0.06),
+      transparent 30% 70%,
+      rgba(255,255,255,0.05));
+    filter: blur(30px) saturate(120%);
     mix-blend-mode: soft-light;
+    animation: drift 36s linear infinite;
+    animation-play-state: var(--pause);
   }
-  @keyframes orbit {
-    to { transform: rotate(360deg) translateZ(0); }
-  }
+  @keyframes drift { to { transform: rotate(360deg); } }
 
-  /* Header */
+  /* header */
   #solstice-lab .topbar {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: clamp(8px, 2vw, 16px);
+    position: relative; z-index: 2;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin-bottom: clamp(6px, 2vw, 16px);
   }
   #solstice-lab .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 14px;
-    border-radius: 999px;
+    display: inline-flex; gap: 12px; align-items: center;
+    padding: 10px 14px; border-radius: 999px;
     border: 1px solid var(--line);
     background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
-    user-select: none;
-    backdrop-filter: blur(6px);
+    user-select: none; backdrop-filter: blur(6px);
   }
-  #solstice-lab .sun-glyph {
-    width: 18px; height: 18px; border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--a1) 40%, transparent));
-    box-shadow:
-      0 0 0 6px color-mix(in oklab, var(--a1) 25%, transparent),
-      0 0 22px color-mix(in oklab, var(--a2) 30%, transparent);
-    animation: throb 3.4s ease-in-out infinite;
-    animation-play-state: var(--pause-anim);
+  #solstice-lab .glyph {
+    width: 20px; height: 20px; position: relative;
   }
+  #solstice-lab .glyph::before,
+  #solstice-lab .glyph::after {
+    content: ""; position: absolute; inset: 0; border-radius: 50%;
+  }
+  #solstice-lab .glyph::before {
+    border: 2px solid color-mix(in oklab, var(--p1) 60%, transparent);
+    box-shadow: 0 0 20px color-mix(in oklab, var(--p1) 35%, transparent);
+  }
+  #solstice-lab .glyph::after {
+    width: 7px; height: 7px; border-radius: 50%; background: #fff;
+    left: 50%; top: 50%; transform-origin: -10px 0;
+    filter: drop-shadow(0 0 10px color-mix(in oklab, var(--p2) 70%, transparent));
+    animation: mini 6s linear infinite;
+    animation-play-state: var(--pause);
+  }
+  @keyframes mini { to { transform: translate(-50%,-50%) rotate(360deg) translate(10px); } }
   #solstice-lab .brand span {
-    font-size: 11px;
-    letter-spacing: .24em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  @keyframes throb {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.06); }
+    font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted);
   }
 
-  /* Controls */
-  #solstice-lab .controls {
-    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
-  }
+  /* controls */
+  #solstice-lab .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
   #solstice-lab .pill {
     display: inline-flex; gap: 8px; padding: 6px; border-radius: 999px;
     border: 1px solid var(--line);
@@ -202,28 +193,27 @@
   }
   #solstice-lab .chip:hover { transform: translateY(-1px); }
   #solstice-lab .chip[aria-pressed="true"] {
-    background: linear-gradient(135deg, color-mix(in oklab, var(--a1) 32%, transparent), color-mix(in oklab, var(--a3) 24%, transparent));
-    box-shadow: 0 10px 26px rgba(0,0,0,0.22), 0 6px 18px color-mix(in oklab, var(--a1) 30%, transparent);
+    background: linear-gradient(135deg,
+      color-mix(in oklab, var(--p1) 26%, transparent),
+      color-mix(in oklab, var(--p3) 22%, transparent));
+    box-shadow: 0 10px 26px rgba(0,0,0,0.22), 0 6px 18px color-mix(in oklab, var(--p1) 30%, transparent);
   }
-  #solstice-lab .slider {
-    padding: 8px 12px;
-    display: inline-flex; gap: 8px; align-items: center;
-  }
+  #solstice-lab .slider { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; }
+  #solstice-lab .slider label { opacity: .8; font-weight: 600; }
   #solstice-lab .slider input[type="range"] {
     -webkit-appearance: none; appearance: none; width: 120px; background: transparent;
   }
   #solstice-lab .slider input[type="range"]::-webkit-slider-runnable-track {
-    height: 6px; border-radius: 8px; background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
+    height: 6px; border-radius: 8px; background: linear-gradient(90deg, var(--p1), var(--p2), var(--p3));
     box-shadow: inset 0 0 0 1px var(--line);
   }
   #solstice-lab .slider input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
     background: #fff; border: 1px solid var(--line);
-    margin-top: -6px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    cursor: grab;
+    margin-top: -6px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: grab;
   }
   #solstice-lab .slider input[type="range"]::-moz-range-track {
-    height: 6px; border-radius: 8px; background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
+    height: 6px; border-radius: 8px; background: linear-gradient(90deg, var(--p1), var(--p2), var(--p3));
     box-shadow: inset 0 0 0 1px var(--line);
   }
   #solstice-lab .slider input[type="range"]::-moz-range-thumb {
@@ -231,204 +221,208 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: grab;
   }
 
-  /* Hero */
-  #solstice-lab .hero {
-    position: relative; z-index: 2;
-    margin: clamp(8px, 1.5vw, 14px) 0 clamp(10px, 2vw, 18px);
-  }
+  /* hero */
+  #solstice-lab .hero { position: relative; z-index: 2; margin: clamp(8px, 1.6vw, 14px) 0 clamp(10px, 2vw, 18px); }
   #solstice-lab .hero h1 {
     margin: 0 0 6px;
-    font-size: clamp(28px, 4.8vw, 58px);
+    font-size: clamp(28px, 5.4vw, 64px);
     letter-spacing: -0.02em; line-height: 1.04; font-weight: 900;
-    background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
+    background: linear-gradient(90deg, var(--p1), var(--p2), var(--p3));
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    filter: drop-shadow(0 10px 24px color-mix(in oklab, var(--a2) 28%, transparent));
+    filter: drop-shadow(0 10px 24px color-mix(in oklab, var(--p2) 28%, transparent));
   }
-  #solstice-lab .hero p {
-    margin: 0; color: var(--muted); font-size: clamp(13px, 1.5vw, 16px); max-width: 68ch;
-  }
+  #solstice-lab .hero p { margin: 0; color: var(--muted); font-size: clamp(13px, 1.5vw, 16px); max-width: 68ch; }
 
-  /* Kinetic Sun Bloom */
-  #solstice-lab .bloom-wrap {
-    position: relative; z-index: 1; display: grid; place-items: center;
-    margin: clamp(16px, 4vw, 32px) 0;
-    perspective: 1000px;
+  /* orbital stage */
+  #solstice-lab .stage {
+    position: relative; z-index: 1;
+    margin: clamp(16px, 4vw, 34px) 0;
   }
-  #solstice-lab .bloom {
-    --size: clamp(200px, 42vw, 380px);
-    width: var(--size); aspect-ratio: 1/1; position: relative; border-radius: 50%;
+  #solstice-lab .sky {
+    position: absolute; inset: 0; border-radius: 22px; overflow: hidden; pointer-events: none;
+  }
+  #solstice-lab .star {
+    position: absolute; width: 2px; height: 2px; border-radius: 50%;
+    background: #fff; opacity: .7;
+    filter: drop-shadow(0 0 6px color-mix(in oklab, var(--p2) 70%, transparent));
+    animation: twinkle 4s ease-in-out infinite alternate;
+    animation-play-state: var(--pause);
+  }
+  @keyframes twinkle { to { opacity: .25; transform: scale(0.8); } }
+
+  #solstice-lab .orrery-wrap { display: grid; place-items: center; perspective: 1200px; }
+  #solstice-lab .orrery {
+    --size: clamp(220px, 48vw, 460px);
+    width: var(--size); aspect-ratio: 1;
+    position: relative; border-radius: 50%;
     transform: rotateX(var(--rx)) rotateY(var(--ry));
     box-shadow: 0 28px 90px rgba(0,0,0,0.28), 0 0 0 1px var(--line);
-    background:
-      radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--a1) 18%, transparent), transparent 55%),
-      radial-gradient(60% 60% at 60% 40%, color-mix(in oklab, var(--a2) 14%, transparent), transparent 60%),
-      linear-gradient(180deg, color-mix(in oklab, var(--bg) 94%, #fff 6%), var(--bg));
+    background: radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--p1) 12%, transparent), transparent 56%),
+                linear-gradient(180deg, color-mix(in oklab, var(--bg) 94%, #fff 6%), var(--bg));
     overflow: hidden;
   }
-  /* Rays via repeating conic gradient masked to ring */
-  #solstice-lab .rays {
-    position: absolute; inset: 0; border-radius: 50%;
-    background: repeating-conic-gradient(from var(--ang, 0deg),
-      color-mix(in oklab, var(--a3) 55%, transparent) 0 2deg,
-      transparent 2deg 6deg);
-    mask: radial-gradient(circle, transparent 38%, #000 38.6% 53%, transparent 53.6%);
-    opacity: .7;
-    mix-blend-mode: screen;
-    filter: blur(calc(var(--glow) * .12px));
-  }
-  /* Core sun */
-  #solstice-lab .sun {
-    position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
-    width: 38%; aspect-ratio: 1; border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #fff, color-mix(in oklab, var(--a1) 70%, transparent) 60%);
-    box-shadow:
-      0 0 0 calc(var(--glow) * .18px) color-mix(in oklab, var(--a1) 24%, transparent),
-      0 20px 50px color-mix(in oklab, var(--a1) 24%, transparent);
+  /* rings */
+  #solstice-lab .ring {
+    position: absolute; inset: 12%; border-radius: 50%;
+    box-shadow: inset 0 0 0 1px var(--line);
     filter: saturate(120%);
   }
-  /* Subtle inner ticks */
-  #solstice-lab .ticks {
+  #solstice-lab .ring.r2 { inset: 22%; }
+  #solstice-lab .ring.r3 { inset: 34%; }
+  #solstice-lab .track {
     position: absolute; inset: 0; border-radius: 50%;
     background:
-      repeating-conic-gradient(from 0deg, rgba(255,255,255,0.18) 0 1deg, transparent 1deg 6deg);
-    mask: radial-gradient(circle, transparent 46%, #000 46.2% 52%, transparent 52.2%);
-    opacity: .55; mix-blend-mode: overlay;
+      radial-gradient(circle at 50% 50%, transparent 58%, rgba(255,255,255,0.06) 58.2% 58.6%, transparent 58.8%),
+      radial-gradient(circle at 50% 50%, transparent 72%, rgba(255,255,255,0.05) 72.2% 72.6%, transparent 72.8%),
+      repeating-conic-gradient(from var(--tick, 0deg),
+        rgba(255,255,255,0.18) 0 1deg, transparent 1deg 6deg);
+    mask: radial-gradient(circle, transparent 56%, #000 56.2% 74%, transparent 74.2%);
+    opacity: .7; mix-blend-mode: overlay;
   }
-  /* Orbit + hand dot */
-  #solstice-lab .orbit {
-    position: absolute; inset: 10%; border-radius: 50%;
-    border: 1px dashed color-mix(in oklab, var(--a3) 40%, transparent);
-    opacity: .6;
-    transform: rotateX(var(--rx)) rotateY(var(--ry));
+  #solstice-lab .planet {
+    position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; border-radius: 50%;
+    transform: translate(-50%,-50%) translateX(var(--dist, 120px));
+    background: radial-gradient(circle at 35% 35%, #fff, color-mix(in oklab, var(--p1) 70%, transparent));
+    box-shadow: 0 0 0 10px color-mix(in oklab, var(--p1) 12%, transparent),
+                0 18px 40px color-mix(in oklab, var(--p1) 24%, transparent);
   }
-  #solstice-lab .dot {
-    position: absolute; left: 50%; top: 50%;
-    width: 11px; height: 11px; border-radius: 50%;
-    background: #fff;
-    transform-origin: -120px 0;
-    box-shadow: 0 0 20px color-mix(in oklab, var(--a3) 70%, transparent);
+  #solstice-lab .planet.p2 {
+    background: radial-gradient(circle at 35% 35%, #fff, color-mix(in oklab, var(--p2) 70%, transparent));
+    box-shadow: 0 0 0 10px color-mix(in oklab, var(--p2) 12%, transparent),
+                0 18px 40px color-mix(in oklab, var(--p2) 24%, transparent);
+  }
+  #solstice-lab .planet.p3 {
+    background: radial-gradient(circle at 35% 35%, #fff, color-mix(in oklab, var(--p3) 70%, transparent));
+    box-shadow: 0 0 0 10px color-mix(in oklab, var(--p3) 12%, transparent),
+                0 18px 40px color-mix(in oklab, var(--p3) 24%, transparent);
+  }
+  #solstice-lab .core {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+    width: 34%; aspect-ratio: 1; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff, color-mix(in oklab, var(--p1) 70%, transparent) 60%);
+    box-shadow: 0 0 0 18px color-mix(in oklab, var(--p1) 10%, transparent),
+                0 20px 60px color-mix(in oklab, var(--p1) 24%, transparent);
+    cursor: pointer; outline: none; border: 1px solid var(--line);
   }
 
-  /* Floating beads */
-  #solstice-lab .bead {
-    position: absolute; width: 120px; height: 120px; border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.8), rgba(255,255,255,0.2) 60%, transparent 70%);
-    filter: blur(8px) saturate(120%);
-    animation: floatY 12s ease-in-out infinite alternate;
-    animation-play-state: var(--pause-anim);
-    mix-blend-mode: screen; pointer-events: none;
-  }
-  #solstice-lab .bead.b1 { left: -40px; top: 10%; width: 160px; height: 160px; }
-  #solstice-lab .bead.b2 { right: -30px; bottom: 5%; width: 140px; height: 140px; animation-duration: 16s; }
-  @keyframes floatY { to { transform: translateY(16px); } }
-
-  /* Meta */
+  /* meta */
   #solstice-lab .meta {
     position: relative; z-index: 2;
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
     margin-top: clamp(10px, 2vw, 18px); color: var(--muted); font-size: 12px;
   }
-  #solstice-lab .meta .right {
-    display: inline-flex; gap: 10px; align-items: center; white-space: nowrap;
-  }
-  #solstice-lab .meta .right .spark {
+  #solstice-lab .meta .right { display: inline-flex; gap: 10px; align-items: center; white-space: nowrap; }
+  #solstice-lab .meta .spark {
     width: 7px; height: 7px; border-radius: 50%;
-    background: var(--a1);
-    box-shadow: 0 0 14px color-mix(in oklab, var(--a1) 65%, transparent);
+    background: var(--p1);
+    box-shadow: 0 0 14px color-mix(in oklab, var(--p1) 65%, transparent);
   }
 
-  /* Reduced motion */
+  /* reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    #solstice-lab { --pause-anim: paused; }
+    #solstice-lab { --pause: paused; }
   }
 </style>
 
-<div class="canvas" role="region" aria-label="Daybreak Studio kinetic sun">
-  <div class="sheen" aria-hidden="true"></div>
-  <div class="bead b1" aria-hidden="true"></div>
-  <div class="bead b2" aria-hidden="true"></div>
-
+<div class="frame" role="region" aria-label="Orbital Garden kinetic orrery">
+  <div class="veil" aria-hidden="true"></div>
   <div class="topbar">
-    <div class="brand" aria-label="Daybreak Studio, edition 53">
-      <span class="sun-glyph" aria-hidden="true"></span>
-      <span>daybreak studio — edition 53</span>
+    <div class="brand" aria-label="Orbital Garden, edition 54">
+      <span class="glyph" aria-hidden="true"></span>
+      <span>orbital garden — edition 54</span>
     </div>
-
     <div class="controls" aria-label="Controls">
       <div class="pill" role="group" aria-label="Theme">
-        <button class="chip" data-theme="dawn" aria-pressed="true">Dawn</button>
-        <button class="chip" data-theme="twilight" aria-pressed="false">Twilight</button>
-        <button class="chip" data-theme="mono" aria-pressed="false">Mono</button>
+        <button class="chip" data-theme="aurora" aria-pressed="true">Aurora</button>
+        <button class="chip" data-theme="midnight" aria-pressed="false">Midnight</button>
+        <button class="chip" data-theme="paper" aria-pressed="false">Paper</button>
       </div>
       <div class="pill" role="group" aria-label="Motion">
         <button class="chip" id="play" aria-pressed="true">Play</button>
         <button class="chip" id="pause" aria-pressed="false">Pause</button>
       </div>
-      <div class="pill slider" aria-label="Glow">
-        <span style="opacity:.8">Glow</span>
-        <input id="glow" type="range" min="0" max="64" value="32" />
+      <div class="pill slider" aria-label="Speed">
+        <label for="speed">Speed</label>
+        <input id="speed" type="range" min="0" max="200" value="100" />
+      </div>
+      <div class="pill slider" aria-label="Stars">
+        <label for="density">Stars</label>
+        <input id="density" type="range" min="0" max="80" value="42" />
       </div>
     </div>
   </div>
 
   <div class="hero">
-    <h1>Let the morning design itself.</h1>
-    <p>A real‑time sun bloom. Raise the glow, tilt the sky, choose your mood.</p>
+    <h1>Plant light. Grow motion.</h1>
+    <p>An orrery of color and calm. Tilt the space, set the speed, choose your sky.</p>
   </div>
 
-  <div class="bloom-wrap">
-    <div class="bloom">
-      <div class="rays" aria-hidden="true"></div>
-      <div class="ticks" aria-hidden="true"></div>
-      <div class="sun" aria-hidden="true"></div>
-      <div class="orbit" aria-hidden="true"></div>
-      <div class="dot" aria-hidden="true"></div>
+  <div class="stage">
+    <div class="sky" aria-hidden="true"></div>
+    <div class="orrery-wrap">
+      <div class="orrery">
+        <div class="ring r1" style="--a:0deg;">
+          <div class="track" aria-hidden="true"></div>
+          <div class="planet p1" style="--dist: 44%;" aria-hidden="true"></div>
+        </div>
+        <div class="ring r2" style="--a:0deg;">
+          <div class="track" aria-hidden="true"></div>
+          <div class="planet p2" style="--dist: 36%;" aria-hidden="true"></div>
+        </div>
+        <div class="ring r3" style="--a:0deg;">
+          <div class="track" aria-hidden="true"></div>
+          <div class="planet p3" style="--dist: 28%;" aria-hidden="true"></div>
+        </div>
+        <button class="core" aria-label="Pulse the core"></button>
+      </div>
     </div>
   </div>
 
   <div class="meta">
-    <span class="quote">“Bright quiet, in motion.”</span>
-    <span class="right"><span class="spark" aria-hidden="true"></span> Stamped <span id="last-updated">Last updated: 2025-10-19 01:16:44 EST</span></span>
+    <span class="quote">“Quiet orbits, bright minds.”</span>
+    <span class="right"><span class="spark" aria-hidden="true"></span> Updated <span id="last-updated">Last updated: 2025-10-19 02:24:39 EST</span></span>
   </div>
 </div>
 
 <script>
   (function () {
     const root = document.getElementById('solstice-lab');
-    const canvas = root.querySelector('.canvas');
-    const rays = root.querySelector('.rays');
-    const dot = root.querySelector('.dot');
-    const glow = root.querySelector('#glow');
+    const frame = root.querySelector('.frame');
+    const sky = root.querySelector('.sky');
+    const rings = Array.from(root.querySelectorAll('.ring'));
+    const core = root.querySelector('.core');
     const playBtn = root.querySelector('#play');
     const pauseBtn = root.querySelector('#pause');
-    const stamp = root.querySelector('#last-updated');
+    const speed = root.querySelector('#speed');
+    const density = root.querySelector('#density');
     const themeBtns = root.querySelectorAll('.chip[data-theme]');
+    const stamp = root.querySelector('#last-updated');
 
-    // Themes
-    const KEY = 'daybreak-theme-53';
-    const saved = localStorage.getItem(KEY) || 'dawn';
-    applyTheme(saved);
+    // Theme persistence
+    const THEME_KEY = 'orbital-garden-54-theme';
+    const SPEED_KEY = 'orbital-garden-54-speed';
+    const DENSITY_KEY = 'orbital-garden-54-density';
+
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'aurora';
+    applyTheme(savedTheme);
     themeBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         themeBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
         btn.setAttribute('aria-pressed', 'true');
         applyTheme(btn.dataset.theme);
-        pulse(canvas);
+        pulse(frame);
       });
       btn.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
       });
     });
     function applyTheme(name) {
-      if (name === 'dawn') {
-        root.removeAttribute('data-theme');
-      } else {
-        root.setAttribute('data-theme', name);
-      }
-      localStorage.setItem(KEY, name);
+      if (!name || name === 'aurora') root.removeAttribute('data-theme');
+      else root.setAttribute('data-theme', name);
+      localStorage.setItem(THEME_KEY, name);
     }
 
-    // Stamp time
+    // Time stamp
     try {
       const now = new Date();
       const fmt = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' });
@@ -437,86 +431,137 @@
       stamp.textContent = new Date().toLocaleString();
     }
 
-    // Glow control
-    function setGlow(v) {
-      root.style.setProperty('--glow', String(v));
-    }
-    glow.addEventListener('input', e => setGlow(e.target.value));
-    setGlow(glow.value);
+    // Controls state
+    const savedSpeed = Number(localStorage.getItem(SPEED_KEY) || speed.value);
+    speed.value = savedSpeed;
+    setSpeed(savedSpeed);
 
-    // Motion controls
+    const savedDensity = Number(localStorage.getItem(DENSITY_KEY) || density.value);
+    density.value = savedDensity;
+
+    speed.addEventListener('input', e => {
+      const v = Number(e.target.value);
+      setSpeed(v);
+      localStorage.setItem(SPEED_KEY, String(v));
+    });
+    function setSpeed(v) {
+      // map 0–200 to 0–2
+      const s = Math.max(0, Math.min(200, v)) / 100;
+      root.style.setProperty('--speed', String(s));
+    }
+
+    // Stars
+    const MAX_STARS = 80;
+    const stars = [];
+    for (let i = 0; i < MAX_STARS; i++) {
+      const d = document.createElement('div');
+      d.className = 'star';
+      d.style.opacity = (0.35 + Math.random() * 0.65).toFixed(2);
+      d.style.animationDuration = (3 + Math.random() * 4).toFixed(2) + 's';
+      d.style.animationDelay = (Math.random() * 4).toFixed(2) + 's';
+      sky.appendChild(d);
+      stars.push(d);
+    }
+    function layoutStars() {
+      const r = sky.getBoundingClientRect();
+      stars.forEach((s, i) => {
+        const x = Math.random() * r.width;
+        const y = Math.random() * r.height;
+        const sc = 0.7 + Math.random() * 1.8;
+        s.style.transform = `translate(${x}px, ${y}px) scale(${sc.toFixed(2)})`;
+      });
+    }
+    function showStars(n) {
+      for (let i = 0; i < MAX_STARS; i++) {
+        stars[i].style.display = i < n ? 'block' : 'none';
+      }
+    }
+    layoutStars();
+    showStars(savedDensity);
+    window.addEventListener('resize', layoutStars);
+    density.addEventListener('input', e => {
+      const n = Number(e.target.value);
+      showStars(n);
+      localStorage.setItem(DENSITY_KEY, String(n));
+    });
+
+    // Motion
     let frozen = false;
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let prefersReduced = mq.matches;
+    mq.addEventListener ? mq.addEventListener('change', applyPref) : mq.addListener(applyPref);
+
     playBtn.addEventListener('click', () => {
       frozen = false;
       playBtn.setAttribute('aria-pressed', 'true');
       pauseBtn.setAttribute('aria-pressed', 'false');
-      root.style.setProperty('--pause-anim', 'running');
+      root.style.setProperty('--pause', 'running');
       if (!prefersReduced) loop();
     });
     pauseBtn.addEventListener('click', () => {
       frozen = true;
       playBtn.setAttribute('aria-pressed', 'false');
       pauseBtn.setAttribute('aria-pressed', 'true');
-      root.style.setProperty('--pause-anim', 'paused');
+      root.style.setProperty('--pause', 'paused');
       if (raf) cancelAnimationFrame(raf);
     });
 
-    // Tilt parallax
+    // Tilt
     function handleMove(e) {
-      const r = canvas.getBoundingClientRect();
+      const r = frame.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width;
       const y = (e.clientY - r.top) / r.height;
-      const ry = (x - 0.5) * 10;
-      const rx = (0.5 - y) * 8;
+      const ry = (x - 0.5) * 12;
+      const rx = (0.5 - y) * 10;
       root.style.setProperty('--ry', ry.toFixed(2) + 'deg');
       root.style.setProperty('--rx', rx.toFixed(2) + 'deg');
-      root.style.setProperty('--elev', (2 + (x - 0.5) * 3).toFixed(2) + 'px');
     }
-    canvas.addEventListener('pointermove', handleMove, { passive: true });
+    frame.addEventListener('pointermove', handleMove, { passive: true });
 
-    // Kinetic sun loop
+    // Core pulse
+    core.addEventListener('click', () => {
+      core.animate(
+        [
+          { transform: 'translate(-50%,-50%) scale(1)', filter: 'brightness(1.12)' },
+          { transform: 'translate(-50%,-50%) scale(1.06)', filter: 'brightness(1.2)' },
+          { transform: 'translate(-50%,-50%) scale(1)', filter: 'brightness(1.0)' }
+        ],
+        { duration: 380, easing: 'ease-out' }
+      );
+      pulse(frame);
+    });
+
+    // Ring rotation loop
     let raf = null;
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let prefersReduced = mq.matches;
-    mq.addEventListener ? mq.addEventListener('change', applyPref) : mq.addListener(applyPref);
+    let a1 = 0, a2 = 120, a3 = 240;
     function applyPref() {
       prefersReduced = mq.matches;
-      root.style.setProperty('--pause-anim', prefersReduced || frozen ? 'paused' : 'running');
-      if (prefersReduced || frozen) {
-        if (raf) cancelAnimationFrame(raf);
-      } else {
-        loop();
-      }
+      root.style.setProperty('--pause', prefersReduced || frozen ? 'paused' : 'running');
+      if (prefersReduced || frozen) { if (raf) cancelAnimationFrame(raf); }
+      else { loop(); }
     }
-
     function loop() {
       if (prefersReduced || frozen) return;
       tick();
       raf = requestAnimationFrame(loop);
     }
-
     function tick() {
-      const now = new Date();
-      const ms = now.getMilliseconds();
-      const s = now.getSeconds() + ms / 1000;
-      const ang = (s / 60) * 360;
-      rays.style.setProperty('--ang', ang + 'deg');
+      const s = Number(getComputedStyle(root).getPropertyValue('--speed')) || 1;
+      a1 = (a1 + 0.3 * s) % 360;
+      a2 = (a2 - 0.2 * s + 360) % 360;
+      a3 = (a3 + 0.45 * s) % 360;
 
-      // Dot on orbit
-      const bloom = root.querySelector('.bloom');
-      const size = bloom.getBoundingClientRect().width;
-      const radius = (size * 0.5) - (size * 0.22);
-      dot.style.transform = `translate(-50%,-50%) rotate(${ang}deg) translate(${radius}px)`;
+      rings[0].style.transform = `rotate(${a1}deg)`;
+      rings[1].style.transform = `rotate(${a2}deg)`;
+      rings[2].style.transform = `rotate(${a3}deg)`;
 
-      // Gentle breathing on sun via glow micro-variance
-      const wiggle = 0.5 + 0.5 * Math.sin((ms + now.getSeconds() * 1000) / 600);
-      const g = Number(getComputedStyle(root).getPropertyValue('--glow')) || 32;
-      root.style.setProperty('--glow', (g + wiggle).toFixed(2));
+      // subtle tick drift on tracks
+      rings.forEach((r, i) => r.querySelector('.track').style.setProperty('--tick', ((i === 0 ? a1 : i === 1 ? a2 : a3) / 8) + 'deg'));
     }
 
     function pulse(el) {
       el.animate(
-        [{ filter: 'brightness(1.15)' }, { filter: 'brightness(1)' }],
+        [{ filter: 'brightness(1.1)' }, { filter: 'brightness(1)' }],
         { duration: 360, easing: 'ease-out' }
       );
     }
