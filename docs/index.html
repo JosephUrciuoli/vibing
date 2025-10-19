@@ -73,275 +73,339 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="aurora-atelier" data-theme="nocturne" aria-label="Aurora Studio">
+<section id="solstice-lab" data-mode="day" aria-label="Solstice Living Poster">
   <style>
-    /* Scoped to #aurora-atelier only */
-    #aurora-atelier {
-      --ink: #e9eefc;
-      --muted: #b7c3e0;
-      --glass: rgba(255,255,255,0.06);
-      --line: rgba(255,255,255,0.15);
-      --c1: #6ea3ff;
-      --c2: #6cffe0;
-      --c3: #b58cff;
-      --radius: 22px;
-      --mx: 0;
-      --my: 0;
+    /* Scoped to #solstice-lab only */
+    #solstice-lab {
+      --bg: #f6f7fb;
+      --ink: #1a2333;
+      --muted: #59657a;
+      --line: rgba(20, 24, 38, 0.12);
+      --accent-1: #ffb56b;
+      --accent-2: #7bdff2;
+      --accent-3: #b79cff;
+      --r: 26px;
+      --rx: 0deg; /* tilt X */
+      --ry: 0deg; /* tilt Y */
+      --orb-rot: 0deg;
+      --orb-z: 28px;
+      --cloud-sway: 0%;
+      --gloss: rgba(255,255,255,0.65);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color: var(--ink);
       letter-spacing: 0.2px;
     }
-    #aurora-atelier[data-theme="dawn"] {
-      --c1: #ff9fbf;
-      --c2: #ffd479;
-      --c3: #b1f7ff;
-    }
-    #aurora-atelier[data-theme="lagoon"] {
-      --c1: #36d1dc;
-      --c2: #5b86e5;
-      --c3: #b3ffab;
-    }
-    #aurora-atelier[data-theme="nocturne"] {
-      --c1: #7a9cff;
-      --c2: #3ae8c4;
-      --c3: #c39bff;
+    #solstice-lab[data-mode="night"] {
+      --bg: #0e1323;
+      --ink: #e9eefc;
+      --muted: #b6c1da;
+      --line: rgba(255,255,255,0.18);
+      --accent-1: #ff7aa2;
+      --accent-2: #4ad1c4;
+      --accent-3: #7da2ff;
+      --gloss: rgba(255,255,255,0.25);
     }
 
-    #aurora-atelier .shell {
+    #solstice-lab .poster {
       position: relative;
-      border-radius: var(--radius);
-      padding: 28px 28px 24px;
+      border-radius: var(--r);
+      padding: 28px;
       background:
-        linear-gradient(180deg, rgba(16,19,35,0.92), rgba(10,12,22,0.94)),
-        radial-gradient(1200px 600px at 80% -20%, rgba(255,255,255,0.06), transparent 60%);
+        radial-gradient(120% 100% at 50% -10%, color-mix(in oklab, var(--accent-2) 20%, transparent), transparent 60%) no-repeat,
+        radial-gradient(120% 100% at 50% 120%, color-mix(in oklab, var(--accent-1) 18%, transparent), transparent 60%) no-repeat,
+        var(--bg);
       border: 1px solid var(--line);
       box-shadow:
-        0 20px 60px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.08);
+        0 22px 65px rgba(0,0,0,0.18),
+        inset 0 1px 0 rgba(255,255,255,0.6);
       overflow: hidden;
-      isolation: isolate;
-      backdrop-filter: blur(8px);
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: background 0.6s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    /* Subtle grid texture */
-    #aurora-atelier .shell::before {
+    /* Subtle paper grain + frame lines */
+    #solstice-lab .poster::before,
+    #solstice-lab .poster::after {
       content: "";
       position: absolute;
       inset: -1px;
+      pointer-events: none;
+    }
+    #solstice-lab .poster::before {
       background:
-        repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,0.04) 38px 39px),
-        repeating-linear-gradient(0deg, transparent 0 38px, rgba(255,255,255,0.035) 38px 39px);
+        repeating-linear-gradient(90deg, transparent 0 38px, rgba(0,0,0,0.035) 38px 39px),
+        repeating-linear-gradient(0deg, transparent 0 38px, rgba(0,0,0,0.03) 38px 39px);
+      mix-blend-mode: soft-light;
+      opacity: 0.18;
+      border-radius: inherit;
+    }
+    #solstice-lab .poster::after {
+      background:
+        radial-gradient(800px 300px at 0% 0%, rgba(255,255,255,0.7), transparent 70%) no-repeat,
+        radial-gradient(800px 300px at 100% 100%, rgba(255,255,255,0.5), transparent 70%) no-repeat;
+      border-radius: inherit;
       opacity: 0.35;
-      mask: radial-gradient(120% 90% at 50% 40%, #000 70%, transparent 100%);
-      pointer-events: none;
     }
 
-    /* Aurora glows */
-    #aurora-atelier .glow {
+    /* Floating decor: clouds/strokes */
+    #solstice-lab .cloud {
       position: absolute;
-      filter: blur(40px) saturate(120%);
-      opacity: 0.75;
-      transform: translate(calc(var(--mx)*10px), calc(var(--my)*10px));
+      height: 220px;
+      filter: blur(40px) saturate(110%);
+      opacity: 0.5;
       mix-blend-mode: screen;
-      will-change: transform, opacity;
-    }
-    #aurora-atelier .g1 {
-      width: 420px; height: 420px; top: -120px; left: -80px;
-      background: radial-gradient(closest-side, var(--c1), transparent 65%);
-      animation: floatA 14s ease-in-out infinite;
-    }
-    #aurora-atelier .g2 {
-      width: 520px; height: 520px; bottom: -160px; right: -120px;
-      background: radial-gradient(closest-side, var(--c2), transparent 65%);
-      animation: floatB 18s ease-in-out infinite;
-    }
-    #aurora-atelier .g3 {
-      width: 360px; height: 360px; top: 20%; right: 20%;
-      background: radial-gradient(closest-side, var(--c3), transparent 70%);
-      opacity: 0.55;
-      animation: floatC 20s ease-in-out infinite;
-    }
-    @keyframes floatA { 0%,100% { transform: translate(-6px, 2px); } 50% { transform: translate(10px, -8px); } }
-    @keyframes floatB { 0%,100% { transform: translate(8px, -4px); } 50% { transform: translate(-10px, 10px); } }
-    @keyframes floatC { 0%,100% { transform: translate(-4px, -8px); } 50% { transform: translate(8px, 8px); } }
-
-    /* Diagonal shine sweep */
-    #aurora-atelier .shine {
-      position: absolute;
-      inset: -30%;
-      background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
-      transform: translate3d(-20%, -20%, 0) rotate(8deg);
-      animation: sweep 9s linear infinite;
+      transform: translateZ(-10px);
       pointer-events: none;
-      opacity: 0.35;
     }
-    @keyframes sweep {
-      0% { transform: translate3d(-45%, -45%, 0) rotate(8deg); }
-      50% { transform: translate3d(0%, 0%, 0) rotate(8deg); }
-      100% { transform: translate3d(45%, 45%, 0) rotate(8deg); }
+    #solstice-lab[data-mode="day"] .cloud.c1 {
+      width: 60%;
+      top: -60px; left: -20%;
+      background: radial-gradient(closest-side, color-mix(in oklab, var(--accent-2) 50%, white), transparent 65%);
+      animation: drift1 28s linear infinite;
     }
+    #solstice-lab[data-mode="day"] .cloud.c2 {
+      width: 50%;
+      bottom: -80px; right: -10%;
+      background: radial-gradient(closest-side, color-mix(in oklab, var(--accent-1) 42%, white), transparent 65%);
+      animation: drift2 36s linear infinite;
+    }
+    #solstice-lab[data-mode="night"] .cloud.c1 {
+      width: 65%;
+      top: -70px; left: -25%;
+      background: radial-gradient(closest-side, color-mix(in oklab, var(--accent-3) 55%, black), transparent 65%);
+      animation: drift1 34s linear infinite reverse;
+      opacity: 0.42;
+      mix-blend-mode: lighten;
+    }
+    #solstice-lab[data-mode="night"] .cloud.c2 {
+      width: 58%;
+      bottom: -70px; right: -15%;
+      background: radial-gradient(closest-side, color-mix(in oklab, var(--accent-2) 60%, black), transparent 65%);
+      animation: drift2 40s linear infinite reverse;
+      opacity: 0.42;
+      mix-blend-mode: lighten;
+    }
+    @keyframes drift1 { 0% { transform: translateX(-4%) translateZ(-10px); } 100% { transform: translateX(4%) translateZ(-10px); } }
+    @keyframes drift2 { 0% { transform: translateX(4%) translateZ(-10px); } 100% { transform: translateX(-4%) translateZ(-10px); } }
 
-    /* Header */
-    #aurora-atelier .top {
+    /* Top bar */
+    #solstice-lab .top {
       position: relative;
+      z-index: 3;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      z-index: 2;
-      margin-bottom: 16px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
-    #aurora-atelier .edition {
+    #solstice-lab .badge {
       display: inline-flex;
       align-items: center;
       gap: 10px;
+      padding: 10px 14px;
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.22em;
-      padding: 10px 12px;
-      color: var(--ink);
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+      color: var(--ink);
+      box-shadow: inset 0 1px 0 var(--gloss);
       user-select: none;
     }
-    #aurora-atelier .edition .dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff, var(--c2));
-      box-shadow: 0 0 10px var(--c2), 0 0 22px var(--c2);
-    }
-
-    /* Title + sub */
-    #aurora-atelier .hero {
-      position: relative;
-      z-index: 2;
-      margin: 8px 0 16px;
-    }
-    #aurora-atelier .hero h1 {
-      margin: 0 0 8px 0;
-      font-size: clamp(28px, 4.2vw, 46px);
-      line-height: 1.08;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 6px 22px rgba(58, 232, 196, 0.12));
-    }
-    #aurora-atelier .hero p {
-      margin: 0;
-      font-size: clamp(14px, 1.4vw, 16px);
-      color: var(--muted);
-      max-width: 56ch;
-    }
-
-    /* Controls */
-    #aurora-atelier .controls {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin: 18px 0 6px;
-      align-items: center;
-    }
-    #aurora-atelier .cta {
-      appearance: none;
-      border: 0;
-      cursor: pointer;
-      padding: 12px 16px;
-      border-radius: 14px;
-      font-weight: 700;
-      font-size: 14px;
-      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.3s ease, color 0.3s ease;
-      will-change: transform;
-    }
-    #aurora-atelier .cta.primary {
-      color: #0d1328;
-      background: linear-gradient(135deg, var(--c2), var(--c1));
-      box-shadow:
-        0 10px 28px rgba(0,0,0,0.35),
-        0 8px 24px color-mix(in oklab, var(--c2) 40%, transparent);
-    }
-    #aurora-atelier .cta.primary:hover { transform: translateY(-1px); }
-    #aurora-atelier .cta.ghost {
+    #solstice-lab[data-mode="night"] .badge {
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05));
       color: var(--ink);
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-      border: 1px solid var(--line);
     }
-    #aurora-atelier .cta.ghost:hover { transform: translateY(-1px); }
+    #solstice-lab .pulse {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 0 0 rgba(123,223,242,0.7);
+      animation: ping 2.6s ease-out infinite;
+    }
+    @keyframes ping {
+      0% { box-shadow: 0 0 0 0 rgba(123,223,242,0.55); }
+      70% { box-shadow: 0 0 0 14px rgba(123,223,242,0); }
+      100% { box-shadow: 0 0 0 0 rgba(123,223,242,0); }
+    }
 
-    /* Theme picks */
-    #aurora-atelier .theme {
-      margin-left: auto;
+    /* Mode switch */
+    #solstice-lab .switch {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 6px 8px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.04);
       border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.5));
+      color: var(--muted);
+      box-shadow: inset 0 1px 0 var(--gloss);
     }
-    #aurora-atelier .swatch {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.25);
-      box-shadow: inset 0 0 0 1.5px rgba(0,0,0,0.25), 0 0 14px rgba(255,255,255,0.06);
-      cursor: pointer;
-      outline: none;
-      transition: transform 0.15s ease, box-shadow 0.2s ease;
+    #solstice-lab[data-mode="night"] .switch {
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
     }
-    #aurora-atelier .swatch:focus-visible { box-shadow: 0 0 0 3px rgba(255,255,255,0.3); }
-    #aurora-atelier .swatch:hover { transform: translateY(-1px) scale(1.03); }
-    #aurora-atelier .swatch[data-theme="dawn"] { background: conic-gradient(from 200deg, #ffd479, #ff9fbf, #ffd479); }
-    #aurora-atelier .swatch[data-theme="nocturne"] { background: conic-gradient(from 200deg, #7a9cff, #c39bff, #3ae8c4, #7a9cff); }
-    #aurora-atelier .swatch[data-theme="lagoon"] { background: conic-gradient(from 200deg, #36d1dc, #5b86e5, #b3ffab, #36d1dc); }
-
-    /* Chips */
-    #aurora-atelier .chips {
+    #solstice-lab .switch input {
+      appearance: none;
+      width: 40px; height: 22px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.02));
+      border: 1px solid var(--line);
       position: relative;
-      z-index: 2;
+      outline: none;
+      cursor: pointer;
+      transition: background 0.25s ease;
+    }
+    #solstice-lab .switch input::after {
+      content: "";
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, white, rgba(255,255,255,0.7));
+      box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+      transition: transform 0.25s ease;
+    }
+    #solstice-lab .switch input:checked::after { transform: translateX(18px); }
+    #solstice-lab .switch .label {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    /* Hero */
+    #solstice-lab .hero {
+      position: relative;
+      z-index: 3;
+      margin: 6px 0 10px;
+      transform: translateZ(1px);
+    }
+    #solstice-lab .hero h1 {
+      margin: 0 0 6px 0;
+      font-size: clamp(28px, 4.2vw, 48px);
+      line-height: 1.04;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 6px 18px color-mix(in oklab, var(--accent-2) 30%, transparent));
+    }
+    #solstice-lab .hero p {
+      margin: 0;
+      font-size: clamp(14px, 1.3vw, 16px);
+      color: var(--muted);
+      max-width: 60ch;
+    }
+
+    /* Orb */
+    #solstice-lab .orb-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+      margin: 22px 0 14px;
+      transform: translateZ(0);
+      perspective: 800px;
+    }
+    #solstice-lab .orb {
+      width: clamp(140px, 34vw, 240px);
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0.2) 35%, transparent 60%),
+        conic-gradient(from var(--orb-rot), var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-1));
+      box-shadow:
+        0 30px 70px rgba(0,0,0,0.25),
+        inset 0 1px 0 var(--gloss),
+        0 0 0 1px var(--line);
+      transform: rotateX(var(--rx)) rotateY(var(--ry)) translateZ(var(--orb-z));
+      transition: box-shadow 0.3s ease, background 0.6s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    #solstice-lab[data-mode="night"] .orb {
+      background:
+        radial-gradient(circle at 40% 30%, rgba(255,255,255,0.4), rgba(255,255,255,0.05) 40%, transparent 70%),
+        conic-gradient(from var(--orb-rot), var(--accent-3), var(--accent-2), var(--accent-1), var(--accent-3));
+    }
+
+    /* Halo ring */
+    #solstice-lab .orbit {
+      position: absolute;
+      inset: -18%;
+      border-radius: 50%;
+      border: 1px dashed color-mix(in oklab, var(--accent-2) 40%, transparent);
+      transform: rotateX(calc(var(--rx))) rotateY(calc(var(--ry))) translateZ(calc(var(--orb-z) - 12px));
+      opacity: 0.6;
+      filter: blur(0.2px);
+    }
+
+    /* Controls */
+    #solstice-lab .controls {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin: 12px 0 6px;
+    }
+    #solstice-lab .btn {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 14px;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.3s ease, color 0.3s ease;
+      will-change: transform;
+      color: #0d1328;
+      background: linear-gradient(135deg, var(--accent-2), var(--accent-1));
+      box-shadow:
+        0 10px 28px rgba(0,0,0,0.18),
+        0 8px 24px color-mix(in oklab, var(--accent-2) 40%, transparent);
+    }
+    #solstice-lab .btn:hover { transform: translateY(-1px); }
+    #solstice-lab .btn.ghost {
+      color: var(--ink);
+      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+      border: 1px solid var(--line);
+      box-shadow: inset 0 1px 0 var(--gloss);
+    }
+    #solstice-lab[data-mode="night"] .btn.ghost {
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      color: var(--ink);
+    }
+
+    /* Notes */
+    #solstice-lab .notes {
+      position: relative;
+      z-index: 3;
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin: 12px 0 8px;
+      margin: 10px 0 6px;
     }
-    #aurora-atelier .chip {
+    #solstice-lab .note {
       font-size: 12px;
       color: var(--ink);
       padding: 8px 10px;
       border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.55));
       border: 1px dashed var(--line);
-      background: rgba(255,255,255,0.03);
+      box-shadow: inset 0 1px 0 var(--gloss);
     }
-
-    /* Meter ring */
-    #aurora-atelier .meter {
-      position: relative;
-      width: 68px; height: 68px;
-      border-radius: 50%;
-      background:
-        conic-gradient(from calc((var(--t,0))*1deg), var(--c1), var(--c2), var(--c3), var(--c1));
-      padding: 2px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
-    }
-    #aurora-atelier .meter::after {
-      content: "";
-      position: absolute; inset: 6px;
-      border-radius: 50%;
-      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
-      border: 1px solid var(--line);
-      backdrop-filter: blur(2px);
+    #solstice-lab[data-mode="night"] .note {
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+      color: var(--ink);
     }
 
     /* Footer */
-    #aurora-atelier .meta {
+    #solstice-lab .meta {
       position: relative;
-      z-index: 2;
-      margin-top: 16px;
+      z-index: 3;
+      margin-top: 14px;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -349,140 +413,188 @@
       color: var(--muted);
       font-size: 12px;
     }
-    #aurora-atelier .stamp {
+    #solstice-lab .mark {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       white-space: nowrap;
     }
-    #aurora-atelier .stamp .tick {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--c2);
-      box-shadow: 0 0 0 0 rgba(58,232,196,0.9);
-      animation: pulse 2.2s ease-out infinite;
+    #solstice-lab .mark .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent-1);
+      box-shadow: 0 0 12px color-mix(in oklab, var(--accent-1) 60%, transparent);
     }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(58,232,196,0.55); }
-      70% { box-shadow: 0 0 0 10px rgba(58,232,196,0); }
-      100% { box-shadow: 0 0 0 0 rgba(58,232,196,0); }
+
+    /* Stars for night */
+    #solstice-lab[data-mode="night"] .stars {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.9), transparent 60%),
+        radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.8), transparent 60%),
+        radial-gradient(1px 1px at 80% 20%, rgba(255,255,255,0.75), transparent 60%),
+        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.85), transparent 60%),
+        radial-gradient(1px 1px at 25% 60%, rgba(255,255,255,0.75), transparent 60%),
+        radial-gradient(1px 1px at 70% 35%, rgba(255,255,255,0.8), transparent 60%);
+      opacity: 0.5;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      transform: translateZ(-20px);
     }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      #aurora-atelier .glow,
-      #aurora-atelier .shine { animation: none !important; }
-      #aurora-atelier .cta,
-      #aurora-atelier .swatch { transition: none !important; }
-      #aurora-atelier .stamp .tick { animation: none !important; }
+      #solstice-lab .cloud { animation: none !important; }
+      #solstice-lab .orb { transition: none !important; }
+      #solstice-lab .btn,
+      #solstice-lab .switch input { transition: none !important; }
     }
   </style>
 
-  <div class="shell" role="region" aria-label="Interactive Aurora Card">
-    <div class="glow g1" aria-hidden="true"></div>
-    <div class="glow g2" aria-hidden="true"></div>
-    <div class="glow g3" aria-hidden="true"></div>
-    <div class="shine" aria-hidden="true"></div>
+  <div class="poster" role="region" aria-label="Interactive Solstice Poster" style="transform: rotateX(var(--rx)) rotateY(var(--ry));">
+    <div class="cloud c1" aria-hidden="true"></div>
+    <div class="cloud c2" aria-hidden="true"></div>
+    <div class="stars" aria-hidden="true"></div>
 
     <div class="top">
-      <div class="edition"><span class="dot" aria-hidden="true"></span> Edition 50</div>
-      <div class="theme" aria-label="Color theme">
-        <button class="swatch" data-theme="nocturne" aria-label="Nocturne theme"></button>
-        <button class="swatch" data-theme="dawn" aria-label="Dawn theme"></button>
-        <button class="swatch" data-theme="lagoon" aria-label="Lagoon theme"></button>
+      <div class="badge"><span class="pulse" aria-hidden="true"></span> Issue 51</div>
+      <div class="switch" aria-label="Toggle day and night mode">
+        <span class="label">Day</span>
+        <input id="mode-toggle" type="checkbox" role="switch" aria-checked="false" aria-label="Night mode">
+        <span class="label">Night</span>
       </div>
     </div>
 
     <div class="hero">
-      <h1>Hushed Aurora</h1>
-      <p>Quiet gradients, weightless motion, and type that breathes. Move your cursor—let the color follow.</p>
+      <h1>Solstice Poster</h1>
+      <p>Air, light, and quiet motion. Tilt the page, watch the orb breathe.</p>
+    </div>
+
+    <div class="orb-wrap">
+      <div class="orb" aria-hidden="true">
+        <div class="orbit" aria-hidden="true"></div>
+      </div>
     </div>
 
     <div class="controls">
-      <button class="cta primary" aria-label="Begin experience">Begin</button>
-      <button class="cta ghost" aria-label="Let it drift">Drift</button>
-      <div aria-hidden="true" style="flex:1 1 auto;"></div>
-      <div class="meter" title="Ambient ring"></div>
+      <button class="btn" id="breathe" aria-label="Breathe the orb">Breathe</button>
+      <button class="btn ghost" id="still" aria-label="Hold still">Still</button>
+      <div style="flex:1"></div>
+      <div class="note" aria-hidden="true">Accessible contrast</div>
+      <div class="note" aria-hidden="true">Pointer tilt</div>
+      <div class="note" aria-hidden="true">Day/Night</div>
     </div>
 
-    <div class="chips" aria-label="Highlights">
-      <span class="chip">Soft focus</span>
-      <span class="chip">Accessible contrast</span>
-      <span class="chip">Live parallax</span>
-      <span class="chip">Calm micro‑motion</span>
+    <div class="notes" aria-label="Highlights">
+      <span class="note">Soft grain</span>
+      <span class="note">Kinetic orb</span>
+      <span class="note">Calm micro‑motion</span>
+      <span class="note">Zero libraries</span>
     </div>
 
     <div class="meta">
-      <span class="stamp"><span class="tick" aria-hidden="true"></span> Refreshed <span id="last-updated">Last updated: 2025-10-18 21:26:40 EST</span></span>
-      <span aria-hidden="true">“Less, but better.”</span>
+      <span class="mark"><span class="dot" aria-hidden="true"></span> Refreshed <span id="last-updated">Last updated: 2025-10-18 23:14:11 EST</span></span>
+      <span aria-hidden="true">“Make it sing without shouting.”</span>
     </div>
   </div>
 
   <script>
     (function () {
-      const root = document.getElementById('aurora-atelier');
+      const root = document.getElementById('solstice-lab');
+      const poster = root.querySelector('.poster');
+      const orb = root.querySelector('.orb');
+      const toggle = root.querySelector('#mode-toggle');
       const stamp = document.getElementById('last-updated');
-      const meter = root.querySelector('.meter');
+      const breathe = root.querySelector('#breathe');
+      const still = root.querySelector('#still');
 
-      // Update timestamp
+      // Timestamp
       try {
         const now = new Date();
-        const formatter = new Intl.DateTimeFormat(undefined, {
-          dateStyle: 'medium',
-          timeStyle: 'short'
-        });
-        stamp.textContent = formatter.format(now);
+        const fmt = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+        stamp.textContent = fmt.format(now);
       } catch (e) {
         stamp.textContent = new Date().toLocaleString();
       }
 
-      // Theme switching
-      root.querySelectorAll('.swatch').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const theme = btn.getAttribute('data-theme');
-          root.setAttribute('data-theme', theme);
-        }, { passive: true });
-      });
+      // Restore mode
+      const saved = localStorage.getItem('solstice-mode');
+      if (saved === 'night') {
+        root.setAttribute('data-mode', 'night');
+        toggle.checked = true;
+        toggle.setAttribute('aria-checked', 'true');
+      }
 
-      // Parallax and meter tick
-      let raf = null, t = 0;
+      // Mode switch
+      toggle.addEventListener('change', () => {
+        const night = toggle.checked;
+        root.setAttribute('data-mode', night ? 'night' : 'day');
+        toggle.setAttribute('aria-checked', night ? 'true' : 'false');
+        localStorage.setItem('solstice-mode', night ? 'night' : 'day');
+        // gentle flash
+        poster.animate([
+          { filter: 'brightness(1.1)' },
+          { filter: 'brightness(1)' }
+        ], { duration: 360, easing: 'ease-out' });
+      }, { passive: true });
+
+      // Tilt interaction
+      function handleMove(e) {
+        const r = poster.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+        const ry = (x - 0.5) * 10;
+        const rx = (0.5 - y) * 8;
+        root.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+        root.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+        root.style.setProperty('--orb-z', (28 + (x - 0.5) * 4).toFixed(2) + 'px');
+      }
+      poster.addEventListener('pointermove', handleMove);
+
+      // Spin and breathe
+      let raf = null, t = 0, breatheOn = true;
       function loop() {
-        t = (t + 0.8) % 360;
-        meter.style.setProperty('--t', t);
+        t = (t + 0.6) % 360;
+        root.style.setProperty('--orb-rot', t + 'deg');
+        if (breatheOn) {
+          const z = 26 + Math.sin((t / 360) * Math.PI * 2) * 4;
+          root.style.setProperty('--orb-z', z.toFixed(2) + 'px');
+        }
         raf = requestAnimationFrame(loop);
       }
       raf = requestAnimationFrame(loop);
 
-      function onMove(e) {
-        const r = root.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width;
-        const y = (e.clientY - r.top) / r.height;
-        root.style.setProperty('--mx', (x * 2 - 1).toFixed(3));
-        root.style.setProperty('--my', (y * 2 - 1).toFixed(3));
-      }
-      root.addEventListener('pointermove', onMove);
+      breathe.addEventListener('click', () => {
+        breatheOn = true;
+        breathe.animate([{ transform: 'scale(1)' }, { transform: 'scale(0.98)' }, { transform: 'scale(1)' }], { duration: 140, easing: 'ease-out' });
+      }, { passive: true });
+
+      still.addEventListener('click', () => {
+        breatheOn = false;
+        still.animate([{ transform: 'scale(1)' }, { transform: 'scale(0.98)' }, { transform: 'scale(1)' }], { duration: 140, easing: 'ease-out' });
+      }, { passive: true });
 
       // Respect reduced motion
-      const m = window.matchMedia('(prefers-reduced-motion: reduce)');
-      function handleMotionPref() {
-        if (m.matches) {
+      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      function applyMotionPref() {
+        if (mq.matches) {
           if (raf) cancelAnimationFrame(raf);
           raf = null;
         } else if (!raf) {
           raf = requestAnimationFrame(loop);
         }
       }
-      m.addEventListener ? m.addEventListener('change', handleMotionPref) : m.addListener(handleMotionPref);
-      handleMotionPref();
+      mq.addEventListener ? mq.addEventListener('change', applyMotionPref) : mq.addListener(applyMotionPref);
+      applyMotionPref();
 
-      // Buttons micro-interaction
-      root.querySelectorAll('.cta').forEach(b => {
-        b.addEventListener('click', () => {
-          b.animate([
-            { transform: 'scale(1)' },
-            { transform: 'scale(0.98)' },
-            { transform: 'scale(1)' }
-          ], { duration: 140, easing: 'ease-out' });
-        }, { passive: true });
+      // Button press micro-interaction on keyboard
+      root.querySelectorAll('.btn').forEach(b => {
+        b.addEventListener('keydown', (ev) => {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            b.click();
+            ev.preventDefault();
+          }
+        });
       });
     })();
   </script>
