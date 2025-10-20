@@ -73,7 +73,455 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-10-20 12:21:51 EST</span></div>
+<section id="v86" class="v86" data-theme="serene">
+  <style>
+    .v86 {
+      --bg1: #0c1222;
+      --bg2: #141f3d;
+      --fg: #e9eef7;
+      --muted: #b7c3d9;
+      --card: rgba(255,255,255,0.06);
+      --stroke: rgba(255,255,255,0.22);
+      --ring: rgba(125, 211, 252, 0.7);
+      --a1: #7dd3fc;
+      --a2: #a78bfa;
+      --highlight: #94f6c2;
+
+      position: relative;
+      isolation: isolate;
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 24px;
+      min-height: 520px;
+      color: var(--fg);
+      background:
+        radial-gradient(1200px 600px at 15% 0%, rgba(255,255,255,0.04), transparent 60%),
+        linear-gradient(140deg, var(--bg1), var(--bg2));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 20px 60px rgba(0,0,0,0.35);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    .v86[data-theme="vibrant"] {
+      --bg1: #150f2b;
+      --bg2: #2a0f46;
+      --a1: #ff8fb2;
+      --a2: #ffd166;
+      --ring: rgba(255, 166, 158, 0.7);
+      --highlight: #ffe9a3;
+      --card: rgba(255,255,255,0.08);
+      --stroke: rgba(255,255,255,0.28);
+    }
+    .v86 .bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .v86 .blob {
+      position: absolute;
+      width: 55vmin;
+      height: 55vmin;
+      filter: blur(50px) saturate(120%);
+      opacity: 0.65;
+      mix-blend-mode: screen;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--a1), transparent 60%),
+                  radial-gradient(circle at 70% 70%, var(--a2), transparent 60%);
+      animation: floatA 18s ease-in-out infinite;
+      transform: translate3d(0,0,0);
+    }
+    .v86 .blob.b2 {
+      width: 65vmin;
+      height: 65vmin;
+      top: -20vmin;
+      right: -15vmin;
+      opacity: 0.5;
+      animation: floatB 22s ease-in-out infinite;
+      filter: blur(70px) saturate(130%);
+    }
+    .v86 .grid {
+      position: absolute;
+      inset: -2px;
+      background:
+        radial-gradient(circle at var(--mx, 60%) var(--my, 30%), rgba(255,255,255,0.1), transparent 40%) top left / 100% 100% no-repeat,
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 60px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 60px);
+      mask: radial-gradient(1200px 600px at 50% 30%, #000 50%, transparent 90%);
+      opacity: 0.4;
+    }
+    @keyframes floatA {
+      0%,100% { transform: translate3d(-10%, 5%, 0) scale(1); }
+      50%     { transform: translate3d(15%, -5%, 0) scale(1.1); }
+    }
+    @keyframes floatB {
+      0%,100% { transform: translate3d(10%, -5%, 0) scale(1); }
+      50%     { transform: translate3d(-10%, 10%, 0) scale(0.95); }
+    }
+
+    .v86 .top {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .v86 .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 650;
+      letter-spacing: 0.2px;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .v86 .brand .mark {
+      position: relative;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--highlight), transparent 70%);
+      box-shadow: 0 0 14px var(--highlight), inset 0 0 10px rgba(255,255,255,0.6);
+      animation: breathe 3.2s ease-in-out infinite;
+    }
+    @keyframes breathe {
+      0%,100% { transform: scale(1); opacity: 0.85; }
+      50%     { transform: scale(1.18); opacity: 1; }
+    }
+    .v86 .controls {
+      display: inline-flex;
+      gap: 8px;
+    }
+    .v86 .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      color: var(--fg);
+      background:
+        linear-gradient(var(--card), var(--card)) padding-box,
+        conic-gradient(from 140deg, var(--a1), var(--a2)) border-box;
+      border: 1px solid transparent;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+      transition: transform 200ms ease, box-shadow 200ms ease, background 300ms ease, opacity 200ms ease;
+      cursor: pointer;
+    }
+    .v86 .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,0.28); }
+    .v86 .btn:active { transform: translateY(0); box-shadow: 0 6px 18px rgba(0,0,0,0.2); }
+    .v86 .btn[aria-pressed="true"] { opacity: 0.9; }
+
+    .v86 .hero {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      padding: 28px 8px 20px;
+      perspective: 1200px;
+    }
+    .v86 .card {
+      position: relative;
+      width: min(820px, 100%);
+      margin: 22px auto 14px;
+      border-radius: 20px;
+      background:
+        linear-gradient(160deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
+      border: 1px solid var(--stroke);
+      backdrop-filter: blur(18px) saturate(130%);
+      -webkit-backdrop-filter: blur(18px) saturate(130%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.3),
+        0 30px 70px rgba(0,0,0,0.35);
+      padding: 28px 24px;
+      transform-style: preserve-3d;
+      transition: transform 400ms cubic-bezier(.2,.7,.3,1);
+    }
+    .v86 .card:before {
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius: inherit;
+      padding:1px;
+      background: linear-gradient(140deg, rgba(255,255,255,0.6), rgba(255,255,255,0) 40%) border-box;
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    .v86 h1 {
+      margin: 2px 0 8px;
+      font-size: clamp(34px, 5.2vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--a1), var(--a2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.35));
+    }
+    .v86 p.lede {
+      margin: 6px 0 18px;
+      font-size: clamp(16px, 2.2vw, 18px);
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 65ch;
+    }
+    .v86 .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 8px 0 2px;
+    }
+    .v86 .chipbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .v86 .chip {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.16);
+      color: var(--fg);
+      opacity: 0.9;
+    }
+    .v86 .meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .v86 .meta .live-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--highlight);
+      box-shadow: 0 0 8px var(--highlight);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); opacity: 0.7; }
+      50%     { transform: scale(1.5); opacity: 1; }
+    }
+
+    .v86 .foot {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      opacity: 0.9;
+    }
+    .v86 .foot .tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .v86 .tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px dashed rgba(255,255,255,0.15);
+    }
+
+    .v86 .btn:focus-visible,
+    .v86 .card:focus-visible {
+      outline: 2px solid var(--ring);
+      outline-offset: 2px;
+    }
+
+    .v86[data-paused="true"] * {
+      animation-play-state: paused !important;
+      transition-duration: 0ms !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .v86 * {
+        animation: none !important;
+        transition: none !important;
+      }
+      .v86 .card,
+      .v86 .btn:hover,
+      .v86 .btn:active {
+        transform: none !important;
+      }
+    }
+  </style>
+
+  <div class="bg" aria-hidden="true">
+    <div class="blob b1" style="top: 35%; left: -20vmin;"></div>
+    <div class="blob b2"></div>
+    <div class="grid"></div>
+  </div>
+
+  <div class="top">
+    <div class="brand">
+      <span class="mark" aria-hidden="true"></span>
+      Studio Lumen
+    </div>
+    <div class="controls">
+      <button class="btn" data-action="theme" aria-pressed="false" title="Toggle vibe">Toggle Vibe</button>
+      <button class="btn" data-action="pause" aria-pressed="false" title="Pause motion">Pause Motion</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <article class="card" tabindex="0" aria-label="Showcase card">
+      <h1>The Soft Interface</h1>
+      <p class="lede">A small celebration of calm, color, and motion. Thoughtful rhythm, gentle gradients, and just enough play to keep ideas breathing.</p>
+
+      <div class="actions">
+        <button class="btn" data-action="surprise" title="Surprise me">Surprise Me</button>
+        <button class="btn" data-action="focus" title="Focus mode">Focus Mode</button>
+      </div>
+
+      <div class="chipbar" aria-hidden="true">
+        <span class="chip">Clarity</span>
+        <span class="chip">Warmth</span>
+        <span class="chip">Motion</span>
+        <span class="chip">Play</span>
+      </div>
+
+      <div class="meta">
+        <span class="live-dot" aria-hidden="true"></span>
+        <span class="meta-label">Refreshed</span>
+        <span id="last-updated">Last updated: 2025-10-20 13:15:31 EST</span>
+      </div>
+    </article>
+  </div>
+
+  <div class="foot">
+    <div class="tags">
+      <span class="tag">Gradient Glass</span>
+      <span class="tag">Parallax Tilt</span>
+      <span class="tag">Accessible Contrast</span>
+    </div>
+    <div class="tags">
+      <span class="tag">Serene/Vibrant</span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('v86');
+      const updated = root.querySelector('#last-updated');
+
+      // Respect saved preferences
+      try {
+        const savedTheme = localStorage.getItem('v86-theme');
+        if (savedTheme) root.dataset.theme = savedTheme;
+        const savedPaused = localStorage.getItem('v86-paused');
+        if (savedPaused === 'true') root.dataset.paused = 'true';
+      } catch (e) {}
+
+      // Reduced motion default
+      const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduce) root.dataset.paused = 'true';
+
+      // Last updated timestamp
+      const fmt = new Intl.DateTimeFormat([], { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit', timeZoneName:'short' });
+      updated.textContent = 'Last updated: ' + fmt.format(new Date());
+
+      // Controls
+      const btnTheme = root.querySelector('[data-action="theme"]');
+      const btnPause = root.querySelector('[data-action="pause"]');
+      const btnSurprise = root.querySelector('[data-action="surprise"]');
+      const btnFocus = root.querySelector('[data-action="focus"]');
+
+      function setTheme(next) {
+        root.dataset.theme = next;
+        btnTheme.setAttribute('aria-pressed', next === 'vibrant' ? 'true' : 'false');
+        try { localStorage.setItem('v86-theme', next); } catch (e) {}
+      }
+      btnTheme.addEventListener('click', () => {
+        const next = root.dataset.theme === 'serene' ? 'vibrant' : 'serene';
+        setTheme(next);
+      });
+      setTheme(root.dataset.theme || 'serene');
+
+      function setPaused(paused) {
+        if (paused) root.dataset.paused = 'true';
+        else root.removeAttribute('data-paused');
+        btnPause.setAttribute('aria-pressed', paused ? 'true' : 'false');
+        try { localStorage.setItem('v86-paused', paused ? 'true' : 'false'); } catch (e) {}
+      }
+      btnPause.addEventListener('click', () => setPaused(!(root.dataset.paused === 'true')));
+      setPaused(root.dataset.paused === 'true');
+
+      // Tilt and parallax
+      const card = root.querySelector('.card');
+      const bg = root.querySelector('.grid');
+      let tiltEnabled = !('ontouchstart' in window) && !prefersReduce;
+
+      function handleMove(e) {
+        if (!tiltEnabled || root.dataset.paused === 'true') return;
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        const rx = (0.5 - y) * 10; // rotateX
+        const ry = (x - 0.5) * 14; // rotateY
+        card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+        root.style.setProperty('--mx', `${Math.round(x*100)}%`);
+        root.style.setProperty('--my', `${Math.round(y*100)}%`);
+      }
+      function resetTilt() {
+        card.style.transform = '';
+      }
+      card.addEventListener('pointermove', handleMove);
+      card.addEventListener('pointerleave', resetTilt);
+
+      // Surprise: quick color bloom
+      btnSurprise.addEventListener('click', () => {
+        // flash highlight via CSS variable tweak
+        const originalA1 = getComputedStyle(root).getPropertyValue('--a1').trim();
+        const originalA2 = getComputedStyle(root).getPropertyValue('--a2').trim();
+        root.style.setProperty('--a1', '#9ef9ff');
+        root.style.setProperty('--a2', '#b2f5ea');
+        setTimeout(() => {
+          root.style.setProperty('--a1', originalA1);
+          root.style.setProperty('--a2', originalA2);
+        }, 800);
+      });
+
+      // Focus mode: hides chrome for quiet reading
+      let focused = false;
+      btnFocus.addEventListener('click', () => {
+        focused = !focused;
+        root.querySelector('.top').style.display = focused ? 'none' : '';
+        root.querySelector('.foot').style.display = focused ? 'none' : '';
+        btnFocus.setAttribute('aria-pressed', focused ? 'true' : 'false');
+      });
+
+      // Soft keyboard focus helper
+      root.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && focused) {
+          focused = false;
+          root.querySelector('.top').style.display = '';
+          root.querySelector('.foot').style.display = '';
+          btnFocus.setAttribute('aria-pressed', 'false');
+        }
+      });
+
+      // Make grid react to overall pointer moves too
+      root.addEventListener('pointermove', (e) => {
+        const r = root.getBoundingClientRect();
+        const mx = ((e.clientX - r.left) / r.width) * 100;
+        const my = ((e.clientY - r.top) / r.height) * 100;
+        root.style.setProperty('--mx', `${mx}%`);
+        root.style.setProperty('--my', `${my}%`);
+      });
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
