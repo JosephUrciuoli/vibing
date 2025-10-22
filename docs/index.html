@@ -73,7 +73,449 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-10-22 17:13:23 EST</span></div>
+<section class="v134">
+  <style>
+    .v134 {
+      --h: 212;          /* base hue */
+      --sat: 72%;
+      --bg1: hsl(calc(var(--h) + 20) 68% 10%);
+      --bg2: hsl(calc(var(--h) - 20) 62% 5%);
+      --text: hsl(0 0% 96%);
+      --muted: hsl(220 10% 78% / 0.8);
+      --accent-1: hsl(calc(var(--h) + 6) 90% 62%);
+      --accent-2: hsl(calc(var(--h) - 8) 86% 58%);
+      --outline: hsl(0 0% 100% / 0.12);
+      --glow: 0.4;       /* 0–1, controlled by slider */
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      isolation: isolate;
+      min-height: 420px;
+      display: grid;
+      place-items: center;
+      padding: clamp(16px, 4vw, 28px);
+      background: radial-gradient(1200px 500px at 10% -5%, hsl(calc(var(--h) + 50) 70% 18% / 0.25), transparent),
+                  radial-gradient(800px 800px at 110% 120%, hsl(calc(var(--h) - 40) 70% 16% / 0.22), transparent),
+                  linear-gradient(135deg, var(--bg1), var(--bg2));
+      box-shadow:
+        inset 0 1px 0 hsl(0 0% 100% / 0.06),
+        0 20px 60px hsl(0 0% 0% / 0.4);
+      border: 1px solid var(--outline);
+      font-family: ui-sans-serif, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+    }
+    /* Soft moving aurora layers */
+    .v134 .aurora {
+      position: absolute;
+      inset: -30%;
+      filter: blur(42px) saturate(120%);
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.40;
+      transform: translateZ(0);
+      animation: v134-pan 26s linear infinite;
+    }
+    .v134 .aurora.a1 {
+      background:
+        radial-gradient(40% 30% at 30% 20%, hsl(calc(var(--h) - 30) 95% 60% / 0.25), transparent 60%),
+        radial-gradient(35% 35% at 80% 60%, hsl(calc(var(--h) + 40) 95% 62% / 0.28), transparent 60%),
+        radial-gradient(28% 28% at 10% 85%, hsl(calc(var(--h) + 10) 95% 60% / 0.22), transparent 60%);
+    }
+    .v134 .aurora.a2 {
+      background:
+        radial-gradient(30% 40% at 70% 20%, hsl(calc(var(--h) + 80) 90% 65% / 0.25), transparent 60%),
+        radial-gradient(35% 30% at 20% 70%, hsl(calc(var(--h) - 60) 90% 66% / 0.26), transparent 60%);
+      animation-duration: 34s;
+      animation-direction: reverse;
+    }
+    @keyframes v134-pan {
+      0% { transform: translate(-6%, -4%) scale(1.08) rotate(0deg); }
+      50% { transform: translate(6%, 4%) scale(1.08) rotate(180deg); }
+      100% { transform: translate(-6%, -4%) scale(1.08) rotate(360deg); }
+    }
+    /* Subtle grain */
+    .v134 .grain {
+      position: absolute; inset: -2px;
+      pointer-events: none;
+      opacity: 0.06;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, #fff, transparent 40%),
+        radial-gradient(1px 1px at 80% 40%, #fff, transparent 40%),
+        radial-gradient(1px 1px at 30% 80%, #fff, transparent 40%),
+        radial-gradient(1px 1px at 60% 60%, #fff, transparent 40%);
+      background-size: 140px 140px, 180px 180px, 160px 160px, 200px 200px;
+      animation: v134-grain 9s steps(10) infinite;
+      mix-blend-mode: overlay;
+    }
+    @keyframes v134-grain {
+      0% { transform: translate(0,0); }
+      100% { transform: translate(-20px, 15px); }
+    }
+
+    /* Content card with 3D tilt */
+    .v134 .card {
+      position: relative;
+      width: min(980px, 100%);
+      border-radius: 18px;
+      background: linear-gradient(180deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.02));
+      border: 1px solid hsl(0 0% 100% / 0.12);
+      box-shadow:
+        0 24px 60px hsl(calc(var(--h) - 20) 60% 10% / 0.45),
+        0 4px 18px hsl(0 0% 0% / 0.35);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      padding: clamp(20px, 4.5vw, 36px);
+      transform-style: preserve-3d;
+      transition: box-shadow 300ms ease, transform 300ms ease;
+      perspective: 1000px;
+    }
+    .v134 .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      opacity: 0.95;
+    }
+    .v134 .mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      background: conic-gradient(from 180deg, var(--accent-1), var(--accent-2), var(--accent-1));
+      box-shadow: 0 0 0 2px hsl(0 0% 100% / 0.10), 0 10px 22px hsl(calc(var(--h) + 4) 90% 55% / calc(0.55 * var(--glow)));
+      transform: translateZ(24px);
+    }
+    .v134 .brand {
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: var(--muted);
+      transform: translateZ(22px);
+    }
+
+    .v134 .title {
+      font-size: clamp(28px, 5.6vw, 60px);
+      line-height: 1.06;
+      margin: 8px 0 8px 0;
+      background: linear-gradient(90deg, var(--text), hsl(0 0% 100% / 0.75));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-wrap: balance;
+      transform: translateZ(26px);
+      letter-spacing: -0.01em;
+    }
+    .v134 .subtitle {
+      margin: 0 0 18px 0;
+      font-size: clamp(14px, 2.2vw, 18px);
+      color: hsl(0 0% 95% / 0.85);
+      max-width: 56ch;
+      transform: translateZ(20px);
+    }
+
+    /* Orbital sculpture */
+    .v134 .orbital {
+      position: relative;
+      display: grid;
+      place-items: center;
+      margin: 14px 0 22px 0;
+      min-height: 160px;
+      transform: translateZ(16px);
+    }
+    .v134 .ring {
+      width: clamp(180px, 38vw, 320px);
+      height: clamp(180px, 38vw, 320px);
+      border-radius: 50%;
+      background:
+        conic-gradient(from 0deg, var(--accent-1), var(--accent-2), var(--accent-1));
+      -webkit-mask: radial-gradient(closest-side, transparent 62%, black 64% 100%);
+              mask: radial-gradient(closest-side, transparent 62%, black 64% 100%);
+      filter: blur(calc(6px + 10px * var(--glow)));
+      opacity: 0.9;
+      animation: v134-spin 22s linear infinite;
+      box-shadow:
+        0 0 60px hsl(calc(var(--h) + 0) 100% 60% / calc(0.16 + var(--glow) * 0.4));
+    }
+    @keyframes v134-spin {
+      to { transform: rotate(360deg); }
+    }
+    .v134 .core {
+      position: absolute;
+      width: clamp(70px, 18vw, 120px);
+      height: clamp(70px, 18vw, 120px);
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, hsl(0 0% 100% / 0.9), hsl(0 0% 100% / 0.15) 45%, transparent 60%),
+                  radial-gradient(circle at 50% 65%, var(--accent-1), var(--accent-2) 65%);
+      box-shadow:
+        0 10px 30px hsl(0 0% 0% / 0.35),
+        0 18px 60px hsl(calc(var(--h) - 6) 90% 55% / calc(0.25 + var(--glow) * 0.6));
+      animation: v134-breathe 7s ease-in-out infinite;
+    }
+    @keyframes v134-breathe {
+      0%,100% { transform: scale(0.98); }
+      50% { transform: scale(1.02); }
+    }
+    .v134 .dot {
+      position: absolute;
+      width: 9px; height: 9px;
+      background: white;
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 2px hsl(0 0% 100% / 0.35),
+        0 0 18px hsl(calc(var(--h) + 10) 100% 60% / calc(0.4 + var(--glow) * 0.6));
+      transform-origin: 50% calc(50% + clamp(90px, 18vw, 150px));
+      animation: v134-orbit 11s linear infinite;
+    }
+    .v134 .dot.d2 { width: 7px; height: 7px; animation-duration: 17s; animation-direction: reverse; opacity: 0.9; }
+    .v134 .dot.d3 { width: 6px; height: 6px; animation-duration: 9s;  animation-timing-function: ease-in-out; opacity: 0.8; }
+    @keyframes v134-orbit {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Controls */
+    .v134 .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 12px;
+      align-items: center;
+      transform: translateZ(18px);
+      margin-top: 6px;
+    }
+    .v134 .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      color: hsl(0 0% 10%);
+      background: linear-gradient(180deg, hsl(0 0% 100% / 0.92), hsl(0 0% 100% / 0.8));
+      box-shadow:
+        inset 0 1px 0 hsl(0 0% 100% / 0.8),
+        0 6px 16px hsl(0 0% 0% / 0.22);
+      transition: transform 120ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+    .v134 .btn:hover { transform: translateY(-1px); }
+    .v134 .btn:active { transform: translateY(0); box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.8), 0 2px 10px hsl(0 0% 0% / 0.25); }
+    .v134 .btn.primary {
+      color: white;
+      background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+      box-shadow:
+        inset 0 0 0 1px hsl(0 0% 100% / 0.18),
+        0 10px 26px hsl(calc(var(--h) + 10) 90% 55% / calc(0.25 + var(--glow) * 0.6));
+    }
+    .v134 .btn.ghost {
+      color: var(--text);
+      background: linear-gradient(180deg, hsl(0 0% 100% / 0.10), hsl(0 0% 100% / 0.06));
+      border: 1px solid hsl(0 0% 100% / 0.18);
+      box-shadow: 0 6px 14px hsl(0 0% 0% / 0.22);
+    }
+    .v134 .slider {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      border: 1px solid hsl(0 0% 100% / 0.16);
+      background: hsl(0 0% 100% / 0.06);
+      padding: 8px 10px;
+      border-radius: 12px;
+      box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.12);
+    }
+    .v134 input[type="range"] {
+      accent-color: var(--accent-1);
+      width: 140px;
+      height: 4px;
+      cursor: pointer;
+      background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+      border-radius: 999px;
+      appearance: none;
+      outline: none;
+    }
+    .v134 input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid hsl(0 0% 0% / 0.3);
+      box-shadow: 0 6px 14px hsl(0 0% 0% / 0.25);
+      margin-top: -6px;
+    }
+    .v134 input[type="range"]::-moz-range-thumb {
+      width: 16px; height: 16px; border-radius: 50%;
+      background: white; border: 2px solid hsl(0 0% 0% / 0.3);
+    }
+
+    .v134 .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      transform: translateZ(16px);
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .v134 .badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .v134 .badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid hsl(0 0% 100% / 0.18);
+      background: hsl(0 0% 100% / 0.06);
+      color: hsl(0 0% 100% / 0.82);
+    }
+
+    /* Pause state */
+    .v134.paused .aurora,
+    .v134.paused .ring,
+    .v134.paused .core,
+    .v134.paused .dot,
+    .v134.paused .grain { animation-play-state: paused !important; }
+
+    /* 3D tilt effect via CSS vars */
+    .v134 .card {
+      --rx: 0deg; --ry: 0deg;
+      transform: rotateX(var(--rx)) rotateY(var(--ry));
+    }
+
+    /* Accessibility & reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .v134 * { animation: none !important; transition: none !important; }
+    }
+  </style>
+
+  <div class="aurora a1" aria-hidden="true"></div>
+  <div class="aurora a2" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="card" role="region" aria-label="Shaped by Light interactive">
+    <div class="header">
+      <div class="mark" aria-hidden="true"></div>
+      <div class="brand">Edition 134</div>
+    </div>
+
+    <h2 class="title">Shaped by Light</h2>
+    <p class="subtitle">A kinetic vignette: calm gradients, gentle depth, and a touch of play. Move your cursor. Tweak the glow. Shuffle the palette.</p>
+
+    <div class="orbital" aria-hidden="true">
+      <div class="ring"></div>
+      <div class="core"></div>
+      <div class="dot d1"></div>
+      <div class="dot d2"></div>
+      <div class="dot d3"></div>
+    </div>
+
+    <div class="controls">
+      <button class="btn primary" id="v134-shuffle" type="button" aria-label="Shuffle color palette">Shuffle palette</button>
+      <button class="btn ghost" id="v134-motion" type="button" aria-pressed="false" aria-label="Pause motion">Pause motion</button>
+      <label class="slider" for="v134-glow">
+        <span>Glow</span>
+        <input id="v134-glow" type="range" min="0" max="100" value="40" />
+      </label>
+    </div>
+
+    <div class="footer">
+      <div class="badges" role="list" aria-label="design cues">
+        <span class="badge" role="listitem">Soft edges</span>
+        <span class="badge" role="listitem">Quiet motion</span>
+        <span class="badge" role="listitem">High contrast</span>
+      </div>
+      <small>Refreshed <span id="last-updated">Last updated: 2025-10-22 18:14:23 EST</span></small>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.currentScript.closest('.v134');
+      const card = root.querySelector('.card');
+      const shuffleBtn = root.querySelector('#v134-shuffle');
+      const motionBtn  = root.querySelector('#v134-motion');
+      const glowRange  = root.querySelector('#v134-glow');
+      const updated    = root.querySelector('#last-updated');
+
+      // Last updated
+      try {
+        const fmt = new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'short', timeZoneName: 'short' });
+        updated.textContent = fmt.format(new Date());
+      } catch (e) {
+        updated.textContent = new Date().toLocaleString();
+      }
+
+      // 3D tilt
+      let rafId;
+      function handleTilt(e) {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX ?? (e.touches && e.touches[0].clientX)) - r.left;
+        const y = (e.clientY ?? (e.touches && e.touches[0].clientY)) - r.top;
+        const px = (x / r.width) - 0.5;
+        const py = (y / r.height) - 0.5;
+        const max = 9; // degrees
+        const rx = (-py * max).toFixed(2) + 'deg';
+        const ry = ( px * max).toFixed(2) + 'deg';
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          card.style.setProperty('--rx', rx);
+          card.style.setProperty('--ry', ry);
+        });
+      }
+      function resetTilt() {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      }
+      card.addEventListener('mousemove', handleTilt, { passive: true });
+      card.addEventListener('mouseleave', resetTilt);
+      card.addEventListener('touchmove', handleTilt, { passive: true });
+      card.addEventListener('touchend', resetTilt);
+
+      // Shuffle palette
+      function shufflePalette() {
+        const h = Math.floor(Math.random() * 360);
+        root.style.setProperty('--h', h);
+        // micro flash highlight
+        card.animate([{ boxShadow: getComputedStyle(card).boxShadow }, { boxShadow: '0 0 0 0 transparent' }], { duration: 260, easing: 'ease-out' });
+      }
+      shuffleBtn.addEventListener('click', shufflePalette);
+
+      // Pause/resume motion
+      motionBtn.addEventListener('click', () => {
+        const paused = root.classList.toggle('paused');
+        motionBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+        motionBtn.textContent = paused ? 'Resume motion' : 'Pause motion';
+      });
+
+      // Glow control
+      function setGlow(v) {
+        const n = Math.max(0, Math.min(100, Number(v))) / 100;
+        root.style.setProperty('--glow', n.toString());
+      }
+      glowRange.addEventListener('input', (e) => setGlow(e.target.value));
+      setGlow(glowRange.value);
+
+      // Keyboard affordance for tilt
+      card.addEventListener('keydown', (e) => {
+        const step = 2.5;
+        const curX = parseFloat(getComputedStyle(card).getPropertyValue('--ry')) || 0;
+        const curY = parseFloat(getComputedStyle(card).getPropertyValue('--rx')) || 0;
+        if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)) {
+          e.preventDefault();
+          let nx = curX, ny = curY;
+          if (e.key === 'ArrowLeft')  nx = Math.max(-9, curX - step);
+          if (e.key === 'ArrowRight') nx = Math.min( 9, curX + step);
+          if (e.key === 'ArrowUp')    ny = Math.max(-9, curY - step);
+          if (e.key === 'ArrowDown')  ny = Math.min( 9, curY + step);
+          card.style.setProperty('--ry', nx + 'deg');
+          card.style.setProperty('--rx', ny + 'deg');
+        }
+      });
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
