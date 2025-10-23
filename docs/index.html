@@ -73,386 +73,429 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="v136" aria-label="Aurora Observatory">
+<section class="v137" aria-label="Solstice Sundial Studio">
   <style>
-    .v136 {
-      --h: 210;           /* base aurora hue */
-      --drift: 0.62;      /* 0–1, controlled by slider */
-      --mx: 0px;          /* pointer parallax X */
-      --my: 0px;          /* pointer parallax Y */
-      --ink: hsl(220 15% 92%);
-      --muted: hsl(220 10% 70%);
-      --panel: hsl(220 22% 8% / 0.6);
+    .v137 {
+      /* Theme tokens (default: Dawn) */
+      --bg-a: hsl(42 82% 96%);
+      --bg-b: hsl(203 88% 97%);
+      --ink: hsl(225 30% 14%);
+      --muted: hsl(225 12% 40%);
+      --accent: hsl(28 90% 52%);
+      --beam: hsl(45 100% 70% / 0.55);
+      --ring: hsl(220 15% 85%);
+      --panel: hsl(0 0% 100% / 0.6);
+      --shadow: 0 30px 80px hsl(220 60% 4% / 0.20);
+      --px: 0px; --py: 0px;
+      --angle: -90deg;            /* 12:00 at top */
+      --spread: 64deg;            /* width of the light wedge */
+      --breath: 16s;              /* subtle ambient pulse */
       position: relative;
-      overflow: hidden;
-      border-radius: 26px;
       isolation: isolate;
-      min-height: 520px;
-      padding: clamp(18px, 4vw, 28px);
-      background:
-        radial-gradient(1200px 800px at -20% -20%, hsl(calc(var(--h) + 90) 90% 18% / 0.55), transparent 60%),
-        radial-gradient(800px 600px at 120% 120%, hsl(calc(var(--h) - 40) 90% 18% / 0.45), transparent 60%),
-        linear-gradient(180deg, hsl(233 50% 5%), hsl(228 46% 8%));
-      box-shadow:
-        inset 0 1px 0 hsl(0 0% 100% / 0.06),
-        0 30px 80px hsl(240 50% 2% / 0.55);
-      font-family: ui-sans-serif,-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial;
+      overflow: hidden;
+      min-height: 560px;
+      border-radius: 28px;
+      padding: clamp(18px, 4.6vw, 34px);
       color: var(--ink);
-    }
-    .v136:focus-within { outline: 2px solid hsl(var(--h) 90% 60% / 0.45); outline-offset: 2px; }
-
-    /* Ambient glows */
-    .v136 .glow {
-      position: absolute; inset: -20%;
+      font-family: ui-sans-serif, -apple-system, system-ui, Segoe UI, Roboto, Helvetica, Arial;
       background:
-        radial-gradient(60% 50% at 30% 30%, hsl(var(--h) 92% 58% / 0.18), transparent 60%),
-        radial-gradient(50% 60% at 70% 70%, hsl(calc(var(--h) + 60) 92% 62% / 0.18), transparent 60%),
-        radial-gradient(40% 40% at 80% 20%, hsl(calc(var(--h) - 40) 92% 60% / 0.14), transparent 60%);
-      filter: blur(calc(40px + 40px * var(--drift)));
-      transform: translate(calc(var(--mx) * 0.05), calc(var(--my) * 0.05));
-      pointer-events: none;
+        radial-gradient(120% 100% at -20% -40%, var(--bg-a), transparent 60%),
+        radial-gradient(130% 90% at 120% 120%, var(--bg-b), transparent 50%),
+        linear-gradient(180deg, hsl(0 0% 100%), hsl(210 60% 98%));
+      box-shadow:
+        inset 0 1px 0 hsl(0 0% 100% / 0.65),
+        var(--shadow);
+    }
+
+    /* Ambient cloud paints */
+    .v137 .paint {
+      position: absolute; inset: -20%;
+      pointer-events: none; mix-blend-mode: multiply;
+      background:
+        radial-gradient(60% 50% at 20% 30%, hsl(46 90% 75% / 0.35), transparent 60%),
+        radial-gradient(50% 60% at 80% 70%, hsl(200 78% 80% / 0.30), transparent 60%),
+        radial-gradient(40% 40% at 60% 20%, hsl(320 70% 86% / 0.22), transparent 60%);
+      filter: blur(40px) saturate(105%);
+      transform: translate(var(--px), var(--py));
+      animation: v137-paint var(--breath) ease-in-out infinite alternate;
+    }
+    .v137 .paint.p2 {
       mix-blend-mode: screen;
-      animation: v136-glow calc(36s - 16s * var(--drift)) ease-in-out infinite alternate;
+      opacity: 0.45;
+      filter: blur(60px) saturate(120%);
+      animation-duration: calc(var(--breath) * 1.25);
+      transform: translate(calc(var(--px) * -0.4), calc(var(--py) * -0.3));
     }
-    .v136 .glow.g2 {
-      animation-duration: calc(44s - 18s * var(--drift));
-      transform: translate(calc(var(--mx) * -0.04), calc(var(--my) * -0.03)) rotate(10deg);
-      opacity: 0.9;
-    }
-    @keyframes v136-glow {
-      0% { translate: 0 0; }
-      100% { translate: -4% 4%; }
-    }
+    @keyframes v137-paint { to { translate: -3% 4%; } }
 
-    /* Grain + stars */
-    .v136 .stars {
-      position: absolute; inset: -2px;
+    /* Gentle texture */
+    .v137 .grain {
+      position: absolute; inset: 0; pointer-events: none; opacity: 0.10;
       background-image:
-        radial-gradient(1px 1px at 10% 20%, hsl(0 0% 100% / 0.9), transparent 40%),
-        radial-gradient(1px 1px at 70% 60%, hsl(0 0% 100% / 0.7), transparent 40%),
-        radial-gradient(1px 1px at 30% 80%, hsl(0 0% 100% / 0.8), transparent 40%),
-        radial-gradient(1px 1px at 85% 30%, hsl(0 0% 100% / 0.6), transparent 40%);
-      background-size: 160px 160px, 220px 220px, 260px 260px, 200px 200px;
-      opacity: 0.35;
-      mix-blend-mode: overlay;
-      animation: v136-stars 24s linear infinite;
-      pointer-events: none;
+        radial-gradient(1px 1px at 10% 20%, hsl(220 20% 10% / 0.5), transparent 40%),
+        radial-gradient(1px 1px at 70% 60%, hsl(220 20% 10% / 0.35), transparent 40%),
+        radial-gradient(1px 1px at 30% 80%, hsl(220 20% 10% / 0.4), transparent 40%),
+        radial-gradient(1px 1px at 85% 30%, hsl(220 20% 10% / 0.3), transparent 40%);
+      background-size: 180px 180px, 260px 260px, 220px 220px, 200px 200px;
+      mix-blend-mode: multiply;
+      animation: v137-grain 24s linear infinite;
     }
-    @keyframes v136-stars { to { transform: translate(-26px, 22px); } }
+    @keyframes v137-grain { to { transform: translate(-28px, 22px); } }
 
-    .v136 .wrap {
-      position: relative;
-      z-index: 2;
-      width: min(1080px, 100%);
-      margin-inline: auto;
-    }
+    .v137 .wrap { position: relative; z-index: 2; width: min(1100px, 100%); margin-inline: auto; }
 
     /* Header */
-    .v136 .head {
+    .v137 .head {
       display: flex; align-items: center; gap: 12px;
-      color: var(--muted);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-weight: 700;
-      font-size: 12px;
-      margin-bottom: 6px;
+      color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase;
+      font-weight: 800; font-size: 12px; margin-bottom: 6px;
     }
-    .v136 .mark {
+    .v137 .mark {
       width: 28px; height: 28px; border-radius: 12px;
       background:
-        radial-gradient(circle at 30% 30%, hsl(0 0% 100% / 0.9), transparent 50%),
-        conic-gradient(from 0deg, hsl(var(--h) 90% 60%), hsl(calc(var(--h) + 60) 90% 55%), hsl(calc(var(--h) + 120) 90% 58%), hsl(var(--h) 90% 60%));
+        radial-gradient(circle at 28% 30%, hsl(0 0% 100% / 0.9), transparent 50%),
+        conic-gradient(from 90deg, var(--accent), hsl(45 90% 65%), var(--accent));
       box-shadow:
-        0 0 0 2px hsl(0 0% 100% / 0.08) inset,
-        0 8px 24px hsl(var(--h) 90% 50% / 0.40);
+        0 0 0 2px hsl(0 0% 100% / 0.7) inset,
+        0 10px 24px hsl(35 90% 50% / 0.35);
     }
 
     /* Title */
-    .v136 .title {
+    .v137 .title {
       margin: 6px 0 8px 0;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      line-height: 1.02;
-      font-size: clamp(34px, 7.2vw, 74px);
-      background: linear-gradient(92deg,
-        hsl(0 0% 100%),
-        hsl(200 30% 92%) 30%,
-        hsl(0 0% 100%) 65%,
-        hsl(200 30% 92%) 100%);
+      font-weight: 900; letter-spacing: -0.02em; line-height: 1.02;
+      font-size: clamp(36px, 7.5vw, 76px);
+      background: linear-gradient(96deg, hsl(225 30% 16%), hsl(225 20% 26%) 40%, var(--accent) 60%, hsl(225 30% 16%));
       -webkit-background-clip: text; background-clip: text; color: transparent;
       text-wrap: balance;
     }
-    .v136 .subtitle {
-      font-size: clamp(14px, 2.2vw, 18px);
-      color: hsl(220 12% 80%);
-      max-width: 70ch;
-      margin: 0 0 16px 0;
+    .v137 .subtitle {
+      font-size: clamp(14px, 2.1vw, 18px);
+      color: var(--muted);
+      max-width: 70ch; margin: 0 0 16px 0;
     }
 
     /* Scene */
-    .v136 .scene {
-      position: relative;
-      height: clamp(280px, 38vw, 380px);
-      margin: 16px 0 20px 0;
-      display: grid;
-      place-items: center;
-      perspective: 1000px;
+    .v137 .scene {
+      display: grid; place-items: center;
+      height: clamp(300px, 40vw, 420px);
+      margin: 18px 0 20px 0; perspective: 1000px;
     }
-
-    .v136 .orb {
+    .v137 .dial {
       position: relative;
-      width: min(360px, 68%);
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
+      width: min(440px, 82%); aspect-ratio: 1 / 1; border-radius: 50%;
       background:
-        radial-gradient(circle at 35% 30%, hsl(0 0% 100% / 0.25), transparent 30%),
-        linear-gradient(180deg, hsl(0 0% 100% / 0.10), hsl(0 0% 100% / 0.0) 50%, hsl(0 0% 100% / 0.06) 100%),
-        radial-gradient(120% 120% at 50% 60%, hsl(var(--h) 80% 55% / 0.25), hsl(calc(var(--h) + 60) 70% 50% / 0.22), hsl(calc(var(--h) + 120) 70% 52% / 0.18), transparent 70%);
-      border: 1px solid hsl(220 20% 90% / 0.14);
+        radial-gradient(closest-side, hsl(0 0% 100%), hsl(220 30% 98%) 58%, hsl(220 25% 95%)),
+        radial-gradient(120% 120% at 30% 20%, hsl(0 0% 100% / 0.9), transparent 50%);
+      border: 1px solid hsl(220 20% 80% / 0.6);
       box-shadow:
-        inset 0 1px 0 hsl(0 0% 100% / 0.25),
-        inset 0 -40px 80px hsl(240 90% 10% / 0.40),
-        0 30px 60px hsl(240 50% 2% / 0.5);
-      transform: translate3d(calc(var(--mx) * 0.10), calc(var(--my) * 0.10), 0) rotateX(6deg);
+        0 20px 50px hsl(220 70% 4% / 0.18),
+        inset 0 2px 0 hsl(0 0% 100%),
+        inset 0 -60px 120px hsl(220 40% 90% / 0.8);
+      transform: translate3d(calc(var(--px) * 0.25), calc(var(--py) * 0.25), 0) rotateX(6deg);
       overflow: hidden;
     }
-    .v136 .orb::after {
-      content: "";
-      position: absolute; inset: -40%;
+    /* Light wedge */
+    .v137 .beam {
+      position: absolute; inset: -6%;
+      background: conic-gradient(from calc(var(--angle) - var(--spread) / 2),
+                   var(--beam) 0 var(--spread), transparent var(--spread) 360deg);
+      filter: blur(18px) saturate(120%);
+      transform: rotate(0deg);
+      mix-blend-mode: multiply;
+    }
+    /* Face ticks */
+    .v137 .face {
+      position: absolute; inset: 8%; border-radius: 50%;
       background:
-        conic-gradient(from 0deg, hsl(var(--h) 90% 60% / 0.08), transparent 40%, hsl(calc(var(--h) + 120) 90% 60% / 0.08));
-      filter: blur(60px);
-      animation: v136-swirl calc(26s - 10s * var(--drift)) linear infinite;
+        radial-gradient(closest-side, transparent 82%, hsl(220 12% 85% / 0.7) 83% 84%, transparent 84% 100%),
+        repeating-conic-gradient(hsl(220 20% 70% / 0.25) 0 0.6deg, transparent 0.6deg 6deg);
+      mask: radial-gradient(circle at 50% 50%, black 72%, transparent 73%);
+    }
+    .v137 .hour {
+      position: absolute; inset: 12%; border-radius: 50%;
+      background: repeating-conic-gradient(hsl(220 25% 55% / 0.55) 0 1.2deg, transparent 1.2deg 30deg);
+      mask: radial-gradient(circle at 50% 50%, black 75%, transparent 76%);
+    }
+    /* Pointer */
+    .v137 .pointer {
+      position: absolute; left: 50%; top: 50%;
+      width: 2px; height: 36%;
+      background: linear-gradient(180deg, var(--accent), hsl(225 20% 18%));
+      transform-origin: 50% 100%;
+      transform: translate(-50%, -100%) rotate(var(--angle));
+      border-radius: 2px;
+      box-shadow: 0 0 0 1px hsl(0 0% 100% / 0.4), 0 16px 28px hsl(35 90% 50% / 0.18);
+    }
+    .v137 .cap {
+      position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, hsl(0 0% 100%), hsl(220 12% 90%));
+      border: 1px solid hsl(220 25% 78%);
+      box-shadow: 0 6px 12px hsl(220 60% 4% / 0.3);
+    }
+    /* Sun dot that rides the rim */
+    .v137 .orb {
+      position: absolute; left: 50%; top: 50%;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, hsl(0 0% 100%), var(--accent));
+      box-shadow:
+        0 0 20px var(--accent),
+        0 0 40px hsl(35 90% 60% / 0.6),
+        0 10px 22px hsl(35 90% 40% / 0.3);
+      transform-origin: -0% calc(50% + min(180px, 33vmin));
+      transform: rotate(var(--angle)) translateY(calc(min(180px, 33vmin) * -1));
       mix-blend-mode: screen;
     }
-    @keyframes v136-swirl { to { transform: rotate(360deg); } }
 
-    .v136 .ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid hsl(220 30% 96% / 0.14);
-      box-shadow: 0 0 60px hsl(var(--h) 90% 60% / 0.12);
-      transform-origin: center;
-      transform: translate3d(calc(var(--mx) * 0.06), calc(var(--my) * 0.06), 0) rotateX(50deg);
-      animation: v136-spin var(--dur) linear infinite;
-      backdrop-filter: blur(1px);
+    /* Controls */
+    .v137 .controls {
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 12px;
     }
-    .v136 .ring .sat {
-      position: absolute; left: 50%; top: -6px; translate: -50% 0;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, white, hsl(0 0% 100% / 0.0) 60%), hsl(var(--h) 90% 60%);
-      box-shadow:
-        0 0 14px hsl(var(--h) 90% 60% / 0.65),
-        0 0 40px hsl(var(--h) 90% 60% / 0.25);
-      mix-blend-mode: screen;
-    }
-    .v136 .r1 { width: 82%; height: 82%; --dur: calc(32s - 12s * var(--drift)); }
-    .v136 .r2 { width: 106%; height: 106%; --dur: calc(54s - 22s * var(--drift)); animation-direction: reverse; opacity: 0.9; }
-    .v136 .r3 { width: 136%; height: 136%; --dur: calc(72s - 30s * var(--drift)); opacity: 0.8; }
-
-    @keyframes v136-spin { to { transform: translate3d(calc(var(--mx) * 0.06), calc(var(--my) * 0.06), 0) rotateX(50deg) rotate(360deg); } }
-
-    /* HUD / controls */
-    .v136 .controls {
-      display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
-      margin-top: 12px;
-    }
-    .v136 .btn {
-      appearance: none;
-      border: 1px solid hsl(220 24% 96% / 0.12);
-      border-radius: 12px;
-      padding: 10px 14px;
-      font-weight: 800;
-      letter-spacing: 0.01em;
-      background: linear-gradient(180deg, hsl(0 0% 100% / 0.10), hsl(0 0% 100% / 0.06));
-      color: var(--ink);
-      box-shadow:
-        0 1px 0 hsl(0 0% 100% / 0.12) inset,
-        0 10px 22px hsl(240 60% 2% / 0.5);
-      cursor: pointer;
+    .v137 .btn {
+      appearance: none; cursor: pointer;
+      border: 1px solid hsl(220 24% 30% / 0.12);
+      border-radius: 12px; padding: 10px 14px;
+      font-weight: 800; letter-spacing: 0.01em; color: var(--ink);
+      background: linear-gradient(180deg, hsl(0 0% 100% / 0.95), hsl(0 0% 100% / 0.85));
+      box-shadow: 0 1px 0 hsl(0 0% 100%) inset, 0 10px 22px hsl(220 60% 4% / 0.18);
       transition: transform 120ms ease, box-shadow 200ms ease, background 220ms ease;
       backdrop-filter: blur(6px);
     }
-    .v136 .btn:hover { transform: translateY(-1px); }
-    .v136 .btn:active { transform: translateY(0); box-shadow: 0 2px 10px hsl(240 60% 2% / 0.6) inset; }
-    .v136 .btn.primary {
-      color: white; border-color: transparent;
-      background: linear-gradient(92deg, hsl(calc(var(--h) + 60) 80% 52%), hsl(var(--h) 80% 58%));
-      box-shadow: 0 12px 28px hsl(var(--h) 90% 55% / calc(0.25 + var(--drift) * 0.4));
+    .v137 .btn:hover { transform: translateY(-1px); }
+    .v137 .btn:active { transform: translateY(0); box-shadow: 0 2px 10px hsl(220 60% 4% / 0.25) inset; }
+    .v137 .btn.primary {
+      color: white;
+      background: linear-gradient(92deg, hsl(28 95% 56%), hsl(12 96% 56%));
+      border-color: transparent;
+      box-shadow: 0 12px 26px hsl(28 90% 50% / 0.35);
     }
-    .v136 .btn.ghost {
-      background: linear-gradient(180deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.04));
-      color: hsl(220 18% 88%);
+    .v137 .btn.ghost {
+      background: linear-gradient(180deg, hsl(0 0% 100% / 0.9), hsl(0 0% 100% / 0.75));
+      color: hsl(225 25% 28%);
     }
 
-    .v136 .slider {
+    .v137 .slider {
       display: inline-flex; align-items: center; gap: 10px;
       color: var(--muted); font-size: 12px;
-      border: 1px solid hsl(220 24% 96% / 0.12);
-      background: hsl(0 0% 100% / 0.06);
+      border: 1px solid hsl(220 24% 30% / 0.12);
+      background: var(--panel);
       padding: 8px 10px; border-radius: 12px;
-      box-shadow: 0 1px 0 hsl(0 0% 100% / 0.12) inset;
+      box-shadow: 0 1px 0 hsl(0 0% 100%) inset;
       backdrop-filter: blur(6px);
     }
-    .v136 input[type="range"] {
-      accent-color: hsl(var(--h) 90% 60%);
-      width: 170px; height: 4px; cursor: pointer;
-      background: linear-gradient(90deg, hsl(calc(var(--h) + 60) 90% 58%), hsl(var(--h) 90% 62%));
-      border-radius: 999px; appearance: none; outline: none;
+    .v137 input[type="range"] {
+      accent-color: var(--accent); width: 200px; height: 6px; cursor: pointer;
+      appearance: none; outline: none; border-radius: 999px;
+      background: linear-gradient(90deg, hsl(28 92% 68%), hsl(12 92% 60%));
     }
-    .v136 input[type="range"]::-webkit-slider-thumb {
-      appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    .v137 input[type="range"]::-webkit-slider-thumb {
+      appearance: none; width: 18px; height: 18px; border-radius: 50%;
       background: white; border: 2px solid hsl(220 12% 60% / 0.4);
-      box-shadow: 0 6px 14px hsl(240 60% 2% / 0.5);
+      box-shadow: 0 6px 14px hsl(220 60% 4% / 0.25);
       margin-top: -6px;
     }
-    .v136 input[type="range"]::-moz-range-thumb {
-      width: 16px; height: 16px; border-radius: 50%;
+    .v137 input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
       background: white; border: 2px solid hsl(220 12% 60% / 0.4);
     }
-
-    .v136 .footer {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-top: 14px; color: var(--muted); font-size: 12px; gap: 10px; flex-wrap: wrap;
+    .v137 .time-label {
+      font-feature-settings: "tnum" 1, "ss01" 1;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink); font-weight: 800; padding: 6px 10px;
+      background: hsl(0 0% 100% / 0.8);
+      border: 1px solid hsl(220 24% 30% / 0.12);
+      border-radius: 10px;
+      box-shadow: 0 1px 0 hsl(0 0% 100%) inset;
     }
-    .v136 .badges { display: flex; gap: 8px; flex-wrap: wrap; }
-    .v136 .badge {
+
+    .v137 .footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 16px; color: var(--muted); font-size: 12px; gap: 10px; flex-wrap: wrap;
+    }
+    .v137 .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .v137 .badge {
       padding: 6px 10px; border-radius: 999px;
-      border: 1px solid hsl(220 24% 96% / 0.12);
-      background: hsl(0 0% 100% / 0.06);
-      color: hsl(220 20% 88%);
+      border: 1px solid hsl(220 24% 30% / 0.12);
+      background: var(--panel);
+      color: hsl(225 25% 28%);
       backdrop-filter: blur(6px);
     }
-
-    /* Pause */
-    .v136.paused .glow,
-    .v136.paused .stars,
-    .v136.paused .orb::after,
-    .v136.paused .r1,
-    .v136.paused .r2,
-    .v136.paused .r3 { animation-play-state: paused !important; }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      .v136 * { animation: none !important; transition: none !important; }
+      .v137 * { animation: none !important; transition: none !important; }
     }
 
-    /* Focus */
-    .v136 .btn:focus-visible,
-    .v136 input[type="range"]:focus-visible {
-      outline: 2px solid hsl(var(--h) 90% 60% / 0.9);
-      outline-offset: 2px;
+    /* Focus rings */
+    .v137 .btn:focus-visible,
+    .v137 input[type="range"]:focus-visible {
+      outline: 2px solid hsl(28 95% 56% / 0.9); outline-offset: 2px;
     }
+
+    /* Pause */
+    .v137.paused .paint,
+    .v137.paused .grain { animation-play-state: paused !important; }
   </style>
 
-  <div class="glow g1" aria-hidden="true"></div>
-  <div class="glow g2" aria-hidden="true"></div>
-  <div class="stars" aria-hidden="true"></div>
+  <div class="paint p1" aria-hidden="true"></div>
+  <div class="paint p2" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
 
   <div class="wrap">
     <div class="head" aria-label="Edition header">
       <div class="mark" aria-hidden="true"></div>
-      <div>Edition 136 — Aurora Observatory</div>
+      <div>Edition 137 — Solstice Sundial</div>
     </div>
 
-    <h2 class="title">Sketching Light, Orbit by Orbit</h2>
-    <p class="subtitle">A nocturne of glass and glow. Nudge the cosmos with your cursor. Shift the aurora. Tune the drift.</p>
+    <h2 class="title">Tracing Time with Light</h2>
+    <p class="subtitle">A ceramic dial, a golden beam, and you. Spin the sun. Drift through Dawn, Noon, Dusk, and Midnight.</p>
 
     <div class="scene" aria-hidden="true">
-      <div class="orb"></div>
-      <div class="ring r1"><span class="sat s1"></span></div>
-      <div class="ring r2"><span class="sat s2"></span></div>
-      <div class="ring r3"><span class="sat s3"></span></div>
+      <div class="dial">
+        <div class="beam"></div>
+        <div class="face"></div>
+        <div class="hour"></div>
+        <div class="pointer"></div>
+        <div class="cap" aria-hidden="true"></div>
+        <div class="orb" aria-hidden="true"></div>
+      </div>
     </div>
 
     <div class="controls">
-      <button class="btn primary" id="v136-shift" type="button" aria-label="Shift aurora palette">Shift aurora</button>
-      <button class="btn ghost" id="v136-motion" type="button" aria-pressed="false" aria-label="Pause animations">Freeze cosmos</button>
-      <label class="slider" for="v136-drift">
-        <span>Drift</span>
-        <input id="v136-drift" type="range" min="0" max="100" value="62" />
+      <button class="btn primary" id="v137-theme" type="button" aria-label="Cycle themes">Cycle theme</button>
+      <button class="btn ghost" id="v137-auto" type="button" aria-pressed="true" aria-label="Toggle auto sun">Auto sun: On</button>
+      <button class="btn ghost" id="v137-motion" type="button" aria-pressed="false" aria-label="Pause ambience">Pause ambience</button>
+
+      <label class="slider" for="v137-time">
+        <span>Time</span>
+        <input id="v137-time" type="range" min="0" max="1439" value="0" />
+        <span class="time-label" id="v137-time-label">12:00 PM</span>
       </label>
     </div>
 
     <div class="footer">
       <div class="badges" role="list" aria-label="design notes">
-        <span class="badge" role="listitem">Aurora mesh</span>
-        <span class="badge" role="listitem">Orbital motion</span>
+        <span class="badge" role="listitem">Live shadows</span>
+        <span class="badge" role="listitem">Four themes</span>
         <span class="badge" role="listitem">Accessible contrast</span>
       </div>
-      <small>Updated <span id="last-updated">Last updated: 2025-10-22 21:19:47 EST</span></small>
+      <small>Updated <span id="last-updated">Last updated: 2025-10-22 23:02:01 EST</span></small>
     </div>
   </div>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.v136');
-      const shiftBtn = root.querySelector('#v136-shift');
-      const motionBtn = root.querySelector('#v136-motion');
-      const drift = root.querySelector('#v136-drift');
+      const root = document.currentScript.closest('.v137');
+      const themeBtn = root.querySelector('#v137-theme');
+      const autoBtn = root.querySelector('#v137-auto');
+      const motionBtn = root.querySelector('#v137-motion');
+      const slider = root.querySelector('#v137-time');
+      const label = root.querySelector('#v137-time-label');
       const updated = root.querySelector('#last-updated');
 
       // Last updated
       try {
         const fmt = new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'short' });
         updated.textContent = fmt.format(new Date());
-      } catch (e) {
+      } catch {
         updated.textContent = new Date().toLocaleString();
       }
 
+      // Themes
+      const themes = [
+        { name: 'Dawn',  vars: { bgA:'hsl(42 82% 96%)', bgB:'hsl(203 88% 97%)', ink:'hsl(225 30% 14%)', muted:'hsl(225 12% 40%)', accent:'hsl(28 90% 52%)', beam:'hsl(45 100% 70% / 0.55)' } },
+        { name: 'Noon',  vars: { bgA:'hsl(200 80% 96%)', bgB:'hsl(180 80% 94%)', ink:'hsl(220 35% 12%)', muted:'hsl(220 14% 40%)', accent:'hsl(190 90% 42%)', beam:'hsl(190 100% 65% / 0.5)' } },
+        { name: 'Dusk',  vars: { bgA:'hsl(282 70% 96%)', bgB:'hsl(18 85% 94%)',  ink:'hsl(258 36% 12%)', muted:'hsl(258 14% 42%)', accent:'hsl(14 92% 54%)', beam:'hsl(18 100% 70% / 0.55)' } },
+        { name: 'Midnight', vars:{ bgA:'hsl(235 50% 16%)', bgB:'hsl(260 45% 12%)', ink:'hsl(220 15% 92%)', muted:'hsl(220 10% 70%)', accent:'hsl(260 95% 66%)', beam:'hsl(220 100% 70% / 0.35)' } },
+      ];
+      let themeIndex = 0;
+      function applyTheme(i) {
+        const v = themes[i].vars;
+        root.style.setProperty('--bg-a', v.bgA);
+        root.style.setProperty('--bg-b', v.bgB);
+        root.style.setProperty('--ink', v.ink);
+        root.style.setProperty('--muted', v.muted);
+        root.style.setProperty('--accent', v.accent);
+        root.style.setProperty('--beam', v.beam);
+        // micro-pop feedback
+        themeBtn.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-2px)' }, { transform: 'translateY(0)' }], { duration: 220, easing: 'ease-out' });
+      }
+      themeBtn.addEventListener('click', () => { themeIndex = (themeIndex + 1) % themes.length; applyTheme(themeIndex); });
+
+      // Time -> angle
+      function minutesToAngle(mins) {
+        const deg = (mins / 1440) * 360 - 90; // 12:00 at top
+        return deg;
+      }
+      function formatTime(mins) {
+        const h24 = Math.floor(mins / 60);
+        const m = mins % 60;
+        const period = h24 >= 12 ? 'PM' : 'AM';
+        const h12 = ((h24 + 11) % 12) + 1;
+        return `${String(h12).padStart(2, '0')}:${String(m).padStart(2, '0')} ${period}`;
+      }
+      function setTime(mins) {
+        const clamped = Math.max(0, Math.min(1439, Math.round(mins)));
+        slider.value = clamped;
+        label.textContent = formatTime(clamped);
+        root.style.setProperty('--angle', minutesToAngle(clamped) + 'deg');
+      }
+
+      // Initialize slider to local time
+      const now = new Date();
+      setTime(now.getHours() * 60 + now.getMinutes());
+
+      // Slider input
+      slider.addEventListener('input', (e) => {
+        auto = false; autoBtn.setAttribute('aria-pressed', 'false'); autoBtn.textContent = 'Auto sun: Off';
+        setTime(Number(e.target.value));
+      });
+
+      // Auto sun loop
+      let auto = true;
+      let raf, last = performance.now();
+      function loop(t) {
+        if (!auto) { raf = requestAnimationFrame(loop); last = t; return; }
+        const dt = t - last; last = t;
+        // advance ~ 6 hours per real minute (speedy but readable)
+        const minutesPerMs = (6 * 60) / (60 * 1000); // 360 min / 60000 ms
+        const next = (Number(slider.value) + dt * minutesPerMs) % 1440;
+        setTime(next);
+        raf = requestAnimationFrame(loop);
+      }
+      raf = requestAnimationFrame(loop);
+      autoBtn.addEventListener('click', () => {
+        auto = !auto;
+        autoBtn.setAttribute('aria-pressed', auto ? 'true' : 'false');
+        autoBtn.textContent = 'Auto sun: ' + (auto ? 'On' : 'Off');
+      });
+
+      // Pause ambience (CSS-only anims)
+      motionBtn.addEventListener('click', () => {
+        const paused = root.classList.toggle('paused');
+        motionBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+        motionBtn.textContent = paused ? 'Resume ambience' : 'Pause ambience';
+      });
+
       // Pointer parallax
-      let raf;
+      let rAF;
       function setParallax(e) {
-        const r = root.getBoundingClientRect();
-        const cx = r.left + r.width / 2;
-        const cy = r.top + r.height / 2;
+        const rect = root.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
         const clientX = (e.touches ? e.touches[0].clientX : e.clientX);
         const clientY = (e.touches ? e.touches[0].clientY : e.clientY);
-        const x = (clientX - cx) / (r.width / 2);
-        const y = (clientY - cy) / (r.height / 2);
-        const amp = 20 * parseFloat(getComputedStyle(root).getPropertyValue('--drift')) || 0;
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          root.style.setProperty('--mx', (x * amp).toFixed(2) + 'px');
-          root.style.setProperty('--my', (y * amp).toFixed(2) + 'px');
+        const x = (clientX - cx) / (rect.width / 2);
+        const y = (clientY - cy) / (rect.height / 2);
+        cancelAnimationFrame(rAF);
+        rAF = requestAnimationFrame(() => {
+          root.style.setProperty('--px', (x * 16).toFixed(2) + 'px');
+          root.style.setProperty('--py', (y * 16).toFixed(2) + 'px');
         });
       }
       root.addEventListener('mousemove', setParallax, { passive: true });
       root.addEventListener('touchmove', setParallax, { passive: true });
-
-      // Drift control
-      function setDrift(v) {
-        const n = Math.max(0, Math.min(100, Number(v))) / 100;
-        root.style.setProperty('--drift', n.toString());
-      }
-      drift.addEventListener('input', (e) => setDrift(e.target.value));
-      setDrift(drift.value);
-
-      // Aurora themes
-      const themes = [
-        { h: 210, name: 'Glacier' },   // blue-cyan
-        { h: 270, name: 'Nebula' },    // violet
-        { h: 150, name: 'Eden'   },    // green
-        { h: 20,  name: 'Ember'  }     // amber-rose
-      ];
-      let idx = 0;
-      function applyTheme(i) {
-        const t = themes[i % themes.length];
-        root.style.setProperty('--h', t.h);
-        // Micro pop
-        shiftBtn.animate(
-          [{ transform: 'translateY(0)' }, { transform: 'translateY(-2px)' }, { transform: 'translateY(0)' }],
-          { duration: 220, easing: 'ease-out' }
-        );
-      }
-      shiftBtn.addEventListener('click', () => { idx = (idx + 1) % themes.length; applyTheme(idx); });
-
-      // Pause/Resume
-      motionBtn.addEventListener('click', () => {
-        const paused = root.classList.toggle('paused');
-        motionBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
-        motionBtn.textContent = paused ? 'Resume cosmos' : 'Freeze cosmos';
-      });
     })();
   </script>
 </section>
