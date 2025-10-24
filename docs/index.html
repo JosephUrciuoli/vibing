@@ -73,279 +73,297 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="v170" aria-label="Daylight Garden — interactive colorfield" tabindex="0">
+<section class="v171" aria-label="Nocturne Observatory — interactive starfield" tabindex="0">
   <style>
-    .v170 {
-      --paper0: #fbfcff;
-      --paper1: #eef5ff;
-      --ink: #0f172a;
-      --muted: #4b5563;
-      --edge: rgba(15, 23, 42, 0.08);
-      --tintA: #6dd6ff;
-      --tintB: #ffd5a4;
-      --accent: #0ea5e9;
+    .v171 {
+      --bg0: #060914;
+      --bg1: #0b1024;
+      --ink: #e7ebff;
+      --muted: #97a0b8;
+      --edge: rgba(255,255,255,0.08);
+      --tA: #6dd6ff;   /* Nebula cyan */
+      --tB: #a78bfa;   /* Ultraviolet violet */
+      --accent: #22d3ee;
 
       font-family: ui-sans-serif, -apple-system, system-ui, "SF Pro", Segoe UI, Roboto, Helvetica, Arial, "Noto Sans";
       color: var(--ink);
       background:
-        radial-gradient(120% 100% at 10% -10%, color-mix(in oklab, var(--tintA), transparent 90%), transparent 50%),
-        radial-gradient(140% 120% at 110% 120%, color-mix(in oklab, var(--tintB), transparent 90%), transparent 55%),
-        linear-gradient(180deg, var(--paper0), var(--paper1));
-      border-radius: 30px;
+        radial-gradient(140% 100% at 20% -10%, color-mix(in oklab, var(--tA), transparent 90%) 0%, transparent 60%),
+        radial-gradient(140% 120% at 115% 120%, color-mix(in oklab, var(--tB), transparent 90%) 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      border-radius: 32px;
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.8),
-        0 40px 120px rgba(0,0,0,0.18);
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 50px 160px rgba(0,0,0,0.5);
       position: relative;
       overflow: clip;
       isolation: isolate;
     }
-    /* Paper grain */
-    .v170::after {
+    .v171::after {
+      /* deep-space grain */
       content:"";
       position:absolute; inset:0; pointer-events:none;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 10 10"><filter id="n"><feTurbulence baseFrequency="0.9" numOctaves="2" seed="12" type="fractalNoise"/></filter><rect width="10" height="10" filter="url(%23n)" opacity="0.03"/></svg>');
-      mix-blend-mode: multiply; opacity: 0.5;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 10 10"><filter id="n"><feTurbulence baseFrequency="0.9" numOctaves="2" seed="7" type="fractalNoise"/></filter><rect width="10" height="10" filter="url(%23n)" opacity="0.045"/></svg>');
+      mix-blend-mode: soft-light; opacity: 0.6;
     }
 
-    /* Chrome / top bar */
-    .v170 .chrome {
+    /* Top bar */
+    .v171 .chrome {
       display:grid; grid-template-columns: 1fr auto; gap: 16px; align-items:center;
-      padding: clamp(16px, 4.5vw, 44px) clamp(18px, 6vw, 56px) 0;
+      padding: clamp(18px, 5vw, 48px) clamp(18px, 6vw, 56px) 0;
       position: relative; z-index: 2;
     }
-    .v170 .brand {
+    .v171 .brand {
       display:inline-grid; grid-auto-flow: column; gap: 12px; align-items:center;
       letter-spacing: 0.26em; text-transform: uppercase;
       color: var(--muted); font-size: 11.5px; font-weight: 900;
     }
-    .v170 .sun {
+    .v171 .planet {
       width: 22px; height: 22px; border-radius: 50%;
       background:
-        conic-gradient(from var(--spin, 0deg), color-mix(in oklab, var(--tintA), white 10%), color-mix(in oklab, var(--tintB), white 10%), color-mix(in oklab, var(--tintA), white 10%));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 8px 18px rgba(0,0,0,0.15);
-      position: relative; overflow: hidden;
+        radial-gradient(circle at 30% 30%, #ffffff, #9cc8ff 40%, #5b84ff 60%, #0000 62%),
+        conic-gradient(from var(--spin, 0deg), color-mix(in oklab, var(--tA), white 15%), color-mix(in oklab, var(--tB), white 15%), color-mix(in oklab, var(--tA), white 15%));
+      position: relative; box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 8px 22px rgba(0,0,0,0.3);
+      overflow: hidden;
     }
-    .v170 .sun::after { content:""; position:absolute; inset:2px; border-radius:50%; border:1px solid rgba(255,255,255,0.7); mix-blend-mode: overlay; }
+    .v171 .planet::after {
+      content:"";
+      position:absolute; inset:-2px; border-radius:50%;
+      border:1px solid rgba(255,255,255,0.28);
+      mix-blend-mode: screen;
+    }
 
-    .v170 .actions { display:flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
-    .v170 .chip {
+    .v171 .actions { display:flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .v171 .chip {
       appearance: none; border: 1px solid var(--edge); border-radius: 999px;
       padding: 10px 14px; font-size: 12px; font-weight: 900; letter-spacing: 0.02em;
-      color: var(--ink); background: rgba(255,255,255,0.7);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px rgba(0,0,0,0.08);
+      color: var(--ink); background: rgba(255,255,255,0.04);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 10px 28px rgba(0,0,0,0.28);
       cursor: pointer; user-select: none;
-      transition: transform 160ms ease, box-shadow 220ms ease, background 220ms ease, color 220ms ease, border-color 220ms ease;
-      backdrop-filter: blur(8px) saturate(140%);
+      transition: transform 160ms ease, box-shadow 220ms ease, background 220ms ease, color 220ms ease, border-color 220ms ease, opacity 220ms ease;
+      backdrop-filter: blur(10px) saturate(150%);
     }
-    .v170 .chip:hover { transform: translateY(-1px); }
-    .v170 .chip.primary {
+    .v171 .chip:hover { transform: translateY(-1px); }
+    .v171 .chip.primary {
       color: #03121d;
-      background: linear-gradient(92deg, var(--tintA), var(--tintB));
+      background: linear-gradient(92deg, var(--tA), var(--tB));
       border-color: transparent;
-      box-shadow: 0 18px 36px color-mix(in oklab, var(--tintB), black 22% / 28%), inset 0 1px 0 rgba(255,255,255,0.7);
+      box-shadow: 0 20px 42px color-mix(in oklab, var(--tB), black 40% / 38%), inset 0 1px 0 rgba(255,255,255,0.3);
     }
 
     /* Hero */
-    .v170 .hero {
-      display:grid; grid-template-columns: 1.1fr 1.6fr; gap: clamp(14px, 3vw, 28px);
+    .v171 .hero {
+      display:grid; grid-template-columns: 1.1fr 1.8fr; gap: clamp(16px, 4vw, 36px);
       align-items: end;
       padding: clamp(10px, 2.6vw, 22px) clamp(18px, 6vw, 56px) clamp(12px, 3vw, 18px);
       position: relative; z-index: 1;
     }
-    @media (max-width: 980px) { .v170 .hero { grid-template-columns: 1fr; } }
-    .v170 .copy { padding-right: clamp(0px, 2vw, 20px); }
-    .v170 .kicker {
+    @media (max-width: 980px) { .v171 .hero { grid-template-columns: 1fr; } }
+    .v171 .copy { padding-right: clamp(0px, 2vw, 20px); }
+    .v171 .kicker {
       display: inline-flex; align-items: center; gap: 8px;
       font-weight: 900; color: var(--muted);
       letter-spacing: 0.22em; text-transform: uppercase; font-size: 11px;
     }
-    .v170 .leaf {
-      width: 8px; height: 8px; border-radius: 4px 4px 4px 0;
-      background: linear-gradient(90deg, var(--tintA), var(--tintB));
+    .v171 .spark {
+      width: 8px; height: 8px; border-radius: 2px 50% 50% 50%;
+      background: linear-gradient(90deg, var(--tA), var(--tB));
       transform: rotate(45deg);
-      box-shadow: 0 0 0 2px rgba(255,255,255,0.7) inset, 0 0 10px color-mix(in oklab, var(--tintA), var(--tintB) 50%);
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.12) inset, 0 0 16px color-mix(in oklab, var(--tA), var(--tB) 50%);
     }
-    .v170 .title {
-      margin: 10px 0 8px;
-      font-size: clamp(44px, 9vw, 96px);
+    .v171 .title {
+      margin: 12px 0 10px;
+      font-size: clamp(44px, 9vw, 100px);
       letter-spacing: -0.02em; line-height: 0.9; font-weight: 1000;
-      background: linear-gradient(110deg, color-mix(in oklab, var(--ink), black 10%), var(--tintB) 58%, var(--tintA));
+      background: linear-gradient(110deg, #d8e6ff 0%, var(--tB) 50%, var(--tA) 100%);
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      filter: drop-shadow(0 14px 28px rgba(0,0,0,0.08));
+      filter: drop-shadow(0 18px 44px rgba(0,0,0,0.55));
     }
-    .v170 .subtitle {
-      margin: 0 0 clamp(12px, 3.2vw, 20px);
+    .v171 .subtitle {
+      margin: 0 0 clamp(12px, 3.2vw, 22px);
       font-size: clamp(14px, 2.2vw, 18px);
       color: var(--muted);
       max-width: 62ch; text-wrap: balance;
     }
-    .v170 .pills { display:flex; gap: 8px; flex-wrap: wrap; }
-    .v170 .pill {
+    .v171 .pills { display:flex; gap: 8px; flex-wrap: wrap; }
+    .v171 .pill {
       padding: 6px 10px; border-radius: 12px; border: 1px solid var(--edge);
-      background: rgba(255,255,255,0.7); color: var(--ink);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.06); color: var(--ink);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
       font-size: 12px;
     }
 
     /* Viewport */
-    .v170 .viewport {
+    .v171 .viewport {
       position: relative;
       border-radius: 26px;
       border: 1px solid var(--edge);
       overflow: clip;
-      min-height: min(62vh, 640px);
+      min-height: min(62vh, 680px);
       background:
-        radial-gradient(80% 80% at 50% 20%, rgba(255,255,255,0.8), rgba(255,255,255,0.6)),
-        linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.7));
+        radial-gradient(80% 80% at 50% 50%, rgba(255,255,255,0.02), rgba(255,255,255,0.01)),
+        linear-gradient(180deg, rgba(5,8,18,0.95), rgba(7,10,24,0.96));
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.9),
-        0 28px 90px rgba(0,0,0,0.12);
+        inset 0 1px 0 rgba(255,255,255,0.05),
+        0 28px 120px rgba(0,0,0,0.5);
       display:grid; place-items:center;
-      backdrop-filter: blur(0.5px) saturate(120%);
+      backdrop-filter: blur(1px) saturate(120%);
     }
-    .v170 .arcs {
-      position:absolute; inset:-10%;
+    .v171 .scan {
+      position:absolute; inset:-15%;
       background:
-        radial-gradient(closest-side, transparent 57%, rgba(15,23,42,0.06) 58%, transparent 60%) repeat,
-        radial-gradient(closest-side, transparent 74%, rgba(15,23,42,0.05) 75%, transparent 77%) repeat;
-      background-size: 80% 80%, 120% 120%;
+        radial-gradient(closest-side, transparent 62%, rgba(255,255,255,0.05) 64%, transparent 66%) repeat,
+        radial-gradient(closest-side, transparent 78%, rgba(255,255,255,0.04) 80%, transparent 82%) repeat,
+        conic-gradient(from 0deg, rgba(255,255,255,0.045), rgba(255,255,255,0));
+      background-size: 80% 80%, 120% 120%, 100% 100%;
       transform: rotate(-8deg);
-      opacity: 0.45;
-      mix-blend-mode: multiply;
+      opacity: 0.55;
+      mix-blend-mode: overlay;
       pointer-events: none;
-      animation: v170-sweep 22s linear infinite;
+      animation: v171-rotate 28s linear infinite;
     }
-    @keyframes v170-sweep { to { transform: rotate(352deg); } }
+    @keyframes v171-rotate { to { transform: rotate(352deg); } }
 
-    .v170 canvas { width: 100%; height: 100%; display: block; }
+    .v171 canvas { width: 100%; height: 100%; display: block; }
 
-    .v170 .center-readout {
+    .v171 .center-readout {
       position:absolute; inset: 0; display:grid; place-items:center; pointer-events:none; text-align:center;
     }
-    .v170 .clock {
+    .v171 .readout {
+      display:flex; flex-direction: column; align-items:center; gap: 8px;
+      padding: 10px 14px; border: 1px solid var(--edge); border-radius: 14px;
+      background: rgba(8,12,26,0.48);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 10px 36px rgba(0,0,0,0.35);
+      backdrop-filter: blur(8px) saturate(140%);
+    }
+    .v171 .clock {
       font-weight: 1000; letter-spacing: -0.02em;
       font-size: clamp(28px, 7vw, 56px);
-      color: rgba(15,23,42,0.65);
-      text-shadow: 0 1px 0 rgba(255,255,255,0.6), 0 0 22px color-mix(in oklab, var(--tintB), var(--tintA));
+      color: color-mix(in oklab, var(--ink), white 20%);
+      text-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 0 30px color-mix(in oklab, var(--tB), var(--tA));
     }
-    .v170 .clock-sub { margin-top: 8px; font-size: 12px; color: rgba(15,23,42,0.6); font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+    .v171 .clock-sub { font-size: 11px; color: var(--muted); font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
 
     /* HUD */
-    .v170 .hud {
-      position: relative; margin-top: clamp(14px, 3.2vw, 24px);
+    .v171 .hud {
+      position: relative; margin-top: clamp(16px, 3.2vw, 26px);
       display:grid; grid-auto-flow: column; gap: 10px; align-items:center; justify-content:center;
-      background: rgba(255,255,255,0.8);
+      background: rgba(8,12,26,0.5);
       border: 1px solid var(--edge);
       border-radius: 16px;
       padding: 10px 12px;
-      box-shadow: 0 16px 42px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
-      backdrop-filter: blur(10px) saturate(160%);
+      box-shadow: 0 18px 52px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px) saturate(160%);
       color: var(--ink);
     }
-    .v170 .slider {
+    .v171 .slider {
       display:grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items:center;
       padding: 6px 10px; border-radius: 12px; border: 1px solid var(--edge);
-      background: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.04);
     }
-    .v170 .slider span { font-weight: 900; font-size: 12px; color: var(--ink); }
-    .v170 input[type="range"] {
-      accent-color: color-mix(in oklab, var(--tintA), var(--tintB));
-      width: clamp(120px, 20vw, 220px); height: 8px; border-radius: 999px;
+    .v171 .slider span { font-weight: 900; font-size: 12px; color: var(--ink); }
+    .v171 input[type="range"] {
+      accent-color: color-mix(in oklab, var(--tA), var(--tB));
+      width: clamp(120px, 20vw, 240px); height: 8px; border-radius: 999px;
       appearance: none; outline: none; cursor: pointer;
-      background: linear-gradient(90deg, var(--tintA), var(--tintB));
+      background: linear-gradient(90deg, var(--tA), var(--tB));
     }
-    .v170 input[type="range"]::-webkit-slider-thumb {
+    .v171 input[type="range"]::-webkit-slider-thumb {
       appearance: none; width: 18px; height: 18px; border-radius: 50%;
-      background: white; border: 1px solid var(--edge);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      background: #0b0f22; border: 1px solid var(--edge);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
       margin-top: -6px;
     }
-    .v170 .val { font-variant-numeric: tabular-nums; font-weight: 900; min-width: 5ch; text-align: right; color: var(--ink); }
+    .v171 .val { font-variant-numeric: tabular-nums; font-weight: 900; min-width: 5ch; text-align: right; color: var(--ink); }
 
     /* Footer */
-    .v170 .meta {
+    .v171 .meta {
       display:flex; justify-content: space-between; align-items:center; gap: 12px; flex-wrap: wrap;
       color: var(--muted); font-size: 12px;
       padding: 16px clamp(18px, 6vw, 56px) 24px;
     }
-    .v170 .tags { display:flex; gap: 8px; flex-wrap: wrap; }
-    .v170 .tag {
+    .v171 .tags { display:flex; gap: 8px; flex-wrap: wrap; }
+    .v171 .tag {
       padding: 6px 10px; border-radius: 999px; border: 1px solid var(--edge);
-      background: rgba(255,255,255,0.75); backdrop-filter: blur(2px);
+      background: rgba(255,255,255,0.06); backdrop-filter: blur(2px);
       color: var(--ink);
     }
 
-    .v170.rm * { animation: none !important; transition: none !important; }
+    .v171.rm * { animation: none !important; transition: none !important; }
   </style>
 
   <div class="chrome">
-    <div class="brand"><span class="sun" aria-hidden="true"></span> Edition 170 — Daylight Garden</div>
+    <div class="brand"><span class="planet" aria-hidden="true"></span> Edition 171 — Nocturne Observatory</div>
     <div class="actions">
-      <button class="chip primary" id="v170-play" type="button" aria-pressed="true" aria-label="Play/Pause">Pause</button>
-      <button class="chip" id="v170-scheme" type="button" aria-label="Cycle scheme">Scheme: Sunlit</button>
-      <button class="chip" id="v170-save" type="button" aria-label="Save image">Save</button>
+      <button class="chip primary" id="v171-play" type="button" aria-pressed="true" aria-label="Play/Pause">Pause</button>
+      <button class="chip" id="v171-scheme" type="button" aria-label="Cycle scheme">Scheme: Nebula</button>
+      <button class="chip" id="v171-const" type="button" aria-pressed="true" aria-label="Toggle constellations">Constellate: On</button>
+      <button class="chip" id="v171-clear" type="button" aria-label="Clear trails">Clear</button>
+      <button class="chip" id="v171-save" type="button" aria-label="Save image">Save</button>
     </div>
   </div>
 
   <div class="hero">
     <div class="copy">
-      <div class="kicker"><span class="leaf" aria-hidden="true"></span> Living Colorfield</div>
-      <h1 class="title">Daylight<br/>Garden</h1>
-      <p class="subtitle">Soft blooms drift across a paper sky. Move to guide the breeze. Space to pause; C to cycle schemes; S to save.</p>
+      <div class="kicker"><span class="spark" aria-hidden="true"></span> Interactive Nightscape</div>
+      <h1 class="title">Nocturne<br/>Observatory</h1>
+      <p class="subtitle">Swim through a living starfield. Drag to bend gravity, double‑click to spark a nova. Space to pause; M to cycle schemes; S to save; R to randomize.</p>
       <div class="pills" role="list" aria-label="design notes">
-        <span class="pill" role="listitem">Pastel light</span>
+        <span class="pill" role="listitem">Neon on velvet</span>
         <span class="pill" role="listitem">Additive glow</span>
-        <span class="pill" role="listitem">Calm clock</span>
+        <span class="pill" role="listitem">Constellation threads</span>
         <span class="pill" role="listitem">Keyboard friendly</span>
       </div>
     </div>
 
-    <div class="viewport" aria-label="Canvas with drifting blooms">
-      <div class="arcs" aria-hidden="true"></div>
-      <canvas id="v170-canvas" aria-hidden="true"></canvas>
+    <div class="viewport" aria-label="Canvas with drifting stars">
+      <div class="scan" aria-hidden="true"></div>
+      <canvas id="v171-canvas" aria-hidden="true"></canvas>
       <div class="center-readout" aria-hidden="true">
-        <div class="clock" id="v170-time">00:00</div>
-        <div class="clock-sub"><span id="v170-bloom-val">Bloom 60%</span> • <span id="v170-flow-val">Flow 0.90</span></div>
+        <div class="readout">
+          <div class="clock" id="v171-time">00:00</div>
+          <div class="clock-sub"><span id="v171-warp-label">Warp 1.00×</span> • <span id="v171-stars-label">Stars 180</span></div>
+        </div>
       </div>
     </div>
 
     <div class="hud" aria-label="Controls">
-      <label class="slider" for="v170-bloom">
-        <span>Bloom</span>
-        <input id="v170-bloom" type="range" min="10" max="100" value="60" />
-        <span class="val" id="v170-bloom-out">60%</span>
+      <label class="slider" for="v171-grav">
+        <span>Gravity</span>
+        <input id="v171-grav" type="range" min="0" max="100" value="55" />
+        <span class="val" id="v171-grav-out">0.07</span>
       </label>
-      <label class="slider" for="v170-flow">
-        <span>Flow</span>
-        <input id="v170-flow" type="range" min="40" max="100" value="90" />
-        <span class="val" id="v170-flow-out">0.90</span>
+      <label class="slider" for="v171-trail">
+        <span>Trail</span>
+        <input id="v171-trail" type="range" min="0" max="100" value="80" />
+        <span class="val" id="v171-trail-out">80%</span>
       </label>
-      <label class="slider" for="v170-speed">
-        <span>Speed</span>
-        <input id="v170-speed" type="range" min="20" max="200" value="100" />
-        <span class="val" id="v170-speed-out">1.00×</span>
+      <label class="slider" for="v171-warp">
+        <span>Warp</span>
+        <input id="v171-warp" type="range" min="25" max="300" value="100" />
+        <span class="val" id="v171-warp-out">1.00×</span>
       </label>
-      <label class="slider" for="v170-blobs">
-        <span>Blobs</span>
-        <input id="v170-blobs" type="range" min="8" max="60" value="24" />
-        <span class="val" id="v170-blobs-out">24</span>
+      <label class="slider" for="v171-stars">
+        <span>Stars</span>
+        <input id="v171-stars" type="range" min="60" max="480" value="180" />
+        <span class="val" id="v171-stars-out">180</span>
       </label>
     </div>
   </div>
 
   <div class="meta">
     <div class="tags">
-      <span class="tag">Light theme</span>
-      <span class="tag">Canvas glow</span>
+      <span class="tag">Dark theme</span>
+      <span class="tag">Additive canvas</span>
       <span class="tag">Responsive</span>
       <span class="tag">Accessible contrast</span>
     </div>
-    <small><span id="last-updated">Last updated: 2025-10-24 09:28:58 EST</span></small>
+    <small><span id="last-updated">Last updated: 2025-10-24 10:18:05 EST</span></small>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.v170');
+      const root = document.currentScript.closest('.v171');
       const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reducedMotion) root.classList.add('rm');
 
@@ -357,62 +375,69 @@
       } catch { updated.textContent = 'Updated ' + new Date().toLocaleString(); }
 
       // Elements
-      const sun = root.querySelector('.sun');
-      const c = root.querySelector('#v170-canvas');
+      const planet = root.querySelector('.planet');
+      const c = root.querySelector('#v171-canvas');
       const ctx = c.getContext('2d', { alpha: true });
 
-      const bloomEl = root.querySelector('#v170-bloom');
-      const flowEl = root.querySelector('#v170-flow');
-      const speedEl = root.querySelector('#v170-speed');
-      const blobsEl = root.querySelector('#v170-blobs');
+      const gravEl = root.querySelector('#v171-grav');
+      const trailEl = root.querySelector('#v171-trail');
+      const warpEl = root.querySelector('#v171-warp');
+      const starsEl = root.querySelector('#v171-stars');
 
-      const bloomOut = root.querySelector('#v170-bloom-out');
-      const flowOut = root.querySelector('#v170-flow-out');
-      const speedOut = root.querySelector('#v170-speed-out');
-      const blobsOut = root.querySelector('#v170-blobs-out');
+      const gravOut = root.querySelector('#v171-grav-out');
+      const trailOut = root.querySelector('#v171-trail-out');
+      const warpOut = root.querySelector('#v171-warp-out');
+      const starsOut = root.querySelector('#v171-stars-out');
 
-      const bloomVal = root.querySelector('#v170-bloom-val');
-      const flowVal = root.querySelector('#v170-flow-val');
-      const timeEl = root.querySelector('#v170-time');
+      const timeEl = root.querySelector('#v171-time');
+      const warpLbl = root.querySelector('#v171-warp-label');
+      const starsLbl = root.querySelector('#v171-stars-label');
 
-      const playBtn = root.querySelector('#v170-play');
-      const schemeBtn = root.querySelector('#v170-scheme');
-      const saveBtn = root.querySelector('#v170-save');
+      const playBtn = root.querySelector('#v171-play');
+      const schemeBtn = root.querySelector('#v171-scheme');
+      const constBtn = root.querySelector('#v171-const');
+      const clearBtn = root.querySelector('#v171-clear');
+      const saveBtn = root.querySelector('#v171-save');
 
       // Schemes
       const SCHEMES = [
-        { name:'Sunlit', paper0:'#fbfcff', paper1:'#eef5ff', ink:'#0f172a', muted:'#475569', tintA:'#6dd6ff', tintB:'#ffd5a4', accent:'#0ea5e9' },
-        { name:'Mist',   paper0:'#f7fbfb', paper1:'#eef7f1', ink:'#0b1220', muted:'#4b5563', tintA:'#9fe7d7', tintB:'#cfdcff', accent:'#14b8a6' },
-        { name:'Citrus', paper0:'#fffdfa', paper1:'#fff4df', ink:'#0a0f1c', muted:'#4b5563', tintA:'#ffd36e', tintB:'#ffa0a0', accent:'#f59e0b' },
-        { name:'Lavender', paper0:'#fbf8ff', paper1:'#efe9ff', ink:'#151428', muted:'#4c4d6a', tintA:'#c3b8ff', tintB:'#ffa7e6', accent:'#7c3aed' }
+        { name:'Nebula',   bg0:'#060914', bg1:'#0b1024', ink:'#e7ebff', muted:'#97a0b8', tA:'#6dd6ff', tB:'#a78bfa', acc:'#22d3ee' },
+        { name:'Ultraviolet', bg0:'#0a0614', bg1:'#120826', ink:'#f3e9ff', muted:'#b7a8cc', tA:'#a78bfa', tB:'#f472b6', acc:'#8b5cf6' },
+        { name:'Amber Dusk', bg0:'#0e0b09', bg1:'#1a0f07', ink:'#ffe9d1', muted:'#c9b8a2', tA:'#ffcc66', tB:'#ff8f70', acc:'#f59e0b' },
+        { name:'Glacier',  bg0:'#051014', bg1:'#081f27', ink:'#e8fbff', muted:'#9cc9d3', tA:'#7ee3ff', tB:'#7cf5c6', acc:'#06b6d4' }
       ];
       let schemeIndex = 0;
       function applyScheme(s) {
-        root.style.setProperty('--paper0', s.paper0);
-        root.style.setProperty('--paper1', s.paper1);
+        root.style.setProperty('--bg0', s.bg0);
+        root.style.setProperty('--bg1', s.bg1);
         root.style.setProperty('--ink', s.ink);
         root.style.setProperty('--muted', s.muted);
-        root.style.setProperty('--tintA', s.tintA);
-        root.style.setProperty('--tintB', s.tintB);
-        root.style.setProperty('--accent', s.accent);
+        root.style.setProperty('--tA', s.tA);
+        root.style.setProperty('--tB', s.tB);
+        root.style.setProperty('--accent', s.acc);
       }
       applyScheme(SCHEMES[schemeIndex]);
 
       // State
       let running = !reducedMotion;
-      let bloom = Number(bloomEl.value) / 100; // 0.1..1
-      let flow = Number(flowEl.value) / 100;   // 0.4..1
-      let speed = Number(speedEl.value) / 100; // 0.2..2
-      let targetBlobs = Number(blobsEl.value);
+      let constellate = true;
+
+      function mapGrav(v){ return (Number(v)/100)*0.12 + 0.01; }
+      function mapTrail(v){ const t = Number(v)/100; return 0.3*(1 - t) + 0.02; } // lower alpha == longer trails
+      function mapWarp(v){ return Number(v)/100 * 1.5; } // 0.25..4.5ish with slider chosen
+      let G = mapGrav(gravEl.value);
+      let fadeAlpha = mapTrail(trailEl.value);
+      let warp = mapWarp(warpEl.value);
+      let targetStars = Number(starsEl.value);
 
       function syncLabels(){
-        const bloomPct = Math.round(bloom*100) + '%';
-        bloomOut.textContent = bloomPct;
-        bloomVal.textContent = 'Bloom ' + bloomPct;
-        flowOut.textContent = flow.toFixed(2);
-        flowVal.textContent = 'Flow ' + flow.toFixed(2);
-        speedOut.textContent = speed.toFixed(2) + '×';
-        blobsOut.textContent = String(targetBlobs);
+        gravOut.textContent = G.toFixed(2);
+        trailOut.textContent = Math.round((Number(trailEl.value)/100)*100) + '%';
+        warpOut.textContent = (warp).toFixed(2) + '×';
+        starsOut.textContent = String(targetStars);
+
+        warpLbl.textContent = 'Warp ' + (warp).toFixed(2) + '×';
+        starsLbl.textContent = 'Stars ' + String(targetStars);
       }
       syncLabels();
 
@@ -429,11 +454,11 @@
         c.width = Math.floor(W * dpr);
         c.height = Math.floor(H * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        initBlobs(targetBlobs, true);
+        initStars(targetStars, true);
       }
       addEventListener('resize', fit, { passive: true });
 
-      // Pointer breeze
+      // Pointer gravity
       function setPointer(ev) {
         const box = c.getBoundingClientRect();
         const p = ev.touches ? ev.touches[0] : ev;
@@ -443,6 +468,16 @@
       c.addEventListener('pointermove', setPointer, { passive: true });
       c.addEventListener('pointerdown', (e)=>{ state.pointer.down = true; setPointer(e); }, { passive: true });
       addEventListener('pointerup', ()=>{ state.pointer.down = false; }, { passive: true });
+
+      // Nova on double click
+      const novas = [];
+      function nova(x,y){
+        novas.push({ x, y, t: 0, life: 1.5 + Math.random()*1.5, hue: Math.random() });
+      }
+      c.addEventListener('dblclick', (e) => {
+        const box = c.getBoundingClientRect();
+        nova(e.clientX - box.left, e.clientY - box.top);
+      }, { passive: true });
 
       // Controls
       playBtn.addEventListener('click', () => {
@@ -459,59 +494,82 @@
         schemeBtn.textContent = 'Scheme: ' + SCHEMES[schemeIndex].name;
       });
 
-      bloomEl.addEventListener('input', e => { bloom = Number(e.target.value)/100; syncLabels(); });
-      flowEl.addEventListener('input', e => { flow = Number(e.target.value)/100; syncLabels(); });
-      speedEl.addEventListener('input', e => { speed = Number(e.target.value)/100*2; syncLabels(); });
-      blobsEl.addEventListener('input', e => { targetBlobs = Number(e.target.value); syncLabels(); rebalanceBlobs(targetBlobs); });
+      constBtn.addEventListener('click', () => {
+        constellate = !constellate;
+        constBtn.setAttribute('aria-pressed', constellate ? 'true' : 'false');
+        constBtn.textContent = 'Constellate: ' + (constellate ? 'On' : 'Off');
+      });
+
+      clearBtn.addEventListener('click', () => {
+        ctx.clearRect(0,0,W,H);
+      });
+
+      gravEl.addEventListener('input', e => { G = mapGrav(e.target.value); syncLabels(); });
+      trailEl.addEventListener('input', e => { fadeAlpha = mapTrail(e.target.value); syncLabels(); });
+      warpEl.addEventListener('input', e => { warp = mapWarp(e.target.value); syncLabels(); });
+      starsEl.addEventListener('input', e => { targetStars = Number(e.target.value); syncLabels(); rebalanceStars(targetStars); });
 
       // Keyboard
       root.addEventListener('keydown', (e) => {
         const k = e.key;
         if (k === ' ') { e.preventDefault(); playBtn.click(); }
-        if (k.toLowerCase() === 'c') schemeBtn.click();
+        if (k.toLowerCase() === 'm') schemeBtn.click();
         if (k.toLowerCase() === 's') saveBtn.click();
-        if (k === '+' || k === '=') { blobsEl.value = Math.min(60, Number(blobsEl.value) + 2); blobsEl.dispatchEvent(new Event('input')); }
-        if (k === '-' || k === '_') { blobsEl.value = Math.max(8, Number(blobsEl.value) - 2); blobsEl.dispatchEvent(new Event('input')); }
+        if (k.toLowerCase() === 'r') randomize();
+        if (k === '+' || k === '=') { starsEl.value = Math.min(480, Number(starsEl.value) + 12); starsEl.dispatchEvent(new Event('input')); }
+        if (k === '-' || k === '_') { starsEl.value = Math.max(60, Number(starsEl.value) - 12); starsEl.dispatchEvent(new Event('input')); }
       });
 
       // Save PNG
       saveBtn.addEventListener('click', () => {
         try {
           const link = document.createElement('a');
-          link.download = `daylight-garden-${SCHEMES[schemeIndex].name.toLowerCase()}.png`;
+          link.download = `nocturne-observatory-${SCHEMES[schemeIndex].name.toLowerCase()}.png`;
           link.href = c.toDataURL('image/png');
           link.click();
         } catch {}
       });
 
-      // Blobs model
-      let blobs = [];
+      // Stars model
+      let stars = [];
       function rand(min, max){ return min + Math.random()*(max-min); }
-      function initBlobs(n, preserve=false){
-        if (!preserve) blobs.length = 0;
-        const need = n - blobs.length;
+      function initStars(n, preserve=false){
+        if (!preserve) stars.length = 0;
+        const need = n - stars.length;
         for (let i=0;i<need;i++){
-          blobs.push(makeBlob());
+          stars.push(makeStar());
         }
-        if (need < 0) blobs.splice(n);
+        if (need < 0) stars.splice(n);
       }
-      function rebalanceBlobs(n){
-        if (n > blobs.length) initBlobs(n, true);
-        else if (n < blobs.length) blobs.splice(n);
+      function rebalanceStars(n){
+        if (n > stars.length) initStars(n, true);
+        else if (n < stars.length) stars.splice(n);
       }
-      function makeBlob(){
-        const r = rand(40, 140);
+      function makeStar(){
+        const depth = rand(0.6, 1.4);
+        const speed = (Math.random() < 0.5 ? 1 : -1) * rand(0.05, 0.2);
+        const angle = rand(0, Math.PI*2);
+        const r = rand(0.6, 1.8) * (2 - depth);
         const hue = Math.random();
         return {
           x: rand(0, W), y: rand(0, H),
-          vx: rand(-0.4, 0.4), vy: rand(-0.4, 0.4),
-          r, hue, wobble: rand(0.5, 1.5)
+          vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+          r, depth, hue, tw: rand(0.5, 1.5), life: rand(0, 1000)
         };
       }
 
-      // Kickoff sizes and blobs
+      function randomize(){
+        // shake parameters a bit
+        gravEl.value = String(Math.floor(rand(20, 85))); G = mapGrav(gravEl.value);
+        trailEl.value = String(Math.floor(rand(50, 95))); fadeAlpha = mapTrail(trailEl.value);
+        warpEl.value = String(Math.floor(rand(60, 220))); warp = mapWarp(warpEl.value);
+        starsEl.value = String(Math.floor(rand(80, 420))); targetStars = Number(starsEl.value); rebalanceStars(targetStars);
+        syncLabels();
+      }
+
+      // Kickoff sizes and stars
       fit();
-      initBlobs(targetBlobs);
+      initStars(targetStars);
 
       // Animation
       let raf, last = performance.now();
@@ -526,92 +584,120 @@
       function draw(now, dt){
         const t = (now - state.t0) * 0.001;
 
-        // Spin the brand sun
-        sun.style.setProperty('--spin', ((now * 0.04) % 360) + 'deg');
+        // Spin the planet badge
+        planet.style.setProperty('--spin', ((now * 0.04) % 360) + 'deg');
 
-        // Soft wipe to maintain glow trails (light)
+        // Fade trails (dark)
         ctx.globalCompositeOperation = 'source-over';
-        ctx.fillStyle = `rgba(255,255,255,${Math.min(0.9, (1-bloom) * 0.2 + 0.02)})`;
+        ctx.fillStyle = `rgba(0,0,0,${fadeAlpha})`;
         ctx.fillRect(0,0,W,H);
 
         // Colors from CSS
         const cs = getComputedStyle(root);
-        const colA = cs.getPropertyValue('--tintA').trim();
-        const colB = cs.getPropertyValue('--tintB').trim();
+        const colA = cs.getPropertyValue('--tA').trim();
+        const colB = cs.getPropertyValue('--tB').trim();
 
-        // Update and draw blobs
+        // Update and draw stars
         ctx.globalCompositeOperation = 'lighter';
-        for (let i=0;i<blobs.length;i++){
-          const b = blobs[i];
+        for (let i=0;i<stars.length;i++){
+          const s = stars[i];
 
-          // Breeze from pointer
+          // Pointer gravity
           if (!isNaN(state.pointer.x)) {
-            const dx = state.pointer.x - b.x, dy = state.pointer.y - b.y;
-            const dist2 = dx*dx + dy*dy + 80;
+            const dx = state.pointer.x - s.x, dy = state.pointer.y - s.y;
+            const dist2 = dx*dx + dy*dy + 40;
             const inv = 1 / Math.sqrt(dist2);
-            const str = (state.pointer.down ? 120 : 40) * inv * inv;
-            b.vx += dx * str * dt;
-            b.vy += dy * str * dt;
+            const str = (state.pointer.down ? 180 : 60) * G * inv * inv;
+            s.vx += dx * str * dt;
+            s.vy += dy * str * dt;
           }
 
-          // Gentle orbiting drift
-          b.vx += Math.sin(t*0.5 + i*0.37) * 0.02 * speed;
-          b.vy += Math.cos(t*0.4 + i*0.41) * 0.02 * speed;
+          // Gentle drift and twinkle
+          s.vx += Math.sin(t*0.8 + i*0.17) * 0.003 * warp;
+          s.vy += Math.cos(t*0.7 + i*0.13) * 0.003 * warp;
 
-          // Integrate with flow damping
-          b.vx *= 0.99 * flow;
-          b.vy *= 0.99 * flow;
-          b.x += b.vx * (60*dt);
-          b.y += b.vy * (60*dt);
+          // Integrate with mild damping and depth parallax
+          const damp = 0.995;
+          s.vx *= damp; s.vy *= damp;
+          s.x += s.vx * (60*dt) * (0.8 + s.depth*0.4) * warp;
+          s.y += s.vy * (60*dt) * (0.8 + s.depth*0.4) * warp;
 
-          // Edge wrap
-          const pad = 160;
-          if (b.x < -pad) b.x = W+pad;
-          if (b.x > W+pad) b.x = -pad;
-          if (b.y < -pad) b.y = H+pad;
-          if (b.y > H+pad) b.y = -pad;
+          // Wrap
+          const pad = 40;
+          if (s.x < -pad) s.x = W+pad;
+          if (s.x > W+pad) s.x = -pad;
+          if (s.y < -pad) s.y = H+pad;
+          if (s.y > H+pad) s.y = -pad;
 
-          // Size wobble
-          const R = b.r * (0.85 + 0.15*Math.sin(t*b.wobble + i*0.9));
+          // Size twinkle
+          const R = s.r * (0.85 + 0.25*Math.sin(t*s.tw + i*0.9));
 
-          // Gradient bloom
-          const g = ctx.createRadialGradient(b.x, b.y, 0.1, b.x, b.y, R);
-          g.addColorStop(0, 'rgba(255,255,255,0.85)');
-          g.addColorStop(0.2, colA);
-          g.addColorStop(1, 'rgba(255,255,255,0)');
-          ctx.globalAlpha = 0.18 + bloom*0.52;
+          // Star glow
+          const g = ctx.createRadialGradient(s.x, s.y, 0.1, s.x, s.y, R*8);
+          g.addColorStop(0, 'rgba(255,255,255,0.95)');
+          g.addColorStop(0.25, colA);
+          g.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.globalAlpha = 0.08 + 0.6*(1/(1+s.depth));
           ctx.fillStyle = g;
-          ctx.beginPath(); ctx.arc(b.x, b.y, R, 0, Math.PI*2); ctx.fill();
+          ctx.beginPath(); ctx.arc(s.x, s.y, R*8, 0, Math.PI*2); ctx.fill();
 
-          // Inner tint
-          const g2 = ctx.createRadialGradient(b.x, b.y, 0.1, b.x, b.y, R*0.6);
-          g2.addColorStop(0, 'rgba(255,255,255,0.9)');
+          // Core
+          const g2 = ctx.createRadialGradient(s.x, s.y, 0.1, s.x, s.y, R*2);
+          g2.addColorStop(0, 'rgba(255,255,255,0.98)');
           g2.addColorStop(1, colB);
-          ctx.globalAlpha = 0.3 + bloom*0.4;
+          ctx.globalAlpha = 0.5;
           ctx.fillStyle = g2;
-          ctx.beginPath(); ctx.arc(b.x, b.y, R*0.6, 0, Math.PI*2); ctx.fill();
+          ctx.beginPath(); ctx.arc(s.x, s.y, R*2, 0, Math.PI*2); ctx.fill();
 
-          // Occasional connective threads
-          if (i % 4 === 0 && i < blobs.length-1){
-            const n = blobs[(i+5) % blobs.length];
-            const dx = n.x - b.x, dy = n.y - b.y;
+          s.life += dt;
+        }
+
+        // Constellations (proximity threads)
+        if (constellate) {
+          ctx.globalAlpha = 0.08;
+          ctx.lineWidth = 1.2;
+          ctx.strokeStyle = colB;
+          for (let i=0;i<stars.length;i+=3){
+            const a = stars[i];
+            // find a near neighbor
+            const j = (i + 17) % stars.length;
+            const b = stars[j];
+            const dx = b.x - a.x, dy = b.y - a.y;
             const dist = Math.hypot(dx,dy);
-            if (dist < Math.min(W,H) * 0.25){
-              ctx.globalAlpha = 0.05 + 0.05*bloom;
-              ctx.strokeStyle = colB;
-              ctx.lineWidth = 2;
-              ctx.beginPath(); ctx.moveTo(b.x, b.y); ctx.lineTo(n.x, n.y); ctx.stroke();
+            if (dist < Math.min(W,H) * 0.22) {
+              ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+
+              // a second link
+              const k = (i + 53) % stars.length;
+              const c2 = stars[k];
+              const d2x = c2.x - b.x, d2y = c2.y - b.y;
+              const dist2 = Math.hypot(d2x, d2y);
+              if (dist2 < Math.min(W,H) * 0.18) {
+                ctx.beginPath(); ctx.moveTo(b.x, b.y); ctx.lineTo(c2.x, c2.y); ctx.stroke();
+              }
             }
           }
         }
 
-        // Gentle vignette to cradle glow
-        ctx.globalCompositeOperation = 'multiply';
-        const vg = ctx.createRadialGradient(W*0.5, H*0.5, Math.min(W,H)*0.6, W*0.5, H*0.5, Math.max(W,H)*0.9);
-        vg.addColorStop(0, 'rgba(255,255,255,0)');
-        vg.addColorStop(1, 'rgba(240,240,240,0.6)');
-        ctx.fillStyle = vg;
-        ctx.fillRect(0,0,W,H);
+        // Novae
+        if (novas.length) {
+          for (let i=novas.length-1; i>=0; i--) {
+            const n = novas[i];
+            n.t += dt;
+            const p = n.t / n.life;
+            const r = (Math.min(W,H) * 0.06) * (0.2 + p*1.6);
+            const a = Math.max(0, 1 - p);
+            ctx.globalCompositeOperation = 'lighter';
+            const g = ctx.createRadialGradient(n.x, n.y, 0.1, n.x, n.y, r);
+            g.addColorStop(0, `rgba(255,255,255,${0.35*a})`);
+            g.addColorStop(0.3, colB);
+            g.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.globalAlpha = 0.5*a;
+            ctx.fillStyle = g;
+            ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI*2); ctx.fill();
+            if (p >= 1) novas.splice(i,1);
+          }
+        }
 
         // Update clock
         if ((now|0) % 250 < 16) {
@@ -627,10 +713,10 @@
       // Start
       if (!reducedMotion) { raf = requestAnimationFrame(loop); } else { draw(performance.now(), 0); playBtn.setAttribute('aria-pressed', 'false'); playBtn.textContent = 'Play'; }
 
-      // Ensure sun animation when paused
+      // Ensure planet animation when paused
       setInterval(() => {
         const now = performance.now();
-        sun.style.setProperty('--spin', ((now * 0.04) % 360) + 'deg');
+        planet.style.setProperty('--spin', ((now * 0.04) % 360) + 'deg');
       }, 240);
     })();
   </script>
