@@ -73,52 +73,44 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div class="vibe191" data-scene="Orrery of Light">
+<div class="vibe192" data-scene="Sky Lantern Atelier">
   <style>
-    .vibe191 {
-      --bg1:#070b14;
-      --bg2:#0f1221;
-      --ink:#f6fbff;
-      --muted:rgba(246,251,255,0.78);
-      --glass:rgba(255,255,255,0.08);
-      --border:rgba(255,255,255,0.16);
-      --ring:rgba(255,255,255,0.14);
-      --ac1:#7bd0ff; /* seconds */
-      --ac2:#9ef3c9; /* minutes */
-      --ac3:#c2a3ff; /* hours */
-      --ac4:#ffd38a; /* star core */
-      --glow:rgba(123,208,255,0.28);
+    .vibe192{
+      --sky1:#0b1021;
+      --sky2:#1a2a53;
+      --ink:#f7fbff;
+      --muted:rgba(247,251,255,0.78);
+      --glass:rgba(255,255,255,0.10);
+      --line:rgba(255,255,255,0.18);
+      --glow1:#ffb48a;
+      --glow2:#9ad7ff;
+      --accent:#7bffe3;
       --play:1;
-      --t:0;
-      --rx:0deg;
-      --ry:0deg;
+      --mx:50%;
+      --my:50%;
       position: relative;
       color: var(--ink);
       font-family: ui-rounded, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       border-radius: 28px;
-      padding: clamp(16px, 3.8vw, 44px);
+      padding: clamp(18px, 4vw, 48px);
       background:
-        radial-gradient(1400px 900px at -18% -38%, color-mix(in oklab, var(--ac3) 18%, transparent), transparent 60%),
-        radial-gradient(1200px 900px at 118% 138%, color-mix(in oklab, var(--ac2) 18%, transparent), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      border: 1px solid var(--border);
+        radial-gradient(1200px 900px at 120% -20%, color-mix(in oklab, var(--glow2) 18%, transparent), transparent 60%),
+        radial-gradient(1200px 900px at -10% 120%, color-mix(in oklab, var(--glow1) 18%, transparent), transparent 60%),
+        linear-gradient(180deg, var(--sky1), var(--sky2));
+      border:1px solid rgba(255,255,255,0.16);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 30px 80px rgba(0,0,0,0.35);
-      overflow: hidden;
-      isolation: isolate;
+      overflow:hidden;
+      isolation:isolate;
     }
-    .vibe191 .bg-aurora,
-    .vibe191 .bg-noise { position: absolute; inset: -20%; pointer-events:none; z-index:0; }
-    .vibe191 .bg-aurora {
-      background:
-        conic-gradient(from calc(var(--t)*0.25deg), rgba(255,255,255,0.05), rgba(194,163,255,0.12), rgba(158,243,201,0.10), rgba(123,208,255,0.10), rgba(255,255,255,0.02));
-      filter: blur(24px) saturate(120%);
-      mix-blend-mode: screen;
-      transform: rotate(6deg) scale(1.1);
-      opacity: 0.55;
+
+    /* Ambient layers */
+    .vibe192 .stars,
+    .vibe192 .grain,
+    .vibe192 .cursor-light{
+      position:absolute; inset:0; pointer-events:none; z-index:0;
     }
-    .vibe191 .bg-noise {
-      inset: 0;
-      opacity: 0.08;
+    .vibe192 .grain{
+      opacity:0.08;
       background-image:
         radial-gradient(1px 1px at 14% 28%, #000 55%, transparent 56%),
         radial-gradient(1px 1px at 66% 62%, #000 55%, transparent 56%),
@@ -126,33 +118,47 @@
         radial-gradient(1px 1px at 32% 82%, #000 55%, transparent 56%);
       background-size: 180px 180px, 220px 220px, 200px 200px, 260px 260px;
       mix-blend-mode: soft-light;
-      animation: g191 26s linear infinite;
+      animation: driftNoise192 28s linear infinite;
     }
-    @keyframes g191 { 0% { transform: translate(0,0);} 100% { transform: translate(-4%, -6%);} }
+    @keyframes driftNoise192 { to{ transform: translate(-4%, -6%);} }
+    .vibe192 .cursor-light{
+      background: radial-gradient(280px 220px at var(--mx) var(--my),
+        color-mix(in oklab, var(--glow2) 22%, transparent),
+        transparent 60%);
+      mix-blend-mode: screen; opacity:0.75; filter: blur(8px) saturate(115%);
+      transition: background-position 100ms linear;
+    }
 
-    .vibe191 .shell{
-      position: relative; z-index:1;
-      display:grid; grid-template-rows:auto auto 1fr auto; gap: clamp(12px, 2.2vw, 22px);
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 22px;
-      padding: clamp(14px, 3.2vw, 28px);
-      box-shadow: 0 40px 120px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.08);
+    /* Shell */
+    .vibe192 .frame{
+      position:relative; z-index:1;
+      display:grid; gap: clamp(14px, 2.6vw, 28px);
+      grid-template-rows:auto auto 1fr auto;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+      border:1px solid rgba(255,255,255,0.16);
+      border-radius:22px;
+      padding: clamp(16px, 3.4vw, 32px);
       backdrop-filter: blur(10px) saturate(125%);
+      box-shadow: 0 40px 120px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.08);
       transform-style: preserve-3d;
-      transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
       transition: transform 160ms ease-out;
     }
-
-    .vibe191 .head { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-    .vibe191 .tag{
-      font-size:11px; letter-spacing:0.2em; text-transform:uppercase;
-      color:#0e1220; background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.78));
-      border:1px solid rgba(0,0,0,0.08); border-radius:999px; padding:8px 12px; white-space:nowrap;
-      box-shadow:0 3px 12px rgba(0,0,0,0.08);
+    .vibe192 .frame:has(canvas:hover){
+      transform: perspective(900px) rotateX(-1.5deg) rotateY(1.5deg);
     }
-    .vibe191 .controls{ display:inline-flex; gap:8px; flex-wrap:wrap; }
-    .vibe191 .btn{
+
+    /* Header */
+    .vibe192 .top{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    }
+    .vibe192 .chip{
+      font-size:11px; letter-spacing:0.22em; text-transform:uppercase;
+      color:#0e1220; background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.80));
+      border:1px solid rgba(0,0,0,0.08); border-radius:999px; padding:8px 12px; white-space:nowrap;
+      box-shadow:0 3px 12px rgba(0,0,0,0.10);
+    }
+    .vibe192 .controls{ display:flex; gap:8px; flex-wrap:wrap; }
+    .vibe192 .btn{
       appearance:none; border:0; cursor:pointer; user-select:none;
       font-size:12px; font-weight:700; letter-spacing:0.01em;
       padding:10px 14px; border-radius:12px;
@@ -161,154 +167,145 @@
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6), 0 4px 14px rgba(0,0,0,0.10);
       transition: transform 140ms ease, box-shadow 180ms ease, background 180ms ease;
     }
-    .vibe191 .btn:hover{ transform: translateY(-1px); }
-    .vibe191 .btn:focus-visible{ outline:2px solid color-mix(in oklab, var(--ac1) 60%, transparent); outline-offset:2px; }
-    .vibe191 .btn.primary{
-      background: linear-gradient(135deg, var(--ac1), var(--ac2));
-      box-shadow: 0 12px 26px color-mix(in oklab, var(--ac2) 30%, transparent), inset 0 -4px 8px rgba(0,0,0,0.12);
+    .vibe192 .btn:hover{ transform: translateY(-1px); }
+    .vibe192 .btn:focus-visible{ outline:2px solid color-mix(in oklab, var(--accent) 60%, transparent); outline-offset:2px; }
+    .vibe192 .btn.primary{
+      background: linear-gradient(135deg, var(--glow1), var(--glow2));
+      box-shadow: 0 12px 26px color-mix(in oklab, var(--glow2) 30%, transparent), inset 0 -4px 8px rgba(0,0,0,0.12);
       color:#0e1220;
     }
 
-    .vibe191 .hero{ display:grid; gap:6px; }
-    .vibe191 .kicker{
+    /* Hero */
+    .vibe192 .hero{ display:grid; gap:6px; }
+    .vibe192 .kicker{
       font-size:12px; letter-spacing:0.28em; text-transform:uppercase;
-      color: color-mix(in oklab, var(--ink) 65%, var(--ac2));
+      color: color-mix(in oklab, var(--ink) 65%, var(--accent));
     }
-    .vibe191 .title{
+    .vibe192 .title{
       margin: 2px 0 6px;
-      font-size: clamp(40px, 8.2vw, 96px);
+      font-size: clamp(42px, 8.6vw, 108px);
       line-height:0.9; letter-spacing:-0.01em;
-      background: linear-gradient(120deg, var(--ink), color-mix(in oklab, var(--ac2) 55%, var(--ink)) 50%, color-mix(in oklab, var(--ac1) 70%, var(--ink)) 100%);
+      background: linear-gradient(120deg, var(--ink), color-mix(in oklab, var(--glow2) 55%, var(--ink)) 50%, color-mix(in oklab, var(--glow1) 70%, var(--ink)) 100%);
       -webkit-background-clip: text; background-clip:text; color:transparent;
       text-shadow: 0 1px 0 rgba(255,255,255,0.35);
     }
-    .vibe191 .lede{ font-size: clamp(14px, 2.2vw, 18px); color: var(--muted); max-width: 70ch; }
+    .vibe192 .lede{ font-size: clamp(14px, 2.2vw, 18px); color: var(--muted); max-width: 72ch; }
 
-    .vibe191 .orrery{
-      position:relative; border-radius:20px; overflow:hidden; cursor:pointer; contain:paint;
-      border:1px solid rgba(255,255,255,0.14);
+    /* Scene */
+    .vibe192 .scene{
+      position:relative; border-radius:20px; overflow:hidden;
+      border:1px solid rgba(255,255,255,0.16);
       background:
         radial-gradient(120% 100% at 50% 20%, rgba(255,255,255,0.12), rgba(255,255,255,0.04)),
         linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), 0 16px 46px rgba(0,0,0,0.26);
-      aspect-ratio: 16 / 10;
-      transform: translateZ(0);
+      aspect-ratio: 16 / 9;
+      contain:paint;
+      cursor:crosshair;
     }
-    .vibe191 .orrery canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
-    .vibe191 .orrery .glow{
-      position:absolute; inset:-20%; pointer-events:none; mix-blend-mode:overlay; opacity:0.75;
-      background:
-        conic-gradient(from calc(var(--t)*0.4deg), rgba(255,255,255,0.04), rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+    .vibe192 .scene canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+    .vibe192 .scene .overlay-tint{
+      position:absolute; inset:-20%; pointer-events:none; mix-blend-mode:overlay; opacity:0.7;
+      background: conic-gradient(from 30deg, rgba(255,255,255,0.04), rgba(255,255,255,0.12), rgba(255,255,255,0.02));
       filter: blur(28px) saturate(120%);
     }
-    .vibe191 .orrery .grid{
-      position:absolute; inset:0; pointer-events:none; opacity:0.22;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.10) 0 1px, transparent 1px 100%),
-        repeating-radial-gradient(circle at 50% 50%, var(--ring) 0 1px, transparent 1px 48px);
-      mask-image: radial-gradient(120% 100% at 50% 30%, rgba(0,0,0,1), transparent 70%);
-    }
 
-    .vibe191 .foot{
+    /* Footer */
+    .vibe192 .foot{
       display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
-      font-size:13px; color:var(--muted); margin-top:6px;
+      font-size:13px; color:var(--muted);
     }
-    .vibe191 .left{ display:inline-flex; align-items:center; gap:10px; flex-wrap:wrap; }
-    .vibe191 .stat{
+    .vibe192 .stats{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .vibe192 .badge{
       display:inline-flex; align-items:center; gap:6px;
       background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
       padding:6px 10px; border-radius:10px;
     }
-    .vibe191 .timeline{
-      position:relative; height:6px; min-width:160px; flex:1 1 auto; border-radius:999px; overflow:hidden;
-      border:1px solid rgba(0,0,0,0.08); background: rgba(255,255,255,0.08);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
-    }
-    .vibe191 .timeline > span{
-      position:absolute; inset:0 auto 0 0; width:0%;
-      background: linear-gradient(90deg, var(--ac1), var(--ac2), var(--ac3));
-      box-shadow:0 0 16px color-mix(in oklab, var(--ac2) 40%, transparent);
-      transition: width 80ms linear;
-    }
   </style>
 
-  <div class="bg-aurora" aria-hidden="true"></div>
-  <div class="bg-noise" aria-hidden="true"></div>
+  <div class="stars" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor-light" aria-hidden="true"></div>
 
-  <section class="shell" role="region" aria-label="Orrery of Light — ambient timepiece">
-    <div class="head">
-      <span class="tag">Iteration 191 — Orrery of Light</span>
+  <section class="frame" role="region" aria-label="Sky Lantern Atelier — interactive ambient scene">
+    <div class="top">
+      <span class="chip">Iteration 192 — Sky Lantern Atelier</span>
       <div class="controls" role="group" aria-label="Controls">
-        <button class="btn" id="theme191" aria-pressed="true">Midnight</button>
-        <button class="btn" id="motion191" aria-pressed="true">Pause</button>
-        <button class="btn primary" id="nudge191">Nudge</button>
+        <button class="btn" id="theme192" aria-pressed="true">Midnight</button>
+        <button class="btn" id="pause192" aria-pressed="true">Pause</button>
+        <button class="btn primary" id="release192">Release</button>
       </div>
     </div>
 
     <div class="hero">
-      <span class="kicker">Celestial Interface</span>
-      <h1 class="title">Time, in Orbits</h1>
-      <p class="lede">Hours, minutes, seconds—three bodies tracing light. Drag your pointer to tilt the cosmos. Nudge to spark comets.</p>
+      <span class="kicker">Light as a wish</span>
+      <h1 class="title">Lift the sky with lanterns</h1>
+      <p class="lede">Drag your pointer—light follows. Click or tap to release a bouquet of lanterns and watch them drift beyond the horizon.</p>
     </div>
 
-    <div class="orrery" id="orrery191" role="img" aria-label="Generative orrery that maps hours, minutes, and seconds to orbits">
-      <canvas id="cv191"></canvas>
-      <div class="glow" aria-hidden="true"></div>
-      <div class="grid" aria-hidden="true"></div>
+    <div class="scene" id="lanternScene192" role="img" aria-label="Generative lanterns drifting upward across a starry gradient sky">
+      <canvas id="sky192"></canvas>
+      <div class="overlay-tint" aria-hidden="true"></div>
     </div>
 
     <div class="foot">
-      <div class="left">
-        <span class="stat">Bodies: <strong id="bodies191">3</strong></span>
-        <span class="stat">Orbits: <strong id="orbits191">0.00</strong></span>
-        <span id="last-updated">Last updated: 2025-10-25 07:12:59 EST</span>
+      <div class="stats">
+        <span class="badge">Lanterns afloat: <strong id="lanterns192">0</strong></span>
+        <span class="badge">Wishes: <strong id="wishes192">0</strong></span>
+        <span class="badge">Theme: <strong id="themeName192">Midnight</strong></span>
       </div>
-      <div class="right" aria-hidden="true">
-        <div class="timeline"><span></span></div>
+      <div class="stats">
+        <span>Updated <span id="last-updated">Last updated: 2025-10-25 08:32:03 EST</span></span>
       </div>
     </div>
   </section>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.vibe191');
-      const shell = root.querySelector('.shell');
-      const orrery = root.querySelector('#orrery191');
-      const canvas = root.querySelector('#cv191');
+      const root = document.currentScript.closest('.vibe192');
+
+      // Elements
+      const scene = root.querySelector('#lanternScene192');
+      const canvas = root.querySelector('#sky192');
       const ctx = canvas.getContext('2d', {alpha:true});
-
-      const themeBtn = root.querySelector('#theme191');
-      const motionBtn = root.querySelector('#motion191');
-      const nudgeBtn = root.querySelector('#nudge191');
-      const bodiesEl = root.querySelector('#bodies191');
-      const orbitsEl = root.querySelector('#orbits191');
-      const barFill = root.querySelector('.timeline > span');
+      const themeBtn = root.querySelector('#theme192');
+      const pauseBtn = root.querySelector('#pause192');
+      const releaseBtn = root.querySelector('#release192');
+      const lanternsEl = root.querySelector('#lanterns192');
+      const wishesEl = root.querySelector('#wishes192');
+      const themeNameEl = root.querySelector('#themeName192');
       const updatedEl = root.querySelector('#last-updated');
+      const cursorLight = root.querySelector('.cursor-light');
 
+      // Themes
       const themes = {
         midnight: {
-          bg1:'#070b14', bg2:'#0f1221', ink:'#f6fbff', muted:'rgba(246,251,255,0.78)',
-          glass:'rgba(255,255,255,0.08)', border:'rgba(255,255,255,0.16)', ring:'rgba(255,255,255,0.14)',
-          ac1:'#7bd0ff', ac2:'#9ef3c9', ac3:'#c2a3ff', ac4:'#ffd38a', glow:'rgba(123,208,255,0.28)'
+          sky1:'#0b1021', sky2:'#1a2a53', ink:'#f7fbff', muted:'rgba(247,251,255,0.78)',
+          glow1:'#ffb48a', glow2:'#9ad7ff', accent:'#7bffe3'
         },
         dusk: {
-          bg1:'#160c10', bg2:'#2a1a26', ink:'#fff7fb', muted:'rgba(255,247,251,0.76)',
-          glass:'rgba(255,255,255,0.10)', border:'rgba(255,255,255,0.18)', ring:'rgba(255,255,255,0.16)',
-          ac1:'#ff8fb1', ac2:'#ffd28b', ac3:'#a58bff', ac4:'#ffe9a6', glow:'rgba(255,143,177,0.28)'
+          sky1:'#1a1016', sky2:'#3b1f39', ink:'#fff6fb', muted:'rgba(255,246,251,0.78)',
+          glow1:'#ff9fb4', glow2:'#ffd28d', accent:'#aaf8cf'
         },
         daybreak: {
-          bg1:'#0b1a12', bg2:'#132820', ink:'#f5fff9', muted:'rgba(245,255,249,0.80)',
-          glass:'rgba(255,255,255,0.10)', border:'rgba(255,255,255,0.18)', ring:'rgba(255,255,255,0.16)',
-          ac1:'#8be3ff', ac2:'#79ffbe', ac3:'#ffd08f', ac4:'#fff2b6', glow:'rgba(139,227,255,0.30)'
+          sky1:'#0f1e16', sky2:'#2e5a4a', ink:'#f5fff9', muted:'rgba(245,255,249,0.80)',
+          glow1:'#ffe29b', glow2:'#8be3ff', accent:'#79ffbe'
         }
       };
       const order = ['midnight','dusk','daybreak'];
       let themeIndex = 0;
 
-      function applyTheme(map){
-        for(const k in map){ root.style.setProperty('--'+k, map[k]); }
-        themeBtn.textContent = order[themeIndex].charAt(0).toUpperCase() + order[themeIndex].slice(1);
-        themeBtn.setAttribute('aria-pressed', themeIndex === 0 ? 'true' : 'false');
+      function applyTheme(k){
+        const t = themes[k];
+        root.style.setProperty('--sky1', t.sky1);
+        root.style.setProperty('--sky2', t.sky2);
+        root.style.setProperty('--ink', t.ink);
+        root.style.setProperty('--muted', t.muted);
+        root.style.setProperty('--glow1', t.glow1);
+        root.style.setProperty('--glow2', t.glow2);
+        root.style.setProperty('--accent', t.accent);
+        themeBtn.textContent = k.charAt(0).toUpperCase() + k.slice(1);
+        themeNameEl.textContent = themeBtn.textContent;
         pulseTitle();
         updateTime();
       }
@@ -320,269 +317,286 @@
         requestAnimationFrame(()=>{ title.style.transition = 'filter 900ms ease'; title.style.filter = ''; });
       }
 
+      // Time string
       function updateTime(){
         try {
           const dtf = new Intl.DateTimeFormat(undefined, {
             year:'numeric', month:'short', day:'2-digit',
             hour:'2-digit', minute:'2-digit', second:'2-digit', timeZoneName:'short'
           });
-          updatedEl.textContent = 'Updated ' + dtf.format(new Date());
+          updatedEl.textContent = dtf.format(new Date());
         } catch {
-          updatedEl.textContent = 'Updated ' + new Date().toLocaleString();
+          updatedEl.textContent = new Date().toLocaleString();
         }
       }
+      setInterval(updateTime, 1000);
 
-      // Tilt parallax on the shell
-      function tilt(e){
-        const r = shell.getBoundingClientRect();
-        const cx = (e.clientX ?? (e.touches && e.touches[0].clientX) ?? r.left + r.width/2) - r.left;
-        const cy = (e.clientY ?? (e.touches && e.touches[0].clientY) ?? r.top + r.height/2) - r.top;
-        const px = (cx / r.width) * 2 - 1;
-        const py = (cy / r.height) * 2 - 1;
-        root.style.setProperty('--ry', (px * 5) + 'deg');
-        root.style.setProperty('--rx', (-py * 4) + 'deg');
-      }
-      shell.addEventListener('pointermove', tilt, {passive:true});
-      shell.addEventListener('touchmove', tilt, {passive:true});
-
-      // Canvas setup
-      let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-      let w=0, h=0, cx=0, cy=0, raf=null, last=performance.now();
-      let secondsTurns=0; // for stats
-      const comets = []; // transient sparks
-
+      // Scene sizing
+      let dpr = Math.max(1, Math.min(2, window.devicePixelRatio||1));
+      let w=0, h=0, raf=null, last=performance.now();
       function resize(){
-        const rect = orrery.getBoundingClientRect();
-        w = Math.max(240, rect.width);
-        h = Math.max(160, rect.height);
-        cx = w/2; cy = h/2;
+        const r = scene.getBoundingClientRect();
+        w = Math.max(240, r.width);
+        h = Math.max(160, r.height);
         canvas.width = Math.floor(w*dpr);
         canvas.height = Math.floor(h*dpr);
         canvas.style.width = w + 'px';
         canvas.style.height = h + 'px';
         ctx.setTransform(dpr,0,0,dpr,0,0);
       }
+      window.addEventListener('resize', resize);
 
-      function getVar(name){ return getComputedStyle(root).getPropertyValue(name).trim(); }
-
-      function draw(ms){
-        const now = ms;
-        const dt = Math.min(0.05, (now - last)/1000);
-        last = now;
-
-        const elapsed = (now/1000);
-        root.style.setProperty('--t', (elapsed*60%360).toFixed(2));
-
-        // minute progress bar
-        const d = new Date();
-        const sec = d.getSeconds() + d.getMilliseconds()/1000;
-        barFill.style.width = ((sec/60)*100).toFixed(2) + '%';
-
-        // time fractions
-        const hrFrac = ((d.getHours()%12) + d.getMinutes()/60 + sec/3600) / 12;
-        const mnFrac = (d.getMinutes() + sec/60) / 60;
-        const scFrac = sec / 60;
-
-        ctx.clearRect(0,0,w,h);
-
-        // star core glow
-        const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(w,h)*0.65);
-        core.addColorStop(0, 'rgba(255,255,255,0.10)');
-        core.addColorStop(1, 'rgba(255,255,255,0.00)');
-        ctx.fillStyle = core;
-        ctx.fillRect(0,0,w,h);
-
-        // central star
-        const starG = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(w,h)*0.18);
-        starG.addColorStop(0, getVar('--ac4'));
-        starG.addColorStop(0.5, 'rgba(255,255,255,0.4)');
-        starG.addColorStop(1, 'rgba(255,255,255,0)');
-        ctx.globalAlpha = 0.65;
-        ctx.beginPath(); ctx.arc(cx, cy, Math.min(w,h)*0.12, 0, Math.PI*2); ctx.fillStyle = starG; ctx.fill();
-        ctx.globalAlpha = 1;
-
-        // orbit radii
-        const base = Math.min(w, h) * 0.36;
-        const rH = base * 0.42; // hours
-        const rM = base * 0.72; // minutes
-        const rS = base * 1.02; // seconds
-
-        // subtle breathing width
-        const breathe = 0.7 + 0.3*Math.sin(elapsed*0.8);
-
-        // draw orbit rings with gentle gradient
-        drawRing(rH, getVar('--ac3'), 1.4*breathe);
-        drawRing(rM, getVar('--ac2'), 1.2*breathe);
-        drawRing(rS, getVar('--ac1'), 1.0*breathe);
-
-        // draw bodies with trails
-        drawBody(rH, hrFrac*TAU(elapsed, 0.07), getVar('--ac3'), 9);
-        drawBody(rM, mnFrac*TAU(elapsed, 0.15), getVar('--ac2'), 7);
-        drawBody(rS, scFrac*TAU(elapsed, 0.30), getVar('--ac1'), 5, true);
-
-        // comets
-        updateComets(dt);
-
-        // update stats
-        secondsTurns += dt/60; // one turn per 60s
-        orbitsEl.textContent = (secondsTurns).toFixed(2);
-        bodiesEl.textContent = (3 + comets.length).toString();
-
-        if (root.style.getPropertyValue('--play') === '1'){
-          raf = requestAnimationFrame(draw);
-        } else {
-          cancelAnimationFrame(raf); raf = null;
+      // Stars
+      const stars = [];
+      function initStars(){
+        stars.length = 0;
+        const count = Math.floor((w*h)/18000);
+        for(let i=0;i<count;i++){
+          stars.push({
+            x: Math.random()*w,
+            y: Math.random()*h,
+            r: Math.random()*1.8 + 0.4,
+            tw: Math.random()*Math.PI*2,
+            s: 10 + Math.random()*20 // speed factor for subtle drift
+          });
         }
       }
 
-      function TAU(elapsed, extra){ return Math.PI*2 + (elapsed*extra); }
+      // Lanterns
+      const lanterns = [];
+      let wishes = 0;
 
-      function drawRing(r, color, width){
+      function spawnLantern(x, spread=60){
+        const px = (x==null) ? (w*0.5 + (Math.random()*w*0.6 - w*0.3)) : x + (Math.random()*spread - spread/2);
+        const size = 12 + Math.random()*16;
+        lanterns.push({
+          x: Math.max(20, Math.min(w-20, px)),
+          y: h + 20 + Math.random()*60,
+          vx: (Math.random()*18 - 9),
+          vy: - (18 + Math.random()*28),
+          sway: Math.random()*Math.PI*2,
+          swayAmp: 12 + Math.random()*24,
+          rot: (Math.random()*0.12 - 0.06),
+          size,
+          alpha: 0, // fade in
+          hue: Math.random()<0.5 ? getVar('--glow1') : getVar('--glow2')
+        });
+      }
+
+      function burst(x){
+        for(let i=0;i<10;i++){ spawnLantern(x, 120); }
+        wishes++;
+        wishesEl.textContent = wishes.toString();
+        pulseTitle();
+      }
+
+      function getVar(name){ return getComputedStyle(root).getPropertyValue(name).trim(); }
+
+      // Drawing helpers
+      function roundRectPath(ctx, x, y, w, h, r){
+        const rr = Math.min(r, w/2, h/2);
+        ctx.beginPath();
+        ctx.moveTo(x+rr, y);
+        ctx.arcTo(x+w, y, x+w, y+h, rr);
+        ctx.arcTo(x+w, y+h, x, y+h, rr);
+        ctx.arcTo(x, y+h, x, y, rr);
+        ctx.arcTo(x, y, x+w, y, rr);
+        ctx.closePath();
+      }
+
+      function drawLantern(l){
+        const x = l.x + Math.sin(l.sway)*l.swayAmp*0.4;
+        const s = l.size;
+        const y = l.y;
+        const bodyW = s*1.3, bodyH = s*2.1;
         ctx.save();
-        ctx.globalAlpha = 0.55;
-        const grad = ctx.createLinearGradient(cx-r, cy-r, cx+r, cy+r);
-        grad.addColorStop(0, 'rgba(255,255,255,0.0)');
-        grad.addColorStop(0.5, color);
-        grad.addColorStop(1, 'rgba(255,255,255,0.0)');
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = width;
-        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.stroke();
+        ctx.translate(x, y);
+        ctx.rotate(l.rot);
 
-        // ticks
-        ctx.globalAlpha = 0.20;
+        // soft back glow
+        const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, bodyW*1.4);
+        glow.addColorStop(0, 'rgba(255,255,255,0.55)');
+        glow.addColorStop(1, 'rgba(255,255,255,0.00)');
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.globalAlpha = 0.35*l.alpha;
+        ctx.fillStyle = glow;
+        ctx.beginPath(); ctx.arc(0, 0, bodyW*1.1, 0, Math.PI*2); ctx.fill();
+
+        // paper body
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.globalAlpha = 0.95*l.alpha;
+        const gx = ctx.createLinearGradient(-bodyW/2, -bodyH/2, bodyW/2, bodyH/2);
+        gx.addColorStop(0, 'rgba(255,255,255,0.85)');
+        gx.addColorStop(0.5, l.hue);
+        gx.addColorStop(1, 'rgba(255,255,255,0.85)');
+        ctx.fillStyle = gx;
         ctx.strokeStyle = 'rgba(255,255,255,0.35)';
         ctx.lineWidth = 1;
-        const ticks = 60;
-        for(let i=0;i<ticks;i++){
-          const a = (i/ticks)*Math.PI*2;
-          const ir = r - 3; const or = r + 3;
-          const x1 = cx + ir*Math.cos(a), y1 = cy + ir*Math.sin(a);
-          const x2 = cx + or*Math.cos(a), y2 = cy + or*Math.sin(a);
-          ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+        roundRectPath(ctx, -bodyW/2, -bodyH/2, bodyW, bodyH, s*0.25);
+        ctx.fill();
+        ctx.stroke();
+
+        // inner flame
+        const flame = ctx.createRadialGradient(0, bodyH*0.18, 0, 0, bodyH*0.18, s*0.9);
+        flame.addColorStop(0, 'rgba(255,255,255,0.95)');
+        flame.addColorStop(1, l.hue);
+        ctx.globalAlpha = 0.9*l.alpha;
+        ctx.beginPath(); ctx.ellipse(0, bodyH*0.18, s*0.5, s*0.3, 0, 0, Math.PI*2); ctx.fillStyle = flame; ctx.fill();
+
+        // rim top/bottom
+        ctx.globalAlpha = 0.6*l.alpha;
+        ctx.fillStyle = 'rgba(0,0,0,0.15)';
+        ctx.fillRect(-bodyW/2, -bodyH/2, bodyW, 2);
+        ctx.fillRect(-bodyW/2, bodyH/2-2, bodyW, 2);
+
+        // string hint
+        ctx.globalAlpha = 0.5*l.alpha;
+        ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, bodyH/2);
+        ctx.quadraticCurveTo(-4, bodyH/2+8, 0, bodyH/2+16);
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      function drawStars(dt, t){
+        ctx.save();
+        for(const st of stars){
+          st.tw += dt * 2;
+          let y = st.y + dt * (-st.s*0.06); // drift upward slowly
+          if(y < -4){ y = h + 4; }
+          st.y = y;
+          const a = 0.35 + 0.65*(0.5+0.5*Math.sin(st.tw));
+          ctx.globalAlpha = a;
+          ctx.fillStyle = 'white';
+          ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, Math.PI*2); ctx.fill();
+
+          // subtle colored halo
+          ctx.globalAlpha = a*0.25;
+          const halo = ctx.createRadialGradient(st.x, st.y, 0, st.x, st.y, st.r*4);
+          halo.addColorStop(0, Math.random()<0.5 ? getVar('--glow2') : getVar('--glow1'));
+          halo.addColorStop(1, 'rgba(255,255,255,0)');
+          ctx.fillStyle = halo;
+          ctx.beginPath(); ctx.arc(st.x, st.y, st.r*3.2, 0, Math.PI*2); ctx.fill();
         }
         ctx.restore();
       }
 
-      function drawBody(r, angle, color, size, leaveTrail=false){
-        const x = cx + r * Math.cos(angle);
-        const y = cy + r * Math.sin(angle);
+      function step(now){
+        const dt = Math.min(0.05, (now - last)/1000);
+        last = now;
 
-        if (leaveTrail){
-          ctx.save();
-          ctx.globalCompositeOperation = 'lighter';
-          ctx.globalAlpha = 0.35;
-          ctx.strokeStyle = color;
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.arc(cx, cy, r, angle - Math.PI/4, angle);
-          ctx.stroke();
-          ctx.restore();
+        // Clear
+        ctx.clearRect(0,0,w,h);
+
+        // Subtle vertical haze
+        const haze = ctx.createLinearGradient(0, h, 0, 0);
+        haze.addColorStop(0, 'rgba(255,255,255,0.04)');
+        haze.addColorStop(1, 'rgba(255,255,255,0.00)');
+        ctx.fillStyle = haze;
+        ctx.fillRect(0,0,w,h);
+
+        // Stars
+        drawStars(dt, now/1000);
+
+        // Lanterns update/render
+        for(let i=lanterns.length-1;i>=0;i--){
+          const L = lanterns[i];
+          L.sway += dt*0.9;
+          L.x += L.vx * dt * 0.2;
+          L.y += L.vy * dt * 0.8;
+          L.vx *= 0.995;
+          L.vy *= 1.00;
+          L.alpha += (1 - L.alpha)*0.06;
+
+          drawLantern(L);
+
+          if (L.y < -40){
+            lanterns.splice(i,1);
+            // respawn a replacement to keep density
+            spawnLantern();
+          }
         }
 
-        // halo
-        const halo = ctx.createRadialGradient(x, y, size*0.6, x, y, size*2.2);
-        halo.addColorStop(0, color);
-        halo.addColorStop(1, 'rgba(255,255,255,0)');
-        ctx.globalAlpha = 0.65;
-        ctx.beginPath(); ctx.arc(x, y, size*1.6, 0, Math.PI*2); ctx.fillStyle = halo; ctx.fill();
+        lanternsEl.textContent = lanterns.length.toString();
 
-        // core
-        ctx.globalAlpha = 1;
-        const core = ctx.createRadialGradient(x, y, 0, x, y, size);
-        core.addColorStop(0, 'white');
-        core.addColorStop(1, color);
-        ctx.beginPath(); ctx.arc(x, y, size*0.7, 0, Math.PI*2); ctx.fillStyle = core; ctx.fill();
-      }
-
-      function spawnComet(angle, baseR){
-        const speed = 60 + Math.random()*80;
-        const dir = angle + (Math.random()*0.6 - 0.3);
-        const r = baseR + (Math.random()*6 - 3);
-        const x = cx + r * Math.cos(angle);
-        const y = cy + r * Math.sin(angle);
-        comets.push({
-          x, y,
-          vx: Math.cos(dir) * speed,
-          vy: Math.sin(dir) * speed,
-          life: 1,
-          hue: [getVar('--ac1'), getVar('--ac2'), getVar('--ac3')][Math.floor(Math.random()*3)]
-        });
-      }
-
-      function updateComets(dt){
-        for(let i=comets.length-1;i>=0;i--){
-          const c = comets[i];
-          c.x += c.vx * dt;
-          c.y += c.vy * dt;
-          c.vx *= 0.995; c.vy *= 0.995;
-          c.life -= dt*0.6;
-
-          // trail
-          ctx.save();
-          ctx.globalCompositeOperation = 'lighter';
-          ctx.globalAlpha = Math.max(0, c.life)*0.8;
-          ctx.strokeStyle = c.hue;
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(c.x, c.y);
-          ctx.lineTo(c.x - c.vx*0.05, c.y - c.vy*0.05);
-          ctx.stroke();
-
-          const glow = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, 10);
-          glow.addColorStop(0, 'white');
-          glow.addColorStop(1, c.hue);
-          ctx.globalAlpha = Math.max(0, c.life)*0.9;
-          ctx.beginPath(); ctx.arc(c.x, c.y, 3, 0, Math.PI*2); ctx.fillStyle = glow; ctx.fill();
-          ctx.restore();
-
-          if (c.life <= 0) comets.splice(i,1);
+        if (root.style.getPropertyValue('--play') === '1'){
+          raf = requestAnimationFrame(step);
+        } else {
+          cancelAnimationFrame(raf); raf=null;
         }
       }
 
-      // Interaction
-      function burst(){
-        const d = new Date();
-        const sec = d.getSeconds() + d.getMilliseconds()/1000;
-        const angle = (sec/60)*Math.PI*2;
-        for(let i=0;i<5;i++){ spawnComet(angle + (i-2)*0.12, Math.min(w,h)*0.36*1.02); }
-        pulseTitle();
+      // Interactions
+      function onPointer(e){
+        const r = scene.getBoundingClientRect();
+        const x = (e.clientX ?? (e.touches && e.touches[0].clientX) ?? r.left + r.width/2);
+        const y = (e.clientY ?? (e.touches && e.touches[0].clientY) ?? r.top + r.height/2);
+        const px = ((x - r.left)/r.width)*100 + '%';
+        const py = ((y - r.top)/r.height)*100 + '%';
+        root.style.setProperty('--mx', px);
+        root.style.setProperty('--my', py);
       }
+      scene.addEventListener('pointermove', onPointer, {passive:true});
+      scene.addEventListener('touchmove', onPointer, {passive:true});
 
-      orrery.addEventListener('pointerdown', burst);
-      nudgeBtn.addEventListener('click', burst);
+      function onRelease(e){
+        const r = scene.getBoundingClientRect();
+        const x = (e.clientX ?? (e.touches && e.touches[0].clientX) ?? (r.left + r.width/2)) - r.left;
+        burst(x);
+      }
+      scene.addEventListener('pointerdown', onRelease);
+      releaseBtn.addEventListener('click', () => burst(w*0.5));
 
-      // Controls
       themeBtn.addEventListener('click', () => {
         themeIndex = (themeIndex + 1) % order.length;
-        applyTheme(themes[order[themeIndex]]);
-      });
-      motionBtn.addEventListener('click', () => {
-        const on = root.style.getPropertyValue('--play') !== '0';
-        if (on) { stop(); } else { start(); }
-        motionBtn.textContent = on ? 'Play' : 'Pause';
-        motionBtn.setAttribute('aria-pressed', (!on).toString());
+        applyTheme(order[themeIndex]);
+        themeBtn.setAttribute('aria-pressed', themeIndex === 0 ? 'true' : 'false');
       });
 
-      function start(){ if(!raf){ root.style.setProperty('--play','1'); raf = requestAnimationFrame(draw);} }
+      pauseBtn.addEventListener('click', () => {
+        const playing = root.style.getPropertyValue('--play') !== '0';
+        if (playing) { stop(); } else { start(); }
+        pauseBtn.textContent = playing ? 'Play' : 'Pause';
+        pauseBtn.setAttribute('aria-pressed', (!playing).toString());
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === ' ') { e.preventDefault(); pauseBtn.click(); }
+        if (e.key.toLowerCase() === 't') { themeBtn.click(); }
+        if (e.key.toLowerCase() === 'l') { releaseBtn.click(); }
+      });
+
+      function start(){ if(!raf){ root.style.setProperty('--play','1'); raf = requestAnimationFrame(step);} }
       function stop(){ root.style.setProperty('--play','0'); if(raf){ cancelAnimationFrame(raf); raf=null; } }
 
-      // Time updater every 1s
-      setInterval(updateTime, 1000);
+      // Init
+      function prime(){
+        resize();
+        initStars();
+        lanterns.length = 0;
+        const baseCount = Math.max(10, Math.floor(w/80));
+        for(let i=0;i<baseCount;i++){ spawnLantern(); }
+        lanternsEl.textContent = lanterns.length.toString();
+      }
 
-      window.addEventListener('resize', resize);
-      window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', e => {
-        if (e.matches) { stop(); motionBtn.textContent = 'Play'; motionBtn.setAttribute('aria-pressed','false'); }
-        else { start(); motionBtn.textContent = 'Pause'; motionBtn.setAttribute('aria-pressed','true'); }
+      // Prefers reduced motion
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      prefersReduced.addEventListener('change', e => {
+        if (e.matches) { stop(); pauseBtn.textContent = 'Play'; pauseBtn.setAttribute('aria-pressed','false'); }
+        else { start(); pauseBtn.textContent = 'Pause'; pauseBtn.setAttribute('aria-pressed','true'); }
       });
 
-      // Init
-      applyTheme(themes[order[themeIndex]]);
-      resize();
+      applyTheme(order[themeIndex]);
       updateTime();
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        stop(); motionBtn.textContent = 'Play'; motionBtn.setAttribute('aria-pressed','false');
+      prime();
+
+      if (prefersReduced.matches) {
+        stop(); pauseBtn.textContent = 'Play'; pauseBtn.setAttribute('aria-pressed','false');
       } else {
-        start(); motionBtn.textContent = 'Pause'; motionBtn.setAttribute('aria-pressed','true');
+        start(); pauseBtn.textContent = 'Pause'; pauseBtn.setAttribute('aria-pressed','true');
       }
     })();
   </script>
