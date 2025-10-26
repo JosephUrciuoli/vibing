@@ -73,354 +73,340 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="v211" class="v211" aria-label="Nocturne Luminarium">
+<section id="v212" class="v212" aria-label="Aurora Atelier">
   <style>
-    /* Scoped to #v211 only */
-    #v211 {
-      --bg0: #05070f;
-      --bg1: #0a0f1f;
-      --ink: #e9f0ff;
-      --muted: #99a8c8;
-      --a1: #67e8f9; /* aqua */
-      --a2: #a78bfa; /* violet */
-      --a3: #22d3ee; /* cyan */
-      --a4: #f472b6; /* rose */
-      --glow: 0 0 0 rgba(0,0,0,0);
+    /* Scoped to #v212 only */
+    #v212 {
+      --t: 0.35;               /* time of day 0=night, 1=day */
       --mx: 50%;
-      --my: 50%;
+      --my: 40%;
+      --ink: #0f1a2a;
+      --muted: #53617a;
+      --accent: #2563eb;
+      --accent-2: #06b6d4;
+      --glass: rgba(255,255,255,0.6);
+      --ring: rgba(15,26,42,0.08);
       position: relative;
       display: grid;
-      gap: clamp(18px, 3vw, 28px);
+      gap: clamp(18px, 3vw, 36px);
       padding: clamp(28px, 6vw, 72px);
       border-radius: 28px;
       color: var(--ink);
-      overflow: clip;
       isolation: isolate;
       background:
-        radial-gradient(900px 600px at var(--mx) var(--my), rgba(103,232,249,0.08), transparent 40%),
-        radial-gradient(1200px 900px at 75% 15%, rgba(167,139,250,0.08), transparent 50%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      border: 1px solid rgba(255,255,255,0.06);
+        radial-gradient(1200px 800px at var(--mx) var(--my), rgba(37,99,235,0.15), transparent 45%),
+        linear-gradient(180deg,
+          color-mix(in oklab, #f0f6ff, #0a1020 calc((1 - var(--t))*30%)),
+          color-mix(in oklab, #ffffff, #dfe8ff calc((1 - var(--t))*25%))
+        );
+      border: 1px solid rgba(15,26,42,0.06);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.05),
-        0 30px 90px rgba(0,0,0,0.45);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        inset 0 1px 0 rgba(255,255,255,0.6),
+        0 30px 90px rgba(10,16,32,0.12);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      overflow: clip;
     }
 
-    /* Nebula canvas */
-    #v211 .nebula {
-      position: absolute; inset: -2px;
-      z-index: -1; opacity: 0.7; pointer-events: none;
-      mix-blend-mode: screen;
-      filter: blur(0.2px) saturate(1.05);
-    }
-
-    /* Vignette + grid overlay */
-    #v211::after, #v211::before {
+    /* Soft film grain */
+    #v212::after {
       content: ""; position: absolute; inset: 0; pointer-events: none;
-    }
-    #v211::before {
       background-image:
-        linear-gradient(transparent, rgba(0,0,0,0.4));
-      mix-blend-mode: multiply;
-    }
-    #v211::after {
-      opacity: 0.12;
-      background-image:
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.1) 0 1px, transparent 1px 80px),
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 80px);
-      mask: radial-gradient(150% 120% at 50% 40%, #000 40%, transparent 100%);
+        radial-gradient(1200px 900px at 80% 10%, rgba(6,182,212,0.16), transparent 60%),
+        radial-gradient(800px 600px at 20% 80%, rgba(99,102,241,0.12), transparent 55%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='2' stitchTiles='stitch' /%3E%3CfeColorMatrix type='saturate' values='0' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025' /%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+      opacity: 1;
     }
 
-    /* Header */
-    #v211 .head {
+    .head {
       display:flex; align-items:center; justify-content: space-between; gap: 16px;
     }
-    #v211 .brand {
-      display:inline-grid; grid-auto-flow: column; align-items:center; gap: 12px;
-      letter-spacing: 0.3px; font-weight: 800;
+    .brand {
+      display:inline-grid; grid-auto-flow: column; gap: 12px; align-items:center;
+      font-weight: 900; letter-spacing: .2px;
     }
-    #v211 .sigmark {
-      width: 40px; height: 40px; border-radius: 12px; position: relative;
-      background: radial-gradient(circle at 30% 30%, #0ff2, transparent 55%), conic-gradient(from 180deg, var(--a1), var(--a2), var(--a4), var(--a3), var(--a1));
-      box-shadow:
-        inset 0 1px 2px rgba(255,255,255,0.35),
-        0 8px 22px rgba(103,232,249,0.35),
-        0 0 0 1px rgba(255,255,255,0.06);
+    .glyph {
+      width: 42px; height: 42px; border-radius: 14px; position: relative; overflow: hidden;
+      background: conic-gradient(from 210deg, #a5b4fc, #67e8f9, #a7f3d0, #fbcfe8, #a5b4fc);
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.8), 0 10px 30px rgba(37,99,235,0.2);
     }
-    #v211 .sigmark::after{
-      content:""; position:absolute; inset:4px; border-radius:10px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.02));
+    .glyph::after {
+      content:""; position:absolute; inset:4px; border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.18));
     }
-    #v211 .switch {
+    .mode {
       display:inline-flex; align-items:center; gap:10px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
       padding: 8px 12px; border-radius: 14px;
-      color: var(--ink); font-weight: 700; font-size: 12px;
+      background: color-mix(in oklab, var(--glass), white 20%);
+      border: 1px solid var(--ring);
+      font-weight: 800; font-size: 12px; color: var(--ink);
       cursor: pointer; user-select: none;
-      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+      box-shadow: 0 6px 20px rgba(15,26,42,0.06), inset 0 1px 0 rgba(255,255,255,0.8);
+      transition: transform .18s ease, background .2s ease, border-color .2s ease;
     }
-    #v211 .switch:hover { transform: translateY(-2px); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
-    #v211 .switch .dot {
-      width: 18px; height: 18px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,0.1));
-      box-shadow: 0 0 0 2px rgba(255,255,255,0.08), 0 0 16px rgba(103,232,249,0.5);
+    .mode:hover { transform: translateY(-2px); background: rgba(255,255,255,0.75); border-color: rgba(15,26,42,0.12); }
+    .mode .dot {
+      width: 18px; height: 18px; border-radius: 999px;
+      background: radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,0.35));
+      box-shadow: 0 0 0 2px rgba(15,26,42,0.05), 0 0 18px rgba(37,99,235,0.45);
     }
 
-    /* Hero */
-    #v211 .hero {
-      display: grid; align-items: center; gap: clamp(18px, 5vw, 56px);
+    .hero {
+      display: grid; gap: clamp(18px, 5vw, 44px);
       grid-template-columns: 1.05fr .95fr;
+      align-items: center;
     }
-    @media (max-width: 950px){ #v211 .hero { grid-template-columns: 1fr; } }
+    @media (max-width: 980px){ .hero { grid-template-columns: 1fr; } }
 
-    #v211 h1 {
+    h1 {
       margin: 0;
       font-weight: 900;
-      letter-spacing: -0.018em;
-      line-height: 0.92;
-      font-size: clamp(38px, 8.6vw, 92px);
-      background: linear-gradient(180deg, #f0f7ff, #a6b8e6 70%, #7ea0ff);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
+      letter-spacing: -0.02em;
+      line-height: .92;
+      font-size: clamp(38px, 8.2vw, 92px);
+      color: transparent;
+      background: linear-gradient(180deg,
+        color-mix(in oklab, #0f1a2a, #1e3a8a 30%),
+        color-mix(in oklab, #0f1a2a, #2563eb 60%));
+      -webkit-background-clip: text; background-clip: text;
+      filter: drop-shadow(0 18px 40px rgba(37,99,235,0.18));
       text-wrap: balance;
-      filter: drop-shadow(0 12px 30px rgba(103,232,249,0.12));
     }
-    #v211 .lede {
+    .lede {
       margin: 12px 0 0 0;
       max-width: 65ch; text-wrap: pretty;
       color: var(--muted);
       font-size: clamp(14px, 2.1vw, 19px);
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
-    #v211 .cta { display:flex; flex-wrap:wrap; gap: 12px; margin-top: clamp(14px, 2.6vw, 28px); }
-    #v211 .btn {
-      --glint: linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+    .cta { display:flex; flex-wrap:wrap; gap: 12px; margin-top: clamp(14px, 2.6vw, 28px); }
+    .btn {
+      --gloss: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.2));
       display:inline-flex; align-items:center; gap:10px;
       padding: 12px 16px; border-radius: 14px;
-      color: var(--ink); text-decoration:none; font-weight: 800; font-size: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
+      text-decoration: none; font-weight: 900; font-size: 14px;
+      color: var(--ink);
       background:
-        radial-gradient(120% 180% at 0% 0%, rgba(103,232,249,0.18), transparent 40%),
-        var(--glint);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.06) inset,
-        0 14px 40px rgba(103,232,249,0.16);
-      transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+        radial-gradient(160% 200% at 0% 0%, rgba(37,99,235,0.12), transparent 50%),
+        var(--gloss);
+      border: 1px solid rgba(15,26,42,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 14px 40px rgba(37,99,235,0.14);
+      transition: transform .15s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
       will-change: transform;
+      position: relative; overflow: hidden;
     }
-    #v211 .btn.primary {
+    .btn.primary {
       background:
-        radial-gradient(120% 180% at 0% 0%, rgba(103,232,249,0.28), transparent 40%),
-        linear-gradient(180deg, rgba(103,232,249,0.22), rgba(167,139,250,0.18));
+        radial-gradient(160% 200% at 0% 0%, rgba(37,99,235,0.22), transparent 50%),
+        linear-gradient(180deg, rgba(37,99,235,0.18), rgba(6,182,212,0.22));
       border: 2px solid transparent;
-      background-origin: border-box;
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.08) inset,
-        0 16px 48px rgba(103,232,249,0.25),
-        0 0 40px rgba(167,139,250,0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 18px 52px rgba(6,182,212,0.28), 0 0 48px rgba(99,102,241,0.18);
     }
-    #v211 .btn:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.25); }
-    #v211 .btn:active { transform: translateY(0); }
+    .btn:hover { transform: translateY(-2px); border-color: rgba(15,26,42,0.2); }
+    .btn:active { transform: translateY(0); }
 
-    /* Orbital module */
-    #v211 .orbital {
-      position: relative; width: min(520px, 95%); aspect-ratio: 1; margin-inline: auto;
-      border-radius: 50%;
-      background:
-        radial-gradient(42% 42% at 50% 50%, rgba(255,255,255,0.08), rgba(255,255,255,0.02) 60%, transparent 61%),
-        radial-gradient(110% 110% at 50% 50%, rgba(103,232,249,0.06), rgba(167,139,250,0.05), rgba(244,114,182,0.05));
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 28px 80px rgba(0,0,0,0.45);
-      overflow: hidden;
+    /* Horizon scene */
+    .scene {
+      position: relative;
+      width: min(560px, 100%); aspect-ratio: 1.2;
+      border-radius: 22px; overflow: hidden;
+      background: linear-gradient(180deg,
+        color-mix(in oklab, #0b1226, #93c5fd calc(var(--t)*100%)),
+        color-mix(in oklab, #0f172a, #e0f2fe calc(var(--t)*100%))
+      );
+      border: 1px solid rgba(15,26,42,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 24px 70px rgba(15,26,42,0.18);
+      margin-inline: auto;
       transform-style: preserve-3d;
       transition: transform .3s ease;
     }
-    #v211 .halo {
-      position:absolute; inset: 8%; border-radius: 50%;
-      box-shadow: 0 0 120px 12px rgba(103,232,249,0.18) inset, 0 0 160px rgba(167,139,250,0.12) inset;
-      pointer-events:none;
+    .scene:hover { transform: perspective(1000px) rotateX(-2deg) rotateY(2deg); }
+    .sky {
+      position: absolute; inset: 0; z-index: 0; opacity: .9; mix-blend-mode: screen; pointer-events:none;
+      filter: saturate(1.15) blur(.2px);
     }
-    #v211 .orbit {
-      position:absolute; inset: 10%; border-radius: 50%;
-      border: 1px dashed rgba(255,255,255,0.18);
-      transform: rotate(0deg);
+    .sun {
+      position: absolute; left: 50%; top: 70%;
+      width: clamp(70px, 18vw, 120px); height: clamp(70px, 18vw, 120px);
+      border-radius: 50%; transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 40% 40%, #fff7c3, #ffdd75 60%, rgba(255,221,117,0) 70%);
+      box-shadow: 0 0 80px 20px rgba(255,221,117,0.55);
+      z-index: 1;
     }
-    #v211 .orbit.m { inset: 21%; opacity: 0.8; }
-    #v211 .orbit.s { inset: 32%; opacity: 0.65; }
-    #v211 .planet {
-      position:absolute; left: 50%; top: 50%;
-      width: 12px; height: 12px; border-radius: 50%;
-      transform-origin: -50% -50%;
-      transform: rotate(var(--deg, 0deg)) translateX(44%);
-      background: radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,0.1));
-      box-shadow: 0 0 0 2px rgba(255,255,255,0.07), 0 0 24px rgba(103,232,249,0.6);
+    .mounts, .mounts svg { position:absolute; inset: 0; z-index: 2; display:block; }
+    .scrub {
+      position: absolute; left: 0; right: 0; bottom: 12px;
+      display:flex; align-items:center; gap: 10px; padding: 0 14px; z-index: 3;
     }
-    #v211 .planet.m { width: 10px; height: 10px; background: radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,0.1)); box-shadow: 0 0 0 2px rgba(255,255,255,0.06), 0 0 20px rgba(167,139,250,0.5); }
-    #v211 .planet.s { width: 8px; height: 8px; box-shadow: 0 0 0 2px rgba(255,255,255,0.05), 0 0 16px rgba(244,114,182,0.55); }
-    #v211 .core {
-      position:absolute; inset: 40%; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ffffff, #a0e6ff 60%, transparent 65%);
-      border: 1px solid rgba(255,255,255,0.25);
-      box-shadow: 0 12px 40px rgba(103,232,249,0.3), 0 0 120px rgba(167,139,250,0.2);
+    .scrub label { font-size: 12px; color: rgba(15,26,42,0.7); font-weight: 700; }
+    .scrub input[type="range"] {
+      -webkit-appearance: none; appearance: none; width: 100%; height: 8px;
+      background: linear-gradient(90deg, #0ea5e9, #22c55e, #f59e0b, #fb7185);
+      border-radius: 999px; outline: none; border: 1px solid rgba(15,26,42,0.1);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+    .scrub input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: white; border: 1px solid rgba(15,26,42,0.15);
+      box-shadow: 0 6px 16px rgba(15,26,42,0.18), inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+    .scrub input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%; background: white; border: 1px solid rgba(15,26,42,0.15);
+      box-shadow: 0 6px 16px rgba(15,26,42,0.18), inset 0 1px 0 rgba(255,255,255,0.9);
     }
 
-    /* Feature grid */
-    #v211 .features {
-      display:grid; gap: clamp(12px, 2.4vw, 18px);
+    /* Feature cards */
+    .features {
+      display:grid; gap: clamp(12px, 2.2vw, 18px);
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-    @media (max-width: 1020px){ #v211 .features { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 680px){ #v211 .features { grid-template-columns: 1fr; } }
+    @media (max-width: 1020px){ .features { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 680px){ .features { grid-template-columns: 1fr; } }
 
-    #v211 .card {
+    .card {
       position: relative;
       padding: clamp(14px, 2.2vw, 20px);
       border-radius: 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 12px 34px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
+      border: 1px solid rgba(15,26,42,0.12);
+      box-shadow: 0 14px 34px rgba(15,26,42,0.12), inset 0 1px 0 rgba(255,255,255,0.85);
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
       will-change: transform;
     }
-    #v211 .card:hover {
+    .card:hover {
       transform: translateY(-8px) scale(1.01);
-      box-shadow: 0 24px 80px rgba(103,232,249,0.2), 0 16px 50px rgba(0,0,0,0.5);
-      border-color: rgba(255,255,255,0.2);
-      background: linear-gradient(180deg, rgba(103,232,249,0.1), rgba(255,255,255,0.03));
+      box-shadow: 0 24px 66px rgba(37,99,235,0.2), 0 18px 50px rgba(15,26,42,0.18);
+      border-color: rgba(15,26,42,0.18);
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.7));
     }
-    #v211 .badge {
+    .badge {
       width: 46px; height: 46px; border-radius: 12px;
       display:grid; place-items:center; font-size: 22px;
-      background: linear-gradient(180deg, rgba(103,232,249,0.16), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255,255,255,0.16);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+      background: linear-gradient(180deg, rgba(37,99,235,0.14), rgba(6,182,212,0.16));
+      border: 1px solid rgba(15,26,42,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
       margin-bottom: 10px;
     }
-    #v211 .card h3 { margin: 0 0 6px 0; letter-spacing: .2px; font-size: clamp(16px, 2vw, 18px); }
-    #v211 .card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; text-wrap: pretty; }
+    .card h3 { margin: 0 0 6px 0; letter-spacing: .2px; font-size: clamp(16px, 2vw, 18px); }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; text-wrap: pretty; }
 
-    /* Footer */
-    #v211 .foot {
+    .foot {
       display:flex; align-items:center; justify-content: space-between; gap: 12px;
       color: var(--muted); font-size: 12px; padding-top: 8px;
     }
-    #v211 .tiny {
-      display:inline-flex; align-items:center; gap: 8px;
-    }
-    #v211 .pulse {
+    .tiny { display:inline-flex; align-items:center; gap: 8px; }
+    .spark {
       width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,0.1));
-      border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 0 10px rgba(103,232,249,0.9), 0 0 30px rgba(167,139,250,0.6);
-      animation: v211-pulse 2.8s ease-in-out infinite;
+      background: radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,0.4));
+      border: 1px solid rgba(15,26,42,0.15);
+      box-shadow: 0 0 10px rgba(250,204,21,0.9), 0 0 30px rgba(37,99,235,0.5);
+      animation: v212-spark 2.8s ease-in-out infinite;
     }
-    @keyframes v211-pulse {
+    @keyframes v212-spark {
       0%,100% { transform: scale(1); opacity: .9; }
       50% { transform: scale(1.25); opacity: 1; }
     }
 
-    /* Dawn theme (toggle) */
-    #v211[data-theme="dawn"] {
-      --bg0: #f7fafc; --bg1: #ebf4ff;
-      --ink: #0f1524; --muted: #5b6a84;
-    }
-    #v211[data-theme="dawn"] .btn.primary {
-      box-shadow: 0 16px 48px rgba(103,232,249,0.22), 0 0 40px rgba(167,139,250,0.18), inset 0 1px 0 rgba(255,255,255,0.4);
-    }
-    #v211[data-theme="dawn"] .pulse { box-shadow: 0 0 10px rgba(250,204,21,0.9), 0 0 30px rgba(167,139,250,0.5); }
-
     @media (prefers-reduced-motion: reduce) {
-      #v211, #v211 * { animation: none !important; transition: none !important; }
+      #v212, #v212 * { animation: none !important; transition: none !important; }
     }
   </style>
 
-  <canvas class="nebula" id="v211-nebula" aria-hidden="true"></canvas>
-
   <div class="head">
-    <div class="brand" aria-label="Luminarium">
-      <span class="sigmark" aria-hidden="true"></span>
-      Luminarium
+    <div class="brand" aria-label="Aurora Atelier">
+      <span class="glyph" aria-hidden="true"></span>
+      Aurora Atelier
     </div>
-    <button class="switch" id="v211-switch" type="button" aria-pressed="false" aria-label="Toggle theme">
+    <button class="mode" id="v212-mode" type="button" aria-pressed="false" aria-label="Toggle auto daylight">
       <span class="dot" aria-hidden="true"></span>
-      toggle dawn
+      auto daylight
     </button>
   </div>
 
   <div class="hero">
     <div>
-      <h1>Nocturne interfaces, tuned to breathe in light.</h1>
-      <p class="lede">A serene, high-contrast night garden of UI—glass, glow, and gentle kinetics. Designed to calm attention while guiding action.</p>
+      <h1>Glow without glare.</h1>
+      <p class="lede">Light-first interfaces that stay calm under pressure. Gentle glass, lucid contrast, and motion that guides—not grabs.</p>
       <div class="cta">
-        <a href="#" class="btn primary" role="button" aria-label="Explore the system">Explore the system</a>
-        <a href="#" class="btn" role="button" aria-label="See live patterns">See live patterns</a>
+        <a href="#" class="btn primary" role="button" aria-label="Start the tour">Start the tour</a>
+        <a href="#" class="btn" role="button" aria-label="See principles">See principles</a>
       </div>
     </div>
 
-    <div class="orbital" id="v211-orbital" aria-label="Orbital timepiece">
-      <div class="halo" aria-hidden="true"></div>
-      <div class="orbit h" aria-hidden="true"></div>
-      <div class="orbit m" aria-hidden="true"></div>
-      <div class="orbit s" aria-hidden="true"></div>
-      <div class="planet h" id="v211-ph"></div>
-      <div class="planet m" id="v211-pm"></div>
-      <div class="planet s" id="v211-ps"></div>
-      <div class="core" aria-hidden="true"></div>
-    </div>
+    <figure class="scene" id="v212-scene" aria-label="Interactive horizon">
+      <canvas class="sky" id="v212-sky" aria-hidden="true"></canvas>
+      <div class="sun" id="v212-sun" aria-hidden="true"></div>
+      <div class="mounts" aria-hidden="true">
+        <svg viewBox="0 0 1000 700" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="v212-mg1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#8fb7ff"/>
+              <stop offset="1" stop-color="#dff1ff"/>
+            </linearGradient>
+            <linearGradient id="v212-mg2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#6aa6ff"/>
+              <stop offset="1" stop-color="#cde7ff"/>
+            </linearGradient>
+            <linearGradient id="v212-mg3" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#4d7dde"/>
+              <stop offset="1" stop-color="#bddbff"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,520 C120,460 200,540 360,500 C520,460 560,560 740,520 C880,490 940,530 1000,520 L1000,700 L0,700 Z" fill="url(#v212-mg1)" opacity="0.65"/>
+          <path d="M0,560 C160,500 260,590 420,560 C600,520 640,620 820,580 C900,560 950,600 1000,590 L1000,700 L0,700 Z" fill="url(#v212-mg2)" opacity="0.75"/>
+          <path d="M0,600 C200,540 300,620 480,600 C700,570 720,650 900,620 C960,610 980,630 1000,630 L1000,700 L0,700 Z" fill="url(#v212-mg3)" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="scrub">
+        <label for="v212-range">time</label>
+        <input id="v212-range" type="range" min="0" max="100" value="35" aria-label="Time of day"/>
+      </div>
+    </figure>
   </div>
 
   <div class="features" role="list">
     <div class="card" role="listitem">
-      <div class="badge" aria-hidden="true">🪐</div>
-      <h3>Ambient Focus</h3>
-      <p>Glow where needed, shadow where helpful—contrast that relaxes instead of shouts.</p>
+      <div class="badge" aria-hidden="true">🌤️</div>
+      <h3>Clarity</h3>
+      <p>Readable by design—ample white space, measured contrast, and balanced rhythm.</p>
     </div>
     <div class="card" role="listitem">
-      <div class="badge" aria-hidden="true">✨</div>
-      <h3>Tactile Motion</h3>
-      <p>Micro-lifts and orbital cues subtly orient the eye without stealing attention.</p>
+      <div class="badge" aria-hidden="true">🎚️</div>
+      <h3>Warm Control</h3>
+      <p>Inputs feel tactile and responsive with glints, springs, and soft feedback.</p>
     </div>
     <div class="card" role="listitem">
-      <div class="badge" aria-hidden="true">🫧</div>
-      <h3>Glass Systems</h3>
-      <p>Layered surfaces, consistent radii, and soft borders that scale elegantly.</p>
+      <div class="badge" aria-hidden="true">🧭</div>
+      <h3>Quiet Guidance</h3>
+      <p>Motion hints direction without shouting—subtle parallax, intentional pacing.</p>
     </div>
   </div>
 
   <div class="foot">
     <div class="tiny">
-      <span class="pulse" aria-hidden="true"></span>
-      <span>Night mode, lucid</span>
+      <span class="spark" aria-hidden="true"></span>
+      <span>Dawn-engine, steady mind</span>
     </div>
-    <span id="last-updated">Last updated: 2025-10-26 05:15:44 EST</span>
+    <span id="last-updated">Last updated: 2025-10-26 06:17:00 EST</span>
   </div>
 
   <script>
     (function(){
-      const root = document.getElementById('v211');
+      const root = document.getElementById('v212');
       if(!root) return;
 
-      // Pointer-reactive highlight + subtle tilt on orbital
+      // Pointer-reactive glow
       const onMove = (e) => {
         const r = root.getBoundingClientRect();
-        const x = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
-        const y = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height));
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
         root.style.setProperty('--mx', (x*100).toFixed(2) + '%');
         root.style.setProperty('--my', (y*100).toFixed(2) + '%');
-        const orb = document.getElementById('v211-orbital');
-        if (!orb) return;
-        const rx = (x - 0.5) * 2, ry = (y - 0.5) * 2;
-        orb.style.transform = `perspective(900px) rotateY(${rx*10}deg) rotateX(${ry*-8}deg)`;
       };
       root.addEventListener('pointermove', onMove);
-      root.addEventListener('pointerleave', ()=> {
-        const orb = document.getElementById('v211-orbital');
-        if (orb) orb.style.transform = '';
-      });
 
-      // Magnetic buttons
+      // Buttons: magnetic + ripple
       root.querySelectorAll('.btn').forEach(btn => {
         btn.addEventListener('pointermove', (e) => {
           const b = btn.getBoundingClientRect();
@@ -429,85 +415,121 @@
           btn.style.transform = `translate(${dx*4}px, ${dy*4}px)`;
         });
         btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
+        btn.addEventListener('click', (e) => {
+          const r = btn.getBoundingClientRect();
+          const x = e.clientX - r.left, y = e.clientY - r.top;
+          const ripple = document.createElement('span');
+          ripple.style.position = 'absolute';
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          ripple.style.width = ripple.style.height = Math.max(r.width, r.height) + 'px';
+          ripple.style.transform = 'translate(-50%, -50%)';
+          ripple.style.borderRadius = '999px';
+          ripple.style.background = 'radial-gradient(circle, rgba(37,99,235,0.25), transparent 60%)';
+          ripple.style.pointerEvents = 'none';
+          ripple.style.transition = 'opacity .6s ease, transform .6s ease';
+          btn.appendChild(ripple);
+          requestAnimationFrame(()=> {
+            ripple.style.opacity = '0';
+            ripple.style.transform = 'translate(-50%, -50%) scale(1.6)';
+          });
+          setTimeout(()=> ripple.remove(), 650);
+        });
       });
 
-      // Theme toggle
-      const sw = document.getElementById('v211-switch');
-      sw?.addEventListener('click', ()=>{
-        const dawn = root.getAttribute('data-theme') !== 'dawn';
-        root.setAttribute('data-theme', dawn ? 'dawn' : 'nocturne');
-        sw.setAttribute('aria-pressed', dawn ? 'true' : 'false');
-        sw.lastChild && (sw.lastChild.nodeType === 3) ? (sw.lastChild.textContent = dawn ? ' toggle night' : ' toggle dawn') : null;
-      });
+      // Scene: time scrub + auto daylight
+      const range = document.getElementById('v212-range');
+      const scene = document.getElementById('v212-scene');
+      const sun = document.getElementById('v212-sun');
+      const mode = document.getElementById('v212-mode');
 
-      // Orbital timepiece
-      const ph = document.getElementById('v211-ph');
-      const pm = document.getElementById('v211-pm');
-      const ps = document.getElementById('v211-ps');
-      const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      function tick(){
+      let auto = false;
+      function setT(t){
+        root.style.setProperty('--t', t.toFixed(3));
+        // Sun arc: left->right and height curve
+        const x = 10 + t*80;             // percent
+        const y = 78 - Math.sin(t*Math.PI) * 35; // sky arc
+        sun.style.left = x + '%';
+        sun.style.top = y + '%';
+        // Ink contrast nudging
+        const ink = t < 0.25 ? '#eaf2ff' : '#0f1a2a';
+        const muted = t < 0.25 ? 'rgba(234,242,255,0.82)' : '#53617a';
+        root.style.setProperty('--ink', ink);
+        root.style.setProperty('--muted', muted);
+      }
+      function getAutoT(){
         const d = new Date();
-        const h = (d.getHours()%12) + d.getMinutes()/60;
-        const m = d.getMinutes() + d.getSeconds()/60;
-        const s = d.getSeconds() + d.getMilliseconds()/1000;
-        const hd = h/12 * 360;
-        const md = m/60 * 360;
-        const sd = s/60 * 360;
-        if (ph) ph.style.setProperty('--deg', hd.toFixed(2) + 'deg');
-        if (pm) pm.style.setProperty('--deg', md.toFixed(2) + 'deg');
-        if (ps) ps.style.setProperty('--deg', sd.toFixed(2) + 'deg');
-        if (!RM) requestAnimationFrame(tick);
+        const mins = d.getHours()*60 + d.getMinutes();
+        // Map 4:00 -> 0.0, 12:00 -> 1.0, 20:00 -> 0.0 (simple day curve)
+        const daySpan = 16*60; // 4:00–20:00
+        const start = 4*60;
+        let m = ((mins - start + 24*60) % (24*60));
+        let t = 0;
+        if (m <= daySpan) t = Math.sin((m/daySpan)*Math.PI); else t = 0;
+        return Math.max(0, Math.min(1, t));
       }
-      tick();
 
-      // Nebula painter
-      const canvas = document.getElementById('v211-nebula');
+      range.addEventListener('input', ()=> { auto = false; mode.setAttribute('aria-pressed','false'); setT(range.value/100); });
+
+      mode.addEventListener('click', ()=>{
+        auto = !auto;
+        mode.setAttribute('aria-pressed', auto ? 'true' : 'false');
+        mode.lastChild && mode.lastChild.nodeType === 3 ? (mode.lastChild.textContent = auto ? ' auto on' : ' auto daylight') : null;
+      });
+
+      // Aurora painter (scene-local)
+      const canvas = document.getElementById('v212-sky');
       const ctx = canvas.getContext('2d', { alpha: true });
-      let w=0, h=0, blobs=[];
+      let cw=1, ch=1, ribbons=[];
+      const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
       function resize(){
-        const r = root.getBoundingClientRect();
-        w = canvas.width = Math.max(1, Math.floor(r.width));
-        h = canvas.height = Math.max(1, Math.floor(r.height));
-        const count = Math.round(Math.min(38, Math.max(18, (w*h)/28000)));
-        blobs = Array.from({length: count}, (_, i) => {
-          const t = Math.random()*Math.PI*2;
-          const r1 = Math.random()*0.45 + 0.15;
-          const speed = (Math.random()*0.4 + 0.2) * (Math.random()<0.5? -1: 1);
-          const radius = Math.random()*120 + 90;
-          const huePick = i%4;
-          const col = huePick===0 ? 'rgba(103,232,249,0.20)' : huePick===1 ? 'rgba(167,139,250,0.18)' : huePick===2 ? 'rgba(244,114,182,0.16)' : 'rgba(125,211,252,0.16)';
-          return { t, r1, speed, radius, col, cx: Math.random()*w, cy: Math.random()*h, amp: Math.random()*80+40 };
-        });
-        draw(0);
+        const r = scene.getBoundingClientRect();
+        cw = canvas.width = Math.max(1, Math.floor(r.width));
+        ch = canvas.height = Math.max(1, Math.floor(r.height));
+        ribbons = Array.from({length: 4}, (_, i) => ({
+          phase: Math.random()*Math.PI*2,
+          speed: (0.6 + Math.random()*0.5) * (i % 2 ? 1 : -1),
+          amp: (0.08 + i*0.02) * ch,
+          baseY: (0.25 + i*0.14) * ch,
+          hue: [195, 208, 230, 260][i],
+          alpha: [0.28, 0.22, 0.18, 0.15][i]
+        }));
+        draw(0, parseFloat(getComputedStyle(root).getPropertyValue('--t')) || 0.35);
       }
-      function draw(time){
-        ctx.clearRect(0,0,w,h);
+
+      function draw(time, t){
+        ctx.clearRect(0,0,cw,ch);
         ctx.globalCompositeOperation = 'lighter';
-        blobs.forEach(b=>{
-          const x = b.cx + Math.cos(b.t + time*0.0002*b.speed) * b.amp;
-          const y = b.cy + Math.sin(b.t*1.1 + time*0.00025*b.speed) * b.amp;
-          const g = ctx.createRadialGradient(x, y, 0, x, y, b.radius);
-          g.addColorStop(0, b.col);
-          g.addColorStop(1, 'rgba(0,0,0,0)');
-          ctx.fillStyle = g;
+        const intensity = 0.2 + (1 - t) * 0.9; // stronger at night
+        for (const rb of ribbons){
           ctx.beginPath();
-          ctx.arc(x, y, b.radius, 0, Math.PI*2);
+          const grad = ctx.createLinearGradient(0, rb.baseY - rb.amp, 0, rb.baseY + rb.amp);
+          const c1 = `hsla(${rb.hue}, 92%, ${Math.round(50 - t*15)}%, ${rb.alpha*intensity})`;
+          const c2 = `hsla(${rb.hue+30}, 92%, ${Math.round(65 - t*20)}%, ${rb.alpha*0.7*intensity})`;
+          grad.addColorStop(0, 'transparent');
+          grad.addColorStop(0.5, c1);
+          grad.addColorStop(1, c2);
+          ctx.fillStyle = grad;
+          let yPrev = rb.baseY;
+          ctx.moveTo(0, yPrev);
+          for (let x=0; x<=cw; x+=6){
+            const y = rb.baseY + Math.sin((x*0.006) + rb.phase + time*0.0005*rb.speed) * rb.amp;
+            ctx.lineTo(x, y);
+          }
+          ctx.lineTo(cw, ch);
+          ctx.lineTo(0, ch);
+          ctx.closePath();
           ctx.fill();
-        });
+        }
         ctx.globalCompositeOperation = 'source-over';
       }
+
       function animate(ts){
-        if (!RM){
-          draw(ts || performance.now());
-          requestAnimationFrame(animate);
-        } else {
-          draw(0);
-        }
+        const t = parseFloat(getComputedStyle(root).getPropertyValue('--t')) || 0.35;
+        draw(ts || performance.now(), t);
+        if (!RM) requestAnimationFrame(animate);
       }
-      const ro = new ResizeObserver(resize);
-      ro.observe(root);
-      resize();
-      requestAnimationFrame(animate);
 
       // Tilt-on-hover for cards
       root.querySelectorAll('.card').forEach(card => {
@@ -519,6 +541,26 @@
         });
         card.addEventListener('pointerleave', ()=> { card.style.transform=''; });
       });
+
+      // Initialize
+      const ro = new ResizeObserver(resize);
+      ro.observe(scene);
+      resize();
+      if (!RM) requestAnimationFrame(animate);
+
+      // Auto tick
+      function tickAuto(){
+        if (auto){
+          const t = getAutoT();
+          setT(t);
+          range.value = Math.round(t*100);
+        }
+        requestAnimationFrame(tickAuto);
+      }
+      requestAnimationFrame(tickAuto);
+
+      // Start state
+      setT(range.value/100);
 
       // Last updated stamp
       const stamp = root.querySelector('#last-updated');
