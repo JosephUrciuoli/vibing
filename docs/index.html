@@ -73,361 +73,503 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="vibe280" aria-label="Quiet Momentum">
+<section class="vibe281" aria-label="Daybreak Interface">
   <style>
-    .vibe280 {
-      --bg-1: #0a0f1f;
-      --bg-2: #0b1327;
-      --glass: rgba(255,255,255,0.06);
-      --stroke: rgba(255,255,255,0.16);
-      --text: #e8f0ff;
-      --muted: #b7c2d9;
-      --accent-a: #76a7ff;
-      --accent-b: #8ee6c5;
-      --accent-c: #c8a8ff;
-      --mx: 50%;
-      --my: 40%;
-      --glow: drop-shadow(0 10px 30px rgba(133, 179, 255, 0.25));
+    .vibe281 {
+      --tone: 0deg;
+      --mx: 60%;
+      --my: 30%;
+      --sx: 50%;
+      --sy: 50%;
+      --ink: #182235;
+      --muted: #5b6a83;
+      --paper: #ffffff;
+      --edge: rgba(18, 24, 40, 0.06);
+      --edge-2: rgba(18, 24, 40, 0.12);
+      --ac1: hsl(calc(205deg + var(--tone)) 90% 62%);
+      --ac2: hsl(calc(330deg + var(--tone)) 85% 68%);
+      --ac3: hsl(calc(160deg + var(--tone)) 70% 54%);
       position: relative;
       isolation: isolate;
-      color: var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Display", Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans";
       letter-spacing: 0.01em;
-      padding: clamp(20px, 6vw, 48px);
-      border-radius: 22px;
+      padding: clamp(22px, 6vw, 56px);
+      border-radius: 26px;
       overflow: hidden;
       background:
-        radial-gradient(1400px 900px at var(--mx) var(--my), rgba(108,137,255,0.12), transparent 60%),
-        radial-gradient(1000px 700px at calc(var(--mx) + 10%) calc(var(--my) + 20%), rgba(142,230,197,0.10), transparent 60%),
-        linear-gradient(180deg, var(--bg-1), var(--bg-2));
-      border: 1px solid rgba(255,255,255,0.08);
+        radial-gradient(1200px 800px at var(--mx) var(--my), rgba(255,255,255,0.9), transparent 65%),
+        linear-gradient(180deg, #fbfcff 0%, #eef3ff 60%, #f7faff 100%);
+      border: 1px solid rgba(18, 24, 40, 0.06);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.08),
-        0 24px 60px rgba(4,12,30,0.55);
+        inset 0 1px 0 rgba(255,255,255,0.7),
+        0 30px 70px rgba(24, 34, 53, 0.14);
+      transition: background-position 0.2s ease;
     }
 
-    /* softly drifting grid */
-    .vibe280::before, .vibe280::after {
-      content: "";
+    .vibe281 .bg {
       position: absolute;
-      inset: -20%;
-      pointer-events: none;
+      inset: -10%;
       z-index: 0;
-    }
-    .vibe280::before {
-      background:
-        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.07), transparent 70%),
-        radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,0.06), transparent 70%),
-        radial-gradient(1px 1px at 80% 40%, rgba(255,255,255,0.06), transparent 70%),
-        radial-gradient(1px 1px at 60% 60%, rgba(255,255,255,0.05), transparent 70%);
-      animation: drift 24s linear infinite alternate;
-      filter: blur(0.2px);
-    }
-    .vibe280::after {
-      background: radial-gradient(800px 500px at calc(var(--mx) - 8%) calc(var(--my) - 6%), rgba(255,255,255,0.06), transparent 60%);
-      mix-blend-mode: overlay;
-      transition: background-position 0.3s ease;
-    }
-    @keyframes drift {
-      0% { transform: translate3d(-1%, -1%, 0) scale(1.02); opacity: 0.7; }
-      100% { transform: translate3d(1%, 1%, 0) scale(1); opacity: 0.9; }
+      pointer-events: none;
     }
 
-    .glass {
+    .vibe281 .grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      background:
+        repeating-linear-gradient(0deg, rgba(24,34,53,0.06) 0 1px, transparent 1px 64px),
+        repeating-linear-gradient(90deg, rgba(24,34,53,0.06) 0 1px, transparent 1px 64px);
+      mask-image: radial-gradient(90% 90% at 50% 50%, black, transparent 80%);
+      -webkit-mask-image: radial-gradient(90% 90% at 50% 50%, black, transparent 80%);
+    }
+    .vibe281.show-grid .grid { opacity: 0.25; }
+
+    .vibe281 .ribbon {
+      position: absolute;
+      width: 160%;
+      height: 52%;
+      left: -20%;
+      top: -8%;
+      background: conic-gradient(from 200deg,
+        var(--ac1),
+        var(--ac2),
+        var(--ac3),
+        var(--ac1)
+      );
+      filter: blur(40px) saturate(1.1);
+      opacity: 0.45;
+      transform: rotate(-6deg) translate3d(0,0,0);
+      animation: drift-ribbon 22s ease-in-out infinite alternate;
+      mask-image:
+        radial-gradient(120% 60% at 50% 60%, black 55%, transparent 65%),
+        linear-gradient(180deg, black, transparent);
+      -webkit-mask-image:
+        radial-gradient(120% 60% at 50% 60%, black 55%, transparent 65%),
+        linear-gradient(180deg, black, transparent);
+      mix-blend-mode: multiply;
+    }
+    .vibe281 .ribbon.b {
+      top: auto; bottom: -10%;
+      transform: rotate(8deg);
+      animation-duration: 28s;
+      opacity: 0.4;
+    }
+    @keyframes drift-ribbon {
+      0% { transform: translateY(-2%) rotate(-8deg) scale(1); }
+      100% { transform: translateY(2%) rotate(-3deg) scale(1.02); }
+    }
+
+    .vibe281 .bloomFx {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(260px 260px at var(--sx) var(--sy),
+          color-mix(in oklab, var(--ac1) 48%, white),
+          transparent 60%);
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    .vibe281.is-blooming .bloomFx {
+      animation: bloom 680ms cubic-bezier(.2,.7,.15,1) forwards;
+    }
+    @keyframes bloom {
+      0% { opacity: 0.0; transform: scale(0.9); }
+      30% { opacity: 0.8; transform: scale(1.02); }
+      100% { opacity: 0; transform: scale(1.2); }
+    }
+
+    .vibe281 .hero {
       position: relative;
       z-index: 2;
-      backdrop-filter: blur(14px) saturate(120%);
-      -webkit-backdrop-filter: blur(14px) saturate(120%);
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
-      border: 1px solid var(--stroke);
-      border-radius: 20px;
-      padding: clamp(18px, 4vw, 28px);
-      box-shadow:
-        0 10px 30px rgba(18, 33, 71, 0.35),
-        inset 0 1px 0 rgba(255,255,255,0.2);
+      display: grid;
+      gap: 12px;
+      margin-bottom: clamp(18px, 4vw, 28px);
+    }
+    .vibe281 .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 12px;
+      font-weight: 600;
+      font-size: 12px;
+      color: #2a3550;
+      background: linear-gradient(180deg, #ffffff, #f1f5ff);
+      border: 1px solid rgba(18,24,40,0.10);
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(24,34,53,0.08), inset 0 1px 0 #fff;
+    }
+    .vibe281 .tag i {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--ac1), var(--ac3));
+      box-shadow: 0 0 0 0 color-mix(in oklab, var(--ac2) 60%, transparent);
+      animation: ping 2.6s ease-out infinite;
+    }
+    @keyframes ping {
+      0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--ac2) 50%, transparent); opacity: 1; }
+      100% { box-shadow: 0 0 0 14px transparent; opacity: 1; }
     }
 
-    .title {
-      display: inline-block;
-      font-weight: 800;
-      font-size: clamp(24px, 5.6vw, 54px);
-      line-height: 1.04;
+    .vibe281 .title {
+      margin: 0;
+      font-size: clamp(28px, 6.6vw, 62px);
+      line-height: 1.02;
       letter-spacing: -0.02em;
-      margin: 0 0 8px 0;
-      background: linear-gradient(90deg, var(--accent-a), var(--accent-c), var(--accent-b));
+      font-weight: 900;
+      background: linear-gradient(90deg, var(--ac1), var(--ac2), var(--ac3));
       background-size: 200% 100%;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      animation: sheen 9s ease-in-out infinite;
-      filter: var(--glow);
+      animation: sheeny 9s ease-in-out infinite;
+      text-wrap: balance;
     }
-    @keyframes sheen {
+    @keyframes sheeny {
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
-
-    .subtitle {
-      margin: 0 0 18px 0;
+    .vibe281 .lede {
+      margin: 0;
       color: var(--muted);
-      font-size: clamp(13px, 2.2vw, 16px);
-      line-height: 1.5;
-      max-width: 56ch;
+      font-size: clamp(14px, 2.4vw, 18px);
+      max-width: 65ch;
     }
 
-    .line {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-      margin: 14px 0 18px 0;
-    }
-
-    .chips {
+    .vibe281 .deck {
+      position: relative;
+      z-index: 2;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin: 10px 0 6px 0;
+      gap: clamp(10px, 2.2vw, 18px);
+      margin-top: 8px;
     }
-    .chip {
+    .vibe281 .card {
       position: relative;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.14);
-      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-      box-shadow: 0 6px 18px rgba(11, 19, 39, 0.35);
+      background: linear-gradient(180deg, #ffffff, #f3f6ff);
+      border: 1px solid rgba(24,34,53,0.12);
+      border-radius: 18px;
+      padding: clamp(14px, 2.6vw, 22px);
+      box-shadow:
+        0 16px 40px rgba(24,34,53,0.12),
+        inset 0 1px 0 #fff;
+      transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+      transform-style: preserve-3d;
       will-change: transform;
-      cursor: default;
       overflow: hidden;
       isolation: isolate;
     }
-    .chip:hover {
-      transform: translateY(-4px);
-      background: rgba(255,255,255,0.10);
-      border-color: rgba(255,255,255,0.28);
-      box-shadow: 0 10px 24px rgba(17, 30, 65, 0.45);
+    .vibe281 .card:hover {
+      box-shadow:
+        0 24px 60px rgba(24,34,53,0.16),
+        inset 0 1px 0 #fff;
+      border-color: rgba(24,34,53,0.18);
     }
-    .chip svg {
-      width: 18px;
-      height: 18px;
-      flex: 0 0 auto;
-      opacity: 0.95;
-    }
-    .chip span {
-      font-weight: 600;
-      font-size: 12.5px;
-      color: #f0f6ff;
-      letter-spacing: 0.02em;
-    }
-    .chip small {
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 2px;
-    }
-    .chip::after {
+    .vibe281 .card::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(400px 120px at var(--mx) var(--my), rgba(255,255,255,0.10), transparent 70%);
+      background:
+        radial-gradient(220px 120px at var(--px, 50%) var(--py, 50%), rgba(255,255,255,0.9), transparent 60%),
+        radial-gradient(140px 80px at var(--px, 50%) var(--py, 50%), color-mix(in oklab, var(--ac1) 20%, transparent), transparent 70%);
       opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-      mix-blend-mode: overlay;
+      transition: opacity 200ms ease;
+      mix-blend-mode: soft-light;
     }
-    .chip:hover::after { opacity: 1; }
-
-    .cta {
+    .vibe281 .card:hover::after { opacity: 1; }
+    .vibe281 .card .k {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      margin-top: 14px;
+      margin-bottom: 10px;
+      font-weight: 800;
+      font-size: clamp(13px, 2.2vw, 14px);
+      letter-spacing: 0.03em;
+      color: #23314f;
+    }
+    .vibe281 .card .k svg {
+      width: 18px; height: 18px;
+      stroke: url(#grad-icon);
+    }
+    .vibe281 .card .sub {
+      color: var(--muted);
+      font-size: 12.5px;
+      margin-top: 8px;
+    }
+    .vibe281 .card .sample-type {
+      font-weight: 900;
+      font-size: clamp(22px, 5vw, 40px);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin: 2px 0 6px 0;
+      color: #0e172a;
+    }
+    .vibe281 .swatches {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin: 4px 0 2px 0;
+    }
+    .vibe281 .swatch {
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      border: 1px solid rgba(24,34,53,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+      transition: transform 180ms ease;
+    }
+    .vibe281 .swatch:hover { transform: translateY(-3px); }
+    .vibe281 .motion {
+      position: relative;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #eef3ff, #e6ecff);
+      border: 1px solid rgba(24,34,53,0.12);
+      overflow: hidden;
+    }
+    .vibe281 .dot {
+      position: absolute;
+      top: 50%; left: 8px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--ac1) 60%, #ffffff));
+      box-shadow: 0 6px 16px color-mix(in oklab, var(--ac1) 40%, transparent);
+      transform: translateY(-50%);
+      animation: slide-dot 2.4s cubic-bezier(.2,.7,.15,1) infinite;
+    }
+    @keyframes slide-dot {
+      0% { left: 8px; }
+      50% { left: calc(100% - 24px); }
+      100% { left: 8px; }
+    }
+
+    .vibe281 .controls {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .vibe281 .control {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, #ffffff, #f3f7ff);
+      border: 1px solid rgba(24,34,53,0.12);
+      border-radius: 14px;
+      box-shadow: 0 10px 26px rgba(24,34,53,0.08), inset 0 1px 0 #fff;
+      color: #2a3550;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .vibe281 .preview {
+      width: 26px; height: 14px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--ac1), var(--ac2), var(--ac3));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+      border: 1px solid rgba(24,34,53,0.14);
+    }
+    .vibe281 input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      width: 160px; height: 14px; border-radius: 999px; outline: none;
+      background:
+        linear-gradient(90deg, var(--ac1), var(--ac3)) 0/ var(--p, 0%) 100% no-repeat,
+        #e9eefc;
+      border: 1px solid rgba(24,34,53,0.16);
+      box-shadow: inset 0 1px 0 #fff;
+    }
+    .vibe281 input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, #e8efff);
+      border: 1px solid rgba(24,34,53,0.22);
+      box-shadow: 0 6px 16px rgba(24,34,53,0.18);
+      cursor: pointer;
+    }
+    .vibe281 input[type="checkbox"] {
+      appearance: none;
+      width: 36px; height: 20px; border-radius: 999px;
+      background: #e8eefc;
+      border: 1px solid rgba(24,34,53,0.16);
+      position: relative;
+      cursor: pointer;
+      transition: background 180ms ease;
+    }
+    .vibe281 input[type="checkbox"]::after {
+      content: "";
+      position: absolute; top: 50%; left: 2px;
+      width: 16px; height: 16px; border-radius: 50%;
+      transform: translateY(-50%);
+      background: #fff;
+      border: 1px solid rgba(24,34,53,0.22);
+      box-shadow: 0 6px 16px rgba(24,34,53,0.18);
+      transition: left 180ms ease;
+    }
+    .vibe281 input[type="checkbox"]:checked {
+      background: linear-gradient(90deg, var(--ac1), var(--ac3));
+    }
+    .vibe281 input[type="checkbox"]:checked::after { left: 18px; }
+
+    .vibe281 .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       padding: 12px 16px;
       border-radius: 14px;
-      background: linear-gradient(180deg, rgba(118,167,255,0.22), rgba(118,167,255,0.12));
-      border: 1px solid rgba(118,167,255,0.45);
-      color: #f6fbff;
-      font-weight: 700;
+      background: linear-gradient(180deg, color-mix(in oklab, var(--ac1) 60%, white), color-mix(in oklab, var(--ac3) 40%, #f7fbff));
+      border: 1px solid color-mix(in oklab, var(--ac1) 50%, #6a7ab0);
+      color: #0e172a;
+      font-weight: 800;
       font-size: 13.5px;
       letter-spacing: 0.02em;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
-      box-shadow: 0 10px 26px rgba(118,167,255,0.30);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      box-shadow: 0 16px 36px color-mix(in oklab, var(--ac1) 28%, transparent), inset 0 1px 0 #fff;
       user-select: none;
     }
-    .cta:active { transform: translateY(1px) scale(0.995); }
-    .cta .pulse {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: #b3d0ff;
-      box-shadow: 0 0 0 0 rgba(179,208,255,0.6);
-      animation: pulse 2.4s ease-out infinite;
-    }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(179,208,255,0.6); }
-      100% { box-shadow: 0 0 0 14px rgba(179,208,255,0); }
-    }
+    .vibe281 .cta:active { transform: translateY(1px) scale(0.995); filter: saturate(1.05); }
 
-    .orbits {
-      position: absolute;
-      inset: -40% -35% -40% -35%;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0.6;
-      filter: blur(0.5px);
-    }
-    .orbit {
-      position: absolute;
-      width: 60vmax; height: 60vmax;
-      border-radius: 50%;
-      border: 1px dashed rgba(255,255,255,0.07);
-      left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      animation: rotate var(--d, 26s) linear infinite;
-    }
-    .orbit:nth-child(2) {
-      width: 80vmax; height: 80vmax; --d: 40s; animation-direction: reverse; opacity: 0.55;
-    }
-    .orbit:nth-child(3) {
-      width: 100vmax; height: 100vmax; --d: 62s; opacity: 0.4;
-    }
-    @keyframes rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }
-
-    .blobs {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .blob {
-      position: absolute;
-      width: 36vmax; height: 36vmax;
-      border-radius: 50%;
-      filter: blur(32px);
-      opacity: 0.16;
-      mix-blend-mode: screen;
-      animation: floaty var(--t, 24s) ease-in-out infinite alternate;
-    }
-    .blob.a { background: radial-gradient(circle at 30% 30%, #7fb7ff, transparent 60%); left: -10%; top: -8%; --t: 28s; }
-    .blob.b { background: radial-gradient(circle at 70% 70%, #b08bff, transparent 60%); right: -15%; bottom: -10%; --t: 32s; }
-    @keyframes floaty {
-      0% { transform: translate3d(0, 0, 0) scale(1); }
-      100% { transform: translate3d(2%, -2%, 0) scale(1.04); }
-    }
-
-    .footer {
+    .vibe281 .meta {
+      position: relative;
+      z-index: 2;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin-top: 16px;
+      margin-top: 18px;
       color: var(--muted);
-      font-size: 12px;
-      z-index: 2;
-      position: relative;
+      font-size: 12.5px;
     }
-    .footer .meta {
+    .vibe281 .stamp {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.14);
       padding: 8px 10px;
       border-radius: 12px;
+      background: linear-gradient(180deg, #ffffff, #f3f7ff);
+      border: 1px solid rgba(24,34,53,0.12);
+      box-shadow: 0 10px 26px rgba(24,34,53,0.08), inset 0 1px 0 #fff;
     }
-    .footer .meta svg { width: 14px; height: 14px; opacity: 0.9; }
+    .vibe281 .stamp svg { width: 14px; height: 14px; opacity: 0.9; }
 
-    @media (max-width: 700px) {
-      .chips { grid-template-columns: 1fr; }
-      .footer { flex-direction: column; align-items: flex-start; }
+    @media (max-width: 900px) {
+      .vibe281 .deck { grid-template-columns: 1fr; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .vibe280, .vibe280 * {
+      .vibe281, .vibe281 * {
         animation: none !important;
         transition: none !important;
       }
     }
   </style>
 
-  <div class="blobs" aria-hidden="true">
-    <div class="blob a"></div>
-    <div class="blob b"></div>
+  <div class="bg" aria-hidden="true">
+    <div class="ribbon a"></div>
+    <div class="ribbon b"></div>
+    <div class="grid"></div>
+    <div class="bloomFx"></div>
   </div>
 
-  <div class="orbits" aria-hidden="true">
-    <div class="orbit"></div>
-    <div class="orbit"></div>
-    <div class="orbit"></div>
+  <div class="hero">
+    <span class="tag"><i aria-hidden="true"></i> Daybreak v281</span>
+    <h1 class="title">Sunlit surfaces. Kind motion. Interfaces that breathe.</h1>
+    <p class="lede">A bright, tactile card system with hue–tunable accents and gentle parallax. Drag your cursor; adjust the mood; tap “Bloom”.</p>
   </div>
 
-  <div class="glass">
-    <h1 class="title">Quiet Momentum</h1>
-    <p class="subtitle">A living card that breathes with your cursor. Soft gradients, kind edges, deliberate calm. Let the interface disappear; keep the feeling.</p>
-    <div class="line" role="presentation"></div>
+  <svg width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="grad-icon" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="hsl(calc(205deg + var(--tone)) 90% 62%)"/>
+        <stop offset="100%" stop-color="hsl(calc(160deg + var(--tone)) 70% 54%)"/>
+      </linearGradient>
+    </defs>
+  </svg>
 
-    <div class="chips" role="list">
-      <div class="chip" role="listitem" aria-label="Responsive Typography">
+  <div class="deck" role="list">
+    <article class="card" role="listitem" aria-label="Typography">
+      <div class="k">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 18h6M7 18V6m0 0h9m0 0v12" stroke="url(#g1)" stroke-width="1.5" stroke-linecap="round"/>
-          <defs><linearGradient id="g1" x1="0" y1="0" x2="24" y2="0"><stop stop-color="#76a7ff"/><stop offset="1" stop-color="#c8a8ff"/></linearGradient></defs>
+          <path d="M4 18h8M8 18V6m0 0h10m0 0v12" stroke="url(#grad-icon)" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
-        <div>
-          <span>Responsive Type</span>
-          <small>Clarity across any size</small>
-        </div>
+        Typography
       </div>
+      <div class="sample-type">Aa Gg — 1.08 optical size</div>
+      <div class="sub">Tuned for clarity from pocket to panorama. Tracking smartly adapts as the card resizes.</div>
+    </article>
 
-      <div class="chip" role="listitem" aria-label="Gentle Motion">
+    <article class="card" role="listitem" aria-label="Color System">
+      <div class="k">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 12c3-6 13-6 16 0M6 14c2.2-3.6 9.8-3.6 12 0M8 16c1.4-1.8 6.6-1.8 8 0" stroke="url(#g2)" stroke-width="1.5" stroke-linecap="round"/>
-          <defs><linearGradient id="g2" x1="0" y1="0" x2="24" y2="0"><stop stop-color="#8ee6c5"/><stop offset="1" stop-color="#76a7ff"/></linearGradient></defs>
+          <circle cx="12" cy="12" r="8" stroke="url(#grad-icon)" stroke-width="1.5"/>
+          <path d="M12 4v16M4 12h16" stroke="url(#grad-icon)" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
-        <div>
-          <span>Gentle Motion</span>
-          <small>Movement with purpose</small>
-        </div>
+        Color System
       </div>
+      <div class="swatches" aria-label="Swatches">
+        <div class="swatch" style="background: var(--ac1);"></div>
+        <div class="swatch" style="background: var(--ac2);"></div>
+        <div class="swatch" style="background: var(--ac3);"></div>
+        <div class="swatch" style="background: linear-gradient(45deg, var(--ac1), var(--ac3));"></div>
+        <div class="swatch" style="background: linear-gradient(45deg, var(--ac2), var(--ac1));"></div>
+      </div>
+      <div class="sub">Accents glide with mood. Pastel at dawn, electric by noon.</div>
+    </article>
 
-      <div class="chip" role="listitem" aria-label="Accessible Contrast">
+    <article class="card" role="listitem" aria-label="Motion Language">
+      <div class="k">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <circle cx="12" cy="12" r="8" stroke="url(#g3)" stroke-width="1.5"/>
-          <path d="M12 4v16M4 12h16" stroke="url(#g3)" stroke-width="1.5" stroke-linecap="round"/>
-          <defs><linearGradient id="g3" x1="0" y1="0" x2="24" y2="0"><stop stop-color="#c8a8ff"/><stop offset="1" stop-color="#8ee6c5"/></linearGradient></defs>
+          <path d="M4 12c3-6 13-6 16 0M6 14c2.2-3.6 9.8-3.6 12 0M8 16c1.4-1.8 6.6-1.8 8 0" stroke="url(#grad-icon)" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
-        <div>
-          <span>Accessible Contrast</span>
-          <small>Readable, day and night</small>
-        </div>
+        Motion
       </div>
+      <div class="motion" aria-hidden="true">
+        <div class="dot"></div>
+      </div>
+      <div class="sub">90–160 ms micro-gestures using an ease-out curve. Movement that feels inevitable.</div>
+    </article>
+  </div>
+
+  <div class="controls" role="group" aria-label="Controls">
+    <div class="control" title="Adjust accent hue">
+      Mood
+      <div class="preview" aria-hidden="true"></div>
+      <input type="range" min="0" max="360" value="0" id="mood-range" aria-label="Mood hue">
     </div>
-
-    <button class="cta" type="button" id="cta-breathe" aria-label="Breathe the interface">
-      <span class="pulse" aria-hidden="true"></span>
-      Breathe
+    <label class="control" for="grid-toggle" title="Toggle layout grid">
+      Grid
+      <input type="checkbox" id="grid-toggle" aria-checked="false" role="switch">
+    </label>
+    <button class="cta" type="button" id="bloom-cta" aria-label="Bloom highlight">
+      Bloom
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" style="width:14px;height:14px;">
-        <path d="M4 12h16M12 4v16" stroke="#e9f2ff" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M12 3v18M3 12h18" stroke="#0e172a" stroke-width="1.6" stroke-linecap="round"/>
       </svg>
     </button>
   </div>
 
-  <div class="footer" aria-label="Meta">
-    <div class="meta">
+  <div class="meta" aria-label="Meta">
+    <span class="stamp">
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M4 12a8 8 0 1 0 16 0 8 8 0 0 0-16 0Zm8-5v5l3 3" stroke="#bcd0ff" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M12 7v5l3 3M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" stroke="#66789f" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
-      <span id="last-updated">Last updated: 2025-10-29 08:38:26 EST</span>
-    </div>
-    <span>“Make it feel inevitable.”</span>
+      <span id="last-updated">Last updated: 2025-10-29 09:31:36 EST</span>
+    </span>
+    <span class="quote">“Let the morning do the talking.”</span>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.vibe280');
+      const root = document.currentScript.closest('.vibe281');
       const updatedEl = root.querySelector('#last-updated');
-      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Set last updated timestamp elegantly
+      // Timestamp
       try {
         const d = new Date();
         const fmt = new Intl.DateTimeFormat([], {
@@ -435,34 +577,78 @@
           hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
         }).format(d);
         updatedEl.textContent = 'Last updated: ' + fmt;
-      } catch(e) {
+      } catch (e) {
         updatedEl.textContent = 'Last updated: ' + new Date().toLocaleString();
       }
 
-      // Cursor-reactive light position
-      function move(e) {
-        const r = root.getBoundingClientRect();
-        const x = ((e.clientX - r.left) / r.width) * 100;
-        const y = ((e.clientY - r.top) / r.height) * 100;
-        root.style.setProperty('--mx', x.toFixed(1) + '%');
-        root.style.setProperty('--my', y.toFixed(1) + '%');
-      }
-      if (!reduceMotion) {
-        root.addEventListener('pointermove', move);
-      }
+      // Pointer-reactive light and card tilt
+      const cards = Array.from(root.querySelectorAll('.card'));
+      let rafId = null;
+      let lastEvt = null;
 
-      // "Breathe" button creates a brief ambience boost
-      const btn = root.querySelector('#cta-breathe');
-      let breatheTimeout;
-      btn.addEventListener('click', function(){
-        clearTimeout(breatheTimeout);
-        root.style.transition = 'filter 600ms ease, transform 600ms ease';
-        root.style.filter = 'brightness(1.06) saturate(1.08)';
-        root.style.transform = 'translateZ(0) scale(1.005)';
-        breatheTimeout = setTimeout(function(){
-          root.style.filter = '';
-          root.style.transform = '';
-        }, 600);
+      function onMove(e){
+        lastEvt = e;
+        if (rafId) return;
+        rafId = requestAnimationFrame(() => {
+          rafId = null;
+          const rRoot = root.getBoundingClientRect();
+          const xRoot = ((e.clientX - rRoot.left) / Math.max(rRoot.width,1)) * 100;
+          const yRoot = ((e.clientY - rRoot.top) / Math.max(rRoot.height,1)) * 100;
+          root.style.setProperty('--mx', xRoot.toFixed(2) + '%');
+          root.style.setProperty('--my', yRoot.toFixed(2) + '%');
+
+          if (!reduce) {
+            cards.forEach(card => {
+              const r = card.getBoundingClientRect();
+              const rx = ((e.clientX - r.left) / Math.max(r.width,1)) - 0.5;
+              const ry = ((e.clientY - r.top) / Math.max(r.height,1)) - 0.5;
+              card.style.transform = 'perspective(800px) rotateX(' + (-ry*6).toFixed(2) + 'deg) rotateY(' + (rx*8).toFixed(2) + 'deg) translateZ(0)';
+              card.style.setProperty('--px', (rx*100 + 50).toFixed(2) + '%');
+              card.style.setProperty('--py', (ry*100 + 50).toFixed(2) + '%');
+            });
+          }
+        });
+      }
+      if (!reduce) root.addEventListener('pointermove', onMove);
+
+      // Reset on leave
+      root.addEventListener('pointerleave', () => {
+        cards.forEach(card => { card.style.transform = ''; });
+      });
+
+      // Mood slider
+      const mood = root.querySelector('#mood-range');
+      function updateMood(v) {
+        const deg = Number(v) || 0;
+        root.style.setProperty('--tone', deg + 'deg');
+        const p = Math.max(0, Math.min(100, (deg/360)*100));
+        mood.style.setProperty('--p', p + '%');
+      }
+      updateMood(mood.value);
+      mood.addEventListener('input', e => updateMood(e.target.value));
+
+      // Grid toggle
+      const gridToggle = root.querySelector('#grid-toggle');
+      function syncGrid() {
+        root.classList.toggle('show-grid', gridToggle.checked);
+        gridToggle.setAttribute('aria-checked', String(gridToggle.checked));
+      }
+      gridToggle.addEventListener('change', syncGrid);
+      syncGrid();
+
+      // Bloom pulse
+      const bloomBtn = root.querySelector('#bloom-cta');
+      bloomBtn.addEventListener('click', (e) => {
+        const r = root.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / Math.max(r.width,1)) * 100;
+        const y = ((e.clientY - r.top) / Math.max(r.height,1)) * 100;
+        root.style.setProperty('--sx', x.toFixed(1) + '%');
+        root.style.setProperty('--sy', y.toFixed(1) + '%');
+        root.classList.remove('is-blooming');
+        // force reflow to restart animation
+        void root.offsetWidth;
+        root.classList.add('is-blooming');
+        setTimeout(() => root.classList.remove('is-blooming'), 700);
       }, { passive: true });
     })();
   </script>
