@@ -73,7 +73,367 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-10-31 19:16:06 EST</span></div>
+<div id="aurora-lab" aria-label="Aurora Lab">
+  <style>
+    /* Scope everything to #aurora-lab */
+    #aurora-lab {
+      --h: 222;              /* base hue, updated by slider */
+      --sat: 70%;
+      --bg: hsl(var(--h) 25% 8%);
+      --bg2: hsl(calc(var(--h) + 40) 30% 10%);
+      --fg: hsl(0 0% 98%);
+      --muted: hsl(0 0% 80% / 0.85);
+      --accent: hsl(var(--h) 80% 62%);
+      --glow: hsl(var(--h) 100% 75% / 0.65);
+      --card: hsl(0 0% 100% / 0.06);
+      --stroke: hsl(0 0% 100% / 0.14);
+      --shadow: 0 10px 30px hsl(0 0% 0% / 0.25), inset 0 1px 0 hsl(0 0% 100% / 0.06);
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 28px clamp(20px, 4vw, 36px);
+      min-height: 68vh;
+      background: radial-gradient(1200px 800px at 15% -10%, hsl(var(--h) 70% 18% / 0.35), transparent 60%),
+                  radial-gradient(900px 600px at 110% 30%, hsl(calc(var(--h) + 80) 60% 20% / 0.30), transparent 60%),
+                  linear-gradient(180deg, var(--bg), var(--bg2));
+      color: var(--fg);
+      isolation: isolate;
+      font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, system-ui, sans-serif;
+      letter-spacing: 0.2px;
+    }
+
+    #aurora-lab .bg-orbs { position: absolute; inset: -15%; pointer-events: none; z-index: 0; filter: saturate(120%); }
+    #aurora-lab .orb {
+      position: absolute; width: 48vmax; height: 48vmax; border-radius: 50%;
+      background: radial-gradient(closest-side, hsl(calc(var(--h) + var(--shift, 0)) 90% 60% / 0.7), transparent 70%);
+      filter: blur(36px);
+      mix-blend-mode: screen;
+      animation: float 18s ease-in-out infinite alternate;
+      transform: translate3d(var(--tx,0), var(--ty,0), 0);
+    }
+    #aurora-lab .orb.o1 { top: 0%; left: -10%; --shift: 40; animation-duration: 22s; }
+    #aurora-lab .orb.o2 { bottom: -10%; right: -6%; --shift: -20; animation-duration: 26s; }
+    #aurora-lab .orb.o3 { top: 30%; right: 25%; --shift: 0; width: 36vmax; height: 36vmax; animation-duration: 20s; }
+
+    @keyframes float {
+      from { transform: translate3d(-2%, 1%, 0) scale(1.02); }
+      to   { transform: translate3d(2%, -1%, 0) scale(0.98); }
+    }
+
+    #aurora-lab .grain {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.10;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 4px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 4px);
+      mix-blend-mode: overlay;
+    }
+
+    #aurora-lab .grid {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.08;
+      background-image:
+        linear-gradient(transparent 95%, rgba(255,255,255,0.15) 96%, transparent 100%),
+        linear-gradient(90deg, transparent 95%, rgba(255,255,255,0.15) 96%, transparent 100%);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(1000px 600px at 50% 30%, black, transparent 70%);
+    }
+
+    #aurora-lab .topbar {
+      position: relative; z-index: 2;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      margin-bottom: clamp(16px, 5vw, 28px);
+    }
+    #aurora-lab .brand {
+      display: inline-flex; align-items: center; gap: 12px; user-select: none;
+    }
+    #aurora-lab .brand .ring {
+      width: 18px; height: 18px; border-radius: 50%;
+      background:
+        radial-gradient(closest-side, var(--glow), transparent 70%),
+        conic-gradient(from var(--spin, 0deg), hsl(var(--h) 80% 70%), hsl(calc(var(--h)+60) 80% 70%), hsl(calc(var(--h)+120) 80% 70%), hsl(var(--h) 80% 70%));
+      filter: blur(0.2px) drop-shadow(0 0 6px var(--glow));
+      animation: spin 20s linear infinite;
+    }
+    #aurora-lab .brand .name {
+      font-weight: 600; letter-spacing: 0.8px; color: var(--fg);
+      text-transform: uppercase; font-size: 12px; opacity: 0.9;
+    }
+    @keyframes spin { to { --spin: 360deg; } }
+
+    #aurora-lab .ctrls {
+      display: inline-flex; align-items: center; gap: 14px; background: var(--card);
+      border: 1px solid var(--stroke); border-radius: 14px; padding: 10px 12px; backdrop-filter: blur(10px) saturate(130%);
+      box-shadow: var(--shadow);
+    }
+    #aurora-lab .ctrls label { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+    #aurora-lab input[type="range"] {
+      appearance: none; width: 160px; height: 4px; border-radius: 999px; background: hsl(0 0% 100% / 0.15);
+      outline: none;
+    }
+    #aurora-lab input[type="range"]::-webkit-slider-thumb {
+      appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, white 0 15%, hsl(var(--h) 90% 70%) 55%, hsl(var(--h) 90% 60%));
+      border: 1px solid hsl(0 0% 100% / 0.3);
+      box-shadow: 0 4px 12px hsl(var(--h) 60% 50% / 0.35);
+      cursor: pointer;
+    }
+    #aurora-lab .mode {
+      border: 1px solid var(--stroke); background: linear-gradient(180deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.03));
+      color: var(--fg); padding: 8px 12px; border-radius: 10px; font-size: 12px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    #aurora-lab .mode:hover { transform: translateY(-1px); box-shadow: 0 8px 16px hsl(0 0% 0% / 0.25); }
+    #aurora-lab .mode:active { transform: translateY(0); }
+
+    #aurora-lab .hero {
+      position: relative; z-index: 2; display: grid; gap: 14px; margin: clamp(8px, 4vw, 20px) 0;
+      grid-template-columns: 1fr; justify-items: start;
+    }
+    #aurora-lab .title {
+      font-size: clamp(28px, 6vw, 56px); line-height: 1.05; letter-spacing: 0.2px; margin: 0;
+      background: linear-gradient(90deg, hsl(var(--h) 80% 85%), hsl(calc(var(--h)+50) 80% 75%) 60%, hsl(var(--h) 30% 95%));
+      -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 4px 16px hsl(var(--h) 70% 50% / 0.2));
+    }
+    #aurora-lab .subtitle {
+      margin: 0; font-size: clamp(14px, 2.5vw, 18px); color: var(--muted); max-width: 56ch;
+    }
+
+    #aurora-lab .glass {
+      width: min(840px, 100%); margin-top: clamp(10px, 3vw, 18px);
+      background: linear-gradient(180deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.04));
+      border: 1px solid var(--stroke); border-radius: 18px; box-shadow: var(--shadow);
+      backdrop-filter: blur(14px) saturate(140%); padding: clamp(16px, 3.2vw, 22px);
+      transform-style: preserve-3d; transform: perspective(900px) rotateX(var(--rx,0)) rotateY(var(--ry,0));
+      transition: box-shadow 0.2s ease;
+    }
+
+    #aurora-lab .info {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 2.5vw, 18px);
+    }
+    #aurora-lab .metric {
+      background: hsl(0 0% 100% / 0.06); border: 1px solid hsl(0 0% 100% / 0.14); border-radius: 12px;
+      padding: 12px; min-width: 0;
+    }
+    #aurora-lab .metric span { display: inline-block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    #aurora-lab .bar { height: 8px; border-radius: 999px; background: hsl(0 0% 100% / 0.15); overflow: hidden; }
+    #aurora-lab .bar i {
+      display: block; height: 100%;
+      background: linear-gradient(90deg, var(--accent), hsl(calc(var(--h)+60) 80% 60%));
+      width: 0%; border-radius: inherit; box-shadow: 0 6px 18px hsl(var(--h) 80% 50% / 0.4);
+      animation: load 1.3s ease forwards;
+    }
+    @keyframes load { to { width: var(--p, 60%); } }
+
+    #aurora-lab .actions {
+      margin-top: clamp(14px, 3vw, 22px);
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    #aurora-lab .btn {
+      position: relative; overflow: hidden; border-radius: 12px; border: 1px solid var(--stroke);
+      padding: 10px 14px; font-weight: 600; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      color: var(--fg); user-select: none;
+    }
+    #aurora-lab .btn.primary {
+      background: linear-gradient(180deg, hsl(var(--h) 80% 60%), hsl(var(--h) 80% 54%));
+      box-shadow: 0 8px 20px hsl(var(--h) 80% 50% / 0.35), inset 0 1px 0 hsl(0 0% 100% / 0.3);
+    }
+    #aurora-lab .btn.ghost {
+      background: hsl(0 0% 100% / 0.08);
+    }
+    #aurora-lab .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px hsl(0 0% 0% / 0.25); }
+    #aurora-lab .btn:active { transform: translateY(0); }
+
+    #aurora-lab .stamp {
+      margin-top: 10px; font-size: 12px; color: hsl(0 0% 80% / 0.75);
+      display: flex; align-items: center; gap: 8px;
+    }
+    #aurora-lab .chip {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 10px;
+      border: 1px solid var(--stroke); border-radius: 999px; background: var(--card); backdrop-filter: blur(8px);
+      color: var(--muted); font-size: 12px;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    #aurora-lab .chip:hover { transform: translateY(-2px); background: hsl(0 0% 100% / 0.10); }
+
+    #aurora-lab .flow {
+      position: relative; z-index: 2; display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px;
+    }
+
+    /* Vivid mode intensifies */
+    #aurora-lab.vivid {
+      --sat: 95%;
+      --accent: hsl(var(--h) 95% 58%);
+      --glow: hsl(var(--h) 100% 75% / 0.85);
+    }
+    #aurora-lab.vivid .glass { backdrop-filter: blur(18px) saturate(170%); }
+    #aurora-lab.vivid .btn.primary { filter: saturate(120%); }
+
+    /* Responsive tweaks */
+    @media (max-width: 720px) {
+      #aurora-lab .info { grid-template-columns: 1fr; }
+      #aurora-lab .ctrls { width: 100%; justify-content: space-between; }
+      #aurora-lab input[type="range"] { width: 120px; }
+    }
+
+    /* Prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      #aurora-lab .orb, #aurora-lab .btn, #aurora-lab .brand .ring { animation: none !important; }
+      #aurora-lab .glass { transition: none !important; transform: none !important; }
+    }
+  </style>
+
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+    <div class="grid"></div>
+    <div class="grain"></div>
+  </div>
+
+  <div class="topbar">
+    <div class="brand">
+      <span class="ring" aria-hidden="true"></span>
+      <span class="name">Aurora Lab</span>
+    </div>
+    <div class="ctrls" role="group" aria-label="Appearance Controls">
+      <label for="hue">Hue
+        <input id="hue" type="range" min="180" max="360" value="222" aria-label="Hue slider">
+      </label>
+      <button class="mode" id="mode" aria-pressed="false" title="Toggle vivid mode">Vivid: Off</button>
+    </div>
+  </div>
+
+  <section class="hero" aria-label="Intro">
+    <h1 class="title">Design that breathes</h1>
+    <p class="subtitle">Ambient interfaces with gentle motion and honest contrast—calm, curious, and precise.</p>
+
+    <div class="glass" id="tilt-card" aria-live="polite">
+      <div class="info">
+        <div class="metric">
+          <span>Serenity</span>
+          <div class="bar"><i style="--p: 82%"></i></div>
+        </div>
+        <div class="metric">
+          <span>Clarity</span>
+          <div class="bar"><i style="--p: 68%"></i></div>
+        </div>
+        <div class="metric">
+          <span>Play</span>
+          <div class="bar"><i style="--p: 46%"></i></div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" data-ripple>Take a breath</button>
+        <button class="btn ghost" data-ripple>Explore</button>
+      </div>
+      <div class="stamp">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 12h16M12 4v16" stroke="currentColor" stroke-width="1.4" opacity="0.6"/>
+        </svg>
+        <span id="last-updated">Last updated: 2025-10-31 21:24:51 EST</span>
+      </div>
+    </div>
+
+    <div class="flow" aria-label="Tags">
+      <span class="chip">Calm UX</span>
+      <span class="chip">Soft Gradients</span>
+      <span class="chip">Micro‑motion</span>
+      <span class="chip">Accessible Contrast</span>
+    </div>
+  </section>
+
+  <script>
+    (() => {
+      const root = document.getElementById('aurora-lab');
+      const hue = root.querySelector('#hue');
+      const mode = root.querySelector('#mode');
+      const card = root.querySelector('#tilt-card');
+      const orbs = root.querySelectorAll('.orb');
+
+      // Set "Last updated" nicely with locale and time zone
+      const stamp = root.querySelector('#last-updated');
+      try {
+        const now = new Date();
+        const formatted = new Intl.DateTimeFormat(undefined, {
+          year: 'numeric', month: 'short', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          hour12: false, timeZoneName: 'short'
+        }).format(now);
+        stamp.textContent = 'Last updated: ' + formatted;
+      } catch (e) {
+        stamp.textContent = 'Last updated: ' + new Date().toLocaleString();
+      }
+
+      // Hue control
+      hue.addEventListener('input', (e) => {
+        const val = +e.target.value;
+        root.style.setProperty('--h', val);
+      });
+
+      // Vivid mode toggle
+      mode.addEventListener('click', () => {
+        const vivid = root.classList.toggle('vivid');
+        mode.setAttribute('aria-pressed', vivid ? 'true' : 'false');
+        mode.textContent = `Vivid: ${vivid ? 'On' : 'Off'}`;
+      });
+
+      // Tilt + parallax
+      let bounds;
+      function updateBounds() { bounds = root.getBoundingClientRect(); }
+      updateBounds();
+      window.addEventListener('resize', updateBounds, { passive: true });
+
+      root.addEventListener('mousemove', (e) => {
+        if (!bounds) return;
+        const x = (e.clientX - bounds.left) / bounds.width - 0.5;
+        const y = (e.clientY - bounds.top) / bounds.height - 0.5;
+        const rx = (y * -6).toFixed(2) + 'deg';
+        const ry = (x * 8).toFixed(2) + 'deg';
+        card.style.setProperty('--rx', rx);
+        card.style.setProperty('--ry', ry);
+        // Parallax the orbs subtly
+        orbs.forEach((o, i) => {
+          const k = (i + 1) * 6;
+          o.style.setProperty('--tx', (x * k) + '%');
+          o.style.setProperty('--ty', (y * k) + '%');
+        });
+      }, { passive: true });
+
+      root.addEventListener('mouseleave', () => {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+        orbs.forEach((o) => { o.style.setProperty('--tx', '0%'); o.style.setProperty('--ty', '0%'); });
+      });
+
+      // Button ripples
+      root.querySelectorAll('[data-ripple]').forEach(btn => {
+        btn.addEventListener('pointerdown', (e) => {
+          const rect = btn.getBoundingClientRect();
+          const r = Math.max(rect.width, rect.height);
+          const ripple = document.createElement('span');
+          Object.assign(ripple.style, {
+            position: 'absolute',
+            left: (e.clientX - rect.left - r/2) + 'px',
+            top: (e.clientY - rect.top - r/2) + 'px',
+            width: r + 'px',
+            height: r + 'px',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(255,255,255,0.6) 0, rgba(255,255,255,0.25) 35%, rgba(255,255,255,0) 70%)',
+            transform: 'scale(0.2)',
+            opacity: '0.8',
+            pointerEvents: 'none',
+            transition: 'transform 500ms ease, opacity 600ms ease'
+          });
+          btn.appendChild(ripple);
+          requestAnimationFrame(() => {
+            ripple.style.transform = 'scale(1.5)';
+            ripple.style.opacity = '0';
+          });
+          setTimeout(() => ripple.remove(), 650);
+        });
+      });
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
