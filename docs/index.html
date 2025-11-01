@@ -73,273 +73,228 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="lumen" aria-label="Luminarium — The Kaleidoscope Garden">
+<section id="orrery" aria-label="Orrery — Cabinet of Orbits">
   <style>
-    /* Scope all styles to #lumen */
-    #lumen {
-      --ink: hsl(228 22% 14%);
-      --muted: hsl(228 12% 38%);
-      --card: hsl(0 0% 100% / .6);
-      --line: hsl(228 20% 18% / .08);
+    /* Theme tokens */
+    #orrery {
+      --bg-1: hsl(222 100% 97%);
+      --bg-2: hsl(210 100% 96%);
+      --ink: hsl(225 20% 15%);
+      --muted: hsl(225 12% 40% / .9);
+      --glass: hsl(0 0% 100% / .6);
+      --line: hsl(225 20% 16% / .12);
+      --halo-a: 200;
+      --halo-b: 320;
       --radius: 28px;
-      --h1: 208;
-      --h2: 326;
       position: relative;
-      min-height: 74vh;
-      padding: clamp(16px, 3.8vw, 40px);
-      border-radius: var(--radius);
-      overflow: hidden;
+      min-height: 78vh;
+      padding: clamp(16px, 4vw, 40px);
       color: var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Display", Inter, Segoe UI, Roboto, Arial;
       letter-spacing: .2px;
+      border-radius: var(--radius);
+      overflow: hidden;
       background:
-        radial-gradient(1400px 1000px at 110% -10%, hsl(var(--h2) 100% 85% / .45), transparent 55%),
-        radial-gradient(1200px 1200px at -20% 120%, hsl(var(--h1) 100% 85% / .45), transparent 55%),
-        linear-gradient(180deg, hsl(220 100% 98%), hsl(220 100% 96%));
+        radial-gradient(1400px 700px at 120% -20%, hsl(var(--halo-b) 95% 86% / .55), transparent 55%),
+        radial-gradient(1200px 1000px at -20% 120%, hsl(var(--halo-a) 95% 86% / .55), transparent 55%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
       isolation: isolate;
     }
-    #lumen.night {
+    #orrery.night {
+      --bg-1: hsl(235 35% 6%);
+      --bg-2: hsl(240 40% 5%);
       --ink: hsl(0 0% 96%);
       --muted: hsl(0 0% 78% / .86);
-      --card: hsl(0 0% 100% / .08);
-      --line: hsl(0 0% 100% / .12);
+      --glass: hsl(0 0% 100% / .08);
+      --line: hsl(0 0% 100% / .14);
       background:
-        radial-gradient(1400px 1000px at 110% -10%, hsl(var(--h2) 80% 22% / .58), transparent 55%),
-        radial-gradient(1200px 1200px at -20% 120%, hsl(var(--h1) 80% 22% / .58), transparent 55%),
-        linear-gradient(180deg, hsl(236 45% 7%), hsl(236 45% 5%));
+        radial-gradient(1600px 900px at 110% -10%, hsl(var(--halo-b) 80% 22% / .58), transparent 55%),
+        radial-gradient(1200px 1200px at -20% 120%, hsl(var(--halo-a) 80% 22% / .58), transparent 55%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
     }
 
-    /* Ambient floaters */
-    #lumen .floaters { position: absolute; inset: -30% -30%; pointer-events: none; z-index: 0; filter: blur(60px) saturate(120%); }
-    #lumen .blob {
-      position: absolute; width: 50vmax; aspect-ratio: 1; border-radius: 50%;
-      background: radial-gradient(circle at 40% 40%, hsl(var(--h1) 100% 75% / .6) 0 38%, transparent 60%);
-      mix-blend-mode: multiply; opacity: .35; animation: roam 58s ease-in-out infinite;
+    /* Ambient floating color film */
+    #orrery .film { position: absolute; inset: -30% -30%; pointer-events: none; z-index: 0; filter: blur(70px) saturate(120%); }
+    #orrery .smoke {
+      position: absolute; width: 55vmax; aspect-ratio: 1; border-radius: 50%;
+      opacity: .34; mix-blend-mode: multiply;
+      background: radial-gradient(circle at 40% 40%, hsl(var(--halo-a) 100% 75% / .65) 0 38%, transparent 60%);
+      animation: drift-a 70s ease-in-out infinite;
     }
-    #lumen .blob.b2 {
-      left: 60%; top: -10%; width: 60vmax;
-      background: radial-gradient(circle at 60% 60%, hsl(var(--h2) 100% 75% / .6) 0 38%, transparent 60%);
-      animation-duration: 86s; animation-direction: alternate;
+    #orrery .smoke.b { left: 60%; top: -10%; width: 65vmax;
+      background: radial-gradient(circle at 60% 60%, hsl(var(--halo-b) 100% 75% / .65) 0 38%, transparent 60%);
+      animation: drift-b 95s ease-in-out infinite;
     }
-    @keyframes roam {
-      0% { transform: translate3d(-8%, -6%, 0) scale(1); }
-      50% { transform: translate3d(6%, 8%, 0) scale(1.12); }
-      100% { transform: translate3d(-8%, -6%, 0) scale(1); }
-    }
+    @keyframes drift-a { 0%{transform:translate3d(-6%,-4%,0) scale(1)} 50%{transform:translate3d(8%,7%,0) scale(1.12)} 100%{transform:translate3d(-6%,-4%,0) scale(1)} }
+    @keyframes drift-b { 0%{transform:translate3d(6%,-6%,0) scale(1)} 50%{transform:translate3d(-6%,8%,0) scale(1.08)} 100%{transform:translate3d(6%,-6%,0) scale(1)} }
 
     /* Header */
-    #lumen .top {
+    #orrery .top {
       position: relative; z-index: 2;
       display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;
-      margin-bottom: clamp(8px, 2vw, 16px);
+      margin-bottom: clamp(12px, 3vw, 22px);
     }
-    #lumen .brand {
-      display: inline-flex; align-items: center; gap: 12px; letter-spacing: .5px; text-transform: uppercase;
-      font-weight: 900; font-size: 12px; opacity: .95;
-    }
-    #lumen .crest {
+    #orrery .brand { display: inline-flex; align-items: center; gap: 12px; text-transform: uppercase; font-weight: 900; font-size: 12px; opacity: .95; }
+    #orrery .seal {
       width: 22px; height: 22px; border-radius: 50%; position: relative; overflow: hidden;
-      background: conic-gradient(from 0deg, hsl(var(--h1) 90% 60%), hsl(var(--h2) 90% 60%), hsl(var(--h1) 90% 60%));
-      box-shadow: 0 0 0 1px hsl(0 0% 100% / .6) inset, 0 0 20px hsl(var(--h1) 100% 55% / .45);
+      background: conic-gradient(from 0deg, hsl(var(--halo-a) 90% 60%), hsl(var(--halo-b) 90% 60%), hsl(var(--halo-a) 90% 60%));
+      box-shadow: 0 0 0 1px hsl(0 0% 100% / .6) inset, 0 0 18px hsl(var(--halo-a) 100% 55% / .45);
     }
-    #lumen .crest::after {
+    #orrery .seal::after {
       content: ""; position: absolute; inset: 3px; border-radius: 50%;
       border: 2px solid hsl(0 0% 100% / .7); border-right-color: transparent; border-top-color: transparent;
-      animation: spin 14s linear infinite;
+      animation: spin 16s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Dock */
-    #lumen .dock {
-      display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap;
-      padding: 10px 12px; border-radius: 14px; background: var(--card); border: 1px solid var(--line);
-      box-shadow: 0 18px 38px hsl(0 0% 0% / .14), inset 0 1px 0 hsl(0 0% 100% / .45);
-      backdrop-filter: blur(12px) saturate(140%);
-    }
-    #lumen .dock label { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; white-space: nowrap; }
-    #lumen input[type="range"] {
-      appearance: none; width: 120px; height: 4px; border-radius: 999px; background: hsl(0 0% 0% / .14); outline: none;
-    }
-    #lumen input[type="range"]::-webkit-slider-thumb {
-      appearance: none; width: 16px; height: 16px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff 0 15%, hsl(var(--h1) 90% 65%) 55%, hsl(var(--h1) 90% 55%));
-      border: 1px solid hsl(0 0% 100% / .55); box-shadow: 0 6px 16px hsl(var(--h1) 70% 50% / .35); cursor: pointer;
-    }
-    #lumen .toggle {
-      appearance: none; width: 44px; height: 24px; border-radius: 999px; position: relative; outline: none; cursor: pointer;
-      background: hsl(0 0% 0% / .12); border: 1px solid var(--line);
-      transition: background .22s ease, box-shadow .22s ease;
-    }
-    #lumen .toggle::after {
-      content: ""; position: absolute; top: 50%; left: 3px; transform: translateY(-50%);
-      width: 18px; height: 18px; border-radius: 50%;
-      background: linear-gradient(180deg, #fff, #ececec);
-      box-shadow: 0 2px 6px hsl(0 0% 0% / .2);
-      transition: left .22s ease, background .22s ease;
-    }
-    #lumen .toggle:checked { background: hsl(var(--h1) 80% 60% / .7); box-shadow: 0 8px 18px hsl(var(--h1) 80% 50% / .35); }
-    #lumen .toggle:checked::after { left: 23px; background: #fff; }
-
     /* Hero */
-    #lumen .hero { position: relative; z-index: 2; margin: 6px 0 12px; }
-    #lumen .title {
-      margin: 0; line-height: .94;
-      font-size: clamp(46px, 7.2vw, 108px); font-weight: 1000; letter-spacing: .2px;
-      background: linear-gradient(90deg, hsl(220 22% 18%), hsl(calc(var(--h1) - 18) 45% 24%) 60%, hsl(214 28% 20%));
+    #orrery .hero { position: relative; z-index: 2; }
+    #orrery .title {
+      margin: 0; line-height: .95;
+      font-size: clamp(42px, 7.6vw, 112px); font-weight: 1000; letter-spacing: .2px;
+      background: linear-gradient(90deg, hsl(220 25% 18%), hsl(calc(var(--halo-a) - 18) 55% 26%) 60%, hsl(214 28% 22%));
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      filter: drop-shadow(0 14px 34px hsl(var(--h1) 70% 50% / .18));
+      filter: drop-shadow(0 16px 36px hsl(var(--halo-a) 70% 50% / .2));
     }
-    #lumen .subtitle { margin: 10px 0 0; color: var(--muted); font-size: clamp(14px, 2.1vw, 18px); max-width: 72ch; }
+    #orrery.night .title {
+      background: linear-gradient(90deg, hsl(0 0% 92%), hsl(var(--halo-a) 80% 72%), hsl(0 0% 98%));
+    }
+    #orrery .tag { margin: 10px 0 0; color: var(--muted); font-size: clamp(14px, 2.1vw, 18px); max-width: 70ch; }
 
-    /* Scope */
-    #lumen .stage { position: relative; z-index: 2; margin-top: 12px; }
-    #lumen .scope {
-      position: relative; border-radius: 24px; padding: clamp(10px, 2.2vw, 18px);
-      background: var(--card); border: 1px solid var(--line);
-      box-shadow: 0 22px 44px hsl(0 0% 0% / .16), inset 0 1px 0 hsl(0 0% 100% / .5);
-      transform-style: preserve-3d; perspective: 1000px; transition: transform .28s ease;
+    /* Orbital stage */
+    #orrery .stage { position: relative; z-index: 2; margin-top: clamp(12px, 3.2vw, 20px); }
+    #orrery .orbital {
+      position: relative; border-radius: 28px;
+      padding: clamp(12px, 2.2vw, 18px);
+      background: var(--glass); border: 1px solid var(--line);
+      box-shadow: 0 22px 44px hsl(0 0% 0% / .16), inset 0 1px 0 hsl(0 0% 100% / .55);
+      backdrop-filter: blur(12px) saturate(140%);
+      transform-style: preserve-3d; perspective: 1000px;
+      transition: transform .28s ease;
     }
-    #lumen .k-frame {
-      position: relative; width: 100%; aspect-ratio: 1/1; border-radius: 16px; overflow: hidden;
-      background: radial-gradient(120% 120% at 50% 50%, hsl(0 0% 100% / .12), transparent 60%);
+    #orrery .orbital:focus-within { outline: 3px solid hsl(var(--halo-a) 100% 60% / .25); outline-offset: 4px; }
+    #orrery .frame {
+      position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 20px; overflow: hidden;
+      background: radial-gradient(120% 120% at 50% 50%, hsl(0 0% 100% / .10), transparent 58%);
     }
-    #lumen canvas#kaleid { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-    #lumen .ring {
-      position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(circle at 50% 50%, transparent 49%, hsl(0 0% 0% / .12) 50% 50.8%, transparent 51%),
-                  radial-gradient(circle at 50% 50%, transparent 69%, hsl(0 0% 0% / .08) 70% 70.8%, transparent 71%);
-      opacity: .6; transition: opacity .2s ease;
-    }
-    #lumen.night .ring {
-      background: radial-gradient(circle at 50% 50%, transparent 49%, hsl(0 0% 100% / .12) 50% 50.8%, transparent 51%),
-                  radial-gradient(circle at 50% 50%, transparent 69%, hsl(0 0% 100% / .08) 70% 70.8%, transparent 71%);
-    }
-    #lumen.grain-on .k-frame::after {
+    #orrery canvas#sky { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+    /* Decorative rings on top of canvas */
+    #orrery .rings::before,
+    #orrery .rings::after {
       content: ""; position: absolute; inset: 0; pointer-events: none;
-      background-image:
-        radial-gradient(1px 1px at 10% 20%, hsl(0 0% 100% / .06) 0 1px, transparent 1px),
-        radial-gradient(1px 1px at 70% 60%, hsl(0 0% 0% / .08) 0 1px, transparent 1px),
-        radial-gradient(1px 1px at 30% 80%, hsl(0 0% 0% / .06) 0 1px, transparent 1px);
-      background-size: 180px 180px, 220px 220px, 160px 160px;
-      mix-blend-mode: soft-light;
-      opacity: .7;
+      border-radius: 50%;
     }
+    #orrery .rings::before {
+      background:
+        radial-gradient(circle at 50% 50%, transparent 47%, hsl(0 0% 0% / .10) 48% 48.7%, transparent 49%),
+        radial-gradient(circle at 50% 50%, transparent 69%, hsl(0 0% 0% / .08) 70% 70.7%, transparent 71%);
+      opacity: .6;
+    }
+    #orrery.night .rings::before {
+      background:
+        radial-gradient(circle at 50% 50%, transparent 47%, hsl(0 0% 100% / .12) 48% 48.7%, transparent 49%),
+        radial-gradient(circle at 50% 50%, transparent 69%, hsl(0 0% 100% / .10) 70% 70.7%, transparent 71%);
+    }
+    #orrery .rings::after {
+      background: conic-gradient(from 0deg, hsl(var(--halo-a) 90% 60% / .08), transparent 40%, hsl(var(--halo-b) 90% 60% / .08), transparent 80%, hsl(var(--halo-a) 90% 60% / .08));
+      mix-blend-mode: soft-light;
+      animation: slowspin 38s linear infinite;
+    }
+    @keyframes slowspin { to { transform: rotate(360deg); } }
 
-    /* Actions */
-    #lumen .actions { position: relative; z-index: 2; display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-    #lumen .btn {
+    /* Control dock (minimal) */
+    #orrery .dock {
+      position: relative; z-index: 2; display: inline-flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      margin-top: 14px; padding: 10px 12px;
+      border-radius: 999px; background: var(--glass); border: 1px solid var(--line);
+      box-shadow: 0 18px 38px hsl(0 0% 0% / .14), inset 0 1px 0 hsl(0 0% 100% / .45);
+      backdrop-filter: blur(10px) saturate(140%);
+    }
+    #orrery .btn {
       position: relative; overflow: hidden; border-radius: 999px; border: 1px solid var(--line);
       padding: 10px 14px; font-weight: 700; letter-spacing: .2px; cursor: pointer; user-select: none;
       background: hsl(0 0% 0% / .06); color: var(--ink);
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
     }
-    #lumen .btn.primary {
-      background: linear-gradient(180deg, hsl(var(--h1) 85% 55%), hsl(var(--h1) 85% 50%));
-      color: white; box-shadow: 0 12px 28px hsl(var(--h1) 80% 50% / .35), inset 0 1px 0 hsl(0 0% 100% / .3);
+    #orrery .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 24px hsl(0 0% 0% / .18); }
+    #orrery .btn:active { transform: translateY(0); }
+    #orrery .btn.primary {
+      background: linear-gradient(180deg, hsl(var(--halo-a) 85% 55%), hsl(var(--halo-a) 85% 50%));
+      color: white; box-shadow: 0 12px 28px hsl(var(--halo-a) 80% 50% / .35), inset 0 1px 0 hsl(0 0% 100% / .3);
     }
-    #lumen .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 24px hsl(0 0% 0% / .18); }
-    #lumen .btn:active { transform: translateY(0); }
 
     /* Footer */
-    #lumen .foot {
-      position: relative; z-index: 2; margin-top: 14px; color: hsl(222 14% 26% / .9);
+    #orrery .foot {
+      position: relative; z-index: 2; margin-top: 16px; color: hsl(222 14% 26% / .9);
       display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 12px;
     }
-    #lumen .chip {
-      padding: 8px 10px; border-radius: 999px; background: var(--card);
-      border: 1px solid var(--line); color: var(--muted); font-size: 12px; backdrop-filter: blur(8px);
+    #orrery .chip {
+      padding: 8px 10px; border-radius: 999px; background: var(--glass);
+      border: 1px solid var(--line); color: var(--muted); backdrop-filter: blur(8px);
     }
+    #orrery .spacer { flex: 1 1 auto; }
 
     /* Responsive */
     @media (max-width: 760px) {
-      #lumen .dock { width: 100%; justify-content: space-between; }
-      #lumen input[type="range"] { width: 110px; }
-      #lumen .subtitle { max-width: 60ch; }
+      #orrery .tag { max-width: 60ch; }
+      #orrery .dock { width: 100%; justify-content: space-between; }
     }
     @media (prefers-reduced-motion: reduce) {
-      #lumen .blob, #lumen .crest::after { animation: none !important; }
+      #orrery .smoke, #orrery .seal::after, #orrery .rings::after { animation: none !important; }
     }
   </style>
 
-  <div class="floaters" aria-hidden="true">
-    <span class="blob b1" style="left:-8%; top:12%;"></span>
-    <span class="blob b2"></span>
+  <div class="film" aria-hidden="true">
+    <span class="smoke a" style="left:-10%; top:16%;"></span>
+    <span class="smoke b"></span>
   </div>
 
   <div class="top">
-    <div class="brand" aria-label="Luminarium">
-      <span class="crest" aria-hidden="true"></span>
-      <span>Luminarium</span>
+    <div class="brand" aria-label="Orrery">
+      <span class="seal" aria-hidden="true"></span>
+      <span>Orrery</span>
     </div>
     <div class="dock" role="group" aria-label="Controls">
-      <label for="sym">Symmetry
-        <input id="sym" type="range" min="4" max="24" value="12" aria-label="Symmetry segments">
-      </label>
-      <label for="speed">Tempo
-        <input id="speed" type="range" min="0" max="200" value="90" aria-label="Animation speed">
-      </label>
-      <label for="bloom">Bloom
-        <input id="bloom" type="range" min="0" max="50" value="18" aria-label="Glow amount">
-      </label>
-      <label for="trail">Trail
-        <input id="trail" type="range" min="2" max="22" value="10" aria-label="Trail persistence">
-      </label>
-      <label for="grain">Grain
-        <input id="grain" class="toggle" type="checkbox" aria-label="Film grain overlay">
-      </label>
       <button class="btn" id="theme" title="Toggle theme">Night</button>
+      <button class="btn" id="pulse" title="Toggle pulsing orbits">Pulse</button>
+      <button class="btn" id="shuffle" title="Remap system">Remap</button>
+      <button class="btn primary" id="save" title="Save image">Snapshot</button>
     </div>
   </div>
 
   <section class="hero" aria-label="Intro">
-    <h1 class="title">The Kaleidoscope Garden</h1>
-    <p class="subtitle">A living tapestry of light. Spin symmetries, dial bloom, leave trails. Pure canvas—no libraries.</p>
+    <h1 class="title">Cabinet of Orbits</h1>
+    <p class="tag">A silent observatory of light—the bodies drift, the rings breathe, the sky writes in soft vectors. Point to nudge the cosmos.</p>
   </section>
 
-  <div class="stage" aria-label="Kaleidoscope">
-    <div class="scope" id="scope">
-      <div class="k-frame">
-        <canvas id="kaleid"></canvas>
-        <div class="ring" aria-hidden="true"></div>
+  <div class="stage" aria-label="Orrery View">
+    <div class="orbital" id="orbital">
+      <div class="frame">
+        <canvas id="sky"></canvas>
+        <div class="rings" aria-hidden="true"></div>
       </div>
     </div>
   </div>
 
-  <div class="actions">
-    <button class="btn primary" id="pause" data-ripple>Pause</button>
-    <button class="btn" id="shuffle" data-ripple>Shuffle Palette</button>
-    <button class="btn" id="save" data-ripple>Snapshot</button>
-  </div>
-
-  <div class="foot">
-    <span class="chip">Mirror Symmetry</span>
-    <span class="chip">Bloom & Trails</span>
+  <div class="foot" aria-label="Meta">
+    <span class="chip">Magnetic pointer</span>
+    <span class="chip">Pulse mode</span>
     <span class="chip">Day/Night</span>
     <span class="chip">Reduced Motion Ready</span>
-    <span style="margin-left:auto;color:var(--muted);">Updated</span>
-    <span id="last-updated">Last updated: 2025-11-01 06:17:10 EST</span>
+    <span class="spacer"></span>
+    <span id="last-updated">Last updated: 2025-11-01 07:13:06 EST</span>
   </div>
 
   <script>
     (() => {
-      const root = document.getElementById('lumen');
-      const scope = root.querySelector('#scope');
-      const canvas = root.querySelector('#kaleid');
+      const root = document.getElementById('orrery');
+      const orbital = root.querySelector('#orbital');
+      const canvas = root.querySelector('#sky');
       const ctx = canvas.getContext('2d', { alpha: true });
 
       const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
       const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-
-      // Controls
-      const symEl = root.querySelector('#sym');
-      const speedEl = root.querySelector('#speed');
-      const bloomEl = root.querySelector('#bloom');
-      const trailEl = root.querySelector('#trail');
-      const grainEl = root.querySelector('#grain');
-      const themeBtn = root.querySelector('#theme');
-      const pauseBtn = root.querySelector('#pause');
-      const shuffleBtn = root.querySelector('#shuffle');
-      const saveBtn = root.querySelector('#save');
 
       // Timestamp
       const stamp = root.querySelector('#last-updated');
@@ -352,180 +307,242 @@
         }).format(now);
       } catch { stamp.textContent = new Date().toLocaleString(); }
 
+      // Controls
+      const themeBtn = root.querySelector('#theme');
+      const pulseBtn = root.querySelector('#pulse');
+      const shuffleBtn = root.querySelector('#shuffle');
+      const saveBtn = root.querySelector('#save');
+
       // Palette
       const palettes = [
-        [208, 326], [278, 18], [140, 210], [18, 198], [12, 302], [190, 28], [332, 220]
+        [200, 320], [278, 18], [140, 210], [18, 198], [12, 302], [190, 28], [332, 220], [48, 190]
       ];
-      let h1 = 208, h2 = 326;
-      function applyPalette([a, b]) {
-        h1 = a; h2 = b;
-        root.style.setProperty('--h1', a);
-        root.style.setProperty('--h2', b);
+      function setPalette([a, b]) {
+        root.style.setProperty('--halo-a', a);
+        root.style.setProperty('--halo-b', b);
       }
-      applyPalette(palettes[Math.floor(Math.random()*palettes.length)]);
+      setPalette(palettes[Math.floor(Math.random() * palettes.length)]);
 
-      // Params
+      // State
       let W = 0, H = 0, CX = 0, CY = 0, R = 0;
-      let running = !reduced;
       let t0 = 0, time = 0;
-      let symmetry = +symEl.value | 0;
-      let tempo = +speedEl.value / 100; // 0..2
-      let bloom = +bloomEl.value;
-      let trail = +trailEl.value / 100; // 0.02..0.22 mapped later
-      let pointer = { x: 0, y: 0, active: false };
+      let running = !reduced;
+      let pulse = true;
 
+      // Bodies
+      let bodies = [];
+      function seedBodies(count = 56) {
+        const arr = [];
+        for (let i = 0; i < count; i++) {
+          const ring = 0.18 + Math.random() * 0.76; // 0..1 of radius
+          arr.push({
+            r: ring, // normalized radius
+            a: Math.random() * Math.PI * 2,
+            w: (0.0006 + Math.random() * 0.002) * (Math.random() < 0.5 ? -1 : 1),
+            s: 2 + Math.pow(1 - ring, 2) * 6, // size, larger toward center
+            hue: (i / count) + Math.random() * 0.2,
+          });
+        }
+        bodies = arr;
+      }
+      seedBodies();
+
+      // Pointer
+      const pointer = { x: 0, y: 0, over: false };
+      function onMove(e) {
+        const r = orbital.getBoundingClientRect();
+        pointer.x = e.clientX - r.left;
+        pointer.y = e.clientY - r.top;
+        pointer.over = true;
+
+        // tilt for delight
+        const tx = (e.clientX - r.left) / r.width - 0.5;
+        const ty = (e.clientY - r.top) / r.height - 0.5;
+        const tilt = 8;
+        orbital.style.transform = `rotateX(${(-ty * tilt).toFixed(2)}deg) rotateY(${(tx * tilt).toFixed(2)}deg)`;
+      }
+      function onLeave() {
+        pointer.over = false;
+        orbital.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      }
+      orbital.addEventListener('pointermove', onMove, { passive: true });
+      orbital.addEventListener('pointerleave', onLeave);
+
+      // Resize
       function sizeCanvas() {
-        const rect = scope.getBoundingClientRect();
+        const rect = orbital.querySelector('.frame').getBoundingClientRect();
         W = Math.max(320, Math.floor(rect.width - 2));
-        H = Math.max(320, Math.floor(rect.width - 2)); // keep square aspect
+        H = W; // square
         canvas.width = Math.floor(W * dpr);
         canvas.height = Math.floor(H * dpr);
         canvas.style.width = W + 'px';
         canvas.style.height = H + 'px';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         CX = W / 2; CY = H / 2; R = Math.min(W, H) * 0.48;
-        // soft clear
         ctx.clearRect(0, 0, W, H);
       }
+      window.addEventListener('resize', sizeCanvas, { passive: true });
+      sizeCanvas();
 
+      // Helpers
       function lerp(a, b, t) { return a + (b - a) * t; }
-      function ease(t) { return 1 - Math.pow(1 - t, 2); }
+      function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
 
-      function drawBaseWedge(localPhase) {
-        const lines = 22;
-        const steps = 84;
-        const wedgeAngle = Math.PI / symmetry;
-        const half = wedgeAngle / 2;
-        const centerBias = 0.12 + 0.06 * Math.sin(time * 0.0006 + localPhase);
-
-        ctx.globalCompositeOperation = 'lighter';
-
-        for (let i = 0; i < lines; i++) {
-          const p = i / (lines - 1);
-          const n = 2 + Math.floor(symmetry * 0.22) + Math.floor(p * 6);
-          const phase = time * (0.0018 + tempo * 0.0024) + p * Math.PI * 1.6 + localPhase * 0.5;
-          const power = 0.7 + p * 1.6;
-
-          const hue = lerp(h1, h2, p) + Math.sin(phase * 0.6 + p * 6) * 12;
-          const alpha = 0.08 + 0.26 * p;
-          ctx.strokeStyle = `hsla(${hue}, 100%, 62%, ${alpha})`;
-          ctx.lineWidth = 0.6 + 1.2 * ease(Math.abs(Math.sin(phase + p * 2)));
-
-          ctx.shadowColor = `hsla(${hue}, 100%, 60%, ${Math.min(0.6, alpha + 0.1)})`;
-          ctx.shadowBlur = bloom;
-
-          ctx.beginPath();
-          for (let s = 0; s <= steps; s++) {
-            const t = s / steps;
-            const phi = lerp(-half, half, t);
-            const rad = R * (centerBias + (1 - centerBias) * Math.pow(Math.abs(Math.sin(n * (phi + 0.0001) + phase)), power));
-            const x = rad * Math.cos(phi);
-            const y = rad * Math.sin(phi);
-            if (s === 0) ctx.moveTo(CX + x, CY + y);
-            else ctx.lineTo(CX + x, CY + y);
-          }
-          ctx.stroke();
-        }
-        ctx.shadowBlur = 0;
-        ctx.globalCompositeOperation = 'source-over';
-      }
-
-      function softFade() {
+      // Drawing
+      function fadeCanvas() {
         const isNight = root.classList.contains('night');
-        const fade = lerp(0.02, 0.22, trail); // map control
         ctx.save();
-        ctx.beginPath();
-        ctx.arc(CX, CY, R + 2, 0, Math.PI * 2);
-        ctx.clip();
-        ctx.fillStyle = isNight ? `rgba(0,0,0,${fade})` : `rgba(255,255,255,${fade * 0.9})`;
+        ctx.beginPath(); ctx.arc(CX, CY, R + 2, 0, Math.PI * 2); ctx.clip();
+        ctx.fillStyle = isNight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.10)';
         ctx.fillRect(0, 0, W, H);
         ctx.restore();
       }
 
-      function tick(now) {
+      function drawOrbitPath(rad, opacity) {
+        ctx.save();
+        ctx.strokeStyle = `rgba(0,0,0,${opacity})`;
+        if (root.classList.contains('night')) ctx.strokeStyle = `rgba(255,255,255,${opacity * 0.8})`;
+        ctx.lineWidth = 0.6;
+        ctx.beginPath();
+        ctx.arc(CX, CY, rad, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function draw() {
         if (!running) return;
+        const now = performance.now();
         const dt = t0 ? Math.min(32, now - t0) : 16;
         t0 = now; time += dt;
 
-        softFade();
+        fadeCanvas();
 
-        const wedgeAngle = Math.PI / symmetry;
-        const segs = symmetry * 2;
+        // Clip to circle for the whole scene
+        ctx.save();
+        ctx.beginPath(); ctx.arc(CX, CY, R + 1, 0, Math.PI * 2); ctx.clip();
 
-        for (let i = 0; i < segs; i++) {
-          ctx.save();
-          ctx.translate(CX, CY);
-          ctx.rotate(i * wedgeAngle);
-          if (i % 2) ctx.scale(-1, 1);
+        // Soft vignette
+        const g = ctx.createRadialGradient(CX, CY, R * 0.2, CX, CY, R);
+        g.addColorStop(0, 'rgba(0,0,0,0)');
+        g.addColorStop(1, root.classList.contains('night') ? 'rgba(0,0,0,0.22)' : 'rgba(0,0,0,0.06)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, W, H);
 
-          // wedge clip
-          ctx.beginPath();
-          ctx.moveTo(0, 0);
-          const r = R + 1;
-          ctx.lineTo(r * Math.cos(wedgeAngle / 2), r * Math.sin(wedgeAngle / 2));
-          ctx.arc(0, 0, r, wedgeAngle / 2, -wedgeAngle / 2, true);
-          ctx.closePath();
-          ctx.translate(-CX, -CY);
-          ctx.clip();
-
-          ctx.restore(); // remove rotation/scale for drawing in world coords
-          drawBaseWedge(i * 0.12);
+        // Orbits (subtle)
+        for (let i = 0; i < 5; i++) {
+          drawOrbitPath(R * (0.25 + i * 0.13), 0.05);
         }
 
-        requestAnimationFrame(tick);
+        // Center glow (star)
+        ctx.save();
+        const cg = ctx.createRadialGradient(CX, CY, 0, CX, CY, R * 0.28);
+        const hA = getComputedStyle(root).getPropertyValue('--halo-a').trim() || '200';
+        ctx.globalCompositeOperation = 'lighter';
+        cg.addColorStop(0, `hsla(${hA}, 100%, 65%, 0.55)`);
+        cg.addColorStop(0.6, `hsla(${hA}, 100%, 65%, 0.08)`);
+        cg.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = cg;
+        ctx.beginPath(); ctx.arc(CX, CY, R * 0.6, 0, Math.PI * 2); ctx.fill();
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.restore();
+
+        // Bodies
+        for (let i = 0; i < bodies.length; i++) {
+          const b = bodies[i];
+          // Advance angle
+          b.a += b.w * dt;
+
+          // Pulsing ring
+          const pulseAmp = pulse ? 0.06 : 0.0;
+          const ringScale = 1 + pulseAmp * Math.sin(time * 0.001 + i * 0.7);
+          const rad = R * b.r * ringScale;
+
+          // Base position
+          let x = CX + Math.cos(b.a) * rad;
+          let y = CY + Math.sin(b.a) * rad;
+
+          // Magnetic pointer nudge
+          if (pointer.over) {
+            const dx = x - pointer.x;
+            const dy = y - pointer.y;
+            const dst = Math.hypot(dx, dy);
+            const influence = clamp(1 - dst / (R * 0.9), 0, 1);
+            x -= dx * 0.08 * influence;
+            y -= dy * 0.08 * influence;
+          }
+
+          // Trail glow and body
+          const hueA = parseFloat(hA) || 200;
+          const hueB = parseFloat(getComputedStyle(root).getPropertyValue('--halo-b')) || 320;
+          const hue = lerp(hueA, hueB, (Math.sin(b.a * 2 + i * 0.3) + 1) / 2);
+          const size = b.s;
+
+          ctx.save();
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.shadowColor = `hsla(${hue}, 100%, 60%, 0.6)`;
+          ctx.shadowBlur = 12;
+
+          const pg = ctx.createRadialGradient(x, y, 0, x, y, size * 4);
+          pg.addColorStop(0, `hsla(${hue}, 100%, 65%, 0.95)`);
+          pg.addColorStop(0.35, `hsla(${hue}, 100%, 65%, 0.45)`);
+          pg.addColorStop(1, 'rgba(255,255,255,0)');
+          ctx.fillStyle = pg;
+          ctx.beginPath(); ctx.arc(x, y, size * 3, 0, Math.PI * 2); ctx.fill();
+
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.shadowBlur = 0;
+          ctx.fillStyle = root.classList.contains('night') ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.9)';
+          ctx.beginPath(); ctx.arc(x, y, size * 0.75, 0, Math.PI * 2); ctx.fill();
+
+          // Delicate tether to center for a few bodies
+          if (i % 7 === 0) {
+            ctx.strokeStyle = `hsla(${hue}, 100%, 50%, 0.25)`;
+            ctx.lineWidth = 0.8;
+            ctx.beginPath();
+            const midx = lerp(x, CX, 0.3);
+            const midy = lerp(y, CY, 0.3);
+            ctx.moveTo(CX, CY);
+            ctx.quadraticCurveTo(midx, midy, x, y);
+            ctx.stroke();
+          }
+
+          ctx.restore();
+        }
+
+        ctx.restore(); // end clip
+
+        requestAnimationFrame(draw);
       }
 
-      // Interactions: tilt
-      function onMove(e) {
-        const r = scope.getBoundingClientRect();
-        const tx = (e.clientX - r.left) / r.width - 0.5;
-        const ty = (e.clientY - r.top) / r.height - 0.5;
-        const tilt = 8;
-        scope.style.transform = `rotateX(${(-ty * tilt).toFixed(2)}deg) rotateY(${(tx * tilt).toFixed(2)}deg)`;
-        pointer.x = e.clientX; pointer.y = e.clientY; pointer.active = true;
-      }
-      function onLeave() {
-        pointer.active = false;
-        scope.style.transform = 'rotateX(0deg) rotateY(0deg)';
-      }
-      scope.addEventListener('pointermove', onMove, { passive: true });
-      scope.addEventListener('pointerleave', onLeave);
-
-      // Wire controls
-      symEl.addEventListener('input', e => { symmetry = Math.max(4, Math.min(24, +e.target.value | 0)); });
-      speedEl.addEventListener('input', e => { tempo = (+e.target.value) / 100; });
-      bloomEl.addEventListener('input', e => { bloom = (+e.target.value); });
-      trailEl.addEventListener('input', e => { trail = (+e.target.value) / 100; });
-      grainEl.addEventListener('change', e => { root.classList.toggle('grain-on', e.target.checked); });
-
+      // Buttons
       themeBtn.addEventListener('click', () => {
         root.classList.toggle('night');
         themeBtn.textContent = root.classList.contains('night') ? 'Day' : 'Night';
-        // subtle palette nudge
-        applyPalette(palettes[Math.floor(Math.random()*palettes.length)]);
+        // Tiny palette drift for delight
+        setPalette(palettes[Math.floor(Math.random() * palettes.length)]);
       });
 
-      pauseBtn.addEventListener('click', () => {
-        running = !running;
-        pauseBtn.textContent = running ? 'Pause' : 'Resume';
-        if (running) requestAnimationFrame(tick);
+      pulseBtn.addEventListener('click', () => {
+        pulse = !pulse;
+        pulseBtn.textContent = pulse ? 'Pulse' : 'Still';
       });
 
       shuffleBtn.addEventListener('click', () => {
-        applyPalette(palettes[Math.floor(Math.random()*palettes.length)]);
+        setPalette(palettes[Math.floor(Math.random() * palettes.length)]);
+        seedBodies(42 + Math.floor(Math.random() * 40));
       });
 
       saveBtn.addEventListener('click', () => {
         try {
           const link = document.createElement('a');
-          link.download = `luminarium-${Date.now()}.png`;
+          link.download = `orrery-${Date.now()}.png`;
           link.href = canvas.toDataURL('image/png');
           link.click();
         } catch (e) { console.warn('Save failed:', e); }
       });
 
-      // Button ripples
-      root.querySelectorAll('[data-ripple]').forEach(btn => {
+      // Subtle ripples on buttons
+      root.querySelectorAll('.btn').forEach(btn => {
         btn.addEventListener('pointerdown', (e) => {
           const rect = btn.getBoundingClientRect();
           const r = Math.max(rect.width, rect.height);
@@ -545,13 +562,8 @@
         });
       });
 
-      // Resize
-      function onResize() { sizeCanvas(); }
-      window.addEventListener('resize', onResize, { passive: true });
-      onResize();
-
       // Start
-      if (running) requestAnimationFrame(tick);
+      if (running) requestAnimationFrame(draw);
     })();
   </script>
 </section>
