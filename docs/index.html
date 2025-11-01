@@ -73,282 +73,302 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="observatory" aria-label="Lucid Observatory">
+<div id="atelier" aria-label="Aether Loom">
   <style>
-    /* Scope everything to #observatory */
-    #observatory {
-      --bg-1: hsl(220 60% 98%);
-      --bg-2: hsl(204 100% 96%);
+    /* Scope everything to #atelier */
+    #atelier {
       --ink: hsl(222 21% 12%);
       --muted: hsl(222 12% 40%);
       --card: hsl(0 0% 100% / .55);
-      --stroke: hsl(220 20% 20% / .08);
-      --accent: 268;
+      --line: hsl(220 20% 20% / .08);
+      --bg-1: hsl(208 100% 98%);
+      --bg-2: hsl(212 100% 96%);
+      --accent: 200;
+      --accent-b: 320;
+      --radius: 28px;
       --glow: 0 18px 40px hsl(0 0% 0% / .18), inset 0 1px 0 hsl(0 0% 100% / .6);
       position: relative;
       min-height: 72vh;
-      border-radius: 32px;
+      border-radius: var(--radius);
       overflow: hidden;
-      padding: clamp(18px, 3.6vw, 36px);
+      padding: clamp(16px, 3.6vw, 36px);
       color: var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Text", Inter, Segoe UI, Roboto, Arial;
       letter-spacing: .1px;
       background:
-        radial-gradient(1200px 900px at 120% -10%, hsl(calc(var(--accent)+40) 100% 90% / .55), transparent 60%),
-        radial-gradient(1000px 1000px at -20% 120%, hsl(calc(var(--accent)-60) 100% 88% / .45), transparent 55%),
+        radial-gradient(1200px 900px at -10% -20%, hsl(var(--accent) 100% 90% / .6), transparent 60%),
+        radial-gradient(1000px 1000px at 120% 130%, hsl(var(--accent-b) 100% 90% / .5), transparent 55%),
         linear-gradient(180deg, var(--bg-1), var(--bg-2));
       isolation: isolate;
     }
 
-    /* Ambient rings */
-    #observatory .ambient { position: absolute; inset: -10% -20%; z-index: 0; pointer-events: none; filter: blur(40px) saturate(110%); }
-    #observatory .ring {
-      position: absolute; aspect-ratio: 1; border-radius: 50%;
-      background: conic-gradient(from 0deg,
-        hsl(calc(var(--accent) + 20) 90% 70% / .5),
-        hsl(calc(var(--accent) + 120) 90% 72% / .5),
-        hsl(calc(var(--accent) + 240) 80% 68% / .5),
-        hsl(calc(var(--accent) + 20) 90% 70% / .5));
-      opacity: .25; mix-blend-mode: multiply;
-      animation: orbit 38s linear infinite;
+    /* Ambient aurora */
+    #atelier .mist { position: absolute; inset: -20% -20%; z-index: 0; pointer-events: none; filter: blur(60px) saturate(110%); }
+    #atelier .blob {
+      position: absolute; width: 50vmax; aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle at 30% 40%, hsl(var(--accent) 100% 70% / .7) 0 35%, transparent 60%);
+      mix-blend-mode: multiply; opacity: .35; animation: drift 46s ease-in-out infinite;
+      transform: translate3d(0,0,0);
     }
-    #observatory .ring.r1 { width: 80vmax; left: -20vmax; top: -30vmax; }
-    #observatory .ring.r2 { width: 60vmax; right: -15vmax; bottom: -20vmax; animation-duration: 54s; }
-    @keyframes orbit { to { transform: rotate(360deg); } }
+    #atelier .blob.b2 {
+      left: 60%; top: -10%; width: 60vmax;
+      background: radial-gradient(circle at 60% 60%, hsl(var(--accent-b) 100% 70% / .7) 0 35%, transparent 60%);
+      animation-duration: 68s; animation-direction: alternate;
+    }
+    @keyframes drift {
+      0% { transform: translate3d(-8%, -6%, 0) scale(1); }
+      50% { transform: translate3d(6%, 8%, 0) scale(1.12); }
+      100% { transform: translate3d(-8%, -6%, 0) scale(1); }
+    }
 
-    /* Topbar */
-    #observatory .top {
+    /* Top bar */
+    #atelier .top {
       position: relative; z-index: 2;
-      display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center;
+      display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;
       margin-bottom: clamp(8px, 2vw, 16px);
     }
-    #observatory .brand {
-      display: inline-flex; align-items: center; gap: 12px; text-transform: uppercase; font-weight: 800;
-      font-size: 12px; letter-spacing: .5px; opacity: .92;
+    #atelier .brand {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-weight: 900; text-transform: uppercase; letter-spacing: .5px;
+      font-size: 12px; opacity: .9;
     }
-    #observatory .compass {
-      width: 22px; height: 22px; border-radius: 12px; position: relative;
-      background: radial-gradient(circle at 35% 35%, #fff 0 20%, hsl(var(--accent) 80% 70%) 55%, hsl(var(--accent) 80% 58%));
+    #atelier .sigil {
+      width: 22px; height: 22px; border-radius: 50%; position: relative; overflow: hidden;
+      background: conic-gradient(from 0deg, hsl(var(--accent) 90% 65%), hsl(var(--accent-b) 90% 65%), hsl(var(--accent) 90% 65%));
       box-shadow: 0 0 0 1px hsl(0 0% 100% / .65) inset, 0 0 22px hsl(var(--accent) 100% 58% / .45);
-      overflow: hidden;
     }
-    #observatory .compass::after {
-      content: ""; position: absolute; inset: 2px; border-radius: 50%;
-      border: 2px solid hsl(0 0% 100% / .65); border-top-color: transparent; border-right-color: transparent;
-      animation: spin 14s linear infinite;
-      filter: drop-shadow(0 0 6px hsl(var(--accent) 90% 60% / .6));
+    #atelier .sigil::after {
+      content: ""; position: absolute; inset: 3px; border-radius: 50%;
+      border: 2px solid hsl(0 0% 100% / .7); border-top-color: transparent; border-right-color: transparent;
+      animation: spin 18s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Control panel */
-    #observatory .panel {
+    /* Control dock */
+    #atelier .dock {
       display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap;
-      padding: 10px 12px; border-radius: 16px;
-      background: var(--card); border: 1px solid var(--stroke);
+      padding: 10px 12px; border-radius: 14px;
+      background: var(--card); border: 1px solid var(--line);
       backdrop-filter: blur(12px) saturate(140%); box-shadow: var(--glow);
     }
-    #observatory .panel label {
-      display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; white-space: nowrap;
+    #atelier .dock label { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; white-space: nowrap; }
+    #atelier input[type="range"] {
+      appearance: none; width: 130px; height: 4px; border-radius: 999px; background: hsl(0 0% 0% / .12); outline: none;
     }
-    #observatory input[type="range"] {
-      appearance: none; width: 140px; height: 4px; border-radius: 999px; background: hsl(0 0% 0% / .12); outline: none;
-    }
-    #observatory input[type="range"]::-webkit-slider-thumb {
+    #atelier input[type="range"]::-webkit-slider-thumb {
       appearance: none; width: 16px; height: 16px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, white 0 15%, hsl(var(--accent) 90% 65%) 55%, hsl(var(--accent) 90% 55%));
+      background: radial-gradient(circle at 30% 30%, #fff 0 15%, hsl(var(--accent) 90% 65%) 55%, hsl(var(--accent) 90% 55%));
       border: 1px solid hsl(0 0% 100% / .5); box-shadow: 0 6px 16px hsl(var(--accent) 70% 50% / .35); cursor: pointer;
     }
-    #observatory .toggle {
+    #atelier .toggle {
       appearance: none; width: 44px; height: 24px; border-radius: 999px; position: relative; outline: none; cursor: pointer;
-      background: hsl(0 0% 0% / .12); border: 1px solid var(--stroke);
+      background: hsl(0 0% 0% / .12); border: 1px solid var(--line);
       transition: background .2s ease, box-shadow .2s ease;
     }
-    #observatory .toggle::after {
+    #atelier .toggle::after {
       content: ""; position: absolute; top: 50%; left: 3px; transform: translateY(-50%);
       width: 18px; height: 18px; border-radius: 50%;
       background: linear-gradient(180deg, #fff, #eaeaea);
       box-shadow: 0 2px 6px hsl(0 0% 0% / .2);
       transition: left .22s ease, background .22s ease;
     }
-    #observatory .toggle:checked { background: hsl(var(--accent) 80% 60% / .7); box-shadow: 0 8px 18px hsl(var(--accent) 80% 50% / .35); }
-    #observatory .toggle:checked::after { left: 23px; background: #fff; }
+    #atelier .toggle:checked { background: hsl(var(--accent) 80% 60% / .7); box-shadow: 0 8px 18px hsl(var(--accent) 80% 50% / .35); }
+    #atelier .toggle:checked::after { left: 23px; background: #fff; }
 
-    #observatory .btn {
-      position: relative; overflow: hidden; border-radius: 12px; border: 1px solid var(--stroke);
+    /* Hero */
+    #atelier .hero { position: relative; z-index: 2; margin: 6px 0 10px; }
+    #atelier .title {
+      margin: 0; line-height: .96;
+      font-size: clamp(48px, 6.8vw, 96px); letter-spacing: .2px; font-weight: 1000;
+      background: linear-gradient(90deg, hsl(220 22% 18%), hsl(calc(var(--accent)-20) 40% 22%) 60%, hsl(210 28% 20%));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 14px 32px hsl(var(--accent) 70% 52% / .18));
+    }
+    #atelier .subtitle { margin: 8px 0 0; color: var(--muted); font-size: clamp(14px, 2.1vw, 18px); max-width: 72ch; }
+
+    /* Orb stage */
+    #atelier .stage { position: relative; z-index: 2; margin-top: 10px; }
+    #atelier .orb-wrap {
+      position: relative; border-radius: 24px; padding: clamp(10px, 1.8vw, 16px);
+      background: var(--card); border: 1px solid var(--line);
+      box-shadow: 0 22px 44px hsl(0 0% 0% / .16), inset 0 1px 0 hsl(0 0% 100% / .5);
+      transform-style: preserve-3d; perspective: 1000px; transition: transform .25s ease;
+    }
+    #atelier .orb {
+      position: relative; width: 100%; aspect-ratio: 1/1;
+      border-radius: 50%; overflow: hidden; background: radial-gradient(100% 100% at 50% 35%, hsl(0 0% 100% / .18), transparent 60%);
+      box-shadow:
+        inset 0 0 0 1px hsl(0 0% 100% / .6),
+        inset 0 0 30px hsl(var(--accent) 80% 60% / .18),
+        0 10px 40px hsl(0 0% 0% / .18);
+    }
+    #atelier .orb::before,
+    #atelier .orb::after {
+      content: ""; position: absolute; inset: 10px; border-radius: 50%; pointer-events: none;
+      border: 1px solid hsl(0 0% 100% / .3);
+      mask: radial-gradient(circle at 50% 50%, transparent 56%, black 57%);
+      opacity: .65;
+      animation: breathe 7s ease-in-out infinite;
+    }
+    #atelier .orb::after {
+      inset: 20px; opacity: .45; animation-duration: 11s; animation-delay: -1s;
+      mask: radial-gradient(circle at 50% 50%, transparent 70%, black 72%);
+    }
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); filter: blur(0px); }
+      50% { transform: scale(1.02); filter: blur(.5px); }
+    }
+
+    #atelier canvas.orb-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    #atelier .overlay-grid {
+      position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .2s ease;
+      background:
+        radial-gradient(circle at 50% 50%, transparent 32%, hsl(0 0% 0% / .06) 33% 34%, transparent 35%),
+        repeating-conic-gradient(from 0deg, hsl(0 0% 0% / .06) 0 1deg, transparent 1deg 6deg);
+      mask: radial-gradient(circle at 50% 50%, black 65%, transparent 66%);
+    }
+    #atelier.grid-on .overlay-grid { opacity: .9; }
+
+    /* Actions */
+    #atelier .actions { position: relative; z-index: 2; display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    #atelier .btn {
+      position: relative; overflow: hidden; border-radius: 999px; border: 1px solid var(--line);
       padding: 10px 14px; font-weight: 700; letter-spacing: .2px; cursor: pointer;
       background: hsl(0 0% 0% / .06); color: var(--ink);
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
       user-select: none;
     }
-    #observatory .btn.primary {
+    #atelier .btn.primary {
       background: linear-gradient(180deg, hsl(var(--accent) 85% 55%), hsl(var(--accent) 85% 50%));
       color: white; box-shadow: 0 12px 28px hsl(var(--accent) 80% 50% / .35), inset 0 1px 0 hsl(0 0% 100% / .3);
     }
-    #observatory .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 24px hsl(0 0% 0% / .18); }
-
-    /* Hero */
-    #observatory .hero { position: relative; z-index: 2; margin: 6px 0 14px; }
-    #observatory .title {
-      margin: 0; line-height: .96;
-      font-size: clamp(40px, 6.6vw, 92px); letter-spacing: .3px; font-weight: 900;
-      background: linear-gradient(90deg, hsl(220 22% 20%), hsl(calc(var(--accent)-30) 35% 24%) 60%, hsl(210 28% 22%));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-      filter: drop-shadow(0 14px 32px hsl(var(--accent) 70% 52% / .2));
-    }
-    #observatory .subtitle { margin: 8px 0 0; color: var(--muted); font-size: clamp(14px, 2.1vw, 18px); max-width: 72ch; }
-
-    /* Stage: hex glass */
-    #observatory .stage {
-      position: relative; z-index: 2; margin-top: 10px;
-      border-radius: 26px; overflow: visible;
-      transform-style: preserve-3d; perspective: 1000px;
-    }
-    #observatory .frame {
-      position: relative; border-radius: 24px; padding: clamp(10px, 1.8vw, 16px);
-      background: var(--card); border: 1px solid var(--stroke);
-      box-shadow: 0 22px 44px hsl(0 0% 0% / .16), inset 0 1px 0 hsl(0 0% 100% / .5);
-      transition: transform .25s ease;
-    }
-    #observatory .hex {
-      position: relative; width: 100%; aspect-ratio: 5 / 3; border-radius: 20px; overflow: hidden;
-      clip-path: polygon(8% 0, 92% 0, 100% 50%, 92% 100%, 8% 100%, 0 50%);
-      background: radial-gradient(120% 120% at 50% 20%, hsl(0 0% 100% / .1), transparent 60%);
-    }
-    #observatory canvas.sky {
-      position: absolute; inset: 0; width: 100%; height: 100%; display: block;
-    }
-    #observatory .grid {
-      position: absolute; inset: 0; pointer-events: none; opacity: .18; mix-blend-mode: multiply;
-      background:
-        linear-gradient(to right, rgba(0,0,0,.07) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(0,0,0,.07) 1px, transparent 1px);
-      background-size: 60px 100%, 100% 60px;
-    }
-    #observatory .rim {
-      position: absolute; inset: 8px; border-radius: 18px; pointer-events: none;
-      box-shadow: inset 0 0 0 1px hsl(0 0% 100% / .6), inset 0 0 0 2px hsl(0 0% 0% / .04);
-      clip-path: polygon(8% 0, 92% 0, 100% 50%, 92% 100%, 8% 100%, 0 50%);
-    }
-
-    /* Actions */
-    #observatory .actions { position: relative; z-index: 2; display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    #atelier .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 24px hsl(0 0% 0% / .18); }
+    #atelier .btn:active { transform: translateY(0); }
 
     /* Footer */
-    #observatory .foot {
+    #atelier .foot {
       position: relative; z-index: 2; margin-top: 14px; color: hsl(222 14% 26% / .9);
       display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 12px;
     }
-    #observatory .chip {
+    #atelier .chip {
       padding: 8px 10px; border-radius: 999px; background: var(--card);
-      border: 1px solid var(--stroke); color: var(--muted); font-size: 12px; backdrop-filter: blur(8px);
+      border: 1px solid var(--line); color: var(--muted); font-size: 12px; backdrop-filter: blur(8px);
     }
 
-    /* Night theme */
-    #observatory.night {
+    /* Noir theme */
+    #atelier.noir {
+      --ink: hsl(0 0% 98%);
+      --muted: hsl(0 0% 88% / .82);
+      --card: hsl(0 0% 100% / .06);
+      --line: hsl(0 0% 100% / .12);
       --bg-1: hsl(235 50% 7%);
       --bg-2: hsl(235 50% 5%);
-      --ink: hsl(0 0% 98%);
-      --muted: hsl(0 0% 90% / .78);
-      --card: hsl(0 0% 100% / .06);
-      --stroke: hsl(0 0% 100% / .12);
       background:
-        radial-gradient(1100px 900px at -20% -10%, hsl(calc(var(--accent) + 60) 80% 14% / .55), transparent 55%),
-        radial-gradient(1100px 900px at 120% 130%, hsl(calc(var(--accent) - 60) 80% 16% / .55), transparent 55%),
+        radial-gradient(1100px 900px at -20% -10%, hsl(var(--accent) 80% 18% / .55), transparent 55%),
+        radial-gradient(1100px 900px at 120% 130%, hsl(var(--accent-b) 80% 18% / .55), transparent 55%),
         linear-gradient(180deg, var(--bg-1), var(--bg-2));
     }
-    #observatory.night .grid { opacity: .28; mix-blend-mode: screen; }
-    #observatory.night .btn { background: hsl(0 0% 100% / .08); }
+    #atelier.noir .btn { background: hsl(0 0% 100% / .08); }
+    #atelier.noir .overlay-grid { background:
+      radial-gradient(circle at 50% 50%, transparent 32%, hsl(0 0% 100% / .08) 33% 34%, transparent 35%),
+      repeating-conic-gradient(from 0deg, hsl(0 0% 100% / .08) 0 1deg, transparent 1deg 6deg);
+    }
 
     /* Responsive */
     @media (max-width: 760px) {
-      #observatory .panel { width: 100%; justify-content: space-between; }
-      #observatory input[type="range"] { width: 110px; }
-      #observatory .hex { aspect-ratio: 4 / 3; }
+      #atelier .dock { width: 100%; justify-content: space-between; }
+      #atelier input[type="range"] { width: 110px; }
+      #atelier .subtitle { max-width: 60ch; }
     }
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      #observatory .ring, #observatory .compass::after { animation: none !important; }
+      #atelier .blob, #atelier .sigil::after, #atelier .orb::before, #atelier .orb::after { animation: none !important; }
     }
   </style>
 
-  <div class="ambient" aria-hidden="true">
-    <div class="ring r1"></div>
-    <div class="ring r2"></div>
+  <div class="mist" aria-hidden="true">
+    <span class="blob b1" style="left:-10%; top:10%;"></span>
+    <span class="blob b2"></span>
   </div>
 
   <div class="top">
-    <div class="brand" aria-label="Lucid Observatory">
-      <span class="compass" aria-hidden="true"></span>
-      <span>Observatory</span>
+    <div class="brand" aria-label="Aether Loom">
+      <span class="sigil" aria-hidden="true"></span>
+      <span>Aether Loom</span>
     </div>
-    <div class="panel" role="group" aria-label="Controls">
-      <label for="dens">Density
-        <input id="dens" type="range" min="10" max="100" value="55" aria-label="Star density">
+    <div class="dock" role="group" aria-label="Controls">
+      <label for="flow">Flow
+        <input id="flow" type="range" min="5" max="60" value="28" aria-label="Flow speed">
       </label>
-      <label for="grav">Gravity
-        <input id="grav" type="range" min="0" max="100" value="40" aria-label="Pointer gravity">
+      <label for="turb">Turbulence
+        <input id="turb" type="range" min="1" max="20" value="8" aria-label="Field turbulence">
       </label>
-      <label for="link">Link Radius
-        <input id="link" type="range" min="20" max="200" value="120" aria-label="Connection radius">
+      <label for="spread">Spread
+        <input id="spread" type="range" min="200" max="4000" value="1600" aria-label="Particle count">
       </label>
-      <label for="constellate">Constellate
-        <input id="constellate" class="toggle" type="checkbox" checked aria-label="Toggle constellations">
+      <label for="glow">Glow
+        <input id="glow" type="range" min="0" max="40" value="16" aria-label="Glow amount">
       </label>
-      <button class="btn" id="theme" title="Toggle day/night">Night</button>
+      <label for="pulse">Pulse
+        <input id="pulse" class="toggle" type="checkbox" checked aria-label="Breathing pulse">
+      </label>
+      <label for="grid">Grid
+        <input id="grid" class="toggle" type="checkbox" aria-label="Show orb grid">
+      </label>
+      <button class="btn" id="theme" title="Toggle theme">Noir</button>
     </div>
   </div>
 
   <section class="hero" aria-label="Intro">
-    <h1 class="title">Lucid Constellations</h1>
-    <p class="subtitle">An interactive starfield in a glass hexagon. Pull space with your cursor; click to launch meteors. Pure canvas—no libraries.</p>
+    <h1 class="title">Breathing Orb</h1>
+    <p class="subtitle">A living flow-field inside glass. Paints with light; bends with touch. Pure canvas—no libraries.</p>
   </section>
 
-  <div class="stage" id="stage" aria-label="Interactive Starfield">
-    <div class="frame" id="frame">
-      <div class="hex">
-        <canvas class="sky"></canvas>
-        <div class="grid"></div>
-        <div class="rim"></div>
+  <div class="stage" aria-label="Interactive Orb">
+    <div class="orb-wrap" id="wrap">
+      <div class="orb" id="orb">
+        <canvas class="orb-canvas"></canvas>
+        <div class="overlay-grid"></div>
       </div>
     </div>
   </div>
 
   <div class="actions">
     <button class="btn primary" id="pause" data-ripple>Pause</button>
-    <button class="btn" id="shuffle" data-ripple>Shuffle Hue</button>
-    <button class="btn" id="reset" data-ripple>Reset</button>
+    <button class="btn" id="shuffle" data-ripple>Shuffle Palette</button>
     <button class="btn" id="save" data-ripple>Snapshot</button>
   </div>
 
   <div class="foot">
-    <span class="chip">Glass Hex Frame</span>
-    <span class="chip">Constellation Links</span>
-    <span class="chip">Day/Night</span>
-    <span class="chip">Reduced Motion Friendly</span>
-    <span style="margin-left:auto;color:var(--muted);">Refreshed</span>
-    <span id="last-updated">Last updated: 2025-11-01 04:20:16 EST</span>
+    <span class="chip">Flow Field</span>
+    <span class="chip">Breathing Rings</span>
+    <span class="chip">Noir/Day</span>
+    <span class="chip">Reduced Motion Ready</span>
+    <span style="margin-left:auto;color:var(--muted);">Updated</span>
+    <span id="last-updated">Last updated: 2025-11-01 05:16:34 EST</span>
   </div>
 
   <script>
     (() => {
-      const root = document.getElementById('observatory');
-      const frame = root.querySelector('#frame');
-      const stage = root.querySelector('#stage');
-      const canvas = root.querySelector('canvas.sky');
+      const root = document.getElementById('atelier');
+      const wrap = root.querySelector('#wrap');
+      const orb = root.querySelector('#orb');
+      const canvas = root.querySelector('canvas.orb-canvas');
       const ctx = canvas.getContext('2d', { alpha: true });
 
-      const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
       const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+      const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
 
       // Controls
-      const densEl = root.querySelector('#dens');
-      const gravEl = root.querySelector('#grav');
-      const linkEl = root.querySelector('#link');
-      const constelEl = root.querySelector('#constellate');
+      const flowEl = root.querySelector('#flow');
+      const turbEl = root.querySelector('#turb');
+      const spreadEl = root.querySelector('#spread');
+      const glowEl = root.querySelector('#glow');
+      const pulseEl = root.querySelector('#pulse');
+      const gridEl = root.querySelector('#grid');
       const themeBtn = root.querySelector('#theme');
       const pauseBtn = root.querySelector('#pause');
       const shuffleBtn = root.querySelector('#shuffle');
-      const resetBtn = root.querySelector('#reset');
       const saveBtn = root.querySelector('#save');
 
       // Timestamp
@@ -362,242 +382,176 @@
         }).format(now);
       } catch { stamp.textContent = new Date().toLocaleString(); }
 
-      // Params
-      let W = 0, H = 0, running = true, t0 = 0;
-      let density = (+densEl.value) / 100;  // 0.1..1.0
-      let gravity = (+gravEl.value) / 100;  // 0..1
-      let linkR = (+linkEl.value);          // px
-      let doLinks = constelEl.checked;
+      // Parameters
+      let W = 0, H = 0, running = true, t0 = 0, time = 0;
+      let flow = (+flowEl.value) / 100;        // 0.05..0.6 base speed factor
+      let turb = (+turbEl.value);              // 1..20 frequency scalar
+      let glow = (+glowEl.value);              // 0..40 blur
+      let breathing = pulseEl.checked;
 
-      const pointer = { x: 0, y: 0, active: false };
-      let hue = +getComputedStyle(root).getPropertyValue('--accent') || 268;
+      const pointer = { x: 0, y: 0, active: false, nx: 0, ny: 0 };
 
-      // Stars
+      // Palettes (pairs of hues)
+      const palettes = [
+        [200, 320], [268, 12], [140, 210], [22, 288], [184, 36], [12, 200], [302, 180]
+      ];
+      function applyPalette([a, b]) {
+        root.style.setProperty('--accent', a);
+        root.style.setProperty('--accent-b', b);
+      }
+      applyPalette(palettes[Math.floor(Math.random()*palettes.length)]);
+
+      // Particles
       let N = 0;
-      let stars = [];
-      let streaks = [];
-
-      function randRange(a, b) { return a + Math.random() * (b - a); }
-
-      function seedStars() {
-        stars.length = 0;
-        const base = 0.00022; // density per px^2
-        N = Math.floor((W * H) * base * (0.4 + density * 1.6));
-        N = Math.max(180, Math.min(2600, N));
+      let parts = [];
+      function seedParticles() {
+        N = Math.max(200, Math.min(6000, +spreadEl.value | 0));
+        parts.length = 0;
         for (let i = 0; i < N; i++) {
-          const s = {
-            x: Math.random() * W,
-            y: Math.random() * H,
-            vx: randRange(-0.25, 0.25),
-            vy: randRange(-0.25, 0.25),
-            r: randRange(0.6, 1.8) * (reduced ? 0.8 : 1),
-            tw: Math.random() * Math.PI * 2, // twinkle phase
-            o: randRange(0.4, 0.9)
-          };
-          stars.push(s);
+          // spawn within a circle
+          const r = Math.sqrt(Math.random()) * (Math.min(W, H) * 0.48);
+          const a = Math.random() * Math.PI * 2;
+          const x = W/2 + Math.cos(a) * r;
+          const y = H/2 + Math.sin(a) * r;
+          parts.push({
+            x, y, px: x, py: y,
+            o: 0.4 + Math.random() * 0.6,
+            hueJ: Math.random()
+          });
         }
+        // soft clear
+        ctx.fillStyle = 'rgba(0,0,0,0)';
+        ctx.clearRect(0,0,W,H);
       }
 
       function sizeCanvas() {
-        const rect = frame.getBoundingClientRect();
-        W = Math.max(320, Math.floor(rect.width - 20));
-        H = Math.max(240, Math.floor(rect.height - 20));
+        const rect = orb.getBoundingClientRect();
+        W = Math.max(300, Math.floor(rect.width));
+        H = Math.max(300, Math.floor(rect.height));
         canvas.width = Math.floor(W * dpr);
         canvas.height = Math.floor(H * dpr);
         canvas.style.width = W + 'px';
         canvas.style.height = H + 'px';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        ctx.clearRect(0, 0, W, H);
-        seedStars();
+        seedParticles();
+      }
+
+      // Field function (pseudo-noise)
+      function fieldAngle(x, y, t) {
+        const k = turb * 0.0022;
+        const nx = (x - W/2) * k, ny = (y - H/2) * k;
+        const p = breathing ? (1 + Math.sin(t * 0.0008) * 0.35) : 1;
+        const base = Math.sin(nx * 2.1 + t*0.0013) + Math.cos(ny * 2.3 - t*0.0011);
+        const cross = Math.sin((nx - ny) * 1.5 + t*0.0007) + Math.cos((nx + ny) * 1.1 - t*0.0017);
+        let angle = (base + cross) * 1.2;
+        if (pointer.active) {
+          const dx = x - pointer.x, dy = y - pointer.y;
+          const a = Math.atan2(dy, dx) + Math.PI; // swirl around pointer
+          angle = angle * 0.75 + a * 0.25;
+        }
+        return angle * p;
       }
 
       function softClear() {
-        // leave gentle trails in night; cleaner in day
-        const isNight = root.classList.contains('night');
-        const alpha = isNight ? 0.08 : 0.16;
+        const isNoir = root.classList.contains('noir');
+        const a = isNoir ? 0.08 : 0.14;
         ctx.globalCompositeOperation = 'source-over';
-        ctx.fillStyle = `rgba(0,0,0,${alpha})`;
+        ctx.fillStyle = `rgba(0,0,0,${a})`;
         ctx.fillRect(0, 0, W, H);
-      }
-
-      function drawStar(s, t) {
-        const twinkle = 0.6 + 0.4 * Math.sin(s.tw + t * 0.002 + s.x * 0.002 + s.y * 0.002);
-        const a = Math.min(1, s.o * twinkle);
-        ctx.globalAlpha = a;
-        ctx.fillStyle = `hsl(${hue + (s.x + s.y) * 0.01}, 90%, 70%)`;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fill();
-
-        // halo
-        ctx.globalAlpha = a * 0.35;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r * 3, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 1;
-      }
-
-      function linkStars(s, others) {
-        if (!doLinks) return;
-        const r2 = linkR * linkR;
-        for (let j = 0; j < others.length; j++) {
-          const o = others[j];
-          const dx = s.x - o.x;
-          const dy = s.y - o.y;
-          const d2 = dx * dx + dy * dy;
-          if (d2 < r2) {
-            const d = Math.sqrt(d2) || 1;
-            const a = 1 - (d / linkR);
-            ctx.globalAlpha = 0.12 + a * 0.28;
-            ctx.strokeStyle = `hsl(${hue}, 90%, 60%)`;
-            ctx.lineWidth = 0.6 + a * 1.2;
-            ctx.beginPath();
-            ctx.moveTo(s.x, s.y);
-            ctx.lineTo(o.x, o.y);
-            ctx.stroke();
-            ctx.globalAlpha = 1;
-          }
-        }
-      }
-
-      function updateStars(dt) {
-        const g = gravity * 0.18 * (reduced ? 0.3 : 1);
-        for (let i = 0; i < stars.length; i++) {
-          const s = stars[i];
-          // micro drift
-          s.vx += Math.sin((s.x + s.y + performance.now() * 0.02) * 0.0006) * 0.02;
-          s.vy += Math.cos((s.x - s.y + performance.now() * 0.02) * 0.0006) * 0.02;
-
-          // pointer gravity
-          if (pointer.active && g > 0) {
-            const dx = pointer.x - s.x;
-            const dy = pointer.y - s.y;
-            const d2 = dx * dx + dy * dy + 30;
-            s.vx += (dx / d2) * (g * 240);
-            s.vy += (dy / d2) * (g * 240);
-          }
-
-          // integrate
-          s.x += s.vx * (dt * 0.06);
-          s.y += s.vy * (dt * 0.06);
-          s.vx *= 0.985; s.vy *= 0.985;
-
-          // wrap softly
-          if (s.x < -2) s.x = W + 2;
-          if (s.y < -2) s.y = H + 2;
-          if (s.x > W + 2) s.x = -2;
-          if (s.y > H + 2) s.y = -2;
-        }
-      }
-
-      // Meteors
-      function spawnMeteor(x, y) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = randRange(6, 12);
-        streaks.push({
-          x, y,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          life: 1,
-          hue: hue + randRange(-20, 20)
-        });
-      }
-
-      function updateMeteors(dt) {
-        for (let i = streaks.length - 1; i >= 0; i--) {
-          const m = streaks[i];
-          m.x += m.vx * (dt * 0.05);
-          m.y += m.vy * (dt * 0.05);
-          m.vx *= 0.996; m.vy *= 0.996;
-          m.life -= 0.012 * (reduced ? 2 : 1);
-          if (m.life <= 0 || m.x < -20 || m.y < -20 || m.x > W + 20 || m.y > H + 20) streaks.splice(i, 1);
-        }
-      }
-
-      function drawMeteors() {
-        for (const m of streaks) {
-          ctx.globalCompositeOperation = 'lighter';
-          const len = 18;
-          ctx.strokeStyle = `hsl(${m.hue}, 100%, 65%)`;
-          ctx.globalAlpha = Math.max(0, m.life) * 0.9;
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(m.x, m.y);
-          ctx.lineTo(m.x - m.vx * 1.2 - len, m.y - m.vy * 1.2 - len);
-          ctx.stroke();
-          ctx.globalCompositeOperation = 'source-over';
-          ctx.globalAlpha = 1;
-        }
       }
 
       function tick(now) {
         if (!running) return;
         const dt = t0 ? Math.min(32, now - t0) : 16;
-        t0 = now;
+        t0 = now; time += dt;
 
         softClear();
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.lineCap = 'round';
 
-        // Links pass first for nice glow layering
-        if (doLinks) {
-          ctx.globalCompositeOperation = 'lighter';
-          for (let i = 0; i < stars.length; i += 2) {
-            linkStars(stars[i], stars.slice(i + 1, i + 28)); // local neighborhood
+        const speed = (0.12 + flow) * (reduced ? 0.6 : 1);
+        const step = speed * 2.2;
+
+        const styleHueA = +getComputedStyle(root).getPropertyValue('--accent') || 200;
+        const styleHueB = +getComputedStyle(root).getPropertyValue('--accent-b') || 320;
+
+        for (let i = 0; i < parts.length; i++) {
+          const p = parts[i];
+          const ang = fieldAngle(p.x, p.y, time);
+          p.px = p.x; p.py = p.y;
+          p.x += Math.cos(ang) * step;
+          p.y += Math.sin(ang) * step;
+
+          // keep inside orb (circle wrap)
+          const dx = p.x - W/2, dy = p.y - H/2;
+          const r = Math.sqrt(dx*dx + dy*dy);
+          const R = Math.min(W, H) * 0.48;
+          if (r > R) {
+            // wrap to opposite edge angle
+            const th = Math.atan2(dy, dx) + Math.PI;
+            p.x = W/2 + Math.cos(th) * (R - 1);
+            p.y = H/2 + Math.sin(th) * (R - 1);
+            p.px = p.x; p.py = p.y;
+            continue;
           }
-          ctx.globalCompositeOperation = 'source-over';
+
+          const mix = p.hueJ;
+          const hue = styleHueA * (1 - mix) + styleHueB * mix + Math.sin((p.x + p.y + time*0.05) * 0.01) * 10;
+          const alpha = 0.08 + p.o * 0.18;
+          ctx.strokeStyle = `hsla(${hue}, 100%, 65%, ${alpha})`;
+          ctx.lineWidth = 1 + p.o * 1.5;
+
+          // glow
+          ctx.shadowColor = `hsla(${hue}, 100%, 60%, ${Math.min(0.6, alpha + 0.1)})`;
+          ctx.shadowBlur = glow;
+
+          ctx.beginPath();
+          ctx.moveTo(p.px, p.py);
+          ctx.lineTo(p.x, p.y);
+          ctx.stroke();
         }
 
-        // Stars
-        for (let i = 0; i < stars.length; i++) drawStar(stars[i], now);
-
-        // Meteors
-        updateMeteors(dt);
-        drawMeteors();
-
-        // Physics
-        updateStars(dt);
+        ctx.shadowBlur = 0;
+        ctx.globalCompositeOperation = 'source-over';
 
         requestAnimationFrame(tick);
       }
 
       // Interactions
       function handleMove(e) {
-        const r = frame.getBoundingClientRect();
-        pointer.x = (e.clientX - r.left - 10);
-        pointer.y = (e.clientY - r.top - 10);
+        const r = wrap.getBoundingClientRect();
+        pointer.x = e.clientX - r.left;
+        pointer.y = e.clientY - r.top;
         pointer.active = true;
 
         // tilt
         const tx = (e.clientX - r.left) / r.width - 0.5;
         const ty = (e.clientY - r.top) / r.height - 0.5;
-        const tilt = 8;
-        if (!reduced) frame.style.transform = `rotateX(${(-ty * tilt).toFixed(2)}deg) rotateY(${(tx * tilt).toFixed(2)}deg)`;
+        const tilt = 10;
+        if (!reduced) wrap.style.transform = `rotateX(${(-ty * tilt).toFixed(2)}deg) rotateY(${(tx * tilt).toFixed(2)}deg)`;
       }
       function resetTilt() {
         pointer.active = false;
-        frame.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        wrap.style.transform = 'rotateX(0deg) rotateY(0deg)';
       }
-      stage.addEventListener('pointermove', handleMove, { passive: true });
-      stage.addEventListener('pointerleave', resetTilt);
+      wrap.addEventListener('pointermove', handleMove, { passive: true });
+      wrap.addEventListener('pointerleave', resetTilt);
 
-      stage.addEventListener('pointerdown', (e) => {
-        const r = frame.getBoundingClientRect();
-        const x = (e.clientX - r.left - 10);
-        const y = (e.clientY - r.top - 10);
-        for (let i = 0; i < 3; i++) spawnMeteor(x, y);
+      // Control wiring
+      flowEl.addEventListener('input', e => { flow = (+e.target.value) / 100; });
+      turbEl.addEventListener('input', e => { turb = (+e.target.value); });
+      glowEl.addEventListener('input', e => { glow = (+e.target.value); });
+      spreadEl.addEventListener('input', seedParticles);
+      pulseEl.addEventListener('change', e => { breathing = e.target.checked; });
+      gridEl.addEventListener('change', e => {
+        root.classList.toggle('grid-on', e.target.checked);
       });
 
-      // Controls wiring
-      densEl.addEventListener('input', e => { density = (+e.target.value) / 100; seedStars(); });
-      gravEl.addEventListener('input', e => { gravity = (+e.target.value) / 100; });
-      linkEl.addEventListener('input', e => { linkR = (+e.target.value); });
-      constelEl.addEventListener('change', e => { doLinks = e.target.checked; });
-
       themeBtn.addEventListener('click', () => {
-        root.classList.toggle('night');
-        themeBtn.textContent = root.classList.contains('night') ? 'Day' : 'Night';
-        const h = Math.floor(Math.random() * 360);
-        hue = h;
-        root.style.setProperty('--accent', h);
+        root.classList.toggle('noir');
+        themeBtn.textContent = root.classList.contains('noir') ? 'Day' : 'Noir';
+        // nudge palette
+        applyPalette(palettes[Math.floor(Math.random()*palettes.length)]);
       });
 
       pauseBtn.addEventListener('click', () => {
@@ -607,19 +561,13 @@
       });
 
       shuffleBtn.addEventListener('click', () => {
-        hue = Math.floor(Math.random() * 360);
-        root.style.setProperty('--accent', hue);
-      });
-
-      resetBtn.addEventListener('click', () => {
-        ctx.clearRect(0, 0, W, H);
-        seedStars();
+        applyPalette(palettes[Math.floor(Math.random()*palettes.length)]);
       });
 
       saveBtn.addEventListener('click', () => {
         try {
           const link = document.createElement('a');
-          link.download = `lucid-constellations-${Date.now()}.png`;
+          link.download = `breathing-orb-${Date.now()}.png`;
           link.href = canvas.toDataURL('image/png');
           link.click();
         } catch (e) { console.warn('Save failed:', e); }
