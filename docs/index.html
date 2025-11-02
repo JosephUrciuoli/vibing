@@ -73,7 +73,395 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-11-02 07:31:33 EST</span></div>
+<section class="vibe371" aria-label="Aurora canvas">
+  <style>
+    .vibe371 {
+      --bg: #0b0f14;
+      --fg: #e9f2fb;
+      --muted: #a8b3c2;
+      --c1: #6ee7ff;
+      --c2: #a78bfa;
+      --c3: #ff86c8;
+      --card: rgba(255, 255, 255, 0.06);
+      --stroke: rgba(255, 255, 255, 0.10);
+      --glow: rgba(255, 255, 255, 0.25);
+      --mx: 50%;
+      --my: 50%;
+      position: relative;
+      isolation: isolate;
+      border-radius: 18px;
+      overflow: hidden;
+      padding: 28px;
+      color: var(--fg);
+      background:
+        radial-gradient(800px 800px at var(--mx) var(--my), rgba(255,255,255,0.06), transparent 60%),
+        linear-gradient(180deg, #0a0f15, #0b1118 70%, #0a0e13);
+      border: 1px solid var(--stroke);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 20px 60px rgba(0, 0, 0, 0.45),
+        0 2px 24px rgba(20, 40, 60, 0.25);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    .vibe371.mono {
+      --c1: #9aa6b2;
+      --c2: #c5ccd4;
+      --c3: #dfe4ea;
+    }
+
+    /* Living light backdrop */
+    .vibe371 .backdrop {
+      position: absolute;
+      inset: -20%;
+      pointer-events: none;
+      filter: blur(40px) saturate(120%);
+      opacity: 0.7;
+      mix-blend-mode: screen;
+      z-index: 0;
+    }
+    .vibe371 .blob {
+      position: absolute;
+      width: 60vmax;
+      height: 60vmax;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--c1), transparent 55%);
+      animation: drift1 18s ease-in-out infinite;
+    }
+    .vibe371 .blob.b2 {
+      background: radial-gradient(circle at 70% 40%, var(--c2), transparent 55%);
+      animation: drift2 22s ease-in-out infinite;
+    }
+    .vibe371 .blob.b3 {
+      background: radial-gradient(circle at 40% 70%, var(--c3), transparent 55%);
+      animation: drift3 26s ease-in-out infinite;
+    }
+
+    @keyframes drift1 {
+      0%,100% { transform: translate(-10%, -6%) scale(1); }
+      50%     { transform: translate(8%, 10%) scale(1.12); }
+    }
+    @keyframes drift2 {
+      0%,100% { transform: translate(20%, -12%) scale(1.05); }
+      50%     { transform: translate(-8%, 6%) scale(0.95); }
+    }
+    @keyframes drift3 {
+      0%,100% { transform: translate(-12%, 18%) scale(1.1); }
+      50%     { transform: translate(12%, -8%) scale(0.9); }
+    }
+
+    /* Subtle grain */
+    .vibe371 .grain {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.10;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.2) 0, transparent 1px),
+        radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,0.15) 0, transparent 1px),
+        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.12) 0, transparent 1px);
+      background-size: 7px 7px, 9px 9px, 13px 13px;
+      mix-blend-mode: overlay;
+      z-index: 0;
+      animation: jitter 4s steps(60) infinite;
+    }
+    @keyframes jitter {
+      to { transform: translate3d(0,0,0); } /* trigger repaint */
+    }
+
+    /* Glass panel */
+    .vibe371 .panel {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(180deg, rgba(12,16,22,0.6), rgba(12,16,22,0.35));
+      border: 1px solid var(--stroke);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow:
+        0 8px 30px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 300ms ease, background 300ms ease, box-shadow 300ms ease;
+      backdrop-filter: blur(6px);
+    }
+
+    .vibe371 .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .vibe371 .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--c1);
+      box-shadow: 0 0 14px var(--c1);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(0.9); opacity: 0.8; }
+      50%     { transform: scale(1.2); opacity: 1; }
+    }
+
+    .vibe371 h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      line-height: 1.05;
+      margin: 14px 0 10px 0;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--fg), #cfe6ff 35%, var(--c2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 6px 24px rgba(150,150,255,0.15));
+    }
+    .vibe371 .lede {
+      margin: 0 0 18px 0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.8vw, 18px);
+      line-height: 1.55;
+      max-width: 62ch;
+    }
+
+    /* Buttons */
+    .vibe371 .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .vibe371 .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.16);
+      color: var(--fg);
+      background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+      box-shadow: 0 2px 18px rgba(0,0,0,0.25);
+      will-change: transform;
+      cursor: pointer;
+    }
+    .vibe371 .btn.primary {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06)),
+        radial-gradient(120% 120% at 0% 0%, var(--c1), transparent 40%),
+        radial-gradient(120% 120% at 100% 100%, var(--c2), transparent 40%);
+      border-color: rgba(255,255,255,0.22);
+      box-shadow:
+        0 6px 26px rgba(103, 188, 255, 0.28),
+        inset 0 1px 0 rgba(255,255,255,0.25);
+    }
+    .vibe371 .btn:hover {
+      transform: translateY(-1px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.07));
+      border-color: rgba(255,255,255,0.28);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 0 0 3px rgba(255,255,255,0.04) inset;
+    }
+    .vibe371 .btn .icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0) 65%);
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.12) inset;
+    }
+
+    /* Feature chips */
+    .vibe371 .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin: 8px 0 6px 0;
+      list-style: none;
+      padding: 0;
+    }
+    .vibe371 .chip {
+      position: relative;
+      padding: 12px 12px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--fg);
+      font-size: 13px;
+      line-height: 1.35;
+      overflow: hidden;
+    }
+    .vibe371 .chip::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.12) 50%, transparent 70%);
+      transform: translateX(-120%);
+      transition: transform 800ms ease;
+    }
+    .vibe371 .chip:hover::after { transform: translateX(120%); }
+    .vibe371 .chip b { color: #eaf3ff; }
+
+    /* Meta row */
+    .vibe371 .meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .vibe371 .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04));
+      color: var(--fg);
+      cursor: pointer;
+      user-select: none;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+    .vibe371 .toggle:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.24); }
+    .vibe371 .knob {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--fg), rgba(255,255,255,0.4));
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.35), 0 2px 10px rgba(0,0,0,0.25);
+    }
+    .vibe371 .label { opacity: 0.85; }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .vibe371 .blob,
+      .vibe371 .grain,
+      .vibe371 .panel,
+      .vibe371 .chip::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+
+  <div class="backdrop" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <div class="grain"></div>
+  </div>
+
+  <div class="panel" id="interactive-panel">
+    <span class="eyebrow"><span class="pulse-dot" aria-hidden="true"></span> Living interface • v371</span>
+    <h1>Whispered Motion</h1>
+    <p class="lede">A calm, tactile surface where light drifts, buttons breathe, and details gently respond to your touch.</p>
+
+    <div class="actions">
+      <button class="btn primary" id="go-btn" aria-label="Begin">
+        <span class="icon" aria-hidden="true"></span>
+        Begin
+      </button>
+      <button class="btn" id="learn-btn" aria-label="Learn more">
+        Learn more
+      </button>
+    </div>
+
+    <ul class="features">
+      <li class="chip"><b>Adaptive glow</b><br>Gradient light follows your cursor with intent.</li>
+      <li class="chip"><b>Quiet contrast</b><br>Readable, gentle, and kind to the eyes.</li>
+      <li class="chip"><b>Tactile motion</b><br>Subtle depth without overwhelm.</li>
+      <li class="chip"><b>Monochrome mode</b><br>One click to go classic and composed.</li>
+    </ul>
+
+    <div class="meta">
+      <span id="last-updated" aria-live="polite"></span>
+      <button class="toggle" id="mode-toggle" aria-pressed="false" aria-label="Toggle monochrome mode">
+        <span class="knob" aria-hidden="true"></span>
+        <span class="label">Monochrome</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.currentScript.closest('.vibe371');
+      const panel = root.querySelector('#interactive-panel');
+      const goBtn = root.querySelector('#go-btn');
+      const learnBtn = root.querySelector('#learn-btn');
+      const toggle = root.querySelector('#mode-toggle');
+      const updated = root.querySelector('#last-updated');
+
+      // Format "Last updated"
+      const now = new Date();
+      const opts = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+      updated.textContent = 'Last updated: ' + now.toLocaleString(undefined, opts);
+
+      // Pointer reactive lighting + tilt
+      function handleMove(e) {
+        const rect = root.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        root.style.setProperty('--mx', (x * 100) + '%');
+        root.style.setProperty('--my', (y * 100) + '%');
+
+        const tiltX = (y - 0.5) * 8;
+        const tiltY = (x - 0.5) * -8;
+        panel.style.transform = 'rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg)';
+      }
+      function resetTilt() {
+        panel.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        root.style.setProperty('--mx', '50%');
+        root.style.setProperty('--my', '50%');
+      }
+      root.addEventListener('pointermove', handleMove);
+      root.addEventListener('pointerleave', resetTilt);
+
+      // Magnetic primary button
+      function magnetize(btn, strength = 14) {
+        btn.addEventListener('pointermove', (e) => {
+          const r = btn.getBoundingClientRect();
+          const dx = e.clientX - (r.left + r.width / 2);
+          const dy = e.clientY - (r.top + r.height / 2);
+          btn.style.transform = 'translate(' + (dx / strength) + 'px,' + (dy / strength) + 'px)';
+        });
+        btn.addEventListener('pointerleave', () => {
+          btn.style.transform = '';
+        });
+      }
+      magnetize(goBtn, 10);
+
+      // Learn button subtle nudge on click
+      learnBtn.addEventListener('click', () => {
+        panel.animate([
+          { transform: panel.style.transform + ' translateZ(0) scale(1)' },
+          { transform: panel.style.transform + ' translateZ(24px) scale(1.01)' },
+          { transform: panel.style.transform + ' translateZ(0) scale(1)' }
+        ], { duration: 320, easing: 'cubic-bezier(.2,.8,.2,1)' });
+      });
+
+      // Monochrome toggle
+      toggle.addEventListener('click', () => {
+        const on = root.classList.toggle('mono');
+        toggle.setAttribute('aria-pressed', String(on));
+      });
+
+      // Respect reduced motion
+      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (mq.matches) {
+        root.removeEventListener('pointermove', handleMove);
+        root.removeEventListener('pointerleave', resetTilt);
+      }
+    }());
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
