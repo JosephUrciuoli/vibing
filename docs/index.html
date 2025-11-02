@@ -73,458 +73,505 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div class="vibe366" data-paused="false" data-inside="false">
+<div class="vibe367" data-playing="true" data-calm="false" data-inside="false">
   <style>
-    .vibe366{
-      --bg: #f7fafc;
-      --paper: #ffffff;
-      --ink: #0b1220;
-      --muted: #5b6b82;
-      --line: rgba(12, 18, 32, 0.08);
-      --a: #4f46e5;
-      --b: #22d3ee;
+    .vibe367{
+      --bg: #0b1020;
+      --ink: #eaf1ff;
+      --muted: #98a2b3;
+      --line: rgba(255,255,255,0.08);
+      --a: #7c3aed;
+      --b: #06b6d4;
       --c: #f59e0b;
-      --shadow: 0 18px 60px rgba(14, 24, 38, 0.10), 0 1px 0 rgba(255,255,255,0.8) inset;
+      --glow: 0 20px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04);
+      --radius: 28px;
       position: relative;
       isolation: isolate;
-      border-radius: 28px;
-      background: radial-gradient(140% 120% at 0% 0%, var(--paper), var(--bg) 70%);
-      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: radial-gradient(140% 180% at 20% -20%, #141a33 0%, var(--bg) 38%, #070b15 100%);
       color: var(--ink);
-      min-height: clamp(540px, 66vh, 880px);
-      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+      min-height: clamp(560px, 68vh, 960px);
+      box-shadow: var(--glow);
       overflow: hidden;
       font-family: ui-sans-serif, -apple-system, system-ui, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial;
     }
 
-    /* Background texture + ambient */
-    .vibe366 .bg{ position:absolute; inset:0; z-index:0; }
-    .vibe366 .texture{
+    /* Aurora layers + grid */
+    .vibe367 .layers{ position:absolute; inset:0; z-index:0; pointer-events:none; }
+    .vibe367 .aurora{
       position:absolute; inset:-20%;
       background:
-        radial-gradient(1200px 800px at 80% 20%,
-          color-mix(in oklab, var(--b) 10%, transparent) 0%,
-          transparent 60%),
-        radial-gradient(900px 700px at 5% 95%,
-          color-mix(in oklab, var(--a) 8%, transparent) 0%,
-          transparent 60%),
-        var(--paper);
-      filter: saturate(110%);
-    }
-    .vibe366 .grain{
-      position:absolute; inset:0;
-      background-image:
-        radial-gradient(circle at 16px 16px, rgba(14,24,38,0.03) 1px, transparent 1px),
-        radial-gradient(circle at 0 0, rgba(14,24,38,0.02) 1px, transparent 1px);
-      background-size: 28px 28px, 28px 28px;
-      background-position: 0 0, 14px 14px;
-      mix-blend-mode: multiply;
-      opacity:.6;
-      animation: drift 28s linear infinite;
-    }
-    @keyframes drift { to { background-position: 0 28px, 28px 28px; } }
-
-    /* Orbital sculpture */
-    .vibe366 .orbit{
-      position:absolute;
-      right:-8%;
-      top:50%;
-      width: min(56vw, 560px);
-      aspect-ratio: 1/1;
-      transform: translateY(-50%);
-      pointer-events:none;
-      filter: drop-shadow(0 20px 40px rgba(14, 24, 38, 0.15));
-    }
-    .vibe366 .glow{
-      position:absolute; inset:22%;
-      background: radial-gradient(circle at 50% 50%,
-        color-mix(in oklab, var(--b) 32%, transparent) 0%,
-        color-mix(in oklab, var(--a) 18%, transparent) 40%,
-        transparent 70%);
+        radial-gradient(60% 80% at 70% 10%, color-mix(in oklab, var(--b) 14%, transparent), transparent 60%),
+        radial-gradient(80% 60% at 10% 90%, color-mix(in oklab, var(--a) 18%, transparent), transparent 70%),
+        radial-gradient(50% 50% at 85% 85%, color-mix(in oklab, var(--c) 14%, transparent), transparent 70%);
       filter: blur(24px) saturate(120%);
-      border-radius: 999px;
       opacity:.9;
+      animation: aurora-shift 28s ease-in-out infinite alternate;
     }
-    .vibe366 .ring{
-      position:absolute; inset:0; border-radius:50%;
+    @keyframes aurora-shift{
+      0%{ transform: translate3d(0,0,0) scale(1); }
+      50%{ transform: translate3d(1.5%, -1%, 0) scale(1.03); }
+      100%{ transform: translate3d(-1.5%, 1%, 0) scale(1.06); }
+    }
+    .vibe367 .grid{
+      position:absolute; inset:-2px;
       background:
-        conic-gradient(from 0deg,
-          color-mix(in oklab, var(--a) 92%, white 8%) 0 27%,
-          color-mix(in oklab, var(--b) 92%, white 8%) 27% 56%,
-          color-mix(in oklab, var(--c) 92%, white 8%) 56% 84%,
-          color-mix(in oklab, var(--a) 92%, white 8%) 84% 100%);
-      animation: spin 36s linear infinite;
+        linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px) 0 0/40px 100%,
+        linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px) 0 0/100% 40px;
+      mask-image: radial-gradient(120% 120% at 50% 30%, #000 50%, transparent 85%);
+      opacity:.6;
+      transform: translateZ(0);
+      animation: glide 22s linear infinite;
     }
-    .vibe366 .ring::after{
-      content:""; position:absolute; inset: clamp(10px, 2.2vw, 16px);
-      background: linear-gradient(180deg, color-mix(in oklab, var(--paper) 94%, var(--bg) 6%), var(--paper));
-      border-radius:50%;
-      box-shadow: inset 0 0 0 1px rgba(14,24,38,0.04);
+    @keyframes glide{
+      to{ background-position: 40px 40px, 0 40px; }
     }
-    .vibe366 .r2{ inset:7%; animation-duration: 48s; animation-direction: reverse; opacity:.9; }
-    .vibe366 .r2::after{ inset: clamp(12px, 2.6vw, 22px); }
-    .vibe366 .r3{ inset:14%; animation-duration: 64s; }
-    .vibe366 .r3::after{ inset: clamp(14px, 3vw, 28px); }
-    @keyframes spin { to{ transform: rotate(360deg); } }
 
-    /* Cursor halo (subtle lens) */
-    .vibe366 .halo{
-      position:absolute; inset:0; pointer-events:none;
-      --hx: 50%; --hy: 50%;
-      background: radial-gradient(280px 280px at var(--hx) var(--hy),
-        rgba(255,255,255,0.9) 0%,
-        rgba(255,255,255,0.0) 60%);
+    /* Canvas stars behind */
+    .vibe367 .sky{
+      position:absolute; inset:0; z-index:0; pointer-events:none;
+      filter: saturate(120%) brightness(0.9);
+      opacity: .85;
+    }
+
+    /* Pointer halo */
+    .vibe367 .halo{
+      --x: 50%; --y: 50%;
+      position:absolute; inset:0; z-index:1; pointer-events:none; opacity:0;
+      background:
+        radial-gradient(280px 280px at var(--x) var(--y),
+          rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.0) 60%),
+        radial-gradient(120px 120px at var(--x) var(--y),
+          color-mix(in oklab, var(--a) 22%, transparent), transparent 70%);
       mix-blend-mode: screen;
-      opacity: 0;
       transition: opacity .35s ease;
     }
-    .vibe366[data-inside="true"] .halo{ opacity:.7; }
+    .vibe367[data-inside="true"] .halo{ opacity:.9; }
 
-    /* Layout shell */
-    .vibe366 .shell{
+    /* Layout */
+    .vibe367 .shell{
       position:relative; z-index:2; height:100%;
       display:grid; grid-template-rows: auto 1fr auto;
-      gap: 18px; padding: 28px;
+      gap: 18px; padding: 24px;
     }
-    .vibe366 .top{
+    .vibe367 .top{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
     }
-    .vibe366 .badge{
-      display:inline-flex; align-items:center; gap:10px;
+    .vibe367 .brand{
+      display:flex; align-items:center; gap:12px;
       padding:10px 14px; border-radius:999px;
-      background: linear-gradient(180deg, rgba(14,24,38,0.04), rgba(14,24,38,0.02));
       border:1px solid var(--line);
-      color: color-mix(in oklab, var(--ink) 88%, #334155 12%);
-      font-weight:700; letter-spacing:.06em; text-transform:uppercase; font-size:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+      letter-spacing:.08em; text-transform:uppercase; font-weight:800; font-size:12px; color: color-mix(in oklab, var(--ink) 88%, #9aa5b1);
     }
-    .vibe366 .badge::before{
-      content:""; width:10px; height:10px; border-radius:50%;
-      background: radial-gradient(circle at 40% 40%, var(--a), var(--b));
-      box-shadow: 0 0 0 3px rgba(14,24,38,0.06), 0 0 20px color-mix(in oklab, var(--a) 30%, transparent);
+    .vibe367 .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, var(--a), var(--b));
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.04), 0 0 22px color-mix(in oklab, var(--a) 36%, transparent);
     }
-    .vibe366 .controls{ display:flex; gap:10px; flex-wrap:wrap; }
-    .vibe366 .btn{
-      appearance:none; cursor:pointer;
+
+    .vibe367 .controls{ display:flex; gap:10px; flex-wrap:wrap; }
+    .vibe367 .btn{
+      appearance:none; cursor:pointer; user-select:none;
       border:1px solid var(--line); border-radius:14px;
-      padding:10px 14px; font-weight:700; font-size:13px;
+      padding:10px 14px; font-weight:800; font-size:13px; letter-spacing:.01em;
       color: var(--ink);
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
-      transition: transform .15s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
-      box-shadow: 0 8px 20px rgba(14, 24, 38, 0.06);
-      backdrop-filter: saturate(120%) blur(2px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      box-shadow: 0 10px 26px rgba(0,0,0,0.25);
+      transition: transform .18s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
+      backdrop-filter: blur(6px) saturate(120%);
     }
-    .vibe366 .btn:hover{ transform: translateY(-1px); border-color: rgba(14,24,38,0.18); }
-    .vibe366 .btn.primary{
+    .vibe367 .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,0.16); }
+    .vibe367 .btn.primary{
       background:
         linear-gradient(180deg,
-          color-mix(in oklab, var(--a) 12%, white) 0%,
-          color-mix(in oklab, var(--b) 12%, white) 100%);
-      color:#0a1022;
-      border-color: color-mix(in oklab, var(--a) 26%, rgba(14,24,38,0.12));
-      box-shadow: 0 10px 26px color-mix(in oklab, var(--a) 20%, transparent);
+          color-mix(in oklab, var(--a) 40%, #1f1f3a) 0%,
+          color-mix(in oklab, var(--b) 40%, #1a3740) 100%);
+      color:#070b14;
+      border-color: color-mix(in oklab, var(--a) 40%, rgba(255,255,255,0.16));
+      box-shadow: 0 14px 40px color-mix(in oklab, var(--a) 32%, transparent);
     }
-    .vibe366 .btn.tog[aria-pressed="true"]{
-      background: linear-gradient(180deg, rgba(14,24,38,0.04), rgba(14,24,38,0.02));
-      color: color-mix(in oklab, var(--ink) 70%, #475569 30%);
-      border-color: rgba(14,24,38,0.18);
+    .vibe367 .btn.tog[aria-pressed="true"]{
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      color: color-mix(in oklab, var(--ink) 70%, #94a3b8 30%);
+      border-color: rgba(255,255,255,0.16);
     }
 
     /* Hero */
-    .vibe366 .hero{
-      display:grid; grid-template-columns: 1.2fr 1fr; align-items:center;
-      gap: clamp(18px, 3vw, 40px);
-      padding: 14px 0 4px;
-      position:relative;
+    .vibe367 .hero{
+      display:grid; grid-template-columns: 1.1fr 1fr; align-items:center;
+      gap: clamp(16px, 3vw, 44px); padding: 10px 0 0 0;
     }
-    .vibe366 h1{
-      margin:0; line-height:.98;
-      font-size: clamp(36px, 6.6vw, 84px);
+    @media (max-width: 980px){ .vibe367 .hero{ grid-template-columns: 1fr; } }
+    .vibe367 h1{
+      margin:0; line-height:.9;
+      font-size: clamp(40px, 7.2vw, 96px);
       letter-spacing: -0.02em;
-      background: linear-gradient(90deg, color-mix(in oklab, var(--ink) 94%, #000 6%), color-mix(in oklab, var(--a) 28%, var(--ink)));
+      background:
+        linear-gradient(90deg,
+          color-mix(in oklab, var(--ink) 92%, #fff 8%) 0%,
+          color-mix(in oklab, var(--b) 50%, var(--a)) 45%,
+          color-mix(in oklab, var(--c) 46%, var(--b)) 100%);
       -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 0 0 rgba(0,0,0,0);
     }
-    .vibe366 .lede{
-      margin: 10px 0 16px 0;
-      color: color-mix(in oklab, var(--ink) 76%, var(--muted));
-      font-size: clamp(14px, 2.2vw, 18px);
-      max-width: 48ch;
+    .vibe367 .lede{
+      margin: 12px 0 18px; max-width: 60ch;
+      color: color-mix(in oklab, var(--ink) 78%, #93a1b6);
+      font-size: clamp(14px, 2.1vw, 18px);
     }
-    .vibe366 .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; }
+    .vibe367 .cta{ display:flex; gap:10px; flex-wrap:wrap; }
 
-    /* Principles */
-    .vibe366 .principles{
-      display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px;
-      margin-top: clamp(6px, 2vw, 18px);
-    }
-    @media (max-width: 960px){
-      .vibe366 .hero{ grid-template-columns: 1fr; }
-      .vibe366 .orbit{ position:relative; right:auto; top:auto; transform:none; margin: -6px auto 0; width:min(72vw, 520px); }
-      .vibe366 .principles{ grid-template-columns: 1fr; }
-    }
-    .vibe366 .card{
-      position:relative; overflow:hidden;
-      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));
+    /* Sequencer */
+    .vibe367 .panel{
+      position:relative;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
       border:1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px 16px 18px;
-      box-shadow: 0 16px 32px rgba(14,24,38,0.08);
-      transition: transform .18s ease, box-shadow .28s ease, border-color .25s ease, background .25s ease;
+      border-radius: 16px; padding: 14px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+      overflow:hidden;
     }
-    .vibe366 .card:hover{
-      transform: translateY(-4px);
-      box-shadow: 0 20px 44px rgba(14,24,38,0.12);
-      border-color: rgba(14,24,38,0.16);
-      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+    .vibe367 .panel h2{
+      margin:0 0 10px; font-size:14px; letter-spacing:.08em; text-transform:uppercase;
+      color: color-mix(in oklab, var(--ink) 74%, #9da7bb); font-weight:800;
+      display:flex; align-items:center; gap:8px;
     }
-    .vibe366 .icon{
-      width:26px; height:26px; border-radius:8px; display:grid; place-items:center; margin-bottom:10px;
-      background: linear-gradient(180deg, color-mix(in oklab, var(--a) 18%, white), color-mix(in oklab, var(--b) 18%, white));
-      color: #0a1022; box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 6px 16px color-mix(in oklab, var(--a) 18%, transparent);
+    .vibe367 .panel h2 .chip{
+      display:inline-block; width:10px; height:10px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, var(--a), var(--b));
+      box-shadow: 0 0 18px color-mix(in oklab, var(--a) 28%, transparent);
     }
-    .vibe366 .card h3{ margin:0 0 6px 0; font-size:16px; letter-spacing:.01em; }
-    .vibe366 .card p{ margin:0; font-size:13px; color: var(--muted); line-height:1.35; }
-    .vibe366 .card::after{
+
+    .vibe367 .sequencer{
+      --cols: 16; --rows: 4;
+      display:grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 8px;
+      align-items:stretch;
+    }
+    .vibe367 .col{
+      position:relative; display:grid; grid-template-rows: repeat(var(--rows), 1fr);
+      gap:8px;
+    }
+    .vibe367 .scan{
       content:""; position:absolute; inset:0;
-      background: radial-gradient(160px 160px at var(--cx, 50%) var(--cy, 50%), rgba(14,24,38,0.06), transparent 60%);
-      opacity:0; transition: opacity .2s ease;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0));
+      border-radius: 10px; opacity:0; pointer-events:none;
+      transition: opacity .18s ease;
     }
-    .vibe366 .card:hover::after{ opacity:1; }
+    .vibe367 .col.active .scan{ opacity:1; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06); }
+
+    .vibe367 .note{
+      position:relative; border-radius: 10px; border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      transition: transform .12s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+      cursor:pointer;
+    }
+    .vibe367 .note::after{
+      content:""; position:absolute; inset:0; border-radius: inherit; opacity:0;
+      background:
+        radial-gradient(60% 80% at 50% 10%, color-mix(in oklab, var(--a) 30%, transparent), transparent),
+        radial-gradient(60% 80% at 50% 90%, color-mix(in oklab, var(--b) 30%, transparent), transparent);
+      transition: opacity .2s ease;
+    }
+    .vibe367 .note[aria-pressed="true"]{
+      border-color: color-mix(in oklab, var(--a) 36%, rgba(255,255,255,0.14));
+      background:
+        linear-gradient(180deg, color-mix(in oklab, var(--a) 22%, rgba(255,255,255,0.08)), color-mix(in oklab, var(--b) 18%, rgba(255,255,255,0.04)));
+      transform: translateY(-1px);
+      box-shadow: 0 10px 26px color-mix(in oklab, var(--a) 26%, transparent);
+    }
+    .vibe367 .col.active .note[aria-pressed="true"]::after{ opacity:1; }
 
     /* Footer */
-    .vibe366 .foot{
+    .vibe367 .foot{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding: 8px 4px 2px;
-      color: var(--muted); font-size:12px;
+      padding-top: 8px; color: var(--muted); font-size:12px;
     }
-    .vibe366 #last-updated{ color: color-mix(in oklab, var(--ink) 80%, #334155 20%); font-variant-numeric: tabular-nums; }
+    .vibe367 #last-updated{ color: color-mix(in oklab, var(--ink) 80%, #afbac9); font-variant-numeric: tabular-nums; }
 
-    /* Sparks (compose) */
-    .vibe366 .spark{
-      position:absolute; width:8px; height:8px; border-radius:50%;
-      pointer-events:none; will-change: transform, opacity;
-      filter: saturate(120%);
-      animation: pop 900ms ease-out forwards;
-      box-shadow: 0 6px 16px rgba(14,24,38,0.12);
+    /* States and accessibility */
+    .vibe367[data-playing="false"] .aurora,
+    .vibe367[data-playing="false"] .grid{ animation-play-state: paused; }
+    .vibe367 .btn:focus-visible,
+    .vibe367 .note:focus-visible{
+      outline: 2px solid color-mix(in oklab, var(--b) 70%, white);
+      outline-offset: 2px;
     }
-    @keyframes pop{
-      0%{ transform: translate(var(--sx), var(--sy)) scale(0.6); opacity:0; }
-      12%{ opacity:1; }
-      60%{ transform: translate(calc(var(--sx) + var(--dx)), calc(var(--sy) + var(--dy))) scale(1); }
-      100%{ transform: translate(calc(var(--sx) + var(--dx)), calc(var(--sy) + var(--dy))) scale(0.4); opacity:0; }
-    }
-
-    /* States */
-    .vibe366.paused .ring,
-    .vibe366.paused .grain{ animation-play-state: paused !important; }
-    .vibe366.paused .halo{ display:none; }
-
     @media (prefers-reduced-motion: reduce){
-      .vibe366 .ring, .vibe366 .grain, .vibe366 .spark{ animation: none !important; }
-      .vibe366 .halo{ display:none !important; }
+      .vibe367 .aurora, .vibe367 .grid{ animation: none !important; }
+      .vibe367 .halo{ display:none !important; }
     }
   </style>
 
-  <div class="bg" aria-hidden="true">
-    <div class="texture"></div>
-    <div class="grain"></div>
-    <div class="orbit" aria-hidden="true">
-      <div class="glow"></div>
-      <div class="ring r1"></div>
-      <div class="ring r2"></div>
-      <div class="ring r3"></div>
-    </div>
+  <div class="layers" aria-hidden="true">
+    <canvas class="sky"></canvas>
+    <div class="aurora"></div>
+    <div class="grid"></div>
     <div class="halo" aria-hidden="true"></div>
   </div>
 
   <div class="shell">
     <div class="top">
-      <span class="badge">Studio Almanac • Day 366</span>
+      <div class="brand"><span class="dot"></span>Nocturne • 367</div>
       <div class="controls">
-        <button class="btn primary" id="composeBtn" type="button">Compose</button>
-        <button class="btn" id="paletteBtn" type="button">Shuffle palette</button>
-        <button class="btn tog" id="stillBtn" type="button" aria-pressed="false">Stillness</button>
+        <button class="btn primary" id="playBtn" type="button">Pause Motion</button>
+        <button class="btn" id="paletteBtn" type="button">Cycle Colorway</button>
+        <button class="btn tog" id="calmBtn" type="button" aria-pressed="false">Calm Mode</button>
       </div>
     </div>
 
     <section class="hero">
       <div>
-        <h1>Quiet Brilliance</h1>
-        <p class="lede">Airy surfaces, lucid rhythm, and color that breathes. Interfaces that feel like morning light.</p>
-        <div class="ctaRow">
-          <button class="btn primary" id="primaryCta" type="button">Begin</button>
-          <button class="btn" id="softCta" type="button">Learn more</button>
+        <h1>Midnight Atelier</h1>
+        <p class="lede">A deep, modern canvas for luminous ideas. Velvet blacks, chromatic glows, and motion that whispers.</p>
+        <div class="cta">
+          <button class="btn primary" id="primaryCta" type="button">Start Creating</button>
+          <button class="btn" id="softCta" type="button">Explore Principles</button>
         </div>
       </div>
-      <div></div>
-    </section>
-
-    <section class="principles" aria-label="Principles">
-      <article class="card">
-        <div class="icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6">
-            <path d="M4 12h16M12 4v16" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h3>Weightless</h3>
-        <p>Generous white space and gentle depth—nothing shouts.</p>
-      </article>
-      <article class="card">
-        <div class="icon" aria-hidden="true" style="background: linear-gradient(180deg, color-mix(in oklab, var(--b) 18%, white), color-mix(in oklab, var(--c) 18%, white));">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6">
-            <circle cx="12" cy="12" r="6"/>
-            <path d="M9 12h6" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h3>Attentive</h3>
-        <p>Motion with manners: subtle cues only when they help.</p>
-      </article>
-      <article class="card">
-        <div class="icon" aria-hidden="true" style="background: linear-gradient(180deg, color-mix(in oklab, var(--c) 18%, white), color-mix(in oklab, var(--a) 18%, white));">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6">
-            <path d="M12 3l2.4 4.8 5.3.7-3.8 3.8.9 5.4L12 15.9 7.2 17.7l.9-5.4L4.3 8.5l5.3-.7L12 3z" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h3>Playable</h3>
-        <p>Small sparks of joy—there if you look for them.</p>
-      </article>
+      <div class="panel">
+        <h2><span class="chip"></span> Kinetic Palette Sequencer</h2>
+        <div class="sequencer" id="sequencer" role="grid" aria-label="Kinetic palette sequencer"></div>
+      </div>
     </section>
 
     <div class="foot">
-      <small>Designed for daylight clarity.</small>
-      <span id="last-updated">Last updated: 2025-11-02 03:19:37 EST</span>
+      <small>Designed for night clarity.</small>
+      <span id="last-updated">Last updated: 2025-11-02 04:15:31 EST</span>
     </div>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.vibe366');
+      const root = document.currentScript.closest('.vibe367');
+      const sky = root.querySelector('.sky');
+      const halo = root.querySelector('.halo');
+      const seqEl = root.querySelector('#sequencer');
+      const playBtn = root.querySelector('#playBtn');
+      const paletteBtn = root.querySelector('#paletteBtn');
+      const calmBtn = root.querySelector('#calmBtn');
+      const primaryCta = root.querySelector('#primaryCta');
 
-      // Update time
-      const updateTime = () => {
+      // Time
+      const stamp = () => {
         const el = root.querySelector('#last-updated');
-        if(!el) return;
         const now = new Date();
         try{
-          el.textContent = 'Updated: ' + now.toLocaleString(undefined, {
+          el.textContent = now.toLocaleString(undefined, {
             year:'numeric', month:'short', day:'2-digit',
             hour:'2-digit', minute:'2-digit', second:'2-digit',
             hour12:true, timeZoneName:'short'
           });
-        }catch(e){
-          el.textContent = 'Updated: ' + now.toString();
-        }
+        }catch(e){ el.textContent = now.toString(); }
       };
-      updateTime();
+      stamp();
 
-      // Palette shuffle
+      // Palettes
       const palettes = [
-        ['#4f46e5','#22d3ee','#f59e0b'],
-        ['#0ea5e9','#10b981','#f472b6'],
-        ['#8b5cf6','#a3e635','#06b6d4'],
-        ['#fb7185','#60a5fa','#fcd34d'],
-        ['#ef4444','#f59e0b','#22c55e']
+        { a:'#7c3aed', b:'#06b6d4', c:'#f59e0b', bg:'#0b1020', ink:'#eaf1ff' },
+        { a:'#22d3ee', b:'#a78bfa', c:'#34d399', bg:'#0a0f1c', ink:'#f1f6ff' },
+        { a:'#fb7185', b:'#60a5fa', c:'#fcd34d', bg:'#0b0c17', ink:'#f7f9ff' },
+        { a:'#ef4444', b:'#22c55e', c:'#14b8a6', bg:'#0a0b1a', ink:'#f1f4ff' }
       ];
-      function setPalette(arr){
-        root.style.setProperty('--a', arr[0]);
-        root.style.setProperty('--b', arr[1]);
-        root.style.setProperty('--c', arr[2]);
+      let palIdx = (new Date().getDate()) % palettes.length;
+      function applyPalette(p){
+        root.style.setProperty('--a', p.a);
+        root.style.setProperty('--b', p.b);
+        root.style.setProperty('--c', p.c);
+        root.style.setProperty('--bg', p.bg);
+        root.style.setProperty('--ink', p.ink);
       }
-      // Seed palette based on day
-      const seed = (new Date()).getDate() % palettes.length;
-      setPalette(palettes[seed]);
+      applyPalette(palettes[palIdx]);
 
-      // Buttons
-      const stillBtn = root.querySelector('#stillBtn');
-      const paletteBtn = root.querySelector('#paletteBtn');
-      const composeBtn = root.querySelector('#composeBtn');
-      const primaryCta = root.querySelector('#primaryCta');
-
-      // Respect reduced motion
+      // Canvas stars
+      const ctx = sky.getContext('2d', { alpha: true });
+      let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      let W=0, H=0, particles=[], playing=true, calm=false;
+      function resize(){
+        const r = root.getBoundingClientRect();
+        W = Math.max(1, Math.floor(r.width));
+        H = Math.max(1, Math.floor(r.height));
+        sky.width = W * dpr;
+        sky.height = H * dpr;
+        sky.style.width = W + 'px';
+        sky.style.height = H + 'px';
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+        buildParticles();
+      }
+      function rand(min,max){ return Math.random()*(max-min)+min; }
+      function buildParticles(){
+        const base = calm ? 60 : 120;
+        const target = Math.round((W*H)/18000);
+        const count = Math.min(base + target, calm ? 180 : 320);
+        particles = new Array(count).fill(0).map(()=>({
+          x: rand(0,W), y: rand(0,H),
+          vx: rand(-0.06, 0.06) * (calm?0.6:1),
+          vy: rand(-0.04, 0.04) * (calm?0.6:1),
+          r: rand(0.5, 1.6) * (calm?0.9:1.1),
+          hue: Math.random()
+        }));
+      }
+      function draw(){
+        if(!playing) return;
+        ctx.clearRect(0,0,W,H);
+        const a = getComputedStyle(root).getPropertyValue('--a').trim();
+        const b = getComputedStyle(root).getPropertyValue('--b').trim();
+        const c = getComputedStyle(root).getPropertyValue('--c').trim();
+        particles.forEach(p=>{
+          p.x += p.vx; p.y += p.vy;
+          // gentle drift toward center
+          const cx = W*0.5, cy = H*0.38;
+          p.vx += (cx - p.x) * 0.000004 * (calm?0.6:1);
+          p.vy += (cy - p.y) * 0.000004 * (calm?0.6:1);
+          // wrap
+          if(p.x < -10) p.x = W+10;
+          if(p.x > W+10) p.x = -10;
+          if(p.y < -10) p.y = H+10;
+          if(p.y > H+10) p.y = -10;
+          // color blend from palette
+          const pal = [a,b,c];
+          const col = pal[Math.floor(p.hue*pal.length) % pal.length];
+          ctx.beginPath();
+          ctx.fillStyle = col;
+          ctx.globalAlpha = 0.75;
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+          ctx.fill();
+          // tiny tail
+          ctx.globalAlpha = 0.18;
+          ctx.fillRect(p.x - p.vx*18, p.y - p.vy*18, 1.2, 1.2);
+          ctx.globalAlpha = 1;
+        });
+        req = requestAnimationFrame(draw);
+      }
+      let req = null;
       const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(prefersReduced){ root.classList.add('paused'); stillBtn.setAttribute('aria-pressed','true'); stillBtn.textContent = 'Motion off'; }
+      if(prefersReduced){ playing=false; root.dataset.playing='false'; playBtn.textContent='Resume Motion'; }
 
-      stillBtn.addEventListener('click', ()=>{
-        const paused = root.classList.toggle('paused');
-        stillBtn.setAttribute('aria-pressed', String(paused));
-        stillBtn.textContent = paused ? 'Resume motion' : 'Stillness';
-      });
+      function start(){ if(playing) return; playing=true; root.dataset.playing='true'; req = requestAnimationFrame(draw); }
+      function stop(){ playing=false; root.dataset.playing='false'; if(req) cancelAnimationFrame(req); }
 
-      paletteBtn.addEventListener('click', ()=>{
-        let next = Math.floor(Math.random()*palettes.length);
-        // Avoid repeating the same palette
-        const curA = getComputedStyle(root).getPropertyValue('--a').trim();
-        let safety = 0;
-        while(palettes[next][0] === curA && safety < 10){ next = Math.floor(Math.random()*palettes.length); safety++; }
-        setPalette(palettes[next]);
-      });
-
-      function burst(x, y){
-        // Create sparks from palette colors
-        const colors = [getComputedStyle(root).getPropertyValue('--a').trim(),
-                        getComputedStyle(root).getPropertyValue('--b').trim(),
-                        getComputedStyle(root).getPropertyValue('--c').trim()];
-        const count = 14;
-        for(let i=0;i<count;i++){
-          const sp = document.createElement('span');
-          sp.className = 'spark';
-          const angle = (Math.PI*2) * (i / count) + Math.random()*0.6;
-          const radius = 60 + Math.random()*80;
-          sp.style.setProperty('--sx', x + 'px');
-          sp.style.setProperty('--sy', y + 'px');
-          sp.style.setProperty('--dx', Math.cos(angle)*radius + 'px');
-          sp.style.setProperty('--dy', Math.sin(angle)*radius + 'px');
-          sp.style.background = `radial-gradient(circle at 30% 30%, ${colors[i%3]}, ${colors[(i+1)%3]})`;
-          sp.style.left = 0; sp.style.top = 0;
-          root.appendChild(sp);
-          sp.addEventListener('animationend', ()=> sp.remove());
+      // Sequencer
+      const COLS = 16, ROWS = 4;
+      const state = Array.from({length: COLS}, ()=> Array(ROWS).fill(false));
+      const columns = [];
+      function buildSequencer(){
+        seqEl.innerHTML = '';
+        for(let x=0;x<COLS;x++){
+          const col = document.createElement('div');
+          col.className = 'col';
+          col.setAttribute('role','row');
+          const scan = document.createElement('div');
+          scan.className = 'scan';
+          col.appendChild(scan);
+          for(let y=0;y<ROWS;y++){
+            const note = document.createElement('button');
+            note.type = 'button';
+            note.className = 'note';
+            note.setAttribute('role','gridcell');
+            note.setAttribute('aria-pressed', 'false');
+            note.addEventListener('click', ()=>{
+              state[x][y] = !state[x][y];
+              note.setAttribute('aria-pressed', String(state[x][y]));
+              pulse(note);
+            });
+            col.appendChild(note);
+          }
+          seqEl.appendChild(col);
+          columns.push(col);
         }
       }
+      function pulse(el){
+        const r = el.getBoundingClientRect();
+        const s = document.createElement('span');
+        const size = Math.max(r.width, r.height)*2;
+        Object.assign(s.style, {
+          position:'absolute', inset:'-2px', borderRadius:'12px',
+          background: `radial-gradient(${size}px ${size}px at 50% 50%, rgba(255,255,255,0.18), transparent 70%)`,
+          pointerEvents:'none', opacity:'0', transform:'scale(0.6)', transition:'opacity .36s ease, transform .36s ease'
+        });
+        el.appendChild(s);
+        requestAnimationFrame(()=>{
+          s.style.opacity='1'; s.style.transform='scale(1)';
+          setTimeout(()=>{ s.style.opacity='0'; s.addEventListener('transitionend', ()=> s.remove(), {once:true}); }, 160);
+        });
+      }
+      let step = 0, stepTimer = null;
+      function advance(){
+        columns.forEach((c,i)=> c.classList.toggle('active', i===step));
+        // amplify particles lightly on active column
+        if(!calm){
+          for(let y=0;y<ROWS;y++){
+            if(state[step][y]){
+              for(let i=0;i<4;i++){
+                const p = particles[Math.floor(Math.random()*particles.length)];
+                p.vx += (Math.random()-0.5)*0.5;
+                p.vy += (Math.random()-0.5)*0.5;
+              }
+            }
+          }
+        }
+        step = (step+1) % COLS;
+      }
+      function playSeq(){ if(stepTimer) return; stepTimer = setInterval(advance, calm?320:220); }
+      function pauseSeq(){ clearInterval(stepTimer); stepTimer = null; }
 
-      composeBtn.addEventListener('click', (e)=>{
-        const r = root.getBoundingClientRect();
-        burst(e.clientX - r.left, e.clientY - r.top);
+      // Controls
+      playBtn.addEventListener('click', ()=>{
+        if(playing){ stop(); playBtn.textContent = 'Resume Motion'; pauseSeq(); }
+        else { start(); playBtn.textContent = 'Pause Motion'; playSeq(); }
+      });
+      paletteBtn.addEventListener('click', ()=>{
+        palIdx = (palIdx + 1) % palettes.length;
+        applyPalette(palettes[palIdx]);
+        stamp();
+      });
+      calmBtn.addEventListener('click', ()=>{
+        calm = !calm;
+        root.dataset.calm = String(calm);
+        calmBtn.setAttribute('aria-pressed', String(calm));
+        calmBtn.textContent = calm ? 'Calm Mode On' : 'Calm Mode';
+        buildParticles();
+        if(stepTimer){ pauseSeq(); playSeq(); }
       });
 
-      primaryCta.addEventListener('click', ()=>{
-        primaryCta.style.transform = 'translateY(-2px) scale(1.02)';
-        setTimeout(()=> primaryCta.style.transform = '', 140);
-      });
-
-      // Card hover halo follows pointer
-      root.querySelectorAll('.card').forEach(card=>{
-        card.addEventListener('pointermove', (e)=>{
-          const r = card.getBoundingClientRect();
-          card.style.setProperty('--cx', (e.clientX - r.left) + 'px');
-          card.style.setProperty('--cy', (e.clientY - r.top) + 'px');
-        }, {passive:true});
-      });
-
-      // Pointer lens + gentle parallax of orbit
-      const halo = root.querySelector('.halo');
-      const orbit = root.querySelector('.orbit');
-      function setXY(e){
+      // Pointer halo + magnetic buttons
+      function setHalo(e){
         const r = root.getBoundingClientRect();
         const x = e.clientX - r.left;
         const y = e.clientY - r.top;
-        halo.style.setProperty('--hx', x + 'px');
-        halo.style.setProperty('--hy', y + 'px');
-        // Parallax
-        const px = (x / r.width - 0.5);
-        const py = (y / r.height - 0.5);
-        if(!root.classList.contains('paused')){
-          orbit.style.transform = `translateY(calc(-50% + ${py*10}px)) translateX(${px*10}px)`;
-        }
+        halo.style.setProperty('--x', x + 'px');
+        halo.style.setProperty('--y', y + 'px');
       }
-      let raf = null;
-      root.addEventListener('pointerenter', ()=> root.dataset.inside = 'true');
-      root.addEventListener('pointerleave', ()=>{
-        root.dataset.inside = 'false';
-        orbit.style.transform = 'translateY(-50%)';
-      });
+      let raf=null;
+      root.addEventListener('pointerenter', ()=> root.dataset.inside='true');
+      root.addEventListener('pointerleave', ()=> root.dataset.inside='false');
       root.addEventListener('pointermove', (e)=>{
         if(raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(()=> setXY(e));
+        raf = requestAnimationFrame(()=> setHalo(e));
       }, {passive:true});
+
+      function magnetize(btn){
+        btn.addEventListener('pointermove', (e)=>{
+          const r = btn.getBoundingClientRect();
+          const dx = (e.clientX - (r.left + r.width/2)) / r.width;
+          const dy = (e.clientY - (r.top + r.height/2)) / r.height;
+          btn.style.transform = `translate(${dx*4}px, ${dy*4}px)`;
+        });
+        btn.addEventListener('pointerleave', ()=> { btn.style.transform=''; });
+      }
+      root.querySelectorAll('.btn').forEach(magnetize);
+      primaryCta.addEventListener('click', ()=>{
+        primaryCta.style.transform = 'translateY(-2px) scale(1.02)';
+        setTimeout(()=> primaryCta.style.transform = '', 160);
+      });
+
+      // Init
+      resize();
+      buildSequencer();
+      if(!prefersReduced){ start(); playSeq(); } else { stop(); pauseSeq(); playBtn.textContent='Resume Motion'; }
+      window.addEventListener('resize', resize, {passive:true});
     })();
   </script>
 </div>
