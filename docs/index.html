@@ -73,217 +73,232 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="aurora-garden" data-theme="dusk" style="--mx:50%;--my:40%;">
+<section class="orbital" data-mode="night" style="--x:50%;--y:50%;">
   <style>
-    .aurora-garden {
-      --ink: #eaf2ff;
-      --muted: rgba(234,242,255,.78);
-      --accent1: #87d1ff;
-      --accent2: #a58bff;
-      --accent3: #ff9fd6;
-      --bg1: #0a0f1a;
-      --bg2: #0c1424;
+    .orbital{
+      --ink: #e9f1ff;
+      --muted: rgba(233,241,255,.75);
+      --edge: rgba(255,255,255,.14);
+      --glow1: #79c7ff;
+      --glow2: #a58bff;
+      --glow3: #ff9fd6;
+      --bg1: #070a14;
+      --bg2: #0a1230;
       position: relative;
       display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      gap: clamp(18px, 3.6vw, 34px);
-      align-items: center;
-      border-radius: 32px;
-      padding: clamp(20px, 4.5vw, 42px);
+      gap: clamp(18px, 3.6vw, 40px);
+      padding: clamp(20px, 5vw, 46px);
+      border-radius: 34px;
       color: var(--ink);
       background:
-        radial-gradient(700px 500px at var(--mx) var(--my), rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(130deg, var(--bg1) 10%, var(--bg2) 60%, #0a1220 100%);
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 30px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05);
-      overflow: hidden;
+        radial-gradient(900px 600px at var(--x) var(--y), rgba(255,255,255,.08), transparent 60%),
+        linear-gradient(130deg, var(--bg1), var(--bg2));
+      border: 1px solid var(--edge);
+      box-shadow: 0 34px 96px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.05);
       font-family: ui-sans-serif, -apple-system, Segoe UI, Inter, Roboto, "Helvetica Neue", Arial;
       isolation: isolate;
-      transform-style: preserve-3d;
+      overflow: hidden;
     }
-    @media (max-width: 880px){ .aurora-garden { grid-template-columns: 1fr; } }
-
-    /* Light theme */
-    .aurora-garden[data-theme="dawn"]{
-      --ink: #121826;
-      --muted: rgba(18,24,38,.72);
-      --accent1: #ff6d7a;
-      --accent2: #ffb44b;
-      --accent3: #2dd4a7;
+    .orbital[data-mode="day"]{
+      --ink: #0f1728;
+      --muted: rgba(15,23,40,.75);
+      --edge: rgba(0,0,0,.14);
+      --glow1: #ff7a6e;
+      --glow2: #ffb84b;
+      --glow3: #2dd4a7;
       --bg1: #fff7ef;
-      --bg2: #f4f8ff;
+      --bg2: #eaf1ff;
       background:
-        radial-gradient(800px 560px at var(--mx) var(--my), rgba(0,0,0,.07), transparent 60%),
-        linear-gradient(130deg, var(--bg1) 10%, var(--bg2) 70%, #fffdf8 100%);
-      border-color: rgba(0,0,0,.12);
-      box-shadow: 0 24px 70px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.9);
+        radial-gradient(1000px 680px at var(--x) var(--y), rgba(0,0,0,.07), transparent 60%),
+        linear-gradient(130deg, var(--bg1), var(--bg2));
+      box-shadow: 0 26px 74px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.9);
     }
 
-    /* Ambient ribbons */
-    .aurora-garden::before,
-    .aurora-garden::after{
+    .orbital::before,
+    .orbital::after{
       content:"";
-      position:absolute;
-      inset:-40%;
+      position:absolute; inset:-35%;
       pointer-events:none;
-      mix-blend-mode: screen;
     }
-    .aurora-garden::before{
+    .orbital::before{
       background:
-        conic-gradient(from 120deg at 60% 40%, rgba(135,209,255,.28), rgba(165,139,255,.28), rgba(255,159,214,.24), transparent 75%);
-      filter: blur(42px) saturate(1.15);
-      animation: drift 26s linear infinite;
+        conic-gradient(from 120deg at 55% 45%, rgba(121,199,255,.25), rgba(165,139,255,.25), rgba(255,159,214,.22), transparent 80%);
+      filter: blur(44px) saturate(1.1);
+      mix-blend-mode: screen;
+      animation: swirl 26s linear infinite;
       opacity:.55;
     }
-    .aurora-garden[data-theme="dawn"]::before{
-      mix-blend-mode: multiply;
-      opacity:.35; filter: blur(30px) saturate(1.2);
+    .orbital[data-mode="day"]::before{
+      mix-blend-mode: multiply; opacity:.35; filter: blur(30px) saturate(1.15);
     }
-    .aurora-garden::after{
+    .orbital::after{
       background:
-        radial-gradient(600px 420px at var(--mx) var(--my), rgba(255,255,255,.13), transparent 60%);
-      transition: background .3s ease;
+        radial-gradient(700px 520px at var(--x) var(--y), rgba(255,255,255,.12), transparent 60%);
+      transition: background .25s ease;
     }
-    @keyframes drift{ to { transform: rotate(1turn); } }
+    @keyframes swirl{ to { transform: rotate(1turn); } }
 
-    /* Left column: copy */
-    .garden-copy { position: relative; z-index: 2; display: grid; gap: 14px; align-content: start; }
-    .badge {
+    .shell{
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1.1fr 1fr; align-items: center;
+      gap: clamp(18px, 4vw, 40px);
+    }
+    @media (max-width: 880px){ .shell{ grid-template-columns: 1fr; } }
+
+    .copy{ display:grid; gap: 14px; align-content:start; }
+    .chip{
       display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 12px; border-radius: 999px;
       font-size: 12px; letter-spacing:.26em; text-transform: uppercase;
       color: var(--muted);
-      padding: 8px 12px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.16);
+      border: 1px solid var(--edge);
       background: rgba(255,255,255,.06);
       backdrop-filter: blur(6px);
     }
-    .aurora-garden[data-theme="dawn"] .badge{
-      border-color: rgba(0,0,0,.12);
-      background: rgba(0,0,0,.05);
-      backdrop-filter: blur(4px);
+    .orbital[data-mode="day"] .chip{
+      background: rgba(0,0,0,.06); backdrop-filter: blur(4px);
     }
-    .title {
+
+    .hero{
       margin: 2px 0 4px;
-      font-weight: 900; letter-spacing: -0.02em; line-height: .96;
-      font-size: clamp(36px, 6.6vw, 78px);
-      background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
-      -webkit-background-clip:text; background-clip:text; color: transparent;
+      font-weight: 900; letter-spacing: -0.02em; line-height: .95;
+      font-size: clamp(38px, 6.8vw, 84px);
+      background: linear-gradient(90deg, var(--glow1), var(--glow2), var(--glow3));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
     }
-    .lead { margin: 0; color: var(--muted); font-size: clamp(14px, 2.4vw, 18px); max-width: 50ch; }
+    .sub{
+      margin: 0; color: var(--muted);
+      font-size: clamp(14px, 2.4vw, 18px);
+      max-width: 54ch;
+    }
 
-    .controls { display:flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-    .btn {
-      appearance: none; cursor: pointer;
-      border-radius: 14px; padding: 12px 14px; font-weight: 800; letter-spacing:.2px;
+    .controls{ display:flex; flex-wrap:wrap; gap: 10px; margin-top: 10px; }
+    .pill{
+      appearance: none; cursor: pointer; user-select:none;
+      border-radius: 16px; padding: 12px 16px; font-weight: 800; letter-spacing:.2px;
       border: 1px solid rgba(255,255,255,.22);
-      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.65));
+      background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.7));
       color: #0c1220;
-      box-shadow: 0 12px 26px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.6);
-      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+      box-shadow: 0 10px 22px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.65);
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
     }
-    .btn:hover{ transform: translateY(-1px); box-shadow: 0 18px 34px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.75); }
-    .btn:active{ transform: translateY(0); }
-    .btn.ghost{
+    .pill:hover{ transform: translateY(-1px); box-shadow: 0 18px 36px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.75); }
+    .pill:active{ transform: translateY(0); }
+    .pill.ghost{
       background: rgba(255,255,255,.08); color: var(--ink);
-      border-color: rgba(255,255,255,.2); box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22); box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
     }
-    .aurora-garden[data-theme="dawn"] .btn.ghost{
-      background: rgba(0,0,0,.06); color: #121826;
-      border-color: rgba(0,0,0,.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+    .orbital[data-mode="day"] .pill.ghost{
+      background: rgba(0,0,0,.06); color: #0f1728; border-color: rgba(0,0,0,.14);
     }
-    .btn.outline{ background: transparent; color: var(--ink); border-color: rgba(255,255,255,.28); box-shadow:none; }
-    .aurora-garden[data-theme="dawn"] .btn.outline{ border-color: rgba(0,0,0,.22); }
+    .pill.outline{ background: transparent; color: var(--ink); border-color: rgba(255,255,255,.28); box-shadow:none; }
+    .orbital[data-mode="day"] .pill.outline{ border-color: rgba(0,0,0,.22); }
+    .pill.minimal{ background: linear-gradient(180deg, rgba(255,255,255,.2), rgba(255,255,255,.08)); color: var(--ink); }
 
-    .meta { display:flex; align-items:center; gap:10px; margin-top: 8px; color: var(--muted); font-size: 12px; }
+    .meta{
+      display:flex; flex-wrap: wrap; gap: 12px; align-items:center;
+      margin-top: 8px; color: var(--muted); font-size: 12px;
+    }
+    #clock{ font-variant-numeric: tabular-nums; opacity:.9; }
 
-    /* Right column: Stage */
-    .stage {
-      position: relative; border-radius: 22px; min-height: clamp(280px, 45vw, 560px);
-      padding: clamp(12px, 2vw, 18px);
+    .stage{
+      position: relative; border-radius: 24px;
+      min-height: clamp(300px, 48vw, 600px);
+      padding: clamp(8px, 1.8vw, 14px);
       background:
         linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
-        repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 1px, transparent 1px 40px),
-        repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 1px, transparent 1px 40px);
+        repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 1px, transparent 1px 42px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 1px, transparent 1px 42px);
       border: 1px solid rgba(255,255,255,.14);
-      box-shadow: 0 16px 40px rgba(0,0,0,.35);
-      overflow:hidden; transform-style: preserve-3d; perspective: 900px;
+      box-shadow: 0 18px 44px rgba(0,0,0,.36);
+      overflow: hidden; transform-style: preserve-3d; perspective: 900px;
     }
-    .aurora-garden[data-theme="dawn"] .stage{
+    .orbital[data-mode="day"] .stage{
       background:
-        linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.6)),
-        repeating-linear-gradient(90deg, rgba(0,0,0,.06) 0 1px, transparent 1px 40px),
-        repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 1px, transparent 1px 40px);
+        linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.65)),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.06) 0 1px, transparent 1px 42px),
+        repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 1px, transparent 1px 42px);
       border-color: rgba(0,0,0,.1);
-      box-shadow: 0 12px 26px rgba(0,0,0,.18);
+      box-shadow: 0 12px 28px rgba(0,0,0,.2);
     }
 
-    canvas#gardenCanvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+    canvas#sky{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 
-    /* Halo ring */
-    .ring {
-      position:absolute; inset: 6% 6%;
+    .halo{
+      position:absolute; inset: 7% 7%;
       border-radius: 50%;
       border: 1px dashed rgba(255,255,255,.18);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
-      pointer-events: none;
-      animation: slowspin 18s linear infinite;
+      pointer-events:none;
+      animation: slowspin 22s linear infinite;
     }
-    .aurora-garden[data-theme="dawn"] .ring{ border-color: rgba(0,0,0,.16); box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
+    .orbital[data-mode="day"] .halo{ border-color: rgba(0,0,0,.16); box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
     @keyframes slowspin{ to { transform: rotate(360deg); } }
 
-    /* Prefers reduced motion */
     @media (prefers-reduced-motion: reduce){
-      .aurora-garden::before, .ring{ animation: none !important; }
+      .orbital::before, .halo{ animation: none !important; }
     }
   </style>
 
-  <div class="garden-copy">
-    <span class="badge">Edition 434 • Time Garden</span>
-    <h1 class="title">Grow Quietly</h1>
-    <p class="lead">A living poster that blooms with your pointer. Dawn to dusk, petals find their rhythm in color and light.</p>
-
-    <div class="controls">
-      <button class="btn" id="themeBtn" aria-pressed="false">Switch to Dawn</button>
-      <button class="btn ghost" id="flowBtn" aria-pressed="true">Pause Flow</button>
-      <button class="btn outline" id="bloomBtn">Bloom</button>
+  <div class="shell">
+    <div class="copy">
+      <div class="chip">Edition 435 • Lumen Orrery</div>
+      <h1 class="hero">Time, in Orbits</h1>
+      <p class="sub">A pocket sky for your cursor. Planets glide, shadows bend, and trails remember where you’ve been.</p>
+      <div class="controls">
+        <button class="pill" id="modeBtn" aria-pressed="false">Switch to Day</button>
+        <button class="pill ghost" id="motionBtn" aria-pressed="true">Pause</button>
+        <button class="pill outline" id="pulseBtn">Pulse</button>
+        <button class="pill minimal" id="randomBtn">Randomize</button>
+      </div>
+      <div class="meta">
+        <span id="clock" aria-live="polite" aria-label="Current time"></span>
+        <span id="last-updated">Last updated: 2025-11-05 06:16:09 EST</span>
+      </div>
     </div>
 
-    <div class="meta">
-      <span id="last-updated">Last updated: 2025-11-05 05:20:26 EST</span>
+    <div class="stage" id="stage" aria-label="Generative orbital field">
+      <canvas id="sky"></canvas>
+      <div class="halo" aria-hidden="true"></div>
     </div>
-  </div>
-
-  <div class="stage" id="stage" aria-label="Generative bloom field">
-    <canvas id="gardenCanvas"></canvas>
-    <div class="ring" aria-hidden="true"></div>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.aurora-garden');
+      const root = document.currentScript.closest('.orbital');
       const stage = root.querySelector('#stage');
-      const canvas = root.querySelector('#gardenCanvas');
+      const canvas = root.querySelector('#sky');
       const ctx = canvas.getContext('2d', { alpha: true });
-      const btnTheme = root.querySelector('#themeBtn');
-      const btnFlow = root.querySelector('#flowBtn');
-      const btnBloom = root.querySelector('#bloomBtn');
+      const modeBtn = root.querySelector('#modeBtn');
+      const motionBtn = root.querySelector('#motionBtn');
+      const pulseBtn = root.querySelector('#pulseBtn');
+      const randomBtn = root.querySelector('#randomBtn');
+      const clockEl = root.querySelector('#clock');
       const updated = root.querySelector('#last-updated');
 
-      // Timestamp
+      // Last updated + clock
       try {
         const d = new Date();
-        updated.textContent = 'Last updated: ' + d.toLocaleString([], { weekday:'short', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+        updated.textContent = 'Updated ' + d.toLocaleString([], { weekday:'short', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' });
       } catch(e){}
+      function tickClock(){
+        try{
+          const d = new Date();
+          clockEl.textContent = d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' }) + ' • ' + d.toLocaleDateString([], { month:'short', day:'2-digit' });
+        }catch(e){}
+      }
+      tickClock();
+      const clockTimer = setInterval(tickClock, 1000);
 
-      // Spotlight tracking
-      function updateSpot(e){
+      // Pointer spotlight
+      function updateLight(e){
         const r = root.getBoundingClientRect();
         const x = ((e.clientX - r.left) / r.width) * 100;
         const y = ((e.clientY - r.top) / r.height) * 100;
-        root.style.setProperty('--mx', x + '%');
-        root.style.setProperty('--my', y + '%');
+        root.style.setProperty('--x', x + '%');
+        root.style.setProperty('--y', y + '%');
       }
-      root.addEventListener('pointermove', updateSpot, {passive:true});
+      root.addEventListener('pointermove', updateLight, {passive:true});
 
       // Tilt stage
       let rect;
@@ -294,7 +309,7 @@
         if(!rect) return;
         const nx = (e.clientX - rect.left)/rect.width - 0.5;
         const ny = (e.clientY - rect.top)/rect.height - 0.5;
-        const rx = (-ny)*7, ry = nx*9;
+        const rx = (-ny)*8, ry = nx*10;
         stage.style.transform = 'rotateX('+rx+'deg) rotateY('+ry+'deg)';
       }, {passive:true});
       stage.addEventListener('pointerleave', ()=>{ stage.style.transform = 'rotateX(0) rotateY(0)'; });
@@ -310,246 +325,260 @@
       window.addEventListener('resize', sizeCanvas, {passive:true});
       sizeCanvas();
 
-      // Garden system
-      const mouse = { x: 0, y: 0, active: false };
-      stage.addEventListener('pointermove', (e)=>{
-        const r = canvas.getBoundingClientRect();
-        const ratio = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-        mouse.x = (e.clientX - r.left) * ratio;
-        mouse.y = (e.clientY - r.top) * ratio;
-        mouse.active = true;
-      }, {passive:true});
-      stage.addEventListener('pointerleave', ()=>{ mouse.active = false; });
+      // Orrery system
+      const state = {
+        t: 0,
+        running: true,
+        seed: Math.random() * 1000,
+        comet: null
+      };
 
-      let raf, t = 0, flowing = true;
-      const blooms = [];
+      function isDay(){ return root.getAttribute('data-mode') === 'day'; }
 
-      function themeIsDawn(){ return root.getAttribute('data-theme') === 'dawn'; }
-
-      function palette(i){
-        if (themeIsDawn()){
-          // warm dawns
+      function palette(){
+        if (isDay()){
           return [
-            {h: 10, s: 92, l: 60},
-            {h: 30, s: 90, l: 58},
-            {h: 145, s: 64, l: 48},
-            {h: 8, s: 82, l: 62}
-          ][i % 4];
+            {h: 8, s: 92, l: 58},
+            {h: 38, s: 92, l: 58},
+            {h: 155, s: 64, l: 46},
+            {h: 210, s: 72, l: 50}
+          ];
         } else {
-          // cool dusks
           return [
             {h: 205, s: 90, l: 64},
             {h: 255, s: 86, l: 66},
             {h: 315, s: 88, l: 70},
             {h: 185, s: 82, l: 58}
-          ][i % 4];
+          ];
         }
       }
 
-      function seedBloom(cx, cy, scale=1){
-        const petals = Math.floor(5 + Math.random()*5);
-        const hueShift = Math.floor(Math.random()*360);
-        blooms.push({
-          x: cx, y: cy,
-          baseR: 14*scale + Math.random()*10*scale,
-          petals,
+      const pointer = { x: 0, y: 0, active: false };
+      stage.addEventListener('pointermove', (e)=>{
+        const r = canvas.getBoundingClientRect();
+        const ratio = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+        pointer.x = (e.clientX - r.left) * ratio;
+        pointer.y = (e.clientY - r.top) * ratio;
+        pointer.active = true;
+      }, {passive:true});
+      stage.addEventListener('pointerleave', ()=>{ pointer.active = false; });
+
+      // Build orbits
+      const bodies = [];
+      function resetOrbits(){
+        bodies.length = 0;
+        const w = canvas.width, h = canvas.height;
+        const c = Math.min(w, h);
+        const count = 9;
+        for (let i=0;i<count;i++){
+          bodies.push({
+            a: c*(0.08 + i*0.06) * (0.9 + Math.random()*0.2), // semi-major
+            b: c*(0.06 + i*0.05) * (0.9 + Math.random()*0.2), // semi-minor
+            tilt: (Math.random()*Math.PI*2),
+            speed: 0.003 + i*0.0009 + Math.random()*0.0006,
+            angle: Math.random() * Math.PI*2,
+            r: 2 + i*0.7 + Math.random()*1.8,
+            hueIdx: i % 4
+          });
+        }
+      }
+      resetOrbits();
+
+      // Comet
+      function launchComet(){
+        const w = canvas.width, h = canvas.height;
+        state.comet = {
+          x: Math.random() > 0.5 ? -50 : w+50,
+          y: Math.random()*h*0.8 + h*0.1,
+          vx: (Math.random()>0.5?1:-1)*(1.5 + Math.random()*2.2),
+          vy: (-0.6 + Math.random()*1.2),
           life: 0,
-          maxLife: 1200 + Math.random()*1200,
-          spin: (Math.random() > 0.5 ? 1 : -1) * (0.002 + Math.random()*0.006),
-          sway: 0.6 + Math.random()*1.6,
-          hueShift
-        });
+          max: 600 + Math.random()*600
+        };
       }
 
-      // Seed initial blooms
-      function seedField(){
-        blooms.length = 0;
-        const cw = canvas.width, ch = canvas.height;
-        const n = 22;
-        for (let i=0;i<n;i++){
-          const a = (i/n) * Math.PI * 2;
-          const r = Math.min(cw, ch)*0.28 + Math.random()*Math.min(cw, ch)*0.12;
-          const x = cw/2 + Math.cos(a) * r * 0.7;
-          const y = ch/2 + Math.sin(a) * r * 0.5;
-          seedBloom(x, y, 0.8 + Math.random()*0.8);
-        }
-        // center
-        seedBloom(cw/2, ch/2, 1.4);
-      }
-      seedField();
-
+      // Drawing
+      let raf;
       function draw(staticOnly){
         if(!ctx) return;
         const w = canvas.width, h = canvas.height;
-        // soft fade wash
+
+        // fade trails
         ctx.globalCompositeOperation = 'source-over';
-        ctx.globalAlpha = themeIsDawn() ? 0.18 : 0.14;
-        ctx.fillStyle = themeIsDawn() ? 'rgba(255,255,255,1)' : 'rgba(0,0,0,1)';
+        ctx.globalAlpha = isDay() ? 0.18 : 0.12;
+        ctx.fillStyle = isDay() ? 'rgba(255,255,255,1)' : 'rgba(0,0,0,1)';
         ctx.fillRect(0,0,w,h);
 
-        // ambient glow
-        const grad = ctx.createRadialGradient(w/2, h/2, Math.min(w,h)*0.05, w/2, h/2, Math.min(w,h)*0.6);
-        if (themeIsDawn()){
-          grad.addColorStop(0, 'rgba(255, 230, 200, 0.35)');
-          grad.addColorStop(1, 'rgba(255,255,255,0)');
-        } else {
-          grad.addColorStop(0, 'rgba(120, 180, 255, 0.22)');
-          grad.addColorStop(1, 'rgba(0,0,0,0)');
-        }
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = grad;
-        ctx.fillRect(0,0,w,h);
-
-        // stars (dusk)
-        if (!themeIsDawn()){
+        // starfield for night
+        if(!isDay()){
           ctx.save();
-          ctx.globalAlpha = 0.5;
-          ctx.fillStyle = 'rgba(255,255,255,0.5)';
-          for (let i=0;i<28;i++){
-            const sx = (i*947 % w), sy = (i*613 % h);
-            const r = ((i*37)%3)+1;
+          ctx.globalAlpha = 0.6;
+          ctx.fillStyle = 'rgba(255,255,255,0.6)';
+          for (let i=0;i<36;i++){
+            const sx = (i*997 % w), sy = (i*631 % h);
+            const r = ((i*37)%3)+0.8;
             ctx.beginPath(); ctx.arc(sx, sy, r, 0, Math.PI*2); ctx.fill();
           }
           ctx.restore();
         }
 
-        t += 1;
+        const pal = palette();
+        const cx = w/2, cy = h/2;
+        state.t += 1;
 
-        // draw blooms
-        for (let i=0;i<blooms.length;i++){
-          const b = blooms[i];
-          const life01 = Math.min(1, b.life / 600);
-          const R = b.baseR * (0.5 + life01*0.9) * (1 + 0.06*Math.sin(t*0.05 + i));
-          const pal = palette(i);
-          const hue = (pal.h + b.hueShift) % 360;
+        // central sun/moon
+        ctx.save();
+        const coreR = Math.max(6, Math.min(w,h)*0.03);
+        const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR*6);
+        if (isDay()){
+          coreGrad.addColorStop(0, 'rgba(255,230,180,0.85)');
+          coreGrad.addColorStop(1, 'rgba(255,255,255,0)');
+        } else {
+          coreGrad.addColorStop(0, 'rgba(120,180,255,0.35)');
+          coreGrad.addColorStop(1, 'rgba(0,0,0,0)');
+        }
+        ctx.fillStyle = coreGrad; ctx.globalAlpha = 1; ctx.fillRect(0,0,w,h);
+        ctx.beginPath();
+        ctx.fillStyle = isDay() ? 'rgba(255,210,120,0.95)' : 'rgba(180,210,255,0.95)';
+        ctx.shadowBlur = isDay()? 16: 18;
+        ctx.shadowColor = isDay()? 'rgba(255,190,130,0.8)':'rgba(140,190,255,0.8)';
+        ctx.arc(cx, cy, coreR, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
 
-          // pointer attraction
-          if (mouse.active){
-            const dx = mouse.x - b.x, dy = mouse.y - b.y;
+        // orbits + planets
+        for (let i=0;i<bodies.length;i++){
+          const b = bodies[i];
+          b.angle += state.running ? b.speed : 0;
+          const s = Math.sin(b.tilt), c = Math.cos(b.tilt);
+          // position on ellipse rotated by tilt
+          let px = b.a * Math.cos(b.angle);
+          let py = b.b * Math.sin(b.angle);
+          let x = cx + px * c - py * s;
+          let y = cy + px * s + py * c;
+
+          // pointer lens
+          if(pointer.active){
+            const dx = x - pointer.x, dy = y - pointer.y;
             const dist = Math.hypot(dx, dy) + 0.001;
-            const pull = Math.min(0.08, 140 / (dist*dist)) * (themeIsDawn() ? 0.8 : 1);
-            b.x += dx * pull;
-            b.y += dy * pull;
+            const lens = Math.min(18, 1600/(dist)); // pull strength
+            x += dx/dist * lens * (isDay()?0.5:0.8);
+            y += dy/dist * lens * (isDay()?0.5:0.8);
           } else {
-            // gentle drift
-            b.x += Math.sin((t+i)*0.002 + i) * 0.2;
-            b.y += Math.cos((t-i)*0.002 - i) * 0.15;
+            // micro drift
+            x += Math.sin((state.t+i)*0.01) * 0.2;
+            y += Math.cos((state.t-i)*0.011) * 0.2;
           }
 
-          // stem
+          // orbit path
           ctx.save();
-          ctx.globalAlpha = themeIsDawn() ? 0.25 : 0.18;
-          ctx.strokeStyle = themeIsDawn() ? 'rgba(20, 120, 80, 0.5)' : 'rgba(160, 220, 255, 0.35)';
-          ctx.lineWidth = 1.2 * (window.devicePixelRatio||1);
+          ctx.globalAlpha = isDay()? 0.18 : 0.22;
+          ctx.strokeStyle = isDay()? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.35)';
+          ctx.lineWidth = 1 * (window.devicePixelRatio||1);
+          ctx.setLineDash([6,6]);
           ctx.beginPath();
-          const sx = b.x + Math.sin((t+i)*0.01)*12;
-          const sy = b.y + Math.cos((t+i)*0.011)*16;
-          ctx.moveTo(w/2, h);
-          ctx.bezierCurveTo(w/2, h*0.72, sx, sy + 60, b.x, b.y);
+          // draw ellipse outline
+          ctx.ellipse(cx, cy, b.a, b.b, b.tilt, 0, Math.PI*2);
           ctx.stroke();
+          ctx.setLineDash([]);
           ctx.restore();
 
-          // petals
-          const petals = b.petals;
-          for (let p=0;p<petals;p++){
-            const ang = (p/petals) * Math.PI*2 + t*b.spin;
-            const puls = 1 + Math.sin(t*0.03 + p+i) * 0.08;
-            const pr = R * puls;
-            ctx.save();
-            ctx.translate(b.x, b.y);
-            ctx.rotate(ang);
-            ctx.scale(1, 0.66 + 0.2*Math.sin(t*0.02 + p));
-            const grd = ctx.createLinearGradient(0,0, pr, pr);
-            const l1 = Math.max(38, pal.l - 12);
-            const l2 = Math.min(80, pal.l + 12);
-            grd.addColorStop(0, 'hsla(' + hue + ',' + pal.s + '%,' + l2 + '%,0.85)');
-            grd.addColorStop(1, 'hsla(' + ((hue+25)%360) + ',' + Math.min(95, pal.s+10) + '%,' + l1 + '%,0.9)');
-            ctx.fillStyle = grd;
-            ctx.shadowBlur = 16;
-            ctx.shadowColor = 'hsla(' + hue + ',90%,' + (pal.l+10) + '%,0.5)';
-            ctx.beginPath();
-            ctx.moveTo(0,0);
-            const k = pr;
-            ctx.quadraticCurveTo(pr*0.35, -k*0.6, pr, 0);
-            ctx.quadraticCurveTo(pr*0.35, k*0.6, 0, 0);
-            ctx.closePath();
-            ctx.fill();
-            ctx.restore();
-          }
-
-          // core
+          // planet
+          const hue = pal[b.hueIdx];
+          const r = Math.max(1.2, b.r * (1 + 0.05*Math.sin(state.t*0.03 + i)));
           ctx.save();
-          ctx.globalAlpha = 0.9;
-          ctx.beginPath();
-          ctx.fillStyle = 'hsla(' + hue + ',' + Math.min(100, pal.s+10) + '%,' + Math.min(80, pal.l+12) + '%, 0.95)';
-          ctx.shadowBlur = 10;
-          ctx.shadowColor = 'hsla(' + hue + ',100%,70%,0.65)';
-          ctx.arc(b.x, b.y, Math.max(1.6, R*0.16), 0, Math.PI*2);
-          ctx.fill();
-          ctx.restore();
+          ctx.globalAlpha = 1;
+          ctx.shadowBlur = 14;
+          ctx.shadowColor = 'hsla('+hue.h+','+hue.s+'%,'+(hue.l+10)+'%,0.7)';
+          const grd = ctx.createRadialGradient(x, y, 0, x, y, r*4);
+          grd.addColorStop(0, 'hsla('+hue.h+','+hue.s+'%,'+Math.min(90,hue.l+20)+'%,0.95)');
+          grd.addColorStop(1, 'hsla('+((hue.h+25)%360)+','+Math.min(98,hue.s+8)+'%,'+Math.max(30,hue.l-18)+'%,0.0)');
+          ctx.fillStyle = grd;
+          ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.fill();
 
-          // life advance
-          if (flowing) b.life += 1;
-          if (b.life > b.maxLife){
-            // fade out and respawn softly
-            blooms.splice(i,1);
-            i--;
-            const nx = w/2 + (Math.random()-0.5) * w*0.6;
-            const ny = h/2 + (Math.random()-0.5) * h*0.5;
-            seedBloom(nx, ny, 0.8 + Math.random()*1.2);
-          }
+          // tiny ring accent
+          ctx.globalAlpha = 0.6;
+          ctx.strokeStyle = 'hsla('+hue.h+','+Math.min(95,hue.s+5)+'%,'+Math.min(85,hue.l+8)+'%,0.8)';
+          ctx.lineWidth = 0.8*(window.devicePixelRatio||1);
+          ctx.beginPath(); ctx.arc(x, y, r*1.9, 0, Math.PI*2); ctx.stroke();
+          ctx.restore();
         }
 
-        if (!staticOnly && flowing) raf = requestAnimationFrame(draw);
+        // comet
+        if (state.comet){
+          const c = state.comet;
+          c.x += c.vx; c.y += c.vy; c.life++;
+          ctx.save();
+          const tail = 80;
+          const angle = Math.atan2(c.vy, c.vx);
+          const tx = Math.cos(angle), ty = Math.sin(angle);
+          for (let i=0;i<tail;i++){
+            const alpha = (1 - i/tail) * 0.4;
+            ctx.globalAlpha = alpha;
+            const lx = c.x - tx*i*3, ly = c.y - ty*i*3;
+            ctx.fillStyle = isDay()? 'rgba(255,180,120,0.9)' : 'rgba(160,210,255,0.9)';
+            ctx.beginPath(); ctx.arc(lx, ly, Math.max(0.5, 2 - i*0.02), 0, Math.PI*2); ctx.fill();
+          }
+          ctx.restore();
+          if (c.life > c.max || c.x < -120 || c.x > canvas.width+120) state.comet = null;
+        }
+
+        if (!staticOnly && state.running) raf = requestAnimationFrame(draw);
       }
 
       // Controls
-      btnTheme.addEventListener('click', ()=>{
-        const dawn = root.getAttribute('data-theme') === 'dawn';
-        if (dawn){
-          root.setAttribute('data-theme', 'dusk');
-          btnTheme.textContent = 'Switch to Dawn';
-          btnTheme.setAttribute('aria-pressed', 'false');
+      modeBtn.addEventListener('click', ()=>{
+        const day = isDay();
+        if (day){
+          root.setAttribute('data-mode', 'night');
+          modeBtn.textContent = 'Switch to Day';
+          modeBtn.setAttribute('aria-pressed', 'false');
         } else {
-          root.setAttribute('data-theme', 'dawn');
-          btnTheme.textContent = 'Switch to Dusk';
-          btnTheme.setAttribute('aria-pressed', 'true');
+          root.setAttribute('data-mode', 'day');
+          modeBtn.textContent = 'Switch to Night';
+          modeBtn.setAttribute('aria-pressed', 'true');
         }
         draw(true);
       });
 
-      btnFlow.addEventListener('click', ()=>{
-        flowing = !flowing;
-        btnFlow.textContent = flowing ? 'Pause Flow' : 'Resume Flow';
-        btnFlow.setAttribute('aria-pressed', String(flowing));
-        if (flowing) draw(); else cancelAnimationFrame(raf);
+      motionBtn.addEventListener('click', ()=>{
+        state.running = !state.running;
+        motionBtn.textContent = state.running ? 'Pause' : 'Resume';
+        motionBtn.setAttribute('aria-pressed', String(state.running));
+        if (state.running) draw(); else cancelAnimationFrame(raf);
       });
 
-      btnBloom.addEventListener('click', ()=>{
-        const w = canvas.width, h = canvas.height;
-        for (let i=0;i<7;i++){
-          const ang = Math.random()*Math.PI*2;
-          const r = Math.min(w,h) * (0.12 + Math.random()*0.28);
-          const x = w/2 + Math.cos(ang)*r*0.8;
-          const y = h/2 + Math.sin(ang)*r*0.6;
-          seedBloom(x, y, 0.8 + Math.random()*1.6);
+      pulseBtn.addEventListener('click', ()=>{
+        for (let i=0;i<bodies.length;i++){
+          bodies[i].angle += Math.random()*0.7 + 0.3;
         }
+        if (!state.comet) launchComet();
         draw(true);
       });
 
-      // Click to bloom at pointer
+      randomBtn.addEventListener('click', ()=>{
+        state.seed = Math.random() * 1000;
+        resetOrbits();
+        draw(true);
+      });
+
+      // Click to launch a comet toward pointer
       stage.addEventListener('pointerdown', (e)=>{
         const r = canvas.getBoundingClientRect();
         const ratio = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-        const x = (e.clientX - r.left) * ratio;
-        const y = (e.clientY - r.top) * ratio;
-        seedBloom(x, y, 1.2);
+        const tx = (e.clientX - r.left) * ratio;
+        const ty = (e.clientY - r.top) * ratio;
+        const startSide = Math.random() > 0.5 ? -80 : canvas.width+80;
+        const angle = Math.atan2(ty - (canvas.height*0.5), tx - startSide);
+        state.comet = { x: startSide, y: canvas.height*0.5, vx: Math.cos(angle)*3.2, vy: Math.sin(angle)*2.2, life:0, max: 900 };
         draw(true);
       });
 
       // Start
       draw(true);
-      if (flowing) raf = requestAnimationFrame(draw);
+      if (state.running) raf = requestAnimationFrame(draw);
+
+      // Cleanup on detach
+      document.addEventListener('visibilitychange', ()=>{ if (document.hidden) cancelAnimationFrame(raf); else if (state.running) draw(); });
     })();
   </script>
 </section>
