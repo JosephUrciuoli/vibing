@@ -73,136 +73,102 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="vibe446" data-theme="light" aria-label="Luminous Field">
+<section class="vibe447" data-theme="dark" aria-label="Solaris Observatory">
   <style>
-    .vibe446 {
-      --h: 212;
-      --bloom: 0.65;
-      --fg: hsl(220 15% 12%);
-      --muted: hsl(220 10% 35%);
-      --bg-1: hsl(210 50% 98%);
-      --bg-2: hsl(230 50% 96%);
-      --panel: hsla(0 0% 100% / 0.7);
-      --panel-b: hsla(220 20% 20% / 0.06);
-      --accent-1: hsl(calc(var(--h) + 10) 80% 48%);
-      --accent-2: hsl(calc(var(--h) - 30) 80% 50%);
-      --glow: color-mix(in hsl, var(--accent-1) 60%, white);
+    .vibe447 {
+      --h: 210;
+      --fg: hsl(220 20% 96%);
+      --muted: hsl(220 12% 72%);
+      --bg-1: hsl(230 35% 10%);
+      --bg-2: hsl(215 45% 13%);
+      --panel: hsla(0 0% 100% / 0.06);
+      --panel-b: hsla(0 0% 100% / 0.14);
+      --accent-1: hsl(var(--h) 90% 65%);
+      --accent-2: hsl(calc(var(--h) - 40) 85% 60%);
+      --glow: 0.6;         /* 0 → 1 */
+      --tempo: 1;          /* 0.5 → 2 */
+      --mx: 50%;
+      --my: 50%;
       position: relative;
       padding: clamp(28px, 6vw, 64px);
       border-radius: 28px;
-      min-height: min(78vh, 780px);
+      min-height: min(82vh, 820px);
       color: var(--fg);
       background:
-        radial-gradient(1200px 800px at var(--mx, 60%) -10%, hsl(var(--h) 100% 92% / 0.65), transparent 60%),
-        radial-gradient(800px 600px at 110% 120%, hsl(calc(var(--h) + 60) 100% 90% / 0.6), transparent 60%),
+        radial-gradient(1200px 800px at var(--mx) var(--my), hsl(var(--h) 90% 18% / 0.55), transparent 60%),
+        radial-gradient(900px 700px at 115% 120%, hsl(calc(var(--h) - 40) 85% 20% / 0.5), transparent 60%),
         linear-gradient(160deg, var(--bg-1), var(--bg-2));
-      box-shadow: 0 10px 30px rgba(0,0,0,0.09), inset 0 0 0 1px rgba(0,0,0,0.03);
+      box-shadow: 0 22px 50px rgba(0,0,0,0.36), inset 0 0 0 1px rgba(255,255,255,0.03);
       overflow: hidden;
       isolation: isolate;
     }
-    .vibe446[data-theme="dark"] {
-      --fg: hsl(220 20% 96%);
-      --muted: hsl(220 10% 78%);
-      --bg-1: hsl(220 40% 9%);
-      --bg-2: hsl(220 35% 12%);
-      --panel: hsla(0 0% 100% / 0.06);
-      --panel-b: hsla(0 0% 100% / 0.16);
+    .vibe447[data-theme="light"] {
+      --fg: hsl(220 15% 12%);
+      --muted: hsl(220 10% 38%);
+      --bg-1: hsl(210 50% 98%);
+      --bg-2: hsl(220 50% 96%);
+      --panel: hsla(0 0% 100% / 0.7);
+      --panel-b: hsla(220 20% 20% / 0.08);
       background:
-        radial-gradient(1200px 800px at var(--mx, 40%) -10%, hsl(var(--h) 90% 18% / 0.55), transparent 60%),
-        radial-gradient(1000px 800px at 110% 120%, hsl(calc(var(--h) - 30) 85% 20% / 0.5), transparent 60%),
+        radial-gradient(1200px 800px at var(--mx) calc(var(--my) - 10%), hsl(var(--h) 100% 92% / 0.55), transparent 60%),
+        radial-gradient(900px 700px at 115% 120%, hsl(calc(var(--h) + 60) 95% 90% / 0.6), transparent 60%),
         linear-gradient(160deg, var(--bg-1), var(--bg-2));
-      box-shadow: 0 12px 36px rgba(0,0,0,0.26), inset 0 0 0 1px rgba(255,255,255,0.03);
+      box-shadow: 0 14px 38px rgba(0,0,0,0.12), inset 0 0 0 1px rgba(0,0,0,0.03);
     }
 
-    /* Ambient texture and flares */
-    .vibe446 .texture {
-      position: absolute; inset: -40%;
-      background:
-        repeating-linear-gradient(90deg, transparent 0 2px, rgba(0,0,0,0.015) 2px 3px),
-        repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,0.015) 2px 3px);
-      transform: rotate(-6deg);
-      filter: saturate(0.9);
-      opacity: clamp(0.08, calc(var(--bloom) * 0.3), 0.18);
-      pointer-events: none;
+    /* Starfield canvas + aurora */
+    .vibe447 .sky {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
       z-index: 0;
-    }
-    .vibe446 .flare {
-      position: absolute; inset: -20% -10% auto -10%;
-      height: 60%;
-      background:
-        conic-gradient(from 120deg at var(--mx, 40%) 60%, hsla(var(--h) 90% 60% / 0.28), transparent 45%),
-        radial-gradient(60% 80% at 70% 20%, hsla(calc(var(--h) + 40) 90% 60% / 0.18), transparent 70%);
-      filter: blur(calc(20px + 40px * var(--bloom)));
-      mix-blend-mode: screen;
-      opacity: clamp(0.25, calc(var(--bloom) + 0.15), 0.75);
-      animation: flare-drift 30s ease-in-out infinite;
       pointer-events: none;
+      opacity: 0.9;
     }
-    @keyframes flare-drift {
-      0%,100% { transform: translate3d(0,0,0) rotate(0deg); }
-      50%     { transform: translate3d(2%, -2%, 0) rotate(8deg); }
+    .vibe447 .aura {
+      position: absolute; inset: -20%;
+      background:
+        conic-gradient(from 40deg at 60% 40%, color-mix(in hsl, var(--accent-1) 50%, transparent) 0 25%, transparent 25% 50%, color-mix(in hsl, var(--accent-2) 55%, transparent) 50% 75%, transparent 75% 100%);
+      filter: blur(calc(28px + 80px * var(--glow))) saturate(1.2);
+      mix-blend-mode: screen;
+      opacity: clamp(0.18, var(--glow), 0.8);
+      transform: translateZ(0);
+      animation: vibe447-aurarotate calc(60s / var(--tempo)) linear infinite;
+      z-index: 1;
+    }
+    @keyframes vibe447-aurarotate {
+      0% { transform: rotate(0deg) translateZ(0); }
+      100% { transform: rotate(360deg) translateZ(0); }
     }
 
     /* Layout */
-    .vibe446 .hero {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: clamp(16px, 4vw, 40px);
-      align-items: center;
+    .vibe447 .wrap {
       position: relative;
       z-index: 2;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: clamp(18px, 5vw, 42px);
+      align-items: center;
     }
-    @media (max-width: 860px) {
-      .vibe446 .hero { grid-template-columns: 1fr; }
-    }
-
-    /* Halo composition */
-    .vibe446 .halo {
-      position: relative;
-      aspect-ratio: 1 / 1;
-      width: min(48vw, 520px);
-      margin-inline: auto;
-      border-radius: 50%;
-      background:
-        radial-gradient(closest-side, transparent 60%, rgba(0,0,0,0.06) 100%),
-        conic-gradient(from calc(var(--spin, 0deg)), var(--accent-1), var(--accent-2), var(--accent-1));
-      -webkit-mask:
-        radial-gradient(closest-side, transparent 54%, black 54.2% 70%, transparent 70.2% 100%),
-        radial-gradient(closest-side at 50% 50%, black 0 100%); /* ring + fill */
-      mask:
-        radial-gradient(closest-side, transparent 54%, black 54.2% 70%, transparent 70.2% 100%),
-        radial-gradient(closest-side at 50% 50%, black 0 100%);
-      filter: saturate(1.15) brightness(calc(0.9 + var(--bloom) * 0.3));
-      box-shadow: 0 20px 60px rgba(0,0,0,0.16);
-      transform: translateZ(0);
-      transition: filter 240ms ease;
-    }
-    .vibe446 .halo::before,
-    .vibe446 .halo::after {
-      content: "";
-      position: absolute; inset: 8%;
-      border-radius: 50%;
-      background:
-        radial-gradient(120% 120% at 70% 30%, hsla(var(--h) 90% 70% / 0.25), transparent 60%),
-        radial-gradient(120% 120% at 30% 70%, hsla(calc(var(--h) + 60) 90% 70% / 0.25), transparent 60%);
-      filter: blur(calc(10px + 40px * var(--bloom)));
-      mix-blend-mode: screen;
-      animation: halo-breathe 8s ease-in-out infinite;
-    }
-    .vibe446 .halo::after {
-      inset: 18%;
-      filter: blur(calc(18px + 50px * var(--bloom)));
-      opacity: 0.8;
-      animation-duration: 12s;
-    }
-    @keyframes halo-breathe {
-      0%,100% { transform: scale(1); opacity: 0.9; }
-      50%     { transform: scale(1.03); opacity: 1; }
+    @media (max-width: 920px) {
+      .vibe447 .wrap { grid-template-columns: 1fr; }
     }
 
-    /* Copy */
-    .vibe446 .badge {
-      display: inline-flex; align-items: center; gap: 8px;
+    /* Panel */
+    .vibe447 .panel {
+      background: linear-gradient(180deg, var(--panel), transparent);
+      border: 1px solid var(--panel-b);
+      border-radius: 20px;
+      padding: clamp(16px, 3vw, 22px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.22), 0 1px 0 hsla(0 0% 100% / 0.06) inset;
+      backdrop-filter: blur(6px);
+      transform-style: preserve-3d;
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+    .vibe447 .panel:hover { transform: translateY(-2px); }
+
+    /* Badge + Title */
+    .vibe447 .badge {
+      display: inline-flex; gap: 8px; align-items: center;
       padding: 8px 12px;
       background: linear-gradient(135deg, var(--panel), transparent);
       border: 1px solid var(--panel-b);
@@ -210,62 +176,61 @@
       font: 700 12px/1 ui-sans-serif, system-ui, Inter, "Helvetica Neue";
       letter-spacing: .08em;
       text-transform: uppercase;
-      box-shadow: inset 0 0 0 1px hsla(0 0% 100% / 0.05);
-      color: var(--fg);
       user-select: none;
+      color: var(--fg);
     }
-    .vibe446 .badge svg { width: 14px; height: 14px; }
-
-    .vibe446 .title {
+    .vibe447 .badge svg { width: 14px; height: 14px; }
+    .vibe447 .title {
       margin: 14px 0 8px;
-      font: 900 clamp(32px, 7vw, 72px)/1.02 ui-sans-serif, system-ui, Inter, "Helvetica Neue";
+      font: 900 clamp(34px, 7.4vw, 78px)/1.02 ui-sans-serif, system-ui, Inter, "Helvetica Neue";
       letter-spacing: -0.02em;
       background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 12px 30px rgba(0,0,0,0.22));
     }
-    .vibe446 .lead {
-      margin: 0 0 18px;
-      font: 500 clamp(14px, 2.3vw, 18px)/1.6 ui-sans-serif, system-ui, Inter;
+    .vibe447 .lead {
+      margin: 0;
+      font: 500 clamp(14px, 2.2vw, 18px)/1.7 ui-sans-serif, system-ui, Inter;
       color: var(--muted);
       max-width: 60ch;
     }
 
     /* Controls */
-    .vibe446 .controls {
-      display: flex; flex-wrap: wrap; gap: 12px 14px; align-items: center;
-      margin: 8px 0 6px;
+    .vibe447 .controls {
+      display: grid; gap: 10px; grid-template-columns: auto 1fr; align-items: center;
+      margin-top: 16px;
     }
-    .vibe446 .controls label {
+    .vibe447 .control-row {
+      display: contents;
+    }
+    .vibe447 .controls label {
       font: 700 12px/1 ui-sans-serif, system-ui, Inter;
       letter-spacing: .08em;
       text-transform: uppercase;
-      opacity: .7;
+      opacity: .8;
     }
-    .vibe446 input[type="range"] {
+    .vibe447 input[type="range"] {
       -webkit-appearance: none; appearance: none;
-      width: min(46vw, 300px);
+      width: 100%;
       height: 8px; border-radius: 999px;
       background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
       outline: none;
     }
-    .vibe446 input[type="range"]::-webkit-slider-thumb {
+    .vibe447 input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 18px; height: 18px; border-radius: 50%;
       background: white; border: 2px solid var(--accent-1);
       box-shadow: 0 2px 8px rgba(0,0,0,0.22);
       cursor: ew-resize;
     }
-    .vibe446 input[type="range"]::-moz-range-thumb {
+    .vibe447 input[type="range"]::-moz-range-thumb {
       width: 18px; height: 18px; border-radius: 50%;
       background: white; border: 2px solid var(--accent-1);
       box-shadow: 0 2px 8px rgba(0,0,0,0.22);
       cursor: ew-resize;
     }
-    .vibe446 .toggle {
+    .vibe447 .toggle {
       appearance: none;
       border: 1px solid var(--panel-b);
       background: linear-gradient(180deg, var(--panel), transparent);
@@ -277,85 +242,103 @@
       cursor: pointer;
       transition: transform 160ms ease, box-shadow 200ms ease, background 180ms ease;
       box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset;
+      margin-top: 8px;
     }
-    .vibe446 .toggle:hover { transform: translateY(-1px); }
-    .vibe446 .toggle[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent-1) inset; }
+    .vibe447 .toggle:hover { transform: translateY(-1px); }
+    .vibe447 .toggle[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent-1) inset; }
 
-    /* Tiles */
-    .vibe446 .tiles {
+    /* Orrery */
+    .vibe447 .orrery {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      width: min(48vw, 520px);
+      margin: 0 auto;
+      border-radius: 50%;
+      background:
+        radial-gradient(closest-side, transparent 62%, rgba(255,255,255,0.06) 100%),
+        radial-gradient(120% 120% at 70% 30%, color-mix(in hsl, var(--accent-1) 35%, transparent) 0 35%, transparent 60%),
+        radial-gradient(120% 120% at 30% 70%, color-mix(in hsl, var(--accent-2) 35%, transparent) 0 35%, transparent 60%);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.22);
+      overflow: hidden;
+      transform: translateZ(0);
+    }
+    .vibe447 .sun {
+      position: absolute; inset: 50% auto auto 50%;
+      width: clamp(70px, 18%, 120px); aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, hsl(var(--h) 95% 70%), hsl(var(--h) 85% 58%) 40%, hsl(var(--h) 70% 30%) 100%);
+      box-shadow:
+        0 0 calc(40px + 60px * var(--glow)) color-mix(in hsl, var(--accent-1) 70%, transparent),
+        0 0 calc(14px + 18px * var(--glow)) hsla(0,0%,100%,0.4) inset;
+    }
+    .vibe447 .orbit {
+      position: absolute; inset: var(--inset);
+      border-radius: 50%;
+      border: 1px dashed color-mix(in hsl, var(--accent-1) 30%, transparent);
+      filter: saturate(1.1);
+      animation: vibe447-spin var(--dur) linear infinite;
+    }
+    .vibe447 .planet {
+      position: absolute; top: 50%; left: 100%;
+      transform: translate(-50%, -50%);
+      width: var(--ps); height: var(--ps); border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent-1), var(--accent-2));
+      box-shadow:
+        0 0 calc(8px + 10px * var(--glow)) color-mix(in hsl, var(--accent-2) 60%, transparent),
+        0 2px 10px rgba(0,0,0,0.4);
+    }
+    @keyframes vibe447-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Cards */
+    .vibe447 .tiles {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(12px, 2.4vw, 18px);
+      gap: clamp(12px, 2.4vw, 20px);
       margin-top: clamp(16px, 3vw, 24px);
       position: relative;
       z-index: 2;
     }
     @media (max-width: 960px) {
-      .vibe446 .tiles { grid-template-columns: 1fr 1fr; }
+      .vibe447 .tiles { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 620px) {
-      .vibe446 .tiles { grid-template-columns: 1fr; }
+      .vibe447 .tiles { grid-template-columns: 1fr; }
     }
-    .vibe446 .tile {
+    .vibe447 .tile {
       background: var(--panel);
       border: 1px solid var(--panel-b);
-      border-radius: 18px;
-      padding: clamp(16px, 3vw, 22px);
-      min-height: 130px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      transition: transform 220ms ease, box-shadow 220ms ease;
+      border-radius: 16px;
+      padding: clamp(14px, 3vw, 20px);
+      min-height: 120px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.16);
+      transition: transform 200ms ease, box-shadow 220ms ease;
       overflow: hidden;
     }
-    .vibe446 .tile:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.18); }
-    .vibe446 .tile h3 {
+    .vibe447 .tile:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(0,0,0,0.26); }
+    .vibe447 .tile h3 {
       margin: 0 0 8px;
       font: 800 clamp(16px, 2.4vw, 20px)/1.2 ui-sans-serif, system-ui, Inter;
     }
-    .vibe446 .tile p, .vibe446 .tile li, .vibe446 .tile span {
+    .vibe447 .tile p, .vibe447 .tile li, .vibe447 .tile span {
       color: var(--muted);
       font: 500 14px/1.6 ui-sans-serif, system-ui, Inter;
       margin: 0;
     }
-    .vibe446 .quote {
-      display: grid; gap: 10px; align-content: start;
-    }
-    .vibe446 .quote svg { width: 22px; height: 22px; opacity: .8; color: var(--accent-1); }
-    .vibe446 .list { display: grid; gap: 8px; }
-    .vibe446 .list li { list-style: none; position: relative; padding-left: 20px; }
-    .vibe446 .list li::before {
+    .vibe447 .list { display: grid; gap: 8px; }
+    .vibe447 .list li { list-style: none; position: relative; padding-left: 18px; }
+    .vibe447 .list li::before {
       content: "";
-      position: absolute; left: 0; top: 8px;
+      position: absolute; left: 0; top: 7px;
       width: 10px; height: 10px; border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, var(--accent-1), var(--accent-2));
-      filter: contrast(1.1) saturate(1.2);
     }
-
-    /* Stats ring */
-    .vibe446 .stats {
-      display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center;
-    }
-    .vibe446 .ring {
-      --p: var(--bloom);
-      width: 70px; height: 70px; border-radius: 50%;
-      background:
-        conic-gradient(var(--accent-1) calc(var(--p)*360deg), transparent 0),
-        conic-gradient(from 180deg, var(--accent-2) calc((var(--p)*360deg)/3), transparent 0);
-      -webkit-mask: radial-gradient(farthest-side, transparent calc(50% - 8px), black calc(50% - 7px));
-      mask: radial-gradient(farthest-side, transparent calc(50% - 8px), black calc(50% - 7px));
-      box-shadow: 0 0 0 1px var(--panel-b) inset, 0 4px 10px rgba(0,0,0,0.14);
-    }
-    .vibe446 .kv {
-      display: grid; gap: 6px;
-    }
-    .vibe446 .kv .k {
-      font: 900 28px/1 ui-sans-serif, system-ui, Inter;
-      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-    }
-    .vibe446 .kv .label { font: 700 12px/1 ui-sans-serif, system-ui, Inter; letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
 
     /* Meta */
-    .vibe446 .meta {
+    .vibe447 .meta {
       margin-top: clamp(16px, 3vw, 24px);
       display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
       color: var(--muted);
@@ -365,107 +348,133 @@
 
     /* Motion reduce */
     @media (prefers-reduced-motion: reduce) {
-      .vibe446 .halo, .vibe446 .halo::before, .vibe446 .halo::after, .vibe446 .flare { animation: none !important; }
-      .vibe446 .tile, .vibe446 .toggle { transition: none !important; }
+      .vibe447 .aura { animation: none !important; }
+      .vibe447 .orbit { animation: none !important; }
+      .vibe447 .panel, .vibe447 .tile, .vibe447 .toggle { transition: none !important; }
     }
   </style>
 
-  <div class="texture" aria-hidden="true"></div>
-  <div class="flare" aria-hidden="true"></div>
+  <canvas class="sky" aria-hidden="true"></canvas>
+  <div class="aura" aria-hidden="true"></div>
 
-  <div class="hero">
-    <div class="copy">
+  <div class="wrap">
+    <div class="panel">
       <div class="badge" aria-label="Version badge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M12 3l2.5 4.3 4.9 1-3.5 3.5.7 5-4.6-2.3L7.4 17l.7-5L4.6 8.3l4.9-1L12 3z"/>
         </svg>
-        Vibe 446
+        Vibe 447
       </div>
-      <h1 class="title">Daybreak Atelier</h1>
-      <p class="lead">Light on linen, color in motion. Interfaces that breathe with you.</p>
+      <h1 class="title">Solaris Observatory</h1>
+      <p class="lead">A calmer orbit for your ideas. Soft light, quiet motion, crisp intent.</p>
 
       <div class="controls" role="group" aria-label="Interactive controls">
-        <label for="bloom">Bloom</label>
-        <input id="bloom" type="range" min="0" max="100" value="65" />
-        <button class="toggle" id="theme-toggle" type="button" aria-pressed="false" title="Toggle light/dark">Toggle theme</button>
+        <div class="control-row">
+          <label for="glow">Glow</label>
+          <input id="glow" type="range" min="0" max="100" value="60" />
+        </div>
+        <div class="control-row">
+          <label for="tempo">Tempo</label>
+          <input id="tempo" type="range" min="50" max="200" value="100" />
+        </div>
+        <button class="toggle" id="theme-toggle" type="button" aria-pressed="true" title="Toggle light/dark">Toggle theme</button>
       </div>
     </div>
 
-    <div class="halo" id="halo" aria-hidden="true"></div>
+    <figure class="orrery" aria-label="Kinetic orrery">
+      <div class="sun" aria-hidden="true"></div>
+
+      <div class="orbit" style="--inset: 10%; --dur: calc(36s / var(--tempo));">
+        <div class="planet" style="--ps: 10px;"></div>
+      </div>
+      <div class="orbit" style="--inset: 22%; --dur: calc(54s / var(--tempo));">
+        <div class="planet" style="--ps: 14px;"></div>
+      </div>
+      <div class="orbit" style="--inset: 36%; --dur: calc(80s / var(--tempo));">
+        <div class="planet" style="--ps: 18px;"></div>
+      </div>
+      <div class="orbit" style="--inset: 52%; --dur: calc(110s / var(--tempo));">
+        <div class="planet" style="--ps: 12px;"></div>
+      </div>
+    </figure>
   </div>
 
   <div class="tiles" role="list">
-    <div class="tile quote" role="listitem" aria-label="Design mantra">
-      <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" aria-hidden="true">
-        <path d="M9 11H6a4 4 0 014-4V5a6 6 0 00-6 6v8h5v-8zM21 11h-3a4 4 0 014-4V5a6 6 0 00-6 6v8h5v-8z"/>
-      </svg>
-      <h3>Poise in motion</h3>
-      <p>Make clarity feel warm. Let motion guide, not shout. End with quiet delight.</p>
+    <div class="tile" role="listitem" aria-label="Mantra">
+      <h3>Stillness, then spark</h3>
+      <p>Start with calm surfaces. Let emphasis appear like sunrise—earned, brief, unmistakable.</p>
     </div>
-
     <div class="tile" role="listitem" aria-label="Principles">
       <h3>Principles</h3>
       <ul class="list" aria-label="List of principles">
-        <li>Fewer edges, better rhythm</li>
-        <li>Color that earns its keep</li>
-        <li>Micro–motion, macro–calm</li>
-        <li>Gravity you can sense</li>
+        <li>Density with air</li>
+        <li>Motion that whispers</li>
+        <li>Color with purpose</li>
+        <li>Edges that soften intent</li>
       </ul>
     </div>
-
-    <div class="tile stats" role="listitem" aria-label="Live palette">
-      <div class="ring" id="ring"></div>
-      <div class="kv">
-        <div class="k" id="hue-readout">—</div>
-        <span class="label">Hue</span>
-        <div class="k" id="bloom-readout" style="font-size:20px;">—</div>
-        <span class="label">Bloom</span>
-        <div class="k" id="mode-readout" style="font-size:16px;">Light</div>
-        <span class="label">Mode</span>
-      </div>
+    <div class="tile" role="listitem" aria-label="Live readouts">
+      <h3>Live readouts</h3>
+      <p><strong>Hue:</strong> <span id="hue-readout">—</span></p>
+      <p><strong>Glow:</strong> <span id="glow-readout">—</span></p>
+      <p><strong>Tempo:</strong> <span id="tempo-readout">—</span></p>
+      <p><strong>Mode:</strong> <span id="mode-readout">Dark</span></p>
     </div>
   </div>
 
   <div class="meta">
-    <span>Tip: move your cursor to tilt the light and spin the halo.</span>
+    <span>Tip: move your cursor to steer the light and drift the sky.</span>
     <span id="last-updated" aria-live="polite"></span>
   </div>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.vibe446');
-      const bloomSlider = root.querySelector('#bloom');
+      const root = document.currentScript.closest('.vibe447');
+      const canvas = root.querySelector('.sky');
+      const ctx = canvas.getContext('2d');
+
+      const glowSlider = root.querySelector('#glow');
+      const tempoSlider = root.querySelector('#tempo');
       const toggle = root.querySelector('#theme-toggle');
+
       const hueEl = root.querySelector('#hue-readout');
-      const bloomEl = root.querySelector('#bloom-readout');
+      const glowEl = root.querySelector('#glow-readout');
+      const tempoEl = root.querySelector('#tempo-readout');
       const modeEl = root.querySelector('#mode-readout');
-      const halo = root.querySelector('#halo');
-      const ring = root.querySelector('#ring');
       const updatedEl = root.querySelector('#last-updated');
+
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       // Time-driven hue
       function setHueByTime() {
         const now = new Date();
         const t = (now.getHours() + now.getMinutes()/60 + now.getSeconds()/3600) / 24;
-        const hue = Math.round(180 + 110 * Math.sin(t * Math.PI * 2));
+        const hue = Math.round(180 + 120 * Math.sin(t * Math.PI * 2));
         root.style.setProperty('--h', hue);
-        hueEl.textContent = hue + '°';
+        if (hueEl) hueEl.textContent = hue + '°';
       }
 
-      // Bloom control
-      function setBloom(v) {
+      // Glow control (0..1)
+      function setGlow(v) {
         const n = Math.max(0, Math.min(100, Number(v))) / 100;
-        root.style.setProperty('--bloom', n.toFixed(2));
-        bloomEl.textContent = Math.round(n * 100) + '%';
-        if (ring) ring.style.setProperty('--p', n.toFixed(3));
+        root.style.setProperty('--glow', n.toFixed(2));
+        if (glowEl) glowEl.textContent = Math.round(n * 100) + '%';
+      }
+
+      // Tempo control (0.5x..2x)
+      function setTempo(v) {
+        const n = Math.max(50, Math.min(200, Number(v))) / 100; // 0.5..2
+        root.style.setProperty('--tempo', n.toFixed(2));
+        if (tempoEl) tempoEl.textContent = n.toFixed(2) + '×';
       }
 
       // Theme toggle
       function toggleTheme() {
-        const isLight = root.getAttribute('data-theme') !== 'dark';
-        root.setAttribute('data-theme', isLight ? 'dark' : 'light');
-        toggle.setAttribute('aria-pressed', String(isLight));
-        modeEl.textContent = isLight ? 'Dark' : 'Light';
+        const isDark = root.getAttribute('data-theme') === 'dark';
+        root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        toggle.setAttribute('aria-pressed', String(!isDark));
+        if (modeEl) modeEl.textContent = isDark ? 'Light' : 'Dark';
+        drawStaticStars(true);
       }
 
       // Timestamp
@@ -478,40 +487,106 @@
         updatedEl.textContent = 'Updated ' + fmt.format(now);
       }
 
-      // Pointer parallax and halo spin
-      let raf = null;
+      // Pointer parallax
+      let rafParallax = null;
       function onMove(e) {
         const rect = root.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width;
         const y = (e.clientY - rect.top) / rect.height;
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        if (!raf) {
-          raf = requestAnimationFrame(() => {
+        if (!rafParallax) {
+          rafParallax = requestAnimationFrame(() => {
             root.style.setProperty('--mx', Math.round(x * 100) + '%');
-            const spin = ((x - 0.5) * 30) + ((0.5 - y) * 18);
-            halo.style.setProperty('--spin', spin.toFixed(2) + 'deg');
-            raf = null;
+            root.style.setProperty('--my', Math.round(y * 100) + '%');
+            rafParallax = null;
           });
         }
       }
 
+      // Starfield
+      let stars = [];
+      let rafStar;
+      function resizeCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const rect = root.getBoundingClientRect();
+        canvas.width = Math.floor(rect.width * dpr);
+        canvas.height = Math.floor(rect.height * dpr);
+        canvas.style.width = rect.width + 'px';
+        canvas.style.height = rect.height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        initStars(rect.width, rect.height);
+      }
+      function initStars(w, h) {
+        const count = Math.round((w * h) / 9000);
+        stars = new Array(count).fill(0).map(() => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.2 + 0.3,
+          s: Math.random() * 0.2 + 0.05,
+          o: Math.random() * 0.4 + 0.3
+        }));
+        drawStaticStars();
+      }
+      function drawStaticStars(force) {
+        if (!ctx) return;
+        const w = canvas.clientWidth, h = canvas.clientHeight;
+        ctx.clearRect(0, 0, w, h);
+        const theme = root.getAttribute('data-theme');
+        const col = theme === 'dark' ? 'rgba(255,255,255,' : 'rgba(60,70,90,';
+        for (const st of stars) {
+          ctx.beginPath();
+          ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+          ctx.fillStyle = col + st.o + ')';
+          ctx.fill();
+        }
+        if (prefersReduced && !force) return;
+      }
+      function animateStars() {
+        if (prefersReduced) return; // respect
+        const w = canvas.clientWidth, h = canvas.clientHeight;
+        ctx.clearRect(0, 0, w, h);
+        const theme = root.getAttribute('data-theme');
+        const col = theme === 'dark' ? 'rgba(255,255,255,' : 'rgba(60,70,90,';
+        for (const st of stars) {
+          st.y += st.s * (0.6 + parseFloat(getComputedStyle(root).getPropertyValue('--glow')) * 0.8);
+          if (st.y > h + 2) { st.y = -2; st.x = Math.random() * w; }
+          ctx.beginPath();
+          ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+          ctx.fillStyle = col + st.o + ')';
+          ctx.fill();
+        }
+        rafStar = requestAnimationFrame(animateStars);
+      }
+
       // Init
       setHueByTime();
-      setBloom(bloomSlider.value);
+      setGlow(glowSlider.value);
+      setTempo(tempoSlider.value);
       updateTimestamp();
+
       const hueTimer = setInterval(setHueByTime, 60 * 1000);
       const timeTimer = setInterval(updateTimestamp, 1000);
 
-      bloomSlider.addEventListener('input', (e) => setBloom(e.target.value), { passive: true });
+      glowSlider.addEventListener('input', (e) => setGlow(e.target.value), { passive: true });
+      tempoSlider.addEventListener('input', (e) => setTempo(e.target.value), { passive: true });
       toggle.addEventListener('click', toggleTheme);
 
       root.addEventListener('pointermove', onMove, { passive: true });
+
+      // Canvas wiring
+      const ro = new ResizeObserver(resizeCanvas);
+      ro.observe(root);
+      resizeCanvas();
+      if (!prefersReduced) {
+        rafStar = requestAnimationFrame(animateStars);
+      }
 
       // Cleanup
       root.addEventListener('DOMNodeRemoved', () => {
         clearInterval(hueTimer);
         clearInterval(timeTimer);
-        if (raf) cancelAnimationFrame(raf);
+        if (rafParallax) cancelAnimationFrame(rafParallax);
+        if (rafStar) cancelAnimationFrame(rafStar);
+        ro.disconnect();
       }, { once: true });
     })();
   </script>
