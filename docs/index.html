@@ -73,229 +73,403 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div class="vibe" data-theme="dusk">
+<div class="sol" data-mode="nocturne" data-orbit="off">
   <style>
-    .vibe { --bg: radial-gradient(1200px 800px at 10% -10%, rgba(255,200,150,.2), transparent 60%), radial-gradient(1000px 700px at 110% 120%, rgba(120,180,255,.18), transparent 55%), linear-gradient(135deg, #0b1020, #141a2b 60%, #101622); --glass: rgba(255,255,255,.06); --stroke: rgba(255,255,255,.18); --text: #eaf1ff; --muted: rgba(234,241,255,.7); --accent1: #7dd3fc; --accent2: #a78bfa; --accent3: #f0abfc; position: relative; overflow: hidden; border-radius: 20px; padding: 28px; background: var(--bg); font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, Noto Sans, "Apple Color Emoji", "Segoe UI Emoji"; color: var(--text); box-shadow: 0 20px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06); }
-    .vibe::before, .vibe::after { content:""; position:absolute; inset:-20%; filter: blur(40px); opacity:.4; transform: translateZ(0); pointer-events:none;}
-    .vibe::before { background: conic-gradient(from 180deg at 30% 20%, rgba(125,211,252,.35), rgba(167,139,250,.3), rgba(240,171,252,.3), transparent 75%); animation: swirl 22s linear infinite; }
-    .vibe::after { background: radial-gradient(600px 500px at 80% 20%, rgba(255,255,255,.08), transparent 60%); mix-blend-mode: screen; }
-    @keyframes swirl { to { transform: rotate(1turn); } }
+    .sol {
+      --ink: #ecf3ff;
+      --muted: rgba(236,243,255,.75);
+      --a1: #8ddcff;
+      --a2: #a894ff;
+      --a3: #ffb1e5;
+      --bg1: #0a0f1a;
+      --bg2: #0e1423;
+      --mx: 50%;
+      --my: 35%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      padding: clamp(20px, 4vw, 36px);
+      color: var(--ink);
+      background:
+        radial-gradient(600px 500px at var(--mx) var(--my), rgba(255,255,255,.08), transparent 60%),
+        linear-gradient(120deg, var(--bg1), var(--bg2) 60%, #0a101e);
+      box-shadow: 0 28px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      font-family: ui-sans-serif, -apple-system, Segoe UI, Inter, Roboto, "Helvetica Neue", Arial;
+      isolation: isolate;
+    }
 
-    .shell { position: relative; z-index:1; display:grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: stretch; }
-    @media (max-width: 780px){ .shell{ grid-template-columns: 1fr; } }
+    /* Lumen (light) mode */
+    .sol[data-mode="lumen"] {
+      --ink: #121826;
+      --muted: rgba(18,24,38,.7);
+      --a1: #ff647e;
+      --a2: #ffaa2b;
+      --a3: #2dd4a7;
+      --bg1: #fff8f0;
+      --bg2: #f3f7ff;
+      background:
+        radial-gradient(700px 520px at var(--mx) var(--my), rgba(0,0,0,.06), transparent 60%),
+        linear-gradient(120deg, var(--bg1), var(--bg2) 70%, #fffdf7);
+      border-color: rgba(0,0,0,.1);
+      box-shadow: 0 24px 70px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.9);
+    }
 
-    .card { position: relative; border-radius: 16px; background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid var(--stroke); padding: 22px 22px 18px; backdrop-filter: blur(8px) saturate(120%); box-shadow: 0 12px 30px rgba(0,0,0,.35); transform-style: preserve-3d; will-change: transform; transition: transform .6s cubic-bezier(.2,.8,.2,1), box-shadow .6s; }
-    .card:hover { box-shadow: 0 30px 60px rgba(0,0,0,.55); }
-    .tilt { perspective: 900px; }
+    .sol::before {
+      content:"";
+      position:absolute;
+      inset:-30%;
+      background:
+        conic-gradient(from 160deg at 60% 40%, rgba(141,220,255,.25), rgba(168,148,255,.25), rgba(255,177,229,.22), transparent 75%);
+      filter: blur(40px) saturate(1.1);
+      opacity:.5;
+      pointer-events:none;
+      animation: slow-pan 20s linear infinite;
+    }
+    .sol[data-mode="lumen"]::before { opacity:.35; filter: blur(30px) saturate(1.2); }
+    @keyframes slow-pan { to { transform: rotate(1turn);} }
 
-    h1 { margin: 0 0 6px; font-weight: 700; letter-spacing: .3px; line-height: 1.05; font-size: clamp(28px, 5vw, 44px); background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3)); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 0 rgba(0,0,0,0); }
-    p.lead { margin: 0 0 16px; color: var(--muted); font-size: clamp(14px, 2.3vw, 18px); }
+    .wrap {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: clamp(18px, 3vw, 28px);
+      align-items: center;
+    }
+    @media (max-width: 860px) { .wrap { grid-template-columns: 1fr; } }
 
-    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 6px; }
-    .chip { padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); font-size: 12px; letter-spacing: .3px; color: #dce7ff; backdrop-filter: blur(6px); }
+    /* Left: heroic type */
+    .hero {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.06);
+    }
+    .sol[data-mode="lumen"] .badge {
+      border-color: rgba(0,0,0,.12);
+      background: rgba(0,0,0,.05);
+    }
 
-    .cta-row { display:flex; align-items:center; gap:10px; margin-top: 8px; }
-    .btn { appearance: none; cursor: pointer; border: 1px solid rgba(255,255,255,.2); color: #0b1020; font-weight: 600; letter-spacing: .2px; background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.7)); padding: 10px 14px; border-radius: 12px; box-shadow: 0 6px 16px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.6); transition: transform .2s ease, box-shadow .2s ease; }
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.75); }
+    h1.title {
+      margin: 4px 0 6px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: .98;
+      font-size: clamp(34px, 6.5vw, 72px);
+      background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    p.lead {
+      margin: 0;
+      font-size: clamp(14px, 2.6vw, 18px);
+      color: var(--muted);
+      max-width: 46ch;
+    }
+
+    .controls {
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .btn {
+      appearance: none;
+      cursor: pointer;
+      border-radius: 14px;
+      padding: 11px 14px;
+      font-weight: 700;
+      letter-spacing: .2px;
+      border: 1px solid rgba(255,255,255,.20);
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.65));
+      color: #0c1220;
+      box-shadow: 0 10px 22px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.6);
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 16px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.75); }
     .btn:active { transform: translateY(0); }
+    .btn.ghost {
+      background: rgba(255,255,255,.08);
+      color: var(--ink);
+      border-color: rgba(255,255,255,.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .sol[data-mode="lumen"] .btn.ghost {
+      background: rgba(0,0,0,.06);
+      border-color: rgba(0,0,0,.12);
+      color: #121826;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+    }
+    .btn.outline {
+      background: transparent;
+      color: var(--ink);
+      border-color: rgba(255,255,255,.28);
+      box-shadow: none;
+    }
+    .sol[data-mode="lumen"] .btn.outline { border-color: rgba(0,0,0,.22); }
 
-    .ghost { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid rgba(255,255,255,.18); box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+    .meta {
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
 
-    .panel { position: relative; border-radius: 16px; border: 1px solid var(--stroke); background: linear-gradient(180deg, rgba(8,12,26,.6), rgba(8,12,26,.3)); backdrop-filter: blur(6px); padding: 18px; overflow: hidden; }
-    .panel h3 { margin: 0 0 10px; font-size: 14px; letter-spacing: .5px; text-transform: uppercase; color: #cfe4ff; opacity: .9; }
-    .list { display: grid; gap: 10px; }
-    .list li { list-style: none; display:flex; align-items: center; gap:10px; padding:10px 12px; border-radius: 12px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); }
-    .dot { width:8px; height:8px; border-radius:50%; background: var(--accent1); box-shadow: 0 0 0 4px rgba(125,211,252,.18); }
-    .list li:nth-child(2) .dot { background: var(--accent2); box-shadow: 0 0 0 4px rgba(167,139,250,.18); }
-    .list li:nth-child(3) .dot { background: var(--accent3); box-shadow: 0 0 0 4px rgba(240,171,252,.18); }
+    /* Right: kinetic scene */
+    .scene {
+      position: relative;
+      border-radius: 20px;
+      min-height: clamp(260px, 42vw, 520px);
+      padding: clamp(14px, 2vw, 18px);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 1px, transparent 1px 40px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 1px, transparent 1px 40px);
+      border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(6px) saturate(120%);
+      overflow: hidden;
+      transform-style: preserve-3d;
+      perspective: 900px;
+      box-shadow: 0 16px 40px rgba(0,0,0,.35);
+    }
+    .sol[data-mode="lumen"] .scene {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.6)),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.06) 0 1px, transparent 1px 40px),
+        repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 1px, transparent 1px 40px);
+      border-color: rgba(0,0,0,.10);
+      box-shadow: 0 12px 26px rgba(0,0,0,.15);
+    }
 
-    blockquote { margin: 14px 0 0; padding-left: 12px; border-left: 2px solid rgba(255,255,255,.18); color: #e9f1ff; font-size: 14px; opacity:.9; }
+    canvas#field {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
 
-    .hud { display:flex; align-items:center; justify-content: space-between; gap: 12px; margin-top: 14px; }
-    .toggle { display:inline-flex; align-items:center; gap:8px; padding: 8px 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); cursor:pointer; }
-    .toggle .knob { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(180deg, var(--accent1), var(--accent2)); border: 1px solid rgba(255,255,255,.4); box-shadow: 0 4px 10px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.5); transition: transform .3s ease; }
-    .toggle[aria-pressed="true"] .knob { transform: translateX(18px) rotate(12deg); }
-    .toggle .label { font-size: 12px; color:#dbe8ff; }
+    .iris {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: min(58vmin, 540px);
+      height: min(58vmin, 540px);
+      pointer-events: none;
+      background:
+        conic-gradient(from 0deg, var(--a1), var(--a2), var(--a3), var(--a1));
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent calc(50% - 12px), #000 calc(50% - 11px), #000 52%, transparent 54%);
+              mask: radial-gradient(circle at 50% 50%, transparent calc(50% - 12px), #000 calc(50% - 11px), #000 52%, transparent 54%);
+      filter: blur(0.3px) saturate(1.05);
+      opacity:.85;
+      transform: translateZ(0);
+    }
+    .sol[data-orbit="on"] .iris { animation: spin 16s linear infinite; }
+    @keyframes spin { to { transform: rotate(1turn) translateZ(0);} }
 
-    .meta { display:flex; align-items:center; gap: 12px; color: var(--muted); font-size: 12px; }
-    .meta .sep { opacity:.4; }
-
-    /* Themes */
-    .vibe[data-theme="dawn"]{ --bg: radial-gradient(1200px 800px at 0% 0%, rgba(255,226,167,.25), transparent 60%), radial-gradient(1000px 700px at 100% 100%, rgba(168,237,255,.26), transparent 55%), linear-gradient(135deg, #f7f4ff, #f9fff7 60%, #fff7f4); --glass: rgba(255,255,255,.6); --stroke: rgba(0,0,0,.08); --text: #1d273a; --muted: rgba(29,39,58,.7); --accent1:#fb7185; --accent2:#f59e0b; --accent3:#22c55e; color: var(--text); }
-    .vibe[data-theme="dawn"] .card, .vibe[data-theme="dawn"] .panel { background: rgba(255,255,255,.65); border: 1px solid rgba(0,0,0,.08); }
-    .vibe[data-theme="dawn"] .chip, .vibe[data-theme="dawn"] .toggle, .vibe[data-theme="dawn"] .ghost { background: rgba(0,0,0,.05); border-color: rgba(0,0,0,.12); color: #1d273a; }
-    .vibe[data-theme="dawn"] .btn { background: linear-gradient(180deg, #1d273a, #0f172a); color: #fff; border-color: rgba(0,0,0,.6); }
-    .vibe[data-theme="dawn"] blockquote { color: #1d273a; border-left-color: rgba(0,0,0,.2); }
-    .vibe[data-theme="dawn"] h1 { background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3)); -webkit-background-clip: text; color: transparent; }
+    /* Breathing state */
+    .sol.breathing .scene {
+      animation: breathe-shadow 6s ease-in-out infinite;
+    }
+    @keyframes breathe-shadow {
+      0%,100% { box-shadow: 0 16px 40px rgba(0,0,0,.35), inset 0 0 0 0 rgba(255,255,255,0); }
+      50% { box-shadow: 0 22px 60px rgba(0,0,0,.45), inset 0 0 0 12px rgba(255,255,255,.08); }
+    }
 
     /* Motion reduce */
     @media (prefers-reduced-motion: reduce) {
-      .vibe::before { animation: none; }
-      .card { transition: none !important; transform: none !important; }
+      .sol::before, .iris { animation: none !important; }
+      .sol.breathing .scene { animation: none !important; }
     }
   </style>
 
-  <div class="shell">
-    <div class="tilt">
-      <div class="card" id="heroCard" aria-label="Showcase card">
-        <h1>Aurora, Composed</h1>
-        <p class="lead">Soft light, careful rhythm, and a touch of kinetic calm. Explore a mood made of gradients.</p>
+  <div class="wrap">
+    <div class="hero">
+      <span class="badge">Edition 433 • Kinetic Poster</span>
+      <h1 class="title">Serene Mechanics</h1>
+      <p class="lead">A typographic, motion-led vignette. Gentle light, deliberate structure, and a circle that thinks in color.</p>
 
-        <div class="chips" aria-label="palette">
-          <span class="chip">gradient • alive</span>
-          <span class="chip">glass • subtle</span>
-          <span class="chip">system type • elegant</span>
-        </div>
+      <div class="controls">
+        <button class="btn" id="breath" aria-pressed="false">Breathe</button>
+        <button class="btn ghost" id="mode" aria-pressed="false">Switch to Lumen</button>
+        <button class="btn outline" id="orbit" aria-pressed="false">Orbit</button>
+      </div>
 
-        <div class="cta-row">
-          <button class="btn" id="pulse">Gently Pulse</button>
-          <button class="btn ghost" id="toggleTheme" aria-pressed="false">Switch to Dawn</button>
-        </div>
-
-        <blockquote>“Simplicity is not the absence of clutter, it’s the presence of clarity.”</blockquote>
-
-        <div class="hud">
-          <div class="meta">
-            <span class="sep">•</span>
-            <span id="last-updated">Last updated: 2025-11-05 03:25:08 EST</span>
-          </div>
-          <div class="toggle" id="orbit" role="button" aria-pressed="false">
-            <span class="label">Orbit</span>
-            <span class="knob" aria-hidden="true"></span>
-          </div>
-        </div>
+      <div class="meta">
+        <span id="last-updated">Last updated: 2025-11-05 04:20:15 EST</span>
       </div>
     </div>
 
-    <div class="panel" id="panel">
-      <h3>Ambient Motions</h3>
-      <ul class="list">
-        <li><span class="dot"></span><span>Parallax tilt follows your cursor.</span></li>
-        <li><span class="dot"></span><span>Orbiting glow sprinkles the edges.</span></li>
-        <li><span class="dot"></span><span>Pulsing focus animates on demand.</span></li>
-      </ul>
-      <canvas id="spark" width="400" height="240" style="width:100%; height:160px; display:block; border-radius:12px; margin-top:14px; background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.12);"></canvas>
+    <div class="scene" id="scene" aria-label="Kinetic color field">
+      <canvas id="field"></canvas>
+      <div class="iris" aria-hidden="true"></div>
     </div>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.vibe');
-      const card = root.querySelector('#heroCard');
-      const toggleTheme = root.querySelector('#toggleTheme');
-      const orbitButton = root.querySelector('#orbit');
-      const pulseBtn = root.querySelector('#pulse');
-      const updated = root.querySelector('#last-updated');
-      const canvas = root.querySelector('#spark');
+      const root = document.currentScript.closest('.sol');
+      const scene = root.querySelector('#scene');
+      const canvas = root.querySelector('#field');
       const ctx = canvas.getContext('2d');
+      const iris = root.querySelector('.iris');
+      const btnBreath = root.querySelector('#breath');
+      const btnMode = root.querySelector('#mode');
+      const btnOrbit = root.querySelector('#orbit');
+      const updated = root.querySelector('#last-updated');
 
-      // last updated
+      // Timestamp
       try {
         const d = new Date();
         updated.textContent = 'Last updated: ' + d.toLocaleString([], { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' });
-      } catch(e) { /* noop */ }
+      } catch(e){}
 
-      // Responsive canvas size
+      // Pointer spotlight
+      const moveSpot = (e)=>{
+        const r = root.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width) * 100;
+        const y = ((e.clientY - r.top) / r.height) * 100;
+        root.style.setProperty('--mx', x + '%');
+        root.style.setProperty('--my', y + '%');
+      };
+      root.addEventListener('pointermove', moveSpot, {passive:true});
+
+      // Canvas sizing
       function sizeCanvas() {
-        const rect = canvas.getBoundingClientRect();
-        const ratio = window.devicePixelRatio || 1;
+        const rect = scene.getBoundingClientRect();
+        const ratio = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
         canvas.width = Math.floor(rect.width * ratio);
-        canvas.height = Math.floor(160 * ratio);
-        draw();
+        canvas.height = Math.floor(rect.height * ratio);
+        draw(true);
       }
-      let orbiting = false, t = 0, raf;
-      const sparks = Array.from({length: 40}, (_,i)=>({
-        r: 1 + Math.random()*2,
-        a: Math.random()*Math.PI*2,
-        d: 20 + Math.random()*80,
-        hue: 190 + Math.random()*120
+      window.addEventListener('resize', sizeCanvas, {passive:true});
+      sizeCanvas();
+
+      // Particles for orbital field
+      let orbiting = false, raf, t = 0;
+      const N = 120;
+      const parts = Array.from({length: N}, (_,i)=>({
+        base: 0.18 + i/N * 0.78,
+        speed: 0.002 + i * 0.00012,
+        phase: Math.random()*Math.PI*2,
+        hue: 200 + (i/N)*140
       }));
-      function draw(){
+
+      function draw(staticOnly){
         if (!ctx) return;
-        const {width:w, height:h} = canvas;
+        const w = canvas.width, h = canvas.height;
         ctx.clearRect(0,0,w,h);
-        // soft glow background
-        const grad = ctx.createLinearGradient(0,0,w,h);
-        grad.addColorStop(0,'rgba(125,211,252,0.10)');
-        grad.addColorStop(1,'rgba(167,139,250,0.08)');
-        ctx.fillStyle = grad;
+
+        // soft wash
+        const bg = ctx.createLinearGradient(0,0,w,h);
+        const isLumen = root.getAttribute('data-mode') === 'lumen';
+        bg.addColorStop(0, isLumen ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.05)');
+        bg.addColorStop(1, isLumen ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.03)');
+        ctx.fillStyle = bg;
         ctx.fillRect(0,0,w,h);
 
         const cx = w/2, cy = h/2;
-        t += 0.016;
-        sparks.forEach((s,i)=>{
-          const speed = 0.6 + i*0.002;
-          const angle = s.a + (orbiting ? t*speed : 0);
-          const radius = s.d * (orbiting ? 1.8 : 1.1);
-          const x = cx + Math.cos(angle)*radius;
-          const y = cy + Math.sin(angle)*radius*0.55;
-          ctx.beginPath();
-          ctx.fillStyle = 'hsla(' + s.hue + ',90%,70%,'+(orbiting ? 0.9 : 0.55)+')';
-          ctx.shadowBlur = 12;
-          ctx.shadowColor = 'hsla(' + s.hue + ',100%,60%,0.6)';
-          ctx.arc(x, y, s.r*(window.devicePixelRatio||1), 0, Math.PI*2);
-          ctx.fill();
-        });
-        if (orbiting) raf = requestAnimationFrame(draw);
-      }
-      sizeCanvas();
-      window.addEventListener('resize', sizeCanvas, {passive:true});
+        const minor = Math.min(w,h) * 0.42;
+        t += orbiting ? 1 : 0;
 
-      // parallax tilt
-      let rect = null;
-      function updateRect(){ rect = card.getBoundingClientRect(); }
+        // rings and dots
+        for (let i=0;i<parts.length;i++){
+          const p = parts[i];
+          const angle = p.phase + (orbiting ? t * p.speed : 0);
+          const rad = minor * p.base * (orbiting ? 1.0 + 0.04*Math.sin(t*0.01+i) : 1.0);
+          const x = cx + Math.cos(angle) * rad;
+          const y = cy + Math.sin(angle) * rad * 0.66;
+
+          ctx.beginPath();
+          ctx.fillStyle = 'hsla(' + p.hue + ',90%,65%,' + (orbiting ? 0.95 : 0.6) + ')';
+          ctx.shadowBlur = 16;
+          ctx.shadowColor = 'hsla(' + p.hue + ',100%,60%,0.55)';
+          const r = (window.devicePixelRatio||1) * (orbiting ? 1.6 : 1.0);
+          ctx.arc(x, y, r, 0, Math.PI*2);
+          ctx.fill();
+
+          if (i % 6 === 0) {
+            ctx.beginPath();
+            ctx.strokeStyle = 'hsla(' + p.hue + ',90%,70%,' + (orbiting ? 0.22 : 0.12) + ')';
+            ctx.lineWidth = (window.devicePixelRatio||1) * 1.2;
+            ctx.ellipse(cx, cy, rad, rad*0.66, 0, 0, Math.PI*2);
+            ctx.stroke();
+          }
+        }
+
+        if (!staticOnly && orbiting) raf = requestAnimationFrame(draw);
+      }
+
+      // Orbit toggle
+      btnOrbit.addEventListener('click', ()=>{
+        orbiting = !orbiting;
+        root.setAttribute('data-orbit', orbiting ? 'on' : 'off');
+        btnOrbit.setAttribute('aria-pressed', String(orbiting));
+        if (orbiting) draw(); else cancelAnimationFrame(raf);
+      });
+
+      // Mode toggle
+      btnMode.addEventListener('click', ()=>{
+        const isLumen = root.getAttribute('data-mode') === 'lumen';
+        root.setAttribute('data-mode', isLumen ? 'nocturne' : 'lumen');
+        btnMode.textContent = isLumen ? 'Switch to Lumen' : 'Switch to Nocturne';
+        btnMode.setAttribute('aria-pressed', String(!isLumen));
+        draw(true);
+      });
+
+      // Breathing pulse
+      let breatheTimer = null, breathing = false;
+      btnBreath.addEventListener('click', ()=>{
+        breathing = !breathing;
+        root.classList.toggle('breathing', breathing);
+        btnBreath.setAttribute('aria-pressed', String(breathing));
+        btnBreath.textContent = breathing ? 'Breathing…' : 'Breathe';
+        clearTimeout(breatheTimer);
+        if (breathing) {
+          // Auto stop after two cycles
+          breatheTimer = setTimeout(()=>{
+            breathing = false;
+            root.classList.remove('breathing');
+            btnBreath.setAttribute('aria-pressed','false');
+            btnBreath.textContent = 'Breathe';
+          }, 12000);
+        }
+      });
+
+      // subtle tilt
+      let rect;
+      function updateRect(){ rect = scene.getBoundingClientRect(); }
       updateRect();
       window.addEventListener('resize', updateRect, {passive:true});
-      card.addEventListener('mousemove', (e)=>{
+      scene.addEventListener('pointermove', (e)=>{
         if (!rect) return;
         const x = (e.clientX - rect.left)/rect.width - 0.5;
         const y = (e.clientY - rect.top)/rect.height - 0.5;
-        const rotX = (-y)*8;
-        const rotY = x*10;
-        card.style.transform = 'rotateX('+rotX+'deg) rotateY('+rotY+'deg)';
-      });
-      card.addEventListener('mouseleave', ()=>{
-        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
-      });
-
-      // Theme toggle
-      toggleTheme.addEventListener('click', ()=>{
-        const isDawn = root.getAttribute('data-theme') === 'dawn';
-        root.setAttribute('data-theme', isDawn ? 'dusk' : 'dawn');
-        toggleTheme.textContent = isDawn ? 'Switch to Dawn' : 'Switch to Dusk';
-        toggleTheme.setAttribute('aria-pressed', String(!isDawn));
+        const rx = (-y)*6, ry = x*8;
+        scene.style.transform = 'rotateX('+rx+'deg) rotateY('+ry+'deg)';
+        iris.style.filter = 'hue-rotate(' + (x*60) + 'deg) saturate(' + (1 + Math.abs(y)*0.3) + ')';
+      }, {passive:true});
+      scene.addEventListener('pointerleave', ()=>{
+        scene.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        iris.style.filter = '';
       });
 
-      // Orbit toggle
-      orbitButton.addEventListener('click', ()=>{
-        orbiting = !orbiting;
-        orbitButton.setAttribute('aria-pressed', String(orbiting));
-        if (orbiting) draw();
-        else cancelAnimationFrame(raf);
-      });
-
-      // Pulse animation
-      let pulsing = false, pulseTimeout;
-      pulseBtn.addEventListener('click', ()=>{
-        if (pulsing) return;
-        pulsing = true;
-        const orig = card.style.boxShadow;
-        card.style.boxShadow = '0 0 0 0 rgba(255,255,255,0.6), 0 30px 60px rgba(0,0,0,.55)';
-        let i = 0;
-        function step(){
-          i++;
-          const spread = Math.min(40, i*2.8);
-          const alpha = Math.max(0, 0.5 - i*0.012);
-          card.style.boxShadow = '0 0 0 '+spread+'px rgba(255,255,255,'+alpha+'), 0 30px 60px rgba(0,0,0,.55)';
-          if (alpha>0.02) requestAnimationFrame(step);
-          else {
-            card.style.boxShadow = orig || '0 12px 30px rgba(0,0,0,.35)';
-            pulsing = false;
-          }
-        }
-        requestAnimationFrame(step);
-      });
-
+      // Initial paint
+      draw(true);
     })();
   </script>
 </div>
