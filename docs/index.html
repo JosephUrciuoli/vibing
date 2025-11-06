@@ -73,347 +73,371 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="liminal" data-theme="dawn" aria-label="Liminal Field">
+<section class="solaris" data-theme="aurora" aria-label="Solaris Dial — kinetic sundial">
   <style>
-    .liminal {
-      --ink: hsl(232 15% 12%);
-      --muted: hsl(232 10% 40%);
-      --bg-1: hsl(210 100% 99%);
-      --bg-2: hsl(190 100% 98%);
-      --glass: hsla(0 0% 100% / .66);
-      --ring: hsla(232 20% 12% / .12);
-      --a: hsl(198 88% 54%);
-      --b: hsl(326 86% 58%);
-      --c: hsl(44 92% 54%);
+    .solaris {
+      --ink: hsl(228 15% 12%);
+      --muted: hsl(228 10% 38%);
+      --bg-1: hsl(206 100% 98%);
+      --bg-2: hsl(190 100% 97%);
+      --a: hsl(200 92% 54%);
+      --b: hsl(312 88% 60%);
+      --c: hsl(48 96% 54%);
+      --ring: hsla(228 40% 10% / .12);
+      --glass: hsla(0 0% 100% / .6);
 
-      --mx: 50%;
-      --my: 50%;
+      --mx: 50%; --my: 50%;
+      --speed: 1;         /* 0.2…3 */
+      --bloom: 16px;      /* 0…40px */
+      --trail: 0.12;      /* 0.02…0.24 */
 
       position: relative;
+      isolation: isolate;
       color: var(--ink);
+      padding: clamp(22px, 5vw, 64px);
       border-radius: 28px;
-      padding: clamp(24px, 5vw, 64px);
       min-height: min(92vh, 1080px);
       overflow: hidden;
-      isolation: isolate;
 
       background:
         radial-gradient(900px 700px at var(--mx) var(--my), color-mix(in hsl, var(--a) 10%, transparent), transparent 60%),
-        radial-gradient(1200px 1000px at calc(100% - 12%) 12%, color-mix(in hsl, var(--b) 12%, transparent), transparent 60%),
-        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+        radial-gradient(1200px 1000px at calc(100% - 8%) 12%, color-mix(in hsl, var(--b) 12%, transparent), transparent 60%),
+        linear-gradient(140deg, var(--bg-1), var(--bg-2));
       box-shadow: 0 34px 100px rgba(0,0,0,.22), inset 0 0 0 1px rgba(0,0,0,.06);
     }
-    .liminal[data-theme="dusk"] {
-      --ink: hsl(0 0% 94%);
-      --muted: hsl(0 0% 80%);
-      --bg-1: hsl(268 44% 24%);
-      --bg-2: hsl(222 44% 20%);
-      --glass: hsla(0 0% 100% / .12);
-      --ring: hsla(0 0% 100% / .18);
-      --a: hsl(260 86% 66%);
-      --b: hsl(188 86% 62%);
-      --c: hsl(36 96% 60%);
-    }
-    .liminal[data-theme="midnight"] {
+    .solaris[data-theme="nocturne"] {
       --ink: hsl(0 0% 96%);
       --muted: hsl(0 0% 72%);
-      --bg-1: hsl(225 32% 10%);
-      --bg-2: hsl(210 34% 8%);
-      --glass: hsla(0 0% 100% / .08);
+      --bg-1: hsl(230 30% 12%);
+      --bg-2: hsl(220 32% 9%);
+      --a: hsl(196 100% 64%);
+      --b: hsl(300 92% 66%);
+      --c: hsl(58 96% 60%);
+      --glass: hsla(0 0% 100% / .12);
       --ring: hsla(0 0% 100% / .16);
-      --a: hsl(195 100% 66%);
-      --b: hsl(300 100% 68%);
-      --c: hsl(55 100% 64%);
+    }
+    .solaris[data-theme="paper"] {
+      --ink: hsl(22 26% 14%);
+      --muted: hsl(22 12% 34%);
+      --bg-1: hsl(42 64% 97%);
+      --bg-2: hsl(30 52% 96%);
+      --a: hsl(16 88% 56%);
+      --b: hsl(228 86% 54%);
+      --c: hsl(148 64% 48%);
+      --ring: hsla(22 20% 12% / .16);
+      --glass: hsla(0 0% 100% / .66);
     }
 
-    /* Ambient grain + soft light */
-    .liminal::before,
-    .liminal::after {
+    .solaris::before,
+    .solaris::after {
       content: "";
       position: absolute; inset: -15%;
       pointer-events: none; z-index: 0;
       background:
-        radial-gradient(800px 800px at 20% 30%, rgba(255,255,255,.10), transparent 70%),
-        radial-gradient(900px 900px at 80% 70%, rgba(0,0,0,.10), transparent 70%),
+        radial-gradient(900px 900px at 20% 30%, rgba(255,255,255,.10), transparent 70%),
+        radial-gradient(900px 900px at 80% 70%, rgba(0,0,0,.08), transparent 70%),
         repeating-linear-gradient(45deg, rgba(0,0,0,.03) 0 6px, rgba(0,0,0,0) 6px 12px);
       mix-blend-mode: overlay;
-      animation: driftBackdrop 120s linear infinite;
+      animation: driftBG 160s linear infinite;
     }
-    .liminal::after {
-      opacity: .35;
-      transform: rotate(.13turn);
-      animation-duration: 180s;
-    }
-    @keyframes driftBackdrop { to { transform: translate3d(6%, -8%, 0) rotate(.02turn); } }
+    .solaris::after { opacity: .35; transform: rotate(.13turn); animation-duration: 220s; }
+    @keyframes driftBG { to { transform: translate3d(6%, -8%, 0) rotate(.02turn); } }
 
-    .liminal .wrap {
+    .solaris .grid {
       position: relative; z-index: 2;
-      display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(18px, 4vw, 42px); align-items: center;
+      display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(18px, 4vw, 48px); align-items: center;
     }
-    @media (max-width: 1024px) { .liminal .wrap { grid-template-columns: 1fr; } }
+    @media (max-width: 1024px) { .solaris .grid { grid-template-columns: 1fr; } }
 
-    .liminal .intro { display: grid; gap: 14px; align-content: start; }
-    .liminal .eyebrow {
+    .solaris .hero { display: grid; gap: 14px; align-content: start; }
+    .solaris .badge {
       display: inline-grid; grid-auto-flow: column; gap: 10px; align-items: center; width: max-content;
       padding: 10px 14px; border-radius: 999px; border: 1px solid var(--ring);
       background: linear-gradient(180deg, var(--glass), transparent);
       font: 900 11px/1 ui-sans-serif, system-ui; text-transform: uppercase; letter-spacing: .14em; color: var(--ink);
       box-shadow: 0 1px 0 hsla(0 0% 100% / .6) inset;
     }
-    .liminal .title {
+    .solaris .title {
       margin: 0; letter-spacing: -0.02em;
-      font: 900 clamp(48px, 9vw, 120px)/0.92 ui-sans-serif, system-ui, "Segoe UI", Helvetica, Arial;
+      font: 900 clamp(48px, 9vw, 120px)/0.92 ui-serif, Georgia, "Times New Roman", serif;
       background: linear-gradient(90deg, var(--a), var(--b), var(--c));
       -webkit-background-clip: text; background-clip: text; color: transparent;
       filter: drop-shadow(0 10px 26px rgba(0,0,0,.16));
     }
-    .liminal .lede {
+    .solaris .lede {
       font: 500 clamp(14px, 2vw, 20px)/1.8 ui-sans-serif, system-ui, "Segoe UI", Helvetica, Arial;
       color: var(--muted); max-width: 62ch;
     }
 
-    .liminal .panel {
+    .solaris .panel {
       display: grid; gap: 14px; width: fit-content;
       background: linear-gradient(180deg, var(--glass), transparent);
       border: 1px solid var(--ring); border-radius: 14px;
       padding: 12px; box-shadow: 0 16px 44px rgba(0,0,0,.18), 0 1px 0 hsla(0 0% 100% / .6) inset;
       backdrop-filter: blur(10px);
     }
-    .liminal .themes { display: grid; grid-auto-flow: column; gap: 8px; width: max-content; }
-    .liminal .chip {
+    .solaris .themes { display: grid; grid-auto-flow: column; gap: 8px; width: max-content; }
+    .solaris .chip {
       inline-size: 30px; block-size: 30px; border-radius: 999px; border: 1px solid var(--ring);
       background: var(--swatch); cursor: pointer; position: relative; transition: transform .16s ease;
       box-shadow: 0 1px 0 hsla(0 0% 100% / .6) inset;
     }
-    .liminal .chip:active { transform: scale(.96); }
-    .liminal .chip[aria-pressed="true"]::after {
+    .solaris .chip:active { transform: scale(.96); }
+    .solaris .chip[aria-pressed="true"]::after {
       content: ""; position: absolute; inset: 3px; border-radius: inherit; border: 2px solid white; mix-blend-mode: overlay;
     }
 
-    .liminal .controls {
-      display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px;
-    }
-    @media (max-width: 920px) { .liminal .controls { grid-template-columns: 1fr; } }
+    .solaris .controls { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px; }
+    @media (max-width: 920px) { .solaris .controls { grid-template-columns: 1fr; } }
 
-    .liminal .ctl {
+    .solaris .ctl {
       display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px;
       border: 1px solid var(--ring); border-radius: 12px; padding: 10px;
       background: linear-gradient(180deg, var(--glass), transparent);
       font: 800 11px/1 ui-sans-serif, system-ui; text-transform: uppercase; letter-spacing: .1em; color: var(--ink);
     }
-    .liminal .btn {
+    .solaris .btn {
       appearance: none; cursor: pointer; padding: 10px 14px; border-radius: 999px; border: 1px solid var(--ring);
       background: linear-gradient(180deg, var(--glass), transparent);
       font: 800 12px/1 ui-sans-serif, system-ui; letter-spacing: .08em; text-transform: uppercase; color: var(--ink);
       box-shadow: 0 1px 0 hsla(0 0% 100% / .6) inset; transition: transform 160ms ease, box-shadow 160ms ease;
     }
-    .liminal .btn:hover { transform: translateY(-1px); }
-    .liminal .btn[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--b) inset; }
+    .solaris .btn:hover { transform: translateY(-1px); }
+    .solaris .btn[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--b) inset; }
 
-    .liminal input[type="range"] {
+    .solaris input[type="range"] {
       -webkit-appearance: none; appearance: none; width: 100%; height: 10px; border-radius: 999px;
       background: linear-gradient(90deg, var(--a), var(--b), var(--c));
       outline: none; border: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
     }
-    .liminal input[type="range"]::-webkit-slider-thumb,
-    .liminal input[type="range"]::-moz-range-thumb {
+    .solaris input[type="range"]::-webkit-slider-thumb,
+    .solaris input[type="range"]::-moz-range-thumb {
       -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
       background: white; border: 2px solid var(--b); box-shadow: 0 2px 8px rgba(0,0,0,0.18); cursor: ew-resize;
     }
 
-    .liminal .frame {
-      position: relative; margin: 16px auto 0; width: min(94vmin, 1080px); aspect-ratio: 1 / 1;
-      border-radius: 26px; border: 1px solid var(--ring);
+    .solaris .dial {
+      position: relative; margin: 16px auto 0;
+      width: min(94vmin, 1080px); aspect-ratio: 1 / 1; border-radius: 26px;
+      border: 1px solid var(--ring);
       background:
-        radial-gradient(circle at 50% 50%, var(--glass), transparent 70%),
-        radial-gradient(closest-side at 50% 50%, hsla(0,0%,100%,.12), transparent 100%);
+        radial-gradient(1200px 800px at var(--mx) var(--my), color-mix(in hsl, var(--a) 12%, transparent), transparent 60%),
+        radial-gradient(closest-side at 50% 50%, hsla(0 0% 100% / .06), transparent 70%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,.04) 0 1px, transparent 1px 40px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.03) 0 1px, transparent 1px 40px);
+      overflow: hidden;
       box-shadow:
         0 38px 96px rgba(0,0,0,.30),
         0 1px 0 hsla(0 0% 100% / .6) inset,
         0 0 0 14px hsla(0 0% 100% / .10) inset;
-      overflow: hidden; backdrop-filter: blur(8px);
-      transform: perspective(900px) rotateX(calc((var(--my, 50%) - 50%) / -6)) rotateY(calc((var(--mx, 50%) - 50%) / 6));
+      transform:
+        perspective(900px) rotateX(calc((var(--my, 50%) - 50%) / -7))
+        rotateY(calc((var(--mx, 50%) - 50%) / 7));
       transition: transform .3s cubic-bezier(.2,.8,.2,1);
+      filter: drop-shadow(0 12px 36px rgba(0,0,0,.18));
     }
-    .liminal .frame::after {
+    .solaris .dial::after {
       content: ""; position: absolute; inset: -2px; border-radius: inherit; pointer-events: none;
       background:
-        radial-gradient(160px 160px at var(--mx) var(--my), hsla(0 0% 100% / .4), transparent 60%),
+        radial-gradient(180px 180px at var(--mx) var(--my), hsla(0 0% 100% / .5), transparent 60%),
         radial-gradient(closest-side, transparent, rgba(255,255,255,.05));
       mix-blend-mode: screen;
     }
-    .liminal canvas#field {
-      position: absolute; inset: 0; width: 100%; height: 100%; mix-blend-mode: screen;
+
+    .solaris canvas#stars {
+      position: absolute; inset: 0; width: 100%; height: 100%; mix-blend-mode: screen; pointer-events: none;
     }
 
-    .liminal .meta {
+    /* Sun + rings */
+    .solaris .sun {
+      position: absolute; inset: 50% auto auto 50%;
+      width: 22vmin; aspect-ratio: 1/1; transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 35%, hsla(0 0% 100% / .85), transparent 55%),
+        radial-gradient(circle at 50% 50%, var(--b), var(--a));
+      filter: blur(0.2px) drop-shadow(0 0 var(--bloom) var(--b)) drop-shadow(0 0 calc(var(--bloom) * .8) var(--a));
+      box-shadow: inset 0 0 40px rgba(255,255,255,.25);
+      animation: throb calc(8s / var(--speed)) ease-in-out infinite;
+    }
+    @keyframes throb { 0%,100%{ transform: translate(-50%, -50%) scale(1); } 50%{ transform: translate(-50%, -50%) scale(1.03); } }
+
+    .solaris .ring {
+      position: absolute; inset: 8%; border-radius: 50%;
+      background:
+        conic-gradient(from 0deg, color-mix(in hsl, var(--a) 35%, transparent) 0 6%, transparent 6% 12%,
+                               color-mix(in hsl, var(--b) 35%, transparent) 12% 18%, transparent 18% 24%,
+                               color-mix(in hsl, var(--c) 35%, transparent) 24% 30%, transparent 30% 36%,
+                               color-mix(in hsl, var(--a) 35%, transparent) 36% 42%, transparent 42% 100%);
+      -webkit-mask: radial-gradient(circle, transparent 44%, black 45%);
+              mask: radial-gradient(circle, transparent 44%, black 45%);
+      opacity: .7;
+      animation: spin calc(90s / var(--speed)) linear infinite;
+      filter: drop-shadow(0 0 calc(var(--bloom) * .6) var(--a));
+    }
+    .solaris .ring.b { inset: 16%; animation-duration: calc(140s / var(--speed)); opacity: .6; }
+    .solaris .ring.c { inset: 24%; animation-duration: calc(200s / var(--speed)); opacity: .5; }
+
+    @keyframes spin { to { transform: rotate(1turn); } }
+
+    /* Orbits */
+    .solaris .orbit {
+      position: absolute; inset: 0; animation: spin var(--ad) linear infinite;
+      animation-play-state: running;
+    }
+    .solaris .orbit::before {
+      content: ""; position: absolute; inset: 0; border-radius: 50%;
+      box-shadow: 0 0 0 1px var(--ring) inset, 0 0 calc(var(--bloom) * .25) color-mix(in hsl, var(--a) 30%, transparent);
+      -webkit-mask: radial-gradient(circle, transparent calc(var(--r) - 1px), black calc(var(--r) - 0px));
+              mask: radial-gradient(circle, transparent calc(var(--r) - 1px), black calc(var(--r) - 0px));
+      opacity: .7;
+    }
+    .solaris .planet {
+      position: absolute; top: 50%; left: calc(50% + var(--r));
+      width: var(--sz); height: var(--sz); transform: translate(-50%, -50%);
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 30%, hsla(0 0% 100% / .9), transparent 60%),
+        radial-gradient(circle at 50% 50%, var(--pc2), var(--pc1));
+      box-shadow:
+        0 0 calc(var(--bloom) * .5) var(--pc1),
+        0 0 calc(var(--bloom) * .25) var(--pc2);
+      filter: saturate(1.2);
+    }
+
+    /* Meta */
+    .solaris .meta {
       margin-top: clamp(16px, 3vw, 28px);
       display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
       color: var(--muted); font: 500 12px/1.4 ui-sans-serif, system-ui; z-index: 2; position: relative;
     }
 
+    /* Pause handling */
+    .solaris.is-paused .orbit,
+    .solaris.is-paused .ring,
+    .solaris.is-paused .sun { animation-play-state: paused !important; }
+
     @media (prefers-reduced-motion: reduce) {
-      .liminal, .liminal .frame { transition: none !important; }
-      .liminal::before, .liminal::after { animation: none !important; }
+      .solaris, .solaris .dial { transition: none !important; }
+      .solaris::before, .solaris::after { animation: none !important; }
+      .solaris .orbit, .solaris .ring, .solaris .sun { animation: none !important; }
     }
   </style>
 
-  <div class="wrap">
-    <div class="intro">
-      <span class="eyebrow" aria-label="Edition badge">Edition 458 · Liminal Field</span>
-      <h1 class="title">Liminal Field</h1>
-      <p class="lede">Currents of color trace invisible winds. Move your cursor to nudge the tide; tune the flow to compose a living poster.</p>
+  <div class="grid">
+    <div class="hero">
+      <span class="badge" aria-label="Edition badge">Edition 459 · Solaris Dial</span>
+      <h1 class="title" aria-label="Solaris Dial">Solaris Dial</h1>
+      <p class="lede">A kinetic sundial. Drag the light; tune the system. Time blooms in color.</p>
 
       <div class="panel" role="region" aria-label="Themes and controls">
         <div class="themes" role="group" aria-label="Themes">
-          <button class="chip" data-theme="dawn" aria-pressed="true" style="--swatch: conic-gradient(from 0deg, hsl(198 88% 54%), hsl(326 86% 58%), hsl(44 92% 54%), hsl(198 88% 54%))" title="Dawn"></button>
-          <button class="chip" data-theme="dusk" aria-pressed="false" style="--swatch: conic-gradient(from 0deg, hsl(260 86% 66%), hsl(188 86% 62%), hsl(36 96% 60%), hsl(260 86% 66%))" title="Dusk"></button>
-          <button class="chip" data-theme="midnight" aria-pressed="false" style="--swatch: conic-gradient(from 0deg, hsl(195 100% 66%), hsl(300 100% 68%), hsl(55 100% 64%), hsl(195 100% 66%))" title="Midnight"></button>
+          <button class="chip" data-theme="aurora" aria-pressed="true" style="--swatch: conic-gradient(from 0deg, hsl(200 92% 54%), hsl(312 88% 60%), hsl(48 96% 54%), hsl(200 92% 54%))" title="Aurora"></button>
+          <button class="chip" data-theme="nocturne" aria-pressed="false" style="--swatch: conic-gradient(from 0deg, hsl(196 100% 64%), hsl(300 92% 66%), hsl(58 96% 60%), hsl(196 100% 64%))" title="Nocturne"></button>
+          <button class="chip" data-theme="paper" aria-pressed="false" style="--swatch: conic-gradient(from 0deg, hsl(16 88% 56%), hsl(228 86% 54%), hsl(148 64% 48%), hsl(16 88% 56%))" title="Paper"></button>
         </div>
 
         <div class="controls">
           <div class="ctl">
-            <span>Density</span>
-            <input id="density" type="range" min="150" max="2600" value="1000" />
-            <span id="density-read">1000</span>
+            <span>Speed</span>
+            <input id="speed" type="range" min="0.2" max="3" step="0.01" value="1" />
+            <span id="speed-read">1.00×</span>
           </div>
           <div class="ctl">
-            <span>Tempo</span>
-            <input id="tempo" type="range" min="20" max="300" value="120" />
-            <span id="tempo-read">1.20</span>
+            <span>Bloom</span>
+            <input id="bloom" type="range" min="0" max="40" step="1" value="16" />
+            <span id="bloom-read">16px</span>
           </div>
           <div class="ctl">
-            <span>Warp</span>
-            <input id="warp" type="range" min="2" max="28" value="9" />
-            <span id="warp-read">0.009</span>
+            <span>Trail</span>
+            <input id="trail" type="range" min="0.02" max="0.24" step="0.01" value="0.12" />
+            <span id="trail-read">0.12</span>
           </div>
 
-          <button class="btn" id="shuffle" title="Reseed field">Shuffle</button>
+          <button class="btn" id="shuffle" title="Randomize orbits">Shuffle</button>
           <button class="btn" id="pause" aria-pressed="false" title="Pause/Play">Pause</button>
         </div>
       </div>
     </div>
 
-    <figure class="frame" aria-label="Flow canvas">
-      <canvas id="field"></canvas>
+    <figure class="dial" aria-label="Sundial stage">
+      <canvas id="stars"></canvas>
+      <div class="sun" aria-hidden="true"></div>
+      <div class="ring a" aria-hidden="true"></div>
+      <div class="ring b" aria-hidden="true"></div>
+      <div class="ring c" aria-hidden="true"></div>
+
+      <!-- Orbits (radiuses in vmin for responsiveness) -->
+      <div class="orbit" style="--r: 36vmin; --sz: 10px; --pc1: var(--a); --pc2: var(--b);" data-period="64"></div>
+      <div class="orbit" style="--r: 28vmin; --sz: 8px;  --pc1: var(--b); --pc2: var(--c);" data-period="84"></div>
+      <div class="orbit" style="--r: 21vmin; --sz: 12px; --pc1: var(--c); --pc2: var(--a);" data-period="112"></div>
+      <div class="orbit" style="--r: 15vmin; --sz: 7px;  --pc1: var(--a); --pc2: var(--c);" data-period="48"></div>
+      <div class="orbit" style="--r: 9vmin;  --sz: 6px;  --pc1: var(--b); --pc2: var(--a);" data-period="36"></div>
+      <div class="orbit" style="--r: 4.5vmin;--sz: 5px;  --pc1: var(--c); --pc2: var(--b);" data-period="22"></div>
     </figure>
   </div>
 
   <div class="meta">
-    <span>“Let the lines find their own way.”</span>
+    <span>“Time is the softest geometry.”</span>
     <span id="last-updated" aria-live="polite"></span>
   </div>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.liminal');
-      const canvas = root.querySelector('#field');
+      const root = document.currentScript.closest('.solaris');
+      const canvas = root.querySelector('#stars');
       const ctx = canvas.getContext('2d');
-
-      const themeBtns = [...root.querySelectorAll('.chip')];
-      const densityInput = root.querySelector('#density');
-      const tempoInput = root.querySelector('#tempo');
-      const warpInput = root.querySelector('#warp');
-
-      const densityRead = root.querySelector('#density-read');
-      const tempoRead = root.querySelector('#tempo-read');
-      const warpRead = root.querySelector('#warp-read');
-
-      const shuffleBtn = root.querySelector('#shuffle');
-      const pauseBtn = root.querySelector('#pause');
       const updatedEl = root.querySelector('#last-updated');
 
-      const DPR = Math.min(2, window.devicePixelRatio || 1);
-      let raf, ro, running = true;
+      const themeBtns = [...root.querySelectorAll('.chip')];
+      const pauseBtn = root.querySelector('#pause');
+      const shuffleBtn = root.querySelector('#shuffle');
 
+      const speedInput = root.querySelector('#speed');
+      const bloomInput = root.querySelector('#bloom');
+      const trailInput = root.querySelector('#trail');
+
+      const speedRead = root.querySelector('#speed-read');
+      const bloomRead = root.querySelector('#bloom-read');
+      const trailRead = root.querySelector('#trail-read');
+
+      const DPR = Math.min(2, window.devicePixelRatio || 1);
       const pointer = { x: -1, y: -1, active: false };
 
+      let raf, ro, running = true;
+
       const state = {
-        density: 1000,
-        tempo: 1.2,
-        warp: 0.009,
-        glow: 16,
-        t: 0,
-        particles: [],
+        speed: 1,
+        bloom: 16,
+        trail: 0.12,
+        stars: [],
         seed: Math.random() * 10000
       };
 
-      const lerp = (a, b, t) => a + (b - a) * t;
-      const smooth = t => t * t * (3 - 2 * t);
-      const fract = x => x - Math.floor(x);
-      function rand3(i, j, k) {
-        const s = Math.sin(i * 127.1 + j * 311.7 + k * 74.7 + state.seed) * 43758.5453;
-        return fract(s);
-      }
-      function valueNoise3D(x, y, z) {
-        const x0 = Math.floor(x), y0 = Math.floor(y), z0 = Math.floor(z);
-        const xf = x - x0, yf = y - y0, zf = z - z0;
-        const u = smooth(xf), v = smooth(yf), w = smooth(zf);
-
-        function n(ix, iy, iz) { return rand3(ix, iy, iz); }
-
-        const x00 = lerp(n(x0, y0, z0), n(x0 + 1, y0, z0), u);
-        const x10 = lerp(n(x0, y0 + 1, z0), n(x0 + 1, y0 + 1, z0), u);
-        const x01 = lerp(n(x0, y0, z0 + 1), n(x0 + 1, y0, z0 + 1), u);
-        const x11 = lerp(n(x0, y0 + 1, z0 + 1), n(x0 + 1, y0 + 1, z0 + 1), u);
-
-        const y0i = lerp(x00, x10, v);
-        const y1i = lerp(x01, x11, v);
-
-        return lerp(y0i, y1i, w); // 0..1
-      }
-
       function cssVar(name) { return getComputedStyle(root).getPropertyValue(name).trim(); }
-      function readPalette() { return [cssVar('--a'), cssVar('--b'), cssVar('--c')].filter(Boolean); }
-      let palette = readPalette();
-
       function setTheme(theme) {
         root.setAttribute('data-theme', theme);
         themeBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.theme === theme)));
-        palette = readPalette();
       }
 
       function size() {
         const rect = canvas.getBoundingClientRect();
         const w = Math.max(200, rect.width | 0);
         const h = Math.max(200, rect.height | 0);
-        canvas.width = w * DPR;
-        canvas.height = h * DPR;
+        canvas.width = w * DPR; canvas.height = h * DPR;
         ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-        // Soft reset
         ctx.globalCompositeOperation = 'source-over';
         ctx.clearRect(0, 0, w, h);
-      }
-
-      function reseedParticles() {
-        const rect = canvas.getBoundingClientRect();
-        const w = rect.width, h = rect.height;
-        const count = Math.max(50, Math.min(2600, state.density | 0));
-        state.particles = new Array(count).fill(0).map((_, i) => {
-          return {
-            x: Math.random() * w,
-            y: Math.random() * h,
-            px: null, py: null,
-            age: 0,
-            life: 200 + Math.random() * 800,
-            hueIdx: i % palette.length,
-            jitter: Math.random() * 0.6 + 0.7
-          };
-        });
-      }
-
-      function setDensity(v) {
-        const d = Math.max(150, Math.min(2600, v | 0));
-        state.density = d; densityRead.textContent = d;
-        reseedParticles();
-      }
-      function setTempo(v) {
-        const t = Math.max(20, Math.min(300, Number(v))) / 100;
-        state.tempo = t; tempoRead.textContent = t.toFixed(2);
-      }
-      function setWarp(v) {
-        const s = Math.max(2, Math.min(28, Number(v))) / 1000;
-        state.warp = s; warpRead.textContent = s.toFixed(3);
+        // reseed stars relative to size
+        const count = Math.round(Math.min(900, Math.max(300, (w * h) / 2500)));
+        state.stars = new Array(count).fill(0).map(() => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.6 + 0.3,
+          hue: Math.random(),
+          flicker: Math.random() * 0.8 + 0.2,
+          phase: Math.random() * Math.PI * 2
+        }));
       }
 
       function updateTimestamp() {
@@ -421,69 +445,89 @@
         updatedEl.textContent = 'Updated ' + fmt.format(new Date());
       }
 
-      function step(now) {
+      function setSpeed(v) {
+        const s = Math.min(3, Math.max(0.2, Number(v)));
+        state.speed = s;
+        speedRead.textContent = s.toFixed(2) + '×';
+        root.style.setProperty('--speed', s);
+        // update orbit durations
+        root.querySelectorAll('.orbit').forEach(orbit => {
+          const base = Number(orbit.getAttribute('data-period')) || 60;
+          orbit.style.setProperty('--ad', `calc(${base}s / var(--speed))`);
+        });
+      }
+      function setBloom(v) {
+        const b = Math.min(40, Math.max(0, Number(v)));
+        state.bloom = b;
+        bloomRead.textContent = b.toFixed(0) + 'px';
+        root.style.setProperty('--bloom', b + 'px');
+      }
+      function setTrail(v) {
+        const t = Math.min(0.24, Math.max(0.02, Number(v)));
+        state.trail = t;
+        trailRead.textContent = t.toFixed(2);
+        root.style.setProperty('--trail', t);
+      }
+
+      function shuffle() {
+        // randomize orbit phase offsets
+        root.querySelectorAll('.orbit').forEach(orbit => {
+          const base = Number(orbit.getAttribute('data-period')) || 60;
+          const offset = Math.random() * base;
+          orbit.style.animationDelay = `-${offset}s`;
+          // ensure planet exists
+          if (!orbit.querySelector('.planet')) {
+            const p = document.createElement('div');
+            p.className = 'planet';
+            orbit.appendChild(p);
+          }
+        });
+        // reseed stars
+        state.seed = Math.random() * 10000;
+        size();
+      }
+
+      function drawStars(now) {
         const rect = canvas.getBoundingClientRect();
         const w = rect.width, h = rect.height;
-        const cx = w / 2, cy = h / 2;
         const t = now * 0.001;
-        state.t = t;
 
-        // Fade trails
+        // fade for trails
         ctx.globalCompositeOperation = 'destination-out';
-        ctx.globalAlpha = 0.05 + Math.min(0.2, (state.tempo - 0.5) * 0.06);
+        ctx.globalAlpha = state.trail;
+        ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, w, h);
 
-        // Draw lines
+        // draw new frame
         ctx.globalCompositeOperation = 'lighter';
-        ctx.globalAlpha = 0.9;
+        for (let i = 0; i < state.stars.length; i++) {
+          const s = state.stars[i];
+          s.phase += 0.8 * s.flicker * (0.6 + state.speed * 0.4) * 0.016;
+          const tw = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(s.phase + i * 0.1 + state.seed));
+          const a = 0.15 + 0.85 * tw;
 
-        const scale = state.warp * 250; // field scale
-        const timeFlow = t * state.tempo * 0.4;
+          // subtle parallax nudge toward pointer
+          const dx = pointer.active ? (pointer.x - w / 2) / w : 0;
+          const dy = pointer.active ? (pointer.y - h / 2) / h : 0;
+          const px = s.x + dx * (i % 7) * 0.6;
+          const py = s.y + dy * (i % 7) * 0.6;
 
-        const vx = pointer.active ? (pointer.x - cx) / w : 0;
-        const vy = pointer.active ? (pointer.y - cy) / h : 0;
+          const grad = ctx.createRadialGradient(px, py, 0, px, py, s.r * 6);
+          const hueA = cssVar('--a');
+          const hueB = cssVar('--b');
+          grad.addColorStop(0, 'rgba(255,255,255,' + (0.7 * a).toFixed(3) + ')');
+          grad.addColorStop(1, 'rgba(255,255,255,0)');
 
-        for (let i = 0; i < state.particles.length; i++) {
-          const p = state.particles[i];
-          const color1 = palette[p.hueIdx % palette.length] || cssVar('--a');
-
-          const x = p.x, y = p.y;
-
-          // Flow-field angle from 3D value noise
-          const n = valueNoise3D(x / scale + vx * 4, y / scale + vy * 4, timeFlow);
-          const angle = n * Math.PI * 2;
-
-          const speed = (0.6 + 1.8 * state.tempo) * p.jitter;
-          const nx = x + Math.cos(angle) * speed;
-          const ny = y + Math.sin(angle) * speed;
-
-          // Draw segment
-          ctx.lineWidth = 1;
-          ctx.shadowBlur = state.glow;
-          ctx.shadowColor = color1;
-          ctx.strokeStyle = color1;
+          ctx.globalAlpha = 1;
+          ctx.fillStyle = grad;
           ctx.beginPath();
-          ctx.moveTo(p.px ?? x, p.py ?? y);
-          ctx.lineTo(nx, ny);
-          ctx.stroke();
-
-          p.px = nx; p.py = ny;
-          p.x = nx; p.y = ny;
-          p.age++;
-
-          // Respawn if out of bounds or old
-          if (nx < -10 || ny < -10 || nx > w + 10 || ny > h + 10 || p.age > p.life) {
-            p.x = Math.random() * w;
-            p.y = Math.random() * h;
-            p.px = null; p.py = null;
-            p.age = 0;
-            p.life = 200 + Math.random() * 800;
-          }
+          ctx.arc(px, py, s.r * (1.2 + 0.6 * tw), 0, Math.PI * 2);
+          ctx.fill();
         }
       }
 
       function animate(now) {
-        step(now);
+        drawStars(now);
         if (running) raf = requestAnimationFrame(animate);
       }
 
@@ -493,6 +537,7 @@
         const my = ((e.clientY - r.top) / r.height) * 100;
         root.style.setProperty('--mx', mx + '%');
         root.style.setProperty('--my', my + '%');
+
         const srect = canvas.getBoundingClientRect();
         pointer.x = e.clientX - srect.left;
         pointer.y = e.clientY - srect.top;
@@ -500,24 +545,25 @@
       }
       function onLeave() { pointer.active = false; }
 
-      // Controls
+      // Bind theme buttons
       themeBtns.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.theme)));
-      densityInput.addEventListener('input', e => setDensity(e.target.value), { passive: true });
-      tempoInput.addEventListener('input', e => setTempo(e.target.value), { passive: true });
-      warpInput.addEventListener('input', e => setWarp(e.target.value), { passive: true });
 
-      shuffleBtn.addEventListener('click', () => {
-        state.seed = Math.random() * 10000;
-        reseedParticles();
-      });
+      // Bind controls
+      speedInput.addEventListener('input', e => setSpeed(e.target.value), { passive: true });
+      bloomInput.addEventListener('input', e => setBloom(e.target.value), { passive: true });
+      trailInput.addEventListener('input', e => setTrail(e.target.value), { passive: true });
+
+      shuffleBtn.addEventListener('click', shuffle);
 
       pauseBtn.addEventListener('click', () => {
         const paused = pauseBtn.getAttribute('aria-pressed') === 'true';
         pauseBtn.setAttribute('aria-pressed', String(!paused));
         if (paused) {
+          root.classList.remove('is-paused');
           running = true;
           raf = requestAnimationFrame(animate);
         } else {
+          root.classList.add('is-paused');
           running = false;
           cancelAnimationFrame(raf);
         }
@@ -527,25 +573,37 @@
       root.addEventListener('pointerleave', onLeave);
 
       // Resize observer
-      function resize() { size(); reseedParticles(); }
+      function resize() { size(); }
       ro = new ResizeObserver(resize);
       ro.observe(canvas);
 
-      // Init
-      setTheme('dawn');
-      setDensity(densityInput.value);
-      setTempo(tempoInput.value);
-      setWarp(warpInput.value);
+      // Initialize orbit durations + planets
+      root.querySelectorAll('.orbit').forEach(orbit => {
+        const base = Number(orbit.getAttribute('data-period')) || 60;
+        orbit.style.setProperty('--ad', `calc(${base}s / var(--speed))`);
+        if (!orbit.querySelector('.planet')) {
+          const p = document.createElement('div');
+          p.className = 'planet';
+          orbit.appendChild(p);
+        }
+      });
+
+      // Init values
+      setTheme('aurora');
+      setSpeed(speedInput.value);
+      setBloom(bloomInput.value);
+      setTrail(trailInput.value);
+
       updateTimestamp();
       const tick = setInterval(updateTimestamp, 1000);
 
       resize();
+      shuffle();
 
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
         running = false;
         cancelAnimationFrame(raf);
-        // Draw a still composition
-        step(performance.now());
+        drawStars(performance.now());
       } else {
         running = true;
         raf = requestAnimationFrame(animate);
