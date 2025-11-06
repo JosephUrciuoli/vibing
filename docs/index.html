@@ -73,379 +73,318 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="vibe448" data-theme="light" aria-label="Prism Atelier">
+<section class="vibe449" data-theme="dark" aria-label="Orbital Loom">
   <style>
-    .vibe448 {
-      --h: 200;
-      --fg: hsl(230 15% 12%);
-      --muted: hsl(230 10% 36%);
-      --bg-1: hsl(210 60% 98%);
-      --bg-2: hsl(210 60% 95%);
-      --panel: hsla(0 0% 100% / 0.75);
-      --panel-b: hsl(230 20% 20% / 0.1);
-      --accent-1: hsl(var(--h) 85% 55%);
-      --accent-2: hsl(calc(var(--h) + 40) 90% 60%);
+    .vibe449 {
+      --h: 210;                    /* base hue */
+      --fg: hsl(210 20% 96%);
+      --muted: hsl(220 10% 72%);
+      --bg1: hsl(230 40% 9%);
+      --bg2: hsl(220 40% 12%);
+      --panel: hsla(0 0% 100% / 0.06);
+      --panel-b: hsla(0 0% 100% / 0.16);
+      --accentA: hsl(var(--h) 90% 60%);
+      --accentB: hsl(calc(var(--h) + 60) 90% 60%);
       --mx: 50%;
       --my: 50%;
-      --glow: 0.5;         /* 0 → 1 */
-      --tempo: 1;          /* 0.5 → 2 */
-      --r: 12;             /* symmetry folds */
+      --tilt-x: 0deg;
+      --tilt-y: 0deg;
+      --glow: 0.6;
+      --speed: 1.0;
       position: relative;
-      padding: clamp(28px, 6vw, 64px);
+      padding: clamp(28px, 6vw, 72px);
       border-radius: 28px;
-      min-height: min(82vh, 860px);
+      min-height: min(84vh, 900px);
       color: var(--fg);
       background:
-        radial-gradient(1000px 700px at var(--mx) var(--my), hsl(var(--h) 90% 90% / 0.65), transparent 60%),
-        linear-gradient(160deg, var(--bg-1), var(--bg-2));
-      box-shadow: 0 18px 48px rgba(0,0,0,0.12), inset 0 0 0 1px rgba(0,0,0,0.04);
+        radial-gradient(1000px 700px at var(--mx) var(--my), hsl(var(--h) 95% 20% / 0.35), transparent 60%),
+        linear-gradient(140deg, var(--bg1), var(--bg2));
+      box-shadow: 0 28px 64px rgba(0,0,0,0.38), inset 0 0 0 1px rgba(255,255,255,0.04);
       overflow: hidden;
       isolation: isolate;
     }
-    .vibe448[data-theme="dark"] {
-      --fg: hsl(220 20% 96%);
-      --muted: hsl(220 12% 72%);
-      --bg-1: hsl(230 35% 10%);
-      --bg-2: hsl(215 45% 13%);
-      --panel: hsla(0 0% 100% / 0.08);
-      --panel-b: hsla(0 0% 100% / 0.14);
+    .vibe449[data-theme="light"] {
+      --fg: hsl(230 20% 12%);
+      --muted: hsl(230 12% 36%);
+      --bg1: hsl(220 70% 98%);
+      --bg2: hsl(220 70% 94%);
+      --panel: hsla(0 0% 100% / 0.75);
+      --panel-b: hsla(230 20% 20% / 0.14);
       background:
-        radial-gradient(1100px 760px at var(--mx) var(--my), hsl(var(--h) 95% 20% / 0.45), transparent 60%),
-        linear-gradient(160deg, var(--bg-1), var(--bg-2));
-      box-shadow: 0 22px 54px rgba(0,0,0,0.36), inset 0 0 0 1px rgba(255,255,255,0.03);
+        radial-gradient(1100px 760px at var(--mx) var(--my), hsl(var(--h) 85% 80% / 0.45), transparent 60%),
+        linear-gradient(140deg, var(--bg1), var(--bg2));
+      box-shadow: 0 22px 54px rgba(0,0,0,0.16), inset 0 0 0 1px rgba(0,0,0,0.04);
     }
 
-    /* Ambient swirls */
-    .vibe448 .swirl {
-      position: absolute; inset: -35% -35% auto auto;
-      width: 120vmax; height: 120vmax;
+    /* Ambient aurora */
+    .vibe449 .aurora {
+      position: absolute; inset: -40% -40% auto auto;
+      width: 135vmax; height: 135vmax;
       background:
         conic-gradient(from 0deg at 50% 50%,
-          color-mix(in hsl, var(--accent-1) 25%, transparent) 0 20%,
-          transparent 20% 45%,
-          color-mix(in hsl, var(--accent-2) 25%, transparent) 45% 65%,
-          transparent 65% 100%);
-      filter: blur(calc(40px + 80px * var(--glow))) saturate(1.1);
-      mix-blend-mode: screen;
-      opacity: clamp(0.10, calc(var(--glow) * 0.9), 0.55);
+          color-mix(in hsl, var(--accentA) 22%, transparent) 0 25%,
+          transparent 25% 55%,
+          color-mix(in hsl, var(--accentB) 22%, transparent) 55% 75%,
+          transparent 75% 100%);
+      filter: blur(calc(60px + 120px * var(--glow))) saturate(1.05);
+      mix-blend-mode: screen; opacity: clamp(0.10, calc(var(--glow) * 0.8), 0.5);
       transform: translateZ(0);
-      pointer-events: none;
-      z-index: 0;
-      animation: vibe448-swirl calc(90s / var(--tempo)) linear infinite;
+      pointer-events: none; z-index: 0;
+      animation: v449-aurora 80s linear infinite;
     }
-    .vibe448 .swirl.b { inset: auto auto -35% -35%; animation-direction: reverse; opacity: clamp(0.08, calc(var(--glow) * 0.7), 0.4); }
-    @keyframes vibe448-swirl { to { transform: rotate(360deg); } }
+    .vibe449 .aurora.b { inset: auto auto -40% -40%; animation-direction: reverse; opacity: clamp(0.08, calc(var(--glow) * 0.6), 0.4); }
+    @keyframes v449-aurora { to { transform: rotate(360deg); } }
 
-    /* Layout */
-    .vibe448 .wrap {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      gap: clamp(18px, 5vw, 44px);
+    /* Grid layout */
+    .vibe449 .shell {
+      position: relative; z-index: 2;
+      display: grid; gap: clamp(18px, 5vw, 44px);
+      grid-template-columns: 1.1fr 1fr;
       align-items: center;
     }
-    @media (max-width: 960px) { .vibe448 .wrap { grid-template-columns: 1fr; } }
+    @media (max-width: 960px) { .vibe449 .shell { grid-template-columns: 1fr; } }
 
-    /* Headline block */
-    .vibe448 .badge {
+    /* Hero copy */
+    .vibe449 .badge {
       display: inline-grid; grid-auto-flow: column; gap: 8px; align-items: center;
-      padding: 8px 12px;
+      padding: 8px 12px; border-radius: 999px;
       background: linear-gradient(135deg, var(--panel), transparent);
       border: 1px solid var(--panel-b);
-      border-radius: 999px;
-      font: 700 12px/1 ui-sans-serif, system-ui, Inter, "Helvetica Neue";
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--fg);
-      user-select: none;
+      font: 700 11px/1 ui-sans-serif, system-ui, Inter, "Helvetica Neue";
+      text-transform: uppercase; letter-spacing: .12em;
+      user-select: none; color: var(--fg);
     }
-    .vibe448 .badge svg { width: 14px; height: 14px; }
-    .vibe448 .title {
+    .vibe449 .badge svg { width: 14px; height: 14px; }
+    .vibe449 .title {
       margin: 14px 0 10px;
-      font: 900 clamp(36px, 7.2vw, 86px)/1.02 ui-sans-serif, system-ui, Inter, "Helvetica Neue";
+      font: 900 clamp(38px, 8vw, 96px)/0.98 ui-sans-serif, system-ui, Inter, "Helvetica Neue";
       letter-spacing: -0.02em;
-      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      background: linear-gradient(90deg, var(--accentA), var(--accentB));
       -webkit-background-clip: text; background-clip: text; color: transparent;
       filter: drop-shadow(0 12px 30px rgba(0,0,0,0.18));
     }
-    .vibe448 .lead {
-      margin: 0 0 8px;
-      font: 500 clamp(14px, 2.1vw, 19px)/1.8 ui-sans-serif, system-ui, Inter;
-      color: var(--muted);
-      max-width: 62ch;
+    .vibe449 .lead {
+      margin: 0;
+      font: 500 clamp(14px, 2.2vw, 20px)/1.8 ui-sans-serif, system-ui, Inter;
+      color: var(--muted); max-width: 62ch;
+    }
+    .vibe449 .hint {
+      margin-top: 10px; color: var(--muted);
+      font: 600 12px/1.4 ui-sans-serif, system-ui, Inter; letter-spacing: .04em;
     }
 
-    /* Panel + Canvas */
-    .vibe448 .panel {
-      background: linear-gradient(180deg, var(--panel), transparent);
+    /* Control bar */
+    .vibe449 .bar {
+      display: grid; gap: 10px;
+      grid-template-columns: auto 1fr auto;
+      align-items: center; margin-top: 14px;
+    }
+    @media (max-width: 700px) { .vibe449 .bar { grid-template-columns: 1fr; } }
+
+    .vibe449 .chips {
+      display: grid; grid-auto-flow: column; gap: 8px; justify-content: start;
+    }
+    .vibe449 .chip {
+      appearance: none; cursor: pointer;
+      padding: 8px 12px; border-radius: 999px;
       border: 1px solid var(--panel-b);
-      border-radius: 22px;
-      padding: clamp(14px, 3vw, 20px);
-      box-shadow: 0 14px 36px rgba(0,0,0,0.14), 0 1px 0 hsla(0 0% 100% / 0.5) inset;
-      backdrop-filter: blur(8px);
-      transform-style: preserve-3d;
-      transition: transform 220ms ease, box-shadow 220ms ease;
-    }
-    .vibe448 .panel:hover { transform: translateY(-2px); }
-    .vibe448 .fabric {
-      position: relative;
-      width: min(50vw, 560px);
-      aspect-ratio: 1 / 1;
-      margin: 0 auto;
-      border-radius: 22px;
-      overflow: hidden;
-      box-shadow: 0 22px 60px rgba(0,0,0,0.22);
-      background:
-        radial-gradient(closest-side, transparent 62%, color-mix(in hsl, var(--accent-1) 10%, transparent) 100%),
-        linear-gradient(135deg, color-mix(in hsl, var(--accent-1) 12%, transparent), color-mix(in hsl, var(--accent-2) 12%, transparent));
-    }
-    .vibe448 canvas.kaleid {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      filter: saturate(calc(0.9 + var(--glow) * 0.6)) contrast(1.05) brightness(calc(0.9 + var(--glow) * 0.2));
-    }
-
-    /* Controls */
-    .vibe448 .controls {
-      display: grid; gap: 12px;
-      grid-template-columns: 1fr 1fr;
-      margin-top: 16px;
-    }
-    @media (max-width: 640px) { .vibe448 .controls { grid-template-columns: 1fr; } }
-
-    .vibe448 .control {
       background: linear-gradient(180deg, var(--panel), transparent);
-      border: 1px solid var(--panel-b);
-      border-radius: 14px;
-      padding: 12px;
-      display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    }
-    .vibe448 label {
-      font: 700 12px/1 ui-sans-serif, system-ui, Inter;
-      letter-spacing: .08em;
-      text-transform: uppercase;
       color: var(--fg);
-      opacity: .9;
-    }
-    .vibe448 .readout {
-      font: 700 12px/1 ui-sans-serif, system-ui, Inter;
-      letter-spacing: .06em;
-      color: var(--muted);
-      text-align: right;
-    }
-    .vibe448 input[type="range"] {
-      -webkit-appearance: none; appearance: none;
-      width: 100%; height: 10px; border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-      outline: none; border: none;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
-    }
-    .vibe448 input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: white; border: 2px solid var(--accent-1);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-      cursor: ew-resize;
-    }
-    .vibe448 input[type="range"]::-moz-range-thumb {
-      width: 18px; height: 18px; border-radius: 50%;
-      background: white; border: 2px solid var(--accent-1);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-      cursor: ew-resize;
-    }
-
-    .vibe448 .bar {
-      display: grid; grid-auto-flow: column; gap: 8px; align-items: center; justify-content: start;
-      margin-top: 12px;
-    }
-    .vibe448 .chip {
-      appearance: none; border: 1px solid var(--panel-b);
-      background: linear-gradient(180deg, var(--panel), transparent);
-      padding: 8px 12px; border-radius: 999px; cursor: pointer;
-      font: 700 12px/1 ui-sans-serif, system-ui, Inter;
-      letter-spacing: .06em; color: var(--fg);
-      transition: transform 160ms ease, box-shadow 200ms ease;
+      font: 700 12px/1 ui-sans-serif, system-ui, Inter; letter-spacing: .06em;
+      transition: transform 160ms ease, box-shadow 200ms ease, background 200ms ease;
       box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset;
     }
-    .vibe448 .chip:hover { transform: translateY(-1px); }
-    .vibe448 .chip[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent-1) inset; }
-    .vibe448 .theme {
-      margin-left: auto;
+    .vibe449 .chip:hover { transform: translateY(-1px); }
+    .vibe449 .chip[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accentA) inset; }
+
+    .vibe449 .tog {
+      margin-left: auto; display: grid; grid-auto-flow: column; gap: 8px; align-items: center;
+    }
+    @media (max-width: 700px) { .vibe449 .tog { margin-left: 0; } }
+
+    /* Panel + Canvas */
+    .vibe449 .loom-wrap {
+      position: relative;
+      perspective: 1200px;
+    }
+    .vibe449 .loom {
+      background: linear-gradient(180deg, var(--panel), transparent);
+      border: 1px solid var(--panel-b);
+      border-radius: 24px;
+      padding: clamp(12px, 2.2vw, 18px);
+      box-shadow: 0 18px 44px rgba(0,0,0,0.28), 0 1px 0 hsla(0 0% 100% / 0.5) inset;
+      backdrop-filter: blur(8px);
+      transform-style: preserve-3d;
+      transform: rotateX(var(--tilt-y)) rotateY(var(--tilt-x));
+      transition: transform 180ms ease;
+    }
+    .vibe449 .fabric {
+      position: relative; margin: 0; width: min(54vw, 640px); aspect-ratio: 1/1; border-radius: 20px; overflow: hidden;
+      background:
+        radial-gradient(closest-side, transparent 62%, color-mix(in hsl, var(--accentA) 10%, transparent) 100%),
+        linear-gradient(135deg, color-mix(in hsl, var(--accentA) 12%, transparent), color-mix(in hsl, var(--accentB) 12%, transparent));
+      box-shadow: 0 24px 60px rgba(0,0,0,0.28);
+    }
+    .vibe449 canvas.weave {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      filter: saturate(calc(0.9 + var(--glow) * 0.7)) contrast(1.05) brightness(calc(0.9 + var(--glow) * 0.2));
     }
 
-    /* Cards */
-    .vibe448 .tiles {
-      margin-top: clamp(18px, 4vw, 26px);
-      display: grid; gap: clamp(12px, 2.6vw, 20px);
-      grid-template-columns: repeat(3, minmax(0,1fr));
+    .vibe449 .controls {
+      margin-top: 14px; display: grid; gap: 12px;
+      grid-template-columns: 1fr 1fr 1fr;
     }
-    @media (max-width: 960px) { .vibe448 .tiles { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 620px) { .vibe448 .tiles { grid-template-columns: 1fr; } }
-    .vibe448 .tile {
-      background: var(--panel);
+    @media (max-width: 760px) { .vibe449 .controls { grid-template-columns: 1fr; } }
+
+    .vibe449 .control {
+      background: linear-gradient(180deg, var(--panel), transparent);
       border: 1px solid var(--panel-b);
-      border-radius: 16px;
-      padding: clamp(14px, 3vw, 20px);
-      min-height: 120px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.14);
-      transition: transform 200ms ease, box-shadow 220ms ease;
+      border-radius: 14px; padding: 12px;
+      display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.16);
     }
-    .vibe448 .tile:hover { transform: translateY(-4px); box-shadow: 0 16px 38px rgba(0,0,0,0.25); }
-    .vibe448 .tile h3 {
-      margin: 0 0 6px;
-      font: 800 clamp(16px, 2.4vw, 20px)/1.2 ui-sans-serif, system-ui, Inter;
+    .vibe449 label {
+      font: 800 11px/1 ui-sans-serif, system-ui, Inter; text-transform: uppercase; letter-spacing: .1em; opacity: .95;
     }
-    .vibe448 .tile p {
-      margin: 0;
-      color: var(--muted);
-      font: 500 14px/1.7 ui-sans-serif, system-ui, Inter;
+    .vibe449 .readout {
+      font: 700 12px/1 ui-sans-serif, system-ui, Inter; color: var(--muted); text-align: right;
+    }
+    .vibe449 input[type="range"] {
+      -webkit-appearance: none; appearance: none; width: 100%; height: 10px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--accentA), var(--accentB));
+      outline: none; border: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+    }
+    .vibe449 input[type="range"]::-webkit-slider-thumb,
+    .vibe449 input[type="range"]::-moz-range-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: white; border: 2px solid var(--accentA);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18); cursor: ew-resize;
     }
 
     /* Meta */
-    .vibe448 .meta {
+    .vibe449 .meta {
       margin-top: clamp(16px, 3vw, 24px);
       display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
-      color: var(--muted);
-      font: 500 12px/1.4 ui-sans-serif, system-ui, Inter;
+      color: var(--muted); font: 500 12px/1.4 ui-sans-serif, system-ui, Inter;
       position: relative; z-index: 2;
     }
 
-    /* Motion safe */
     @media (prefers-reduced-motion: reduce) {
-      .vibe448 .swirl { animation: none !important; }
-      .vibe448 .panel, .vibe448 .tile, .vibe448 .chip { transition: none !important; }
+      .vibe449 .aurora { animation: none !important; }
+      .vibe449 .loom, .vibe449 .chip { transition: none !important; }
     }
   </style>
 
-  <div class="swirl a" aria-hidden="true"></div>
-  <div class="swirl b" aria-hidden="true"></div>
+  <div class="aurora a" aria-hidden="true"></div>
+  <div class="aurora b" aria-hidden="true"></div>
 
-  <div class="wrap">
-    <div class="panel">
+  <div class="shell">
+    <div class="intro">
       <div class="badge" aria-label="Version badge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="9"></circle>
-          <path d="M12 7v5l3 3"></path>
+          <path d="M12 3v6m0 6v6M3 12h6m6 0h6"></path>
         </svg>
-        Vibe 448
+        Vibe 449
       </div>
-      <h1 class="title">Prism Atelier</h1>
-      <p class="lead">A living tapestry of symmetry. Steer the light, tune the folds, let color breathe.</p>
+      <h1 class="title">Orbital Loom</h1>
+      <p class="lead">Threads of light orbit and braid in real time. Shape the motion; tune the glow; change the sky.</p>
+      <p class="hint">Tip: move your pointer to tilt the loom — the background pools where you linger.</p>
 
-      <div class="bar">
-        <button class="chip palette" data-h="200" aria-pressed="true" title="Aero">Aero</button>
-        <button class="chip palette" data-h="320" aria-pressed="false" title="Bloom">Bloom</button>
-        <button class="chip palette" data-h="40" aria-pressed="false" title="Citrine">Citrine</button>
-        <button class="chip theme" id="theme-toggle" aria-pressed="false" title="Toggle light/dark">Theme</button>
-      </div>
-
-      <div class="controls" role="group" aria-label="Interactive controls">
-        <div class="control">
-          <label for="bloom">Bloom</label>
-          <input id="bloom" type="range" min="0" max="100" value="50" />
-          <span class="readout" id="bloom-readout">50%</span>
+      <div class="bar" role="group" aria-label="Modes and palette">
+        <div class="chips" aria-label="Modes">
+          <button class="chip mode" data-mode="spin" aria-pressed="true" title="Spin">Spin</button>
+          <button class="chip mode" data-mode="pulse" aria-pressed="false" title="Pulse">Pulse</button>
+          <button class="chip mode" data-mode="flow" aria-pressed="false" title="Flow">Flow</button>
         </div>
-        <div class="control">
-          <label for="tempo">Tempo</label>
-          <input id="tempo" type="range" min="50" max="200" value="100" />
-          <span class="readout" id="tempo-readout">1.00×</span>
+        <div class="chips" aria-label="Palettes">
+          <button class="chip palette" data-h="210" aria-pressed="true" title="Aero">Aero</button>
+          <button class="chip palette" data-h="32" aria-pressed="false" title="Solar">Solar</button>
+          <button class="chip palette" data-h="285" aria-pressed="false" title="Violet">Violet</button>
+          <button class="chip palette" data-h="165" aria-pressed="false" title="Sea">Sea</button>
         </div>
-        <div class="control">
-          <label for="sym">Symmetry</label>
-          <input id="sym" type="range" min="6" max="28" value="12" />
-          <span class="readout"><span id="sym-readout">12</span>-fold</span>
-        </div>
-        <div class="control">
-          <label>Hue</label>
-          <div style="height:10px; border-radius:999px; background:linear-gradient(90deg, hsl(0 85% 55%), hsl(90 85% 55%), hsl(180 85% 55%), hsl(270 85% 55%), hsl(360 85% 55%));"></div>
-          <span class="readout" id="hue-readout">200°</span>
+        <div class="tog">
+          <button class="chip theme" id="theme-toggle" aria-pressed="true" title="Toggle theme">Theme</button>
         </div>
       </div>
     </div>
 
-    <figure class="fabric" aria-label="Kaleidoscopic fabric">
-      <canvas class="kaleid" aria-hidden="true"></canvas>
-    </figure>
-  </div>
+    <div class="loom-wrap">
+      <div class="loom">
+        <figure class="fabric" aria-label="Orbital weave">
+          <canvas class="weave" aria-hidden="true"></canvas>
+        </figure>
 
-  <div class="tiles" role="list">
-    <div class="tile" role="listitem" aria-label="Mantra">
-      <h3>Quiet geometry</h3>
-      <p>Form first, flourish second. Clarity invites curiosity.</p>
-    </div>
-    <div class="tile" role="listitem" aria-label="Play">
-      <h3>Play</h3>
-      <p>Drag to guide the light. Increase folds for fine weave; slow tempo to study structure.</p>
-    </div>
-    <div class="tile" role="listitem" aria-label="Palette">
-      <h3>Palettes</h3>
-      <p>Aero, Bloom, Citrine—tuned for accessible contrast in both themes.</p>
+        <div class="controls" role="group" aria-label="Interactive controls">
+          <div class="control">
+            <label for="speed">Speed</label>
+            <input id="speed" type="range" min="20" max="200" value="100" />
+            <span class="readout" id="speed-read">1.00×</span>
+          </div>
+          <div class="control">
+            <label for="glow">Glow</label>
+            <input id="glow" type="range" min="0" max="100" value="60" />
+            <span class="readout" id="glow-read">60%</span>
+          </div>
+          <div class="control">
+            <label for="density">Density</label>
+            <input id="density" type="range" min="4" max="16" value="9" />
+            <span class="readout"><span id="density-read">9</span> rings</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="meta">
-    <span>Tip: move your pointer—color pools gather where you linger.</span>
+    <span>Made with patience and sine waves.</span>
     <span id="last-updated" aria-live="polite"></span>
   </div>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.vibe448');
-      const canvas = root.querySelector('canvas.kaleid');
+      const root = document.currentScript.closest('.vibe449');
+      const canvas = root.querySelector('canvas.weave');
       const ctx = canvas.getContext('2d');
-      const bloom = root.querySelector('#bloom');
-      const tempo = root.querySelector('#tempo');
-      const sym = root.querySelector('#sym');
-      const hueRead = root.querySelector('#hue-readout');
-      const bloomRead = root.querySelector('#bloom-readout');
-      const tempoRead = root.querySelector('#tempo-readout');
-      const symRead = root.querySelector('#sym-readout');
+
+      const modeBtns = [...root.querySelectorAll('.chip.mode')];
+      const paletteBtns = [...root.querySelectorAll('.chip.palette')];
       const themeToggle = root.querySelector('#theme-toggle');
-      const paletteChips = [...root.querySelectorAll('.chip.palette')];
+
+      const speed = root.querySelector('#speed');
+      const glow = root.querySelector('#glow');
+      const density = root.querySelector('#density');
+
+      const speedRead = root.querySelector('#speed-read');
+      const glowRead = root.querySelector('#glow-read');
+      const densityRead = root.querySelector('#density-read');
+
       const updatedEl = root.querySelector('#last-updated');
 
       let pointer = { x: 0.5, y: 0.5 };
+      let mode = 'spin';
+
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      function applyHue(h) {
+      function setHue(h) {
         const hue = Math.round(h);
         root.style.setProperty('--h', hue);
-        if (hueRead) hueRead.textContent = hue + '°';
       }
-      function applyBloom(v) {
+      function setSpeed(v) {
+        const n = Math.max(20, Math.min(200, Number(v))) / 100; // 0.2..2
+        root.style.setProperty('--speed', n.toFixed(2));
+        speedRead.textContent = n.toFixed(2) + '×';
+      }
+      function setGlow(v) {
         const n = Math.max(0, Math.min(100, Number(v))) / 100;
         root.style.setProperty('--glow', n.toFixed(2));
-        if (bloomRead) bloomRead.textContent = Math.round(n * 100) + '%';
+        glowRead.textContent = Math.round(n * 100) + '%';
       }
-      function applyTempo(v) {
-        const n = Math.max(50, Math.min(200, Number(v))) / 100; // 0.5..2
-        root.style.setProperty('--tempo', n.toFixed(2));
-        if (tempoRead) tempoRead.textContent = n.toFixed(2) + '×';
+      function setDensity(v) {
+        const n = Math.max(4, Math.min(16, Math.round(Number(v))));
+        densityRead.textContent = n;
+        rings.count = n;
+        buildRings();
       }
-      function applySymmetry(v) {
-        const n = Math.max(6, Math.min(28, Math.round(Number(v))));
-        root.style.setProperty('--r', n);
-        if (symRead) symRead.textContent = n;
-      }
-
-      function toggleTheme() {
-        const dark = root.getAttribute('data-theme') === 'dark';
-        root.setAttribute('data-theme', dark ? 'light' : 'dark');
-        themeToggle.setAttribute('aria-pressed', String(!dark));
-        draw(true);
-      }
-
-      // Palette buttons
-      paletteChips.forEach(btn => {
-        btn.addEventListener('click', () => {
-          paletteChips.forEach(b => b.setAttribute('aria-pressed', 'false'));
-          btn.setAttribute('aria-pressed', 'true');
-          applyHue(btn.dataset.h || 200);
-          draw(true);
-        });
-      });
 
       // Timestamp
       function updateTimestamp() {
@@ -456,6 +395,56 @@
         });
         updatedEl.textContent = 'Updated ' + fmt.format(now);
       }
+
+      // Theme toggle
+      function toggleTheme() {
+        const light = root.getAttribute('data-theme') === 'light';
+        root.setAttribute('data-theme', light ? 'dark' : 'light');
+        themeToggle.setAttribute('aria-pressed', String(!light));
+        draw(true);
+      }
+      themeToggle.addEventListener('click', toggleTheme);
+
+      // Modes
+      modeBtns.forEach(b => {
+        b.addEventListener('click', () => {
+          modeBtns.forEach(x => x.setAttribute('aria-pressed', 'false'));
+          b.setAttribute('aria-pressed', 'true');
+          mode = b.dataset.mode || 'spin';
+          draw(true);
+        });
+      });
+
+      // Palettes
+      paletteBtns.forEach(p => {
+        p.addEventListener('click', () => {
+          paletteBtns.forEach(x => x.setAttribute('aria-pressed', 'false'));
+          p.setAttribute('aria-pressed', 'true');
+          setHue(p.dataset.h || 210);
+          draw(true);
+        });
+      });
+
+      // Inputs
+      speed.addEventListener('input', e => { setSpeed(e.target.value); loopStart(); }, { passive: true });
+      glow.addEventListener('input', e => { setGlow(e.target.value); draw(true); }, { passive: true });
+      density.addEventListener('input', e => { setDensity(e.target.value); draw(true); }, { passive: true });
+
+      // Pointer → tilt + light pool
+      function onMove(e) {
+        const rect = root.getBoundingClientRect();
+        pointer.x = (e.clientX - rect.left) / rect.width;
+        pointer.y = (e.clientY - rect.top) / rect.height;
+        root.style.setProperty('--mx', Math.round(pointer.x * 100) + '%');
+        root.style.setProperty('--my', Math.round(pointer.y * 100) + '%');
+
+        // gentle parallax tilt
+        const dx = (pointer.x - 0.5) * 2;
+        const dy = (pointer.y - 0.5) * -2;
+        root.style.setProperty('--tilt-x', (dx * 6) + 'deg');
+        root.style.setProperty('--tilt-y', (dy * 6) + 'deg');
+      }
+      root.addEventListener('pointermove', onMove, { passive: true });
 
       // Canvas sizing
       function resize() {
@@ -468,102 +457,108 @@
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         draw(true);
       }
+      const ro = new ResizeObserver(resize);
+      ro.observe(canvas);
 
-      // Interaction: pointer moves spotlight center
-      function onMove(e) {
-        const rect = root.getBoundingClientRect();
-        pointer.x = (e.clientX - rect.left) / rect.width;
-        pointer.y = (e.clientY - rect.top) / rect.height;
-        root.style.setProperty('--mx', Math.round(pointer.x * 100) + '%');
-        root.style.setProperty('--my', Math.round(pointer.y * 100) + '%');
+      // Orbital rings model
+      const rings = { count: 9, data: [] };
+      function buildRings() {
+        rings.data = [];
+        const w = canvas.clientWidth || 600;
+        const h = canvas.clientHeight || 600;
+        const R = Math.min(w, h) * 0.46;
+        for (let i = 0; i < rings.count; i++) {
+          const t = i / Math.max(1, rings.count - 1);
+          const radius = (0.12 + t * 0.8) * R;
+          const segments = Math.round(96 + t * 120);
+          const phase = Math.random() * Math.PI * 2;
+          rings.data.push({ radius, segments, phase });
+        }
       }
-      root.addEventListener('pointermove', onMove, { passive: true });
 
-      // Kaleidoscopic draw
+      // Color helper
+      function hsl(h, s, l, a = 1) { return `hsla(${h} ${s}% ${l}% / ${a})`; }
+
+      // Draw loop
       let raf;
       function draw(force) {
-        if (!ctx) return;
         const w = canvas.clientWidth;
         const h = canvas.clientHeight;
+        if (!w || !h) return;
         ctx.clearRect(0, 0, w, h);
 
-        const folds = parseInt(getComputedStyle(root).getPropertyValue('--r')) || 12;
-        const tempoVal = parseFloat(getComputedStyle(root).getPropertyValue('--tempo')) || 1;
-        const glow = parseFloat(getComputedStyle(root).getPropertyValue('--glow')) || 0.5;
-        const baseHue = parseInt(getComputedStyle(root).getPropertyValue('--h')) || 200;
-
         const cx = w / 2, cy = h / 2;
-        const R = Math.min(w, h) * 0.48;
-        const slice = (Math.PI * 2) / folds;
+        const hue = parseInt(getComputedStyle(root).getPropertyValue('--h')) || 210;
+        const spd = parseFloat(getComputedStyle(root).getPropertyValue('--speed')) || 1;
+        const glowV = parseFloat(getComputedStyle(root).getPropertyValue('--glow')) || 0.6;
 
-        const t = performance.now() * 0.001 * tempoVal;
-        const linger = (pointer.x + pointer.y) * 0.5;
-        const hueShift = (Math.sin(t * 0.6 + linger * 4) * 40);
+        const t = performance.now() * 0.001 * spd;
+        ctx.save();
+        ctx.translate(cx, cy);
 
-        const layers = 72;
-        ctx.lineCap = 'round';
+        // luminous center
+        const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Math.min(w, h) * 0.5);
+        g.addColorStop(0, hsl((hue + 30) % 360, 90, 62, 0.25 + glowV * 0.35));
+        g.addColorStop(1, 'transparent');
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(0, 0, Math.min(w, h) * 0.5, 0, Math.PI * 2); ctx.fill();
 
-        // Precompute gradient palette
-        function col(i) {
-          const f = i / layers;
-          const hhh = (baseHue + hueShift + f * 140) % 360;
-          const s = 80 + Math.sin(t + f * 3) * 10;
-          const l = 45 + Math.cos(t * 0.8 + f * 4) * 8;
-          return `hsl(${hhh} ${s}% ${l}%)`;
-        }
+        ctx.globalCompositeOperation = 'lighter';
 
-        // Draw each slice mirrored
-        for (let sIdx = 0; sIdx < folds; sIdx++) {
-          ctx.save();
-          ctx.translate(cx, cy);
-          ctx.rotate(slice * sIdx);
-          if (sIdx % 2) ctx.scale(1, -1);
+        // draw each ring
+        rings.data.forEach((ring, idx) => {
+          const f = idx / Math.max(1, rings.data.length - 1);
+          const seg = ring.segments;
+          const step = (Math.PI * 2) / seg;
+          const baseR = ring.radius;
 
-          // Clip to wedge
-          ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.arc(0, 0, R, 0, slice, false);
-          ctx.closePath();
-          ctx.clip();
+          const spin = (0.2 + f * 0.9) * t * 2;
+          const pulse = Math.sin(t * (1.2 + f * 1.4) + ring.phase) * (8 + glowV * 14);
+          const flow = Math.sin((t * 0.8 + ring.phase) + f * 6) * (12 + glowV * 10);
 
-          // Layered ribbons
-          for (let i = 0; i < layers; i++) {
-            const f = i / layers;
-            const r = f * R;
-            const amp = 0.55 + glow * 0.8;
-            const wob = Math.sin(t * 1.4 + r * 0.03 + linger * 6) * amp;
-            const a = (slice * 0.5) + wob * (slice * 0.45);
-            const thickness = 1 + glow * 2 + (1 - f) * 2;
+          let rMod = 0;
+          if (mode === 'spin') rMod = 0;
+          if (mode === 'pulse') rMod = pulse;
+          if (mode === 'flow') rMod = flow;
 
-            ctx.beginPath();
-            ctx.strokeStyle = col(i);
-            ctx.globalAlpha = 0.25 + glow * 0.35;
-            ctx.lineWidth = thickness;
+          // ring path
+          let px, py;
+          for (let i = 0; i <= seg; i++) {
+            const ang = i * step + ring.phase + spin;
+            const wave = Math.sin(ang * (2 + f * 3) + t * (1.5 + f)) * (6 + glowV * 8);
+            const rr = baseR + rMod + wave;
+            const x = Math.cos(ang) * rr;
+            const y = Math.sin(ang) * rr;
 
-            const p = Math.max(6, Math.floor(16 + glow * 24));
-            for (let k = 0; k <= p; k++) {
-              const kk = k / p;
-              const rr = r * (0.5 + kk * 0.9);
-              const aa = a * (0.3 + kk * 0.7);
-              const px = Math.cos(aa) * rr;
-              const py = Math.sin(aa) * rr;
-              if (k === 0) ctx.moveTo(px, py);
-              else ctx.lineTo(px, py);
+            if (i > 0) {
+              // color shifts along angle
+              const aDeg = (ang * 180 / Math.PI) % 360;
+              const sat = 82 + Math.sin(t + f * 3) * 8;
+              const light = 45 + Math.cos(t * 0.8 + f * 4) * 6;
+              const alpha = 0.10 + glowV * 0.25;
+
+              ctx.strokeStyle = hsl((hue + aDeg) % 360, sat, light, alpha);
+              ctx.lineWidth = 0.8 + glowV * 1.4 + (1 - f) * 1.2;
+              ctx.beginPath();
+              ctx.moveTo(px, py);
+              ctx.lineTo(x, y);
+              ctx.stroke();
+
+              // occasional spoke
+              if (i % Math.round(24 + f * 16) === 0) {
+                ctx.strokeStyle = hsl((hue + aDeg + 30) % 360, sat, light + 6, alpha * 0.8);
+                ctx.lineWidth = 0.6 + glowV;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x * 0.85, y * 0.85);
+                ctx.stroke();
+              }
             }
-            ctx.stroke();
+            px = x; py = y;
           }
-          ctx.restore();
-        }
+        });
 
-        // Soft center bloom
-        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
-        grad.addColorStop(0, `hsla(${(baseHue + hueShift) % 360}, 85%, 60%, ${0.25 + glow * 0.35})`);
-        grad.addColorStop(1, 'transparent');
-        ctx.fillStyle = grad;
-        ctx.globalAlpha = 1;
-        ctx.beginPath();
-        ctx.arc(cx, cy, R, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.restore();
 
         if (!prefersReduced && !force) raf = requestAnimationFrame(() => draw(false));
       }
@@ -574,40 +569,25 @@
         else draw(true);
       }
 
-      // Wire controls
-      bloom.addEventListener('input', e => { applyBloom(e.target.value); draw(true); }, { passive: true });
-      tempo.addEventListener('input', e => { applyTempo(e.target.value); loopStart(); }, { passive: true });
-      sym.addEventListener('input', e => { applySymmetry(e.target.value); draw(true); }, { passive: true });
-      themeToggle.addEventListener('click', toggleTheme);
-
-      // Init values
-      applyHue(200);
-      applyBloom(bloom.value);
-      applyTempo(tempo.value);
-      applySymmetry(sym.value);
+      // Init
+      setHue(210);
+      setSpeed(speed.value);
+      setGlow(glow.value);
+      setDensity(density.value);
       updateTimestamp();
 
-      // Time-driven hue drift
-      function driftHue() {
-        const now = new Date();
-        const t = (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) / 86400;
-        const base = parseInt(getComputedStyle(root).getPropertyValue('--h')) || 200;
-        const drift = Math.round(Math.sin(t * Math.PI * 2) * 20);
-        hueRead.textContent = (base + drift) + '°';
-      }
-      const timeTimer = setInterval(() => { updateTimestamp(); driftHue(); }, 1000);
+      // subtle hue clock drift textless (keeps background alive)
+      const tick = setInterval(updateTimestamp, 1000);
 
-      // Resize observer
-      const ro = new ResizeObserver(resize);
-      ro.observe(canvas);
       resize();
+      buildRings();
       loopStart();
 
-      // Cleanup on removal
+      // Cleanup when removed
       root.addEventListener('DOMNodeRemoved', () => {
         cancelAnimationFrame(raf);
         ro.disconnect();
-        clearInterval(timeTimer);
+        clearInterval(tick);
       }, { once: true });
     })();
   </script>
