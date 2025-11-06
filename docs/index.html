@@ -73,371 +73,318 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="solaris" data-theme="aurora" aria-label="Solaris Dial — kinetic sundial">
+<section class="weave" data-theme="fjord" aria-label="Lumen Weave — living gradient atelier">
   <style>
-    .solaris {
-      --ink: hsl(228 15% 12%);
-      --muted: hsl(228 10% 38%);
-      --bg-1: hsl(206 100% 98%);
-      --bg-2: hsl(190 100% 97%);
-      --a: hsl(200 92% 54%);
-      --b: hsl(312 88% 60%);
-      --c: hsl(48 96% 54%);
-      --ring: hsla(228 40% 10% / .12);
-      --glass: hsla(0 0% 100% / .6);
+    .weave {
+      --ink: hsl(220 20% 12%);
+      --muted: hsl(220 10% 36%);
+      --ring: hsla(220 30% 10% / .14);
+      --glass: hsla(0 0% 100% / .55);
 
-      --mx: 50%; --my: 50%;
-      --speed: 1;         /* 0.2…3 */
-      --bloom: 16px;      /* 0…40px */
-      --trail: 0.12;      /* 0.02…0.24 */
+      --bg-1: hsl(210 100% 98%);
+      --bg-2: hsl(195 100% 96%);
+      --a: hsl(198 90% 56%);
+      --b: hsl(268 85% 62%);
+      --c: hsl(48 96% 58%);
+
+      --mx: 50%;
+      --my: 50%;
+      --speed: 1;
+      --grain: .18;
+      --bloom: 20px;
 
       position: relative;
-      isolation: isolate;
       color: var(--ink);
-      padding: clamp(22px, 5vw, 64px);
+      padding: clamp(20px, 5vw, 64px);
       border-radius: 28px;
       min-height: min(92vh, 1080px);
       overflow: hidden;
-
       background:
-        radial-gradient(900px 700px at var(--mx) var(--my), color-mix(in hsl, var(--a) 10%, transparent), transparent 60%),
-        radial-gradient(1200px 1000px at calc(100% - 8%) 12%, color-mix(in hsl, var(--b) 12%, transparent), transparent 60%),
-        linear-gradient(140deg, var(--bg-1), var(--bg-2));
+        radial-gradient(1000px 800px at calc(var(--mx)) calc(var(--my)), color-mix(in hsl, var(--a) 10%, transparent), transparent 60%),
+        linear-gradient(130deg, var(--bg-1), var(--bg-2));
       box-shadow: 0 34px 100px rgba(0,0,0,.22), inset 0 0 0 1px rgba(0,0,0,.06);
+      isolation: isolate;
     }
-    .solaris[data-theme="nocturne"] {
-      --ink: hsl(0 0% 96%);
-      --muted: hsl(0 0% 72%);
-      --bg-1: hsl(230 30% 12%);
-      --bg-2: hsl(220 32% 9%);
-      --a: hsl(196 100% 64%);
-      --b: hsl(300 92% 66%);
-      --c: hsl(58 96% 60%);
-      --glass: hsla(0 0% 100% / .12);
-      --ring: hsla(0 0% 100% / .16);
-    }
-    .solaris[data-theme="paper"] {
-      --ink: hsl(22 26% 14%);
-      --muted: hsl(22 12% 34%);
-      --bg-1: hsl(42 64% 97%);
-      --bg-2: hsl(30 52% 96%);
-      --a: hsl(16 88% 56%);
-      --b: hsl(228 86% 54%);
-      --c: hsl(148 64% 48%);
-      --ring: hsla(22 20% 12% / .16);
-      --glass: hsla(0 0% 100% / .66);
-    }
-
-    .solaris::before,
-    .solaris::after {
+    .weave::before,
+    .weave::after {
       content: "";
       position: absolute; inset: -15%;
       pointer-events: none; z-index: 0;
       background:
-        radial-gradient(900px 900px at 20% 30%, rgba(255,255,255,.10), transparent 70%),
-        radial-gradient(900px 900px at 80% 70%, rgba(0,0,0,.08), transparent 70%),
-        repeating-linear-gradient(45deg, rgba(0,0,0,.03) 0 6px, rgba(0,0,0,0) 6px 12px);
+        conic-gradient(from 0turn at 20% 30%, color-mix(in hsl, var(--a) 18%, transparent) 0 10%, transparent 10% 55%, color-mix(in hsl, var(--b) 16%, transparent) 55% 70%, transparent 70% 100%),
+        radial-gradient(1000px 700px at 82% 66%, color-mix(in hsl, var(--c) 12%, transparent), transparent 60%),
+        repeating-linear-gradient(45deg, rgba(0,0,0,.025) 0 6px, rgba(0,0,0,0) 6px 12px);
       mix-blend-mode: overlay;
-      animation: driftBG 160s linear infinite;
+      animation: sky-roll calc(120s / var(--speed)) linear infinite;
     }
-    .solaris::after { opacity: .35; transform: rotate(.13turn); animation-duration: 220s; }
-    @keyframes driftBG { to { transform: translate3d(6%, -8%, 0) rotate(.02turn); } }
+    .weave::after { opacity: .35; animation-duration: calc(180s / var(--speed)); transform: rotate(.1turn); }
+    @keyframes sky-roll { to { transform: rotate(.02turn) translate3d(6%, -6%, 0); } }
 
-    .solaris .grid {
-      position: relative; z-index: 2;
-      display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(18px, 4vw, 48px); align-items: center;
+    .weave .grid {
+      display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(18px, 4vw, 48px); align-items: center; position: relative; z-index: 2;
     }
-    @media (max-width: 1024px) { .solaris .grid { grid-template-columns: 1fr; } }
+    @media (max-width: 1040px) { .weave .grid { grid-template-columns: 1fr; } }
 
-    .solaris .hero { display: grid; gap: 14px; align-content: start; }
-    .solaris .badge {
+    .weave .hero { display: grid; gap: 14px; align-content: start; }
+    .weave .badge {
       display: inline-grid; grid-auto-flow: column; gap: 10px; align-items: center; width: max-content;
       padding: 10px 14px; border-radius: 999px; border: 1px solid var(--ring);
       background: linear-gradient(180deg, var(--glass), transparent);
       font: 900 11px/1 ui-sans-serif, system-ui; text-transform: uppercase; letter-spacing: .14em; color: var(--ink);
       box-shadow: 0 1px 0 hsla(0 0% 100% / .6) inset;
     }
-    .solaris .title {
+    .weave .title {
       margin: 0; letter-spacing: -0.02em;
       font: 900 clamp(48px, 9vw, 120px)/0.92 ui-serif, Georgia, "Times New Roman", serif;
       background: linear-gradient(90deg, var(--a), var(--b), var(--c));
       -webkit-background-clip: text; background-clip: text; color: transparent;
       filter: drop-shadow(0 10px 26px rgba(0,0,0,.16));
     }
-    .solaris .lede {
+    .weave .lede {
       font: 500 clamp(14px, 2vw, 20px)/1.8 ui-sans-serif, system-ui, "Segoe UI", Helvetica, Arial;
-      color: var(--muted); max-width: 62ch;
+      color: var(--muted); max-width: 64ch;
     }
 
-    .solaris .panel {
-      display: grid; gap: 14px; width: fit-content;
+    .weave .deck {
+      display: grid; gap: 12px; width: fit-content;
       background: linear-gradient(180deg, var(--glass), transparent);
       border: 1px solid var(--ring); border-radius: 14px;
       padding: 12px; box-shadow: 0 16px 44px rgba(0,0,0,.18), 0 1px 0 hsla(0 0% 100% / .6) inset;
       backdrop-filter: blur(10px);
     }
-    .solaris .themes { display: grid; grid-auto-flow: column; gap: 8px; width: max-content; }
-    .solaris .chip {
+    .weave .themes { display: grid; grid-auto-flow: column; gap: 8px; width: max-content; }
+    .weave .chip {
       inline-size: 30px; block-size: 30px; border-radius: 999px; border: 1px solid var(--ring);
       background: var(--swatch); cursor: pointer; position: relative; transition: transform .16s ease;
       box-shadow: 0 1px 0 hsla(0 0% 100% / .6) inset;
     }
-    .solaris .chip:active { transform: scale(.96); }
-    .solaris .chip[aria-pressed="true"]::after {
+    .weave .chip:active { transform: scale(.96); }
+    .weave .chip[aria-pressed="true"]::after {
       content: ""; position: absolute; inset: 3px; border-radius: inherit; border: 2px solid white; mix-blend-mode: overlay;
     }
 
-    .solaris .controls { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px; }
-    @media (max-width: 920px) { .solaris .controls { grid-template-columns: 1fr; } }
-
-    .solaris .ctl {
+    .weave .controls { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: stretch; }
+    @media (max-width: 920px) { .weave .controls { grid-template-columns: 1fr; } }
+    .weave .ctl {
       display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px;
       border: 1px solid var(--ring); border-radius: 12px; padding: 10px;
       background: linear-gradient(180deg, var(--glass), transparent);
       font: 800 11px/1 ui-sans-serif, system-ui; text-transform: uppercase; letter-spacing: .1em; color: var(--ink);
     }
-    .solaris .btn {
+    .weave .btn {
       appearance: none; cursor: pointer; padding: 10px 14px; border-radius: 999px; border: 1px solid var(--ring);
       background: linear-gradient(180deg, var(--glass), transparent);
       font: 800 12px/1 ui-sans-serif, system-ui; letter-spacing: .08em; text-transform: uppercase; color: var(--ink);
       box-shadow: 0 1px 0 hsla(0 0% 100% / .6) inset; transition: transform 160ms ease, box-shadow 160ms ease;
     }
-    .solaris .btn:hover { transform: translateY(-1px); }
-    .solaris .btn[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--b) inset; }
+    .weave .btn:hover { transform: translateY(-1px); }
+    .weave .btn[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--b) inset; }
 
-    .solaris input[type="range"] {
+    .weave input[type="range"] {
       -webkit-appearance: none; appearance: none; width: 100%; height: 10px; border-radius: 999px;
       background: linear-gradient(90deg, var(--a), var(--b), var(--c));
       outline: none; border: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
     }
-    .solaris input[type="range"]::-webkit-slider-thumb,
-    .solaris input[type="range"]::-moz-range-thumb {
+    .weave input[type="range"]::-webkit-slider-thumb,
+    .weave input[type="range"]::-moz-range-thumb {
       -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
       background: white; border: 2px solid var(--b); box-shadow: 0 2px 8px rgba(0,0,0,0.18); cursor: ew-resize;
     }
 
-    .solaris .dial {
+    /* Loom — living gradient scene */
+    .weave .loom {
       position: relative; margin: 16px auto 0;
-      width: min(94vmin, 1080px); aspect-ratio: 1 / 1; border-radius: 26px;
+      width: min(94vmin, 1100px); aspect-ratio: 1 / 1; border-radius: 26px; overflow: hidden;
       border: 1px solid var(--ring);
       background:
-        radial-gradient(1200px 800px at var(--mx) var(--my), color-mix(in hsl, var(--a) 12%, transparent), transparent 60%),
         radial-gradient(closest-side at 50% 50%, hsla(0 0% 100% / .06), transparent 70%),
         repeating-linear-gradient(0deg, rgba(0,0,0,.04) 0 1px, transparent 1px 40px),
         repeating-linear-gradient(90deg, rgba(0,0,0,.03) 0 1px, transparent 1px 40px);
-      overflow: hidden;
       box-shadow:
         0 38px 96px rgba(0,0,0,.30),
         0 1px 0 hsla(0 0% 100% / .6) inset,
         0 0 0 14px hsla(0 0% 100% / .10) inset;
       transform:
-        perspective(900px) rotateX(calc((var(--my, 50%) - 50%) / -7))
-        rotateY(calc((var(--mx, 50%) - 50%) / 7));
+        perspective(900px) rotateX(calc((var(--my, 50%) - 50%) / -8))
+        rotateY(calc((var(--mx, 50%) - 50%) / 8));
       transition: transform .3s cubic-bezier(.2,.8,.2,1);
       filter: drop-shadow(0 12px 36px rgba(0,0,0,.18));
+      isolation: isolate;
     }
-    .solaris .dial::after {
-      content: ""; position: absolute; inset: -2px; border-radius: inherit; pointer-events: none;
+    .weave .glow {
+      position: absolute; inset: -20%;
       background:
-        radial-gradient(180px 180px at var(--mx) var(--my), hsla(0 0% 100% / .5), transparent 60%),
-        radial-gradient(closest-side, transparent, rgba(255,255,255,.05));
+        conic-gradient(from 0turn at 50% 50%, color-mix(in hsl, var(--a) 24%, transparent) 0 20%, transparent 20% 60%, color-mix(in hsl, var(--b) 24%, transparent) 60% 80%, transparent 80% 100%);
+      filter: blur(40px) saturate(1.1);
+      opacity: .85;
+      animation: swirl calc(90s / var(--speed)) linear infinite;
       mix-blend-mode: screen;
     }
+    .weave .glow.b {
+      animation-duration: calc(140s / var(--speed));
+      background:
+        conic-gradient(from .25turn at 40% 60%, color-mix(in hsl, var(--c) 22%, transparent) 0 14%, transparent 14% 56%, color-mix(in hsl, var(--a) 20%, transparent) 56% 86%, transparent 86% 100%);
+      opacity: .7;
+    }
+    @keyframes swirl { to { transform: rotate(1turn); } }
 
-    .solaris canvas#stars {
-      position: absolute; inset: 0; width: 100%; height: 100%; mix-blend-mode: screen; pointer-events: none;
+    .weave .grain {
+      position: absolute; inset: 0; pointer-events: none; mix-blend-mode: overlay; opacity: var(--grain);
+      background-image:
+        radial-gradient(circle at 25% 15%, rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(circle at 80% 70%, rgba(0,0,0,.08), transparent 60%),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity=".28"/></svg>');
+      background-size: auto, auto, 220px 220px;
     }
 
-    /* Sun + rings */
-    .solaris .sun {
-      position: absolute; inset: 50% auto auto 50%;
-      width: 22vmin; aspect-ratio: 1/1; transform: translate(-50%, -50%);
+    .weave .orb {
+      position: absolute; left: var(--x); top: var(--y);
+      width: var(--s); height: var(--s); transform: translate(-50%,-50%);
       border-radius: 50%;
       background:
-        radial-gradient(circle at 35% 35%, hsla(0 0% 100% / .85), transparent 55%),
-        radial-gradient(circle at 50% 50%, var(--b), var(--a));
-      filter: blur(0.2px) drop-shadow(0 0 var(--bloom) var(--b)) drop-shadow(0 0 calc(var(--bloom) * .8) var(--a));
-      box-shadow: inset 0 0 40px rgba(255,255,255,.25);
-      animation: throb calc(8s / var(--speed)) ease-in-out infinite;
+        radial-gradient(circle at 35% 35%, hsla(0 0% 100% / .8), transparent 55%),
+        radial-gradient(circle at 50% 50%, hsl(var(--h) / 1), hsl(var(--h) / .6));
+      filter: blur(.2px) drop-shadow(0 0 var(--bloom) hsl(var(--h) / .9)) drop-shadow(0 0 calc(var(--bloom) * .7) hsl(var(--h) / .6));
+      mix-blend-mode: screen;
+      animation: float var(--d) ease-in-out infinite;
+      animation-delay: var(--del);
+      opacity: .95;
     }
-    @keyframes throb { 0%,100%{ transform: translate(-50%, -50%) scale(1); } 50%{ transform: translate(-50%, -50%) scale(1.03); } }
+    @keyframes float {
+      0%   { transform: translate(-50%,-50%) translate3d(-3%, -4%, 0) scale(1); }
+      25%  { transform: translate(-50%,-50%) translate3d(3%, -2%, 0)  scale(1.03); }
+      50%  { transform: translate(-50%,-50%) translate3d(4%, 3%, 0)   scale(1.01); }
+      75%  { transform: translate(-50%,-50%) translate3d(-2%, 4%, 0)  scale(1.04); }
+      100% { transform: translate(-50%,-50%) translate3d(-3%, -4%, 0) scale(1); }
+    }
 
-    .solaris .ring {
-      position: absolute; inset: 8%; border-radius: 50%;
+    .weave .ink {
+      position: absolute; left: var(--x); top: var(--y); width: 22vmin; aspect-ratio: 1;
+      transform: translate(-50%,-50%); border-radius: 50%;
       background:
-        conic-gradient(from 0deg, color-mix(in hsl, var(--a) 35%, transparent) 0 6%, transparent 6% 12%,
-                               color-mix(in hsl, var(--b) 35%, transparent) 12% 18%, transparent 18% 24%,
-                               color-mix(in hsl, var(--c) 35%, transparent) 24% 30%, transparent 30% 36%,
-                               color-mix(in hsl, var(--a) 35%, transparent) 36% 42%, transparent 42% 100%);
-      -webkit-mask: radial-gradient(circle, transparent 44%, black 45%);
-              mask: radial-gradient(circle, transparent 44%, black 45%);
-      opacity: .7;
-      animation: spin calc(90s / var(--speed)) linear infinite;
-      filter: drop-shadow(0 0 calc(var(--bloom) * .6) var(--a));
+        radial-gradient(closest-side, hsla(0 0% 100% / .22), transparent 60%),
+        radial-gradient(closest-side, color-mix(in hsl, var(--b) 36%, transparent), transparent 70%);
+      filter: blur(10px);
+      pointer-events: none;
+      mix-blend-mode: screen;
+      animation: ink-pop .9s ease-out forwards;
     }
-    .solaris .ring.b { inset: 16%; animation-duration: calc(140s / var(--speed)); opacity: .6; }
-    .solaris .ring.c { inset: 24%; animation-duration: calc(200s / var(--speed)); opacity: .5; }
-
-    @keyframes spin { to { transform: rotate(1turn); } }
-
-    /* Orbits */
-    .solaris .orbit {
-      position: absolute; inset: 0; animation: spin var(--ad) linear infinite;
-      animation-play-state: running;
-    }
-    .solaris .orbit::before {
-      content: ""; position: absolute; inset: 0; border-radius: 50%;
-      box-shadow: 0 0 0 1px var(--ring) inset, 0 0 calc(var(--bloom) * .25) color-mix(in hsl, var(--a) 30%, transparent);
-      -webkit-mask: radial-gradient(circle, transparent calc(var(--r) - 1px), black calc(var(--r) - 0px));
-              mask: radial-gradient(circle, transparent calc(var(--r) - 1px), black calc(var(--r) - 0px));
-      opacity: .7;
-    }
-    .solaris .planet {
-      position: absolute; top: 50%; left: calc(50% + var(--r));
-      width: var(--sz); height: var(--sz); transform: translate(-50%, -50%);
-      border-radius: 999px;
-      background:
-        radial-gradient(circle at 30% 30%, hsla(0 0% 100% / .9), transparent 60%),
-        radial-gradient(circle at 50% 50%, var(--pc2), var(--pc1));
-      box-shadow:
-        0 0 calc(var(--bloom) * .5) var(--pc1),
-        0 0 calc(var(--bloom) * .25) var(--pc2);
-      filter: saturate(1.2);
+    @keyframes ink-pop {
+      0% { opacity: .0; transform: translate(-50%,-50%) scale(.4); }
+      40% { opacity: .9; }
+      100% { opacity: 0; transform: translate(-50%,-50%) scale(1.4); }
     }
 
-    /* Meta */
-    .solaris .meta {
+    .weave .meta {
       margin-top: clamp(16px, 3vw, 28px);
       display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
       color: var(--muted); font: 500 12px/1.4 ui-sans-serif, system-ui; z-index: 2; position: relative;
     }
 
-    /* Pause handling */
-    .solaris.is-paused .orbit,
-    .solaris.is-paused .ring,
-    .solaris.is-paused .sun { animation-play-state: paused !important; }
-
+    .weave.is-paused .glow,
+    .weave.is-paused .orb { animation-play-state: paused !important; }
     @media (prefers-reduced-motion: reduce) {
-      .solaris, .solaris .dial { transition: none !important; }
-      .solaris::before, .solaris::after { animation: none !important; }
-      .solaris .orbit, .solaris .ring, .solaris .sun { animation: none !important; }
+      .weave, .weave .loom { transition: none !important; }
+      .weave::before, .weave::after, .weave .glow, .weave .orb { animation: none !important; }
+    }
+
+    /* Themes */
+    .weave[data-theme="fjord"] {
+      --ink: hsl(220 20% 12%); --muted: hsl(220 10% 36%);
+      --bg-1: hsl(210 100% 98%); --bg-2: hsl(195 100% 96%);
+      --a: hsl(198 90% 56%); --b: hsl(268 85% 62%); --c: hsl(48 96% 58%);
+    }
+    .weave[data-theme="grove"] {
+      --ink: hsl(148 22% 12%); --muted: hsl(148 10% 34%);
+      --bg-1: hsl(140 55% 96%); --bg-2: hsl(120 50% 95%);
+      --a: hsl(148 70% 46%); --b: hsl(173 78% 44%); --c: hsl(46 94% 55%);
+    }
+    .weave[data-theme="sakura"] {
+      --ink: hsl(342 20% 12%); --muted: hsl(342 12% 38%);
+      --bg-1: hsl(340 66% 97%); --bg-2: hsl(10 60% 97%);
+      --a: hsl(338 88% 65%); --b: hsl(280 76% 64%); --c: hsl(48 96% 60%);
+    }
+    .weave[data-theme="quartz"] {
+      --ink: hsl(262 20% 96%); --muted: hsl(262 12% 78%);
+      --bg-1: hsl(258 40% 16%); --bg-2: hsl(246 44% 12%);
+      --a: hsl(258 86% 64%); --b: hsl(198 90% 56%); --c: hsl(58 96% 62%);
+      --glass: hsla(0 0% 100% / .14); --ring: hsla(0 0% 100% / .18);
     }
   </style>
 
   <div class="grid">
     <div class="hero">
-      <span class="badge" aria-label="Edition badge">Edition 459 · Solaris Dial</span>
-      <h1 class="title" aria-label="Solaris Dial">Solaris Dial</h1>
-      <p class="lede">A kinetic sundial. Drag the light; tune the system. Time blooms in color.</p>
+      <span class="badge" aria-label="Edition badge">Edition 460 · Lumen Weave</span>
+      <h1 class="title" aria-label="Lumen Weave">Lumen Weave</h1>
+      <p class="lede">Paint with light. Move your cursor to stir the fabric. Flow, grain, and hue braid into a living poster.</p>
 
-      <div class="panel" role="region" aria-label="Themes and controls">
+      <div class="deck" role="region" aria-label="Themes and controls">
         <div class="themes" role="group" aria-label="Themes">
-          <button class="chip" data-theme="aurora" aria-pressed="true" style="--swatch: conic-gradient(from 0deg, hsl(200 92% 54%), hsl(312 88% 60%), hsl(48 96% 54%), hsl(200 92% 54%))" title="Aurora"></button>
-          <button class="chip" data-theme="nocturne" aria-pressed="false" style="--swatch: conic-gradient(from 0deg, hsl(196 100% 64%), hsl(300 92% 66%), hsl(58 96% 60%), hsl(196 100% 64%))" title="Nocturne"></button>
-          <button class="chip" data-theme="paper" aria-pressed="false" style="--swatch: conic-gradient(from 0deg, hsl(16 88% 56%), hsl(228 86% 54%), hsl(148 64% 48%), hsl(16 88% 56%))" title="Paper"></button>
+          <button class="chip" data-theme="fjord" aria-pressed="true" style="--swatch: conic-gradient(from 0deg, hsl(198 90% 56%), hsl(268 85% 62%), hsl(48 96% 58%), hsl(198 90% 56%))" title="Fjord"></button>
+          <button class="chip" data-theme="grove" aria-pressed="false" style="--swatch: conic-gradient(from 0deg, hsl(148 70% 46%), hsl(173 78% 44%), hsl(46 94% 55%), hsl(148 70% 46%))" title="Grove"></button>
+          <button class="chip" data-theme="sakura" aria-pressed="false" style="--swatch: conic-gradient(from 0deg, hsl(338 88% 65%), hsl(280 76% 64%), hsl(48 96% 60%), hsl(338 88% 65%))" title="Sakura"></button>
+          <button class="chip" data-theme="quartz" aria-pressed="false" style="--swatch: conic-gradient(from 0deg, hsl(258 86% 64%), hsl(198 90% 56%), hsl(58 96% 62%), hsl(258 86% 64%))" title="Quartz"></button>
         </div>
 
         <div class="controls">
           <div class="ctl">
-            <span>Speed</span>
-            <input id="speed" type="range" min="0.2" max="3" step="0.01" value="1" />
-            <span id="speed-read">1.00×</span>
+            <span>Flow</span>
+            <input id="flow" type="range" min="0.2" max="3" step="0.01" value="1" />
+            <span id="flow-read">1.00×</span>
           </div>
           <div class="ctl">
-            <span>Bloom</span>
-            <input id="bloom" type="range" min="0" max="40" step="1" value="16" />
-            <span id="bloom-read">16px</span>
+            <span>Grain</span>
+            <input id="grain" type="range" min="0" max="0.6" step="0.01" value="0.18" />
+            <span id="grain-read">0.18</span>
           </div>
-          <div class="ctl">
-            <span>Trail</span>
-            <input id="trail" type="range" min="0.02" max="0.24" step="0.01" value="0.12" />
-            <span id="trail-read">0.12</span>
-          </div>
-
-          <button class="btn" id="shuffle" title="Randomize orbits">Shuffle</button>
+          <button class="btn" id="shuffle" title="Reseed glow">Shuffle</button>
           <button class="btn" id="pause" aria-pressed="false" title="Pause/Play">Pause</button>
         </div>
       </div>
     </div>
 
-    <figure class="dial" aria-label="Sundial stage">
-      <canvas id="stars"></canvas>
-      <div class="sun" aria-hidden="true"></div>
-      <div class="ring a" aria-hidden="true"></div>
-      <div class="ring b" aria-hidden="true"></div>
-      <div class="ring c" aria-hidden="true"></div>
-
-      <!-- Orbits (radiuses in vmin for responsiveness) -->
-      <div class="orbit" style="--r: 36vmin; --sz: 10px; --pc1: var(--a); --pc2: var(--b);" data-period="64"></div>
-      <div class="orbit" style="--r: 28vmin; --sz: 8px;  --pc1: var(--b); --pc2: var(--c);" data-period="84"></div>
-      <div class="orbit" style="--r: 21vmin; --sz: 12px; --pc1: var(--c); --pc2: var(--a);" data-period="112"></div>
-      <div class="orbit" style="--r: 15vmin; --sz: 7px;  --pc1: var(--a); --pc2: var(--c);" data-period="48"></div>
-      <div class="orbit" style="--r: 9vmin;  --sz: 6px;  --pc1: var(--b); --pc2: var(--a);" data-period="36"></div>
-      <div class="orbit" style="--r: 4.5vmin;--sz: 5px;  --pc1: var(--c); --pc2: var(--b);" data-period="22"></div>
+    <figure class="loom" aria-label="Living gradient stage">
+      <div class="glow a" aria-hidden="true"></div>
+      <div class="glow b" aria-hidden="true"></div>
+      <!-- Orbs -->
+      <span class="orb" style="--x: 20%; --y: 70%; --s: 14vmin; --h: 198 90% 56%; --d: calc(18s / var(--speed)); --del: -2s;"></span>
+      <span class="orb" style="--x: 82%; --y: 30%; --s: 12vmin; --h: 268 85% 62%; --d: calc(22s / var(--speed)); --del: -6s;"></span>
+      <span class="orb" style="--x: 50%; --y: 14%; --s: 10vmin; --h: 48 96% 58%;  --d: calc(26s / var(--speed)); --del: -10s;"></span>
+      <span class="orb" style="--x: 12%; --y: 20%; --s: 9vmin;  --h: 198 90% 56%; --d: calc(30s / var(--speed)); --del: -3s;"></span>
+      <span class="orb" style="--x: 64%; --y: 76%; --s: 11vmin; --h: 268 85% 62%; --d: calc(24s / var(--speed)); --del: -12s;"></span>
+      <span class="orb" style="--x: 35%; --y: 48%; --s: 7vmin;  --h: 48 96% 58%;  --d: calc(20s / var(--speed)); --del: -8s;"></span>
+      <span class="orb" style="--x: 90%; --y: 60%; --s: 8vmin;  --h: 198 90% 56%; --d: calc(28s / var(--speed)); --del: -1s;"></span>
+      <div class="grain" aria-hidden="true"></div>
     </figure>
   </div>
 
   <div class="meta">
-    <span>“Time is the softest geometry.”</span>
+    <span>“Light is a language; motion is its grammar.”</span>
     <span id="last-updated" aria-live="polite"></span>
   </div>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.solaris');
-      const canvas = root.querySelector('#stars');
-      const ctx = canvas.getContext('2d');
+      const root = document.currentScript.closest('.weave');
+      const loom = root.querySelector('.loom');
       const updatedEl = root.querySelector('#last-updated');
 
       const themeBtns = [...root.querySelectorAll('.chip')];
       const pauseBtn = root.querySelector('#pause');
       const shuffleBtn = root.querySelector('#shuffle');
 
-      const speedInput = root.querySelector('#speed');
-      const bloomInput = root.querySelector('#bloom');
-      const trailInput = root.querySelector('#trail');
+      const flowInput = root.querySelector('#flow');
+      const grainInput = root.querySelector('#grain');
 
-      const speedRead = root.querySelector('#speed-read');
-      const bloomRead = root.querySelector('#bloom-read');
-      const trailRead = root.querySelector('#trail-read');
+      const flowRead = root.querySelector('#flow-read');
+      const grainRead = root.querySelector('#grain-read');
 
-      const DPR = Math.min(2, window.devicePixelRatio || 1);
-      const pointer = { x: -1, y: -1, active: false };
+      let running = true;
+      const pointer = { x: 0, y: 0, active: false };
 
-      let raf, ro, running = true;
-
-      const state = {
-        speed: 1,
-        bloom: 16,
-        trail: 0.12,
-        stars: [],
-        seed: Math.random() * 10000
-      };
-
-      function cssVar(name) { return getComputedStyle(root).getPropertyValue(name).trim(); }
       function setTheme(theme) {
         root.setAttribute('data-theme', theme);
         themeBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.theme === theme)));
-      }
-
-      function size() {
-        const rect = canvas.getBoundingClientRect();
-        const w = Math.max(200, rect.width | 0);
-        const h = Math.max(200, rect.height | 0);
-        canvas.width = w * DPR; canvas.height = h * DPR;
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.clearRect(0, 0, w, h);
-        // reseed stars relative to size
-        const count = Math.round(Math.min(900, Math.max(300, (w * h) / 2500)));
-        state.stars = new Array(count).fill(0).map(() => ({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          r: Math.random() * 1.6 + 0.3,
-          hue: Math.random(),
-          flicker: Math.random() * 0.8 + 0.2,
-          phase: Math.random() * Math.PI * 2
-        }));
       }
 
       function updateTimestamp() {
@@ -445,90 +392,19 @@
         updatedEl.textContent = 'Updated ' + fmt.format(new Date());
       }
 
-      function setSpeed(v) {
+      function setFlow(v) {
         const s = Math.min(3, Math.max(0.2, Number(v)));
-        state.speed = s;
-        speedRead.textContent = s.toFixed(2) + '×';
         root.style.setProperty('--speed', s);
-        // update orbit durations
-        root.querySelectorAll('.orbit').forEach(orbit => {
-          const base = Number(orbit.getAttribute('data-period')) || 60;
-          orbit.style.setProperty('--ad', `calc(${base}s / var(--speed))`);
-        });
-      }
-      function setBloom(v) {
-        const b = Math.min(40, Math.max(0, Number(v)));
-        state.bloom = b;
-        bloomRead.textContent = b.toFixed(0) + 'px';
-        root.style.setProperty('--bloom', b + 'px');
-      }
-      function setTrail(v) {
-        const t = Math.min(0.24, Math.max(0.02, Number(v)));
-        state.trail = t;
-        trailRead.textContent = t.toFixed(2);
-        root.style.setProperty('--trail', t);
+        flowRead.textContent = s.toFixed(2) + '×';
+        // Update each orb's duration via style prop (already calc'd in CSS, but nudge reflow)
+        root.querySelectorAll('.orb').forEach(o => { o.style.animationDuration = `calc(${o.style.getPropertyValue('--d').replace('calc(','').replace(' / var(--speed))','')} / var(--speed))`; });
+        // Update background swirls durations happen via CSS var
       }
 
-      function shuffle() {
-        // randomize orbit phase offsets
-        root.querySelectorAll('.orbit').forEach(orbit => {
-          const base = Number(orbit.getAttribute('data-period')) || 60;
-          const offset = Math.random() * base;
-          orbit.style.animationDelay = `-${offset}s`;
-          // ensure planet exists
-          if (!orbit.querySelector('.planet')) {
-            const p = document.createElement('div');
-            p.className = 'planet';
-            orbit.appendChild(p);
-          }
-        });
-        // reseed stars
-        state.seed = Math.random() * 10000;
-        size();
-      }
-
-      function drawStars(now) {
-        const rect = canvas.getBoundingClientRect();
-        const w = rect.width, h = rect.height;
-        const t = now * 0.001;
-
-        // fade for trails
-        ctx.globalCompositeOperation = 'destination-out';
-        ctx.globalAlpha = state.trail;
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, w, h);
-
-        // draw new frame
-        ctx.globalCompositeOperation = 'lighter';
-        for (let i = 0; i < state.stars.length; i++) {
-          const s = state.stars[i];
-          s.phase += 0.8 * s.flicker * (0.6 + state.speed * 0.4) * 0.016;
-          const tw = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(s.phase + i * 0.1 + state.seed));
-          const a = 0.15 + 0.85 * tw;
-
-          // subtle parallax nudge toward pointer
-          const dx = pointer.active ? (pointer.x - w / 2) / w : 0;
-          const dy = pointer.active ? (pointer.y - h / 2) / h : 0;
-          const px = s.x + dx * (i % 7) * 0.6;
-          const py = s.y + dy * (i % 7) * 0.6;
-
-          const grad = ctx.createRadialGradient(px, py, 0, px, py, s.r * 6);
-          const hueA = cssVar('--a');
-          const hueB = cssVar('--b');
-          grad.addColorStop(0, 'rgba(255,255,255,' + (0.7 * a).toFixed(3) + ')');
-          grad.addColorStop(1, 'rgba(255,255,255,0)');
-
-          ctx.globalAlpha = 1;
-          ctx.fillStyle = grad;
-          ctx.beginPath();
-          ctx.arc(px, py, s.r * (1.2 + 0.6 * tw), 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-
-      function animate(now) {
-        drawStars(now);
-        if (running) raf = requestAnimationFrame(animate);
+      function setGrain(v) {
+        const g = Math.min(0.6, Math.max(0, Number(v)));
+        root.style.setProperty('--grain', g);
+        grainRead.textContent = g.toFixed(2);
       }
 
       function onMove(e) {
@@ -537,84 +413,95 @@
         const my = ((e.clientY - r.top) / r.height) * 100;
         root.style.setProperty('--mx', mx + '%');
         root.style.setProperty('--my', my + '%');
+        pointer.x = mx; pointer.y = my; pointer.active = true;
 
-        const srect = canvas.getBoundingClientRect();
-        pointer.x = e.clientX - srect.left;
-        pointer.y = e.clientY - srect.top;
-        pointer.active = true;
+        // ink ripple (throttle by time)
+        spawnInk(e.clientX, e.clientY);
       }
-      function onLeave() { pointer.active = false; }
+
+      let lastInk = 0;
+      function spawnInk(clientX, clientY) {
+        const now = performance.now();
+        if (now - lastInk < 70) return;
+        lastInk = now;
+
+        const lr = loom.getBoundingClientRect();
+        if (clientX < lr.left || clientX > lr.right || clientY < lr.top || clientY > lr.bottom) return;
+
+        const x = ((clientX - lr.left) / lr.width) * 100;
+        const y = ((clientY - lr.top) / lr.height) * 100;
+
+        const blob = document.createElement('div');
+        blob.className = 'ink';
+        blob.style.setProperty('--x', x + '%');
+        blob.style.setProperty('--y', y + '%');
+        loom.appendChild(blob);
+        setTimeout(() => blob.remove(), 900);
+      }
+
+      function shuffle() {
+        // Randomize orb positions, sizes, hues, and delays
+        const hues = {
+          fjord: [ '198 90% 56%', '268 85% 62%', '48 96% 58%' ],
+          grove: [ '148 70% 46%', '173 78% 44%', '46 94% 55%' ],
+          sakura: [ '338 88% 65%', '280 76% 64%', '48 96% 60%' ],
+          quartz: [ '258 86% 64%', '198 90% 56%', '58 96% 62%' ]
+        }[root.getAttribute('data-theme')] || ['198 90% 56%','268 85% 62%','48 96% 58%'];
+
+        const orbs = [...root.querySelectorAll('.orb')];
+        orbs.forEach((o, i) => {
+          const x = 8 + Math.random() * 84;
+          const y = 10 + Math.random() * 80;
+          const s = (7 + Math.random() * 10) + 'vmin';
+          const h = hues[i % hues.length];
+          const d = (18 + Math.random() * 14).toFixed(0) + 's';
+          const del = (-1 - Math.random() * 12).toFixed(0) + 's';
+          o.style.setProperty('--x', x + '%');
+          o.style.setProperty('--y', y + '%');
+          o.style.setProperty('--s', s);
+          o.style.setProperty('--h', h);
+          o.style.setProperty('--d', `calc(${d} / var(--speed))`);
+          o.style.setProperty('--del', del);
+        });
+      }
 
       // Bind theme buttons
-      themeBtns.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.theme)));
+      themeBtns.forEach(b => b.addEventListener('click', () => { setTheme(b.dataset.theme); shuffle(); }));
 
-      // Bind controls
-      speedInput.addEventListener('input', e => setSpeed(e.target.value), { passive: true });
-      bloomInput.addEventListener('input', e => setBloom(e.target.value), { passive: true });
-      trailInput.addEventListener('input', e => setTrail(e.target.value), { passive: true });
-
+      // Controls
+      flowInput.addEventListener('input', e => setFlow(e.target.value), { passive: true });
+      grainInput.addEventListener('input', e => setGrain(e.target.value), { passive: true });
       shuffleBtn.addEventListener('click', shuffle);
 
+      // Pause
       pauseBtn.addEventListener('click', () => {
         const paused = pauseBtn.getAttribute('aria-pressed') === 'true';
         pauseBtn.setAttribute('aria-pressed', String(!paused));
         if (paused) {
           root.classList.remove('is-paused');
           running = true;
-          raf = requestAnimationFrame(animate);
         } else {
           root.classList.add('is-paused');
           running = false;
-          cancelAnimationFrame(raf);
         }
       });
 
+      // Pointer
       root.addEventListener('pointermove', onMove, { passive: true });
-      root.addEventListener('pointerleave', onLeave);
+      root.addEventListener('pointerleave', () => { pointer.active = false; });
 
-      // Resize observer
-      function resize() { size(); }
-      ro = new ResizeObserver(resize);
-      ro.observe(canvas);
-
-      // Initialize orbit durations + planets
-      root.querySelectorAll('.orbit').forEach(orbit => {
-        const base = Number(orbit.getAttribute('data-period')) || 60;
-        orbit.style.setProperty('--ad', `calc(${base}s / var(--speed))`);
-        if (!orbit.querySelector('.planet')) {
-          const p = document.createElement('div');
-          p.className = 'planet';
-          orbit.appendChild(p);
-        }
-      });
-
-      // Init values
-      setTheme('aurora');
-      setSpeed(speedInput.value);
-      setBloom(bloomInput.value);
-      setTrail(trailInput.value);
-
+      // Timestamp
       updateTimestamp();
       const tick = setInterval(updateTimestamp, 1000);
 
-      resize();
+      // Init
+      setTheme('fjord');
+      setFlow(flowInput.value);
+      setGrain(grainInput.value);
       shuffle();
 
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        running = false;
-        cancelAnimationFrame(raf);
-        drawStars(performance.now());
-      } else {
-        running = true;
-        raf = requestAnimationFrame(animate);
-      }
-
-      // Cleanup
-      root.addEventListener('DOMNodeRemoved', () => {
-        cancelAnimationFrame(raf);
-        clearInterval(tick);
-        if (ro) ro.disconnect();
-      }, { once: true });
+      // Cleanup when removed
+      root.addEventListener('DOMNodeRemoved', () => { clearInterval(tick); }, { once: true });
     })();
   </script>
 </section>
