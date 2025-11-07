@@ -73,7 +73,432 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-11-07 04:18:30 EST</span></div>
+<section class="vibe477" data-theme="glacier" data-animate="on" aria-label="Ambient design showcase">
+  <style>
+    .vibe477 {
+      --bg: #0b0f14;
+      --text: #e6edf3;
+      --muted: #a8b3bd;
+      --card: rgba(255,255,255,0.06);
+      --stroke: rgba(255,255,255,0.14);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --accent-1: #5be3ff;
+      --accent-2: #4db6ff;
+      --accent-3: #80ffea;
+      --blur-strength: 48px;
+      --radius: 18px;
+      --motion: 1; /* scaled via data-animate */
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 700px at 10% 0%, rgba(91,227,255,0.14), transparent 55%),
+                  radial-gradient(1000px 600px at 100% 100%, rgba(128,255,234,0.12), transparent 60%),
+                  linear-gradient(180deg, #0b0f14, #0b1017 60%, #0b0f14);
+      border-radius: 22px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 30px 60px rgba(0,0,0,0.4);
+    }
+
+    /* THEMES */
+    .vibe477[data-theme="dawn"]   { --accent-1:#ff9a9e; --accent-2:#fad0c4; --accent-3:#ffd08a; }
+    .vibe477[data-theme="glacier"]{ --accent-1:#5be3ff; --accent-2:#4db6ff; --accent-3:#80ffea; }
+    .vibe477[data-theme="ember"]  { --accent-1:#b388ff; --accent-2:#ff7eb6; --accent-3:#ffb07c; }
+
+    /* Background orbs + grid */
+    .vibe477 .bg-orb {
+      position: absolute;
+      filter: blur(var(--blur-strength));
+      opacity: calc(0.45 * var(--motion));
+      transform: translateZ(0);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .vibe477 .orb-1 {
+      width: 480px; height: 480px; top: -120px; left: -120px;
+      background: radial-gradient(circle at 30% 30%, var(--accent-1), transparent 60%);
+      animation: drift-1 26s cubic-bezier(.2,.6,.2,1) infinite alternate both;
+      animation-play-state: var(--play, running);
+    }
+    .vibe477 .orb-2 {
+      width: 560px; height: 560px; bottom: -160px; right: -120px;
+      background: radial-gradient(circle at 70% 70%, var(--accent-2), transparent 60%);
+      animation: drift-2 32s cubic-bezier(.2,.6,.2,1) infinite alternate both;
+      animation-play-state: var(--play, running);
+    }
+    .vibe477 .orb-3 {
+      width: 420px; height: 420px; top: 40%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 50% 50%, var(--accent-3), transparent 56%);
+      opacity: calc(0.25 * var(--motion));
+      animation: pulse 18s ease-in-out infinite alternate both;
+      animation-play-state: var(--play, running);
+    }
+
+    .vibe477 .grid {
+      position: absolute;
+      inset: -1px;
+      background:
+        linear-gradient(transparent 95%, rgba(255,255,255,0.055) 96%),
+        linear-gradient(90deg, transparent 95%, rgba(255,255,255,0.055) 96%);
+      background-size: 40px 40px, 40px 40px;
+      mask-image: radial-gradient(900px 500px at 60% 30%, black, transparent 70%);
+      opacity: .6;
+      transform: translateZ(0);
+      animation: slideGrid 60s linear infinite;
+      animation-play-state: var(--play, running);
+    }
+
+    /* Header */
+    .vibe477 .bar {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: calc(var(--radius) - 6px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid var(--stroke);
+      backdrop-filter: blur(8px) saturate(120%);
+      box-shadow: var(--shadow);
+    }
+    .vibe477 .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 13px;
+      color: var(--text);
+      opacity: .95;
+    }
+    .vibe477 .brand svg {
+      width: 18px; height: 18px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,.5));
+    }
+    .vibe477 .themes {
+      display: flex; gap: 6px; align-items: center;
+    }
+    .vibe477 .pill {
+      position: relative;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
+      backdrop-filter: blur(6px);
+      will-change: transform;
+    }
+    .vibe477 .pill:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.3); }
+    .vibe477 .pill[data-active="true"] {
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      color: #0a0e13;
+      border-color: transparent;
+    }
+
+    /* Hero */
+    .vibe477 .hero {
+      position: relative;
+      z-index: 2;
+      margin: 26px 0 14px;
+      padding: 26px 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background:
+        radial-gradient(120% 200% at 100% 0%, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      backdrop-filter: blur(10px) saturate(120%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .vibe477 .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+      opacity: .9;
+    }
+    .vibe477 .eyebrow .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent-1), var(--accent-2));
+      box-shadow: 0 0 18px var(--accent-2);
+    }
+    .vibe477 h1 {
+      margin: 10px 0 8px;
+      font-size: clamp(28px, 6vw, 56px);
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--text), rgba(255,255,255,0.88) 40%, var(--accent-1) 90%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-wrap: balance;
+    }
+    .vibe477 .sub {
+      margin: 6px 0 16px;
+      color: var(--muted);
+      font-size: clamp(14px, 1.8vw, 18px);
+      line-height: 1.5;
+      max-width: 70ch;
+    }
+    .vibe477 .cta {
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .vibe477 .btn {
+      border: 1px solid var(--stroke);
+      color: var(--text);
+      background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform .15s ease, border-color .2s ease, background .2s ease;
+    }
+    .vibe477 .btn.primary {
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      color: #0b0f14;
+      border-color: transparent;
+      font-weight: 600;
+    }
+    .vibe477 .btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.3); }
+
+    /* Cards */
+    .vibe477 .deck {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 10px 0 8px;
+    }
+    @media (max-width: 820px) {
+      .vibe477 .deck { grid-template-columns: 1fr; }
+    }
+    .vibe477 .card {
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      transform: perspective(800px)
+                 rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
+                 translate3d(var(--tx, 0px), var(--ty, 0px), 0);
+      transition: box-shadow .3s ease, border-color .2s ease;
+      will-change: transform;
+      min-height: 120px;
+      position: relative;
+      overflow: hidden;
+    }
+    .vibe477 .card::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: 16px;
+      background: radial-gradient(240px 120px at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.10), transparent 60%);
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+    .vibe477 .card:hover { border-color: rgba(255,255,255,0.26); }
+    .vibe477 .card h3 {
+      margin: 6px 0 6px;
+      font-size: 18px;
+      letter-spacing: -0.015em;
+      color: #f2f6fa;
+    }
+    .vibe477 .card p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .vibe477 .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; color: var(--muted);
+    }
+    .vibe477 .swatch {
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.5);
+      background: conic-gradient(from 0deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-1));
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.05) inset;
+    }
+
+    /* Footer */
+    .vibe477 .foot {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: calc(var(--radius) - 6px);
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      backdrop-filter: blur(8px);
+    }
+    .vibe477 .foot small { color: var(--muted); }
+
+    /* Motion controls via attribute */
+    .vibe477[data-animate="off"] { --motion: 0; --play: paused; }
+    @media (prefers-reduced-motion: reduce) {
+      .vibe477 { --motion: 0; --play: paused; }
+      .vibe477 .card, .vibe477 .btn, .vibe477 .pill { transition: none !important; }
+    }
+
+    /* Keyframes */
+    @keyframes drift-1 {
+      0% { transform: translate(0,0) scale(1); }
+      100% { transform: translate(40px, 30px) scale(1.05); }
+    }
+    @keyframes drift-2 {
+      0% { transform: translate(0,0) scale(1); }
+      100% { transform: translate(-40px, -20px) scale(1.06); }
+    }
+    @keyframes pulse {
+      0% { transform: translate(-50%, -50%) scale(0.9); }
+      100% { transform: translate(-50%, -50%) scale(1.05); }
+    }
+    @keyframes slideGrid {
+      0% { background-position: 0 0, 0 0; }
+      100% { background-position: 400px 400px, 400px 400px; }
+    }
+  </style>
+
+  <!-- Ambient backdrops -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+  <div class="grid" aria-hidden="true"></div>
+
+  <!-- Header bar -->
+  <div class="bar">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="g477" x1="0" y1="0" x2="24" y2="24">
+            <stop offset="0" stop-color="var(--accent-1)"/>
+            <stop offset="1" stop-color="var(--accent-2)"/>
+          </linearGradient>
+        </defs>
+        <path d="M12 2l2.3 4.7 5.2.8-3.8 3.7.9 5.2L12 14.8 7.4 16.4l.9-5.2-3.8-3.7 5.2-.8L12 2z" stroke="url(#g477)" stroke-width="1.2" fill="none"/>
+      </svg>
+      Atmos Studio
+    </div>
+    <div class="themes" role="group" aria-label="Theme">
+      <button class="pill" data-theme="dawn" aria-pressed="false">Dawn</button>
+      <button class="pill" data-theme="glacier" data-active="true" aria-pressed="true">Glacier</button>
+      <button class="pill" data-theme="ember" aria-pressed="false">Ember</button>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="eyebrow"><span class="dot"></span> Iteration 477 · Quietly bold</div>
+    <h1>Make silence visible.</h1>
+    <p class="sub">A living canvas of light, space, and motion. Soft gradients breathe; type whispers; elements respond to your touch.</p>
+    <div class="cta">
+      <button class="btn primary" data-motion="on">See the motion</button>
+      <button class="btn" data-motion="off">Keep it still</button>
+      <span class="chip"><span class="swatch"></span> Palette in flux</span>
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div class="deck">
+    <article class="card">
+      <h3>Typography as tone</h3>
+      <p>System fonts, tuned spacing, and balanced rhythm create a voice that’s calm yet confident.</p>
+    </article>
+    <article class="card">
+      <h3>Motion with meaning</h3>
+      <p>Drift and parallax respond to intent. Dial it down anytime—serenity is a feature.</p>
+    </article>
+    <article class="card">
+      <h3>Light, layered</h3>
+      <p>Glass layers, subtle grain, and aurora color wash bring depth without noise.</p>
+    </article>
+  </div>
+
+  <!-- Footer -->
+  <div class="foot">
+    <small>Tip: hover the cards—space tilts with you.</small>
+    <small><span id="last-updated">Last updated: 2025-11-07 05:19:59 EST</span></small>
+  </div>
+
+  <script>
+    (function(){
+      const root = document.currentScript.closest('.vibe477');
+
+      // Last updated
+      const ts = new Date();
+      const fmt = new Intl.DateTimeFormat(navigator.language || 'en-US', {
+        year:'numeric', month:'short', day:'2-digit',
+        hour:'2-digit', minute:'2-digit', hour12:true
+      });
+      const lu = root.querySelector('#last-updated');
+      if (lu) lu.textContent = 'Updated ' + fmt.format(ts);
+
+      // Theme switching
+      const pills = root.querySelectorAll('.pill[data-theme]');
+      const setTheme = (t) => {
+        root.setAttribute('data-theme', t);
+        pills.forEach(b=>{
+          const active = b.getAttribute('data-theme') === t;
+          b.toggleAttribute('data-active', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
+      };
+      pills.forEach(btn => btn.addEventListener('click', () => setTheme(btn.dataset.theme)));
+
+      // Motion toggle
+      const toOn = root.querySelector('.btn[data-motion="on"]');
+      const toOff = root.querySelector('.btn[data-motion="off"]');
+      const setMotion = (on) => root.setAttribute('data-animate', on ? 'on' : 'off');
+      toOn && toOn.addEventListener('click', ()=> setMotion(true));
+      toOff && toOff.addEventListener('click', ()=> setMotion(false));
+
+      // Card parallax + highlight
+      const cards = Array.from(root.querySelectorAll('.card'));
+      const clamp = (n,min,max)=> Math.max(min, Math.min(max, n));
+      root.addEventListener('pointermove', (e)=>{
+        const scale = 1; // sensitivity
+        cards.forEach(card=>{
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width;
+          const y = (e.clientY - r.top) / r.height;
+          const rx = clamp((0.5 - y) * 8 * scale, -8, 8);
+          const ry = clamp((x - 0.5) * 10 * scale, -10, 10);
+          card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+          card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+          card.style.setProperty('--tx', ((x - .5) * 10).toFixed(1) + 'px');
+          card.style.setProperty('--ty', ((y - .5) * 10).toFixed(1) + 'px');
+          card.style.setProperty('--mx', (x*100).toFixed(2) + '%');
+          card.style.setProperty('--my', (y*100).toFixed(2) + '%');
+        });
+      });
+      root.addEventListener('pointerleave', ()=>{
+        cards.forEach(card=>{
+          card.style.removeProperty('--rx');
+          card.style.removeProperty('--ry');
+          card.style.removeProperty('--tx');
+          card.style.removeProperty('--ty');
+          card.style.removeProperty('--mx');
+          card.style.removeProperty('--my');
+        });
+      });
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
