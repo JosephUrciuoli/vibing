@@ -73,7 +73,261 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-11-07 15:17:52 EST</span></div>
+<section class="vibe-488" data-theme="aurora" data-motion="on" aria-label="Vibe 488 showcase">
+  <style>
+    .vibe-488 { 
+      --c1:#6ee7ff; --c2:#7c4dff; --c3:#ff63c3; --surface:rgba(255,255,255,0.10);
+      --stroke:rgba(255,255,255,0.18); --text:#f8fafc; --muted:#cbd5e1; --accent:#a5f3fc;
+      --glow: 26; --radius:18px; --shadow: 0 10px 30px rgba(0,0,0,0.40);
+      position: relative; overflow: hidden; border-radius: var(--radius);
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(255,255,255,0.05), transparent 60%),
+                  radial-gradient(1000px 700px at 100% 0, rgba(255,255,255,0.03), transparent 60%),
+                  linear-gradient(135deg, #0b1020, #0b1328 45%, #0a0f24);
+      color: var(--text); padding: 28px; min-height: 380px; isolation: isolate;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji;
+    }
+    .vibe-488 * { box-sizing: border-box; }
+    /* Themes */
+    .vibe-488[data-theme="aurora"] { --c1:#36ffd1; --c2:#7c4dff; --c3:#ff6ec7; --accent:#99f6e4; }
+    .vibe-488[data-theme="dusk"]   { --c1:#ff9a5a; --c2:#c471f5; --c3:#6a9eff; --accent:#ffd7a8; background: linear-gradient(135deg,#121016,#151322 45%,#17172a);}
+    .vibe-488[data-theme="ocean"]  { --c1:#42e9f5; --c2:#00b3ff; --c3:#00ffa3; --accent:#a7f3d0; background: linear-gradient(135deg,#0b1520,#0a1a27 45%,#0a1e2b);}
+    .vibe-488[data-theme="sol"]    { --c1:#ffd166; --c2:#ff6b6b; --c3:#b892ff; --accent:#ffe7a3; background: linear-gradient(135deg,#14110f,#1a1410 45%,#211711);}
+
+    /* Floating orbs */
+    .vibe-488 .orbs { position:absolute; inset:-20% -20% -20% -20%; pointer-events:none; filter: blur(40px) saturate(120%); }
+    .vibe-488 .orb { position:absolute; width:42vmin; aspect-ratio:1; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, var(--c1), transparent 60%); mix-blend-mode: screen; opacity:0.55;
+      animation: floatA 18s ease-in-out infinite;
+    }
+    .vibe-488 .orb.o2 { left:55%; top:10%; background: radial-gradient(circle at 60% 30%, var(--c2), transparent 60%); animation: floatB 22s ease-in-out infinite; }
+    .vibe-488 .orb.o3 { left:15%; top:55%; background: radial-gradient(circle at 40% 40%, var(--c3), transparent 60%); animation: floatC 26s ease-in-out infinite; }
+
+    @keyframes floatA { 0%,100%{ transform: translate3d(0,0,0) scale(1);} 50%{ transform: translate3d(4%, -3%,0) scale(1.08);} }
+    @keyframes floatB { 0%,100%{ transform: translate3d(0,0,0) scale(1);} 50%{ transform: translate3d(-5%, 4%,0) scale(1.05);} }
+    @keyframes floatC { 0%,100%{ transform: translate3d(0,0,0) scale(1);} 50%{ transform: translate3d(6%, 2%,0) scale(1.12);} }
+
+    /* Header */
+    .vibe-488 .top { display:flex; align-items:center; justify-content:space-between; gap:16px; position:relative; z-index:2; }
+    .vibe-488 .badge { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+      border:1px solid var(--stroke); box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+      font-weight:600; letter-spacing:0.3px; color:var(--text);
+    }
+    .vibe-488 .badge .dot { width:8px; height:8px; border-radius:50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+
+    .vibe-488 .themes { display:flex; gap:8px; flex-wrap:wrap; }
+    .vibe-488 button.theme { appearance:none; border:none; cursor:pointer; padding:8px 12px; border-radius:999px;
+      color:#0b1020; font-weight:600; background: white; opacity:0.85;
+      transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease; box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    }
+    .vibe-488 button.theme[data-active="true"] { box-shadow: 0 6px 20px rgba(0,0,0,0.35), inset 0 0 0 2px rgba(0,0,0,0.12); transform: translateY(-1px); opacity:1; }
+    .vibe-488 button.theme:hover { transform: translateY(-2px) scale(1.02); }
+
+    /* Glass panel */
+    .vibe-488 .panel {
+      position:relative; z-index:2; margin-top:18px; border-radius: calc(var(--radius) - 4px);
+      padding: 22px; background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+      border:1px solid var(--stroke); backdrop-filter: blur(16px) saturate(140%);
+      box-shadow: var(--shadow), 0 0 calc(var(--glow) * 1px) rgba(255,255,255,0.06);
+      transform: perspective(900px) rotateX(calc(var(--tiltY,0) * 1deg)) rotateY(calc(var(--tiltX,0) * 1deg));
+      transition: box-shadow .3s ease;
+    }
+    .vibe-488 h1 { margin:0 0 6px 0; font-size: clamp(24px, 3.8vw, 36px); letter-spacing:0.2px; line-height:1.15; }
+    .vibe-488 p.lede { margin:0 0 18px 0; color: var(--muted); max-width: 60ch; }
+
+    /* Controls */
+    .vibe-488 .controls { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin: 8px 0 6px; }
+    .vibe-488 .slider {
+      display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px;
+      background: rgba(255,255,255,0.08); border:1px solid var(--stroke);
+    }
+    .vibe-488 .slider input[type="range"] {
+      -webkit-appearance:none; width:180px; height:6px; border-radius:999px;
+      background: linear-gradient(90deg, var(--c1), var(--c2) 50%, var(--c3));
+      outline:none;
+    }
+    .vibe-488 .slider input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
+      background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 0 0 6px rgba(255,255,255,0.2) inset;
+      border: none;
+    }
+    .vibe-488 .toggle {
+      appearance:none; border:1px solid var(--stroke); background: rgba(255,255,255,0.08); color: var(--text);
+      padding:10px 12px; border-radius:12px; cursor:pointer; font-weight:600;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .vibe-488 .toggle:hover { transform: translateY(-1px); }
+    .vibe-488 .toggle[data-active="true"] { background: rgba(255,255,255,0.18); }
+
+    /* Feature grid */
+    .vibe-488 .grid { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:12px; margin-top: 14px; }
+    @media (max-width: 720px){ .vibe-488 .grid { grid-template-columns: 1fr; } }
+    .vibe-488 .card {
+      padding:14px; border-radius:14px; background: rgba(255,255,255,0.08); border:1px solid var(--stroke);
+      transition: transform .25s ease, background .25s ease; position:relative; overflow:hidden;
+    }
+    .vibe-488 .card:hover { transform: translateY(-3px); background: rgba(255,255,255,0.12); }
+    .vibe-488 .icon {
+      width:40px; height:40px; border-radius:10px; display:grid; place-items:center; color:#0a0f24; font-weight:900;
+      background: conic-gradient(from 0deg, var(--c1), var(--c2), var(--c3), var(--c1)); margin-bottom:8px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    }
+    .vibe-488 .card h3 { margin:0 0 6px 0; font-size: 16px; }
+    .vibe-488 .card p { margin:0; color: var(--muted); font-size: 13.5px; }
+
+    /* Micro-animations inside cards */
+    .vibe-488 .typo-sample { font-variation-settings: "wght" 700; letter-spacing:0.4px; }
+    .vibe-488 .typo-letters { display:flex; gap:6px; margin-top:8px; }
+    .vibe-488 .typo-letters span { display:inline-block; padding:6px 8px; border-radius:8px; background: rgba(255,255,255,0.10); }
+    .vibe-488 .pulse-dot {
+      width:10px; height:10px; border-radius:50%; background: var(--c2);
+      box-shadow: 0 0 0 0 rgba(124,77,255,0.6); animation: pulse 2.1s infinite;
+      margin-top:8px;
+    }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(124,77,255,0.6);} 70% { box-shadow: 0 0 0 10px rgba(124,77,255,0);} 100% { box-shadow: 0 0 0 0 rgba(124,77,255,0);} }
+    .vibe-488 .swatch { height:10px; border-radius:999px; background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3)); margin-top:8px; }
+
+    /* Footer */
+    .vibe-488 .foot { display:flex; align-items:center; justify-content:space-between; margin-top:16px; color:var(--muted); font-size: 12.5px; }
+    .vibe-488 .foot .tiny { opacity:0.85; }
+
+    /* Motion preferences and manual toggle */
+    @media (prefers-reduced-motion: reduce) {
+      .vibe-488 .orb, .vibe-488 .panel, .vibe-488 .card, .vibe-488 button.theme { animation: none !important; transition: none !important; }
+    }
+    .vibe-488[data-motion="off"] .orb, 
+    .vibe-488[data-motion="off"] .panel, 
+    .vibe-488[data-motion="off"] .card, 
+    .vibe-488[data-motion="off"] button.theme { animation: none !important; transition: none !important; }
+  </style>
+
+  <div class="orbs" aria-hidden="true">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+  </div>
+
+  <div class="top">
+    <div class="badge"><span class="dot" aria-hidden="true"></span> Iteration 488 — New Light</div>
+    <div class="themes" role="group" aria-label="Theme selector">
+      <button class="theme" data-theme="aurora" data-active="true" aria-pressed="true" title="Aurora">Aurora</button>
+      <button class="theme" data-theme="dusk" aria-pressed="false" title="Dusk">Dusk</button>
+      <button class="theme" data-theme="ocean" aria-pressed="false" title="Ocean">Ocean</button>
+      <button class="theme" data-theme="sol" aria-pressed="false" title="Sol">Sol</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel">
+    <h1>Calm. Clear. Considered.</h1>
+    <p class="lede">A bolder drift of glass and light—gentle motion, crisp type, and auroras you can steer.</p>
+
+    <div class="controls">
+      <div class="slider" title="Adjust glow">
+        <span style="font-size:12px;opacity:.85;">Glow</span>
+        <input id="glow" type="range" min="10" max="60" value="26" aria-label="Glow intensity">
+      </div>
+      <button class="toggle" id="motion" data-active="true" aria-pressed="true" title="Toggle motion">Reduce Motion: Off</button>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="icon" aria-hidden="true">Aa</div>
+        <h3 class="typo-sample">Typography</h3>
+        <p>System-perfect type with measured air and focus.</p>
+        <div class="typo-letters" aria-hidden="true"><span>Aa</span><span>12</span><span>&</span></div>
+      </div>
+      <div class="card">
+        <div class="icon" aria-hidden="true">◯</div>
+        <h3>Motion</h3>
+        <p>Subtle physics and parallax that follow your touch.</p>
+        <div class="pulse-dot" aria-hidden="true"></div>
+      </div>
+      <div class="card">
+        <div class="icon" aria-hidden="true">◎</div>
+        <h3>Color</h3>
+        <p>Auroras with depth. Switch moods instantly.</p>
+        <div class="swatch" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <div class="tiny">“Delight lives in the details.”</div>
+      <span id="last-updated">Last updated: 2025-11-07 16:12:41 EST</span>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const root = document.currentScript.closest('.vibe-488');
+      const themeButtons = root.querySelectorAll('button.theme');
+      const glow = root.querySelector('#glow');
+      const panel = root.querySelector('#panel');
+      const motionBtn = root.querySelector('#motion');
+      const last = root.querySelector('#last-updated');
+
+      // Set initial theme by time of day
+      const hour = new Date().getHours();
+      const initial = hour < 9 ? 'sol' : (hour < 17 ? 'aurora' : 'dusk');
+      setTheme(initial);
+
+      // Theme switching
+      themeButtons.forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          setTheme(btn.dataset.theme);
+        });
+      });
+      function setTheme(name){
+        root.setAttribute('data-theme', name);
+        themeButtons.forEach(b=>{
+          const active = b.dataset.theme===name;
+          b.dataset.active = active ? "true" : "false";
+          b.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+      }
+
+      // Glow control
+      glow.addEventListener('input', (e)=>{
+        root.style.setProperty('--glow', e.target.value);
+      });
+
+      // Motion toggle
+      motionBtn.addEventListener('click', ()=>{
+        const isOn = root.getAttribute('data-motion') !== 'off';
+        root.setAttribute('data-motion', isOn ? 'off' : 'on');
+        motionBtn.dataset.active = isOn ? "false" : "true";
+        motionBtn.setAttribute('aria-pressed', isOn ? 'false' : 'true');
+        motionBtn.textContent = 'Reduce Motion: ' + (isOn ? 'On' : 'Off');
+      });
+
+      // Parallax tilt
+      let rect = null;
+      const updateRect = ()=> rect = panel.getBoundingClientRect();
+      updateRect();
+      window.addEventListener('resize', updateRect);
+      root.addEventListener('pointermove', (e)=>{
+        if(root.getAttribute('data-motion')==='off') return;
+        if(!rect) updateRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const max = 3.5;
+        root.style.setProperty('--tiltX', (x*max).toFixed(2));
+        root.style.setProperty('--tiltY', (-y*max).toFixed(2));
+      });
+      root.addEventListener('pointerleave', ()=>{
+        root.style.setProperty('--tiltX', 0);
+        root.style.setProperty('--tiltY', 0);
+      });
+
+      // Last updated
+      try {
+        const fmt = new Intl.DateTimeFormat(undefined, { dateStyle:'medium', timeStyle:'short' });
+        last.textContent = 'Last updated: ' + fmt.format(new Date());
+      } catch(e) {
+        last.textContent = 'Last updated: ' + new Date().toLocaleString();
+      }
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
