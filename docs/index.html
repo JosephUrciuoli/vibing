@@ -73,261 +73,345 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="vibe-489" data-palette="bloom" data-motion="on" aria-label="Vibe 489 — Kinetic Poster">
+<section class="vibe-490" data-theme="dusk" data-motion="on" aria-label="Vibe 490 — Orbital Atlas">
   <style>
-    .vibe-489 {
-      --bg-0:#f6f7fb; --bg-1:#ffffff; --ink:#0b1020; --muted:#475569;
-      --ac-1:#ff7ad9; --ac-2:#7c4dff; --ac-3:#36ffd1; --ring:rgba(11,16,32,0.12);
-      position: relative; overflow: hidden; border-radius: 22px; padding: clamp(18px, 3vw, 28px);
-      background:
-        radial-gradient(1200px 800px at 120% -10%, rgba(124,77,255,0.08), transparent 60%),
-        radial-gradient(1100px 900px at -10% 120%, rgba(54,255,209,0.10), transparent 55%),
-        linear-gradient(180deg, var(--bg-0), var(--bg-1));
-      color: var(--ink); min-height: 420px; isolation: isolate;
+    .vibe-490 {
+      --bg-top:#0e1424; --bg-bot:#11182a;
+      --ink:#eef3ff; --muted:#9aa5be;
+      --ac-1:#7c4dff; --ac-2:#36ffd1; --ac-3:#ff7ad9;
+      position: relative; overflow: hidden; border-radius: 28px;
+      padding: clamp(18px, 3.5vw, 40px); color: var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.20), inset 0 1px 0 rgba(255,255,255,0.6);
+      box-shadow: 0 28px 80px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+      background:
+        radial-gradient(1200px 700px at 110% -20%, color-mix(in oklab, var(--ac-1), transparent 87%), transparent),
+        radial-gradient(1000px 800px at -20% 120%, color-mix(in oklab, var(--ac-2), transparent 88%), transparent),
+        linear-gradient(180deg, var(--bg-top), var(--bg-bot));
+      isolation: isolate;
+      transform-style: preserve-3d;
+      --rx: 0deg; --ry: 0deg;
     }
-    .vibe-489 * { box-sizing: border-box; }
+    .vibe-490 * { box-sizing: border-box; }
 
-    /* Soft paper micro-grid */
-    .vibe-489::before {
-      content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-      background-image:
-        radial-gradient(circle at 25% 20%, rgba(11,16,32,0.05), transparent 40%),
-        radial-gradient(circle at 75% 80%, rgba(11,16,32,0.04), transparent 45%),
-        linear-gradient(transparent, transparent),
-        repeating-linear-gradient(90deg, rgba(11,16,32,0.04) 0 1px, transparent 1px 40px),
-        repeating-linear-gradient(0deg, rgba(11,16,32,0.03) 0 1px, transparent 1px 40px);
-      mix-blend-mode: multiply;
+    /* Faint micro-grid, masked to edges */
+    .vibe-490::before {
+      content:""; position:absolute; inset:-1px; z-index:0; pointer-events:none;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 42px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 42px);
+      -webkit-mask: radial-gradient(120% 120% at 50% 50%, #000 65%, transparent 100%);
+              mask: radial-gradient(120% 120% at 50% 50%, #000 65%, transparent 100%);
+      mix-blend-mode: soft-light;
     }
 
-    /* Palettes */
-    .vibe-489[data-palette="bloom"]  { --ac-1:#ff7ad9; --ac-2:#7c4dff; --ac-3:#36ffd1; }
-    .vibe-489[data-palette="midnight"]{ --ac-1:#00c6ff; --ac-2:#6a8bff; --ac-3:#00ffa3; }
-    .vibe-489[data-palette="salt"]   { --ac-1:#111827; --ac-2:#64748b; --ac-3:#f59e0b; }
+    /* Theme variants */
+    .vibe-490[data-theme="dawn"] {
+      --bg-top:#20152f; --bg-bot:#2e2342;
+      --ac-1:#ffb86b; --ac-2:#ffd36e; --ac-3:#7bf1a8;
+      --ink:#fff7f0; --muted:#c9c2d6;
+    }
+    .vibe-490[data-theme="dusk"] {
+      --bg-top:#0e1424; --bg-bot:#11182a;
+      --ac-1:#7c4dff; --ac-2:#36ffd1; --ac-3:#ff7ad9;
+      --ink:#eef3ff; --muted:#9aa5be;
+    }
+    .vibe-490[data-theme="void"] {
+      --bg-top:#080a12; --bg-bot:#0b0e19;
+      --ac-1:#58c4ff; --ac-2:#00ffbf; --ac-3:#9a7bff;
+      --ink:#e9f0ff; --muted:#94a0bd;
+    }
 
-    /* Canvas field */
-    .vibe-489 #field {
-      position:absolute; inset: -12% -12% -12% -12%; z-index:1; filter: blur(4px) saturate(115%);
-      opacity: 0.9; mix-blend-mode: multiply; pointer-events:none;
+    /* Canvas layer */
+    .vibe-490 .sky {
+      position:absolute; inset:-8% -8% -8% -8%; z-index:0;
+      filter: saturate(120%) blur(0.2px);
+      pointer-events:none;
+      opacity: 0.96;
+      mix-blend-mode: screen;
+    }
+
+    /* Soft halos */
+    .vibe-490 .halos::before,
+    .vibe-490 .halos::after {
+      content:""; position:absolute; z-index:1; pointer-events:none; inset:auto;
+      width: 60vmax; height: 60vmax; border-radius: 50%;
+      filter: blur(50px);
+      opacity: 0.18;
+      transform: translateZ(0);
+    }
+    .vibe-490 .halos::before {
+      left:-30vmax; top:-20vmax;
+      background: radial-gradient(circle at 30% 30%, var(--ac-1), transparent 60%);
+    }
+    .vibe-490 .halos::after {
+      right:-28vmax; bottom:-24vmax;
+      background: radial-gradient(circle at 70% 70%, var(--ac-2), transparent 65%);
     }
 
     /* Masthead */
-    .vibe-489 .mast { position:relative; z-index:2; max-width: 1100px; margin: 0 auto; }
-    .vibe-489 .eyebrow {
-      display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px;
-      background: rgba(255,255,255,0.65); border:1px solid var(--ring);
-      box-shadow: 0 4px 16px rgba(11,16,32,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
-      font-weight:600; letter-spacing:.2px; backdrop-filter: blur(8px);
+    .vibe-490 .mast { position:relative; z-index:2; max-width: 1100px; margin: 0 auto; perspective: 1200px; }
+    .vibe-490 .badge {
+      display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px;
+      background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+      color: var(--ink); font-weight:700; letter-spacing:.3px; backdrop-filter: blur(8px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 10px 30px rgba(0,0,0,0.25);
     }
-    .vibe-489 .eyebrow::before {
-      content:""; width:8px; height:8px; border-radius:50%; background: var(--ac-3);
-      box-shadow: 0 0 0 6px color-mix(in oklab, var(--ac-3), transparent 75%);
+    .vibe-490 .badge i {
+      display:inline-block; width:10px; height:10px; border-radius:50%;
+      background: var(--ac-2);
+      box-shadow: 0 0 0 6px color-mix(in oklab, var(--ac-2), transparent 78%);
     }
-    .vibe-489 h1 {
-      margin: 14px 0 6px; font-size: clamp(36px, 8vw, 84px); line-height: .95; letter-spacing:-0.5px;
-      background: linear-gradient(90deg, var(--ink), color-mix(in oklab, var(--ac-1), var(--ink) 50%));
+    .vibe-490 h1 {
+      margin: 16px 0 8px; font-size: clamp(42px, 9vw, 98px); line-height: .92; letter-spacing:-0.6px;
+      background: linear-gradient(90deg,
+        color-mix(in oklab, var(--ink), var(--ac-1) 28%),
+        color-mix(in oklab, var(--ink), var(--ac-3) 22%));
       -webkit-background-clip: text; background-clip: text; color: transparent;
+      transform: rotateX(var(--rx)) rotateY(var(--ry));
+      transition: transform .25s ease;
+      text-shadow: 0 8px 40px color-mix(in oklab, var(--ac-1), transparent 85%);
     }
-    .vibe-489 .lede { margin: 0; color: var(--muted); max-width: 70ch; font-size: clamp(14px, 2.2vw, 18px); }
+    .vibe-490 .lede {
+      margin: 0; color: var(--muted); max-width: 70ch; font-size: clamp(14px, 2.2vw, 19px);
+    }
 
     /* Controls */
-    .vibe-489 .controls { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top: 16px; }
-    .vibe-489 .chip {
-      appearance:none; border:none; cursor:pointer; padding:8px 12px; border-radius:999px; font-weight:700;
-      color:#0b1020; background: white; border:1px solid var(--ring);
-      box-shadow: 0 6px 18px rgba(11,16,32,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+    .vibe-490 .controls {
+      display:flex; flex-wrap:wrap; gap:10px 12px; align-items:center; margin-top: 18px;
     }
-    .vibe-489 .chip[data-active="true"] {
-      background: linear-gradient(180deg, white, rgba(255,255,255,0.75));
-      box-shadow: 0 10px 30px color-mix(in oklab, var(--ac-2), transparent 70%), inset 0 0 0 2px color-mix(in oklab, var(--ac-2), transparent 70%);
+    .vibe-490 .chip {
+      appearance:none; border:none; cursor:pointer; padding:10px 14px; border-radius:999px; font-weight:800;
+      color: var(--ink); background: rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.12);
+      transition: transform .18s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+    }
+    .vibe-490 .chip[data-active="true"] {
+      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
+      box-shadow: 0 14px 38px color-mix(in oklab, var(--ac-1), transparent 78%), inset 0 0 0 2px color-mix(in oklab, var(--ac-1), transparent 70%);
       transform: translateY(-1px);
     }
-    .vibe-489 .knob {
+    .vibe-490 .knob {
       display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:12px;
-      background: rgba(255,255,255,0.75); border:1px solid var(--ring); font-weight:600;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14);
+      font-weight:700; color: var(--ink);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
     }
-    .vibe-489 input[type="range"] {
-      -webkit-appearance:none; width: 180px; height: 8px; border-radius:999px; background: color-mix(in oklab, var(--ac-1) 30%, var(--ac-2) 70%);
-      outline: none; box-shadow: inset 0 0 0 1px rgba(11,16,32,0.08);
+    .vibe-490 input[type="range"] {
+      -webkit-appearance:none; width: 200px; height: 8px; border-radius:999px;
+      background: linear-gradient(90deg, var(--ac-1), var(--ac-2));
+      outline: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
     }
-    .vibe-489 input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 18px; height:18px; border-radius:50%; background:white;
-      border:1px solid var(--ring); box-shadow: 0 4px 10px rgba(11,16,32,0.25), 0 0 0 6px rgba(255,255,255,0.65) inset;
+    .vibe-490 input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height:18px; border-radius:50%; background: #0b0f19;
+      border:1px solid rgba(255,255,255,0.35);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.5), 0 0 0 6px color-mix(in oklab, var(--ac-2), transparent 70%) inset;
     }
-    .vibe-489 .motion {
-      appearance:none; border:none; cursor:pointer; padding:8px 12px; border-radius:12px; font-weight:700;
-      background: color-mix(in oklab, var(--ac-3), white 70%); color:#0b1020; border:1px solid var(--ring);
-      box-shadow: 0 6px 18px rgba(11,16,32,0.08);
-      transition: transform .2s ease, filter .2s ease;
+    .vibe-490 .switch {
+      appearance:none; cursor:pointer; border: 1px solid rgba(255,255,255,0.14); border-radius: 12px;
+      background: rgba(255,255,255,0.08); padding:8px 12px; font-weight:800; color: var(--ink);
+      transition: transform .18s ease, filter .18s ease;
     }
-    .vibe-489 .motion:hover { transform: translateY(-1px); filter: saturate(110%); }
+    .vibe-490 .switch:hover { transform: translateY(-1px); filter: saturate(110%); }
 
-    /* Flow line */
-    .vibe-489 .flow {
-      position: relative; z-index:2; margin-top: 22px; overflow:hidden; border-radius: 16px;
-      border:1px solid var(--ring); background: rgba(255,255,255,0.65); backdrop-filter: blur(6px);
+    /* Marquee line */
+    .vibe-490 .flow {
+      position: relative; z-index:2; margin-top: 22px; overflow:hidden; border-radius: 14px;
+      border:1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(6px);
     }
-    .vibe-489 .track {
-      display:flex; gap:40px; white-space:nowrap; padding:10px 16px; align-items:center;
-      animation: slide 22s linear infinite;
-      color: color-mix(in oklab, var(--ink), var(--ac-2) 25%); font-weight:700; letter-spacing:.2px;
+    .vibe-490 .track {
+      display:flex; gap:36px; white-space:nowrap; padding:10px 16px; align-items:center;
+      animation: glide 26s linear infinite;
+      color: color-mix(in oklab, var(--ink), var(--ac-1) 18%); font-weight:800; letter-spacing:.2px;
     }
-    .vibe-489 .track span {
-      display:inline-flex; align-items:center; gap:10px;
+    .vibe-490 .flow .dot {
+      width:8px; height:8px; border-radius:50%; background: var(--ac-3);
+      box-shadow: 0 0 0 6px color-mix(in oklab, var(--ac-3), transparent 80%);
+      display:inline-block;
     }
-    .vibe-489 .dot {
-      width:8px; height:8px; border-radius:50%; background: var(--ac-1);
-      box-shadow: 0 0 0 6px color-mix(in oklab, var(--ac-1), transparent 80%);
-    }
-    @keyframes slide {
+    @keyframes glide {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
     }
-    .vibe-489 .flow:hover .track { animation-play-state: paused; }
+    .vibe-490 .flow:hover .track { animation-play-state: paused; }
 
     /* Footer */
-    .vibe-489 .foot {
+    .vibe-490 .foot {
       position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between;
       margin-top: 18px; color: var(--muted); font-size: 13px;
     }
 
     /* Motion preferences */
     @media (prefers-reduced-motion: reduce) {
-      .vibe-489 .track { animation: none !important; }
-      .vibe-489 #field { filter: none; }
+      .vibe-490 .track { animation: none !important; }
+      .vibe-490 .sky { filter:none; }
     }
-    .vibe-489[data-motion="off"] .track { animation: none !important; }
+    .vibe-490[data-motion="off"] .track { animation: none !important; }
   </style>
 
-  <canvas id="field" aria-hidden="true"></canvas>
+  <canvas class="sky" id="sky" aria-hidden="true"></canvas>
+  <div class="halos" aria-hidden="true"></div>
 
   <div class="mast">
-    <div class="eyebrow">Iteration 489 — Kinetic Study</div>
-    <h1>Quiet Energy</h1>
-    <p class="lede">A living gradient that sketches waves to your touch and time of day.</p>
+    <div class="badge"><i></i> Iteration 490 — Orbital Atlas</div>
+    <h1>Soft Machines</h1>
+    <p class="lede">Threads of light trace orbits you suggest. Tilt your gaze; steer the stars.</p>
 
-    <div class="controls" role="group" aria-label="Scene controls">
-      <div class="chips" role="group" aria-label="Palette">
-        <button class="chip" data-palette="bloom" data-active="true" aria-pressed="true" title="Bloom">Bloom</button>
-        <button class="chip" data-palette="midnight" aria-pressed="false" title="Midnight">Midnight</button>
-        <button class="chip" data-palette="salt" aria-pressed="false" title="Salt">Salt</button>
+    <div class="controls" role="group" aria-label="Controls">
+      <div class="chips" role="group" aria-label="Theme">
+        <button class="chip" data-theme="dawn" aria-pressed="false">Dawn</button>
+        <button class="chip" data-theme="dusk" data-active="true" aria-pressed="true">Dusk</button>
+        <button class="chip" data-theme="void" aria-pressed="false">Void</button>
       </div>
-      <label class="knob" for="intensity">Intensity
-        <input id="intensity" type="range" min="0.2" max="1.6" step="0.1" value="0.9" aria-label="Intensity">
+      <label class="knob" for="tempo">Tempo
+        <input id="tempo" type="range" min="0.2" max="2" step="0.1" value="1">
       </label>
-      <button class="motion" id="motion" aria-pressed="true" title="Toggle motion">Motion: On</button>
+      <button class="switch" id="trail" aria-pressed="true" title="Toggle trails">Trails: On</button>
+      <button class="switch" id="motion" aria-pressed="true" title="Toggle motion">Motion: On</button>
     </div>
   </div>
 
   <div class="flow" aria-hidden="true">
     <div class="track">
-      <span><i class="dot"></i> Calm</span>
-      <span><i class="dot"></i> Clear</span>
-      <span><i class="dot"></i> Considered</span>
-      <span><i class="dot"></i> Poised</span>
+      <span><i class="dot"></i> Orbital</span>
       <span><i class="dot"></i> Tactile</span>
+      <span><i class="dot"></i> Lucid</span>
+      <span><i class="dot"></i> Poised</span>
       <span><i class="dot"></i> Playful</span>
       <span><i class="dot"></i> Quiet</span>
-      <span><i class="dot"></i> Bright</span>
-      <span><i class="dot"></i> Fluid</span>
-      <span><i class="dot"></i> Gentle</span>
       <span><i class="dot"></i> Focused</span>
+      <span><i class="dot"></i> Gentle</span>
       <!-- duplicate for seamless loop -->
-      <span><i class="dot"></i> Calm</span>
-      <span><i class="dot"></i> Clear</span>
-      <span><i class="dot"></i> Considered</span>
-      <span><i class="dot"></i> Poised</span>
+      <span><i class="dot"></i> Orbital</span>
       <span><i class="dot"></i> Tactile</span>
+      <span><i class="dot"></i> Lucid</span>
+      <span><i class="dot"></i> Poised</span>
       <span><i class="dot"></i> Playful</span>
       <span><i class="dot"></i> Quiet</span>
-      <span><i class="dot"></i> Bright</span>
-      <span><i class="dot"></i> Fluid</span>
-      <span><i class="dot"></i> Gentle</span>
       <span><i class="dot"></i> Focused</span>
+      <span><i class="dot"></i> Gentle</span>
     </div>
   </div>
 
   <div class="foot">
-    <small>Designed to breathe — not shout.</small>
-    <span id="last-updated">Last updated: 2025-11-07 17:16:13 EST</span>
+    <small>Designed to orbit calm.</small>
+    <span id="last-updated">Last updated: 2025-11-07 18:15:54 EST</span>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.vibe-489');
-      const canvas = root.querySelector('#field');
+      const root = document.currentScript.closest('.vibe-490');
+      const canvas = root.querySelector('#sky');
       const ctx = canvas.getContext('2d', { alpha: true });
-      const intensityEl = root.querySelector('#intensity');
+      const tempoEl = root.querySelector('#tempo');
       const motionBtn = root.querySelector('#motion');
-      const last = root.querySelector('#last-updated');
+      const trailBtn = root.querySelector('#trail');
       const chips = root.querySelectorAll('.chip');
+      const last = root.querySelector('#last-updated');
 
-      // Palettes
-      const PALETTES = {
-        bloom: ['#ff7ad9','#7c4dff','#36ffd1','#99ffe6'],
-        midnight: ['#00c6ff','#6a8bff','#00ffa3','#87f7ff'],
-        salt: ['#111827','#64748b','#f59e0b','#94a3b8']
+      // Themes (used for particle colors)
+      const THEMES = {
+        dawn: ['#ffb86b','#ffd36e','#ff8ea3','#7bf1a8','#ffe7a3'],
+        dusk: ['#7c4dff','#36ffd1','#ff7ad9','#a8e6ff','#d6b3ff'],
+        void: ['#58c4ff','#00ffbf','#9a7bff','#b6f8ff','#8ef7d2']
       };
 
-      // Time-based initial palette
-      const hour = new Date().getHours();
-      const initial = hour < 9 ? 'salt' : (hour < 18 ? 'bloom' : 'midnight');
-      setPalette(initial);
-
-      // Canvas sizing
+      // Device pixel ratio and sizing
       let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
       function resize() {
         const rect = root.getBoundingClientRect();
-        canvas.width = rect.width * dpr * 1.24;
-        canvas.height = rect.height * dpr * 1.24;
-        canvas.style.width = rect.width * 1.24 + 'px';
-        canvas.style.height = rect.height * 1.24 + 'px';
+        canvas.width = Math.max(1, Math.floor(rect.width * dpr * 1.16));
+        canvas.height = Math.max(1, Math.floor(rect.height * dpr * 1.16));
+        canvas.style.width = rect.width * 1.16 + 'px';
+        canvas.style.height = rect.height * 1.16 + 'px';
         ctx.setTransform(dpr,0,0,dpr,0,0);
       }
       resize();
-      window.addEventListener('resize', resize);
+      window.addEventListener('resize', resize, { passive:true });
 
       // State
       let t = 0;
       let running = true;
-      let intensity = parseFloat(intensityEl.value);
-      let palette = PALETTES[root.getAttribute('data-palette')] || PALETTES.bloom;
+      let trailOn = true;
+      let tempo = parseFloat(tempoEl.value);
+      let palette = THEMES[root.getAttribute('data-theme')] || THEMES.dusk;
       const pointer = { x: 0.5, y: 0.5, vx: 0, vy: 0, ts: 0 };
+      const particles = [];
+      const LINKS = 7; // connection hop
 
+      // Initialize particles in rings
+      function seed() {
+        particles.length = 0;
+        const count = 120;
+        for (let i=0;i<count;i++){
+          const ring = (i % 4) + 1;
+          const radius = (ring * 38) + (Math.random()*24);
+          particles.push({
+            a: Math.random()*Math.PI*2,
+            r: radius,
+            s: (0.0008 + Math.random()*0.0018) * (Math.random()>0.5?1:-1),
+            hue: palette[i % palette.length],
+            size: 1 + (ring*0.35)
+          });
+        }
+      }
+      seed();
+
+      // Motion preference
+      const mediaReduce = matchMedia('(prefers-reduced-motion: reduce)');
+      if (mediaReduce.matches) {
+        root.setAttribute('data-motion', 'off');
+        running = false;
+        motionBtn.textContent = 'Motion: Off';
+        motionBtn.setAttribute('aria-pressed','false');
+      }
+
+      // Pointer steering + subtle tilt of headline
+      const mast = root.querySelector('.mast');
       root.addEventListener('pointermove', (e)=>{
         const r = root.getBoundingClientRect();
         const nx = (e.clientX - r.left) / Math.max(1, r.width);
         const ny = (e.clientY - r.top) / Math.max(1, r.height);
-        pointer.vx += (nx - pointer.x) * 0.35;
-        pointer.vy += (ny - pointer.y) * 0.35;
+        pointer.vx += (nx - pointer.x) * 0.25;
+        pointer.vy += (ny - pointer.y) * 0.25;
         pointer.ts = performance.now();
+
+        // tilt
+        const rx = (0.5 - ny) * 6;
+        const ry = (nx - 0.5) * 8;
+        root.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+        root.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+      });
+      root.addEventListener('pointerleave', ()=>{
+        root.style.setProperty('--rx','0deg');
+        root.style.setProperty('--ry','0deg');
       });
 
       // Controls
       chips.forEach(btn=>{
         btn.addEventListener('click', ()=>{
-          setPalette(btn.dataset.palette);
+          const theme = btn.dataset.theme;
+          root.setAttribute('data-theme', theme);
+          palette = THEMES[theme] || palette;
+          chips.forEach(b=>{
+            const active = b === btn;
+            b.dataset.active = active ? "true" : "false";
+            b.setAttribute('aria-pressed', active ? 'true' : 'false');
+          });
+          // re-seed with fresh palette
+          seed();
         });
       });
-      function setPalette(name){
-        root.setAttribute('data-palette', name);
-        palette = PALETTES[name] || palette;
-        chips.forEach(b=>{
-          const active = b.dataset.palette === name;
-          b.dataset.active = active ? "true" : "false";
-          b.setAttribute('aria-pressed', active ? 'true' : 'false');
-        });
-        // gently tint background accent
-        root.style.setProperty('--ac-1', palette[0]);
-        root.style.setProperty('--ac-2', palette[1]);
-        root.style.setProperty('--ac-3', palette[2]);
-      }
 
-      intensityEl.addEventListener('input', e=>{
-        intensity = parseFloat(e.target.value || '1');
+      tempoEl.addEventListener('input', e=>{
+        tempo = parseFloat(e.target.value || '1');
+      });
+
+      trailBtn.addEventListener('click', ()=>{
+        trailOn = !trailOn;
+        trailBtn.textContent = 'Trails: ' + (trailOn ? 'On' : 'Off');
+        trailBtn.setAttribute('aria-pressed', trailOn ? 'true' : 'false');
       });
 
       motionBtn.addEventListener('click', ()=>{
@@ -340,55 +424,65 @@
         else drawStatic();
       });
 
-      // Draw waves
-      function draw(time){
-        const { width: Wcss, height: Hcss } = canvas.getBoundingClientRect();
-        const W = Wcss, H = Hcss;
-        ctx.clearRect(0,0,W,H);
-        // gentle paper base
-        ctx.fillStyle = 'rgba(255,255,255,0.65)';
-        ctx.fillRect(0,0,W,H);
+      // Draw orbital threads
+      function draw(now){
+        const W = canvas.getBoundingClientRect().width;
+        const H = canvas.getBoundingClientRect().height;
 
-        const cx = W * (0.4 + pointer.x * 0.2);
-        const cy = H * (0.45 + (pointer.y - 0.5) * 0.3);
-
-        // decay pointer velocity
-        pointer.vx *= 0.85; pointer.vy *= 0.85;
-        pointer.x += pointer.vx * 0.1; pointer.y += pointer.vy * 0.1;
-
-        const layers = 7;
-        for (let i = 0; i < layers; i++){
-          const p = i / (layers - 1);
-          const hue = palette[i % palette.length];
-          const amp = (40 + p * 90) * intensity;
-          const freq = 0.8 + p * 0.9;
-          const speed = 0.0008 + p * 0.0006;
-          const lw = 44 - p * 30;
-
-          ctx.beginPath();
-          for (let x = -W*0.1; x <= W*1.1; x += 8){
-            const y = cy + Math.sin((x*0.01*freq) + t*speed*240 + i*0.6) * amp
-                          + Math.cos((x*0.007) - t*speed*180) * (amp*0.15);
-            if (x === -W*0.1) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-          }
-          ctx.strokeStyle = hue;
-          ctx.globalAlpha = 0.075 + (0.12 * (1 - p));
-          ctx.lineWidth = lw;
-          ctx.lineCap = 'round';
-          ctx.lineJoin = 'round';
-          ctx.globalCompositeOperation = 'lighter';
-          ctx.stroke();
+        // gently clear for trails
+        if (trailOn) {
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.fillStyle = 'rgba(0,0,0,0.08)';
+          ctx.fillRect(0,0,W,H);
+        } else {
+          ctx.clearRect(0,0,W,H);
         }
 
-        // Halo
-        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W,H)*0.6);
-        grad.addColorStop(0, hexToRgba(palette[2], 0.18));
-        grad.addColorStop(1, 'rgba(255,255,255,0)');
+        // Center follows pointer
+        pointer.vx *= 0.90; pointer.vy *= 0.90;
+        pointer.x += pointer.vx * 0.1; pointer.y += pointer.vy * 0.1;
+        const cx = W * (0.48 + (pointer.x - 0.5) * 0.18);
+        const cy = H * (0.50 + (pointer.y - 0.5) * 0.18);
+
+        ctx.globalCompositeOperation = 'lighter';
+
+        // update + draw connections
+        for (let i=0;i<particles.length;i++){
+          const p = particles[i];
+          p.a += p.s * tempo * 60 / 1000 * (now ? (now - t) : 16);
+
+          const x = cx + Math.cos(p.a) * p.r;
+          const y = cy + Math.sin(p.a) * p.r;
+
+          // connect to a farther hop for weave
+          const j = (i + LINKS) % particles.length;
+          const q = particles[j];
+          const x2 = cx + Math.cos(q.a) * q.r;
+          const y2 = cy + Math.sin(q.a) * q.r;
+
+          // thread
+          ctx.strokeStyle = p.hue;
+          ctx.globalAlpha = 0.08 + (0.16 * (i % 5) / 5);
+          ctx.lineWidth = 1.2 + ((i % 7) * 0.15);
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          // slight curve toward center
+          const mx = (x + x2) / 2, my = (y + y2) / 2;
+          ctx.quadraticCurveTo((mx + cx)/2, (my + cy)/2, x2, y2);
+          ctx.stroke();
+
+          // nodes (glowing)
+          if ((i % 12) === 0) {
+            const g = ctx.createRadialGradient(x, y, 0, x, y, 18);
+            g.addColorStop(0, hexToRgba(p.hue, 0.9));
+            g.addColorStop(1, hexToRgba(p.hue, 0));
+            ctx.fillStyle = g;
+            ctx.globalAlpha = 0.35;
+            ctx.beginPath(); ctx.arc(x, y, 18, 0, Math.PI*2); ctx.fill();
+          }
+        }
+
         ctx.globalAlpha = 1;
-        ctx.globalCompositeOperation = 'multiply';
-        ctx.fillStyle = grad;
-        ctx.beginPath(); ctx.rect(0,0,W,H); ctx.fill();
         ctx.globalCompositeOperation = 'source-over';
       }
 
@@ -401,8 +495,9 @@
 
       function raf(now){
         if (root.getAttribute('data-motion') === 'off') return;
+        if (!t) t = now || performance.now();
+        draw(now || performance.now());
         t = now || performance.now();
-        draw(t);
         requestAnimationFrame(raf);
       }
 
@@ -411,7 +506,7 @@
         draw(t);
       }
 
-      // auto start
+      // Kick off
       requestAnimationFrame(raf);
 
       // Last updated
