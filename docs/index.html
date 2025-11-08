@@ -73,307 +73,261 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="observatory" data-theme="aurora" data-motion="on" aria-label="Orbital Observatory — Kinetic Orrery">
+<section class="poster" data-theme="polar" data-mode="ribbon" data-motion="on" aria-label="Ribbon Studio — Living Poster">
   <style>
-    .observatory {
-      --ink: #eaf2ff;
-      --muted: #a7b5d4;
-      --bg-a: #0a0f19;
-      --bg-b: #111827;
-      --glow-a: #6cf3ff;
-      --glow-b: #8ea0ff;
-      --p1: #7df3ff;
-      --p2: #8ea2ff;
-      --p3: #ff85cf;
-      --p4: #ffd273;
-      --card: rgba(17,24,39,.55);
-      --edge: rgba(255,255,255,.08);
+    .poster {
+      --ink: #0c1c2a;
+      --muted: #4a6478;
+      --bg1: #f3fbff;
+      --bg2: #e9f4ff;
+      --p1: #7de4ff;
+      --p2: #9ba7ff;
+      --p3: #ff9ad1;
+      --p4: #ffd88a;
+      --edge: rgba(0,0,0,.08);
+      --glass: rgba(255,255,255,.6);
       --radius: 28px;
 
       position: relative;
-      border-radius: var(--radius);
       color: var(--ink);
-      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Display", "Inter", "Segoe UI", Roboto, Helvetica, Arial;
+      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Display", Inter, "Segoe UI", Roboto, Helvetica, Arial;
       padding: clamp(22px, 5vw, 54px);
+      border-radius: var(--radius);
       background:
-        radial-gradient(140% 120% at 10% -20%, #17223a 0%, transparent 60%),
-        radial-gradient(130% 100% at 110% 120%, #1a2e3b 0%, transparent 62%),
-        linear-gradient(180deg, var(--bg-a), var(--bg-b));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 40px 120px rgba(0,0,0,.55);
+        radial-gradient(160% 120% at -10% -20%, color-mix(in oklab, var(--p1) 14%, transparent), transparent 60%),
+        radial-gradient(140% 140% at 110% 120%, color-mix(in oklab, var(--p2) 12%, transparent), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 40px 120px rgba(14, 30, 52, .18);
       overflow: hidden;
       isolation: isolate;
     }
-    .observatory * { box-sizing: border-box; }
+    .poster * { box-sizing: border-box; }
 
-    /* Subtle star field + aurora sweep */
-    .observatory::before,
-    .observatory::after {
+    /* Soft texture + vignette */
+    .poster::before,
+    .poster::after {
       content: "";
       position: absolute; inset: -2px; border-radius: inherit; pointer-events: none;
     }
-    .observatory::before {
-      background-image:
-        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.22) 0 1px, transparent 2px),
-        radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,.12) 0 1px, transparent 2px),
-        radial-gradient(1px 1px at 66% 16%, rgba(255,255,255,.18) 0 1px, transparent 2px),
-        radial-gradient(1px 1px at 88% 66%, rgba(255,255,255,.12) 0 1px, transparent 2px),
-        repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 1px 18px);
-      opacity: .35;
-      mix-blend-mode: screen;
-      animation: obs-stars 24s ease-in-out infinite alternate;
-    }
-    .observatory::after {
+    .poster::before {
       background:
-        radial-gradient(100% 100% at 50% 10%, color-mix(in oklab, var(--glow-a), transparent 90%), transparent 60%),
-        radial-gradient(100% 100% at 0% 100%, color-mix(in oklab, var(--glow-b), transparent 92%), transparent 62%);
-      filter: saturate(115%);
+        repeating-radial-gradient(circle at 20% 30%, rgba(0,0,0,.015) 0 0.8px, transparent 1.6px 6px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 1px, transparent 1px 14px);
+      mix-blend-mode: multiply;
+      opacity: .6;
+      filter: blur(.2px);
+    }
+    .poster::after {
+      background: radial-gradient(120% 180% at 50% -40%, rgba(255,255,255,.45), transparent 60%);
       opacity: .8;
-      animation: obs-sweep 18s ease-in-out infinite alternate;
     }
-    @keyframes obs-stars { 0% { transform: translateY(-6px); } 100% { transform: translateY(6px); } }
-    @keyframes obs-sweep { 0% { transform: translate3d(0,0,0) scale(1); } 100% { transform: translate3d(-1.5%,2%,0) scale(1.03); } }
 
-    .observatory .grid { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; display: grid; gap: clamp(16px, 3vw, 28px); }
-    .observatory .top {
-      display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(16px, 3vw, 24px); align-items: center;
-    }
-    @media (max-width: 960px) { .observatory .top { grid-template-columns: 1fr; } }
+    .poster .frame { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; display: grid; gap: clamp(16px, 3vw, 28px); }
+    .poster .masthead { display: grid; gap: 10px; }
 
-    .observatory .badge {
-      display: inline-flex; align-items: center; gap: 10px;
+    .poster .emblem {
+      display: inline-flex; align-items: center; gap: 10px; width: max-content;
       padding: 8px 12px; border-radius: 999px;
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      background: var(--glass);
       border: 1px solid var(--edge);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 10px 26px rgba(0,0,0,.32);
-      font-weight: 900; letter-spacing: .24px;
-      width: max-content; color: var(--muted);
+      font-weight: 900; letter-spacing: .24px; color: var(--muted);
       backdrop-filter: blur(8px);
+      box-shadow: 0 12px 30px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.65);
     }
-    .observatory .pulse {
+    .poster .dot {
       width: 10px; height: 10px; border-radius: 50%;
       background: conic-gradient(from 0deg, var(--p1), var(--p2), var(--p3), var(--p4), var(--p1));
-      box-shadow: 0 0 0 6px color-mix(in oklab, var(--p1), transparent 80%);
+      box-shadow: 0 0 0 6px color-mix(in oklab, var(--p1) 20%, transparent);
       animation: spin 9s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .observatory h1 {
-      margin: 10px 0 6px;
-      font-size: clamp(44px, 10vw, 130px);
-      line-height: .9;
+    .poster h1 {
+      margin: 6px 0 4px;
+      font-size: clamp(44px, 10vw, 120px);
+      line-height: .88;
       letter-spacing: -1.2px;
       color: transparent;
       background: linear-gradient(90deg, var(--p1), var(--p3), var(--p2), var(--p4));
       -webkit-background-clip: text; background-clip: text;
-      text-shadow: 0 10px 38px rgba(0,0,0,.35);
+      text-shadow: 0 10px 38px rgba(0,0,0,.06);
       text-wrap: balance;
     }
-    .observatory .lede {
-      max-width: 70ch; margin: 0;
-      color: var(--muted); font-size: clamp(14px, 2.2vw, 18px);
+    .poster .lede {
+      max-width: 70ch; margin: 0; color: var(--muted); font-size: clamp(14px, 2.2vw, 18px);
+      text-wrap: pretty;
     }
 
-    /* Orrery stage */
-    .observatory .panel {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-    .observatory .stage {
-      position: relative;
+    .poster .stage {
+      position: relative; border-radius: 26px; overflow: hidden;
       height: min(68vmin, 560px);
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      background: linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.45));
       border: 1px solid var(--edge);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 28px 80px rgba(0,0,0,.45);
-      overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 26px 80px rgba(0,0,0,.18);
       transform-style: preserve-3d; perspective: 1000px;
     }
-    .observatory canvas#sky { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .poster canvas#field { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
-    /* HUD ring */
-    .observatory .hud {
-      position: absolute; inset: 8% 6%;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), inset 0 -80px 160px rgba(255,255,255,.04);
-      pointer-events: none;
-      transform: translateZ(38px);
-      mask: radial-gradient(circle at center, rgba(0,0,0,1) 58%, rgba(0,0,0,0) 62%);
-      -webkit-mask: radial-gradient(circle at center, rgba(0,0,0,1) 58%, rgba(0,0,0,0) 62%);
-    }
-    .observatory .ticks {
-      position: absolute; inset: 0; pointer-events: none;
+    /* Subtle grid overlay */
+    .poster .stage::after {
+      content:""; position:absolute; inset:0; pointer-events:none;
       background:
-        conic-gradient(from 0deg, rgba(255,255,255,.16) 0 2deg, transparent 2deg 15deg);
-      mask: radial-gradient(circle at center, transparent 0 54%, black 56% 64%, transparent 66% 100%);
-      -webkit-mask: radial-gradient(circle at center, transparent 0 54%, black 56% 64%, transparent 66% 100%);
-      opacity: .75;
-      animation: drift 22s linear infinite;
+        radial-gradient(60% 80% at 50% 40%, rgba(255,255,255,.5), transparent 60%),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.035) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(0deg, rgba(0,0,0,.028) 0 1px, transparent 1px 24px);
+      mix-blend-mode: soft-light;
+      opacity:.45;
     }
-    @keyframes drift { to { transform: rotate(360deg); } }
 
-    /* Controls */
-    .observatory .controls {
+    /* Dock */
+    .poster .dock {
       display:flex; flex-wrap:wrap; align-items:center; gap: 10px 12px;
-      background: var(--card);
+      background: var(--glass);
       border: 1px solid var(--edge);
       border-radius: 16px;
       padding: 10px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 16px 44px rgba(0,0,0,.28);
       backdrop-filter: blur(10px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.65), 0 16px 44px rgba(0,0,0,.14);
     }
-    .observatory .chips { display:flex; flex-wrap:wrap; gap: 8px; }
-    .observatory .chip, .observatory .knob, .observatory .button {
+    .poster .chips { display:flex; flex-wrap:wrap; gap: 8px; }
+    .poster .chip, .poster .button, .poster .knob {
       appearance: none; cursor: pointer; user-select: none;
       border: 1px solid var(--edge); border-radius: 12px;
-      background: rgba(255,255,255,.04); color: var(--ink);
+      background: rgba(255,255,255,.5); color: var(--ink);
       font-weight: 800; letter-spacing: .2px;
       padding: 8px 12px;
       transition: transform .16s ease, filter .16s ease, box-shadow .2s ease, background .2s ease;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 10px 26px rgba(0,0,0,.24);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 10px 26px rgba(0,0,0,.12);
     }
-    .observatory .chip { border-radius: 999px; }
-    .observatory .chip[aria-pressed="true"] {
-      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-      box-shadow: 0 14px 32px color-mix(in oklab, var(--p1), transparent 84%), inset 0 0 0 2px color-mix(in oklab, var(--p1), transparent 62%);
+    .poster .chip { border-radius: 999px; }
+    .poster .chip[aria-pressed="true"] {
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.55));
+      box-shadow: 0 14px 32px color-mix(in oklab, var(--p1) 30%, transparent), inset 0 0 0 2px color-mix(in oklab, var(--p1) 22%, transparent);
     }
-    .observatory .chip:hover, .observatory .button:hover { transform: translateY(-1px) scale(1.01); filter: saturate(112%); }
-    .observatory .knob { display: inline-flex; align-items: center; gap: 10px; }
-    .observatory input[type="range"] {
+    .poster .chip:hover, .poster .button:hover { transform: translateY(-1px) scale(1.01); filter: saturate(112%); }
+    .poster .knob { display:inline-flex; align-items:center; gap: 10px; }
+    .poster input[type="range"] {
       -webkit-appearance: none; width: 180px; height: 8px; border-radius: 999px; outline: none;
       background: linear-gradient(90deg, var(--p1), var(--p2));
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
     }
-    .observatory input[type="range"]::-webkit-slider-thumb {
+    .poster input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
-      background: #121824; border: 1px solid rgba(255,255,255,.22);
-      box-shadow: 0 6px 16px rgba(0,0,0,.6), 0 0 0 6px color-mix(in oklab, var(--p2), transparent 76%) inset;
+      background: #ffffff; border: 1px solid rgba(0,0,0,.14);
+      box-shadow: 0 6px 16px rgba(0,0,0,.2), 0 0 0 6px color-mix(in oklab, var(--p2) 24%, transparent) inset;
     }
 
-    .observatory .meta {
+    .poster .meta {
       display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap: 10px;
       color: var(--muted); font-size: 13px;
     }
 
-    /* Themes */
-    .observatory[data-theme="aurora"] {
-      --ink:#eaf2ff; --muted:#a7b5d4;
-      --bg-a:#0a0f19; --bg-b:#111827;
-      --glow-a:#6cf3ff; --glow-b:#8ea0ff;
-      --p1:#7df3ff; --p2:#8ea2ff; --p3:#ff85cf; --p4:#ffd273;
-      --card: rgba(17,24,39,.55); --edge: rgba(255,255,255,.08);
+    /* THEMES */
+    .poster[data-theme="polar"] {
+      --ink:#0c1c2a; --muted:#4a6478;
+      --bg1:#f3fbff; --bg2:#e9f4ff;
+      --p1:#7de4ff; --p2:#9ba7ff; --p3:#ff9ad1; --p4:#ffd88a;
+      --edge: rgba(0,0,0,.10); --glass: rgba(255,255,255,.65);
     }
-    .observatory[data-theme="onyx"] {
+    .poster[data-theme="ink"] {
       --ink:#f3f6ff; --muted:#cbd6f1;
-      --bg-a:#05070b; --bg-b:#0b0e14;
-      --glow-a:#89a7ff; --glow-b:#7df3ff;
+      --bg1:#060911; --bg2:#0b1220;
       --p1:#98a6ff; --p2:#7de4ff; --p3:#b49cff; --p4:#ffd48f;
-      --card: rgba(10,12,18,.55); --edge: rgba(255,255,255,.10);
+      --edge: rgba(255,255,255,.10); --glass: rgba(10,12,18,.55);
+      color: var(--ink);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 40px 120px rgba(0,0,0,.45);
     }
-    .observatory[data-theme="terra"] {
-      --ink:#0e2018; --muted:#436154;
-      --bg-a:#e9f6ef; --bg-b:#e3f0ea;
-      --glow-a:#58d59a; --glow-b:#63caff;
-      --p1:#58d59a; --p2:#63caff; --p3:#84f3b7; --p4:#ffd569;
-      --card: rgba(255,255,255,.55); --edge: rgba(0,0,0,.08);
-      color: #0e2018;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.65), 0 40px 120px rgba(12,19,32,.22);
+    .poster[data-theme="sand"] {
+      --ink:#1a130b; --muted:#6f6355;
+      --bg1:#fff9f1; --bg2:#f6eee3;
+      --p1:#ffcc8f; --p2:#6ee7d1; --p3:#a98cff; --p4:#ff8fb0;
+      --edge: rgba(0,0,0,.10); --glass: rgba(255,255,255,.7);
     }
-    .observatory[data-theme="blossom"] {
+    .poster[data-theme="blossom"] {
       --ink:#28141d; --muted:#7f5b66;
-      --bg-a:#fff1f8; --bg-b:#ffe8f2;
-      --glow-a:#ff7fc2; --glow-b:#ffb38a;
+      --bg1:#fff1f8; --bg2:#ffe8f2;
       --p1:#ff7fc2; --p2:#ffb38a; --p3:#a98cff; --p4:#7bdcff;
-      --card: rgba(255,255,255,.62); --edge: rgba(0,0,0,.08);
-      color: #28141d;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.75), 0 40px 120px rgba(128,64,80,.16);
+      --edge: rgba(0,0,0,.08); --glass: rgba(255,255,255,.7);
     }
 
-    /* Motion respect */
-    .observatory[data-motion="off"] .pulse { animation: none; }
-    @media (prefers-reduced-motion: reduce) {
-      .observatory .pulse { animation: none !important; }
-      .observatory::before { animation: none !important; }
-      .observatory::after { animation: none !important; }
-      .observatory .ticks { animation: none !important; }
-    }
+    /* Motion preference */
+    .poster[data-motion="off"] .dot { animation: none; }
+    @media (prefers-reduced-motion: reduce) { .poster .dot { animation: none !important; } }
   </style>
 
-  <div class="grid">
-    <div class="badge"><i class="pulse" aria-hidden="true"></i> Orbital Observatory — Edition 502</div>
+  <div class="frame">
+    <div class="emblem"><i class="dot" aria-hidden="true"></i> Kinetic Poster — No. 503</div>
+    <div class="masthead">
+      <h1>Ribbon&nbsp;Studio</h1>
+      <p class="lede">Air sketches light. Drag to stir the wind. A living poster of luminous ribbons.</p>
+    </div>
 
-    <div class="top">
-      <div>
-        <h1>Orbital Atelier</h1>
-        <p class="lede">Sketch gravity. Paint in time. A kinetic orrery where planets write light and trails remember.</p>
+    <div class="stage" id="stage" role="img" aria-label="Flowing aurora ribbons with gentle glow">
+      <canvas id="field"></canvas>
+    </div>
+
+    <div class="dock" role="group" aria-label="Controls">
+      <div class="chips" aria-label="Theme">
+        <button class="chip" data-theme="polar" aria-pressed="true">Polar</button>
+        <button class="chip" data-theme="ink" aria-pressed="false">Ink</button>
+        <button class="chip" data-theme="sand" aria-pressed="false">Sand</button>
+        <button class="chip" data-theme="blossom" aria-pressed="false">Blossom</button>
       </div>
-      <div class="panel">
-        <div class="stage" id="stage" role="img" aria-label="Generative orrery with orbiting bodies and luminous trails">
-          <canvas id="sky"></canvas>
-          <div class="hud" aria-hidden="true">
-            <div class="ticks"></div>
-          </div>
-        </div>
-        <div class="controls" role="group" aria-label="Controls">
-          <div class="chips" aria-label="Theme">
-            <button class="chip" data-theme="aurora" aria-pressed="true">Aurora</button>
-            <button class="chip" data-theme="onyx" aria-pressed="false">Onyx</button>
-            <button class="chip" data-theme="terra" aria-pressed="false">Terra</button>
-            <button class="chip" data-theme="blossom" aria-pressed="false">Blossom</button>
-          </div>
-          <div class="chips" aria-label="Mode">
-            <button class="chip" data-mode="harmonic" aria-pressed="true">Harmonic</button>
-            <button class="chip" data-mode="chaos" aria-pressed="false">Chaos</button>
-            <button class="chip" data-mode="comet" aria-pressed="false">Comet</button>
-          </div>
-          <label class="knob" for="bodies">Bodies
-            <input id="bodies" type="range" min="3" max="48" step="1" value="14" aria-label="Planet count">
-          </label>
-          <label class="knob" for="speed">Speed
-            <input id="speed" type="range" min="0.2" max="2.2" step="0.1" value="1.0" aria-label="Orbital speed">
-          </label>
-          <label class="knob" for="persistence">Trails
-            <input id="persistence" type="range" min="0.75" max="0.995" step="0.005" value="0.94" aria-label="Trail persistence">
-          </label>
-          <button class="button" id="toggle-motion" aria-pressed="true">Motion: On</button>
-          <button class="button" id="randomize">Pulse</button>
-        </div>
+      <div class="chips" aria-label="Mode">
+        <button class="chip" data-mode="ribbon" aria-pressed="true">Ribbon</button>
+        <button class="chip" data-mode="weave" aria-pressed="false">Weave</button>
+        <button class="chip" data-mode="bloom" aria-pressed="false">Bloom</button>
       </div>
+      <label class="knob" for="density">Density
+        <input id="density" type="range" min="2" max="36" step="1" value="12" aria-label="Ribbon count">
+      </label>
+      <label class="knob" for="wind">Wind
+        <input id="wind" type="range" min="0.2" max="3.0" step="0.1" value="1.0" aria-label="Wind speed">
+      </label>
+      <label class="knob" for="fade">Fade
+        <input id="fade" type="range" min="0.75" max="0.995" step="0.005" value="0.94" aria-label="Trail fade">
+      </label>
+      <label class="knob" for="thick">Thickness
+        <input id="thick" type="range" min="1" max="16" step="1" value="6" aria-label="Stroke thickness">
+      </label>
+      <button class="button" id="toggle-motion" aria-pressed="true">Breathe: On</button>
+      <button class="button" id="pulse">Pulse</button>
     </div>
 
     <div class="meta">
-      <small>Hold and tilt to steer the field. Gravity hums in gradients.</small>
-      <span id="last-updated">Last updated: 2025-11-08 08:22:02 EST</span>
+      <small>Hold and tilt to shape the field. Gentle on GPUs, bold in mood.</small>
+      <span id="last-updated">Last updated: 2025-11-08 09:14:24 EST</span>
     </div>
   </div>
 
   <script>
     (function(){
-      const root  = document.currentScript.closest('.observatory');
+      const root  = document.currentScript.closest('.poster');
       const stage = root.querySelector('#stage');
-      const canvas = root.querySelector('#sky');
+      const canvas = root.querySelector('#field');
       const ctx = canvas.getContext('2d');
 
       const themeChips = root.querySelectorAll('.chip[data-theme]');
       const modeChips  = root.querySelectorAll('.chip[data-mode]');
-      const bodiesEl   = root.querySelector('#bodies');
-      const speedEl    = root.querySelector('#speed');
-      const persistEl  = root.querySelector('#persistence');
+      const densityEl  = root.querySelector('#density');
+      const windEl     = root.querySelector('#wind');
+      const fadeEl     = root.querySelector('#fade');
+      const thickEl    = root.querySelector('#thick');
       const motionBtn  = root.querySelector('#toggle-motion');
-      const pulseBtn   = root.querySelector('#randomize');
+      const pulseBtn   = root.querySelector('#pulse');
       const last       = root.querySelector('#last-updated');
 
       let dpr = Math.max(1, Math.min(2.5, window.devicePixelRatio || 1));
       let running = true, raf;
-      let MODE = 'harmonic';
-      let BODIES = +bodiesEl.value;
-      let SPEED = +speedEl.value;
-      let PERSIST = +persistEl.value;
+      let MODE = 'ribbon';
+      let RIBBONS = +densityEl.value;
+      let WIND = +windEl.value;
+      let FADE = +fadeEl.value;
+      let THICK = +thickEl.value;
 
-      let planets = [];
       let time = 0;
-      let tilt = { x: 0, y: 0, mod: 1 };
+      let mouse = { x: 0, y: 0, inside: false };
+      let tilt = { mod: 1 };
 
       function css(name){ return getComputedStyle(root).getPropertyValue(name).trim(); }
       function pal(){ return [css('--p1'), css('--p2'), css('--p3'), css('--p4')].filter(Boolean); }
@@ -386,112 +340,174 @@
         canvas.style.height = r.height + 'px';
         ctx.setTransform(1,0,0,1,0,0);
         ctx.scale(dpr, dpr);
-        init();
+        prime();
       }
 
-      function init(){
+      function prime(){
         const w = canvas.width / dpr, h = canvas.height / dpr;
-        const cx = w/2, cy = h/2;
-        const base = Math.min(w,h) * 0.42;
-
-        const palette = pal();
-        planets = Array.from({length: BODIES}, (_, i) => {
-          const t = i / BODIES;
-          const r = base * (0.15 + 0.75 * Math.pow(t, 0.9));
-          const speed = (0.6 + t) * 0.0025;
-          const phase = Math.random() * Math.PI * 2;
-          return {
-            r,
-            a: phase,
-            v: speed,
-            w: 1.2 + 2.8 * t,
-            hue: palette[i % palette.length] || '#fff',
-            e: 0.02 + 0.22 * Math.sin(i * 1.37), // eccentricity
-          };
-        });
-
-        // prime background
         ctx.clearRect(0,0,w,h);
-        ctx.fillStyle = 'rgba(0,0,0,0)';
-        ctx.fillRect(0,0,w,h);
-        drawFrame(0,true);
+        drawFrame(0, true);
       }
 
-      function step(dt){
-        time += dt * SPEED;
+      function lerp(a,b,t){ return a+(b-a)*t; }
+      function mix(a,b,t){
+        const pa = parseInt(a.slice(1),16), pb = parseInt(b.slice(1),16);
+        const ra=(pa>>16)&255, ga=(pa>>8)&255, ba=pa&255;
+        const rb=(pb>>16)&255, gb=(pb>>8)&255, bb=pb&255;
+        const r=Math.round(lerp(ra,rb,t)), g=Math.round(lerp(ga,gb,t)), b_=Math.round(lerp(ba,bb,t));
+        return `rgb(${r},${g},${b_})`;
+      }
+
+      function clearWithFade(){
+        const w = canvas.width / dpr, h = canvas.height / dpr;
+        ctx.globalCompositeOperation = 'source-over';
+        // If dark theme, fade to black; else fade to white
+        const bg1 = css('--bg1');
+        const isDark = (/(#0|#1|#2|#3|#04|#05|#06)/i).test(bg1);
+        ctx.fillStyle = isDark ? `rgba(0,0,0,${1-FADE})` : `rgba(255,255,255,${1-FADE})`;
+        ctx.fillRect(0,0,w,h);
+      }
+
+      function drawRibbonSet(){
         const w = canvas.width / dpr, h = canvas.height / dpr;
         const cx = w/2, cy = h/2;
-
-        // fade for trails
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.fillStyle = `rgba(0,0,0,${1 - PERSIST})`;
-        // light themes fade with white veil
-        if (getComputedStyle(root).getPropertyValue('--bg-a').trim().startsWith('#e') || root.getAttribute('data-theme') === 'terra' || root.getAttribute('data-theme') === 'blossom') {
-          ctx.fillStyle = `rgba(255,255,255,${1 - PERSIST})`;
-        }
-        ctx.fillRect(0,0,w,h);
+        const palette = pal();
+        const baseAmp = Math.min(w,h) * 0.18 * tilt.mod;
+        const freqA = 0.0042, freqB = 0.0021;
 
         ctx.globalCompositeOperation = 'lighter';
-        for (let i=0; i<planets.length; i++){
-          const p = planets[i];
-          const theta = p.a;
 
-          // mode perturbations
-          let ex = p.e, ey = p.e;
-          if (MODE === 'chaos') {
-            ex *= 2.2; ey *= 1.8;
-          } else if (MODE === 'comet') {
-            ex *= 3.0; ey *= 0.6;
-          }
+        for (let i=0; i<RIBBONS; i++){
+          const t = i / Math.max(1, RIBBONS-1);
+          const color = palette[i % palette.length];
+          const amp = baseAmp * (0.35 + 0.9*t);
+          const lw = (THICK * (1.1 + 1.2*t));
+          const phase = i * 0.9;
 
-          const ox = Math.cos(theta) * p.r * (1 + ex * Math.sin(time * 0.7 + i));
-          const oy = Math.sin(theta) * p.r * (1 + ey * Math.cos(time * 0.9 - i));
-          const x = cx + ox * (0.98 + 0.04 * tilt.mod);
-          const y = cy + oy * (0.98 + 0.04 * tilt.mod);
-
-          // trail stroke
-          ctx.beginPath();
-          ctx.moveTo(x,y);
-          const seg = 24;
-          let lx = x, ly = y;
-          for (let s=1; s<=seg; s++){
-            const t = theta - s * 0.05 * (1 + 0.5 * Math.sin(i + time*0.3));
-            const px = cx + Math.cos(t) * p.r * (1 + ex * Math.sin(time * 0.7 + i));
-            const py = cy + Math.sin(t) * p.r * (1 + ey * Math.cos(time * 0.9 - i));
-            lx = px; ly = py;
-            ctx.lineTo(px, py);
-          }
+          ctx.lineWidth = lw;
           ctx.lineCap = 'round';
           ctx.lineJoin = 'round';
-          ctx.shadowBlur = 12 + 28 * (i/planets.length);
-          ctx.shadowColor = p.hue;
-          ctx.lineWidth = p.w;
-          ctx.strokeStyle = p.hue;
-          ctx.globalAlpha = 0.08 + 0.92 * (i/planets.length);
+          ctx.shadowBlur = 22 + 26 * t;
+          ctx.shadowColor = color;
+          ctx.strokeStyle = color;
+          ctx.globalAlpha = 0.3 + 0.7 * t;
+
+          ctx.beginPath();
+          const step = 8;
+          for (let x=-40, first=true; x<=w+40; x+=step){
+            // influence from mouse as a gentle gust
+            let gust = 0;
+            if (mouse.inside){
+              const dx = x - mouse.x;
+              const sigma = 120;
+              const g = Math.exp(-(dx*dx)/(2*sigma*sigma));
+              gust = g * (mouse.y - cy) * 0.35;
+            }
+            const y = cy
+              + Math.sin(x*freqA + time*0.9*WIND + phase) * amp
+              + Math.sin(x*freqB - time*0.45*WIND + phase*1.7) * (amp*0.45)
+              + gust;
+
+            if (first){ ctx.moveTo(x, y); first=false; }
+            else { ctx.lineTo(x, y); }
+          }
           ctx.stroke();
 
-          // highlight
+          // soft highlight
           ctx.shadowBlur = 0;
-          ctx.globalAlpha = 0.25;
-          ctx.lineWidth = p.w * 0.42;
+          ctx.globalAlpha = 0.2;
+          ctx.lineWidth = lw * 0.42;
           ctx.strokeStyle = 'rgba(255,255,255,.9)';
           ctx.stroke();
+        }
 
-          // head glow
-          ctx.globalAlpha = 0.9;
-          ctx.fillStyle = p.hue;
-          ctx.shadowBlur = 22;
-          ctx.shadowColor = p.hue;
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = 'source-over';
+      }
+
+      function drawWeaveSet(){
+        const w = canvas.width / dpr, h = canvas.height / dpr;
+        ctx.save();
+        // First pass: horizontal ribbons, faint
+        drawRibbonSet();
+        // Second pass: rotated thin threads
+        ctx.translate(w/2, h/2);
+        ctx.rotate(Math.PI/4);
+        ctx.translate(-w/2, -h/2);
+        const palette = pal();
+        const threads = Math.max(6, Math.floor(RIBBONS*1.5));
+        const stepY = (h+80) / threads;
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i=0; i<threads; i++){
+          const t = i/threads;
+          const color = mix(palette[0], palette[(i+1)%palette.length], t);
+          const y0 = -40 + i*stepY;
           ctx.beginPath();
-          ctx.arc(x, y, Math.max(0.9, 1.8 + p.w*0.12), 0, Math.PI*2);
-          ctx.fill();
+          const amp = 20 + 80 * t * tilt.mod;
+          for (let x=-40, first=true; x<=w+40; x+=6){
+            const y = y0 + Math.sin(x*0.025 + time*1.6*WIND + i) * amp;
+            if (first){ ctx.moveTo(x,y); first=false; } else { ctx.lineTo(x,y); }
+          }
+          ctx.lineWidth = Math.max(1, THICK * 0.35);
+          ctx.strokeStyle = color;
+          ctx.globalAlpha = 0.12 + 0.28 * t;
+          ctx.stroke();
+        }
+        ctx.restore();
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = 'source-over';
+      }
 
-          // advance
-          const baseV = p.v * (MODE === 'harmonic' ? 1 : MODE === 'chaos' ? 2.1 : 1.3);
-          p.a += baseV * (1 + 0.6 * Math.sin(time * 0.4 + i*0.7)) * (0.9 + 0.2 * tilt.mod);
+      function drawBloomSet(){
+        const w = canvas.width / dpr, h = canvas.height / dpr;
+        const cx = w/2, cy = h/2;
+        const palette = pal();
+        ctx.globalCompositeOperation = 'lighter';
+        const rings = RIBBONS;
+        for (let i=0; i<rings; i++){
+          const t = i / Math.max(1, rings-1);
+          const color = palette[i % palette.length];
+          const base = Math.min(w,h)*0.12 + t*Math.min(w,h)*0.38;
+          const amp = 12 + 44 * tilt.mod * (0.5 + t);
+          const k = 3 + Math.round(4*t);
+          const phase = i * 0.7;
+
+          ctx.beginPath();
+          const segs = 480;
+          for (let s=0; s<=segs; s++){
+            const a = (s/segs) * Math.PI*2;
+            const gust = mouse.inside ? (Math.atan2(mouse.y-cy, mouse.x-cx) - a) : 0;
+            const g = mouse.inside ? Math.exp(-(gust*gust) / (2*0.25*0.25)) * 18 : 0;
+            const r = base + Math.sin(k*a + time*1.2*WIND + phase) * amp + g;
+            const x = cx + Math.cos(a)*r;
+            const y = cy + Math.sin(a)*r;
+            if (s===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+          }
+          ctx.closePath();
+          ctx.lineWidth = THICK * (0.6 + 0.9*t);
+          ctx.shadowBlur = 18 + 34*t;
+          ctx.shadowColor = color;
+          ctx.strokeStyle = color;
+          ctx.globalAlpha = 0.25 + 0.6*t;
+          ctx.stroke();
+
+          // inner gleam
+          ctx.shadowBlur = 0;
+          ctx.globalAlpha = 0.18;
+          ctx.lineWidth *= 0.4;
+          ctx.strokeStyle = 'rgba(255,255,255,.9)';
+          ctx.stroke();
         }
         ctx.globalAlpha = 1;
         ctx.globalCompositeOperation = 'source-over';
+      }
+
+      function step(dt){
+        time += dt;
+        clearWithFade();
+        if (MODE === 'ribbon') drawRibbonSet();
+        else if (MODE === 'weave') drawWeaveSet();
+        else drawBloomSet();
       }
 
       function drawFrame(ts, instant){
@@ -510,62 +526,69 @@
       function setTheme(t){
         root.setAttribute('data-theme', t);
         themeChips.forEach(c => c.setAttribute('aria-pressed', c.dataset.theme === t ? 'true' : 'false'));
-        init();
+        prime();
       }
 
       function setMode(m){
         MODE = m;
         modeChips.forEach(c => c.setAttribute('aria-pressed', c.dataset.mode === m ? 'true' : 'false'));
+        prime();
       }
 
       // Interactions
       themeChips.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.theme)));
       modeChips.forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
-      bodiesEl.addEventListener('input', () => { BODIES = +bodiesEl.value; init(); });
-      speedEl.addEventListener('input', () => { SPEED = +speedEl.value; });
-      persistEl.addEventListener('input', () => { PERSIST = +persistEl.value; });
+      densityEl.addEventListener('input', () => { RIBBONS = +densityEl.value; });
+      windEl.addEventListener('input', () => { WIND = +windEl.value; });
+      fadeEl.addEventListener('input', () => { FADE = +fadeEl.value; });
+      thickEl.addEventListener('input', () => { THICK = +thickEl.value; });
 
       function setMotion(on){
         root.setAttribute('data-motion', on ? 'on' : 'off');
         motionBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
-        motionBtn.textContent = on ? 'Motion: On' : 'Motion: Off';
+        motionBtn.textContent = on ? 'Breathe: On' : 'Breathe: Off';
         if (on && !running){ running = true; raf = requestAnimationFrame(loop); }
         else if (!on && running){ running = false; cancelAnimationFrame(raf); drawFrame(0,true); }
       }
       motionBtn.addEventListener('click', () => setMotion(root.getAttribute('data-motion') !== 'on'));
 
       pulseBtn.addEventListener('click', () => {
-        const themes = ['aurora','onyx','terra','blossom'];
-        const modes  = ['harmonic','chaos','comet'];
+        const themes = ['polar','ink','sand','blossom'];
+        const modes  = ['ribbon','weave','bloom'];
         setTheme(themes[Math.floor(Math.random()*themes.length)]);
         setMode(modes[Math.floor(Math.random()*modes.length)]);
-        const n = Math.floor(3 + Math.random()*45);
-        bodiesEl.value = n; BODIES = n; init();
-        const sp = (0.2 + Math.random()*2.0).toFixed(1);
-        speedEl.value = sp; SPEED = +sp;
-        const pr = (0.75 + Math.random()*0.245).toFixed(3);
-        persistEl.value = pr; PERSIST = +pr;
-        setMotion(Math.random() > .18);
+        const n = Math.floor(2 + Math.random()*34);
+        densityEl.value = n; RIBBONS = n;
+        const sp = (0.2 + Math.random()*2.8).toFixed(1);
+        windEl.value = sp; WIND = +sp;
+        const fd = (0.75 + Math.random()*0.245).toFixed(3);
+        fadeEl.value = fd; FADE = +fd;
+        const th = Math.floor(1 + Math.random()*15);
+        thickEl.value = th; THICK = th;
+        setMotion(Math.random() > .15);
       });
 
-      // Pointer tilt
+      // Pointer tilt / gust
       function pointerTilt(e){
         const r = stage.getBoundingClientRect();
         const nx = (e.clientX - r.left) / Math.max(1, r.width);
         const ny = (e.clientY - r.top) / Math.max(1, r.height);
-        const rx = (0.5 - ny) * 10;
-        const ry = (nx - 0.5) * 12;
+        const rx = (0.5 - ny) * 8;
+        const ry = (nx - 0.5) * 10;
         stage.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
         tilt.mod = 0.8 + nx*0.6;
+        mouse.x = e.clientX - r.left;
+        mouse.y = e.clientY - r.top;
+        mouse.inside = true;
       }
       root.addEventListener('pointermove', pointerTilt);
-      root.addEventListener('pointerleave', () => { stage.style.transform = 'rotateX(0deg) rotateY(0deg)'; tilt.mod = 1; });
+      root.addEventListener('pointerleave', () => { stage.style.transform = 'rotateX(0deg) rotateY(0deg)'; tilt.mod = 1; mouse.inside=false; });
 
       // Init
       const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       resize();
-      setTheme(root.getAttribute('data-theme') || 'aurora');
-      setMode('harmonic');
+      setTheme(root.getAttribute('data-theme') || 'polar');
+      setMode('ribbon');
       setMotion(!prefersReduced);
 
       // Resize observe
@@ -584,6 +607,9 @@
       } catch(e) {
         last.textContent = 'Last updated: ' + new Date().toLocaleString();
       }
+
+      // Start loop
+      raf = requestAnimationFrame(loop);
 
       // Cleanup
       root.addEventListener('DOMNodeRemoved', () => { cancelAnimationFrame(raf); if (ro) ro.disconnect(); }, { once: true });
