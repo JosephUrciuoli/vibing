@@ -73,69 +73,92 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="vibe-517" aria-label="Daybreak Studio">
+<section class="nocturne-518" aria-label="Nocturne Observatory">
   <style>
-    .vibe-517 {
-      --h: 206;
-      --acc: hsl(var(--h) 80% 50%);
-      --acc-2: hsl(calc(var(--h) + 40) 80% 60%);
-      --ink: #0c1424;
-      --muted: #5b6c85;
-      --paper: #ffffff;
-      --paper-2: #f7fbff;
+    .nocturne-518 {
+      --h: 268; /* starting hue */
+      --p: 74.4%; /* slider position (calc from --h) */
+      --ink: hsl(210 20% 92%);
+      --muted: hsl(215 12% 72%);
+      --bg-0: #070a12;
+      --bg-1: #0a1220;
       position: relative;
-      color: var(--ink);
       border-radius: 28px;
-      padding: clamp(22px, 4.5vw, 54px);
-      background:
-        radial-gradient(1200px 700px at -10% -20%, hsla(var(--h), 100%, 85%, 0.45), transparent 55%),
-        radial-gradient(900px 700px at 110% 20%, hsla(calc(var(--h) + 40), 90%, 90%, 0.4), transparent 55%),
-        linear-gradient(180deg, #fdfefe, #fffdf8);
-      border: 1px solid #e6edf7;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.8),
-        0 20px 60px rgba(18,28,45,0.12),
-        0 6px 18px rgba(18,28,45,0.08);
       overflow: hidden;
+      color: var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      padding: clamp(18px, 3vw, 28px);
+      background:
+        radial-gradient(1200px 900px at 90% -10%, hsla(var(--h) 90% 60% / .15), transparent 55%),
+        radial-gradient(900px 800px at -10% 110%, hsla(calc(var(--h) + 40) 90% 60% / .12), transparent 55%),
+        linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.04),
+        0 24px 80px rgba(0,0,0,0.55),
+        0 8px 24px rgba(0,0,0,0.35);
       isolation: isolate;
     }
-    .vibe-517::after {
-      /* subtle paper grain */
+
+    /* Soft film grain */
+    .nocturne-518::after {
       content: "";
       position: absolute;
       inset: 0;
       pointer-events: none;
-      mix-blend-mode: multiply;
+      opacity: .25;
+      mix-blend-mode: overlay;
       background:
-        repeating-linear-gradient( 90deg, rgba(0,0,0,0.015), rgba(0,0,0,0.015) 1px, transparent 1px, transparent 2px ),
-        repeating-linear-gradient( 0deg, rgba(0,0,0,0.01), rgba(0,0,0,0.01) 1px, transparent 1px, transparent 3px );
-      opacity: 0.55;
+        repeating-linear-gradient(90deg, rgba(255,255,255,.02), rgba(255,255,255,.02) 1px, transparent 1px, transparent 2px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.015), rgba(255,255,255,.015) 1px, transparent 1px, transparent 3px);
+    }
+
+    .starfield {
+      position: absolute;
+      inset: 0;
       z-index: 0;
     }
 
-    .shell {
-      position: relative;
-      z-index: 1;
-      max-width: 1000px;
-      margin: 0 auto;
-      background: linear-gradient(180deg, var(--paper), var(--paper-2));
-      border: 1px solid #e8eef8;
-      border-radius: 22px;
-      padding: clamp(20px, 4vw, 44px);
-      box-shadow:
-        0 16px 60px rgba(15, 30, 60, 0.10),
-        inset 0 1px 0 rgba(255,255,255,0.65);
-      transition: transform 450ms cubic-bezier(.2,.8,.2,1), box-shadow 450ms ease;
-      transform: perspective(900px) rotateX(var(--rx, 0)) rotateY(var(--ry, 0));
+    .aurora {
+      position: absolute;
+      inset: -20% -10% -20% -10%;
+      z-index: 0;
+      filter: blur(42px) saturate(120%);
+      opacity: .65;
+      background:
+        radial-gradient(380px 200px at 15% 20%, hsla(var(--h) 90% 60% / .55), transparent 70%),
+        radial-gradient(520px 240px at 85% 25%, hsla(calc(var(--h) + 30) 90% 65% / .45), transparent 70%),
+        radial-gradient(420px 260px at 60% 85%, hsla(calc(var(--h) - 40) 90% 65% / .35), transparent 72%);
+      animation: drift-aurora 22s ease-in-out infinite alternate;
     }
-    .shell:hover { box-shadow: 0 24px 80px rgba(15,30,60,0.14), inset 0 1px 0 rgba(255,255,255,0.7); }
+    @keyframes drift-aurora {
+      0%   { transform: translateY(0) rotate(0.5deg) scale(1.02); opacity: .62; }
+      50%  { transform: translateY(-1%) rotate(-0.5deg) scale(1.04); opacity: .7; }
+      100% { transform: translateY(1%) rotate(0.5deg) scale(1.01); opacity: .6; }
+    }
+
+    .glass {
+      position: relative;
+      z-index: 2;
+      max-width: 1080px;
+      margin: 0 auto;
+      border-radius: 22px;
+      padding: clamp(20px, 4.5vw, 44px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow:
+        0 24px 90px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      backdrop-filter: blur(14px) saturate(120%);
+      transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+      transition: box-shadow 320ms ease, transform 420ms cubic-bezier(.2,.8,.2,1), border-color 320ms ease;
+    }
+    .glass:hover { border-color: hsla(var(--h) 90% 60% / .28); }
 
     .topline {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
     }
     .chip {
       display: inline-flex;
@@ -143,254 +166,237 @@
       gap: 8px;
       padding: 8px 12px;
       border-radius: 999px;
-      font-size: 12px;
-      letter-spacing: .08em;
-      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      background: linear-gradient(180deg, #f4f8ff, #eef4ff);
-      border: 1px solid #dbe7fb;
-      box-shadow: inset 0 1px 0 white;
+      color: var(--muted);
+      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
       user-select: none;
       white-space: nowrap;
     }
-    .chip .dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: radial-gradient(circle at 40% 35%, #fff, var(--acc) 55%, hsl(var(--h) 90% 40%));
-      box-shadow: 0 0 12px var(--acc);
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      justify-self: center;
     }
-
+    .logo {
+      width: 22px; height: 22px;
+      filter: drop-shadow(0 6px 18px hsla(var(--h) 90% 60% / .35));
+    }
     .title {
-      margin: 12px 0 4px;
-      font-weight: 800;
-      line-height: 1.02;
+      margin: 0;
+      font-weight: 900;
+      line-height: .98;
       letter-spacing: -0.02em;
-      font-size: clamp(36px, 7vw, 84px);
+      font-size: clamp(38px, 7.6vw, 96px);
       color: transparent;
-      background: linear-gradient(92deg, #0d1a34 0%, var(--ink) 20%, var(--acc) 60%, var(--acc-2) 100%);
+      background: linear-gradient(
+        92deg,
+        hsl(calc(var(--h) - 30) 90% 70%),
+        hsl(var(--h) 90% 72%) 45%,
+        hsl(calc(var(--h) + 30) 90% 70%)
+      );
       -webkit-background-clip: text;
               background-clip: text;
-      filter: drop-shadow(0 10px 24px rgba(50,90,200,0.12));
+      filter: drop-shadow(0 14px 32px hsla(var(--h) 90% 60% / .25));
+      text-align: center;
     }
     .lede {
-      max-width: 70ch;
-      font-size: clamp(16px, 2.2vw, 20px);
-      line-height: 1.65;
+      margin: 12px auto 16px;
+      max-width: 68ch;
+      text-align: center;
+      font-size: clamp(16px, 2.2vw, 19px);
+      line-height: 1.7;
       color: var(--muted);
-      margin: 6px 0 18px;
     }
 
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
       gap: 12px;
       align-items: center;
       margin: 18px 0 8px;
     }
-    .btn {
-      --shadow: 0 14px 26px rgba(13, 26, 52, 0.16);
-      appearance: none;
-      border: 1px solid #dbe7fb;
-      background: linear-gradient(180deg, #f7fbff, #eef4ff);
-      color: var(--ink);
-      border-radius: 14px;
-      padding: 12px 16px;
-      font-weight: 600;
-      letter-spacing: .02em;
-      cursor: pointer;
-      box-shadow: var(--shadow), inset 0 1px 0 white;
-      transition: transform 180ms ease, box-shadow 220ms ease, background 200ms ease, border-color 200ms ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn:hover { transform: translateY(-2px); }
-    .btn:active { transform: translateY(0); }
-    .btn.primary {
-      border-color: color-mix(in hsl, var(--acc) 28%, #dbe7fb);
-      background: linear-gradient(180deg, color-mix(in hsl, var(--acc) 18%, #ffffff), color-mix(in hsl, var(--acc) 10%, #eef4ff));
-      color: #0a1221;
-      box-shadow:
-        0 16px 36px color-mix(in hsl, var(--acc) 28%, transparent),
-        inset 0 1px 0 rgba(255,255,255,0.8);
-    }
-    .btn.ghost {
-      background: linear-gradient(180deg, #ffffff, #f6f9ff);
-      color: #1a2235;
-    }
-    .btn .ripple {
-      position: absolute;
-      pointer-events: none;
-      inset: 0;
-      transform: translate(-50%, -50%) scale(0);
-      width: 1px; height: 1px; border-radius: 50%;
-      background: radial-gradient(200px 200px at var(--x, 50%) var(--y, 50%), color-mix(in hsl, var(--acc) 50%, #ffffff) 0%, transparent 70%);
-      opacity: 0;
-      transition: transform 600ms ease, opacity 600ms ease;
-    }
-    .btn.rippling .ripple {
-      transform: translate(-50%, -50%) scale(40);
-      opacity: .9;
-    }
-
-    .studio {
-      display: grid;
-      grid-template-columns: minmax(220px, 280px) 1fr;
-      gap: clamp(18px, 4vw, 34px);
-      align-items: center;
-      margin-top: clamp(18px, 4vw, 28px);
-    }
     @media (max-width: 820px) {
-      .studio { grid-template-columns: 1fr; }
+      .controls { grid-template-columns: 1fr; }
     }
-
-    /* Hue Dial */
-    .dial {
-      --a: 210deg;
+    .spectrum {
+      --height: 44px;
       position: relative;
-      width: clamp(200px, 28vw, 260px);
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
+      height: var(--height);
+      border-radius: 999px;
       outline: none;
-      border: 0;
-    }
-    .dial-ring {
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
+      cursor: ew-resize;
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow:
+        0 10px 28px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.12);
       background:
-        conic-gradient(
-          from 0deg,
-          hsl(0 80% 55%),
-          hsl(45 85% 55%),
-          hsl(90 65% 45%),
-          hsl(160 70% 45%),
-          hsl(205 80% 55%),
-          hsl(250 80% 60%),
-          hsl(300 80% 55%),
-          hsl(360 80% 55%)
+        linear-gradient(90deg,
+          hsl(0 85% 55%),
+          hsl(45 90% 60%),
+          hsl(90 80% 50%),
+          hsl(160 80% 50%),
+          hsl(205 90% 60%),
+          hsl(260 90% 68%),
+          hsl(300 90% 60%),
+          hsl(360 85% 55%)
         );
-      box-shadow: inset 0 0 0 10px #ffffff, 0 12px 28px rgba(10, 20, 40, 0.12);
-      filter: saturate(110%);
     }
-    .dial-ring::after {
-      content: "";
+    .spectrum .handle {
       position: absolute;
-      inset: 12px;
-      border-radius: inherit;
-      background: radial-gradient(circle at 50% 40%, #ffffff, #f5f9ff);
-      border: 1px solid #e7eef9;
-      box-shadow: inset 0 1px 0 white;
+      top: 50%;
+      left: 0;
+      transform: translate(calc(var(--p) - 50%), -50%);
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #fff, hsla(var(--h) 100% 68% / .8));
+      border: 1px solid hsla(var(--h) 90% 65% / .6);
+      box-shadow:
+        0 12px 28px hsla(var(--h) 90% 60% / .35),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+      pointer-events: none;
     }
-    .dial-label {
-      position: relative;
-      z-index: 2;
-      text-align: center;
+    .s-label {
       color: var(--muted);
       font-size: 12px;
-      letter-spacing: .08em;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      user-select: none;
-      margin-top: 8px;
-    }
-    .dial-knob {
-      position: absolute;
-      width: 34px; height: 34px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #ffffff, color-mix(in hsl, var(--acc) 20%, #eef4ff));
-      border: 1px solid color-mix(in hsl, var(--acc) 45%, #dbe7fb);
-      box-shadow:
-        0 10px 20px color-mix(in hsl, var(--acc) 30%, rgba(10,20,40,0.12)),
-        inset 0 1px 0 #fff;
-      transform: translate(-50%, -50%) rotate(var(--a)) translate(calc(50% - 10px), calc(-50% + -94px));
-      transform-origin: 50% 50%;
-      pointer-events: none;
-    }
-    .dial-center {
-      position: relative;
-      z-index: 1;
       text-align: center;
-      display: grid;
-      place-items: center;
-      width: 120px;
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
-      color: #0f1b34;
-      font-weight: 700;
-      letter-spacing: .04em;
-      background:
-        radial-gradient(120px 120px at 50% 35%, color-mix(in hsl, var(--acc) 10%, #ffffff), #ffffff 60%);
-      border: 1px solid #e5edfb;
-      box-shadow: 0 10px 26px rgba(14, 28, 52, 0.08), inset 0 1px 0 #fff;
-    }
-    .dial-center small {
-      font-weight: 600;
-      color: var(--muted);
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      font-size: 11px;
-      display: block;
     }
 
-    /* Cards */
-    .cards {
+    .btn {
+      --glow: hsla(var(--h) 90% 60% / .45);
+      appearance: none;
+      border: 1px solid rgba(255,255,255,0.16);
+      color: var(--ink);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      cursor: pointer;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12);
+      transition: transform 160ms ease, box-shadow 240ms ease, border-color 240ms ease, background 240ms ease;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(0,0,0,0.45), 0 0 0 6px var(--glow); border-color: hsla(var(--h) 90% 65% / .45); }
+    .btn:active { transform: translateY(0); }
+    .btn.primary {
+      background: linear-gradient(180deg, hsla(var(--h) 90% 62% / .28), rgba(255,255,255,0.06));
+      border-color: hsla(var(--h) 90% 65% / .45);
+    }
+    .btn .spark {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(120px 60px at var(--sx, 10%) -20%, hsla(0 0% 100% / .65), transparent 60%);
+      mix-blend-mode: screen;
+      opacity: .55;
+      transition: opacity 200ms ease;
+      pointer-events: none;
+    }
+    .btn:hover .spark { opacity: .85; }
+
+    .console {
+      display: grid;
+      grid-template-columns: minmax(240px, 360px) 1fr;
+      gap: clamp(14px, 3vw, 28px);
+      align-items: center;
+      margin-top: clamp(18px, 4vw, 30px);
+    }
+    @media (max-width: 980px) { .console { grid-template-columns: 1fr; } }
+
+    .orrery {
+      position: relative;
+      width: clamp(220px, 36vw, 360px);
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      filter: drop-shadow(0 16px 42px hsla(var(--h) 90% 60% / .18));
+    }
+    .core {
+      width: 110px; aspect-ratio: 1/1; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff, hsla(var(--h) 90% 65% / .65) 60%, transparent 65%);
+      border: 1px solid hsla(var(--h) 90% 65% / .6);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 20px 40px hsla(var(--h) 90% 60% / .25);
+    }
+    .ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px dashed hsla(var(--h) 90% 70% / .25);
+    }
+    .ring.r2 { inset: 12%; }
+    .ring.r3 { inset: 24%; }
+    .planet {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #fff, hsla(var(--h) 90% 65% / .9));
+      border: 1px solid hsla(var(--h) 90% 65% / .6);
+      box-shadow: 0 14px 26px hsla(var(--h) 90% 60% / .35), inset 0 1px 0 rgba(255,255,255,.8);
+      transform: translate(-50%, -50%) translateY(calc(-50% + var(--offset, 0px)));
+    }
+    .orbit {
+      position: absolute;
+      inset: 0;
+      animation: spin var(--t, 16s) linear infinite;
+    }
+    .orbit.o2 { --t: 22s; }
+    .orbit.o3 { --t: 30s; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .notes {
       list-style: none;
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(12px, 2.6vw, 18px);
+      gap: clamp(12px, 2.8vw, 18px);
     }
-    @media (max-width: 880px) {
-      .cards { grid-template-columns: 1fr; }
-    }
-    .card {
+    @media (max-width: 880px) { .notes { grid-template-columns: 1fr; } }
+    .note-card {
       position: relative;
       border-radius: 16px;
-      background: linear-gradient(180deg, #ffffff, #f8fbff);
-      border: 1px solid #e3ebf8;
-      padding: clamp(14px, 2.6vw, 18px);
-      box-shadow: 0 14px 28px rgba(15,30,60,0.08), inset 0 1px 0 #fff;
-      transition: transform 300ms cubic-bezier(.2,.7,.2,1), box-shadow 300ms ease, border-color 300ms ease;
-      will-change: transform;
+      padding: clamp(14px, 2.4vw, 18px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 14px 36px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.08);
+      transition: transform 260ms cubic-bezier(.2,.7,.2,1), box-shadow 260ms ease, border-color 260ms ease;
     }
-    .card::before {
+    .note-card::before {
       content: "";
       position: absolute;
       inset: 0;
       border-radius: inherit;
-      background: linear-gradient(90deg, color-mix(in hsl, var(--acc) 20%, transparent), transparent 30%, transparent 70%, color-mix(in hsl, var(--acc-2) 18%, transparent));
-      opacity: .35;
+      background: linear-gradient(90deg, hsla(var(--h) 90% 65% / .18), transparent 30%, transparent 70%, hsla(calc(var(--h) + 40) 90% 65% / .16));
+      opacity: .5;
       pointer-events: none;
     }
-    .card:hover {
+    .note-card:hover {
       transform: translateY(-6px);
-      border-color: color-mix(in hsl, var(--acc) 28%, #e3ebf8);
-      box-shadow: 0 18px 40px color-mix(in hsl, var(--acc) 16%, rgba(15,30,60,0.18));
+      border-color: hsla(var(--h) 90% 65% / .35);
+      box-shadow: 0 18px 46px rgba(0,0,0,0.5), 0 0 0 6px hsla(var(--h) 90% 60% / .18);
     }
-    .card h3 {
+    .note-card h3 {
       margin: 8px 0 6px;
       font-size: clamp(16px, 2.2vw, 20px);
       letter-spacing: -0.01em;
-      color: #0f1b34;
+      color: var(--ink);
     }
-    .card p {
+    .note-card p {
       margin: 0;
       color: var(--muted);
       line-height: 1.6;
       font-size: 14.5px;
     }
-    .icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(180deg, color-mix(in hsl, var(--acc) 18%, #ffffff), #ffffff);
-      border: 1px solid color-mix(in hsl, var(--acc) 30%, #e4ecfa);
-      box-shadow: 0 8px 18px color-mix(in hsl, var(--acc) 22%, rgba(15,30,60,0.18)), inset 0 1px 0 #fff;
-    }
-    .icon svg { display: block; width: 20px; height: 20px; fill: hsl(var(--h) 60% 38%); }
 
     .meta {
       display: flex;
@@ -400,224 +406,217 @@
       margin-top: 18px;
       color: var(--muted);
       font-size: 12.5px;
+      flex-wrap: wrap;
     }
     #last-updated {
-      color: #0f1b34;
-      background: linear-gradient(180deg, #ffffff, #f2f7ff);
-      border: 1px solid #dfe9fb;
+      color: var(--ink);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.16);
       padding: 6px 10px;
       border-radius: 10px;
-      box-shadow: inset 0 1px 0 white;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.16);
       white-space: nowrap;
     }
 
-    /* Gentle floaters */
-    .floaters {
-      position: absolute;
-      inset: -10% -10% -10% -10%;
-      z-index: 0;
-      pointer-events: none;
-      opacity: .55;
-    }
-    .floater {
-      position: absolute;
-      width: var(--s, 10px);
-      height: var(--s, 10px);
-      border-radius: 999px;
-      background: radial-gradient(circle at 40% 40%, #fff, hsla(var(--h), 90%, 75%, .9) 40%, transparent 70%);
-      filter: blur(0.4px) saturate(110%);
-      animation: drift-up var(--d, 18s) linear infinite;
-    }
-    @keyframes drift-up {
-      0%   { transform: translate3d(var(--x, 0px), var(--y, 0px), 0) scale(1); opacity: .2; }
-      50%  { opacity: .5; }
-      100% { transform: translate3d(calc(var(--x, 0px) + 20px), calc(var(--y, 0px) - 220px), 0) scale(1.05); opacity: 0; }
-    }
-
     @media (prefers-reduced-motion: reduce) {
-      .vibe-517::after, .floater { animation: none !important; }
-      .shell { transform: none !important; transition: none !important; }
-      .btn .ripple { display: none; }
+      .aurora { animation: none !important; }
+      .orbit { animation: none !important; }
+      .btn .spark { display: none !important; }
     }
   </style>
 
-  <div class="shell" role="region" aria-label="Daybreak panel">
+  <canvas class="starfield" aria-hidden="true"></canvas>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <div class="glass" role="region" aria-label="Aurora Console">
     <div class="topline">
-      <span class="chip"><span class="dot" aria-hidden="true"></span> Iteration 517</span>
-      <div class="dial-label">Drag the ring to tune the tone</div>
+      <span class="chip">Iteration 518</span>
+      <svg class="logo" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="hsl(var(--h) 90% 70%)" d="M12 2l1.9 4.8L19 9l-5.1.8L12 15l-1.9-5.2L5 9l5.1-2.2L12 2z"/>
+      </svg>
+      <span class="s-label">Night mode</span>
     </div>
 
-    <h1 class="title">Daybreak Studio</h1>
-    <p class="lede">A bright, tactile interface study. Soft paper, honest shadows, and motion that whispers.
-      Move the dial to tint the morning; everything follows.</p>
+    <h1 class="title">Nocturne Observatory</h1>
+    <p class="lede">A dark, glassy interface study. Vaporous light, quiet motion, and a hue you can tune. Touch the spectrum—watch the night breathe.</p>
 
-    <div class="cta-row">
-      <button class="btn primary" type="button" aria-label="Compose the morning">
-        Compose the morning
-        <span class="ripple" aria-hidden="true"></span>
+    <div class="controls" aria-label="Controls">
+      <div class="spectrum" id="spectrum" tabindex="0" role="slider" aria-label="Aurora hue" aria-valuemin="0" aria-valuemax="360" aria-valuenow="268" aria-valuetext="Hue 268 degrees">
+        <div class="handle" aria-hidden="true"></div>
+      </div>
+      <button class="btn primary" type="button" aria-label="Launch Aurora">
+        Launch Aurora
+        <span class="spark" aria-hidden="true"></span>
       </button>
-      <button class="btn ghost" type="button" aria-label="Read the tiny manual">
-        Read the tiny manual
-        <span class="ripple" aria-hidden="true"></span>
-      </button>
+      <button class="btn" type="button" aria-label="Read field notes">Field notes</button>
     </div>
 
-    <div class="studio">
-      <div class="dial" id="hue-dial" role="slider" aria-label="Accent hue" tabindex="0" aria-valuemin="0" aria-valuemax="360" aria-valuenow="206">
-        <div class="dial-ring" aria-hidden="true"></div>
-        <div class="dial-center"><small>Tone</small><span style="font-size:14px;">H<span aria-hidden="true">•</span><span id="hue-readout">206</span>°</span></div>
-        <div class="dial-knob" aria-hidden="true"></div>
+    <div class="console">
+      <div class="orrery" aria-label="Kinetic display">
+        <div class="orbit o1">
+          <span class="planet" style="--offset: -160px;"></span>
+        </div>
+        <div class="ring r1" aria-hidden="true"></div>
+        <div class="orbit o2">
+          <span class="planet" style="--offset: -122px;"></span>
+        </div>
+        <div class="ring r2" aria-hidden="true"></div>
+        <div class="orbit o3">
+          <span class="planet" style="--offset: -84px;"></span>
+        </div>
+        <div class="ring r3" aria-hidden="true"></div>
+        <div class="core" aria-hidden="true"></div>
       </div>
 
-      <ul class="cards" aria-label="Notes">
-        <li class="card">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 3a9 9 0 1 0 9 9" opacity=".2"/>
-              <path d="M12 3v6m0 6v6m-6-6h12M6.5 6.5l11 11M17.5 6.5l-11 11" />
-            </svg>
-          </div>
-          <h3>Make</h3>
-          <p>Craft small things with care. The rest will scale itself.</p>
+      <ul class="notes" aria-label="Principles">
+        <li class="note-card">
+          <h3>1 — Breathe</h3>
+          <p>Interfaces deserve a pulse. Micro-motion guides attention without shouting.</p>
         </li>
-        <li class="card">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M3 12h18M12 3v18" opacity=".2"/>
-              <path d="M7 7h10v10H7zM9.5 9.5h5v5h-5z" />
-            </svg>
-          </div>
-          <h3>Tinker</h3>
-          <p>Turn a knob. Move a point. See how it feels—then keep the good parts.</p>
+        <li class="note-card">
+          <h3>2 — Tint</h3>
+          <p>Color is context. Tune the hue; let the system echo your choice with restraint.</p>
         </li>
-        <li class="card">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 5c-4 0-7 7-7 7s3 7 7 7 7-7 7-7-3-7-7-7Z" opacity=".2"/>
-              <path d="M12 8.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Z" />
-            </svg>
-          </div>
-          <h3>Notice</h3>
-          <p>Design is how it behaves in your hands. Add delight, remove drag.</p>
+        <li class="note-card">
+          <h3>3 — Drift</h3>
+          <p>Let elements glide, not jump. Smooth edges and soft light reduce friction.</p>
         </li>
       </ul>
     </div>
 
     <div class="meta">
-      <span class="note">Sunlit, responsive, and kind to your eyes.</span>
-      <span id="last-updated">Last updated: 2025-11-09 02:15:57 EST</span>
+      <span class="note">Hue: <strong><span id="hue-readout-518">268</span>°</strong></span>
+      <span id="last-updated">Last updated: 2025-11-09 03:19:58 EST</span>
     </div>
-  </div>
-
-  <div class="floaters" aria-hidden="true">
-    <span class="floater" style="--x:10vw; --y:10vh; --s:10px; --d:22s;"></span>
-    <span class="floater" style="--x:30vw; --y:20vh; --s:8px; --d:18s;"></span>
-    <span class="floater" style="--x:55vw; --y:30vh; --s:12px; --d:24s;"></span>
-    <span class="floater" style="--x:75vw; --y:18vh; --s:9px; --d:20s;"></span>
-    <span class="floater" style="--x:15vw; --y:60vh; --s:7px; --d:19s;"></span>
-    <span class="floater" style="--x:42vw; --y:70vh; --s:10px; --d:23s;"></span>
-    <span class="floater" style="--x:82vw; --y:62vh; --s:8px; --d:21s;"></span>
   </div>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.vibe-517');
+      const root = document.currentScript.closest('.nocturne-518');
       if (!root) return;
-      const shell = root.querySelector('.shell');
-      const dial = root.querySelector('#hue-dial');
-      const knob = root.querySelector('.dial-knob');
-      const readout = root.querySelector('#hue-readout');
-      const last = root.querySelector('#last-updated');
 
       // Timestamp
+      const last = root.querySelector('#last-updated');
       try {
         const now = new Date();
         const date = now.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
         last.textContent = 'Last updated: ' + date;
       } catch { last.textContent = 'Last updated: just now'; }
 
-      // Gentle pointer tilt
-      let tiltTimer;
-      const onMove = (e) => {
-        const r = shell.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width;
-        const y = (e.clientY - r.top) / r.height;
-        const rx = (0.5 - y) * 6;
-        const ry = (x - 0.5) * 8;
-        shell.style.setProperty('--rx', rx.toFixed(2) + 'deg');
-        shell.style.setProperty('--ry', ry.toFixed(2) + 'deg');
-      };
-      shell.addEventListener('pointermove', onMove);
-      shell.addEventListener('pointerleave', () => {
-        clearTimeout(tiltTimer);
-        tiltTimer = setTimeout(() => {
-          shell.style.setProperty('--rx', '0deg');
-          shell.style.setProperty('--ry', '0deg');
-        }, 60);
+      // Parallax tilt
+      const glass = root.querySelector('.glass');
+      glass.addEventListener('pointermove', (e) => {
+        const r = glass.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        glass.style.setProperty('--rx', (-y * 6).toFixed(2) + 'deg');
+        glass.style.setProperty('--ry', (x * 10).toFixed(2) + 'deg');
+        const spark = root.querySelector('.btn.primary .spark');
+        if (spark) spark.style.setProperty('--sx', (x * 50 + 50) + '%');
+      });
+      glass.addEventListener('pointerleave', () => {
+        glass.style.setProperty('--rx', '0deg');
+        glass.style.setProperty('--ry', '0deg');
       });
 
-      // Hue dial interactions
+      // Hue spectrum slider
+      const spectrum = root.querySelector('#spectrum');
+      const readout = root.querySelector('#hue-readout-518');
+      const setHue = (h) => {
+        let hue = Math.round(Math.max(0, Math.min(360, h)));
+        root.style.setProperty('--h', hue);
+        root.style.setProperty('--p', (hue / 360 * 100).toFixed(2) + '%');
+        spectrum.setAttribute('aria-valuenow', String(hue));
+        spectrum.setAttribute('aria-valuetext', 'Hue ' + hue + ' degrees');
+        readout.textContent = hue;
+      };
+      const getHueFromX = (clientX) => {
+        const r = spectrum.getBoundingClientRect();
+        const x = Math.min(Math.max(clientX - r.left, 0), r.width);
+        return (x / r.width) * 360;
+      };
+      const initH = parseInt(getComputedStyle(root).getPropertyValue('--h')) || 268;
+      setHue(initH);
+
       let dragging = false;
-      const setHueFromAngle = (deg) => {
-        // Normalize 0-360
-        let h = Math.round(((deg % 360) + 360) % 360);
-        root.style.setProperty('--h', h);
-        readout.textContent = h;
-        dial.setAttribute('aria-valuenow', String(h));
-        dial.style.setProperty('--a', h + 'deg');
-      };
-
-      const getAngle = (clientX, clientY) => {
-        const rect = dial.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        const dx = clientX - cx;
-        const dy = clientY - cy;
-        const rad = Math.atan2(dy, dx); // -PI..PI from +x axis
-        const deg = (rad * 180 / Math.PI) + 90; // rotate so 0 is up
-        return deg;
-      };
-
-      const handlePointer = (e) => {
-        setHueFromAngle(getAngle(e.clientX, e.clientY));
-      };
-
-      dial.addEventListener('pointerdown', (e) => {
+      spectrum.addEventListener('pointerdown', (e) => {
         dragging = true;
-        dial.setPointerCapture(e.pointerId);
-        handlePointer(e);
+        spectrum.setPointerCapture(e.pointerId);
+        setHue(getHueFromX(e.clientX));
       });
-      dial.addEventListener('pointermove', (e) => { if (dragging) handlePointer(e); });
-      dial.addEventListener('pointerup', (e) => { dragging = false; dial.releasePointerCapture(e.pointerId); });
-      dial.addEventListener('pointercancel', () => { dragging = false; });
-
-      // Keyboard support
-      dial.addEventListener('keydown', (e) => {
+      spectrum.addEventListener('pointermove', (e) => { if (dragging) setHue(getHueFromX(e.clientX)); });
+      spectrum.addEventListener('pointerup', (e) => { dragging = false; spectrum.releasePointerCapture(e.pointerId); });
+      spectrum.addEventListener('pointercancel', () => { dragging = false; });
+      spectrum.addEventListener('keydown', (e) => {
         const step = e.shiftKey ? 15 : 5;
-        const current = parseInt(dial.getAttribute('aria-valuenow') || '0', 10);
-        if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); setHueFromAngle(current + step); }
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); setHueFromAngle(current - step); }
-        if (e.key === 'Home') { e.preventDefault(); setHueFromAngle(0); }
-        if (e.key === 'End') { e.preventDefault(); setHueFromAngle(360); }
+        const current = parseInt(spectrum.getAttribute('aria-valuenow') || '0', 10);
+        if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); setHue(current + step); }
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); setHue(current - step); }
+        if (e.key === 'Home') { e.preventDefault(); setHue(0); }
+        if (e.key === 'End') { e.preventDefault(); setHue(360); }
       });
 
-      // Button ripple
-      root.addEventListener('pointerdown', (e) => {
-        const btn = e.target.closest('.btn');
-        if (!btn) return;
-        const r = btn.getBoundingClientRect();
-        const ripple = btn.querySelector('.ripple');
-        ripple.style.setProperty('--x', (e.clientX - r.left) + 'px');
-        ripple.style.setProperty('--y', (e.clientY - r.top) + 'px');
-        btn.classList.remove('rippling');
-        void btn.offsetWidth; // reflow
-        btn.classList.add('rippling');
-        setTimeout(() => btn.classList.remove('rippling'), 600);
-      }, { passive: true });
+      // Starfield
+      const canvas = root.querySelector('.starfield');
+      const ctx = canvas.getContext('2d', { alpha: true });
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Initialize dial knob angle to current hue
-      const initialH = parseInt(getComputedStyle(root).getPropertyValue('--h')) || 206;
-      setHueFromAngle(initialH);
+      let dpr = Math.max(1, window.devicePixelRatio || 1);
+      const resize = () => {
+        const r = root.getBoundingClientRect();
+        canvas.width = Math.max(1, Math.floor(r.width * dpr));
+        canvas.height = Math.max(1, Math.floor(r.height * dpr));
+        initStars();
+        draw();
+      };
+      window.addEventListener('resize', resize);
+
+      let stars = [];
+      function initStars() {
+        const area = canvas.width * canvas.height;
+        const count = Math.min(300, Math.max(80, Math.floor(area / (16000 / dpr))));
+        stars = Array.from({ length: count }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: (Math.random() * 1.2 + 0.2) * dpr,
+          speed: (Math.random() * 0.08 + 0.02) * dpr,
+          phase: Math.random() * Math.PI * 2,
+          depth: Math.random()
+        }));
+      }
+
+      let px = 0, py = 0;
+      root.addEventListener('pointermove', (e) => {
+        const r = root.getBoundingClientRect();
+        px = (e.clientX - r.left) / r.width - 0.5;
+        py = (e.clientY - r.top) / r.height - 0.5;
+      });
+
+      function draw() {
+        const w = canvas.width, h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+        const hue = parseInt(getComputedStyle(root).getPropertyValue('--h')) || 268;
+        for (const s of stars) {
+          if (!prefersReduced) {
+            s.y += s.speed * (1 + s.depth * 1.6);
+            s.x += px * s.depth * 0.9;
+            if (s.y > h + 10) { s.y = -10; s.x = Math.random() * w; }
+            s.phase += 0.02 + s.depth * 0.01;
+          }
+          const alpha = 0.35 + 0.35 * Math.sin(s.phase);
+          const hh = (hue + (s.depth * 40 - 20)) % 360;
+          ctx.beginPath();
+          ctx.fillStyle = `hsla(${hh}, 90%, ${72 - s.depth * 32}%, ${0.12 + alpha * 0.35})`;
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      let raf;
+      function loop() { draw(); raf = requestAnimationFrame(loop); }
+
+      resize();
+      if (!prefersReduced) loop(); else draw();
     })();
   </script>
 </section>
