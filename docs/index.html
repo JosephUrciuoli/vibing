@@ -73,7 +73,447 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-11-11 05:20:16 EST</span></div>
+<section class="vibe565" data-theme="dusk" aria-label="Quiet Momentum Showcase">
+  <style>
+    .vibe565 {
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      --fg: #eaf1ff;
+      --muted: #c9d3f7cc;
+      --glass: 16, 22, 36;
+      --glass-alpha: 0.45;
+      --stroke: rgba(255,255,255,0.14);
+      --glow: 88,173,255;
+      --accent: 110, 178, 255;
+      --accent-2: 186, 120, 255;
+      --bg-a: 14, 18, 28;
+      --bg-b: 24, 31, 47;
+      position: relative;
+      border-radius: 20px;
+      overflow: clip;
+      padding: 28px;
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+      background:
+        radial-gradient(1200px 800px at calc(var(--mx,50%) + 0px) calc(var(--my,50%) + 0px),
+          rgba(var(--glow),0.18), transparent 60%),
+        linear-gradient(160deg, rgba(var(--bg-a),1), rgba(var(--bg-b),1));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 20px 60px rgba(0,0,0,0.35);
+      font-family: var(--font);
+      color: var(--fg);
+    }
+
+    /* Theme: Dawn */
+    .vibe565[data-theme="dawn"] {
+      --fg: #0f1222;
+      --muted: #1c2558aa;
+      --glass: 255,255,255;
+      --glass-alpha: 0.65;
+      --stroke: rgba(22,28,45,0.12);
+      --glow: 255,160,90;
+      --accent: 255, 163, 109;
+      --accent-2: 255, 83, 160;
+      --bg-a: 250, 245, 255;
+      --bg-b: 228, 238, 255;
+      background:
+        radial-gradient(800px 600px at calc(var(--mx,50%) + 0px) calc(var(--my,50%) + 0px),
+          rgba(var(--glow),0.22), transparent 60%),
+        linear-gradient(160deg, rgba(var(--bg-a),1), rgba(var(--bg-b),1));
+    }
+
+    /* Decorative layers */
+    .vibe565::before,
+    .vibe565::after {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .vibe565::before {
+      background:
+        radial-gradient(600px 600px at 10% 0%, rgba(var(--accent),0.12), transparent 60%),
+        radial-gradient(800px 800px at 110% 100%, rgba(var(--accent-2),0.10), transparent 60%);
+      filter: blur(10px) saturate(1.1);
+    }
+    .vibe565::after {
+      background:
+        repeating-linear-gradient(135deg,
+          rgba(255,255,255,0.04) 0 2px,
+          transparent 2px 10px);
+      mix-blend-mode: overlay;
+      opacity: 0.25;
+      mask-image: radial-gradient(80% 80% at 50% 50%, black 40%, transparent 100%);
+    }
+
+    .v565-stage {
+      position: relative;
+      width: min(980px, 100%);
+      z-index: 2;
+    }
+
+    .v565-cloud {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      padding: clamp(18px, 4vw, 28px);
+      border-radius: 18px;
+      background: rgba(var(--glass), var(--glass-alpha));
+      border: 1px solid var(--stroke);
+      backdrop-filter: saturate(1.02) blur(16px);
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+      transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+      transition: transform 300ms ease, background 300ms ease, border-color 300ms ease;
+    }
+
+    .v565-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .v565-title {
+      line-height: 1.05;
+      margin: 0;
+      font-size: clamp(28px, 6vw, 56px);
+      letter-spacing: -0.02em;
+      background: linear-gradient(92deg,
+        rgb(var(--accent)) 0%,
+        rgb(var(--accent-2)) 55%,
+        #b2d3ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 6px 24px rgba(var(--accent),0.16));
+    }
+
+    .v565-kicker {
+      margin: 2px 0 0 2px;
+      font-size: clamp(12px, 2.4vw, 14px);
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .v565-toggle {
+      appearance: none;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+      color: var(--fg);
+      border-radius: 999px;
+      padding: 10px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      position: relative;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+      transition: transform 180ms ease, background 300ms ease, border-color 300ms ease;
+    }
+    .v565-toggle:hover { transform: translateY(-1px); }
+    .v565-toggle:active { transform: translateY(0); }
+    .v565-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff 0 12%, transparent 13%), linear-gradient(135deg, rgb(var(--accent)), rgb(var(--accent-2)));
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.35) inset, 0 6px 12px rgba(0,0,0,0.25);
+    }
+
+    .v565-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .v565-panel {
+      grid-column: span 8;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
+      padding: 18px;
+      min-height: 140px;
+      position: relative;
+      overflow: hidden;
+    }
+    .v565-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(400px 180px at var(--mx,50%) 0%, rgba(var(--glow),0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .v565-side {
+      grid-column: span 4;
+      display: grid;
+      gap: 14px;
+    }
+
+    .v565-chipline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .v565-chip {
+      --c1: rgb(var(--accent));
+      --c2: rgb(var(--accent-2));
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
+      color: var(--fg);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      position: relative;
+      overflow: hidden;
+    }
+    .v565-chip::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      transform: translateX(-120%);
+      animation: v565-sheen 3.6s ease-in-out infinite;
+    }
+
+    .v565-mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .v565-footer {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+    }
+
+    .v565-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--stroke);
+      background:
+        radial-gradient(120% 120% at 0% 0%, rgba(var(--accent),0.28), rgba(255,255,255,0.04) 45%) no-repeat,
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      color: var(--fg);
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+      transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+    }
+    .v565-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.34);
+      filter: saturate(1.08);
+    }
+
+    .v565-orb {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(255,255,255,0.05) 35%, transparent 60%),
+                  conic-gradient(from 120deg, rgba(var(--accent),0.55), rgba(var(--accent-2),0.45), rgba(var(--accent),0.55));
+      filter: blur(8px);
+      mix-blend-mode: screen;
+      opacity: 0.22;
+      animation: v565-orbit 16s ease-in-out infinite alternate;
+    }
+    .v565-orb.o1 { top: -40px; left: -20px; animation-delay: 0s; }
+    .v565-orb.o2 { bottom: -60px; right: -20px; width: 220px; height: 220px; animation-delay: .6s; }
+
+    .v565-mark {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .v565-spark {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0.2));
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.18), 0 6px 18px rgba(0,0,0,0.2);
+      animation: v565-pulse 2.8s ease-in-out infinite;
+    }
+
+    @keyframes v565-orbit {
+      0%   { transform: translate(0,0) scale(1); }
+      50%  { transform: translate(14px, -12px) scale(1.06); }
+      100% { transform: translate(-12px, 14px) scale(1); }
+    }
+    @keyframes v565-sheen {
+      0% { transform: translateX(-120%); }
+      55% { transform: translateX(120%); }
+      100% { transform: translateX(120%); }
+    }
+    @keyframes v565-pulse {
+      0%, 100% { transform: scale(0.9); opacity: 0.9; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    /* Responsive stacking */
+    @media (max-width: 860px) {
+      .v565-grid { grid-template-columns: 1fr; }
+      .v565-panel, .v565-side { grid-column: span 12; }
+    }
+
+    /* Motion sensitivity */
+    @media (prefers-reduced-motion: reduce) {
+      .v565-cloud, .v565-orb, .v565-chip::before, .v565-spark { animation: none !important; }
+      .v565-cloud { transform: none !important; }
+      .vibe565 { background: linear-gradient(160deg, rgba(var(--bg-a),1), rgba(var(--bg-b),1)); }
+    }
+  </style>
+
+  <div class="v565-orb o1" aria-hidden="true"></div>
+  <div class="v565-orb o2" aria-hidden="true"></div>
+
+  <div class="v565-stage">
+    <div class="v565-cloud" id="v565-card">
+      <div class="v565-top">
+        <div>
+          <h1 class="v565-title">Quiet Momentum</h1>
+          <div class="v565-kicker">Design that breathes. Interaction that smiles.</div>
+        </div>
+        <button class="v565-toggle" id="v565-theme" aria-pressed="false" aria-label="Toggle theme">
+          <span class="v565-dot" aria-hidden="true"></span>
+          Toggle Dawn/Dusk
+        </button>
+      </div>
+
+      <div class="v565-grid">
+        <section class="v565-panel">
+          <p style="margin:0 0 8px 0; font-size: clamp(14px,2.2vw,16px); color: var(--fg);">
+            A space for clarity: soft gradients, crisp type, and motion that guides your eye without shouting.
+          </p>
+          <div class="v565-chipline" aria-label="Design principles">
+            <span class="v565-chip">Whitespace first</span>
+            <span class="v565-chip">Human rhythm</span>
+            <span class="v565-chip">High contrast</span>
+            <span class="v565-chip">Subtle delight</span>
+          </div>
+        </section>
+
+        <aside class="v565-side">
+          <div class="v565-panel" style="min-height: 80px;">
+            <div class="v565-mono">Tip</div>
+            <div style="font-weight:600; margin-top:6px;">Move your cursor—light follows intention.</div>
+          </div>
+          <a class="v565-cta" href="javascript:void(0)" id="v565-cta">
+            Explore the pulse
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h11m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </aside>
+      </div>
+
+      <div class="v565-footer">
+        <div class="v565-mark">
+          <span class="v565-spark" aria-hidden="true"></span>
+          <span class="v565-mono">Alive UI · minimal noise, maximum signal</span>
+        </div>
+        <span id="last-updated">Last updated: 2025-11-11 06:15:55 EST</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const root = document.currentScript.closest('.vibe565');
+      const card = root.querySelector('#v565-card');
+      const themeBtn = root.querySelector('#v565-theme');
+      const updated = root.querySelector('#last-updated');
+      const cta = root.querySelector('#v565-cta');
+
+      // Time stamp
+      try {
+        const now = new Date();
+        const opts = { weekday: 'short', year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', timeZoneName:'short' };
+        updated.textContent = 'Updated ' + now.toLocaleString(undefined, opts);
+      } catch(e) {
+        updated.textContent = 'Updated just now';
+      }
+
+      // Pointer glow + gentle tilt
+      const bounds = () => card.getBoundingClientRect();
+      const setVars = (x, y) => {
+        const b = bounds();
+        const mx = ((x - b.left) / b.width) * 100;
+        const my = ((y - b.top) / b.height) * 100;
+        root.style.setProperty('--mx', mx + '%');
+        root.style.setProperty('--my', my + '%');
+
+        const rx = ((y - (b.top + b.height/2)) / b.height) * -6; // tilt X
+        const ry = ((x - (b.left + b.width/2)) / b.width) * 6;   // tilt Y
+        card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+        card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+      };
+
+      let idleTimer;
+      const relax = () => {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+        root.style.removeProperty('--mx');
+        root.style.removeProperty('--my');
+      };
+
+      root.addEventListener('pointermove', (e) => {
+        setVars(e.clientX, e.clientY);
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(relax, 1200);
+      }, { passive: true });
+
+      // Theme toggle
+      const toggleTheme = () => {
+        const current = root.getAttribute('data-theme');
+        const next = current === 'dawn' ? 'dusk' : 'dawn';
+        root.setAttribute('data-theme', next);
+        const pressed = next === 'dawn';
+        themeBtn.setAttribute('aria-pressed', String(pressed));
+      };
+      themeBtn.addEventListener('click', toggleTheme);
+
+      // CTA micro interaction
+      cta.addEventListener('click', () => {
+        // quick flash on chips
+        root.querySelectorAll('.v565-chip').forEach((chip, i) => {
+          chip.animate(
+            [{ transform: 'translateY(0)', filter: 'brightness(1)' },
+             { transform: 'translateY(-4px)', filter: 'brightness(1.2)' },
+             { transform: 'translateY(0)', filter: 'brightness(1)' }],
+            { duration: 520 + i*60, easing: 'cubic-bezier(.2,.8,.2,1)' }
+          );
+        });
+      });
+
+      // Accessibility: keyboard theme toggle with Enter/Space
+      themeBtn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault(); toggleTheme();
+        }
+      });
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
