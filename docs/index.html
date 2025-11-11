@@ -73,347 +73,359 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="sonata559" aria-label="SONATA 559 — Orbital Loom">
+<section id="sonata560" aria-label="SONATA 560 — Watercolor Garden">
   <style>
-    /* SONATA — Iteration 559 (scoped) */
-    #sonata559 {
-      --ink: #e8f1ff;
-      --muted: #9ba7be;
-      --bgA: #05070d;
-      --bgB: #0a0f1c;
+    /* SONATA — Iteration 560 (scoped) */
+    #sonata560 {
+      --ink: #1b1f27;
+      --muted: #5d6472;
 
-      --a: #64ffda; /* aqua */
-      --b: #9b6bff; /* violet */
-      --c: #f6bc4f; /* gold */
-      --d: #7ee2ff; /* ice */
+      --paperA: #faf7f2;
+      --paperB: #f3efe8;
+      --paperFiber: rgba(0,0,0,.02);
 
-      --glass: color-mix(in srgb, #0b1020 50%, transparent);
-      --ring: rgba(255,255,255,.12);
+      --a: #ff7a7a; /* coral */
+      --b: #5ad7c2; /* mint */
+      --c: #9f8bff; /* lilac */
+
+      --ring: rgba(27,31,39,.12);
+      --ring-strong: rgba(27,31,39,.18);
+
+      --shadow: 0 30px 80px rgba(27,31,39,.18);
+      --soft: blur(12px) saturate(120%);
 
       position: relative;
-      min-height: 96vh;
       display: grid;
       place-items: center;
-      padding: clamp(18px, 5vw, 54px);
+      min-height: 96vh;
+      padding: clamp(16px, 5vw, 56px);
       color: var(--ink);
-      font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, "SF Pro Display", "Helvetica Neue", Arial, system-ui, sans-serif;
-      border-radius: 36px;
+      font-family: ui-sans-serif, -apple-system, Segoe UI, "SF Pro Display", "Helvetica Neue", Inter, system-ui, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(140% 160% at 50% -20%, var(--paperA), var(--paperB) 40%, #ece7de 90%),
+        repeating-linear-gradient(115deg, var(--paperFiber) 0 1px, transparent 1px 9px);
       overflow: hidden;
+      border-radius: 40px;
       isolation: isolate;
+    }
+    #sonata560[data-theme="night"] {
+      --ink: #ecf1ff;
+      --muted: #93a0bc;
+      --ring: rgba(255,255,255,.12);
+      --ring-strong: rgba(255,255,255,.18);
       background:
-        radial-gradient(140% 120% at 50% -20%, var(--bgA), var(--bgB) 40%, #000 100%);
+        radial-gradient(160% 180% at 50% -20%, #0b1020, #121a33 40%, #0b0f25 100%),
+        repeating-linear-gradient(115deg, rgba(255,255,255,.02) 0 1px, transparent 1px 9px);
+      --shadow: 0 40px 100px rgba(0,0,0,.55);
     }
-    #sonata559::before,
-    #sonata559::after {
-      content: "";
-      position: absolute; inset: -40%;
-      pointer-events: none; z-index: 0;
-    }
-    /* Soft aurora veils */
-    #sonata559::before {
-      background:
-        radial-gradient(60% 40% at 30% 20%, color-mix(in srgb, var(--b) 16%, transparent), transparent 60%),
-        radial-gradient(60% 40% at 70% 80%, color-mix(in srgb, var(--a) 14%, transparent), transparent 60%);
-      filter: blur(100px) saturate(130%);
-      animation: s559-veilA 90s linear infinite;
-      opacity: .8;
-      mix-blend-mode: screen;
-    }
-    #sonata559::after {
-      background:
-        conic-gradient(from 0deg at 50% 50%, color-mix(in srgb, var(--c) 10%, transparent) 0 25%, transparent 25% 50%, color-mix(in srgb, var(--d) 10%, transparent) 50% 75%, transparent 75% 100%);
-      filter: blur(140px) saturate(140%);
-      animation: s559-veilB 120s linear infinite reverse;
-      opacity: .6;
-      mix-blend-mode: overlay;
-    }
-    @keyframes s559-veilA { to { transform: rotate(360deg) scale(1.02); } }
-    @keyframes s559-veilB { to { transform: rotate(-360deg) scale(1.03); } }
 
-    /* Light theme override */
-    #sonata559[data-theme="light"] {
-      --ink: #0b1222;
-      --muted: #55607a;
-      --glass: color-mix(in srgb, #ffffff 70%, transparent);
-      --ring: rgba(11,18,34,.16);
-      background:
-        radial-gradient(140% 120% at 50% -20%, #f8fbff, #eef4ff 40%, #e8f0ff 100%);
+    /* Floating petals (ambient) */
+    #sonata560 .petals { position: absolute; inset: -10% -20%; pointer-events: none; z-index: 0; }
+    #sonata560 .petal {
+      position: absolute;
+      width: clamp(12px, 1.8vw, 22px); height: clamp(12px, 1.8vw, 22px);
+      border-radius: 100% 60% 100% 60% / 100% 60% 100% 60%;
+      opacity: .18; filter: blur(1px);
+      background: radial-gradient(circle at 30% 30%, #fff8, #fff0 60%), linear-gradient(180deg, var(--a), var(--b));
+      mix-blend-mode: soft-light;
+      animation: s560-drift calc(18s + var(--z) * 8s) linear infinite;
+      transform: rotate(var(--r));
+      left: calc(var(--x) * 100%); top: calc(var(--y) * 100%);
     }
-    #sonata559[data-theme="light"]::before,
-    #sonata559[data-theme="light"]::after { mix-blend-mode: soft-light; opacity: .9; }
+    #sonata560[data-theme="night"] .petal { opacity: .26; mix-blend-mode: screen; }
+    @keyframes s560-drift {
+      0%   { transform: translate3d(0, 0, 0) rotate(var(--r)); }
+      50%  { transform: translate3d(6px, -18vh, 0) rotate(calc(var(--r) + 40deg)); }
+      100% { transform: translate3d(-8px, -36vh, 0) rotate(calc(var(--r) + 80deg)); }
+    }
 
     /* Frame */
-    #sonata559 .frame {
+    #sonata560 .wrap {
       position: relative; z-index: 1;
-      width: min(1200px, 96vw);
+      width: min(1180px, 96vw);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,.35)) padding-box;
+      border: 1px solid var(--ring);
       border-radius: 28px;
-      padding: clamp(16px, 2.8vw, 32px);
-      background:
-        linear-gradient(180deg, var(--glass), color-mix(in srgb, #ffffff 14%, transparent)) padding-box,
-        conic-gradient(from 180deg, color-mix(in srgb, var(--a) 22%, transparent), color-mix(in srgb, var(--b) 22%, transparent), color-mix(in srgb, var(--c) 22%, transparent), color-mix(in srgb, var(--d) 22%, transparent), color-mix(in srgb, var(--a) 22%, transparent)) border-box;
-      border: 1px solid transparent;
-      backdrop-filter: blur(14px) saturate(150%);
-      -webkit-backdrop-filter: blur(14px) saturate(150%);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.08),
-        0 50px 120px rgba(0,0,0,.55);
+      padding: clamp(16px, 3vw, 36px);
+      box-shadow: var(--shadow);
+      backdrop-filter: var(--soft);
+      -webkit-backdrop-filter: var(--soft);
     }
-    #sonata559[data-theme="light"] .frame {
+    #sonata560[data-theme="night"] .wrap {
       background:
-        linear-gradient(180deg, color-mix(in srgb, #ffffff 65%, transparent), color-mix(in srgb, #ffffff 40%, transparent)) padding-box,
-        conic-gradient(from 180deg, color-mix(in srgb, var(--a) 18%, transparent), color-mix(in srgb, var(--b) 18%, transparent), color-mix(in srgb, var(--c) 18%, transparent), color-mix(in srgb, var(--d) 18%, transparent), color-mix(in srgb, var(--a) 18%, transparent)) border-box;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.9),
-        0 40px 100px rgba(8,10,20,.18);
+        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)) padding-box;
     }
 
-    /* Mast */
-    #sonata559 .mast {
-      display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px;
+    /* Masthead */
+    #sonata560 .mast {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 16px;
+      align-items: center;
       margin-bottom: clamp(8px, 2vw, 18px);
     }
-    #sonata559 .sig {
-      display: inline-grid; grid-auto-flow: column; gap: 12px; align-items: center;
-      font-size: 12px; letter-spacing: .24em; text-transform: uppercase; font-weight: 900;
-      color: var(--muted);
-    }
-    #sonata559 .orb {
-      width: 32px; height: 32px; border-radius: 50%;
-      position: relative; overflow: hidden; display: grid; place-items: center;
+    #sonata560 .seal {
+      position: relative;
+      width: 38px; height: 38px; border-radius: 50%;
+      display: grid; place-items: center;
+      border: 2px solid var(--ring-strong);
       background:
-        radial-gradient(circle at 30% 30%, #fff5, #0000 60%),
-        conic-gradient(var(--a), var(--b), var(--c), var(--d), var(--a));
-      border: 2px solid color-mix(in srgb, #ffffff 60%, transparent);
-      box-shadow: 0 0 0 3px rgba(0,0,0,.1), 0 0 28px color-mix(in srgb, var(--a), transparent 70%);
+        conic-gradient(from 0deg, var(--a), var(--b), var(--c), var(--a));
+      box-shadow: inset 0 0 0 6px rgba(255,255,255,.6), 0 8px 26px rgba(0,0,0,.12);
+      animation: s560-spin 18s linear infinite;
     }
-    #sonata559 .orb::after {
-      content: "559"; position: absolute; inset: 0;
-      display: grid; place-items: center; font-size: 10px; font-weight: 900; color: #000; opacity: .35;
+    #sonata560[data-theme="night"] .seal { box-shadow: inset 0 0 0 6px rgba(0,0,0,.3), 0 8px 26px rgba(0,0,0,.4); }
+    #sonata560 .seal span {
+      font-size: 11px; font-weight: 900; letter-spacing: .18em; color: var(--ink);
+      mix-blend-mode: multiply;
+    }
+    @keyframes s560-spin { to { transform: rotate(360deg); } }
+
+    #sonata560 .meta {
+      color: var(--muted);
+      font-size: 12px; letter-spacing: .18em; text-transform: uppercase; font-weight: 900;
     }
 
-    /* Actions */
-    #sonata559 .actions { display:flex; flex-wrap:wrap; gap:10px; }
-    #sonata559 .chip {
-      appearance:none; -webkit-appearance:none; cursor:pointer;
-      padding:10px 14px; border-radius:999px; font-weight:800; font-size:12px;
+    #sonata560 .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    #sonata560 .chip {
+      appearance: none; -webkit-appearance: none; cursor: pointer;
+      padding: 10px 14px; border-radius: 999px; font-weight: 800; font-size: 12px;
       color: var(--ink);
       border: 1px solid var(--ring);
       background:
-        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)) padding-box,
-        linear-gradient(90deg, var(--a), var(--b)) border-box;
-      box-shadow: 0 16px 36px rgba(0,0,0,.4);
+        linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.45)) padding-box,
+        linear-gradient(90deg, var(--a), var(--b), var(--c)) border-box;
+      box-shadow: 0 14px 30px rgba(0,0,0,.10);
       transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
     }
-    #sonata559 .chip:hover { transform: translateY(-1px); }
-    #sonata559[data-theme="light"] .chip {
+    #sonata560 .chip:hover { transform: translateY(-1px); }
+    #sonata560[data-theme="night"] .chip {
       background:
-        linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,255,255,.4)) padding-box,
-        linear-gradient(90deg, var(--a), var(--b)) border-box;
-      box-shadow: 0 16px 32px rgba(8,10,20,.10);
+        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)) padding-box,
+        linear-gradient(90deg, var(--a), var(--b), var(--c)) border-box;
+      box-shadow: 0 14px 30px rgba(0,0,0,.40);
+      color: var(--ink);
     }
 
     /* Hero */
-    #sonata559 .hero { margin: 4px 0 12px 0; }
-    #sonata559 h1 {
+    #sonata560 .hero { margin: 6px 0 12px; }
+    #sonata560 h1 {
       margin: 0;
-      font-size: clamp(48px, 8.5vw, 108px);
-      line-height: .88; letter-spacing: -.02em; text-wrap: balance;
-      background: linear-gradient(100deg, color-mix(in srgb, var(--a) 70%, #fff 0%), color-mix(in srgb, var(--b) 70%, #fff 0%), color-mix(in srgb, var(--c) 70%, #fff 0%));
+      font-size: clamp(48px, 8vw, 112px);
+      line-height: .88;
+      letter-spacing: -.02em;
+      text-wrap: balance;
+      background: conic-gradient(from 180deg at 50% 60%, color-mix(in srgb, var(--a) 82%, #fff 0%), color-mix(in srgb, var(--b) 70%, #fff 0%), color-mix(in srgb, var(--c) 80%, #fff 0%));
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      filter: drop-shadow(0 2px 0 rgba(255,255,255,.05));
+      filter: drop-shadow(0 2px 0 rgba(255,255,255,.24));
     }
-    #sonata559 .lead {
-      margin: 10px 0 0 0; color: var(--muted); font-size: clamp(14px, 2.2vw, 18px); max-width: 74ch;
+    #sonata560 .lead {
+      margin: 10px 0 0; color: var(--muted);
+      font-size: clamp(14px, 2.2vw, 18px);
+      max-width: 70ch;
     }
 
     /* Stage */
-    #sonata559 .stage {
+    #sonata560 .stage {
       position: relative; width: 100%;
-      aspect-ratio: 7 / 4;
-      max-height: 64vh;
+      aspect-ratio: 16 / 9;
+      max-height: 66vh;
       border-radius: 26px; overflow: hidden;
       border: 1px solid var(--ring);
       background:
-        radial-gradient(120% 120% at 50% 8%, rgba(255,255,255,.06), rgba(255,255,255,.03));
+        radial-gradient(120% 120% at 50% 10%, rgba(255,255,255,.70), rgba(255,255,255,.30));
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.08),
-        0 56px 140px rgba(0,0,0,.55);
+        inset 0 1px 0 rgba(255,255,255,.8),
+        0 50px 120px rgba(0,0,0,.15);
       transform-style: preserve-3d;
       transition: transform .25s ease, box-shadow .25s ease;
     }
-    #sonata559[data-theme="light"] .stage {
+    #sonata560[data-theme="night"] .stage {
       background:
-        radial-gradient(120% 120% at 50% 8%, rgba(255,255,255,.86), rgba(255,255,255,.35));
-      border-color: rgba(11,18,34,.12);
+        radial-gradient(120% 120% at 50% 10%, rgba(255,255,255,.10), rgba(255,255,255,.04));
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.85),
-        0 42px 120px rgba(8,10,20,.18);
+        inset 0 1px 0 rgba(255,255,255,.10),
+        0 42px 120px rgba(0,0,0,.55);
     }
-    #sonata559 canvas#loom559 {
-      position:absolute; inset:0; width:100%; height:100%;
+    #sonata560 canvas#ink560 {
+      position: absolute; inset: 0; width: 100%; height: 100%;
       filter:
-        saturate(125%)
-        drop-shadow(0 0 20px color-mix(in srgb, var(--b), transparent 85%))
-        drop-shadow(0 0 28px color-mix(in srgb, var(--a), transparent 90%));
+        saturate(120%)
+        drop-shadow(0 0 24px color-mix(in srgb, var(--a), transparent 85%))
+        drop-shadow(0 0 24px color-mix(in srgb, var(--b), transparent 88%));
       will-change: transform, filter;
     }
-    #sonata559 .grid {
-      pointer-events:none; position:absolute; inset:0; z-index:1; opacity:.25;
-      background-image:
-        linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
-      background-size: 40px 40px;
-      mix-blend-mode: soft-light;
+    #sonata560 .paper {
+      pointer-events: none; position: absolute; inset: 0; z-index: 1; opacity: .35;
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,.02) 0 1px, transparent 1px 7px),
+        radial-gradient(60% 80% at 50% 20%, rgba(255,255,255,.16), rgba(255,255,255,0));
+      mix-blend-mode: multiply;
     }
-    #sonata559[data-theme="light"] .grid { opacity:.18; background-image:
-      linear-gradient(to right, rgba(11,18,34,.06) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(11,18,34,.06) 1px, transparent 1px);
-    }
-    #sonata559 .hud {
-      position: absolute; left: 12px; top: 12px; z-index: 2;
+    #sonata560[data-theme="night"] .paper { opacity: .25; mix-blend-mode: soft-light; }
+
+    #sonata560 .hud {
+      position: absolute; right: 12px; top: 12px; z-index: 2;
       font-size: 11px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase;
       padding: 8px 10px; border-radius: 10px; color: var(--ink);
-      border:1px solid var(--ring);
-      background: color-mix(in srgb, #ffffff 10%, transparent);
+      border: 1px solid var(--ring);
+      background: color-mix(in srgb, #ffffff 72%, transparent);
       backdrop-filter: blur(8px) saturate(130%);
       -webkit-backdrop-filter: blur(8px) saturate(130%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 14px 30px rgba(0,0,0,.28);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 14px 30px rgba(0,0,0,.12);
     }
-    #sonata559[data-theme="light"] .hud {
-      background: color-mix(in srgb, #ffffff 78%, transparent);
-      border-color: rgba(11,18,34,.12);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 14px 30px rgba(8,10,20,.12);
+    #sonata560[data-theme="night"] .hud {
+      background: color-mix(in srgb, #ffffff 12%, transparent);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 14px 30px rgba(0,0,0,.45);
     }
 
-    /* Dock controls */
-    #sonata559 .dock { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top: clamp(16px, 2.6vw, 24px); }
-    #sonata559 .block {
-      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-      padding:8px 10px; border-radius:12px;
-      border:1px solid var(--ring);
-      background: color-mix(in srgb, #ffffff 10%, transparent);
+    /* Controls */
+    #sonata560 .dock { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: clamp(16px, 2.6vw, 24px); }
+    #sonata560 .block {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      padding: 8px 10px; border-radius: 12px;
+      border: 1px solid var(--ring);
+      background: color-mix(in srgb, #ffffff 70%, transparent);
       backdrop-filter: blur(8px) saturate(130%);
       -webkit-backdrop-filter: blur(8px) saturate(130%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 22px 60px rgba(0,0,0,.45);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 22px 60px rgba(0,0,0,.10);
     }
-    #sonata559[data-theme="light"] .block {
-      background: color-mix(in srgb, #ffffff 78%, transparent);
-      border-color: rgba(11,18,34,.12);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 22px 60px rgba(8,10,20,.12);
+    #sonata560[data-theme="night"] .block {
+      background: color-mix(in srgb, #ffffff 10%, transparent);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.10), 0 22px 60px rgba(0,0,0,.45);
     }
-    #sonata559 .block label {
+    #sonata560 .block label {
       font-size: 10px; letter-spacing: .14em; text-transform: uppercase; font-weight: 900; opacity: .78; margin-right: 4px;
     }
-    #sonata559 input[type="range"] {
+    #sonata560 input[type="range"] {
       -webkit-appearance: none; appearance: none;
       width: 220px; height: 26px; border-radius: 999px; padding: 0 10px;
       border: 1px solid var(--ring);
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-    }
-    #sonata559[data-theme="light"] input[type="range"] {
       background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.35));
     }
-    #sonata559 input[type="range"]::-webkit-slider-thumb {
+    #sonata560[data-theme="night"] input[type="range"] {
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+    }
+    #sonata560 input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
       background:
         linear-gradient(#fff, #fff) padding-box,
-        conic-gradient(var(--a), var(--b), var(--c), var(--d)) border-box;
-      border: 2px solid transparent; box-shadow: 0 8px 18px rgba(0,0,0,.3); cursor: pointer;
+        conic-gradient(var(--a), var(--b), var(--c), var(--a)) border-box;
+      border: 2px solid transparent; box-shadow: 0 8px 18px rgba(0,0,0,.2); cursor: pointer;
     }
-    #sonata559 input[type="range"]::-moz-range-thumb {
+    #sonata560 input[type="range"]::-moz-range-thumb {
       width: 18px; height: 18px; border: none; border-radius: 50%; background: #fff; cursor: pointer;
     }
 
     /* Footer */
-    #sonata559 .foot {
+    #sonata560 .foot {
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
       margin-top: clamp(16px, 2.6vw, 24px); color: var(--muted); font-size: 12px;
     }
-    #sonata559 .beat {
-      width: 46px; height: 10px; border-radius: 999px;
-      background: linear-gradient(90deg, var(--a), var(--b), var(--c));
-      box-shadow: 0 0 0 0 rgba(100,255,218,.0);
-      animation: s559-beat 2.6s ease-in-out infinite;
+    #sonata560 .meter {
+      width: 70px; height: 10px; border-radius: 999px; overflow: hidden; position: relative;
+      background: linear-gradient(90deg, color-mix(in srgb, var(--a) 50%, #fff 0%), color-mix(in srgb, var(--b) 50%, #fff 0%), color-mix(in srgb, var(--c) 50%, #fff 0%));
     }
-    @keyframes s559-beat {
-      0%{ box-shadow:0 0 0 0 color-mix(in srgb, var(--a) 22%, transparent); transform: scaleX(1);}
-      60%{ box-shadow:0 0 0 18px transparent; transform: scaleX(1.08);}
-      100%{ box-shadow:0 0 0 0 transparent; transform: scaleX(1);}
+    #sonata560 .meter::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(90deg, #fff0, #fff8, #fff0);
+      transform: translateX(-100%);
+      animation: s560-sheen 2.8s ease-in-out infinite;
     }
+    @keyframes s560-sheen { 50% { transform: translateX(100%); } }
 
-    /* Motion preferences */
     @media (prefers-reduced-motion: reduce) {
-      #sonata559::before, #sonata559::after, #sonata559 .beat { animation: none !important; }
-      #sonata559 .stage, #sonata559 canvas#loom559 { transition: none !important; }
+      #sonata560 .seal, #sonata560 .petal, #sonata560 .meter::after { animation: none !important; }
+      #sonata560 .stage, #sonata560 canvas#ink560 { transition: none !important; }
     }
   </style>
 
-  <div class="frame" role="region" aria-label="Orbital Loom — kinetic orrery">
+  <!-- Ambient petals -->
+  <div class="petals" aria-hidden="true">
+    <span class="petal" style="--x:.05;--y:.75;--z:.2;--r:18deg;"></span>
+    <span class="petal" style="--x:.18;--y:.95;--z:.6;--r:42deg;"></span>
+    <span class="petal" style="--x:.32;--y:.82;--z:.1;--r:-24deg;"></span>
+    <span class="petal" style="--x:.48;--y:.88;--z:.7;--r:8deg;"></span>
+    <span class="petal" style="--x:.62;--y:.92;--z:.3;--r:-12deg;"></span>
+    <span class="petal" style="--x:.76;--y:.86;--z:.5;--r:28deg;"></span>
+    <span class="petal" style="--x:.88;--y:.94;--z:.8;--r:-36deg;"></span>
+    <span class="petal" style="--x:.22;--y:.70;--z:.9;--r:64deg;"></span>
+  </div>
+
+  <div class="wrap" role="region" aria-label="Watercolor field">
     <div class="mast">
-      <div class="sig"><span class="orb" aria-hidden="true"></span> SONATA · Iteration 559</div>
-      <div class="hero">
-        <h1>Orbital Loom</h1>
-        <p class="lead">A quiet orrery of light and distance. Nudge the cosmos; watch the threads align.</p>
-      </div>
+      <div class="seal"><span>560</span></div>
+      <div class="meta">SONATA • Iteration 560</div>
       <div class="actions">
-        <button class="chip" id="theme559" type="button" aria-label="Toggle theme" aria-pressed="true">Dark</button>
-        <button class="chip" id="tone559" type="button" aria-label="Cycle palette">Palette</button>
-        <button class="chip" id="pause559" type="button" aria-label="Pause or resume" aria-pressed="false">Pause</button>
-        <button class="chip" id="snap559" type="button" aria-label="Export image">Snapshot</button>
+        <button class="chip" id="theme560" type="button" aria-label="Toggle day/night" aria-pressed="false">Day</button>
+        <button class="chip" id="tone560" type="button" aria-label="Cycle palette">Palette</button>
+        <button class="chip" id="pause560" type="button" aria-label="Pause or resume" aria-pressed="false">Pause</button>
+        <button class="chip" id="snap560" type="button" aria-label="Export image">Save</button>
       </div>
     </div>
 
-    <figure class="stage" id="stage559" role="img" aria-label="Interlaced orbits drawing luminous threads">
-      <canvas id="loom559" aria-hidden="true"></canvas>
-      <div class="grid" aria-hidden="true"></div>
+    <div class="hero">
+      <h1>Watercolor Garden</h1>
+      <p class="lead">Ink on wind. Draw with light; let it bloom.</p>
+    </div>
+
+    <figure class="stage" id="stage560" role="img" aria-label="Flowing ink ribbons blooming on paper">
+      <canvas id="ink560" aria-hidden="true"></canvas>
+      <div class="paper" aria-hidden="true"></div>
       <div class="hud" aria-live="polite">
-        <span id="hudOrbits559">24 orbits</span> · <span id="hudTempo559">1.00×</span>
+        <span id="hudFlow560">Flow 1.00×</span> · <span id="hudBloom560">Bloom 1.00</span>
       </div>
     </figure>
 
     <div class="dock" aria-label="Controls">
       <div class="block">
-        <label for="orbits559">Orbits</label>
-        <input id="orbits559" type="range" min="8" max="64" step="1" value="24" />
+        <label for="flow560">Flow</label>
+        <input id="flow560" type="range" min="0.20" max="2.00" step="0.05" value="1.00" />
       </div>
       <div class="block">
-        <label for="glow559">Glow</label>
-        <input id="glow559" type="range" min="0.20" max="2.20" step="0.05" value="1.10" />
+        <label for="bloom560">Bloom</label>
+        <input id="bloom560" type="range" min="0.20" max="2.50" step="0.05" value="1.00" />
       </div>
       <div class="block">
-        <label for="tempo559">Tempo</label>
-        <input id="tempo559" type="range" min="0.25" max="2.50" step="0.05" value="1.00" />
+        <label for="grain560">Grain</label>
+        <input id="grain560" type="range" min="0.00" max="0.60" step="0.02" value="0.35" />
+      </div>
+      <div class="block">
+        <label for="density560">Density</label>
+        <input id="density560" type="range" min="80" max="600" step="10" value="260" />
       </div>
     </div>
 
     <div class="foot">
-      <div style="display:flex; align-items:center; gap:10px;">
-        <span class="beat" aria-hidden="true"></span>
-        <span>Time, braided</span>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="meter" aria-hidden="true"></div>
+        <span>Quiet ink becomes sky</span>
       </div>
-      <span id="last-updated">Last updated: 2025-11-11 00:18:15 EST</span>
+      <span id="last-updated">Last updated: 2025-11-11 01:28:12 EST</span>
     </div>
   </div>
 
   <script>
     (function () {
-      const root   = document.getElementById('sonata559');
-      const stage  = document.getElementById('stage559');
-      const cvs    = document.getElementById('loom559');
+      const root   = document.getElementById('sonata560');
+      const stage  = document.getElementById('stage560');
+      const cvs    = document.getElementById('ink560');
       const ctx    = cvs.getContext('2d');
 
-      const bTheme = document.getElementById('theme559');
-      const bTone  = document.getElementById('tone559');
-      const bPause = document.getElementById('pause559');
-      const bSnap  = document.getElementById('snap559');
+      const bTheme = document.getElementById('theme560');
+      const bTone  = document.getElementById('tone560');
+      const bPause = document.getElementById('pause560');
+      const bSnap  = document.getElementById('snap560');
 
-      const rOrbits = document.getElementById('orbits559');
-      const rGlow   = document.getElementById('glow559');
-      const rTempo  = document.getElementById('tempo559');
+      const rFlow   = document.getElementById('flow560');
+      const rBloom  = document.getElementById('bloom560');
+      const rGrain  = document.getElementById('grain560');
+      const rDense  = document.getElementById('density560');
 
-      const hudOrbits = document.getElementById('hudOrbits559');
-      const hudTempo  = document.getElementById('hudTempo559');
-      const stampEl   = document.getElementById('last-updated');
+      const hudFlow  = document.getElementById('hudFlow560');
+      const hudBloom = document.getElementById('hudBloom560');
+      const stampEl  = document.getElementById('last-updated');
 
       // Timestamp
       try {
@@ -423,79 +435,70 @@
           hour: '2-digit', minute: '2-digit', second: '2-digit',
           timeZoneName: 'short'
         }).format(now);
-        stampEl.textContent = 'Last updated: ' + parts;
-      } catch {
-        stampEl.textContent = 'Last updated just now';
-      }
+        stampEl.textContent = 'Updated: ' + parts;
+      } catch { stampEl.textContent = 'Updated just now'; }
 
       // Palettes
       const tones = [
-        { name:'Astra', a:'#64ffda', b:'#9b6bff', c:'#f6bc4f', d:'#7ee2ff' },
-        { name:'Verdigris', a:'#9bffbe', b:'#43d9de', c:'#ffe07d', d:'#bda5ff' },
-        { name:'Sienna', a:'#ffd29a', b:'#ffa7c4', c:'#ffef9f', d:'#9ee8ff' },
-        { name:'Ultravox', a:'#79ffe1', b:'#7aa2ff', c:'#e9b8ff', d:'#ffdd8a' },
-        { name:'Noctiluca', a:'#7cffbe', b:'#61e1ff', c:'#ffe08e', d:'#d4a7ff' }
+        { name:'Garden', a:'#ff7a7a', b:'#5ad7c2', c:'#9f8bff' },
+        { name:'Dawn',   a:'#ff9f6e', b:'#ffd86b', c:'#7cc9ff' },
+        { name:'Lagoon', a:'#63ffd3', b:'#47bfff', c:'#b09cff' },
+        { name:'Peony',  a:'#ff8bb3', b:'#ffd1a8', c:'#9ee6ff' },
+        { name:'Moss',   a:'#a5ff9c', b:'#7fe3c7', c:'#ffd580' }
       ];
-      function applyTone(t) {
+      function applyTone(t){
         root.style.setProperty('--a', t.a);
         root.style.setProperty('--b', t.b);
         root.style.setProperty('--c', t.c);
-        root.style.setProperty('--d', t.d);
         bTone.textContent = 'Palette · ' + t.name;
       }
       let toneIndex = 0;
-      const savedTone = localStorage.getItem('s559-tone');
-      if (savedTone) {
-        try { const obj = JSON.parse(savedTone); applyTone(obj); toneIndex = Math.max(0, tones.findIndex(x => x.name === obj.name)); } catch { applyTone(tones[0]); }
-      } else {
-        applyTone(tones[0]);
-      }
+      try {
+        const saved = localStorage.getItem('s560-tone');
+        if (saved) { const obj = JSON.parse(saved); applyTone(obj); toneIndex = Math.max(0, tones.findIndex(x => x.name === obj.name)); }
+        else applyTone(tones[0]);
+      } catch { applyTone(tones[0]); }
       bTone.addEventListener('click', () => {
         toneIndex = (toneIndex + 1) % tones.length;
         applyTone(tones[toneIndex]);
-        localStorage.setItem('s559-tone', JSON.stringify(tones[toneIndex]));
+        localStorage.setItem('s560-tone', JSON.stringify(tones[toneIndex]));
       });
 
-      // Theme
+      // Theme (day/night)
       const hourNow = (new Date()).getHours();
-      const defaultTheme = (hourNow >= 7 && hourNow < 19) ? 'light' : 'dark';
-      const savedTheme = localStorage.getItem('s559-theme');
-      const startTheme = savedTheme || defaultTheme;
-      if (startTheme === 'light') {
-        root.setAttribute('data-theme', 'light');
-        bTheme.textContent = 'Light';
-        bTheme.setAttribute('aria-pressed', 'false');
+      const defaultTheme = (hourNow >= 7 && hourNow < 19) ? 'day' : 'night';
+      const savedTheme = localStorage.getItem('s560-theme') || defaultTheme;
+      if (savedTheme === 'night') {
+        root.setAttribute('data-theme','night');
+        bTheme.textContent = 'Night';
+        bTheme.setAttribute('aria-pressed','true');
       } else {
-        bTheme.textContent = 'Dark';
-        bTheme.setAttribute('aria-pressed', 'true');
+        bTheme.textContent = 'Day';
+        bTheme.setAttribute('aria-pressed','false');
       }
       bTheme.addEventListener('click', () => {
-        const isLight = root.getAttribute('data-theme') === 'light';
-        if (isLight) {
+        const night = root.getAttribute('data-theme') === 'night';
+        if (night) {
           root.removeAttribute('data-theme');
-          bTheme.textContent = 'Dark';
-          bTheme.setAttribute('aria-pressed', 'true');
-          localStorage.setItem('s559-theme', 'dark');
+          bTheme.textContent = 'Day';
+          bTheme.setAttribute('aria-pressed','false');
+          localStorage.setItem('s560-theme','day');
         } else {
-          root.setAttribute('data-theme', 'light');
-          bTheme.textContent = 'Light';
-          bTheme.setAttribute('aria-pressed', 'false');
-          localStorage.setItem('s559-theme', 'light');
+          root.setAttribute('data-theme','night');
+          bTheme.textContent = 'Night';
+          bTheme.setAttribute('aria-pressed','true');
+          localStorage.setItem('s560-theme','night');
         }
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          stage.style.transform = 'perspective(1100px) rotateX(8deg) rotateY(-6deg) scale(1.02)';
+          stage.style.transform = 'perspective(1100px) rotateX(6deg) rotateY(-5deg) scale(1.02)';
           setTimeout(()=> stage.style.transform='', 260);
         }
       });
 
       // Utils
-      function cssColor(name) {
+      function css(name){
         const v = getComputedStyle(root).getPropertyValue(name).trim();
-        if (v.startsWith('#')) {
-          const hex = v.replace('#','');
-          const r=parseInt(hex.slice(0,2),16), g=parseInt(hex.slice(2,4),16), b=parseInt(hex.slice(4,6),16);
-          return [r,g,b];
-        }
+        if (v.startsWith('#')) { const h=v.replace('#',''); return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]; }
         const m = v.match(/rgba?\(([^)]+)\)/i);
         if (m) { const p = m[1].split(',').map(Number); return p.slice(0,3); }
         return [255,255,255];
@@ -505,31 +508,41 @@
       function rgba(c,a){ return `rgba(${c[0]},${c[1]},${c[2]},${a})`; }
       function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
 
-      // Stage interactions
-      const pointer = { nx: 0, ny: 0, inside: false };
-      stage.addEventListener('pointerenter', () => { pointer.inside = true; });
-      stage.addEventListener('pointerleave', () => { pointer.inside = false; stage.style.transform = ''; });
-      stage.addEventListener('pointermove', (e) => {
-        const r = stage.getBoundingClientRect();
-        const nx = (e.clientX - r.left)/r.width - 0.5;
-        const ny = (e.clientY - r.top)/r.height - 0.5;
-        pointer.nx = nx; pointer.ny = ny;
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          stage.style.transform = `perspective(1100px) rotateX(${-ny * 10}deg) rotateY(${nx * 14}deg) scale(1.01)`;
+      // Field
+      const state = {
+        flow: parseFloat(rFlow.value),
+        bloom: parseFloat(rBloom.value),
+        grain: parseFloat(rGrain.value),
+        density: parseInt(rDense.value, 10),
+        paused: false,
+        time: 0
+      };
+      hudFlow.textContent = `Flow ${state.flow.toFixed(2)}×`;
+      hudBloom.textContent = `Bloom ${state.bloom.toFixed(2)}`;
+
+      // Paper grain control
+      function updateGrain(){ document.querySelector('#sonata560 .paper').style.opacity = String(clamp(state.grain, 0, 0.7)); }
+      updateGrain();
+
+      rFlow.addEventListener('input', ()=> { state.flow = parseFloat(rFlow.value); hudFlow.textContent = `Flow ${state.flow.toFixed(2)}×`; });
+      rBloom.addEventListener('input', ()=> { state.bloom = parseFloat(rBloom.value); hudBloom.textContent = `Bloom ${state.bloom.toFixed(2)}`; });
+      rGrain.addEventListener('input', ()=> { state.grain = parseFloat(rGrain.value); updateGrain(); });
+      rDense.addEventListener('input', ()=> { state.density = parseInt(rDense.value,10); seed(true); });
+
+      bPause.addEventListener('click', () => {
+        state.paused = !state.paused;
+        bPause.setAttribute('aria-pressed', String(state.paused));
+        bPause.textContent = state.paused ? 'Resume' : 'Pause';
+        if (!state.paused && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          last = performance.now(); requestAnimationFrame(loop);
         }
       });
-
-      // Scene state
-      const state = {
-        paused: false,
-        orbits: parseInt(rOrbits.value, 10),
-        glow: parseFloat(rGlow.value),
-        tempo: parseFloat(rTempo.value),
-        time: 0,
-        tilt: { x: 0, y: 0 }
-      };
-      hudOrbits.textContent = `${state.orbits} orbits`;
-      hudTempo.textContent = `${state.tempo.toFixed(2)}×`;
+      bSnap.addEventListener('click', () => {
+        const link = document.createElement('a');
+        link.download = 'watercolor-garden.png';
+        link.href = cvs.toDataURL('image/png');
+        link.click();
+      });
 
       // Canvas sizing
       let W=1, H=1, DPR = Math.max(1, Math.min(2.5, window.devicePixelRatio || 1));
@@ -543,165 +556,148 @@
         cvs.style.width = W + 'px';
         cvs.style.height = H + 'px';
         ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-        drawOnce();
+        drawBase(true);
       }
       window.addEventListener('resize', resize);
 
-      // Controls
-      rOrbits.addEventListener('input', () => { state.orbits = parseInt(rOrbits.value, 10); hudOrbits.textContent = `${state.orbits} orbits`; seed(); });
-      rGlow.addEventListener('input', () => { state.glow = parseFloat(rGlow.value); });
-      rTempo.addEventListener('input', () => { state.tempo = parseFloat(rTempo.value); hudTempo.textContent = `${state.tempo.toFixed(2)}×`; });
-
-      bPause.addEventListener('click', () => {
-        state.paused = !state.paused;
-        bPause.setAttribute('aria-pressed', String(state.paused));
-        bPause.textContent = state.paused ? 'Resume' : 'Pause';
-        if (!state.paused && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          lastTime = performance.now();
-          requestAnimationFrame(loop);
+      // Particles
+      let P=[];
+      function seed(keep=false) {
+        const target = state.density;
+        if (keep && P.length) {
+          // adjust length
+          if (P.length > target) P.length = target;
+          while (P.length < target) P.push(spawn(Math.random()*W, Math.random()*H));
+          return;
         }
-      });
-      bSnap.addEventListener('click', () => {
-        const link = document.createElement('a');
-        link.download = 'orbital-loom.png';
-        link.href = cvs.toDataURL('image/png');
-        link.click();
-      });
-
-      // Color ring
-      function ringColor(t, bias=0) {
-        const c1 = cssColor('--a'), c2 = cssColor('--b'), c3 = cssColor('--c'), c4 = cssColor('--d');
-        let x = (Math.sin((t + bias) * Math.PI * 2) * 0.5 + 0.5);
-        if (x < 0.33) return mix(c1, c2, x / 0.33);
-        if (x < 0.66) return mix(c2, c3, (x - 0.33) / 0.33);
-        return mix(c3, c4, (x - 0.66) / 0.34);
-      }
-
-      // Particles on orbits
-      let nodes = [];
-      function seed() {
-        nodes = [];
-        const rings = state.orbits;
-        const baseR = Math.min(W, H) * 0.42;
-        for (let j = 0; j < rings; j++) {
-          const tRing = j / (rings - 1);
-          const r = baseR * (0.08 + 0.92 * tRing);
-          const speed = (0.2 + 1.4 * Math.pow(1 - tRing, 1.2)) * (Math.random() > 0.5 ? 1 : -1);
-          const nodCount = 3 + ((j % 4) === 0 ? 2 : 0);
-          for (let k = 0; k < nodCount; k++) {
-            nodes.push({
-              ring: j,
-              r,
-              phase: Math.random() * Math.PI * 2,
-              omega: speed * (0.6 + Math.random() * 0.6),
-              wobble: 0.012 + Math.random() * 0.03,
-              hueBias: Math.random()
-            });
-          }
+        P = [];
+        for (let i=0;i<target;i++) {
+          P.push(spawn(Math.random()*W, Math.random()*H));
         }
       }
+      function spawn(x,y) {
+        return {
+          x, y,
+          px: x, py: y,
+          t: Math.random()*Math.PI*2,
+          hueBias: Math.random(),
+          size: 0.6 + Math.random()*1.2
+        };
+      }
 
-      function drawOnce(){ ctx.clearRect(0,0,W,H); }
+      // Flow field (sin-based "curlish" noise)
+      function field(x,y,t){
+        const s = 0.0018, s2 = 0.0026;
+        const a = Math.sin(y * s + t*0.6) + Math.cos((x + y) * s2 - t*0.4);
+        const b = Math.cos(x * s - t*0.35) - Math.sin((x - y) * s2 + t*0.5);
+        return { vx: a, vy: b };
+      }
 
-      let lastTime = performance.now();
-      function loop(now) {
-        const dt = Math.min(0.05, (now - lastTime)/1000) * state.tempo;
-        lastTime = now;
+      // Palette ring
+      function swirlColor(u) {
+        const a = css('--a'), b = css('--b'), c = css('--c');
+        if (u < .5) return mix(a, b, u/.5);
+        return mix(b, c, (u-.5)/.5);
+      }
+
+      // Pointer attraction
+      const pointer = { x: 0, y: 0, inside: false };
+      stage.addEventListener('pointerenter', () => { pointer.inside = true; });
+      stage.addEventListener('pointerleave', () => { pointer.inside = false; stage.style.transform=''; });
+      stage.addEventListener('pointermove', (e) => {
+        const r = stage.getBoundingClientRect();
+        pointer.x = e.clientX - r.left;
+        pointer.y = e.clientY - r.top;
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          const nx = (pointer.x/r.width - .5), ny = (pointer.y/r.height - .5);
+          stage.style.transform = `perspective(1100px) rotateX(${-ny*8}deg) rotateY(${nx*10}deg) scale(1.005)`;
+        }
+      });
+      stage.addEventListener('click', (e) => {
+        const r = stage.getBoundingClientRect();
+        const x = e.clientX - r.left, y = e.clientY - r.top;
+        for (let i=0;i<30;i++) P[Math.floor(Math.random()*P.length)] = spawn(x + (Math.random()-0.5)*20, y + (Math.random()-0.5)*20);
+      });
+
+      function drawBase(clear=false){
+        if (clear) ctx.clearRect(0,0,W,H);
+        const night = root.getAttribute('data-theme') === 'night';
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = night ? 'rgba(11,16,32,0.18)' : 'rgba(255,255,255,0.16)';
+        ctx.fillRect(0,0,W,H);
+      }
+
+      let last = performance.now();
+      function loop(now){
+        const dt = Math.min(0.05, (now - last)/1000) * state.flow;
+        last = now;
         state.time += dt;
 
-        // tilt easing
-        const tx = pointer.nx || 0, ty = pointer.ny || 0;
-        state.tilt.x = lerp(state.tilt.x, tx, 0.08);
-        state.tilt.y = lerp(state.tilt.y, ty, 0.08);
-
-        // fade frame
+        // subtle fade
+        const night = root.getAttribute('data-theme') === 'night';
         ctx.globalCompositeOperation = 'source-over';
-        if (root.getAttribute('data-theme') === 'light') {
-          ctx.fillStyle = `rgba(245,248,255,${0.16})`;
-        } else {
-          ctx.fillStyle = `rgba(5,7,13,${0.16})`;
-        }
+        ctx.fillStyle = night ? 'rgba(10,14,28,0.095)' : 'rgba(250,247,242,0.08)';
         ctx.fillRect(0,0,W,H);
 
-        const cx = W/2 + state.tilt.x * W * 0.06;
-        const cy = H/2 + state.tilt.y * H * 0.06;
+        // draw
+        for (let i=0;i<P.length;i++){
+          const p = P[i];
+          p.px = p.x; p.py = p.y;
 
-        // center breathing glow
-        const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W,H)*0.16);
-        core.addColorStop(0, rgba(cssColor('--d'), 0.18 * state.glow));
-        core.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = core;
-        ctx.fillRect(0,0,W,H);
+          const F = field(p.x, p.y, state.time);
+          let vx = F.vx, vy = F.vy;
 
-        // draw luminous threads
-        const byLight = root.getAttribute('data-theme') === 'light';
-        for (let i = 0; i < nodes.length; i++) {
-          const n = nodes[i];
-          const t = state.time;
-          const theta = n.phase + t * n.omega + Math.sin(t * 0.7 + n.ring) * n.wobble;
-          const r = n.r * (1 + 0.045 * Math.sin(t * 0.9 + n.hueBias * 6.28));
-          const x = cx + Math.cos(theta) * r;
-          const y = cy + Math.sin(theta) * r;
+          // pointer attraction
+          if (pointer.inside) {
+            const dx = pointer.x - p.x;
+            const dy = pointer.y - p.y;
+            const d2 = Math.max(24, dx*dx + dy*dy);
+            const k = 160 / d2;
+            vx += dx * k; vy += dy * k;
+          }
 
-          // Node glow
-          const col = ringColor((n.ring / Math.max(1, state.orbits-1)), n.hueBias + t*0.02);
-          ctx.globalCompositeOperation = 'lighter';
-          ctx.fillStyle = rgba(col, (byLight ? 0.16 : 0.22) * state.glow);
-          ctx.shadowColor = rgba(col, 0.6 * state.glow);
-          ctx.shadowBlur = 16 * state.glow + (n.ring % 3) * 2;
+          p.x += vx * 18 * dt;
+          p.y += vy * 18 * dt;
+
+          // wrap edges for continuous flow
+          if (p.x < -2) p.x = W+2; if (p.x > W+2) p.x = -2;
+          if (p.y < -2) p.y = H+2; if (p.y > H+2) p.y = -2;
+
+          // color
+          const u = (Math.sin((p.x + p.y)*0.002 + p.hueBias*6.28 + state.time*0.5)*0.5 + 0.5);
+          const col = swirlColor(u);
+
+          // stroke
+          ctx.globalCompositeOperation = night ? 'lighter' : 'multiply';
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.strokeStyle = rgba(col, night ? (0.18 * state.bloom) : (0.24 * state.bloom));
+          ctx.lineWidth = 0.6 + 0.8 * p.size;
+          ctx.shadowColor = rgba(col, 0.6 * state.bloom);
+          ctx.shadowBlur = 10 * state.bloom;
+
           ctx.beginPath();
-          ctx.arc(x, y, 1.2 + 1.2 * (0.5 + 0.5 * Math.sin(t*1.7 + n.hueBias*8)), 0, Math.PI*2);
-          ctx.fill();
-
-          // Short tangent stroke
-          ctx.globalCompositeOperation = 'source-over';
-          ctx.shadowBlur = 0;
-          const txv = -Math.sin(theta), tyv = Math.cos(theta);
-          ctx.strokeStyle = rgba(col, (byLight ? 0.20 : 0.26) * state.glow);
-          ctx.lineWidth = 0.6;
-          ctx.beginPath();
-          ctx.moveTo(x - txv * 6, y - tyv * 6);
-          ctx.lineTo(x + txv * 6, y + tyv * 6);
+          ctx.moveTo(p.px, p.py);
+          ctx.lineTo(p.x, p.y);
           ctx.stroke();
 
-          // Connect to neighbor ring occasionally
-          if (n.ring < state.orbits - 1) {
-            // find a nearby node on next ring
-            for (let j=i+1; j<nodes.length; j++) {
-              const m = nodes[j];
-              if (m.ring !== n.ring + 1) continue;
-              const mt = m.phase + t * m.omega;
-              const mx = cx + Math.cos(mt) * m.r;
-              const my = cy + Math.sin(mt) * m.r;
-              const dx = mx - x, dy = my - y;
-              const dist = Math.hypot(dx, dy);
-              if (dist < Math.min(W,H) * 0.10) {
-                const a = clamp(1 - dist / (Math.min(W,H) * 0.10), 0, 1) * (byLight ? 0.18 : 0.24) * state.glow;
-                ctx.globalCompositeOperation = 'lighter';
-                ctx.strokeStyle = rgba(mix(col, ringColor(m.ring / Math.max(1, state.orbits-1), m.hueBias), 0.5), a);
-                ctx.lineWidth = 0.8;
-                ctx.beginPath();
-                ctx.moveTo(x, y);
-                // slight curve
-                const mxp = (x + mx)/2 + (tyv) * 10;
-                const myp = (y + my)/2 + (-txv) * 10;
-                ctx.quadraticCurveTo(mxp, myp, mx, my);
-                ctx.stroke();
-                break;
-              }
-            }
+          // occasional bloom dots
+          if ((i + (now|0)) % 260 === 0) {
+            ctx.globalCompositeOperation = 'lighter';
+            ctx.fillStyle = rgba(col, 0.12 * state.bloom);
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 4 + 10 * Math.random(), 0, Math.PI*2);
+            ctx.fill();
           }
         }
 
-        if (!state.paused && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          requestAnimationFrame(loop);
-        }
+        if (!state.paused && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) requestAnimationFrame(loop);
       }
 
       // Init
       resize();
-      seed();
-      drawOnce();
+      seed(false);
+      drawBase(true);
 
       if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) requestAnimationFrame(loop);
     })();
