@@ -73,96 +73,123 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="atelier" aria-label="Daylight Atelier — Paper Garden">
+<section class="nocturne" aria-label="Lumen Observatory — Night Studio">
   <style>
-    .atelier {
-      --bg0: #ffffff;
-      --bg1: #fafaf7;
-      --ink: #1b2430;
-      --muted: #637089;
-      --ring: #e9eef6;
-      --a1: #ff7a59;  /* coral */
-      --a2: #5ac8fa;  /* sky */
-      --a3: #62d39e;  /* mint */
+    .nocturne {
+      --bg0: #0b0f17;
+      --bg1: #111a2e;
+      --ink: #e8f1ff;
+      --muted: #a0b4d1;
+      --ring: #1a2740;
+      --a1: #7a8cff; /* cobalt */
+      --a2: #5df2ff; /* cyan */
+      --a3: #ff7ad6; /* orchid */
       --mx: 50%;
       --my: 50%;
       position: relative;
       isolation: isolate;
       border-radius: 28px;
       overflow: hidden;
-      padding: 28px 26px 20px;
+      padding: 28px;
       color: var(--ink);
       background:
-        radial-gradient(1200px 900px at 8% -10%, #fff2e5 0%, #ffffff 35%, transparent 60%),
-        radial-gradient(1000px 800px at 100% 100%, #e8f3ff 0%, var(--bg1) 58%),
-        linear-gradient(180deg, #00000005, #00000000);
+        radial-gradient(1200px 900px at -10% -20%, #1a2444 0%, transparent 45%),
+        radial-gradient(1000px 800px at 120% 120%, #1c1335 0%, transparent 50%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
       box-shadow:
-        0 28px 80px rgba(16, 24, 40, 0.12),
-        inset 0 0 0 1px rgba(10, 20, 40, 0.03);
+        0 28px 80px rgba(5, 8, 15, 0.55),
+        inset 0 0 0 1px rgba(255,255,255,0.04);
     }
-    /* Subtle paper grid */
-    .atelier::after {
+    /* Pointer lens */
+    .nocturne::before {
+      content: "";
+      position: absolute; inset: -20%;
+      pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(280px 220px at var(--mx) var(--my), rgba(98, 247, 255, 0.10), transparent 55%),
+        radial-gradient(380px 340px at calc(var(--mx) + 120px) calc(var(--my) + 80px), rgba(255, 131, 242, 0.12), transparent 65%),
+        radial-gradient(460px 380px at calc(var(--mx) - 160px) calc(var(--my) - 120px), rgba(124, 150, 255, 0.10), transparent 70%);
+      mix-blend-mode: screen;
+      transition: background 0.18s ease-out;
+    }
+    /* Subtle star grid texture */
+    .nocturne::after {
       content: "";
       position: absolute; inset: 0;
       background:
-        repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(0,0,0,0.022) 24px),
-        repeating-linear-gradient(90deg, transparent, transparent 23px, rgba(0,0,0,0.018) 24px);
-      mix-blend-mode: multiply;
-      opacity: 0.35;
-      pointer-events: none;
-      z-index: 0;
+        repeating-linear-gradient(0deg, transparent 0 21px, rgba(255,255,255,0.02) 21px 22px),
+        repeating-linear-gradient(90deg, transparent 0 21px, rgba(255,255,255,0.018) 21px 22px);
+      opacity: 0.15;
+      pointer-events: none; z-index: 0;
     }
-    /* Cursor sun-kiss */
-    .atelier::before {
-      content: "";
-      position: absolute; inset: -10%;
-      background:
-        radial-gradient(280px 220px at var(--mx) var(--my), rgba(255, 214, 169, 0.28), transparent 55%),
-        radial-gradient(420px 360px at calc(var(--mx) + 120px) calc(var(--my) + 80px), rgba(104, 211, 158, 0.18), transparent 65%),
-        radial-gradient(500px 420px at calc(var(--mx) - 180px) calc(var(--my) - 140px), rgba(90, 200, 250, 0.18), transparent 70%);
-      transition: background 0.18s ease-out;
-      pointer-events: none;
-      z-index: 0;
-      mix-blend-mode: screen;
-    }
+
     /* Layout */
-    .grid {
-      position: relative;
-      z-index: 2;
+    .wrap {
+      position: relative; z-index: 2;
       display: grid;
       grid-template-columns: 1.1fr 1fr;
       gap: 26px;
       align-items: center;
     }
-    @media (max-width: 980px) { .grid { grid-template-columns: 1fr; gap: 18px; } }
+    @media (max-width: 980px) { .wrap { grid-template-columns: 1fr; gap: 18px; } }
+
+    /* Background canvas */
+    .sky {
+      position: absolute; inset: 0; z-index: 1;
+      opacity: 0.9;
+      filter: saturate(1.1);
+      pointer-events: none;
+    }
+
+    /* Aurora veil */
+    .veil {
+      position: absolute; inset: -20%; z-index: 1;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 400ms ease;
+      mix-blend-mode: screen;
+      background:
+        conic-gradient(from 0deg at 50% 50%,
+          rgba(125, 140, 255, 0.12),
+          rgba(93, 242, 255, 0.10),
+          rgba(255, 122, 214, 0.10),
+          rgba(125, 140, 255, 0.12));
+      animation: swirl 30s linear infinite;
+    }
+    .aurora .veil { opacity: 0.6; }
+    @keyframes swirl { to { transform: rotate(360deg); } }
 
     .brand {
       display: inline-flex; align-items: center; gap: 10px;
       color: var(--muted);
-      font: 700 12px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      font: 800 12px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue";
+      letter-spacing: 0.18em; text-transform: uppercase;
       margin-bottom: 12px;
+      opacity: 0.9;
     }
-    .dot {
+    .spark {
       width: 9px; height: 9px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--a1), var(--a2), var(--a3));
-      box-shadow: 0 0 0 3px rgba(0,0,0,0.04), 0 0 12px rgba(255,122,89,0.2);
+      background: radial-gradient(circle at 30% 30%, var(--a2), var(--a1) 60%, var(--a3));
+      box-shadow: 0 0 0 3px rgba(93,242,255,0.08), 0 0 18px rgba(125,140,255,0.45), 0 0 40px rgba(255,122,214,0.25);
     }
+
     .title {
       margin: 0;
-      font: 800 56px/1.04 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue";
+      font: 900 64px/1.02 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue";
       letter-spacing: -0.02em;
-      background: linear-gradient(180deg, #1b2430, #3b4656);
+      background: linear-gradient(180deg, #eaf2ff 0%, #bcd6ff 30%, #f6cdff 80%);
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      text-shadow: 0 1px 0 #ffffff;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.08);
     }
+    @media (max-width: 620px) { .title { font-size: 44px; } }
+
     .lead {
       margin: 12px 0 20px;
-      font: 500 16px/1.75 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue";
+      font: 500 16px/1.8 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue";
       color: var(--muted);
       max-width: 60ch;
     }
+
     /* Buttons */
     .actions { display: flex; flex-wrap: wrap; gap: 10px; }
     .btn {
@@ -170,330 +197,356 @@
       display: inline-flex; align-items: center; gap: 10px;
       padding: 12px 14px;
       border-radius: 14px;
-      border: 1px solid rgba(16,24,40,0.12);
-      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.65));
+      border: 1px solid rgba(180,200,255,0.2);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
       color: var(--ink);
       font: 800 13px/1 ui-sans-serif, system-ui;
-      letter-spacing: 0.02em;
-      text-decoration: none;
-      box-shadow: 0 8px 18px rgba(16,24,40,0.08), inset 0 1px 0 rgba(255,255,255,0.6);
+      letter-spacing: 0.02em; text-decoration: none;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.2),
+        0 8px 18px rgba(0, 10, 30, 0.35);
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      transition: transform 0.15s ease, box-shadow 0.25s ease, border-color 0.2s ease, background 0.2s ease;
       -webkit-tap-highlight-color: transparent;
       backdrop-filter: blur(8px);
     }
-    .btn:hover, .btn:focus-visible {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 28px rgba(16,24,40,0.10), inset 0 1px 0 rgba(255,255,255,0.75);
-      border-color: rgba(16,24,40,0.2);
-      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,0.7));
-    }
-    .chip {
+    .btn .chip {
       width: 14px; height: 14px; border-radius: 4px;
       background: linear-gradient(135deg, var(--a1), var(--a2), var(--a3));
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15), 0 0 10px rgba(93,242,255,0.4);
+    }
+    .btn:hover, .btn:focus-visible {
+      transform: translateY(-1px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.25),
+        0 14px 32px rgba(0, 10, 30, 0.5);
+      border-color: rgba(200,220,255,0.35);
+      outline: none;
     }
 
-    /* Paper Garden */
-    .garden {
+    /* Sculpture */
+    .stage {
       position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      user-select: none;
-      perspective: 1000px;
-    }
-    @media (max-width: 620px) { .garden { grid-template-columns: repeat(2, 1fr); } }
-    .plot {
       aspect-ratio: 1/1;
-      border-radius: 16px;
+      width: 100%;
+      border-radius: 20px;
       background:
-        radial-gradient(140% 80% at 50% 0%, rgba(255,255,255,0.9), rgba(255,255,255,0.7)),
-        linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.5));
-      border: 1px solid var(--ring);
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid rgba(160,180,220,0.15);
       box-shadow:
-        0 8px 18px rgba(16,24,40,0.08),
-        inset 0 1px 0 rgba(255,255,255,0.8);
-      display: grid;
-      place-items: center;
-      transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.2s ease;
+        inset 0 1px 0 rgba(255,255,255,0.12),
+        0 10px 40px rgba(0, 8, 25, 0.45);
       overflow: hidden;
       transform-style: preserve-3d;
+      perspective: 1000px;
+      backdrop-filter: blur(10px);
     }
-    .plot:hover {
-      transform: translateY(-2px) rotateX(3deg);
-      border-color: color-mix(in oklab, var(--a2) 25%, var(--ring));
-      box-shadow: 0 14px 32px rgba(16,24,40,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
+    .sculpture {
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+    }
+    .ring {
+      position: absolute; border-radius: 50%;
+      border: 1px dashed rgba(180,200,255,0.2);
+      box-shadow: 0 0 40px rgba(125,140,255,0.12) inset;
+      animation: orbit var(--spd, 26s) linear infinite;
+    }
+    .ring::after {
+      content: "";
+      position: absolute;
+      width: 14px; height: 14px; border-radius: 50%;
+      top: -7px; left: 50%; transform: translateX(-50%);
+      background: radial-gradient(circle at 30% 30%, var(--a2), var(--a1) 60%, var(--a3));
+      box-shadow:
+        0 0 10px rgba(93,242,255,0.55),
+        0 0 26px rgba(255,122,214,0.35),
+        0 0 50px rgba(122,140,255,0.25);
+    }
+    .r1 { width: 68%; height: 68%; --spd: 38s; }
+    .r2 { width: 52%; height: 52%; --spd: 26s; }
+    .r3 { width: 36%; height: 36%; --spd: 18s; }
+    .r4 { width: 22%; height: 22%; --spd: 14s; }
+    @keyframes orbit { to { transform: rotate(360deg); } }
+
+    .core {
+      position: absolute; width: 16%; height: 16%; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #b8d8ff 60%, #7a8cff);
+      box-shadow:
+        inset 0 0 20px rgba(255,255,255,0.55),
+        0 0 30px rgba(122,140,255,0.65),
+        0 0 120px rgba(93,242,255,0.35);
+      animation: pulse 4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); filter: saturate(1); }
+      50% { transform: scale(1.06); filter: saturate(1.2); }
     }
 
-    /* Blooms */
-    .flower {
-      width: 88%;
-      max-width: 160px;
-      filter: drop-shadow(0 2px 10px rgba(16,24,40,0.12));
-      transform: translateZ(20px);
-    }
-    .flower .petal {
-      transform-origin: 50% 50%;
-      opacity: 0.96;
-    }
-    .flower .core {
-      filter: saturate(1.1);
-    }
-    .spin {
-      animation: spin var(--spd, 18s) linear infinite;
-    }
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    .float {
-      animation: float 10s ease-in-out infinite;
-      transform-origin: 50% 50%;
-    }
-    @keyframes float {
-      0% { transform: translateY(0px) }
-      50% { transform: translateY(-4px) }
-      100% { transform: translateY(0px) }
-    }
+    .tilt { transition: transform 200ms ease; }
 
     /* Footer */
     .footer {
       position: relative; z-index: 2;
       margin-top: 18px; padding-top: 12px;
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
-      border-top: 1px solid rgba(16,24,40,0.12);
+      border-top: 1px solid rgba(160,180,220,0.18);
       color: var(--muted);
-      font: 600 12px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      font: 600 12px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue";
     }
     .keys { display: inline-flex; gap: 10px; align-items: center; flex-wrap: wrap; }
     .key {
-      border: 1px solid rgba(16,24,40,0.2);
-      background: #f6f8fb;
-      padding: 4px 8px; border-radius: 8px; color: #17202b; font-weight: 800;
-      box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 2px 8px rgba(16,24,40,0.05);
+      border: 1px solid rgba(160,180,220,0.4);
+      background: rgba(255,255,255,0.06);
+      padding: 4px 8px; border-radius: 8px; color: #e6f0ff; font-weight: 800;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.15) inset, 0 2px 8px rgba(0,0,0,0.25);
     }
 
     /* Modes */
-    .calm .spin { animation-duration: 60s !important; }
-    .still .spin, .still .float { animation: none !important; }
+    .still .ring, .still .core, .still .veil { animation: none !important; }
+    .still .veil { opacity: 0 !important; }
     @media (prefers-reduced-motion: reduce) {
-      .spin, .float { animation: none !important; }
+      .ring, .core, .veil { animation: none !important; }
     }
-    .gridless::after { opacity: 0.04; }
   </style>
 
-  <div class="grid">
-    <div class="col">
-      <div class="brand"><span class="dot" aria-hidden="true"></span> Daylight Atelier • Iteration 582</div>
-      <h1 class="title">Paper Garden</h1>
-      <p class="lead">
-        Sunlit, quiet, and made of gentle motion. Plant ideas. Watch them bloom.
-        Tap any flower to re‑seed it; the breeze takes care of the rest.
-      </p>
+  <canvas class="sky" id="sky" aria-hidden="true"></canvas>
+  <div class="veil" aria-hidden="true"></div>
 
+  <div class="wrap">
+    <div class="col">
+      <div class="brand"><span class="spark" aria-hidden="true"></span> Lumen Observatory • Iteration 583</div>
+      <h1 class="title">Sketches in Night</h1>
+      <p class="lead">
+        A hush of light that listens back. Draw orbits with your cursor; the sky replies in subtle motion.
+      </p>
       <div class="actions">
         <button class="btn" id="palette" aria-label="Cycle palette" aria-pressed="false">
           <span class="chip" aria-hidden="true"></span> Palette
         </button>
-        <button class="btn" id="calm" aria-label="Toggle calm (slow motion)" aria-pressed="false">
-          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zm0 2a7 7 0 110 14A7 7 0 0112 5z" fill="currentColor"/></svg> Calm
+        <button class="btn" id="aurora" aria-label="Toggle aurora veil" aria-pressed="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 4.5L20 9l-4.5 2.5L12 16l-3.5-4.5L4 9l5.5-1.5L12 3z" fill="currentColor"/></svg> Aurora
         </button>
-        <button class="btn" id="gridlines" aria-label="Toggle gridlines" aria-pressed="false">
-          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v2H4zM4 11h16v2H4zM4 18h16v2H4z" fill="currentColor"/></svg> Grid
+        <button class="btn" id="connect" aria-label="Toggle constellations" aria-pressed="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5a2 2 0 104 0 2 2 0 10-4 0zm10 14a2 2 0 104 0 2 2 0 10-4 0zM3 11h8M13 13l6 4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg> Connect
+        </button>
+        <button class="btn" id="still" aria-label="Toggle still mode (pause motion)" aria-pressed="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z" fill="currentColor"/></svg> Still
         </button>
       </div>
     </div>
 
     <div class="col">
-      <div class="garden" id="garden" aria-label="Interactive paper garden">
-        <div class="plot"></div>
-        <div class="plot"></div>
-        <div class="plot"></div>
-        <div class="plot"></div>
-        <div class="plot"></div>
-        <div class="plot"></div>
-        <div class="plot"></div>
-        <div class="plot"></div>
-        <div class="plot"></div>
+      <div class="stage tilt" id="stage" aria-label="Orbital sculpture">
+        <div class="sculpture" aria-hidden="true">
+          <div class="ring r1"></div>
+          <div class="ring r2"></div>
+          <div class="ring r3"></div>
+          <div class="ring r4"></div>
+          <div class="core"></div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="footer">
-    <div><span id="last-updated">Last updated: 2025-11-12 01:28:00 EST</span></div>
+    <div><span id="last-updated">Last updated: 2025-11-12 02:17:52 EST</span></div>
     <div class="keys">
-      <span class="key">P</span> Palette
-      <span class="key">C</span> Calm
-      <span class="key">G</span> Grid
-      <span class="key">Move</span> Sun follows
+      <span class="key">A</span> Palette
+      <span class="key">U</span> Aurora
+      <span class="key">C</span> Connect
+      <span class="key">S</span> Still
+      <span class="key">Move</span> Lens / Tilt
     </div>
   </div>
 
   <script>
     (function () {
       const root = document.currentScript.parentElement;
-      const shell = root.closest('.atelier') || root;
+      const shell = root.closest('.nocturne') || root;
+      const canvas = root.querySelector('#sky');
+      const ctx = canvas.getContext('2d');
+      const veil = root.querySelector('.veil');
+      const stage = root.querySelector('#stage');
 
-      // Pointer sunlight
-      const onPointer = (e) => {
+      // Responsive canvas
+      let DPR = Math.min(2, window.devicePixelRatio || 1);
+      function sizeCanvas() {
+        const { width, height } = shell.getBoundingClientRect();
+        canvas.width = Math.max(1, Math.floor(width * DPR));
+        canvas.height = Math.max(1, Math.floor(height * DPR));
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+      }
+      sizeCanvas();
+      window.addEventListener('resize', () => { DPR = Math.min(2, window.devicePixelRatio || 1); sizeCanvas(); seedStars(); });
+
+      // Pointer lens + tilt
+      function onPointer(e) {
         const r = shell.getBoundingClientRect();
-        shell.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-        shell.style.setProperty('--my', (e.clientY - r.top) + 'px');
-      };
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+        shell.style.setProperty('--mx', x + 'px');
+        shell.style.setProperty('--my', y + 'px');
+        // Tilt stage
+        const sr = stage.getBoundingClientRect();
+        const dx = (e.clientX - (sr.left + sr.width/2)) / (sr.width/2);
+        const dy = (e.clientY - (sr.top + sr.height/2)) / (sr.height/2);
+        stage.style.transform = `rotateX(${(-dy*6).toFixed(2)}deg) rotateY(${(dx*6).toFixed(2)}deg)`;
+        pointer.x = (x / r.width) * 2 - 1;
+        pointer.y = (y / r.height) * 2 - 1;
+      }
       shell.addEventListener('pointermove', onPointer, { passive: true });
+      shell.addEventListener('pointerleave', () => { stage.style.transform = ''; pointer.x = 0; pointer.y = 0; }, { passive: true });
 
       // Palettes
       const palettes = [
-        { a1:'#ff7a59', a2:'#5ac8fa', a3:'#62d39e', bg0:'#ffffff', bg1:'#fafaf7', ink:'#1b2430', muted:'#637089', ring:'#e9eef6' }, // Daylight
-        { a1:'#ffa24b', a2:'#ff6aa2', a3:'#8ed0ff', bg0:'#fff9f2', bg1:'#fffefb', ink:'#1f2733', muted:'#6a7389', ring:'#efe7de' }, // Dawn
-        { a1:'#b39cff', a2:'#76e0b9', a3:'#ffe27a', bg0:'#f7f8ff', bg1:'#f2f7ff', ink:'#1a2130', muted:'#5b6b86', ring:'#e4e8f6' }  // Blue hour
+        { a1:'#7a8cff', a2:'#5df2ff', a3:'#ff7ad6', bg0:'#0b0f17', bg1:'#111a2e', ink:'#e8f1ff', muted:'#a0b4d1', ring:'#1a2740' }, // Night Neon
+        { a1:'#9dfcff', a2:'#b8ffb5', a3:'#ffd87a', bg0:'#081316', bg1:'#0b1b1e', ink:'#eafff7', muted:'#a6d0c7', ring:'#163132' }, // Glacier Dawn
+        { a1:'#ff9b7a', a2:'#ffd06e', a3:'#7ae4ff', bg0:'#130b0c', bg1:'#1e1412', ink:'#fff5ea', muted:'#e0c9b9', ring:'#3a2622' }, // Ember Haze
+        { a1:'#b7c4ff', a2:'#e0e7ff', a3:'#ffffff', bg0:'#0a0a0f', bg1:'#14141b', ink:'#f2f4ff', muted:'#bfc5e6', ring:'#27273a' }  // Monotone Moon
       ];
       function applyTheme(p) {
-        shell.style.setProperty('--a1', p.a1);
-        shell.style.setProperty('--a2', p.a2);
-        shell.style.setProperty('--a3', p.a3);
-        shell.style.setProperty('--bg0', p.bg0);
-        shell.style.setProperty('--bg1', p.bg1);
-        shell.style.setProperty('--ink', p.ink);
-        shell.style.setProperty('--muted', p.muted);
-        shell.style.setProperty('--ring', p.ring);
+        for (const k of Object.keys(p)) shell.style.setProperty('--' + k, p[k]);
       }
       let paletteIndex = 0;
       applyTheme(palettes[0]);
 
       // Controls
       const btnPalette = root.querySelector('#palette');
-      const btnCalm = root.querySelector('#calm');
-      const btnGrid = root.querySelector('#gridlines');
+      const btnAurora = root.querySelector('#aurora');
+      const btnConnect = root.querySelector('#connect');
+      const btnStill = root.querySelector('#still');
 
       btnPalette.addEventListener('click', () => {
         paletteIndex = (paletteIndex + 1) % palettes.length;
         applyTheme(palettes[paletteIndex]);
-        btnPalette.setAttribute('aria-pressed', 'true');
-        setTimeout(() => btnPalette.setAttribute('aria-pressed', 'false'), 240);
+        pulse(btnPalette);
       });
-      btnCalm.addEventListener('click', () => {
-        shell.classList.toggle('calm');
-        btnCalm.setAttribute('aria-pressed', shell.classList.contains('calm') ? 'true' : 'false');
+      btnAurora.addEventListener('click', () => {
+        shell.classList.toggle('aurora');
+        btnAurora.setAttribute('aria-pressed', shell.classList.contains('aurora') ? 'true' : 'false');
+        pulse(btnAurora);
       });
-      btnGrid.addEventListener('click', () => {
-        shell.classList.toggle('gridless');
-        btnGrid.setAttribute('aria-pressed', shell.classList.contains('gridless') ? 'true' : 'false');
+      btnConnect.addEventListener('click', () => {
+        connect = !connect;
+        btnConnect.setAttribute('aria-pressed', connect ? 'true' : 'false');
+        pulse(btnConnect);
+      });
+      btnStill.addEventListener('click', () => {
+        paused = !paused;
+        shell.classList.toggle('still', paused);
+        btnStill.setAttribute('aria-pressed', paused ? 'true' : 'false');
+        pulse(btnStill);
       });
       window.addEventListener('keydown', (e) => {
         const k = e.key.toLowerCase();
-        if (k === 'p') btnPalette.click();
-        if (k === 'c') btnCalm.click();
-        if (k === 'g') btnGrid.click();
+        if (k === 'a') btnPalette.click();
+        if (k === 'u') btnAurora.click();
+        if (k === 'c') btnConnect.click();
+        if (k === 's') btnStill.click();
       });
+      function pulse(el) {
+        el.animate([{ transform: 'scale(1)' }, { transform: 'scale(0.96)' }, { transform: 'scale(1)' }], { duration: 200, easing: 'ease-out' });
+      }
 
-      // Garden generator
-      const plots = Array.from(root.querySelectorAll('.plot'));
-      const NS = 'http://www.w3.org/2000/svg';
-      function rand(min, max) { return Math.random() * (max - min) + min; }
-      function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-      function makeBloom() {
-        const svg = document.createElementNS(NS, 'svg');
-        svg.setAttribute('class', 'flower float');
-        svg.setAttribute('viewBox', '-50 -50 100 100');
-        svg.setAttribute('aria-hidden', 'true');
+      // Stars
+      let stars = [];
+      const pointer = { x: 0, y: 0 };
+      let connect = false;
+      let paused = false;
 
-        const wrap = document.createElementNS(NS, 'g');
-        wrap.setAttribute('class', 'spin');
-        wrap.style.setProperty('--spd', rand(12, 26).toFixed(2) + 's');
+      function seedStars() {
+        const count = Math.floor((canvas.width * canvas.height) / (12000 * DPR));
+        stars = new Array(count).fill(0).map(() => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          z: Math.random() * 0.7 + 0.3, // depth
+          vx: (Math.random() * 0.2 + 0.05) * (Math.random() < 0.5 ? -1 : 1),
+          vy: (Math.random() * 0.2 + 0.05) * (Math.random() < 0.5 ? -1 : 1),
+          size: Math.random() * 1.6 + 0.4,
+          hue: Math.random()
+        }));
+      }
+      seedStars();
 
-        const petals = Math.round(rand(6, 12));
-        const rOuter = rand(26, 40);
-        const rInner = rand(8, 14);
-        const softness = rand(0.3, 0.6);
-        const hues = [
-          [getComputedStyle(shell).getPropertyValue('--a1').trim(), getComputedStyle(shell).getPropertyValue('--a2').trim()],
-          [getComputedStyle(shell).getPropertyValue('--a2').trim(), getComputedStyle(shell).getPropertyValue('--a3').trim()],
-          [getComputedStyle(shell).getPropertyValue('--a3').trim(), getComputedStyle(shell).getPropertyValue('--a1').trim()],
-        ];
-        const [c1, c2] = pick(hues);
-
-        // Gradient
-        const defs = document.createElementNS(NS, 'defs');
-        const gradId = 'g' + Math.random().toString(36).slice(2);
-        const grad = document.createElementNS(NS, 'radialGradient');
-        grad.setAttribute('id', gradId);
-        grad.setAttribute('cx', '50%'); grad.setAttribute('cy', '50%');
-        grad.setAttribute('r', '60%');
-        const s1 = document.createElementNS(NS, 'stop'); s1.setAttribute('offset', '0%'); s1.setAttribute('stop-color', c2); s1.setAttribute('stop-opacity', '0.95');
-        const s2 = document.createElementNS(NS, 'stop'); s2.setAttribute('offset', '65%'); s2.setAttribute('stop-color', c1); s2.setAttribute('stop-opacity', '0.9');
-        const s3 = document.createElementNS(NS, 'stop'); s3.setAttribute('offset', '100%'); s3.setAttribute('stop-color', c1); s3.setAttribute('stop-opacity', '0.6');
-        grad.append(s1, s2, s3);
-        defs.appendChild(grad);
-        svg.appendChild(defs);
-
-        for (let i = 0; i < petals; i++) {
-          const angle = (i / petals) * Math.PI * 2;
-          const x1 = Math.cos(angle) * rInner;
-          const y1 = Math.sin(angle) * rInner;
-          const x2 = Math.cos(angle) * rOuter;
-          const y2 = Math.sin(angle) * rOuter;
-          const ctrlAngle = angle + Math.PI / petals;
-          const cx1 = Math.cos(ctrlAngle) * (rOuter * (1 + softness));
-          const cy1 = Math.sin(ctrlAngle) * (rOuter * (1 + softness));
-
-          const path = document.createElementNS(NS, 'path');
-          const d = `
-            M 0 0
-            Q ${cx1.toFixed(2)} ${cy1.toFixed(2)} ${x2.toFixed(2)} ${y2.toFixed(2)}
-            T ${(-x1).toFixed(2)} ${(-y1).toFixed(2)}
-            T 0 0
-          `;
-          path.setAttribute('d', d);
-          path.setAttribute('fill', `url(#${gradId})`);
-          path.setAttribute('class', 'petal');
-          path.setAttribute('opacity', String(rand(0.85, 1)));
-          wrap.appendChild(path);
+      function drawStars() {
+        const w = canvas.width, h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+        if (!paused) {
+          for (const s of stars) {
+            s.x += s.vx * s.z;
+            s.y += s.vy * s.z;
+            if (s.x < -20) s.x = w + 20; if (s.x > w + 20) s.x = -20;
+            if (s.y < -20) s.y = h + 20; if (s.y > h + 20) s.y = -20;
+          }
         }
+        // parallax offset
+        const px = pointer.x * 8 * DPR;
+        const py = pointer.y * 8 * DPR;
 
-        // Core
-        const core = document.createElementNS(NS, 'circle');
-        core.setAttribute('class', 'core');
-        core.setAttribute('cx', '0'); core.setAttribute('cy', '0');
-        core.setAttribute('r', String(rand(3.5, 6)));
-        core.setAttribute('fill', getComputedStyle(shell).getPropertyValue('--ink').trim());
-        core.setAttribute('opacity', '0.85');
+        // draw stars
+        ctx.save();
+        for (const s of stars) {
+          const x = s.x + px * s.z;
+          const y = s.y + py * s.z;
+          ctx.globalAlpha = 0.65 + s.z * 0.35;
+          const grad = ctx.createRadialGradient(x, y, 0, x, y, (s.size + 1.5) * DPR);
+          // color from CSS variables
+          const a1 = getComputedStyle(shell).getPropertyValue('--a1').trim();
+          const a2 = getComputedStyle(shell).getPropertyValue('--a2').trim();
+          const a3 = getComputedStyle(shell).getPropertyValue('--a3').trim();
+          const colors = [a1, a2, a3];
+          const c = colors[Math.floor(s.hue * colors.length)];
+          grad.addColorStop(0, c);
+          grad.addColorStop(1, 'transparent');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(x, y, s.size * DPR, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
 
-        svg.appendChild(wrap);
-        svg.appendChild(core);
-        return svg;
+        if (connect) {
+          ctx.save();
+          ctx.globalAlpha = 0.22;
+          ctx.lineWidth = 1 * DPR;
+          const ink = getComputedStyle(shell).getPropertyValue('--ink').trim();
+          ctx.strokeStyle = ink;
+          for (let i = 0; i < stars.length; i += 3) {
+            const s1 = stars[i];
+            let nearest = null; let nearestD = Infinity;
+            for (let j = i + 1; j < i + 35 && j < stars.length; j++) {
+              const s2 = stars[j];
+              const dx = (s2.x - s1.x), dy = (s2.y - s1.y);
+              const d = dx*dx + dy*dy;
+              if (d < nearestD) { nearest = s2; nearestD = d; }
+            }
+            if (nearest && nearestD < (200*DPR)*(200*DPR)) {
+              const x1 = s1.x + px * s1.z, y1 = s1.y + py * s1.z;
+              const x2 = nearest.x + px * nearest.z, y2 = nearest.y + py * nearest.z;
+              ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+            }
+          }
+          ctx.restore();
+        }
       }
 
-      function seedPlot(el) {
-        el.innerHTML = '';
-        const bloom = makeBloom();
-        el.appendChild(bloom);
-        el.animate([{ transform: 'scale(0.94)' }, { transform: 'scale(1)' }], { duration: 220, easing: 'ease-out' });
+      function tick() {
+        drawStars();
+        raf = requestAnimationFrame(tick);
       }
-
-      plots.forEach(p => {
-        seedPlot(p);
-        p.addEventListener('click', () => seedPlot(p));
-        // gentle tilt per plot
-        p.addEventListener('pointermove', (e) => {
-          const r = p.getBoundingClientRect();
-          const dx = (e.clientX - (r.left + r.width/2)) / (r.width/2);
-          const dy = (e.clientY - (r.top + r.height/2)) / (r.height/2);
-          p.style.transform = `translateY(-2px) rotateX(${(-dy*6).toFixed(2)}deg) rotateY(${(dx*6).toFixed(2)}deg)`;
-        }, { passive: true });
-        p.addEventListener('pointerleave', () => { p.style.transform = ''; }, { passive: true });
-      });
+      let raf = requestAnimationFrame(tick);
 
       // Last updated
       const last = root.querySelector('#last-updated');
       last.textContent = 'Updated ' + new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'short' }).format(new Date());
 
-      // Start calmer if user prefers
+      // Respect reduced motion
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        paused = true;
         shell.classList.add('still');
-        btnCalm.setAttribute('aria-pressed', 'true');
+        btnStill.setAttribute('aria-pressed', 'true');
       }
     })();
   </script>
