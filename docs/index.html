@@ -73,202 +73,251 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="vx595" data-paused="false" aria-label="Solar Bloom Poster">
+<section class="vx596" data-paused="false" aria-label="Aurora Note">
   <style>
-    .vx595{
-      --h: 204; /* base hue, will be randomized */
-      --radius: 20px;
+    .vx596{
       --mx: 0; --my: 0;
-      color:#0f1320;
+      --spd: 1;
+      --h1: 210; --h2: 280; --h3: 150;
+      --glass: rgba(255,255,255,0.10);
+      --glass-stroke: rgba(255,255,255,0.22);
+      --ink: #0c1122;
+      --ink-2: #0b0f1d;
+      --txt: #e9eefc;
+      --muted: #aab3d0;
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      min-height: 540px;
+      padding: 26px;
+      color: var(--txt);
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans";
-      position:relative;
-      overflow:hidden;
-      border-radius:var(--radius);
-      padding:28px;
-      min-height:480px;
       background:
-        radial-gradient(120% 120% at 8% -10%, hsl(calc(var(--h) + 20) 100% 94% / .85), transparent 50%),
-        radial-gradient(120% 120% at 105% 110%, hsl(calc(var(--h) + 120) 100% 95% / .75), transparent 52%),
-        #f7fafc;
-      border:1px solid rgba(16,24,40,0.08);
-      box-shadow: 0 10px 40px rgba(16,24,40,0.08) inset;
-      perspective:900px;
+        radial-gradient(120% 120% at -10% -20%, #1b2350 0%, transparent 60%),
+        radial-gradient(140% 140% at 120% 120%, #1a2a5a 0%, transparent 58%),
+        linear-gradient(180deg, var(--ink), var(--ink-2));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 16px 60px rgba(5,8,20,0.45);
+      perspective: 900px;
       isolation: isolate;
     }
-    .vx595::after{
+    .vx596:before{
       content:"";
-      position:absolute;inset:-20%;
-      background: radial-gradient(80% 60% at 50% 20%, rgba(255,255,255,0.9), transparent 70%),
-                  radial-gradient(60% 60% at 50% 90%, rgba(0,0,0,0.06), transparent 60%);
+      position:absolute; inset:-30%;
+      background:
+        radial-gradient(100px 100px at 12% 18%, rgba(255,255,255,0.06), transparent 60%),
+        radial-gradient(160px 120px at 88% 82%, rgba(255,255,255,0.05), transparent 60%);
+      mix-blend-mode: overlay;
       pointer-events:none;
-      mix-blend-mode:soft-light;
     }
 
-    /* Kinetic stage */
-    .vx595 .stage{
-      position:absolute;inset:0;z-index:1;pointer-events:none;
-      transform: translateZ(0) rotateX(calc(var(--my) * 6deg)) rotateY(calc(var(--mx) * -6deg));
+    /* Kinetic aurora sheets */
+    .vx596 .aurora{
+      position:absolute; inset:-10% -20% -10% -20%;
+      filter: saturate(120%) blur(0.2px);
+      transform: rotateX(calc(var(--my) * 8deg)) rotateY(calc(var(--mx) * -8deg));
       transform-origin:center;
-      transition: transform 400ms cubic-bezier(.2,.8,.2,1);
+      transition: transform 300ms cubic-bezier(.2,.8,.2,1);
+      z-index:0;
     }
-    .vx595 .sun{
-      position:absolute;top:50%;left:50%;translate:-50% -50%;
-      width:28vmin;height:28vmin;border-radius:50%;
-      background: radial-gradient(circle at 40% 35%, #ffffff 0 18%, hsl(calc(var(--h) + 18) 100% 88%) 36%, transparent 70%);
-      filter: blur(3px) saturate(110%);
-      opacity:.9;
-    }
-    .vx595 .ring{
-      position:absolute;top:50%;left:50%;translate:-50% -50%;
-      border-radius:50%;
-      background: conic-gradient(
-        from 0deg,
-        hsla(var(--h) 90% 62% / .55),
-        hsla(calc(var(--h) + 60) 90% 62% / .40),
-        hsla(calc(var(--h) + 120) 90% 60% / .55),
-        hsla(var(--h) 90% 62% / .55)
-      );
-      filter:saturate(115%);
-      animation: vx595-spin var(--dur,36s) linear infinite;
-      opacity:.85;
-      /* ring stroke via mask */
-      --t: 12px;
-      -webkit-mask: radial-gradient(circle, transparent calc(50% - var(--t)), #000 calc(50% - var(--t)), #000 calc(50% + var(--t)), transparent calc(50% + var(--t) + 1px));
-              mask: radial-gradient(circle, transparent calc(50% - var(--t)), #000 calc(50% - var(--t)), #000 calc(50% + var(--t)), transparent calc(50% + var(--t) + 1px));
+    .vx596 .sheet{
+      position:absolute; width:160vmax; height:40vmax;
+      left:50%; top:50%; translate:-50% -50%;
+      border-radius: 100vmax;
+      filter: blur(28px);
+      mix-blend-mode: screen;
+      opacity: 0.85;
+      -webkit-mask: radial-gradient(120% 100% at 50% 50%, #000 40%, transparent 80%);
+              mask: radial-gradient(120% 100% at 50% 50%, #000 40%, transparent 80%);
       will-change: transform;
     }
-    .vx595 .r1{width:84vmin;height:84vmin;--t:14px;--dur:48s;filter: blur(0.2px)}
-    .vx595 .r2{width:56vmin;height:56vmin;--t:12px;--dur:34s;animation-direction: reverse}
-    .vx595 .r3{width:34vmin;height:34vmin;--t:10px;--dur:24s}
-
-    .vx595 .orbit{
-      position:absolute;top:50%;left:50%;translate:-50% -50%;
-      width:56vmin;height:56vmin;border-radius:50%;
-      animation: vx595-spin 18s linear infinite;
-      filter:saturate(110%);
+    .vx596 .s1{
+      background:
+        conic-gradient(from 20deg, hsla(var(--h1) 90% 60% / .65), hsla(var(--h2) 90% 60% / .55), hsla(var(--h3) 90% 62% / .65), hsla(var(--h1) 90% 60% / .65));
     }
-    .vx595 .o2{width:34vmin;height:34vmin;animation-duration:12s;animation-direction: reverse}
-    .vx595 .planet{
-      position:absolute;top:0;left:50%;translate:-50% -50%;
-      width:12px;height:12px;border-radius:50%;
-      background: radial-gradient(circle at 32% 30%, #fff 0 45%, hsla(var(--h) 70% 50% / .9) 55% 100%);
-      box-shadow: 0 8px 22px hsla(var(--h) 75% 40% / .35);
+    .vx596 .s2{
+      background:
+        conic-gradient(from 120deg, hsla(calc(var(--h2) + 20) 95% 66% / .55), hsla(calc(var(--h3) + 40) 90% 62% / .55), hsla(calc(var(--h1) + 10) 95% 66% / .55), hsla(calc(var(--h2) + 20) 95% 66% / .55));
+      opacity:.72;
     }
-    .vx595 .o2 .planet{width:9px;height:9px;box-shadow: 0 6px 18px hsla(calc(var(--h)+40) 75% 40% / .35)}
-
-    @keyframes vx595-spin{
-      to{ transform: rotate(360deg); }
+    .vx596 .s3{
+      background:
+        conic-gradient(from 260deg, hsla(calc(var(--h3) + 10) 90% 62% / .45), hsla(calc(var(--h1) + 60) 90% 62% / .45), hsla(calc(var(--h2) + 80) 90% 62% / .45), hsla(calc(var(--h3) + 10) 90% 62% / .45));
+      opacity:.6;
     }
 
-    /* Copy block */
-    .vx595 .copy{
-      position:relative;z-index:2;max-width:760px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.45));
-      border:1px solid rgba(16,24,40,0.10);
-      backdrop-filter: blur(10px) saturate(120%);
-      border-radius:16px;padding:22px 20px;
-      box-shadow: 0 20px 60px rgba(16,24,40,0.10), inset 0 1px 0 rgba(255,255,255,0.8);
+    /* Glass panel */
+    .vx596 .panel{
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+      margin: 0 auto;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid var(--glass-stroke);
+      border-radius: 18px;
+      backdrop-filter: blur(14px) saturate(130%);
+      -webkit-backdrop-filter: blur(14px) saturate(130%);
+      box-shadow: 0 24px 80px rgba(8,12,28,0.45), inset 0 1px 0 rgba(255,255,255,0.15);
+      padding: 22px 20px;
       transform: translate3d(calc(var(--mx) * 10px), calc(var(--my) * 10px), 0);
       transition: box-shadow 300ms ease, transform 300ms ease;
     }
-    .vx595 .copy:hover{ box-shadow: 0 28px 80px rgba(16,24,40,0.14), inset 0 1px 0 rgba(255,255,255,0.9) }
-    .vx595 .chip{
-      display:inline-block; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#445169;
-      padding:6px 10px; border-radius:999px;
-      background: linear-gradient(90deg, hsla(var(--h) 80% 55% / .18), hsla(calc(var(--h)+60) 80% 55% / .18));
-      border:1px solid rgba(16,24,40,0.12);
+    .vx596 .panel:hover{ box-shadow: 0 30px 100px rgba(8,12,28,0.55), inset 0 1px 0 rgba(255,255,255,0.22) }
+
+    .vx596 .row{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap }
+    .vx596 .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+      color: var(--muted);
+      padding:8px 12px; border-radius:999px;
+      background:
+        linear-gradient(#0e1633, #0e1633) padding-box,
+        linear-gradient(135deg, hsla(var(--h1) 90% 60% / .4), hsla(var(--h2) 90% 60% / .4)) border-box;
+      border:1px solid transparent;
     }
-    .vx595 h1{
-      margin:10px 0 6px; font-size:clamp(30px, 6vw, 64px); line-height:1.02; letter-spacing:-0.02em;
+    .vx596 .badge-dot{
+      width:8px;height:8px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #fff 0 40%, hsl(var(--h2) 90% 60%) 60% 100%);
+      box-shadow: 0 0 10px hsl(var(--h2) 90% 60% / .8);
     }
-    .vx595 h1 .shade{
-      background: linear-gradient(90deg, hsl(var(--h) 70% 35%), hsl(calc(var(--h)+30) 70% 38%), hsl(calc(var(--h)+90) 70% 35%));
-      background-size: 200% 100%;
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-      animation: vx595-hue 8s ease-in-out infinite;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+    .vx596 h1{
+      margin:10px 0 4px;
+      font-size: clamp(32px, 6.8vw, 76px);
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, hsl(var(--h1) 80% 78%), hsl(var(--h2) 80% 78%), hsl(var(--h3) 80% 78%));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.15);
+      filter: drop-shadow(0 6px 24px rgba(34,88,244,0.12));
+      animation: vx596-hue 10s ease-in-out infinite;
     }
-    @keyframes vx595-hue{
-      0%,100%{ background-position: 0% 50% }
-      50%{ background-position: 100% 50% }
+    @keyframes vx596-hue{
+      0%,100% { filter: drop-shadow(0 6px 24px rgba(34,88,244,0.12)) }
+      50% { filter: drop-shadow(0 10px 30px rgba(244, 34, 195, 0.18)) }
     }
-    .vx595 p{
-      margin:0 0 14px; color:#2a364c; opacity:.9; font-size:clamp(14px, 1.6vw, 18px)
+    .vx596 p{
+      margin:0 0 14px;
+      color: var(--muted);
+      font-size: clamp(14px, 1.6vw, 18px);
     }
 
-    .vx595 .controls{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:6px }
-    .vx595 .btn{
+    /* Controls */
+    .vx596 .controls{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:8px }
+    .vx596 .btn{
       appearance:none; cursor:pointer; border:0; border-radius:999px;
       padding:10px 14px; font-weight:600; font-size:14px;
-      transition: transform 180ms ease, box-shadow 220ms ease, background 300ms ease, color 300ms ease;
+      transition: transform 180ms ease, box-shadow 220ms ease, background 300ms ease, color 300ms ease, opacity 200ms ease;
+      background: linear-gradient(90deg, hsl(var(--h2) 90% 60%), hsl(var(--h1) 90% 60%));
+      color:#061022;
+      box-shadow: 0 8px 22px hsla(var(--h2) 80% 45% / .28), inset 0 1px 0 rgba(255,255,255,0.4);
     }
-    .vx595 .btn.primary{
-      color:#081427;
-      background: linear-gradient(90deg, hsl(var(--h) 90% 64%), hsl(calc(var(--h)+60) 90% 58%));
-      box-shadow: 0 8px 22px hsla(var(--h) 80% 45% / .28), inset 0 1px 0 rgba(255,255,255,0.4);
-    }
-    .vx595 .btn.primary:hover{ transform: translateY(-1px); box-shadow: 0 12px 28px hsla(calc(var(--h)+50) 80% 45% / .32) }
-    .vx595 .btn.ghost{
-      color:#253049;
-      background: linear-gradient(#ffffff, #ffffff) padding-box,
-                  linear-gradient(135deg, hsla(var(--h) 80% 55% / .5), hsla(calc(var(--h)+80) 80% 55% / .5)) border-box;
-      border:1px solid transparent;
-      box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset;
-    }
-    .vx595 .btn.ghost:hover{ transform: translateY(-1px) }
-
-    .vx595 .meta{
-      margin-top:10px; display:flex; align-items:center; gap:10px;
-      color:#5b6783; font-size:12px; opacity:.9;
-    }
-    .vx595 .meta::before{
-      content:""; height:1px; flex:1;
-      background: linear-gradient(to right, transparent, rgba(16,24,40,0.18), transparent);
+    .vx596 .btn:hover{ transform: translateY(-1px) }
+    .vx596 .btn.ghost{
+      background: linear-gradient(#0e1633, #0e1633) padding-box,
+                  linear-gradient(135deg, hsla(var(--h1) 80% 55% / .5), hsla(var(--h2) 80% 55% / .5)) border-box;
+      border:1px solid transparent; color: var(--txt);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
     }
 
-    .vx595[data-paused="true"] .ring,
-    .vx595[data-paused="true"] .orbit,
-    .vx595[data-paused="true"] .sun,
-    .vx595[data-paused="true"] .shade { animation-play-state: paused !important }
+    .vx596 .swatches{ display:flex; gap:8px; align-items:center }
+    .vx596 .sw{ width:28px; height:28px; border-radius:50%; border:1px solid rgba(255,255,255,0.25);
+      background: conic-gradient(from 0deg, #fff 0 10%, transparent 10% 100%), var(--bg, #fff);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.35);
+      cursor:pointer; position:relative;
+      transition: transform 150ms ease, box-shadow 200ms ease, filter 300ms ease;
+    }
+    .vx596 .sw:focus-visible{ outline:2px solid #9cc2ff; outline-offset:2px }
+    .vx596 .sw:hover{ transform: translateY(-2px) }
+
+    .vx596 .slider{
+      display:flex; align-items:center; gap:10px;
+      color: var(--muted); font-size:12px;
+      margin-left:auto;
+    }
+    .vx596 input[type="range"]{
+      -webkit-appearance: none; appearance: none;
+      width: 140px; height: 8px; border-radius: 999px;
+      background: linear-gradient(90deg, hsl(var(--h1) 90% 60%), hsl(var(--h2) 90% 60%));
+      outline: none; border: 1px solid rgba(255,255,255,0.25);
+    }
+    .vx596 input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance:none; appearance:none;
+      width:18px; height:18px; border-radius:50%;
+      background:#ffffff; border:2px solid hsl(var(--h1) 90% 60%);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+      cursor: pointer;
+    }
+    .vx596 input[type="range"]::-moz-range-thumb{
+      width:18px; height:18px; border-radius:50%;
+      background:#ffffff; border:2px solid hsl(var(--h1) 90% 60%);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+      cursor: pointer;
+    }
+
+    .vx596 .meta{
+      margin-top: 10px; display:flex; align-items:center; gap:10px; color: var(--muted); font-size:12px;
+    }
+    .vx596 .meta::before, .vx596 .meta::after{
+      content:""; height:1px; flex:1; background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+    }
+
+    /* Pause handling */
+    .vx596[data-paused="true"] .sheet{ animation-play-state: paused !important }
+    .vx596[data-paused="true"] .aurora{ transition: none }
 
     @media (max-width: 560px){
-      .vx595{ padding:22px; min-height:440px }
-      .vx595 .copy{ padding:18px }
-      .vx595 h1{ font-size: clamp(28px, 9vw, 44px) }
+      .vx596{ padding:20px; min-height: 500px }
+      .vx596 .panel{ padding:18px }
+      .vx596 h1{ font-size: clamp(28px, 10vw, 48px) }
+      .vx596 .slider{ order: 3; width: 100%; justify-content:flex-start; margin-left:0 }
     }
     @media (prefers-reduced-motion: reduce){
-      .vx595 .ring, .vx595 .orbit, .vx595 .sun, .vx595 .shade { animation: none !important }
+      .vx596{ --spd: 0 }
     }
   </style>
 
-  <div class="stage" aria-hidden="true">
-    <div class="sun"></div>
-    <div class="ring r1"></div>
-    <div class="ring r2"></div>
-    <div class="ring r3"></div>
-    <div class="orbit o1"><span class="planet"></span></div>
-    <div class="orbit o2"><span class="planet"></span></div>
+  <div class="aurora" aria-hidden="true">
+    <div class="sheet s1"></div>
+    <div class="sheet s2"></div>
+    <div class="sheet s3"></div>
   </div>
 
-  <article class="copy" role="region" aria-label="Solar Bloom">
-    <div class="chip">Iteration 595</div>
-    <h1><span class="shade">Solar Bloom</span></h1>
-    <p>Light, air, and motion in quiet balance — a poster that breathes with you.</p>
-    <div class="controls">
-      <button class="btn primary" id="shift" aria-label="Shift daylight palette">Shift daylight</button>
-      <button class="btn ghost" id="motion" aria-label="Toggle motion">Pause breeze</button>
+  <article class="panel" role="region" aria-label="Aurora Control">
+    <div class="row">
+      <span class="chip"><span class="badge-dot"></span> Iteration 596</span>
+      <div class="swatches" role="group" aria-label="Palettes">
+        <button class="sw" aria-label="Daybreak palette" data-theme="day" style="--bg: radial-gradient(circle at 30% 30%, #ffd7a3, #ff8d75, #ff6ad5)"></button>
+        <button class="sw" aria-label="Nocturne palette" data-theme="night" style="--bg: radial-gradient(circle at 30% 30%, #8bc6ff, #6e7aff, #2cf5e0)"></button>
+        <button class="sw" aria-label="Iridescent palette" data-theme="iris" style="--bg: radial-gradient(circle at 30% 30%, #b6ffea, #b99cff, #ffde59)"></button>
+      </div>
+      <div class="slider">
+        <label for="vx596-tempo">Tempo</label>
+        <input id="vx596-tempo" type="range" min="0.4" max="2" step="0.1" value="1" aria-label="Animation speed">
+      </div>
     </div>
+
+    <h1>Aurora Note</h1>
+    <p>Soft ribbons of light, gently stewarded by your touch. Shift the sky, set the tempo, and breathe.</p>
+
+    <div class="controls">
+      <button class="btn" id="vx596-toggle" aria-pressed="false" aria-label="Pause motion">Pause motion</button>
+      <button class="btn ghost" id="vx596-focus" aria-label="Center composition">Center</button>
+    </div>
+
     <div class="meta">
-      Updated <span id="last-updated">Last updated: 2025-11-12 15:20:25 EST</span>
+      <span>Updated <span id="last-updated">Last updated: 2025-11-12 16:16:55 EST</span></span>
     </div>
   </article>
 
   <script>
     (function(){
-      const root = document.querySelector('.vx595');
-      const last = document.getElementById('last-updated');
-      const shiftBtn = document.getElementById('shift');
-      const motionBtn = document.getElementById('motion');
+      const root = document.querySelector('.vx596');
+      const sheets = [...root.querySelectorAll('.sheet')];
+      const toggleBtn = root.querySelector('#vx596-toggle');
+      const centerBtn = root.querySelector('#vx596-focus');
+      const tempo = root.querySelector('#vx596-tempo');
+      const swatches = [...root.querySelectorAll('.sw')];
+      const last = root.querySelector('#last-updated');
 
       function fmt(d){
         try{
@@ -277,37 +326,56 @@
       }
       last.textContent = fmt(new Date());
 
-      function setHue(h){
-        const hue = ((h%360)+360)%360;
-        root.style.setProperty('--h', hue);
+      // Themes
+      const themes = {
+        day:  { h1: 28,  h2: 340, h3: 200, bgA:'#14203a', bgB:'#101a33' },
+        night:{ h1: 210, h2: 280, h3: 150, bgA:'#0c1122', bgB:'#0b0f1d' },
+        iris: { h1: 165, h2: 275, h3: 45,  bgA:'#111322', bgB:'#0f172a' }
+      };
+      function applyTheme(key){
+        const t = themes[key] || themes.night;
+        root.style.setProperty('--h1', t.h1);
+        root.style.setProperty('--h2', t.h2);
+        root.style.setProperty('--h3', t.h3);
+        root.style.setProperty('--ink', t.bgA);
+        root.style.setProperty('--ink-2', t.bgB);
       }
-      function randomHue(){ return Math.floor(Math.random()*360); }
 
-      // Seed with time-of-day for a fresh vibe
-      const now = new Date();
-      const seed = (now.getHours()*15 + now.getMinutes()) % 360;
-      setHue(seed);
+      // Seed theme by time-of-day
+      const hr = new Date().getHours();
+      applyTheme(hr >= 6 && hr < 12 ? 'day' : hr >= 12 && hr < 19 ? 'iris' : 'night');
 
-      shiftBtn.addEventListener('click', () => setHue(randomHue()));
+      // Swatch clicks
+      swatches.forEach(btn => btn.addEventListener('click', () => {
+        applyTheme(btn.dataset.theme);
+        pulse(btn);
+      }));
 
-      function updateMotionLabel(){
-        const paused = root.dataset.paused === 'true';
-        motionBtn.textContent = paused ? 'Resume breeze' : 'Pause breeze';
-        motionBtn.setAttribute('aria-pressed', paused);
+      // Motion controls
+      function paused(){ return root.dataset.paused === 'true'; }
+      function setPaused(v){
+        root.dataset.paused = v ? 'true' : 'false';
+        toggleBtn.textContent = v ? 'Resume motion' : 'Pause motion';
+        toggleBtn.setAttribute('aria-pressed', String(v));
       }
-      motionBtn.addEventListener('click', () => {
-        root.dataset.paused = root.dataset.paused === 'true' ? 'false' : 'true';
-        updateMotionLabel();
+      toggleBtn.addEventListener('click', () => setPaused(!paused()));
+
+      // Center composition
+      centerBtn.addEventListener('click', () => {
+        root.style.setProperty('--mx', 0);
+        root.style.setProperty('--my', 0);
+        pulse(centerBtn);
       });
 
-      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        root.dataset.paused = 'true';
-      }
-      updateMotionLabel();
+      // Tempo
+      tempo.addEventListener('input', () => {
+        const v = parseFloat(tempo.value || '1');
+        root.style.setProperty('--spd', v);
+      });
 
-      // Pointer parallax
+      // Pointer tilt
       const onMove = (e) => {
-        if (root.dataset.paused === 'true') return;
+        if (paused()) return;
         const r = root.getBoundingClientRect();
         const mx = (e.clientX - r.left)/r.width * 2 - 1;
         const my = (e.clientY - r.top)/r.height * 2 - 1;
@@ -319,6 +387,40 @@
         root.style.setProperty('--mx', 0);
         root.style.setProperty('--my', 0);
       });
+
+      // Reduced motion
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setPaused(true);
+      }
+
+      // Animation loop
+      let t = 0;
+      function loop(){
+        const spd = parseFloat(getComputedStyle(root).getPropertyValue('--spd')) || 1;
+        t += 0.6 * spd;
+        if (!paused()){
+          // Sine-based choreography
+          const a = Math.sin((t)*0.006);
+          const b = Math.sin((t+500)*0.0055);
+          const c = Math.sin((t+1400)*0.0048);
+
+          const transforms = [
+            `translate3d(${a*14}vmin, ${b*6}vmin, 0) rotate(${a*8}deg) skewY(${b*6}deg)`,
+            `translate3d(${b*10}vmin, ${c*10}vmin, 0) rotate(${b*12}deg) skewY(${c*8}deg)`,
+            `translate3d(${c*18}vmin, ${a*12}vmin, 0) rotate(${c*10}deg) skewY(${a*10}deg)`
+          ];
+          sheets.forEach((el, i) => { el.style.transform = transforms[i]; });
+        }
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+
+      // Small pulse feedback
+      function pulse(el){
+        el.style.transform += ' scale(0.98)';
+        el.style.opacity = '0.95';
+        setTimeout(() => { el.style.transform = el.style.transform.replace(' scale(0.98)',''); el.style.opacity=''; }, 120);
+      }
     })();
   </script>
 </section>
