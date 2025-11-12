@@ -73,354 +73,318 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="canvas-ui" aria-label="Halo Studio – Kinetic White">
+<section class="nocturne" aria-label="Lumen Lab — Nocturne Prism">
   <style>
-    .canvas-ui {
-      --bg: #f6f7f4;
-      --ink: #141616;
-      --ink-dim: #5a6060;
-      --ring: #dfe6e6;
-      --a: #5ad3a5;
-      --b: #7aa8ff;
-      --c: #ffb36e;
+    .nocturne {
+      --bg0: #070a10;
+      --bg1: #0b1220;
+      --ink: #e8f1ff;
+      --dim: #9fb0c3;
+      --acc1: #7be2ff;
+      --acc2: #a78bfa;
+      --acc3: #68f5c2;
       --mx: 50%;
       --my: 50%;
       position: relative;
       isolation: isolate;
-      border-radius: 24px;
+      border-radius: 26px;
       overflow: hidden;
-      padding: 28px 26px 20px 26px;
+      padding: 28px 26px 20px;
       color: var(--ink);
       background:
-        radial-gradient(1200px 800px at 10% 0%, #ffffff 0%, var(--bg) 55%),
-        radial-gradient(900px 600px at 100% 100%, #f2f5ff 0%, var(--bg) 60%),
-        linear-gradient(180deg, #fff3, #0000);
+        radial-gradient(1200px 900px at 10% 0%, #0f172a 0%, var(--bg1) 60%),
+        radial-gradient(1000px 800px at 100% 100%, #0a0f1d 0%, var(--bg0) 58%),
+        linear-gradient(180deg, #ffffff08, #0000);
       box-shadow:
-        0 24px 70px rgba(14,20,20,0.25),
-        inset 0 0 0 1px rgba(20,24,24,0.04);
+        0 28px 80px rgba(0,0,0,0.55),
+        inset 0 0 0 1px rgba(255,255,255,0.03);
     }
-    .canvas-ui:after {
+    /* Pointer-reactive glow */
+    .nocturne::before {
       content: "";
       position: absolute;
       inset: -20%;
       background:
-        radial-gradient(400px 200px at var(--mx) var(--my), rgba(255,255,255,0.6), transparent 60%),
-        radial-gradient(600px 500px at 80% 0%, rgba(90,211,165,0.08), transparent 60%),
-        radial-gradient(500px 400px at 0% 100%, rgba(122,168,255,0.10), transparent 65%);
+        radial-gradient(420px 320px at var(--mx) var(--my), #8be9ff18, transparent 60%),
+        radial-gradient(580px 460px at 80% 0%, #a78bfa10, transparent 60%),
+        radial-gradient(600px 420px at 0% 100%, #68f5c210, transparent 65%);
+      transition: background 0.18s ease-out;
       pointer-events: none;
       z-index: 0;
-      transition: background 0.2s ease-out;
     }
-
-    /* Decorative blooms */
-    .bloom {
+    /* Aurora canvas sits under content */
+    .aurora {
       position: absolute;
-      filter: blur(28px) saturate(115%);
-      mix-blend-mode: multiply;
-      opacity: 0.35;
+      inset: 0;
       z-index: 0;
-      transform: translateZ(0);
-      will-change: transform;
-      animation: drift 22s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+      opacity: 0.55;
     }
-    .b1 { width: 360px; height: 360px; top: -80px; left: -60px; background: radial-gradient(circle at 30% 30%, #fff, transparent 55%), radial-gradient(circle at 60% 70%, var(--a), transparent 70%); }
-    .b2 { width: 320px; height: 320px; bottom: -60px; right: -40px; background: radial-gradient(circle at 70% 40%, #fff, transparent 55%), radial-gradient(circle at 50% 60%, var(--b), transparent 70%); animation-delay: -10s; }
-    @keyframes drift {
+    /* Soft blooms */
+    .nebula {
+      position: absolute;
+      width: 440px; height: 440px;
+      filter: blur(42px) saturate(120%);
+      border-radius: 50%;
+      opacity: 0.28;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      animation: float 28s ease-in-out infinite alternate;
+      transform: translateZ(0);
+    }
+    .n1 { top: -140px; left: -120px; background: radial-gradient(circle at 40% 40%, #7be2ff, transparent 60%); }
+    .n2 { bottom: -120px; right: -140px; background: radial-gradient(circle at 60% 60%, #a78bfa, transparent 65%); animation-delay: -10s; }
+    .n3 { top: 40%; left: 60%; background: radial-gradient(circle at 30% 70%, #68f5c2, transparent 65%); animation-delay: -18s; }
+    @keyframes float {
       0% { transform: translate3d(0,0,0) scale(1); }
-      50% { transform: translate3d(10px,-6px,0) scale(1.06); }
-      100% { transform: translate3d(-8px,10px,0) scale(1.1); }
+      50% { transform: translate3d(14px,-10px,0) scale(1.06); }
+      100% { transform: translate3d(-12px,12px,0) scale(1.1); }
     }
 
-    /* Grid */
-    .wrap {
+    /* Layout */
+    .grid {
       position: relative;
       z-index: 2;
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 22px;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 26px;
       align-items: center;
     }
-    @media (max-width: 900px) {
-      .wrap { grid-template-columns: 1fr; gap: 18px; }
-    }
+    @media (max-width: 920px) { .grid { grid-template-columns: 1fr; gap: 18px; } }
 
-    /* Brand */
+    /* Brand + headline */
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--ink-dim);
-      font: 600 12px/1.2 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      letter-spacing: 0.14em;
+      display: flex; align-items: center; gap: 10px;
+      color: var(--dim);
+      font: 700 12px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       margin-bottom: 10px;
     }
-    .badge {
+    .glyph {
       width: 9px; height: 9px; border-radius: 50%;
-      background: conic-gradient(from 90deg, var(--a), var(--b), var(--c), var(--a));
-      box-shadow: 0 0 0 3px rgba(255,255,255,0.7), 0 0 10px rgba(0,0,0,0.08) inset;
+      background: conic-gradient(from 0deg, var(--acc1), var(--acc2), var(--acc3), var(--acc1));
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.08), 0 0 10px rgba(123,226,255,0.25) inset;
     }
-
-    /* Headline block */
-    .h1 {
+    .title {
       margin: 0;
-      font: 800 44px/1.08 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      font: 900 52px/1.02 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
       letter-spacing: -0.02em;
-      background: linear-gradient(180deg, #121414, #3a3f3f);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      background: linear-gradient(180deg, #ecf4ff, #bfd6ff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 1px 0 #ffffff22;
     }
     .lead {
-      margin: 10px 0 18px 0;
-      font: 500 16px/1.7 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      color: var(--ink-dim);
-      max-width: 56ch;
+      margin: 12px 0 18px;
+      font: 500 16px/1.75 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      color: var(--dim);
+      max-width: 60ch;
     }
 
-    /* Clock card */
-    .block {
-      display: grid;
-      gap: 14px;
-    }
-    .clock {
-      display: grid;
-      grid-auto-flow: column;
-      justify-content: start;
-      align-items: baseline;
-      gap: 12px;
-      padding: 16px 18px;
-      border-radius: 16px;
-      background: linear-gradient(180deg, #ffffff, #f1f3f1);
-      border: 1px solid rgba(20,24,24,0.08);
-      box-shadow:
-        0 12px 28px rgba(40,60,60,0.12),
-        inset 0 1px 0 rgba(255,255,255,0.7);
-      user-select: none;
-    }
-    .time {
-      font: 800 56px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      letter-spacing: -0.02em;
-      color: #0d1212;
-      text-shadow: 0 1px 0 #fff;
-      transition: letter-spacing 0.5s ease;
-    }
-    .ampm {
-      font: 700 14px/1 ui-sans-serif, system-ui;
-      padding: 6px 8px;
-      border-radius: 999px;
-      color: #0e1212;
-      background: linear-gradient(180deg, rgba(90,211,165,0.18), rgba(90,211,165,0.08));
-      border: 1px solid rgba(90,211,165,0.35);
-    }
-    .date {
-      font: 600 13px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      color: var(--ink-dim);
-    }
-
-    /* Controls */
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+    /* Buttons */
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; }
     .btn {
       position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+      display: inline-flex; align-items: center; gap: 10px;
       padding: 12px 14px;
       border-radius: 14px;
-      border: 1px solid rgba(20,24,24,0.12);
-      background: linear-gradient(180deg, #ffffff, #f2f5f4);
-      color: #0e1414;
-      font: 700 14px/1 ui-sans-serif, system-ui;
-      letter-spacing: 0.01em;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      color: var(--ink);
+      font: 800 13px/1 ui-sans-serif, system-ui;
+      letter-spacing: 0.02em;
       text-decoration: none;
-      box-shadow: 0 8px 20px rgba(40,60,60,0.14), inset 0 1px 0 #fff;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
       -webkit-tap-highlight-color: transparent;
+      backdrop-filter: blur(10px);
     }
-    .btn:hover, .btn:focus-visible { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(40,60,60,0.18), inset 0 1px 0 #fff; }
-    .btn .swatch {
-      width: 14px; height: 14px; border-radius: 4px; flex: 0 0 auto;
-      background: linear-gradient(135deg, var(--a), var(--b));
-      box-shadow: 0 0 0 1px rgba(20,24,24,0.15) inset;
+    .btn:hover, .btn:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.18);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
     }
+    .swatch { width: 14px; height: 14px; border-radius: 4px; background: linear-gradient(135deg, var(--acc1), var(--acc2), var(--acc3)); }
 
-    /* Orbit module */
-    .orbit {
+    /* Chrono ring block */
+    .chrono {
+      position: relative;
+      border-radius: 22px;
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 18px 42px rgba(0,0,0,0.46), inset 0 1px 0 rgba(255,255,255,0.18);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 12px;
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+    .rings {
       position: relative;
       aspect-ratio: 1/1;
       min-height: 300px;
-      border-radius: 20px;
-      background:
-        radial-gradient(250px 160px at 70% 30%, rgba(122,168,255,0.10), transparent 70%),
-        linear-gradient(180deg, #ffffff, #f2f4f3);
-      border: 1px solid rgba(20,24,24,0.08);
-      box-shadow: 0 18px 40px rgba(40,60,60,0.12), inset 0 1px 0 #fff;
       display: grid;
       place-items: center;
-      overflow: hidden;
     }
-    .ring {
-      width: 78%;
-      height: 78%;
+    .ring-layer {
+      position: absolute;
+      inset: 12%;
       border-radius: 50%;
       background:
-        conic-gradient(from 0deg, var(--a), var(--b), var(--c), var(--a));
-      mask: radial-gradient(circle at 50% 50%, transparent 52%, #000 53%);
-      filter: blur(0.5px);
-      opacity: 0.55;
-      animation: spin 18s linear infinite;
+        conic-gradient(from -90deg, var(--acc2) 0, var(--acc2) var(--hr), #2a3140 var(--hr) 360deg);
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 54%, #000 56%);
+              mask: radial-gradient(circle at 50% 50%, transparent 54%, #000 56%);
+      filter: drop-shadow(0 6px 22px rgba(0,0,0,0.5));
+      transition: background 0.2s linear;
     }
-    .ring:after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      border: 1px solid var(--ring);
-      opacity: 0.9;
-      pointer-events: none;
+    .ring-layer.min {
+      inset: 22%;
+      background:
+        conic-gradient(from -90deg, var(--acc1) 0, var(--acc1) var(--min), #253042 var(--min) 360deg);
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 52%, #000 54%);
+              mask: radial-gradient(circle at 50% 50%, transparent 52%, #000 54%);
     }
-    .planet {
-      position: absolute;
-      width: 40%;
-      aspect-ratio: 1/1;
+    .ring-layer.sec {
+      inset: 32%;
+      background:
+        conic-gradient(from -90deg, var(--acc3) 0, var(--acc3) var(--sec), #1f2a3b var(--sec) 360deg);
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 50%, #000 52%);
+              mask: radial-gradient(circle at 50% 50%, transparent 50%, #000 52%);
+    }
+    .dial {
+      position: absolute; inset: 40%;
+      display: grid; place-items: center;
       border-radius: 16px;
-      background: linear-gradient(180deg, #ffffff, #eef1f1);
-      border: 1px solid rgba(20,24,24,0.08);
-      box-shadow: 0 16px 36px rgba(40,60,60,0.16), inset 0 1px 0 #fff;
-      display: grid;
-      place-items: center;
-      z-index: 2;
-      transform: translateZ(0);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 8px 24px rgba(0,0,0,0.35);
     }
-    .planet .label {
-      text-align: center;
-      padding: 8px 10px;
-      font: 700 13px/1.4 ui-sans-serif, system-ui;
-      color: #0e1414;
+    .time {
+      font: 900 40px/1 ui-sans-serif, system-ui;
+      letter-spacing: -0.02em;
+      color: #f2f7ff;
+      text-shadow: 0 1px 0 #ffffff22;
     }
-    .sat {
-      position: absolute;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff, var(--a));
-      box-shadow: 0 0 0 3px rgba(90,211,165,0.12);
-      transform-origin: 160px 160px;
-      animation: spin 18s linear infinite reverse;
-      opacity: 0.9;
-    }
-    .sat.s2 { background: radial-gradient(circle at 35% 35%, #fff, var(--b)); animation-duration: 12s; transform-origin: 130px 130px; }
-    .sat.s3 { background: radial-gradient(circle at 35% 35%, #fff, var(--c)); animation-duration: 24s; transform-origin: 190px 190px; }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    .sub {
+      margin-top: 6px;
+      font: 700 12px/1.4 ui-sans-serif, system-ui;
+      color: var(--dim);
     }
 
-    /* Constellation canvas */
-    .sky {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      opacity: 0.45;
-      mix-blend-mode: multiply;
+    /* Interactive stage tiles */
+    .stage {
+      position: relative;
+      z-index: 2;
+      margin-top: 6px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      perspective: 1000px;
+    }
+    @media (max-width: 920px) { .stage { grid-template-columns: repeat(4, 1fr); } }
+    .tile {
+      aspect-ratio: 1/1;
+      border-radius: 12px;
+      background: radial-gradient(120px 120px at 30% 30%, #ffffff10, #ffffff02);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12);
+      transition: transform 0.12s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-position 0.2s ease;
+      will-change: transform;
+      overflow: hidden;
+    }
+    .tile::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(180px 180px at var(--mx) var(--my), color-mix(in oklab, var(--acc1) 60%, transparent), transparent 70%);
+      mix-blend-mode: screen;
+      opacity: 0;
+      transition: opacity 0.2s ease;
       pointer-events: none;
     }
+    .tile:hover { border-color: rgba(255,255,255,0.16); box-shadow: 0 12px 28px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.18); }
+    .tile:hover::after { opacity: 0.8; }
+    .tile.active { background: radial-gradient(140px 140px at 70% 60%, #ffffff18, #ffffff06); border-color: rgba(255,255,255,0.22); }
 
     /* Footer */
     .footer {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(20,24,24,0.08);
-      color: var(--ink-dim);
+      position: relative; z-index: 2;
+      margin-top: 16px; padding-top: 12px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: var(--dim);
       font: 600 12px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
     }
-    .keys {
-      display: inline-flex;
-      gap: 10px; align-items: center; flex-wrap: wrap;
-    }
+    .keys { display: inline-flex; gap: 10px; align-items: center; flex-wrap: wrap; }
     .key {
-      border: 1px solid rgba(20,24,24,0.15);
-      background: #fff;
-      padding: 4px 8px;
-      border-radius: 8px;
-      color: #0e1414;
-      font-weight: 800;
-      box-shadow: 0 1px 0 #fff inset, 0 2px 8px rgba(40,60,60,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      background: #0e1522;
+      padding: 4px 8px; border-radius: 8px; color: #e9f2ff; font-weight: 800;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.12) inset, 0 2px 8px rgba(0,0,0,0.3);
     }
 
-    /* States */
-    .pulse .ring,
-    .pulse .sat { animation-duration: 6s !important; }
-    .zen .bloom,
-    .zen .ring,
-    .zen .sat { animation: none !important; }
-    .zen .sky { opacity: 0.18; }
-
+    /* Focus/quiet states */
+    .focus .nebula { opacity: 0.08; }
+    .focus .aurora { opacity: 0.2; }
+    .quiet .nebula { animation: none !important; }
     @media (prefers-reduced-motion: reduce) {
-      .bloom, .ring, .sat { animation: none !important; }
-      .sky { opacity: 0.18; }
+      .nebula { animation: none !important; }
+      .aurora { opacity: 0.3; }
     }
   </style>
 
-  <canvas class="sky" width="0" height="0" aria-hidden="true"></canvas>
-  <div class="bloom b1" aria-hidden="true"></div>
-  <div class="bloom b2" aria-hidden="true"></div>
+  <canvas class="aurora" width="0" height="0" aria-hidden="true"></canvas>
+  <div class="nebula n1" aria-hidden="true"></div>
+  <div class="nebula n2" aria-hidden="true"></div>
+  <div class="nebula n3" aria-hidden="true"></div>
 
-  <div class="wrap">
-    <div class="block">
-      <div class="brand"><span class="badge" aria-hidden="true"></span> Halo Studio • Iteration 580</div>
-      <h1 class="h1">Quiet Kinesis</h1>
-      <p class="lead">A bright, tactile interface where motion whispers. Soft edges, crisp type, and gentle orbits invite calm exploration.</p>
-
-      <div class="clock" aria-live="polite">
-        <div class="time" id="time">00:00</div>
-        <span class="ampm" id="ampm">AM</span>
-        <div class="date" id="date">—</div>
-      </div>
+  <div class="grid">
+    <div class="col">
+      <div class="brand"><span class="glyph" aria-hidden="true"></span> Lumen Lab • Iteration 581</div>
+      <h1 class="title">Nocturne Prism</h1>
+      <p class="lead">A tempered darkroom for ideas. Glass, glow, and drifting color—designed to quiet the noise and let clarity radiate.</p>
 
       <div class="actions">
-        <button class="btn" id="theme-btn" aria-label="Cycle theme" aria-pressed="false">
+        <button class="btn" id="theme" aria-label="Cycle theme" aria-pressed="false">
           <span class="swatch" aria-hidden="true"></span> Theme
         </button>
-        <button class="btn" id="pulse-btn" aria-label="Toggle pulse" aria-pressed="false">
-          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2-6 4 12 2-6h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Pulse
+        <button class="btn" id="quiet" aria-label="Toggle quiet (reduced motion)" aria-pressed="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v6h4l5 4V5l-5 4H5z" fill="currentColor"/></svg> Quiet
         </button>
-        <button class="btn" id="zen-btn" aria-label="Toggle zen mode" aria-pressed="false">
-          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          Zen
+        <button class="btn" id="focus" aria-label="Toggle focus (reduce glow)" aria-pressed="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg> Focus
         </button>
       </div>
     </div>
 
-    <div class="orbit">
-      <div class="ring" aria-hidden="true"></div>
-      <div class="planet">
-        <div class="label">
-          Serene motion, bold clarity
-          <div style="font:600 11px/1.4 ui-sans-serif; color: var(--ink-dim);">Pointer-reactive glow</div>
+    <div class="col">
+      <div class="chrono" aria-live="polite">
+        <div class="rings" id="rings">
+          <div class="ring-layer hr" style="--hr: 0deg;"></div>
+          <div class="ring-layer min" style="--min: 0deg;"></div>
+          <div class="ring-layer sec" style="--sec: 0deg;"></div>
+          <div class="dial">
+            <div class="time" id="time">00:00</div>
+            <div class="sub" id="date">—</div>
+          </div>
         </div>
       </div>
-      <div class="sat s1" style="transform: rotate(20deg) translateX(0);" aria-hidden="true"></div>
-      <div class="sat s2" style="transform: rotate(160deg) translateX(0);" aria-hidden="true"></div>
-      <div class="sat s3" style="transform: rotate(300deg) translateX(0);" aria-hidden="true"></div>
     </div>
   </div>
 
+  <div class="stage" id="stage" aria-label="Kinetic tiles">
+    <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+    <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+  </div>
+
   <div class="footer">
-    <div><span id="last-updated">Last updated: 2025-11-11 23:22:12 EST</span></div>
+    <div><span id="last-updated">Last updated: 2025-11-12 00:18:33 EST</span></div>
     <div class="keys">
       <span class="key">T</span> Theme
-      <span class="key">P</span> Pulse
-      <span class="key">Z</span> Zen
+      <span class="key">Q</span> Quiet
+      <span class="key">F</span> Focus
       <span class="key">Move</span> Glow follows
     </div>
   </div>
@@ -428,151 +392,153 @@
   <script>
     (function () {
       const root = document.currentScript.parentElement;
-      const shell = root.closest('.canvas-ui') || root;
-      const sky = root.querySelector('.sky');
+      const shell = root.closest('.nocturne') || root;
 
-      // Pointer glow
-      const pointer = (e) => {
+      // Pointer glow variables
+      const onPointer = (e) => {
         const r = shell.getBoundingClientRect();
         shell.style.setProperty('--mx', (e.clientX - r.left) + 'px');
         shell.style.setProperty('--my', (e.clientY - r.top) + 'px');
       };
-      shell.addEventListener('pointermove', pointer, { passive: true });
+      shell.addEventListener('pointermove', onPointer, { passive: true });
 
-      // Theme cycling
-      const themes = [
-        { a: '#5ad3a5', b: '#7aa8ff', c: '#ffb36e', bg: '#f6f7f4' }, // Breeze
-        { a: '#ffa29a', b: '#ffd06a', c: '#8fd3fe', bg: '#f9f6f2' }, // Sunrise
-        { a: '#9fe0ff', b: '#b69bff', c: '#ff9fe0', bg: '#f5f6fb' }, // Aurora
-        { a: '#8ee1c0', b: '#7bd0e6', c: '#bde07a', bg: '#f4faf7' }  // Meadow
+      // Theme sets
+      const palettes = [
+        { acc1:'#7be2ff', acc2:'#a78bfa', acc3:'#68f5c2', bg0:'#070a10', bg1:'#0b1220' }, // Night Cyan/Violet/Mint
+        { acc1:'#ff7aa8', acc2:'#ffc46b', acc3:'#8fd8ff', bg0:'#0b0a10', bg1:'#181221' }, // Sunset Neon
+        { acc1:'#8ef1a8', acc2:'#67d0ff', acc3:'#ffb085', bg0:'#051014', bg1:'#0e1720' }, // Meadow Aurora
+        { acc1:'#b0a9ff', acc2:'#7ff0ff', acc3:'#ffd476', bg0:'#07090e', bg1:'#0b1120' }  // Polar Glow
       ];
       let themeIndex = 0;
-      function applyTheme(t) {
-        shell.style.setProperty('--a', t.a);
-        shell.style.setProperty('--b', t.b);
-        shell.style.setProperty('--c', t.c);
-        shell.style.setProperty('--bg', t.bg);
+      function applyTheme(p) {
+        shell.style.setProperty('--acc1', p.acc1);
+        shell.style.setProperty('--acc2', p.acc2);
+        shell.style.setProperty('--acc3', p.acc3);
+        shell.style.setProperty('--bg0', p.bg0);
+        shell.style.setProperty('--bg1', p.bg1);
       }
+      applyTheme(palettes[0]);
 
       // Buttons
-      const btnTheme = root.querySelector('#theme-btn');
-      const btnPulse = root.querySelector('#pulse-btn');
-      const btnZen = root.querySelector('#zen-btn');
-      btnTheme?.addEventListener('click', () => {
-        themeIndex = (themeIndex + 1) % themes.length;
-        applyTheme(themes[themeIndex]);
+      const btnTheme = root.querySelector('#theme');
+      const btnQuiet = root.querySelector('#quiet');
+      const btnFocus = root.querySelector('#focus');
+      btnTheme.addEventListener('click', () => {
+        themeIndex = (themeIndex + 1) % palettes.length;
+        applyTheme(palettes[themeIndex]);
         btnTheme.setAttribute('aria-pressed', 'true');
-        setTimeout(() => btnTheme.setAttribute('aria-pressed', 'false'), 250);
+        setTimeout(() => btnTheme.setAttribute('aria-pressed', 'false'), 220);
       });
-      btnPulse?.addEventListener('click', () => {
-        shell.classList.toggle('pulse');
-        const pressed = shell.classList.contains('pulse');
-        btnPulse.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+      btnQuiet.addEventListener('click', () => {
+        shell.classList.toggle('quiet');
+        btnQuiet.setAttribute('aria-pressed', shell.classList.contains('quiet') ? 'true' : 'false');
       });
-      btnZen?.addEventListener('click', () => {
-        shell.classList.toggle('zen');
-        const pressed = shell.classList.contains('zen');
-        btnZen.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+      btnFocus.addEventListener('click', () => {
+        shell.classList.toggle('focus');
+        btnFocus.setAttribute('aria-pressed', shell.classList.contains('focus') ? 'true' : 'false');
       });
       window.addEventListener('keydown', (e) => {
         const k = e.key.toLowerCase();
-        if (k === 't') btnTheme?.click();
-        if (k === 'p') btnPulse?.click();
-        if (k === 'z') btnZen?.click();
+        if (k === 't') btnTheme.click();
+        if (k === 'q') btnQuiet.click();
+        if (k === 'f') btnFocus.click();
       });
 
-      // Clock
+      // Chrono rings
       const timeEl = root.querySelector('#time');
-      const ampmEl = root.querySelector('#ampm');
       const dateEl = root.querySelector('#date');
+      const rings = root.querySelector('.rings');
       function tick() {
         const n = new Date();
-        let h = n.getHours();
+        const h = n.getHours();
         const m = n.getMinutes();
-        const am = h < 12 ? 'AM' : 'PM';
-        h = h % 12 || 12;
-        timeEl.textContent = String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
-        ampmEl.textContent = am;
+        const s = n.getSeconds();
+        const secDeg = (s / 60) * 360;
+        const minDeg = ((m + s / 60) / 60) * 360;
+        const hrDeg  = (((h % 12) + m / 60) / 12) * 360;
+
+        rings.style.setProperty('--sec', secDeg + 'deg');
+        rings.style.setProperty('--min', minDeg + 'deg');
+        rings.style.setProperty('--hr',  hrDeg + 'deg');
+
+        timeEl.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
         dateEl.textContent = new Intl.DateTimeFormat([], { weekday: 'long', month: 'long', day: 'numeric' }).format(n);
-        // subtle breathing letter-spacing on minute change
-        timeEl.animate([{ letterSpacing: '-0.02em' }, { letterSpacing: '0em' }, { letterSpacing: '-0.02em' }], { duration: 700, easing: 'ease-out' });
+
+        // subtle pulse on minute
+        if (s === 0) {
+          timeEl.animate([{ letterSpacing: '-0.02em' }, { letterSpacing: '0.01em' }, { letterSpacing: '-0.02em' }], { duration: 700, easing: 'ease-out' });
+        }
       }
       tick();
-      setInterval(tick, 60 * 1000);
+      setInterval(tick, 1000);
 
       // Last updated
       const last = root.querySelector('#last-updated');
-      const now = new Date();
-      last.textContent = 'Updated ' + new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'short' }).format(now);
+      last.textContent = 'Updated ' + new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'short' }).format(new Date());
 
-      // Constellation canvas
-      const ctx = sky.getContext('2d');
-      let w = 0, h = 0, points = [], mouse = { x: -9999, y: -9999 };
+      // Kinetic tiles: tilt and activate on click
+      const stage = root.querySelector('#stage');
+      const tiles = Array.from(stage.querySelectorAll('.tile'));
+      let tiltRAF = null;
+      function stageTilt(e) {
+        const r = stage.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = (e.clientX - cx) / (r.width / 2);
+        const dy = (e.clientY - cy) / (r.height / 2);
+        const rotX = (dy * -6).toFixed(2);
+        const rotY = (dx * 6).toFixed(2);
+        if (!tiltRAF) {
+          tiltRAF = requestAnimationFrame(() => {
+            stage.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+            tiltRAF = null;
+          });
+        }
+        // feed tile-level glow position
+        stage.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        stage.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      }
+      stage.addEventListener('pointermove', stageTilt, { passive: true });
+      stage.addEventListener('pointerleave', () => { stage.style.transform = 'rotateX(0deg) rotateY(0deg)'; }, { passive: true });
+      tiles.forEach(t => {
+        t.addEventListener('click', () => t.classList.toggle('active'));
+      });
+
+      // Aurora canvas
+      const aur = root.querySelector('.aurora');
+      const ctx = aur.getContext('2d');
+      let W = 0, H = 0, t = 0;
       function resize() {
         const r = shell.getBoundingClientRect();
-        w = sky.width = r.width * devicePixelRatio;
-        h = sky.height = r.height * devicePixelRatio;
-        sky.style.width = r.width + 'px';
-        sky.style.height = r.height + 'px';
-        // build points
-        const count = Math.max(60, Math.floor((r.width * r.height) / 8000));
-        points = Array.from({ length: count }, () => ({
-          x: Math.random() * w, y: Math.random() * h,
-          vx: (Math.random() - 0.5) * 0.15 * devicePixelRatio,
-          vy: (Math.random() - 0.5) * 0.15 * devicePixelRatio
-        }));
+        W = aur.width = Math.max(1, r.width * devicePixelRatio);
+        H = aur.height = Math.max(1, r.height * devicePixelRatio);
+        aur.style.width = r.width + 'px';
+        aur.style.height = r.height + 'px';
       }
       resize();
       addEventListener('resize', resize);
-      shell.addEventListener('pointermove', (e) => {
-        const r = shell.getBoundingClientRect();
-        mouse.x = (e.clientX - r.left) * devicePixelRatio;
-        mouse.y = (e.clientY - r.top) * devicePixelRatio;
-      }, { passive: true });
-      shell.addEventListener('pointerleave', () => { mouse.x = -9999; mouse.y = -9999; }, { passive: true });
-
+      function ribbon(x, y, r1, r2, c1, c2, alpha) {
+        const g = ctx.createRadialGradient(x, y, r1, x, y, r2);
+        g.addColorStop(0, c1);
+        g.addColorStop(1, c2);
+        ctx.globalAlpha = alpha;
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(x, y, r2, 0, Math.PI * 2); ctx.fill();
+      }
       function loop() {
-        ctx.clearRect(0, 0, w, h);
-        // move points
-        for (const p of points) {
-          p.x += p.vx; p.y += p.vy;
-          if (p.x < 0 || p.x > w) p.vx *= -1;
-          if (p.y < 0 || p.y > h) p.vy *= -1;
-        }
-        // draw lines
-        ctx.lineWidth = 1 * devicePixelRatio;
-        for (let i = 0; i < points.length; i++) {
-          const a = points[i];
-          for (let j = i + 1; j < i + 7 && j < points.length; j++) {
-            const b = points[j];
-            const dx = a.x - b.x, dy = a.y - b.y;
-            const d2 = dx*dx + dy*dy;
-            if (d2 < (130 * devicePixelRatio) ** 2) {
-              const alpha = 0.12 * (1 - d2 / ((130 * devicePixelRatio) ** 2));
-              ctx.strokeStyle = `rgba(30,40,40,${alpha})`;
-              ctx.beginPath();
-              ctx.moveTo(a.x, a.y);
-              ctx.lineTo(b.x, b.y);
-              ctx.stroke();
-            }
-          }
-          // mouse links
-          const mdx = a.x - mouse.x, mdy = a.y - mouse.y;
-          const md2 = mdx*mdx + mdy*mdy;
-          if (md2 < (180 * devicePixelRatio) ** 2) {
-            ctx.strokeStyle = `rgba(0,0,0,${0.10 * (1 - md2 / ((180 * devicePixelRatio) ** 2))})`;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.stroke();
-          }
-        }
+        t += 0.006;
+        ctx.clearRect(0, 0, W, H);
+        const cx = W * 0.3 + Math.sin(t * 0.9) * W * 0.12;
+        const cy = H * 0.35 + Math.cos(t * 0.7) * H * 0.10;
+        const cx2 = W * 0.7 + Math.cos(t * 0.6) * W * 0.15;
+        const cy2 = H * 0.65 + Math.sin(t * 0.8) * H * 0.12;
+        ribbon(cx, cy, 20, Math.min(W, H) * 0.35, 'rgba(123,226,255,0.35)', 'rgba(0,0,0,0)', 0.8);
+        ribbon(cx2, cy2, 20, Math.min(W, H) * 0.40, 'rgba(167,139,250,0.30)', 'rgba(0,0,0,0)', 0.75);
+        ribbon(cx * 1.05, cy2 * 0.95, 20, Math.min(W, H) * 0.30, 'rgba(104,245,194,0.25)', 'rgba(0,0,0,0)', 0.9);
         requestAnimationFrame(loop);
       }
       requestAnimationFrame(loop);
-
-      // Initialize theme
-      applyTheme(themes[0]);
     })();
   </script>
 </section>
