@@ -73,260 +73,299 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="poster" aria-label="Quiet Momentum — Living Kinetic Poster">
+<section class="aurora" aria-label="Aurora Dial — Generative Timepiece">
   <style>
-    .poster {
-      --ink: #101320;
-      --muted: #5a6479;
-      --bg1: #fffdfa;
-      --bg2: #eef8ff;
-      --ac1: #ff8a5b;
-      --ac2: #7b61ff;
-      --ac3: #15c9a7;
-
+    .aurora {
+      --ink: #101319;
+      --muted: #5c6579;
+      --bg1: #f8fbff;
+      --bg2: #eef6ff;
+      --ac1: #7b61ff;
+      --ac2: #13c9a6;
+      --ac3: #ff8a5b;
+      --glow: 0 40px 120px rgba(16, 19, 25, 0.25);
       color: var(--ink);
       border-radius: 28px;
-      padding: 28px;
+      padding: 26px;
       position: relative;
       overflow: hidden;
       background:
-        radial-gradient(120% 90% at 10% -10%, #ffebb633 0 40%, transparent 60%),
-        radial-gradient(120% 120% at 110% 120%, #b3ffe633 0 35%, transparent 60%),
+        radial-gradient(110% 90% at 0% 0%, color-mix(in srgb, var(--ac2), transparent 85%) 0 50%, transparent 70%),
+        radial-gradient(120% 90% at 120% 120%, color-mix(in srgb, var(--ac3), transparent 86%) 0 50%, transparent 70%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
-      box-shadow:
-        inset 0 0 0 1px rgba(0,0,0,0.06),
-        0 30px 120px rgba(16, 17, 37, 0.20);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06), var(--glow);
       isolation: isolate;
     }
-    .poster::before,
-    .poster::after {
+
+    /* animated backdrop mist */
+    .aurora::before,
+    .aurora::after {
       content: "";
       position: absolute; inset: -40%;
       background:
-        conic-gradient(from 0deg at 65% 40%, color-mix(in srgb, var(--ac2), transparent 80%), color-mix(in srgb, var(--ac1), transparent 82%), color-mix(in srgb, var(--ac3), transparent 80%), color-mix(in srgb, var(--ac2), transparent 80%));
+        conic-gradient(from 0deg at 50% 50%,
+          color-mix(in srgb, var(--ac1), transparent 86%),
+          color-mix(in srgb, var(--ac2), transparent 86%),
+          color-mix(in srgb, var(--ac3), transparent 86%),
+          color-mix(in srgb, var(--ac1), transparent 86%));
       filter: blur(90px) saturate(1.1);
       opacity: 0.35;
       pointer-events: none;
       mix-blend-mode: screen;
-      animation: slow-turn 70s linear infinite;
+      animation: breathe 80s linear infinite;
     }
-    .poster::after { animation-direction: reverse; opacity: 0.22; }
-    @keyframes slow-turn { to { transform: rotate(360deg); } }
+    .aurora::after { animation-direction: reverse; opacity: 0.22; }
+    @keyframes breathe { to { transform: rotate(360deg); } }
 
-    .mat {
-      position: relative; z-index: 1;
-      display: grid; grid-template-columns: 1.05fr 1fr; gap: 28px; align-items: center;
+    .chrome {
+      position: relative; z-index: 3;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      margin-bottom: 14px;
     }
-    @media (max-width: 980px) { .mat { grid-template-columns: 1fr; gap: 18px; } }
-
-    /* Masthead */
-    .chip {
+    .brand {
       display: inline-flex; align-items: center; gap: 10px;
       font: 800 11px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;
-      color: var(--muted);
       text-transform: uppercase; letter-spacing: 0.18em;
-      user-select: none; margin-bottom: 10px;
-    }
-    .chip .led {
-      width: 12px; height: 12px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff 0 40%, var(--ac1) 42%, var(--ac2) 100%);
-      box-shadow: 0 0 0 6px color-mix(in srgb, var(--ac2), transparent 86%), 0 0 16px color-mix(in srgb, var(--ac1), transparent 55%);
-    }
-    .display {
-      margin: 0;
-      font: 900 clamp(42px, 7vw, 86px)/0.92 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;
-      letter-spacing: -0.02em;
-      background: linear-gradient(180deg, #151a31 0%, color-mix(in srgb, var(--ac2), white 32%) 55%, color-mix(in srgb, var(--ac3), white 20%));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-      text-shadow: 0 2px 0 rgba(255,255,255,0.45);
-    }
-    .tag {
-      margin: 14px 0 24px;
       color: var(--muted);
-      font: 500 16px/1.8 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;
-      max-width: 60ch;
+      user-select: none;
+    }
+    .brand .sig {
+      width: 14px; height: 14px; border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,0.6) 42%, transparent 43%),
+        radial-gradient(circle at 65% 65%, var(--ac1), var(--ac2));
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--ac1), transparent 88%), 0 0 14px color-mix(in srgb, var(--ac2), transparent 45%);
     }
 
-    /* Controls */
-    .controls { display: flex; flex-wrap: wrap; gap: 10px; }
-    .pill {
+    .actions { display: inline-flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
       appearance: none; border: 1px solid rgba(0,0,0,0.08);
-      background: linear-gradient(180deg, rgba(255,255,255,0.62), rgba(255,255,255,0.30));
+      background: linear-gradient(180deg, rgba(255,255,255,0.70), rgba(255,255,255,0.35));
       color: var(--ink);
       font: 800 12px/1 ui-sans-serif, system-ui;
-      letter-spacing: 0.02em; padding: 12px 14px; border-radius: 14px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.75), 0 10px 24px rgba(0,0,0,0.10);
+      letter-spacing: 0.02em; padding: 11px 14px; border-radius: 14px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 10px 24px rgba(0,0,0,0.10);
       display: inline-flex; align-items: center; gap: 10px;
       cursor: pointer; transition: transform 0.15s ease, box-shadow 0.3s ease, border-color 0.2s ease, background 0.2s ease;
       -webkit-tap-highlight-color: transparent; backdrop-filter: blur(8px);
     }
-    .pill:hover, .pill:focus-visible { transform: translateY(-1px); outline: none; border-color: rgba(0,0,0,0.2); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 18px 38px rgba(0,0,0,0.16); }
-    .pill .swatch {
-      width: 14px; height: 14px; border-radius: 4px;
-      background: linear-gradient(135deg, var(--ac1), var(--ac2), var(--ac3));
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.85), 0 0 12px color-mix(in srgb, var(--ac2), transparent 65%);
-    }
+    .btn:hover, .btn:focus-visible { transform: translateY(-1px); outline: none; border-color: rgba(0,0,0,0.2); box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 18px 38px rgba(0,0,0,0.16); }
 
-    /* Canvas */
-    .canvas {
-      position: relative; width: 100%; aspect-ratio: 3 / 2; border-radius: 24px; overflow: hidden;
-      border: 1px solid rgba(0,0,0,0.08);
+    .stage {
+      position: relative; z-index: 2;
+      display: grid; place-items: center;
+      border-radius: 22px;
+      padding: clamp(18px, 3.2vw, 28px);
       background:
-        radial-gradient(120% 90% at 50% -10%, rgba(255,255,255,0.85), rgba(255,255,255,0.0) 60%),
-        linear-gradient(180deg, rgba(255,255,255,0.80), rgba(255,255,255,0.55));
+        radial-gradient(120% 90% at 50% -10%, rgba(255,255,255,0.85), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.60));
+      border: 1px solid rgba(0,0,0,0.08);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 30px 80px rgba(0,0,0,0.10);
       transform-style: preserve-3d; perspective: 1000px;
-      transition: box-shadow 300ms ease, transform 200ms ease;
+      transition: box-shadow 300ms ease, transform 200ms ease, background 450ms ease, border-color 300ms ease;
+      min-height: clamp(360px, 54vh, 580px);
     }
-    .glow {
-      position: absolute; inset: -15% -25% auto -25%; height: 45%;
+    .stage::before {
+      content: "";
+      position: absolute; inset: -30%;
       background:
-        radial-gradient(120% 100% at 30% 0%, rgba(255,255,255,0.95), rgba(255,255,255,0.0) 60%),
-        linear-gradient(90deg, color-mix(in srgb, var(--ac2), white 60%), transparent);
-      mix-blend-mode: screen; pointer-events: none;
+        conic-gradient(from 0deg at 50% 50%, color-mix(in srgb, var(--ac1), transparent 82%), color-mix(in srgb, var(--ac2), transparent 82%), color-mix(in srgb, var(--ac3), transparent 82%), color-mix(in srgb, var(--ac1), transparent 82%));
+      filter: blur(80px); opacity: 0.25; mix-blend-mode: screen; pointer-events: none;
+      animation: swirl 60s linear infinite;
     }
-    .noise {
-      position: absolute; inset: 0; pointer-events: none; opacity: 0.06;
+    @keyframes swirl { to { transform: rotate(360deg) scale(1.01); } }
+
+    .dial {
+      position: relative;
+      width: min(78vmin, 780px);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      display: grid; place-items: center;
+    }
+
+    /* rings */
+    .ring {
+      position: absolute; border-radius: 50%; mix-blend-mode: screen;
+      filter: saturate(1.05) blur(0.3px);
+      animation: spin var(--dur, 18s) linear infinite;
+    }
+    .ring::after { /* soft inner glow */
+      content: ""; position: absolute; inset: 0; border-radius: 50%;
+      box-shadow: inset 0 0 80px color-mix(in srgb, var(--ac2), transparent 66%);
+      pointer-events: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .r1 { inset: 2%; --t: 22px; --dur: 36s; background: conic-gradient(from 0deg, var(--ac1), var(--ac2), var(--ac3), var(--ac1)); -webkit-mask: radial-gradient(farthest-side, transparent calc(50% - var(--t)), #000 calc(50% - var(--t))); mask: radial-gradient(farthest-side, transparent calc(50% - var(--t)), #000 calc(50% - var(--t))); }
+    .r2 { inset: 10%; --t: 16px; --dur: 24s; background: conic-gradient(from 60deg, color-mix(in srgb, var(--ac2), white 40%), color-mix(in srgb, var(--ac3), white 20%), color-mix(in srgb, var(--ac1), white 30%), color-mix(in srgb, var(--ac2), white 40%)); -webkit-mask: radial-gradient(farthest-side, transparent calc(50% - var(--t)), #000 calc(50% - var(--t))); mask: radial-gradient(farthest-side, transparent calc(50% - var(--t)), #000 calc(50% - var(--t))); animation-direction: reverse; }
+    .r3 { inset: 22%; --t: 14px; --dur: 18s; background: conic-gradient(from 120deg, color-mix(in srgb, var(--ac3), white 20%), color-mix(in srgb, var(--ac1), white 10%), color-mix(in srgb, var(--ac2), white 30%), color-mix(in srgb, var(--ac3), white 20%)); -webkit-mask: radial-gradient(farthest-side, transparent calc(50% - var(--t)), #000 calc(50% - var(--t))); mask: radial-gradient(farthest-side, transparent calc(50% - var(--t)), #000 calc(50% - var(--t))); }
+    .r4 { inset: 35%; --t: 12px; --dur: 14s; background: conic-gradient(from 180deg, color-mix(in srgb, var(--ac1), white 12%), color-mix(in srgb, var(--ac2), white 12%), color-mix(in srgb, var(--ac3), white 12%), color-mix(in srgb, var(--ac1), white 12%)); -webkit-mask: radial-gradient(farthest-side, transparent calc(50% - var(--t)), #000 calc(50% - var(--t))); mask: radial-gradient(farthest-side, transparent calc(50% - var(--t)), #000 calc(50% - var(--t))); animation-direction: reverse; }
+
+    /* sparks orbiting */
+    .spark-field { position: absolute; inset: 0; }
+    .spark {
+      position: absolute; left: 50%; top: 50%;
+      width: 0; height: 0;
+      --ang: calc(var(--i) * 18deg);
+      --rad: calc(24% + (var(--i) * 0.6%));
+      --spd: calc(9s + (var(--i) * 0.22s));
+      transform: rotate(var(--ang));
+      transform-origin: 0 0;
+      animation: orbit var(--spd) linear infinite;
+      filter: saturate(1.1);
+    }
+    .spark::before {
+      content: ""; position: absolute; left: var(--rad); top: -3px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,0.6) 48%, transparent 50%),
+        radial-gradient(circle at 70% 70%, color-mix(in srgb, var(--ac2), var(--ac1) 40%), color-mix(in srgb, var(--ac3), var(--ac2) 50%));
+      box-shadow: 0 0 0 8px color-mix(in srgb, var(--ac2), transparent 92%), 0 12px 28px color-mix(in srgb, var(--ac2), transparent 65%), 0 0 22px color-mix(in srgb, var(--ac1), transparent 50%);
+    }
+    @keyframes orbit { to { transform: rotate(calc(var(--ang) + 360deg)); } }
+
+    .center {
+      position: relative; z-index: 2;
+      display: grid; place-items: center; text-align: center;
+      width: 52%; aspect-ratio: 1; border-radius: 50%;
+      background:
+        radial-gradient(80% 80% at 50% 45%, rgba(255,255,255,0.85), rgba(255,255,255,0.65) 60%, rgba(255,255,255,0.30));
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 24px 60px rgba(0,0,0,0.10);
+      backdrop-filter: blur(6px) saturate(1.05);
+    }
+    .time {
+      font: 900 clamp(36px, 7.4vw, 72px)/0.9 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;
+      letter-spacing: -0.02em;
+      background: linear-gradient(180deg, #151a31 0%, color-mix(in srgb, var(--ac1), white 32%) 55%, color-mix(in srgb, var(--ac2), white 18%));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 2px 0 rgba(255,255,255,0.45);
+      margin-bottom: 6px;
+    }
+    .sub {
+      color: var(--muted);
+      font: 600 clamp(12px, 2.2vw, 14px)/1.3 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;
+      letter-spacing: 0.02em;
+    }
+
+    /* lens follows pointer */
+    .lens {
+      position: absolute; width: 160px; height: 160px; border-radius: 50%;
+      pointer-events: none; opacity: 0; transform: translate(-50%, -50%);
+      border: 1px solid rgba(0,0,0,0.06);
+      background:
+        radial-gradient(60% 60% at 40% 40%, rgba(255,255,255,0.8), rgba(255,255,255,0.2) 60%, rgba(255,255,255,0) 70%);
+      backdrop-filter: blur(6px) saturate(1.3) brightness(1.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 30px 70px rgba(0,0,0,0.14);
+      transition: opacity 180ms ease, width 200ms ease, height 200ms ease;
+    }
+
+    .grain {
+      position: absolute; inset: 0; pointer-events: none; opacity: 0.05;
       background:
         repeating-conic-gradient(from 0deg, rgba(0,0,0,0.08) 0 0.5deg, transparent 0.5deg 1deg),
         repeating-linear-gradient(90deg, rgba(0,0,0,0.04) 0 1px, transparent 1px 3px);
       mix-blend-mode: multiply;
+      border-radius: 22px;
     }
 
-    /* Ribbons */
-    .ribbon {
-      position: absolute; left: -25%; width: 150%; height: 38%;
-      filter: blur(16px) saturate(1.05);
-      opacity: 0.75;
-      transform-origin: 50% 50%;
-      border-radius: 100vmax;
-      -webkit-mask: radial-gradient(90% 50% at 50% 50%, #000 0 70%, transparent 85%);
-              mask: radial-gradient(90% 50% at 50% 50%, #000 0 70%, transparent 85%);
-      animation: flow 22s ease-in-out infinite;
-      mix-blend-mode: screen;
-    }
-    .r1 { top: 6%;  transform: rotate(-16deg); background: linear-gradient(90deg, color-mix(in srgb, var(--ac2), white 40%), color-mix(in srgb, var(--ac1), transparent 10%), color-mix(in srgb, var(--ac3), white 10%)); animation-duration: 24s; }
-    .r2 { top: 36%; transform: rotate(8deg);   background: linear-gradient(90deg, color-mix(in srgb, var(--ac3), white 20%), color-mix(in srgb, var(--ac2), transparent 0%), color-mix(in srgb, var(--ac1), white 15%)); animation-duration: 28s; }
-    .r3 { top: 66%; transform: rotate(-6deg);  background: linear-gradient(90deg, color-mix(in srgb, var(--ac1), white 10%), color-mix(in srgb, var(--ac3), white 0%), color-mix(in srgb, var(--ac2), white 25%)); animation-duration: 32s; }
-    @keyframes flow {
-      0%   { transform: translateX(-4%) rotate(var(--rot, 0deg)) scale(1); }
-      50%  { transform: translateX(4%)  rotate(calc(var(--rot, 0deg) + 1.5deg)) scale(1.02); }
-      100% { transform: translateX(-4%) rotate(var(--rot, 0deg)) scale(1); }
-    }
-
-    /* Orbs */
-    .orb {
-      position: absolute; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff 0 40%, #ffffff00 41%), radial-gradient(circle at 60% 60%, var(--oc1), var(--oc2));
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.55),
-        0 0 0 10px color-mix(in srgb, var(--oc2), transparent 92%),
-        0 22px 60px color-mix(in srgb, var(--oc2), transparent 60%);
-      animation: floaty var(--dur, 16s) ease-in-out infinite;
-    }
-    .o1 { width: 120px; height: 120px; left: 8%;  top: 18%; --oc1: var(--ac1); --oc2: var(--ac2); --dur: 20s; }
-    .o2 { width: 88px;  height: 88px;  right: 12%; top: 28%; --oc1: #ffd29f;    --oc2: var(--ac3); --dur: 16s; }
-    .o3 { width: 64px;  height: 64px;  left: 22%; bottom: 10%; --oc1: #9be4ff; --oc2: #c1d0ff; --dur: 14s; }
-    .o4 { width: 46px;  height: 46px;  right: 20%; bottom: 16%; --oc1: #f9f871; --oc2: var(--ac2); --dur: 18s; }
-    @keyframes floaty {
-      0%   { transform: translate3d(0, 0, 0) scale(1); }
-      50%  { transform: translate3d(0.6rem, -0.8rem, 0) scale(1.03); }
-      100% { transform: translate3d(0, 0, 0) scale(1); }
-    }
-
-    /* Grid overlay */
-    .grid {
-      position: absolute; inset: 0; pointer-events: none; opacity: 0;
-      transition: opacity 220ms ease;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(0,0,0,0.06), transparent 40%),
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.08) 0 1px, transparent 1px 24px),
-        repeating-linear-gradient(90deg, rgba(0,0,0,0.08) 0 1px, transparent 1px 24px);
-      -webkit-mask: radial-gradient(75% 75% at 50% 50%, #000, transparent 80%);
-              mask: radial-gradient(75% 75% at 50% 50%, #000, transparent 80%);
-    }
-    .show-grid .grid { opacity: 0.45; }
-
-    /* Footer */
     .foot {
-      position: relative; z-index: 1;
+      position: relative; z-index: 2;
       margin-top: 18px; padding-top: 12px;
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
       border-top: 1px solid rgba(0,0,0,0.08);
       color: var(--muted);
-      font: 600 12px/1.4 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;
+      font: 600 12px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;
     }
     .keys { display: inline-flex; gap: 10px; align-items: center; flex-wrap: wrap; }
     .k { border: 1px solid rgba(0,0,0,0.18); background: rgba(255,255,255,0.75); padding: 4px 8px; border-radius: 8px; color: var(--ink); font-weight: 800; box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 8px rgba(0,0,0,0.06); }
 
-    /* States */
-    .paused .ribbon, .paused .orb, .paused .poster::before, .paused .poster::after { animation-play-state: paused; }
-    .no-tilt .canvas { transform: none !important; }
+    /* states */
+    .paused .ring, .paused .spark, .paused .aurora::before, .paused .aurora::after, .paused .stage::before { animation-play-state: paused !important; }
+    .focus .chrome, .focus .foot { opacity: 0.35; filter: blur(0.1px); transition: opacity 200ms ease; }
+    .focus .stage { box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 60px 120px rgba(0,0,0,0.18); }
+
     @media (prefers-reduced-motion: reduce) {
-      .poster::before, .poster::after, .ribbon, .orb { animation: none !important; }
-      .no-tilt .canvas, .canvas { transform: none !important; }
+      .ring, .spark, .aurora::before, .aurora::after, .stage::before { animation: none !important; }
+      .lens { display: none; }
     }
 
-    /* Transitions */
-    .poster, .canvas, .pill, .orb, .ribbon, .display {
-      transition: color 250ms ease, background 450ms ease, box-shadow 450ms ease, border-color 300ms ease;
-    }
+    /* transitions */
+    .aurora, .stage, .btn, .ring, .time { transition: color 250ms ease, background 450ms ease, box-shadow 450ms ease, border-color 300ms ease; }
   </style>
 
-  <div class="mat">
-    <div class="col">
-      <div class="chip"><span class="led" aria-hidden="true"></span> Atelier • Iteration 588</div>
-      <h1 class="display">Quiet<br>Momentum</h1>
-      <p class="tag">A living poster of ribbons and light. Hover to tilt the field; switch themes to repaint the air.</p>
-      <div class="controls">
-        <button class="pill" id="theme" aria-label="Cycle theme" aria-pressed="false"><span class="swatch" aria-hidden="true"></span> Theme</button>
-        <button class="pill" id="pause" aria-label="Pause motion" aria-pressed="false">Pause</button>
-        <button class="pill" id="grid" aria-label="Toggle grid" aria-pressed="false">Grid</button>
-        <button class="pill" id="tilt" aria-label="Toggle tilt" aria-pressed="true">Tilt</button>
+  <div class="chrome">
+    <div class="brand"><span class="sig" aria-hidden="true"></span> Aurora • Iteration 589</div>
+    <div class="actions">
+      <button class="btn" id="btn-theme" aria-label="Cycle theme" aria-pressed="false">Theme</button>
+      <button class="btn" id="btn-pause" aria-label="Pause motion" aria-pressed="false">Pause</button>
+      <button class="btn" id="btn-focus" aria-label="Focus mode" aria-pressed="false">Focus</button>
+    </div>
+  </div>
+
+  <div class="stage" id="stage" tabindex="0" aria-label="Interactive aurora dial">
+    <div class="dial">
+      <div class="ring r1" aria-hidden="true"></div>
+      <div class="ring r2" aria-hidden="true"></div>
+      <div class="ring r3" aria-hidden="true"></div>
+      <div class="ring r4" aria-hidden="true"></div>
+
+      <div class="spark-field" aria-hidden="true">
+        <span class="spark" style="--i:0"></span>
+        <span class="spark" style="--i:1"></span>
+        <span class="spark" style="--i:2"></span>
+        <span class="spark" style="--i:3"></span>
+        <span class="spark" style="--i:4"></span>
+        <span class="spark" style="--i:5"></span>
+        <span class="spark" style="--i:6"></span>
+        <span class="spark" style="--i:7"></span>
+        <span class="spark" style="--i:8"></span>
+        <span class="spark" style="--i:9"></span>
+        <span class="spark" style="--i:10"></span>
+        <span class="spark" style="--i:11"></span>
+        <span class="spark" style="--i:12"></span>
+        <span class="spark" style="--i:13"></span>
+        <span class="spark" style="--i:14"></span>
+        <span class="spark" style="--i:15"></span>
+        <span class="spark" style="--i:16"></span>
+        <span class="spark" style="--i:17"></span>
+        <span class="spark" style="--i:18"></span>
+        <span class="spark" style="--i:19"></span>
+      </div>
+
+      <div class="center">
+        <div class="time" id="time">00:00:00</div>
+        <div class="sub" id="date">Loading…</div>
       </div>
     </div>
 
-    <div class="col">
-      <div class="canvas" id="canvas" tabindex="0" aria-label="Interactive kinetic canvas">
-        <div class="glow" aria-hidden="true"></div>
-
-        <div class="ribbon r1" style="--rot:-16deg" aria-hidden="true"></div>
-        <div class="ribbon r2" style="--rot:8deg" aria-hidden="true"></div>
-        <div class="ribbon r3" style="--rot:-6deg" aria-hidden="true"></div>
-
-        <div class="orb o1" aria-hidden="true"></div>
-        <div class="orb o2" aria-hidden="true"></div>
-        <div class="orb o3" aria-hidden="true"></div>
-        <div class="orb o4" aria-hidden="true"></div>
-
-        <div class="noise" aria-hidden="true"></div>
-        <div class="grid" aria-hidden="true"></div>
-      </div>
-    </div>
+    <div class="lens" id="lens" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
   </div>
 
   <div class="foot">
     <div class="keys">
       <span class="k">M</span> Theme
       <span class="k">P</span> Pause
-      <span class="k">G</span> Grid
-      <span class="k">T</span> Tilt
-      <span class="k">Move</span> Tilt Canvas
+      <span class="k">F</span> Focus
+      <span class="k">Move</span> Lens & Tilt
     </div>
-    <div class="stamp">Updated • <span id="last-updated">Last updated: 2025-11-12 07:38:09 EST</span></div>
+    <div class="stamp">Updated • <span id="last-updated">Last updated: 2025-11-12 08:31:23 EST</span></div>
   </div>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.poster');
-      const canvas = root.querySelector('#canvas');
+      const root = document.currentScript.closest('.aurora');
+      const stage = root.querySelector('#stage');
+      const lens = root.querySelector('#lens');
+      const timeEl = root.querySelector('#time');
+      const dateEl = root.querySelector('#date');
 
-      // Palettes
+      // Themes
       const themes = [
-        { name: 'Lilt', ink:'#101320', muted:'#5a6479', bg1:'#fffdfa', bg2:'#eef8ff', ac1:'#ff8a5b', ac2:'#7b61ff', ac3:'#15c9a7' },
-        { name: 'Nocturne', ink:'#e8eefc', muted:'#adb7d2', bg1:'#0d0f1b', bg2:'#1c2240', ac1:'#9be4ff', ac2:'#8b7bff', ac3:'#ffb47d' },
-        { name: 'Citrus', ink:'#191a13', muted:'#6b6f52', bg1:'#fffee6', bg2:'#fff2cf', ac1:'#ff9d00', ac2:'#ff6b6b', ac3:'#7cd992' },
-        { name: 'Mist', ink:'#0e152a', muted:'#5a6b86', bg1:'#eef3ff', bg2:'#ebfffb', ac1:'#7dd3fc', ac2:'#a78bfa', ac3:'#34d399' },
+        { name: 'Dawn', ink:'#101319', muted:'#5c6579', bg1:'#f8fbff', bg2:'#eef6ff', ac1:'#7b61ff', ac2:'#13c9a6', ac3:'#ff8a5b' },
+        { name: 'Nocturne', ink:'#e8eefc', muted:'#aeb7d2', bg1:'#0d1020', bg2:'#1a2142', ac1:'#8b7bff', ac2:'#9be4ff', ac3:'#ffb47d' },
+        { name: 'Citrus Mint', ink:'#191a13', muted:'#6a7058', bg1:'#fffde8', bg2:'#f5ffe9', ac1:'#ff9d00', ac2:'#34d399', ac3:'#ff6b6b' },
         { name: 'Mono', ink:'#111', muted:'#666', bg1:'#f6f7f9', bg2:'#eceff3', ac1:'#222', ac2:'#777', ac3:'#bbb' }
       ];
       let tidx = 0;
@@ -341,24 +380,20 @@
       }
       applyTheme(themes[tidx]);
 
-      // Buttons
-      const btnTheme = root.querySelector('#theme');
-      const btnPause = root.querySelector('#pause');
-      const btnGrid = root.querySelector('#grid');
-      const btnTilt = root.querySelector('#tilt');
+      // Controls
+      const btnTheme = root.querySelector('#btn-theme');
+      const btnPause = root.querySelector('#btn-pause');
+      const btnFocus = root.querySelector('#btn-focus');
 
       function pulse(el) {
-        el.animate(
-          [{ transform: 'translateY(0)' }, { transform: 'translateY(2px)' }, { transform: 'translateY(0)' }],
-          { duration: 160, easing: 'ease-out' }
-        );
+        el.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(2px)' }, { transform: 'translateY(0)' }], { duration: 160, easing: 'ease-out' });
       }
 
       btnTheme.addEventListener('click', () => {
         tidx = (tidx + 1) % themes.length;
         applyTheme(themes[tidx]);
         btnTheme.setAttribute('aria-pressed', 'true');
-        setTimeout(() => btnTheme.setAttribute('aria-pressed', 'false'), 120);
+        setTimeout(() => btnTheme.setAttribute('aria-pressed', 'false'), 160);
         pulse(btnTheme);
       });
 
@@ -370,21 +405,12 @@
         pulse(btnPause);
       });
 
-      let showGrid = false;
-      btnGrid.addEventListener('click', () => {
-        showGrid = !showGrid;
-        canvas.classList.toggle('show-grid', showGrid);
-        btnGrid.setAttribute('aria-pressed', showGrid ? 'true' : 'false');
-        pulse(btnGrid);
-      });
-
-      let tiltOn = true;
-      btnTilt.addEventListener('click', () => {
-        tiltOn = !tiltOn;
-        root.classList.toggle('no-tilt', !tiltOn);
-        btnTilt.setAttribute('aria-pressed', tiltOn ? 'true' : 'false');
-        if (!tiltOn) canvas.style.transform = '';
-        pulse(btnTilt);
+      let focus = false;
+      btnFocus.addEventListener('click', () => {
+        focus = !focus;
+        root.classList.toggle('focus', focus);
+        btnFocus.setAttribute('aria-pressed', focus ? 'true' : 'false');
+        pulse(btnFocus);
       });
 
       // Keyboard shortcuts
@@ -392,34 +418,54 @@
         const k = e.key.toLowerCase();
         if (k === 'm') btnTheme.click();
         if (k === 'p') btnPause.click();
-        if (k === 'g') btnGrid.click();
-        if (k === 't') btnTilt.click();
+        if (k === 'f') btnFocus.click();
       });
 
-      // Tilt interaction
+      // Time update
+      function two(n){ return String(n).padStart(2,'0'); }
+      function tick() {
+        const d = new Date();
+        const h = two(d.getHours());
+        const m = two(d.getMinutes());
+        const s = two(d.getSeconds());
+        timeEl.textContent = `${h}:${m}:${s}`;
+        dateEl.textContent = d.toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric' });
+      }
+      tick();
+      const timer = setInterval(tick, 1000);
+
+      // Lens + subtle tilt
+      let tiltOn = true;
       function onPointer(e) {
-        const r = canvas.getBoundingClientRect();
+        const r = stage.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width;
         const y = (e.clientY - r.top) / r.height;
-        if (!tiltOn) return;
         const dx = (x - 0.5), dy = (y - 0.5);
-        canvas.style.transform = `rotateX(${(-dy*10).toFixed(2)}deg) rotateY(${(dx*10).toFixed(2)}deg)`;
+        if (tiltOn) stage.style.transform = `rotateX(${(-dy*8).toFixed(2)}deg) rotateY(${(dx*8).toFixed(2)}deg)`;
+        lens.style.left = `${e.clientX - r.left}px`;
+        lens.style.top = `${e.clientY - r.top}px`;
+        lens.style.opacity = '1';
       }
-      canvas.addEventListener('pointermove', onPointer, { passive: true });
-      canvas.addEventListener('pointerleave', () => { if (tiltOn) canvas.style.transform = ''; }, { passive: true });
+      stage.addEventListener('pointermove', onPointer, { passive: true });
+      stage.addEventListener('pointerleave', () => {
+        stage.style.transform = '';
+        lens.style.opacity = '0';
+      }, { passive: true });
 
       // Respect reduced motion
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        root.classList.add('no-tilt', 'paused');
+        root.classList.add('paused');
         paused = true;
         tiltOn = false;
-        btnTilt.setAttribute('aria-pressed', 'false');
-        btnPause.setAttribute('aria-pressed', 'true');
+        lens.style.display = 'none';
       }
 
       // Last updated
       const last = root.querySelector('#last-updated');
       last.textContent = new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'short' }).format(new Date());
+
+      // Cleanup on detach (optional safety)
+      window.addEventListener('pagehide', () => clearInterval(timer), { once: true });
     })();
   </script>
 </section>
