@@ -73,281 +73,383 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="hikari" aria-label="Daybreak Studio">
+<section class="orison" aria-label="Lumen Atelier">
   <style>
-    .hikari {
-      --bg: #f7fafc;
-      --surface: #ffffff;
-      --ink: #0b1b26;
-      --muted: #4a6273;
-      --line: rgba(11, 27, 38, 0.08);
-      --accent: #e46e2b;
-      --g1: #ffb86b;
-      --g2: #ff7aa3;
-      --g3: #7dd3fc;
+    .orison {
+      --bg0: #f6f9ff;
+      --bg1: #ffffff;
+      --ink: #0a1220;
+      --muted: #5d6b7a;
+      --line: rgba(10, 18, 32, 0.08);
+      --g1: #ffd492;
+      --g2: #ff91ca;
+      --g3: #8ad8ff;
+      --accent: #0a7bd9;
+      --ringA: rgba(255, 255, 255, 0.7);
+      --ringB: rgba(10, 18, 32, 0.12);
+      --tempo: 1;
       position: relative;
       color: var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
-      border-radius: 22px;
+      border-radius: 28px;
       overflow: clip;
-      box-shadow: 0 18px 60px rgba(5, 20, 30, 0.15);
+      box-shadow: 0 26px 70px rgba(8, 20, 38, 0.18);
       background:
-        radial-gradient(120% 120% at 15% 10%, rgba(255, 240, 224, 0.6), transparent 45%),
-        radial-gradient(120% 120% at 85% 90%, rgba(225, 245, 255, 0.7), transparent 48%),
-        var(--bg);
+        radial-gradient(120% 100% at 10% 0%, rgba(255, 243, 220, 0.6), transparent 40%),
+        radial-gradient(140% 110% at 90% 100%, rgba(226, 247, 255, 0.6), transparent 45%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
       isolate: isolate;
     }
 
-    /* Stage with animated border glow */
-    .hikari .stage {
+    .orison .frame {
       position: relative;
-      padding: clamp(18px, 3.6vw, 38px);
-      min-height: clamp(420px, 56vw, 720px);
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+      padding: clamp(22px, 4.2vw, 44px);
+      min-height: clamp(540px, 62vw, 800px);
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.78));
       border: 1px solid var(--line);
-      border-radius: 20px;
-      background-clip: padding-box, border-box;
+      overflow: hidden;
     }
-    .hikari .stage::before {
+
+    /* Backdrop mesh canvas */
+    .orison .mesh {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      border-radius: 24px;
+      pointer-events: none;
+      opacity: 0.9;
+      mix-blend-mode: multiply;
+    }
+
+    /* Header + copy */
+    .orison .content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      align-items: center;
+      gap: clamp(18px, 4.5vw, 56px);
+    }
+    @media (max-width: 920px) {
+      .orison .content { grid-template-columns: 1fr; }
+      .orison .halo-wrap { order: -1; }
+    }
+
+    .orison .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.85;
+    }
+    .orison .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--g1), var(--g2) 60%);
+      box-shadow: 0 0 0 5px rgba(255, 212, 146, 0.18);
+    }
+
+    .orison h1 {
+      margin: 10px 0 6px 0;
+      font-size: clamp(34px, 6.4vw, 84px);
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      font-weight: 900;
+      background: linear-gradient(92deg, var(--ink) 0%, var(--g2) 55%, var(--g3) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .orison .lead {
+      margin: 8px 0 18px 0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.6vw, 18px);
+      line-height: 1.65;
+      max-width: 58ch;
+    }
+
+    /* Controls */
+    .orison .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 12px;
+      margin-top: 10px;
+    }
+    .orison .chip {
+      --bd: rgba(10, 18, 32, 0.14);
+      appearance: none;
+      border: 1px solid var(--bd);
+      color: var(--ink);
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.72));
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform 140ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
+      box-shadow: 0 8px 18px rgba(8, 20, 38, 0.08);
+    }
+    .orison .chip:hover { transform: translateY(-1px); border-color: rgba(10, 18, 32, 0.25); }
+    .orison .chip[aria-pressed="true"] {
+      border-color: transparent;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.78)) padding-box,
+        linear-gradient(90deg, var(--g1), var(--g2), var(--g3)) border-box;
+      border: 2px solid transparent;
+      box-shadow: 0 12px 28px rgba(8, 20, 38, 0.14);
+    }
+    .orison .ghost {
+      background: transparent;
+      border-style: dashed;
+      opacity: 0.85;
+    }
+    .orison .tempo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: 2px;
+    }
+    .orison .tempo input[type="range"] {
+      width: 120px;
+      accent-color: var(--accent);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Halo centerpiece */
+    .orison .halo-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+    .orison .halo {
+      position: relative;
+      width: min(560px, 90%);
+      aspect-ratio: 1/1;
+      border-radius: 24px;
+      background:
+        radial-gradient(60% 60% at 50% 50%, rgba(255,255,255,0.66), rgba(255,255,255,0.34) 60%, rgba(255,255,255,0.18) 100%);
+      border: 1px solid var(--line);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.6),
+        0 18px 40px rgba(8, 20, 38, 0.10);
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 220ms ease;
+    }
+    .orison .halo:hover { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+
+    .orison .glow {
+      position: absolute;
+      inset: 12%;
+      border-radius: 50%;
+      filter: blur(20px) saturate(1.08);
+      background:
+        radial-gradient(closest-side, rgba(255,255,255,0.8), transparent 60%),
+        conic-gradient(from var(--twist, 0deg), var(--g1), var(--g2), var(--g3), var(--g1));
+      animation: breathe 9s ease-in-out infinite both;
+      z-index: 1;
+    }
+
+    .orison svg.rings {
+      position: absolute;
+      inset: 2%;
+      z-index: 2;
+      filter: drop-shadow(0 10px 24px rgba(8, 20, 38, 0.20));
+    }
+    .orison .ring {
+      fill: none;
+      stroke-linecap: round;
+      stroke-width: 0.9;
+      vector-effect: non-scaling-stroke;
+      opacity: 0.95;
+      transform-origin: 50% 50%;
+      animation: orbit calc(28s / var(--tempo)) linear infinite;
+    }
+    .orison .ring.alt {
+      stroke-dasharray: 2 6;
+      opacity: 0.5;
+      animation-duration: calc(40s / var(--tempo));
+      animation-direction: reverse;
+    }
+
+    .orison .orb {
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 12%;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      filter: saturate(1.05);
+    }
+    .orison .orb::before {
+      content: "";
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--g3), var(--g2) 60%, rgba(255,255,255,0.8) 90%);
+      box-shadow:
+        inset 0 0 12px rgba(255,255,255,0.5),
+        0 14px 26px rgba(8, 20, 38, 0.18);
+    }
+    .orison .o1 { transform: translate(-50%, -50%) rotate(0deg) translateX(34%); animation: sweep1 calc(22s / var(--tempo)) linear infinite; }
+    .orison .o2 { width: 9%;  transform: translate(-50%, -50%) rotate(0deg) translateX(-38%); animation: sweep2 calc(30s / var(--tempo)) linear infinite; filter: hue-rotate(30deg); }
+    .orison .o3 { width: 7%;  transform: translate(-50%, -50%) rotate(0deg) translateY(-42%); animation: sweep3 calc(36s / var(--tempo)) linear infinite; filter: hue-rotate(-20deg); }
+
+    @keyframes orbit { to { transform: rotate(360deg); } }
+    @keyframes breathe { 0%,100%{ transform: scale(1);} 50%{ transform: scale(1.03);} }
+    @keyframes sweep1 { to { transform: translate(-50%, -50%) rotate(360deg) translateX(34%); } }
+    @keyframes sweep2 { to { transform: translate(-50%, -50%) rotate(-360deg) translateX(-38%); } }
+    @keyframes sweep3 { to { transform: translate(-50%, -50%) rotate(360deg) translateY(-42%); } }
+
+    /* Meta */
+    .orison .meta {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 4px 2px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .orison .hint { opacity: 0.85; }
+
+    /* Glow edge */
+    .orison .frame::before {
       content: "";
       position: absolute;
       inset: -1px;
-      border-radius: 20px;
+      border-radius: 24px;
       background:
-        conic-gradient(from var(--spin, 0deg),
-          var(--g1), var(--g2), var(--g3), var(--g1));
+        conic-gradient(from var(--twist, 0deg), var(--g1), var(--g2), var(--g3), var(--g1));
       -webkit-mask:
         linear-gradient(#000 0 0) content-box,
         linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
               mask-composite: exclude;
-      padding: 1px; /* creates the gradient border */
-      filter: blur(10px) saturate(1.1);
+      padding: 1px;
+      filter: blur(12px) saturate(1.08);
       pointer-events: none;
-      opacity: 0.65;
+      opacity: 0.7;
       transition: opacity 300ms ease;
     }
-    .hikari:hover .stage::before { opacity: 0.9; }
+    .orison:hover .frame::before { opacity: 0.95; }
 
-    /* Canvas */
-    .hikari .silk {
-      position: absolute;
-      inset: 0;
-      border-radius: 20px;
-      z-index: 0;
-      pointer-events: none;
+    /* Themes */
+    .orison.pearl { /* default soft daylight */
+      --bg0: #f6f9ff; --bg1: #ffffff; --ink:#0a1220; --muted:#5d6b7a; --accent:#0a7bd9;
+      --g1:#ffd492; --g2:#ff91ca; --g3:#8ad8ff;
     }
-
-    /* Layout */
-    .hikari .wrap {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      align-items: center;
-      gap: clamp(18px, 4.2vw, 44px);
-    }
-    @media (max-width: 860px) {
-      .hikari .wrap { grid-template-columns: 1fr; }
-      .hikari .poster { order: -1; }
-    }
-
-    /* Card */
-    .hikari .card {
-      position: relative;
-      background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.86));
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: clamp(18px, 3.2vw, 28px);
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.4),
-        0 14px 30px rgba(12, 45, 70, 0.08);
-      transform-style: preserve-3d;
-      will-change: transform;
-    }
-    .hikari .eyebrow {
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      opacity: 0.86;
-    }
-    .hikari .spark {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle, var(--g1), var(--g2) 60%);
-      box-shadow: 0 0 0 4px rgba(255, 186, 107, 0.18);
-    }
-    .hikari h1 {
-      margin: 8px 0 6px 0;
-      font-size: clamp(28px, 5vw, 64px);
-      line-height: 1.02;
-      letter-spacing: -0.02em;
-      font-weight: 900;
-      background: linear-gradient(92deg, var(--ink) 0%, var(--g2) 60%, var(--g3) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .hikari .lead {
-      margin: 8px 0 18px 0;
-      color: var(--muted);
-      font-size: clamp(14px, 1.6vw, 18px);
-      line-height: 1.6;
-    }
-
-    /* Controls */
-    .hikari .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 8px;
-    }
-    .hikari .chip {
-      --bd: rgba(11, 27, 38, 0.12);
-      appearance: none;
-      border: 1px solid var(--bd);
-      color: var(--ink);
+    .orison.cobalt {
+      --bg0:#0d1b2a; --bg1:#0f2235; --ink:#e9f1ff; --muted:#aab9ce; --accent:#66e2ff;
+      --g1:#66e2ff; --g2:#57bfff; --g3:#8cf0d2; --ringB: rgba(255,255,255,0.1);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 13px;
-      cursor: pointer;
-      transition: transform 140ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
-      box-shadow: 0 6px 16px rgba(5, 20, 30, 0.06);
+        radial-gradient(120% 100% at 10% 0%, rgba(32, 52, 73, 0.7), transparent 40%),
+        radial-gradient(140% 110% at 90% 100%, rgba(24, 116, 205, 0.5), transparent 45%),
+        linear-gradient(180deg, #0b1522, #0f2235);
     }
-    .hikari .chip:hover { transform: translateY(-1px); border-color: rgba(11,27,38,0.22); }
-    .hikari .chip[aria-pressed="true"] {
-      border-color: transparent;
+    .orison.velvet {
+      --bg0:#1b0f21; --bg1:#2a1434; --ink:#ffefff; --muted:#d2b9da; --accent:#ff8cc6;
+      --g1:#ffb3d1; --g2:#c59bff; --g3:#ffd38e; --ringB: rgba(255,255,255,0.12);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.78)) padding-box,
-        linear-gradient(90deg, var(--g1), var(--g2), var(--g3)) border-box;
-      border: 2px solid transparent;
-      box-shadow: 0 10px 24px rgba(5, 20, 30, 0.12);
-    }
-    .hikari .ghost {
-      background: transparent;
-      border-style: dashed;
-      opacity: 0.8;
+        radial-gradient(120% 100% at 10% 0%, rgba(76, 23, 102, 0.6), transparent 40%),
+        radial-gradient(140% 110% at 90% 100%, rgba(255, 140, 198, 0.4), transparent 45%),
+        linear-gradient(180deg, #1b0f21, #2a1434);
     }
 
-    /* Poster glyph */
-    .hikari .poster {
-      position: relative;
-      width: min(480px, 92%);
-      aspect-ratio: 1/1;
-      margin-inline: auto;
-      border-radius: 18px;
-      background:
-        radial-gradient(60% 60% at 50% 50%, rgba(255,255,255,0.65), rgba(255,255,255,0.35) 60%, rgba(255,255,255,0.2) 100%),
-        linear-gradient(120deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
-      border: 1px solid var(--line);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5), 0 14px 30px rgba(12,45,70,0.08);
-      overflow: hidden;
-    }
-    .hikari .orb {
-      position: absolute;
-      inset: 18%;
-      border-radius: 50%;
-      background:
-        radial-gradient(closest-side, rgba(255,255,255,0.85), transparent 60%),
-        conic-gradient(from var(--spin, 0deg), var(--g1), var(--g2), var(--g3), var(--g1));
-      filter: saturate(1.05) blur(0.2px);
-      box-shadow: 0 14px 40px rgba(7, 28, 44, 0.12);
-      animation: breathe 8s ease-in-out infinite;
-    }
-    .hikari .ring {
-      position: absolute;
-      inset: 6%;
-      border-radius: 50%;
-      border: 1px dashed rgba(11,27,38,0.15);
-      mix-blend-mode: multiply;
-      animation: spin 22s linear infinite;
-    }
-    .hikari .ring:nth-child(3) { inset: 2%; animation-duration: 36s; animation-direction: reverse; opacity: 0.6; }
+    /* State classes */
+    .orison.paused .ring,
+    .orison.paused .glow,
+    .orison.paused .o1,
+    .orison.paused .o2,
+    .orison.paused .o3 { animation-play-state: paused; }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes breathe {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.03); }
-    }
+    .orison.minimal .frame::before { opacity: 0.35; filter: blur(8px) saturate(1); }
+    .orison.minimal .glow { filter: blur(14px) saturate(1); opacity: 0.7; }
+    .orison.minimal .orb::before { box-shadow: inset 0 0 8px rgba(255,255,255,0.4), 0 8px 16px rgba(8, 20, 38, 0.12); }
+    .orison.minimal .mesh { opacity: 0.5; mix-blend-mode: normal; }
 
-    /* Meta */
-    .hikari .meta {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 2px 2px 2px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .hikari .hint {
-      opacity: 0.85;
-    }
-
-    /* Modes */
-    .hikari.sunrise { --accent:#e46e2b; --g1:#ffb86b; --g2:#ff7aa3; --g3:#7dd3fc; }
-    .hikari.noon     { --accent:#1b7bdc; --g1:#8effc1; --g2:#5bbcff; --g3:#6b9bff; }
-    .hikari.dusk     { --accent:#8457ff; --g1:#b28dff; --g2:#ff8fb0; --g3:#ffd080; }
-
-    .hikari.paused .stage::before,
-    .hikari.paused .orb,
-    .hikari.paused .ring { animation-play-state: paused; }
-    .hikari.calm .stage::before { opacity: 0.5; }
-
-    /* Accessible motion */
+    /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      .hikari .stage::before, .hikari .orb, .hikari .ring { animation: none !important; }
+      .orison .ring, .orison .glow, .orison .o1, .orison .o2, .orison .o3 { animation: none !important; }
+      .orison .halo:hover { transform: none !important; }
     }
   </style>
 
-  <div class="stage">
-    <canvas class="silk" aria-hidden="true"></canvas>
+  <div class="frame">
+    <canvas class="mesh" aria-hidden="true"></canvas>
 
-    <div class="wrap">
-      <div class="card" id="tilt">
-        <div class="eyebrow"><span class="spark"></span> Daybreak UI</div>
-        <h1>Bright. Crisp. Playfully precise.</h1>
-        <p class="lead">A kinetic poster for your interface—soft edges, clean type, and color that quietly celebrates motion.</p>
+    <div class="content">
+      <div class="copy">
+        <div class="eyebrow"><span class="dot"></span> Lumen Atelier</div>
+        <h1>Soft Motion. Clear Intent.</h1>
+        <p class="lead">A contemplative hero for modern interfaces—glasslight rings, quiet color, and choreography you can tune.</p>
 
-        <div class="controls" role="group" aria-label="Theme">
-          <button class="chip" data-theme="sunrise" aria-pressed="true">Sunrise</button>
-          <button class="chip" data-theme="noon" aria-pressed="false">Noon</button>
-          <button class="chip" data-theme="dusk" aria-pressed="false">Dusk</button>
-          <button class="chip ghost" id="motion" aria-pressed="false">Pause motion</button>
-          <button class="chip ghost" id="calm" aria-pressed="false">Calm visuals</button>
+        <div class="controls" role="group" aria-label="Modes">
+          <button class="chip" data-theme="pearl" aria-pressed="true">Pearl</button>
+          <button class="chip" data-theme="cobalt" aria-pressed="false">Cobalt</button>
+          <button class="chip" data-theme="velvet" aria-pressed="false">Velvet</button>
+          <button class="chip ghost" id="pause" aria-pressed="false">Pause</button>
+          <button class="chip ghost" id="minimal" aria-pressed="false">Minimal</button>
+          <label class="tempo" for="tempo">
+            Tempo
+            <input id="tempo" type="range" min="0.4" max="1.8" step="0.1" value="1" />
+          </label>
         </div>
       </div>
 
-      <div class="poster" aria-hidden="true">
-        <div class="ring"></div>
-        <div class="ring"></div>
-        <div class="orb"></div>
+      <div class="halo-wrap">
+        <div class="halo" id="halo">
+          <div class="glow"></div>
+
+          <svg class="rings" viewBox="-50 -50 100 100" aria-hidden="true">
+            <defs>
+              <linearGradient id="strokeGrad" x1="-50" y1="0" x2="50" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="var(--g1)"/>
+                <stop offset="50%" stop-color="var(--g2)"/>
+                <stop offset="100%" stop-color="var(--g3)"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring" r="40" stroke="url(#strokeGrad)"></circle>
+            <circle class="ring alt" r="30" stroke="var(--ringB)"></circle>
+          </svg>
+
+          <div class="orb o1" aria-hidden="true"></div>
+          <div class="orb o2" aria-hidden="true"></div>
+          <div class="orb o3" aria-hidden="true"></div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="meta">
-    <span id="last-updated">Last updated: 2025-11-13 08:31:24 EST</span>
-    <span class="hint">Tip: Move your cursor—tilt the card and steer the color threads.</span>
+    <span id="last-updated">Last updated: 2025-11-13 09:18:01 EST</span>
+    <span class="hint">Tip: Move your cursor over the halo—shift the rings, tilt the glass, and tune the tempo.</span>
   </div>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.hikari');
-      const canvas = root.querySelector('.silk');
-      const ctx = canvas.getContext('2d');
-      const tilt = root.querySelector('#tilt');
+      const root = document.currentScript.closest('.orison');
+      const mesh = root.querySelector('.mesh');
+      const ctx = mesh.getContext('2d');
+      const halo = root.querySelector('#halo');
+      const pauseBtn = root.querySelector('#pause');
+      const minimalBtn = root.querySelector('#minimal');
+      const tempo = root.querySelector('#tempo');
       const themeBtns = [...root.querySelectorAll('.chip[data-theme]')];
-      const motionBtn = root.querySelector('#motion');
-      const calmBtn = root.querySelector('#calm');
 
       // Timestamp
       const lu = root.querySelector('#last-updated');
@@ -362,124 +464,175 @@
       }) + ' ' + tzAbbr(now);
 
       // Themes
-      const THEMES = { sunrise:1, noon:1, dusk:1 };
+      const THEMES = { pearl:1, cobalt:1, velvet:1 };
       function setTheme(name) {
         if (!THEMES[name]) return;
-        root.classList.remove('sunrise', 'noon', 'dusk');
+        root.classList.remove('pearl', 'cobalt', 'velvet');
         root.classList.add(name);
         themeBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.theme === name)));
       }
       themeBtns.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.theme)));
 
-      // Motion + Calm
+      // State
       let paused = false;
-      motionBtn.addEventListener('click', () => {
+      const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      pauseBtn.addEventListener('click', () => {
         paused = !paused;
         root.classList.toggle('paused', paused);
-        motionBtn.setAttribute('aria-pressed', String(paused));
-        motionBtn.textContent = paused ? 'Resume motion' : 'Pause motion';
-      });
-      calmBtn.addEventListener('click', () => {
-        const next = !root.classList.contains('calm');
-        root.classList.toggle('calm', next);
-        calmBtn.setAttribute('aria-pressed', String(next));
-        calmBtn.textContent = next ? 'Resume intensity' : 'Calm visuals';
+        pauseBtn.setAttribute('aria-pressed', String(paused));
+        pauseBtn.textContent = paused ? 'Resume' : 'Pause';
       });
 
-      // Resize canvas
+      minimalBtn.addEventListener('click', () => {
+        const next = !root.classList.contains('minimal');
+        root.classList.toggle('minimal', next);
+        minimalBtn.setAttribute('aria-pressed', String(next));
+        minimalBtn.textContent = next ? 'Restore' : 'Minimal';
+      });
+
+      tempo.addEventListener('input', () => {
+        root.style.setProperty('--tempo', tempo.value);
+      });
+
+      // Pointer-driven tilt + twist
+      let mx = 0.5, my = 0.5, hasPointer = false;
+      root.addEventListener('pointermove', (e) => {
+        const r = halo.getBoundingClientRect();
+        mx = (e.clientX - r.left) / r.width;
+        my = (e.clientY - r.top) / r.height;
+        mx = Math.max(0, Math.min(1, mx));
+        my = Math.max(0, Math.min(1, my));
+        hasPointer = true;
+
+        const rx = ((my - 0.5) * -10).toFixed(2) + 'deg';
+        const ry = ((mx - 0.5) * 12).toFixed(2) + 'deg';
+        halo.style.setProperty('--rx', rx);
+        halo.style.setProperty('--ry', ry);
+
+        const twist = ((mx - 0.5) * 140 + (my - 0.5) * 80).toFixed(2) + 'deg';
+        root.style.setProperty('--twist', twist);
+      }, { passive: true });
+      root.addEventListener('pointerleave', () => { hasPointer = false; });
+
+      // Backdrop generative mesh
       const DPR = Math.min(window.devicePixelRatio || 1, 2);
       function fit() {
-        const r = canvas.getBoundingClientRect();
-        canvas.width = Math.max(1, Math.floor(r.width * DPR));
-        canvas.height = Math.max(1, Math.floor(r.height * DPR));
+        const r = mesh.getBoundingClientRect();
+        mesh.width = Math.max(1, Math.floor(r.width * DPR));
+        mesh.height = Math.max(1, Math.floor(r.height * DPR));
       }
       fit();
       addEventListener('resize', fit);
 
-      // Pointer-driven tilt and field
-      let mx = 0.5, my = 0.4, hasPointer = false;
-      root.addEventListener('pointermove', (e) => {
-        const r = root.getBoundingClientRect();
-        mx = (e.clientX - r.left) / r.width;
-        my = (e.clientY - r.top) / r.height;
-        hasPointer = true;
-        // Rotate border gradient
-        const deg = (mx - 0.5) * 40 + (my - 0.5) * 40;
-        root.style.setProperty('--spin', deg.toFixed(2) + 'deg');
-      });
-      root.addEventListener('pointerleave', () => { hasPointer = false; });
-
-      // Tilt card
-      function tiltUpdate() {
-        const r = tilt.getBoundingClientRect();
-        const cx = r.left + r.width / 2;
-        const cy = r.top + r.height / 2;
-        let dx = (mx * r.width + r.left - cx) / r.width;
-        let dy = (my * r.height + r.top - cy) / r.height;
-        if (!hasPointer) { dx *= 0.2; dy *= 0.2; }
-        tilt.style.transform =
-          'perspective(900px) rotateX(' + (-dy * 6).toFixed(2) + 'deg) rotateY(' + (dx * 8).toFixed(2) + 'deg)';
-        requestAnimationFrame(tiltUpdate);
+      const POINTS = [];
+      function initPoints() {
+        POINTS.length = 0;
+        const count = Math.floor((mesh.width * mesh.height) / (18000 / DPR)) + 24;
+        for (let i = 0; i < count; i++) {
+          POINTS.push({
+            x: Math.random() * mesh.width,
+            y: Math.random() * mesh.height,
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4
+          });
+        }
       }
-      tiltUpdate();
+      initPoints();
+      addEventListener('resize', initPoints);
 
-      // Generative silk threads
-      let t = Math.random() * 1000;
-      const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      function threadColor(stops) {
-        const g = ctx.createLinearGradient(0, 0, canvas.width, 0);
+      function themeGradient() {
+        const g = ctx.createLinearGradient(0, 0, mesh.width, 0);
         const style = getComputedStyle(root);
-        const c1 = style.getPropertyValue('--g1').trim();
-        const c2 = style.getPropertyValue('--g2').trim();
-        const c3 = style.getPropertyValue('--g3').trim();
-        g.addColorStop(0, c1); g.addColorStop(0.5, c2); g.addColorStop(1, c3);
+        g.addColorStop(0, style.getPropertyValue('--g1').trim());
+        g.addColorStop(0.5, style.getPropertyValue('--g2').trim());
+        g.addColorStop(1, style.getPropertyValue('--g3').trim());
         return g;
       }
-      function draw() {
-        if (!canvas.width || !canvas.height) return;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        const W = canvas.width, H = canvas.height;
-        const cx = mx * W, cy = my * H;
-        const lines = 7;
-        ctx.globalCompositeOperation = 'lighter';
+      let t = Math.random() * 1000;
 
-        for (let i = 0; i < lines; i++) {
-          const phase = t * 0.6 + i * 0.8;
-          const amp = (H * 0.06) + i * 3;
-          const freq = 0.002 + i * 0.0006;
+      function drawMesh() {
+        if (!mesh.width || !mesh.height) return;
+        ctx.clearRect(0, 0, mesh.width, mesh.height);
 
-          ctx.beginPath();
-          for (let x = 0; x <= W; x += 8) {
-            const dist = Math.abs(x - cx) / W;
-            const bell = Math.exp(-dist * 5);
-            const y =
-              H * 0.5
-              + Math.sin(x * freq + phase) * amp * (0.6 + 0.4 * bell)
-              + (cy - H * 0.5) * 0.2 * bell;
-            if (x === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
+        const g = themeGradient();
+        const maxDist = Math.min(mesh.width, mesh.height) * 0.14;
+
+        // Update positions
+        for (const p of POINTS) {
+          // mild attraction to pointer when hovering
+          if (hasPointer) {
+            const px = mx * mesh.width;
+            const py = my * mesh.height;
+            const dx = px - p.x, dy = py - p.y;
+            const dist = Math.hypot(dx, dy) + 0.0001;
+            const pull = Math.exp(-(dist / (maxDist * 1.4)));
+            p.vx += (dx / dist) * 0.02 * pull;
+            p.vy += (dy / dist) * 0.02 * pull;
           }
-          ctx.lineWidth = 1.2 + i * 0.35;
-          ctx.strokeStyle = threadColor();
-          ctx.globalAlpha = 0.14 + i * 0.04;
-          ctx.stroke();
+
+          p.x += p.vx;
+          p.y += p.vy;
+
+          // subtle noise drift
+          p.vx += Math.sin((p.y + t) * 0.001) * 0.02;
+          p.vy += Math.cos((p.x - t) * 0.001) * 0.02;
+
+          // friction + bounds
+          p.vx *= 0.995;
+          p.vy *= 0.995;
+          if (p.x < 0 || p.x > mesh.width) { p.vx *= -1; p.x = Math.max(0, Math.min(mesh.width, p.x)); }
+          if (p.y < 0 || p.y > mesh.height) { p.vy *= -1; p.y = Math.max(0, Math.min(mesh.height, p.y)); }
+        }
+
+        // Draw connections
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = g;
+        ctx.globalAlpha = 0.22;
+        for (let i = 0; i < POINTS.length; i++) {
+          const a = POINTS[i];
+          for (let j = i + 1; j < POINTS.length; j++) {
+            const b = POINTS[j];
+            const dx = a.x - b.x, dy = a.y - b.y;
+            const d = Math.hypot(dx, dy);
+            if (d < maxDist) {
+              const fade = 1 - d / maxDist;
+              ctx.globalAlpha = 0.08 + fade * 0.18;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
+          }
+        }
+        // Draw nodes
+        ctx.globalAlpha = 0.35;
+        for (const p of POINTS) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 1.3, 0, Math.PI * 2);
+          ctx.fillStyle = g;
+          ctx.fill();
         }
         ctx.globalAlpha = 1;
-        ctx.globalCompositeOperation = 'source-over';
       }
 
       function loop() {
         if (!paused && !prefersReduced) {
-          t += 0.008;
+          t += 0.8 * (parseFloat(getComputedStyle(root).getPropertyValue('--tempo')) || 1);
         }
-        draw();
+        drawMesh();
         requestAnimationFrame(loop);
       }
+
+      // Initialize
+      setTheme('pearl');
+      root.style.setProperty('--tempo', tempo.value);
       loop();
 
-      // Initialize theme
-      setTheme('sunrise');
+      // Recreate gradient stops when theme changes (force redraw)
+      const observer = new MutationObserver(drawMesh);
+      observer.observe(root, { attributes: true, attributeFilter: ['class', 'style'] });
     }());
   </script>
 </section>
