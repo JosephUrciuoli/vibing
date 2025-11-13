@@ -73,7 +73,346 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-11-13 06:16:19 EST</span></div>
+<section class="atelier" aria-label="Luminous Interface">
+  <style>
+    .atelier {
+      --hue: 210;
+      --accent: hsl(var(--hue) 80% 64%);
+      --accent-2: hsl(calc(var(--hue) + 28) 80% 58%);
+      --ink: #eaf1ff;
+      --muted: rgba(235, 244, 255, 0.72);
+      --panel: rgba(255, 255, 255, 0.06);
+      --stroke: rgba(255, 255, 255, 0.18);
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      isolation: isolate;
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Ambient background */
+    .atelier .bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(120% 120% at var(--mx, 35%) var(--my, 35%), hsla(var(--hue), 90%, 60%, 0.26), transparent 60%),
+        radial-gradient(120% 120% at calc(100% - var(--mx, 35%)) calc(100% - var(--my, 35%)), hsla(calc(var(--hue) + 40), 90%, 50%, 0.22), transparent 60%),
+        linear-gradient(155deg, #070b14, #0a1020 50%, #0a1428 85%, #070b14);
+      transition: filter 400ms ease, opacity 400ms ease;
+      pointer-events: none;
+    }
+    .atelier .bg::before,
+    .atelier .bg::after {
+      content: "";
+      position: absolute;
+      inset: -25%;
+      background:
+        radial-gradient(closest-side, hsla(calc(var(--hue) + 80), 80%, 60%, 0.22), transparent 60%);
+      filter: blur(44px) saturate(1.1);
+      animation: float1 18s ease-in-out infinite;
+      opacity: 0.55;
+      mix-blend-mode: screen;
+      will-change: transform, filter;
+    }
+    .atelier .bg::after {
+      animation: float2 26s ease-in-out infinite;
+      background:
+        radial-gradient(closest-side, hsla(calc(var(--hue) - 40), 80%, 55%, 0.18), transparent 60%);
+      opacity: 0.4;
+    }
+    @keyframes float1 {
+      0%, 100% { transform: translate(-6%, -2%) rotate(0deg) scale(1); }
+      50% { transform: translate(6%, 4%) rotate(10deg) scale(1.05); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translate(6%, 2%) rotate(0deg) scale(1); }
+      50% { transform: translate(-4%, -6%) rotate(-12deg) scale(0.96); }
+    }
+
+    /* Layout */
+    .atelier .grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(20px, 4vw, 40px);
+      padding: clamp(20px, 3.2vw, 36px);
+      z-index: 1;
+    }
+    @media (max-width: 860px) {
+      .atelier .grid { grid-template-columns: 1fr; }
+      .atelier .orbital { margin-inline: auto; order: -1; }
+    }
+
+    /* Panel and typography */
+    .atelier .panel {
+      background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.03));
+      border: 1px solid var(--stroke);
+      border-radius: 16px;
+      padding: clamp(18px, 2.6vw, 28px);
+      backdrop-filter: blur(14px) saturate(1.25);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03), 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .atelier h1 {
+      margin: 0 0 8px 0;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+      font-size: clamp(28px, 4.6vw, 56px);
+      background: linear-gradient(92deg, var(--ink) 0%, var(--accent) 55%, var(--accent-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 18px rgba(112, 162, 255, 0.16);
+    }
+    .atelier p.lead {
+      margin: 6px 0 16px 0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.5vw, 18px);
+      line-height: 1.55;
+    }
+
+    /* Chips */
+    .atelier .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0 18px 0;
+    }
+    .atelier .chip {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      color: #dbe6ff;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      box-shadow: 0 8px 14px rgba(0, 0, 0, 0.15);
+      transform: translateY(0);
+      animation: bob 6s ease-in-out infinite;
+      backdrop-filter: blur(8px);
+    }
+    .atelier .chip:nth-child(2) { animation-delay: 0.6s; }
+    .atelier .chip:nth-child(3) { animation-delay: 1.2s; }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    /* Controls */
+    .atelier .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .atelier .btn {
+      appearance: none;
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--ink);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03));
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
+      will-change: transform;
+      position: relative;
+      overflow: hidden;
+    }
+    .atelier .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.36);
+      box-shadow: 0 10px 22px rgba(46, 115, 255, 0.22);
+    }
+    .atelier .btn.primary {
+      background:
+        linear-gradient(180deg, hsla(var(--hue), 80%, 60%, 0.28), hsla(var(--hue), 80%, 46%, 0.18));
+      border-color: hsla(var(--hue), 90%, 65%, 0.45);
+    }
+    .atelier .btn.ghost {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+
+    /* Orbit visual */
+    .atelier .orbital {
+      position: relative;
+      width: min(360px, 90%);
+      aspect-ratio: 1/1;
+      margin-left: auto;
+      filter: drop-shadow(0 20px 50px rgba(0,0,0,0.45));
+    }
+    .atelier .halo {
+      position: absolute;
+      inset: 14%;
+      background: radial-gradient(circle at 50% 60%, hsla(var(--hue), 90%, 65%, 0.35), transparent 65%);
+      filter: blur(18px);
+      opacity: 0.6;
+      border-radius: 50%;
+    }
+    .atelier .core {
+      position: absolute;
+      inset: 38%;
+      border-radius: 50%;
+      background:
+        radial-gradient(60% 60% at 35% 35%, #ffffff, rgba(255,255,255,0.7) 35%, rgba(255,255,255,0.25) 60%, transparent 70%),
+        radial-gradient(circle at 70% 65%, hsla(var(--hue), 80%, 70%, 0.22), transparent 60%);
+      box-shadow: inset 0 0 24px rgba(255,255,255,0.35), 0 10px 40px hsla(var(--hue), 70%, 60%, 0.25);
+    }
+    .atelier .ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.16);
+      mask:
+        radial-gradient(closest-side, rgba(0,0,0,0) 58%, rgba(0,0,0,1) 59%);
+      animation: spin var(--dur) linear infinite;
+      transform-origin: 50% 50%;
+      backdrop-filter: blur(2px);
+    }
+    .atelier .r1 { --dur: 16s; }
+    .atelier .r2 { --dur: 24s; transform: scale(0.74); animation-direction: reverse; }
+    .atelier .r3 { --dur: 32s; transform: scale(0.48); }
+    .atelier .dot {
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      translate: -50% 0;
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle, #fff, var(--accent) 60%, transparent 62%);
+      border-radius: 50%;
+      box-shadow:
+        0 0 12px var(--accent),
+        0 0 28px hsla(var(--hue), 90%, 65%, 0.65);
+    }
+    @keyframes spin {
+      from { rotate: 0deg; }
+      to { rotate: 360deg; }
+    }
+
+    /* Footer/meta */
+    .atelier .meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 16px 16px 16px;
+      color: rgba(230, 240, 255, 0.7);
+      font-size: 12px;
+    }
+    .atelier .meta .tip {
+      opacity: 0.8;
+    }
+
+    /* Modes */
+    .atelier.pulse .bg { filter: brightness(1.08) saturate(1.2); }
+    .atelier.pulse .r1 { animation-duration: 12s; }
+    .atelier.pulse .r2 { animation-duration: 18s; }
+    .atelier.pulse .r3 { animation-duration: 24s; }
+    .atelier.calm .bg,
+    .atelier.calm .bg::before,
+    .atelier.calm .bg::after { animation-play-state: paused; }
+    .atelier.calm .ring { animation-play-state: paused; }
+    .atelier.calm { filter: saturate(0.92); }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .atelier .bg::before, .atelier .bg::after,
+      .atelier .ring, .atelier .chip { animation: none !important; }
+    }
+  </style>
+
+  <div class="bg" aria-hidden="true"></div>
+
+  <div class="grid">
+    <div class="panel">
+      <h1>Lucid surfaces. Quiet power.</h1>
+      <p class="lead">A living canvas that responds to your touch—subtle light, precise motion, and typography that breathes.</p>
+
+      <div class="chips" aria-hidden="true">
+        <span class="chip">Fine typography</span>
+        <span class="chip">Responsive motion</span>
+        <span class="chip">Ambient depth</span>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="play" type="button">Play the light</button>
+        <a href="#" class="btn ghost" id="calm-toggle" aria-pressed="false">Calm mode</a>
+      </div>
+    </div>
+
+    <div class="orbital" aria-hidden="true">
+      <div class="halo"></div>
+      <div class="core"></div>
+      <div class="ring r1"><span class="dot"></span></div>
+      <div class="ring r2"><span class="dot"></span></div>
+      <div class="ring r3"><span class="dot"></span></div>
+    </div>
+  </div>
+
+  <div class="meta">
+    <span id="last-updated">Last updated: 2025-11-13 07:38:56 EST</span>
+    <span class="tip">Tip: Move your cursor to steer the aurora.</span>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.currentScript.closest('.atelier');
+      const calmToggle = root.querySelector('#calm-toggle');
+      const play = root.querySelector('#play');
+
+      // Pointer-driven light
+      root.addEventListener('pointermove', (e) => {
+        const r = root.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width) * 100;
+        const y = ((e.clientY - r.top) / r.height) * 100;
+        root.style.setProperty('--mx', x + '%');
+        root.style.setProperty('--my', y + '%');
+      });
+
+      // Time stamp
+      const lu = root.querySelector('#last-updated');
+      function tzAbbr(d) {
+        try { return d.toLocaleTimeString([], { timeZoneName: 'short' }).split(' ').pop(); }
+        catch { return ''; }
+      }
+      const now = new Date();
+      lu.textContent = 'Last updated: ' + now.toLocaleString([], {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      }) + ' ' + tzAbbr(now);
+
+      // Controls
+      play.addEventListener('click', () => {
+        root.classList.toggle('pulse');
+      });
+
+      calmToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        const next = !root.classList.contains('calm');
+        root.classList.toggle('calm', next);
+        calmToggle.setAttribute('aria-pressed', String(next));
+        calmToggle.textContent = next ? 'Resume motion' : 'Calm mode';
+      });
+
+      // Gentle hue breathing
+      const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!prefersReduced) {
+        let t = Math.random() * Math.PI * 2;
+        function tick() {
+          t += 0.004;
+          const h = 200 + 40 * Math.sin(t);
+          root.style.setProperty('--hue', h.toFixed(2));
+          requestAnimationFrame(tick);
+        }
+        tick();
+      }
+    }());
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
