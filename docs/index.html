@@ -73,510 +73,547 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="poster" data-theme="dawn" aria-label="Orbital Sonnet">
+<section id="atelier" data-theme="mist" aria-label="Liminal Field 685">
   <style>
-    /* ——— Design tokens ——— */
-    #poster {
-      --fg: #f7fbff;
-      --muted: #b9c7d8;
+    /* ——— Tokens ——— */
+    #atelier {
+      --ink: #ecf3ff;
+      --mute: #b7c4d6;
       --line: rgba(255,255,255,0.18);
-      --glass: rgba(255,255,255,0.08);
-      --a1: #ffd89b; /* overridden by theme */
-      --a2: #ff8fb1;
-      --a3: #9bd7ff;
-      --speed: 1;
-      --tx: 0deg;
-      --ty: 0deg;
+      --bg-1: #0a0e14;
+      --bg-2: #121a26;
+      --g-a: #8dd6ff;
+      --g-b: #b19cff;
+      --g-c: #ffacd2;
+      --g-d: #ffd39e;
+      --g-e: #9bffd3;
+      --radius: 34px;
       --depth: 800px;
+      --speed: 1;
+      --tilt-x: 0deg;
+      --tilt-y: 0deg;
 
       position: relative;
-      border-radius: 36px;
-      padding: clamp(18px, 4.8vw, 42px);
-      color: var(--fg);
+      border-radius: var(--radius);
+      padding: clamp(20px,4.8vw,44px);
+      color: var(--ink);
       background:
-        radial-gradient(160% 120% at 20% -10%, rgba(255,255,255,0.10), transparent 55%),
-        linear-gradient(180deg, #0a0c14, #0e1421 40%, #0b1020 100%);
+        radial-gradient(100% 120% at 80% -10%, rgba(255,255,255,0.08), transparent 50%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
       border: 1px solid var(--line);
-      box-shadow: 0 30px 120px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.05);
+      box-shadow:
+        0 28px 120px rgba(0,0,0,0.55),
+        inset 0 0 0 1px rgba(255,255,255,0.06);
       font: 500 15px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       overflow: hidden;
+      min-height: 560px;
       isolation: isolate;
-      min-height: 520px;
     }
 
     /* Themes */
-    #poster[data-theme="dawn"]  { --a1:#ffd89b; --a2:#ff8fb1; --a3:#fff6a9; }
-    #poster[data-theme="dusk"]  { --a1:#8b7cff; --a2:#66e0ff; --a3:#ff87d3; }
-    #poster[data-theme="ocean"] { --a1:#6de8ff; --a2:#5a7dff; --a3:#60ffc7; }
-    #poster[data-theme="ember"] { --a1:#ffae72; --a2:#ff6a96; --a3:#ffd27a; }
+    #atelier[data-theme="mist"] {
+      --bg-1:#0a0e14; --bg-2:#141e2a; --g-a:#8dd6ff; --g-b:#b19cff; --g-c:#ffacd2; --g-d:#ffd39e; --g-e:#9bffd3;
+    }
+    #atelier[data-theme="nocturne"] {
+      --bg-1:#070810; --bg-2:#0c1020; --g-a:#7aa2ff; --g-b:#4ef1ff; --g-c:#ba82ff; --g-d:#6cffc1; --g-e:#ffe674;
+    }
+    #atelier[data-theme="coral"] {
+      --bg-1:#140b0b; --bg-2:#2b0f19; --g-a:#ff8fa3; --g-b:#ffd39e; --g-c:#ff87d3; --g-d:#ffe37a; --g-e:#8df5ff;
+    }
+    #atelier[data-theme="meadow"] {
+      --bg-1:#0a1210; --bg-2:#0e1c17; --g-a:#9bffd3; --g-b:#6de8ff; --g-c:#ffd39e; --g-d:#b19cff; --g-e:#ffacd2;
+    }
 
-    /* Aurora background */
-    #poster .aurora,
-    #poster .grain {
-      position: absolute; inset: 0; pointer-events: none;
+    /* Halo grain + grid */
+    #atelier .grain, #atelier .grid {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
     }
-    #poster .aurora::before,
-    #poster .aurora::after {
-      content: "";
-      position: absolute; inset: -30%;
-      background:
-        conic-gradient(from 0turn at 60% 40%,
-          color-mix(in oklab, var(--a1) 48%, transparent) 0 10%,
-          color-mix(in oklab, var(--a2) 42%, transparent) 10% 40%,
-          color-mix(in oklab, var(--a3) 38%, transparent) 40% 66%,
-          transparent 66% 100%);
-      filter: blur(60px) saturate(120%);
-      mix-blend-mode: screen;
-      opacity: .6;
-      animation: sweep calc(46s / var(--speed)) linear infinite;
-    }
-    #poster .aurora::after {
-      inset: -24%;
-      filter: blur(40px);
-      opacity: .55;
-      animation-duration: calc(72s / var(--speed));
-      animation-direction: reverse;
-    }
-    @keyframes sweep { to { transform: rotate(1turn); } }
-
-    /* Subtle film grain (CSS only) */
-    #poster .grain {
+    #atelier .grain {
       background-image:
-        radial-gradient(1px 1px at 9% 17%, rgba(255,255,255,0.07), transparent),
-        radial-gradient(1px 1px at 73% 63%, rgba(255,255,255,0.06), transparent),
-        radial-gradient(1px 1px at 38% 84%, rgba(255,255,255,0.06), transparent),
-        radial-gradient(1px 1px at 91% 28%, rgba(255,255,255,0.05), transparent);
-      background-size: 180px 180px, 220px 220px, 210px 210px, 200px 200px;
+        radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.06), transparent 40%),
+        radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,0.05), transparent 40%),
+        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.05), transparent 40%),
+        radial-gradient(1px 1px at 90% 30%, rgba(255,255,255,0.05), transparent 40%);
+      background-size: 180px 180px, 220px 220px, 200px 200px, 210px 210px;
       mix-blend-mode: overlay;
-      opacity: .65;
-      animation: jitter calc(2.4s / var(--speed)) steps(2) infinite;
+      opacity: .7;
+      animation: jitter 2.4s steps(2) infinite;
     }
-    @keyframes jitter { 50% { transform: translate(.6px, .6px) } }
+    #atelier .grid::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(transparent 31px, rgba(255,255,255,0.06) 32px, transparent 33px) 0 0 / 100% 32px,
+        linear-gradient(90deg, transparent 31px, rgba(255,255,255,0.06) 32px, transparent 33px) 0 0 / 32px 100%;
+      opacity: .06;
+      mask: radial-gradient(180% 120% at 50% 10%, black, transparent 70%);
+    }
+    @keyframes jitter { 50% { transform: translate(.6px,.6px) } }
 
-    /* ——— Top bar ——— */
-    #poster .top {
+    /* Top bar */
+    #atelier .top {
       position: relative; z-index: 3;
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      margin-bottom: clamp(10px, 2vw, 18px);
+      margin-bottom: clamp(8px,2vw,16px);
     }
-    #poster .brand {
-      display: inline-flex; align-items: center; gap: 10px; color: var(--muted);
-      user-select: none; letter-spacing: .2px;
+    #atelier .brand {
+      display: inline-flex; align-items: center; gap: 10px; color: var(--mute);
+      letter-spacing: .2px; user-select: none;
     }
-    #poster .mark {
+    #atelier .sig {
       width: 28px; height: 28px; border-radius: 10px; position: relative; overflow: hidden;
       border: 1px solid var(--line);
       background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
-      box-shadow: 0 14px 28px color-mix(in oklab, var(--a1) 22%, transparent), inset 0 0 0 1px rgba(255,255,255,0.08);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.08);
     }
-    #poster .mark::after {
+    #atelier .sig::after {
       content: ""; position: absolute; inset: -40%;
-      background: conic-gradient(from 0turn, var(--a1), var(--a2), var(--a3), var(--a1));
-      filter: blur(14px); opacity: .9; animation: roll calc(16s / var(--speed)) linear infinite;
+      background: conic-gradient(from 0turn, var(--g-a), var(--g-b), var(--g-c), var(--g-d), var(--g-e), var(--g-a));
+      filter: blur(12px); opacity: .9; animation: roll 16s linear infinite;
     }
-    @keyframes roll { to { transform: rotate(1turn); } }
+    @keyframes roll { to { transform: rotate(1turn) } }
 
-    /* ——— Hero ——— */
-    #poster .hero {
-      position: relative; z-index: 3;
-      text-align: center; display: grid; gap: clamp(8px,2.2vw,14px);
-      margin: clamp(6px,2.4vw,16px) 0;
-      justify-items: center;
+    /* Hero */
+    #atelier .hero {
+      position: relative; z-index: 3; text-align: center;
+      display: grid; gap: clamp(8px,2.2vw,14px); justify-items: center;
+      margin: clamp(6px,2.6vw,18px) 0;
     }
-    #poster .kicker {
-      color: color-mix(in oklab, var(--fg) 86%, transparent);
+    #atelier .kicker {
+      color: color-mix(in oklab, var(--ink) 85%, transparent);
       font-weight: 800; letter-spacing: .22em; text-transform: uppercase;
-      font-size: clamp(11px, 2vw, 13px); opacity: .9;
+      font-size: clamp(11px,2vw,13px); opacity: .9;
     }
-    #poster .title {
+    #atelier .title {
       font-weight: 900; letter-spacing: -0.02em; line-height: .92;
-      font-size: clamp(34px, 7.4vw, 92px);
-      background: linear-gradient(90deg, var(--fg), var(--a1) 30%, var(--a2) 60%, var(--a3));
+      font-size: clamp(36px, 7.8vw, 96px);
+      background: linear-gradient(90deg, var(--ink), var(--g-a) 30%, var(--g-c) 60%, var(--g-d));
       -webkit-background-clip: text; background-clip: text; color: transparent;
       filter: drop-shadow(0 2px 12px rgba(0,0,0,0.28));
     }
-    #poster .subtitle {
-      color: var(--muted);
-      font-size: clamp(13px, 2vw, 18px);
-      max-width: 60ch;
+    #atelier .sub {
+      color: var(--mute); font-size: clamp(13px, 2vw, 18px); max-width: 62ch;
     }
 
-    /* ——— Orbital scene ——— */
-    #poster .scene {
+    /* Stage */
+    #atelier .stage {
       position: relative; z-index: 2;
       display: grid; place-items: center;
-      margin: clamp(8px,2.4vw,20px) 0;
-      min-height: clamp(260px, 48vmin, 520px);
+      margin: clamp(10px,2.8vw,22px) 0;
+      min-height: clamp(280px, 52vmin, 560px);
       perspective: var(--depth);
-      perspective-origin: 50% 40%;
     }
-    #poster .stage {
+    #atelier .frame {
       position: relative;
-      width: min(78vmin, 820px);
-      aspect-ratio: 1;
-      transform-style: preserve-3d;
-      transform: rotateX(var(--tx)) rotateY(var(--ty));
-      transition: transform .18s ease;
-      filter: drop-shadow(0 24px 64px rgba(0,0,0,0.35));
-    }
-    #poster .portal {
-      position: absolute; inset: 0; border-radius: 50%;
+      width: min(88vw, 980px);
+      aspect-ratio: 21/10;
+      border-radius: 24px;
+      border: 1px solid var(--line);
       background:
-        radial-gradient(closest-side, rgba(255,255,255,0.14), transparent 60%),
-        radial-gradient(70% 70% at 50% 50%,
-          color-mix(in oklab,var(--a2) 18%, transparent), transparent 60%);
-      border: 1px solid var(--line);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
-      backdrop-filter: blur(2px) saturate(108%);
+        radial-gradient(120% 100% at 50% 0%, rgba(255,255,255,0.08), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      box-shadow: 0 20px 64px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.06);
+      transform-style: preserve-3d;
+      transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+      transition: transform .2s ease;
+      overflow: hidden;
+    }
+    #atelier svg { width: 100%; height: 100%; display: block; }
+
+    /* Ribbons */
+    #atelier .glow { opacity: .44; filter: url(#soft); mix-blend-mode: screen; }
+    #atelier .stroke { opacity: .95; mix-blend-mode: screen; }
+    #atelier .caption {
+      position: absolute; bottom: 14px; left: 14px;
+      color: var(--mute); font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+      border: 1px solid var(--line); padding: 6px 10px; border-radius: 999px;
+      backdrop-filter: blur(4px) saturate(120%);
     }
 
-    #poster .rings { position: absolute; inset: 0; }
-    #poster .track {
-      position: absolute; top: 50%; left: 50%;
-      translate: -50% -50%;
-      width: calc(var(--r) * 2px);
-      height: calc(var(--r) * 2px);
-      border-radius: 50%;
-      border: 1px dashed rgba(255,255,255,0.18);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
-      opacity: .9;
-      pointer-events: none;
-    }
-    #poster .carrier {
-      position: absolute; top: 50%; left: 50%;
-      translate: -50% -50%;
-      width: calc(var(--r) * 2px);
-      height: calc(var(--r) * 2px);
-      animation: spin linear infinite;
-      animation-duration: calc(var(--d) * 1s / var(--speed));
-      transform-origin: center;
-      filter: drop-shadow(0 10px 22px rgba(0,0,0,0.35));
-    }
-    #poster .carrier.alt { animation-direction: reverse; }
-    #poster .carrier .planet {
-      position: absolute; top: 50%; left: 50%;
-      translate: calc(var(--r) * 1px) -50%;
-      width: var(--p); height: var(--p); border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--a1) 20%, var(--a2)) 48%, var(--a2) 88%);
-      box-shadow:
-        0 0 0 6px color-mix(in oklab, var(--a1) 20%, transparent),
-        0 16px 26px rgba(0,0,0,0.45);
-    }
-    #poster .carrier .trail {
-      position: absolute; top: 50%; left: 50%;
-      translate: calc(var(--r) * 1px) -50%;
-      width: 120px; height: 2px; border-radius: 2px;
-      background: linear-gradient(90deg, rgba(255,255,255,0.65), rgba(255,255,255,0));
-      transform-origin: left center;
-      rotate: -12deg;
-      opacity: .45;
-      filter: blur(.4px);
-    }
-    @keyframes spin { to { transform: rotate(1turn); } }
-
-    /* Core time display */
-    #poster .core {
-      position: absolute; inset: 24% 24%;
-      display: grid; place-items: center; border-radius: 50%;
-      background: radial-gradient(closest-side, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
-      border: 1px solid var(--line);
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.06),
-        0 18px 48px rgba(0,0,0,0.35);
-      backdrop-filter: blur(6px) saturate(120%);
-      text-align: center;
-      padding: 18px;
-    }
-    #poster .clock {
-      font-weight: 900; letter-spacing: -0.02em; line-height: 1;
-      font-size: clamp(26px, 7vmin, 64px);
-      background: linear-gradient(90deg, var(--fg), var(--a1) 40%, var(--a2) 72%, var(--a3));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-    }
-    #poster .motto { color: var(--muted); font-size: clamp(11px, 1.8vw, 13px); letter-spacing: .12em; text-transform: uppercase; margin-top: 6px; }
-
-    /* ——— Controls ——— */
-    #poster .controls {
+    /* Controls */
+    #atelier .controls {
       position: relative; z-index: 3;
-      display: grid; grid-template-columns: 1fr; gap: 12px; justify-items: center;
-      margin-top: clamp(10px, 2.4vw, 18px);
+      display: grid; gap: 12px; justify-items: center; margin-top: clamp(12px,2.6vw,20px);
     }
-    #poster .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: center; }
-    #poster .chip, #poster .swatch {
-      appearance: none; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
+    #atelier .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: center; }
+    #atelier .chip, #atelier .swatch {
+      appearance: none; cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none;
       padding: 10px 14px; border-radius: 14px;
       border: 1px solid var(--line);
       background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
-      color: var(--fg); font-weight: 800; letter-spacing: .2px; font-size: 12px;
+      color: var(--ink); font-weight: 800; letter-spacing: .2px; font-size: 12px;
       box-shadow: 0 10px 26px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.06);
       transition: transform .12s ease, box-shadow .25s ease, background .2s ease;
     }
-    #poster .chip:hover, #poster .swatch:hover { transform: translateY(-1px); box-shadow: 0 18px 36px rgba(0,0,0,0.55), 0 0 0 6px color-mix(in oklab, var(--a1) 24%, transparent); }
-    #poster .chip:active { transform: translateY(0); }
-    #poster .chip.primary {
+    #atelier .chip:hover, #atelier .swatch:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 36px rgba(0,0,0,0.55), 0 0 0 6px color-mix(in oklab, var(--g-a) 24%, transparent);
+    }
+    #atelier .chip:active { transform: translateY(0); }
+    #atelier .chip.primary {
       background:
         linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.10)),
-        linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
+        linear-gradient(90deg, var(--g-a), var(--g-c), var(--g-d));
       background-blend-mode: overlay, normal;
       color: #0b1020;
       border-color: rgba(255,255,255,0.22);
     }
-    #poster .swatch {
-      width: 28px; height: 28px; border-radius: 999px; border: 1px solid var(--line);
+    #atelier .swatch {
+      width: 28px; height: 28px; border-radius: 999px; padding: 0;
       background: var(--bg);
       box-shadow: 0 10px 22px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.08);
-      padding: 0;
     }
-    #poster .swatch.active::after { content: ""; position: absolute; inset: 3px; border: 2px solid rgba(255,255,255,0.85); border-radius: 999px; }
-    #poster .slider {
-      appearance: none; width: min(380px, 70vw); height: 10px; border-radius: 999px; background: rgba(255,255,255,0.1);
-      outline: none; border: 1px solid var(--line);
+    #atelier .swatch.active::after {
+      content: ""; position: absolute; inset: 3px; border: 2px solid rgba(255,255,255,0.85); border-radius: 999px;
+    }
+    #atelier .slider {
+      appearance: none; width: min(420px, 76vw); height: 10px; border-radius: 999px;
+      background: rgba(255,255,255,0.1); outline: none; border: 1px solid var(--line);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 6px 16px rgba(0,0,0,0.35);
     }
-    #poster .slider::-webkit-slider-thumb {
+    #atelier .slider::-webkit-slider-thumb {
       -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
-      background: linear-gradient(90deg, var(--a1), var(--a2));
-      border: 1px solid rgba(255,255,255,0.8);
-      box-shadow: 0 10px 20px color-mix(in oklab, var(--a1) 24%, transparent);
-      cursor: pointer;
+      background: linear-gradient(90deg, var(--g-a), var(--g-c)); border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 0 10px 20px color-mix(in oklab, var(--g-a) 24%, transparent); cursor: pointer;
     }
-    #poster .hint { color: var(--muted); font-size: 12px; }
+    #atelier .hint { color: var(--mute); font-size: 12px; }
 
-    /* ——— Footer ——— */
-    #poster .foot {
+    /* Footer */
+    #atelier .foot {
       position: relative; z-index: 3; margin-top: 18px;
-      display: flex; flex-direction: column; gap: 10px; align-items: center; color: var(--muted);
+      display: flex; flex-direction: column; gap: 10px; align-items: center; color: var(--mute);
     }
-    #poster .rule { height: 1px; width: 100%; border-radius: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); opacity: .7; }
-    #poster .meta {
+    #atelier .rule { height: 1px; width: 100%; border-radius: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); opacity: .7; }
+    #atelier .meta {
       display: inline-flex; gap: 10px; align-items: center; font-size: 12px;
       background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
       border: 1px solid var(--line); padding: 6px 10px; border-radius: 999px;
     }
-    #poster .tag {
+    #atelier .tag {
       padding: 4px 8px; border-radius: 999px; font-size: 11px; color: #0b1020;
-      background: linear-gradient(90deg, var(--a1), var(--a2));
-      box-shadow: 0 2px 10px color-mix(in oklab, var(--a1) 24%, transparent);
+      background: linear-gradient(90deg, var(--g-a), var(--g-c));
+      box-shadow: 0 2px 10px color-mix(in oklab, var(--g-a) 24%, transparent);
       font-weight: 800; letter-spacing: .3px;
     }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      #poster, #poster * { animation: none !important; transition: none !important; }
-      #poster .aurora { display: none; }
+      #atelier, #atelier * { animation: none !important; transition: none !important; }
+      #atelier .grain { display: none; }
     }
   </style>
 
-  <!-- Background layers -->
-  <div class="aurora" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
+  <div class="grid" aria-hidden="true"></div>
 
-  <!-- Top -->
   <div class="top">
     <div class="brand">
-      <span class="mark" aria-hidden="true"></span>
-      <span>Orbital Sonnet • Iteration 684</span>
+      <span class="sig" aria-hidden="true"></span>
+      <span>Liminal Field • Iteration 685</span>
     </div>
     <div class="brand" aria-hidden="true" style="gap:6px;">
-      <span class="mark" aria-hidden="true" style="width:22px;height:22px;border-radius:8px;"></span>
-      <span>Concentric Study</span>
+      <span class="sig" aria-hidden="true" style="width:22px;height:22px;border-radius:8px;"></span>
+      <span>Kinetic Lines Study</span>
     </div>
   </div>
 
-  <!-- Hero -->
   <div class="hero">
-    <div class="kicker">A circular meditation</div>
-    <h1 class="title">Make time feel spacious.</h1>
-    <p class="subtitle">Concentric rings drift at a human tempo. Tilt the scene with your cursor, tune the tempo, and change the sky.</p>
+    <div class="kicker">A generative reverie</div>
+    <h1 class="title">Lines that listen.</h1>
+    <p class="sub">Drag your gaze across the frame—three quiet ribbons respond, breathing at a human tempo. Change the sky. Tune the pulse.</p>
   </div>
 
-  <!-- Orbital scene -->
-  <div class="scene" id="scene">
-    <div class="stage" id="stage" aria-hidden="true">
-      <div class="portal"></div>
-      <div class="rings" id="rings"></div>
-      <div class="core" aria-live="polite">
-        <div class="clock" id="clock">00:00:00</div>
-        <div class="motto">Every orbit is a choice</div>
-      </div>
+  <div class="stage" id="stage">
+    <div class="frame" id="frame" aria-label="Generative ribbon field">
+      <svg id="flow" viewBox="0 0 1000 480" role="img" aria-describedby="flow-desc" preserveAspectRatio="none">
+        <desc id="flow-desc">Three animated, softly glowing lines sweep across, forming a calm, ambient motion.</desc>
+        <defs>
+          <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#8dd6ff"/>
+            <stop offset="100%" stop-color="#b19cff"/>
+          </linearGradient>
+          <linearGradient id="grad2" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#ffacd2"/>
+            <stop offset="100%" stop-color="#ffd39e"/>
+          </linearGradient>
+          <linearGradient id="grad3" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#9bffd3"/>
+            <stop offset="100%" stop-color="#8dd6ff"/>
+          </linearGradient>
+          <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="b"/>
+            <feMerge>
+              <feMergeNode in="b"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <g id="ribbons" aria-hidden="true">
+          <g class="r">
+            <path class="glow" stroke="url(#grad1)" stroke-linecap="round" stroke-linejoin="round" d="M0 0 L1000 0"></path>
+            <path class="stroke" stroke="url(#grad1)" stroke-linecap="round" stroke-linejoin="round" d="M0 0 L1000 0"></path>
+          </g>
+          <g class="r">
+            <path class="glow" stroke="url(#grad2)" stroke-linecap="round" stroke-linejoin="round" d="M0 0 L1000 0"></path>
+            <path class="stroke" stroke="url(#grad2)" stroke-linecap="round" stroke-linejoin="round" d="M0 0 L1000 0"></path>
+          </g>
+          <g class="r">
+            <path class="glow" stroke="url(#grad3)" stroke-linecap="round" stroke-linejoin="round" d="M0 0 L1000 0"></path>
+            <path class="stroke" stroke="url(#grad3)" stroke-linecap="round" stroke-linejoin="round" d="M0 0 L1000 0"></path>
+          </g>
+        </g>
+      </svg>
+      <div class="caption" aria-live="polite">Every curve remembers a breath</div>
     </div>
   </div>
 
-  <!-- Controls -->
   <div class="controls" role="group" aria-label="Controls">
     <div class="row" aria-label="Themes">
-      <button class="swatch active" data-theme="dawn" title="Dawn" style="--bg: linear-gradient(90deg,#ffd89b,#ff8fb1);"></button>
-      <button class="swatch" data-theme="dusk" title="Dusk" style="--bg: linear-gradient(90deg,#8b7cff,#66e0ff);"></button>
-      <button class="swatch" data-theme="ocean" title="Ocean" style="--bg: linear-gradient(90deg,#6de8ff,#5a7dff);"></button>
-      <button class="swatch" data-theme="ember" title="Ember" style="--bg: linear-gradient(90deg,#ffae72,#ff6a96);"></button>
+      <button class="swatch active" data-theme="mist" title="Mist" style="--bg: linear-gradient(90deg,#8dd6ff,#b19cff);"></button>
+      <button class="swatch" data-theme="nocturne" title="Nocturne" style="--bg: linear-gradient(90deg,#7aa2ff,#4ef1ff);"></button>
+      <button class="swatch" data-theme="coral" title="Coral" style="--bg: linear-gradient(90deg,#ff8fa3,#ffd39e);"></button>
+      <button class="swatch" data-theme="meadow" title="Meadow" style="--bg: linear-gradient(90deg,#9bffd3,#6de8ff);"></button>
       <button class="chip primary" id="pause">Pause</button>
       <button class="chip" id="shuffle">Shuffle</button>
     </div>
-    <div class="row" aria-label="Density and Tempo">
-      <input class="slider" id="density" type="range" min="3" max="12" step="1" value="7" aria-label="Orbit count">
-      <span class="hint" id="densityLabel">Rings: 7</span>
-    </div>
     <div class="row" aria-label="Tempo">
-      <input class="slider" id="speed" type="range" min="0.4" max="1.6" step="0.01" value="1" aria-label="Animation speed">
-      <span class="hint" id="speedLabel">Tempo: 1.00×</span>
+      <input class="slider" id="tempo" type="range" min="0.4" max="1.8" step="0.01" value="1" aria-label="Animation speed">
+      <span class="hint" id="tempoLabel">Tempo: 1.00×</span>
+    </div>
+    <div class="row" aria-label="Complexity and Weight">
+      <input class="slider" id="complexity" type="range" min="0" max="100" step="1" value="42" aria-label="Wave complexity">
+      <span class="hint" id="complexityLabel">Complexity: 42</span>
     </div>
   </div>
 
-  <!-- Footer -->
   <div class="foot">
     <div class="rule" aria-hidden="true"></div>
     <small class="meta">
       <span class="tag">Updated</span>
-      <span id="last-updated">Last updated: 2025-11-16 17:16:05 EST</span>
+      <span id="last-updated">Last updated: 2025-11-16 18:16:00 EST</span>
     </small>
   </div>
 
   <script>
     (function () {
-      const root = document.getElementById('poster');
-      const stage = root.querySelector('#stage');
-      const ringsEl = root.querySelector('#rings');
-      const clockEl = root.querySelector('#clock');
-      const density = root.querySelector('#density');
-      const densityLabel = root.querySelector('#densityLabel');
-      const speed = root.querySelector('#speed');
-      const speedLabel = root.querySelector('#speedLabel');
+      const root = document.getElementById('atelier');
+      const frame = root.querySelector('#frame');
+      const svg = root.querySelector('#flow');
+      const group = root.querySelector('#ribbons');
+      const ribbons = [...group.querySelectorAll('.r')].map(g => ({
+        glow: g.querySelector('.glow'),
+        stroke: g.querySelector('.stroke'),
+        width: 26
+      }));
       const swatches = [...root.querySelectorAll('.swatch')];
       const pauseBtn = root.querySelector('#pause');
       const shuffleBtn = root.querySelector('#shuffle');
-      const last = root.querySelector('#last-updated');
+      const tempo = root.querySelector('#tempo');
+      const tempoLabel = root.querySelector('#tempoLabel');
+      const cx = root.querySelector('#complexity');
+      const cxLabel = root.querySelector('#complexityLabel');
+      const updated = root.querySelector('#last-updated');
 
       // Last updated
       try {
         const fmt = new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'medium' });
-        last.textContent = 'Last updated: ' + fmt.format(new Date());
+        updated.textContent = 'Last updated: ' + fmt.format(new Date());
       } catch {
-        last.textContent = 'Last updated: ' + new Date().toLocaleString();
+        updated.textContent = 'Last updated: ' + new Date().toLocaleString();
       }
 
-      // Render concentric orbits
-      function renderOrbits(n, shuffle=false) {
-        ringsEl.innerHTML = '';
-        const frag = document.createDocumentFragment();
-        const base = 58;      // base radius in px
-        const step = Math.min(stage.clientWidth, stage.clientHeight) / 16; // responsive spacing
-        for (let i = 0; i < n; i++) {
-          const r = Math.round(base + i * step);
-          const d = (14 + i * 3.2) * (0.8 + Math.random() * 0.6); // seconds
-          const p = Math.max(6, 12 - i) + (Math.random() * 4);    // planet size
-          const carrier = document.createElement('div');
-          carrier.className = 'carrier' + (i % 2 ? ' alt' : '');
-          carrier.style.setProperty('--r', r);
-          carrier.style.setProperty('--d', d.toFixed(2));
-          carrier.style.transform = shuffle ? `rotate(${(Math.random()*360).toFixed(1)}deg)` : '';
-
-          // subtle ellipse for variety
-          if (shuffle && Math.random() > 0.5) {
-            const sx = (0.88 + Math.random() * 0.24).toFixed(3);
-            const sy = (0.88 + Math.random() * 0.24).toFixed(3);
-            carrier.style.scale = `${sx} ${sy}`;
-          }
-
-          const track = document.createElement('div');
-          track.className = 'track';
-          track.style.setProperty('--r', r);
-
-          const planet = document.createElement('span');
-          planet.className = 'planet';
-          planet.style.setProperty('--r', r);
-          planet.style.setProperty('--p', p + 'px');
-
-          const trail = document.createElement('span');
-          trail.className = 'trail';
-          trail.style.setProperty('--r', r);
-
-          carrier.appendChild(trail);
-          carrier.appendChild(planet);
-          frag.appendChild(track);
-          frag.appendChild(carrier);
+      // Theme system
+      const palettes = {
+        mist: {
+          bg1:'#0a0e14', bg2:'#141e2a',
+          grads: [['#8dd6ff','#b19cff'], ['#ffacd2','#ffd39e'], ['#9bffd3','#8dd6ff']]
+        },
+        nocturne: {
+          bg1:'#070810', bg2:'#0c1020',
+          grads: [['#7aa2ff','#4ef1ff'], ['#ba82ff','#6cffc1'], ['#ffe674','#7aa2ff']]
+        },
+        coral: {
+          bg1:'#140b0b', bg2:'#2b0f19',
+          grads: [['#ff8fa3','#ffd39e'], ['#ff87d3','#ffe37a'], ['#8df5ff','#ff8fa3']]
+        },
+        meadow: {
+          bg1:'#0a1210', bg2:'#0e1c17',
+          grads: [['#9bffd3','#6de8ff'], ['#ffd39e','#b19cff'], ['#ffacd2','#9bffd3']]
         }
-        ringsEl.appendChild(frag);
+      };
+      function setTheme(name) {
+        root.dataset.theme = name;
+        const [g1a,g1b] = palettes[name].grads[0];
+        const [g2a,g2b] = palettes[name].grads[1];
+        const [g3a,g3b] = palettes[name].grads[2];
+        svg.querySelector('#grad1 stop[offset="0%"]').setAttribute('stop-color', g1a);
+        svg.querySelector('#grad1 stop[offset="100%"]').setAttribute('stop-color', g1b);
+        svg.querySelector('#grad2 stop[offset="0%"]').setAttribute('stop-color', g2a);
+        svg.querySelector('#grad2 stop[offset="100%"]').setAttribute('stop-color', g2b);
+        svg.querySelector('#grad3 stop[offset="0%"]').setAttribute('stop-color', g3a);
+        svg.querySelector('#grad3 stop[offset="100%"]').setAttribute('stop-color', g3b);
+        swatches.forEach(s => s.classList.toggle('active', s.dataset.theme === name));
+      }
+      swatches.forEach(s => s.addEventListener('click', () => setTheme(s.dataset.theme)));
+      setTheme(root.dataset.theme || 'mist');
+
+      // Geometry + animation
+      let W = 1000, H = 480;
+      function resize() {
+        const rect = frame.getBoundingClientRect();
+        W = Math.max(640, Math.floor(rect.width));
+        H = Math.max(320, Math.floor(rect.height));
+        svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      }
+      const ro = new ResizeObserver(resize);
+      ro.observe(frame);
+      resize();
+
+      // Motion params
+      let t = 0;
+      let running = true;
+      let speed = parseFloat(tempo.value);
+      let complexity = parseInt(cx.value, 10);
+
+      tempo.addEventListener('input', e => {
+        speed = parseFloat(e.target.value);
+        tempoLabel.textContent = 'Tempo: ' + speed.toFixed(2) + '×';
+      });
+      tempoLabel.textContent = 'Tempo: ' + speed.toFixed(2) + '×';
+
+      cx.addEventListener('input', e => {
+        complexity = parseInt(e.target.value, 10);
+        cxLabel.textContent = 'Complexity: ' + complexity;
+      });
+      cxLabel.textContent = 'Complexity: ' + complexity;
+
+      // Seeds per ribbon
+      const seeds = ribbons.map((_, i) => ({
+        p1: Math.random() * 100 + i * 17,
+        p2: Math.random() * 100 + i * 29,
+        p3: Math.random() * 100 + i * 41,
+        baseY: 0.36 + i * 0.20,
+        width: 18 + i * 8
+      }));
+
+      function shuffle() {
+        seeds.forEach((s, i) => {
+          s.p1 = Math.random() * 100 + i * 17;
+          s.p2 = Math.random() * 100 + i * 29;
+          s.p3 = Math.random() * 100 + i * 41;
+          s.baseY = 0.30 + i * 0.22 + (Math.random() * 0.06 - 0.03);
+          s.width = 16 + i * 10 + Math.random() * 8;
+        });
+      }
+      shuffleBtn.addEventListener('click', shuffle);
+
+      // Path builder (smooth Q midpoints)
+      function buildPath(points) {
+        if (points.length < 2) return '';
+        let d = `M ${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)}`;
+        for (let i = 0; i < points.length - 1; i++) {
+          const p = points[i];
+          const n = points[i + 1];
+          const mx = (p.x + n.x) * 0.5;
+          const my = (p.y + n.y) * 0.5;
+          d += ` Q ${p.x.toFixed(2)} ${p.y.toFixed(2)} ${mx.toFixed(2)} ${my.toFixed(2)}`;
+        }
+        const last = points[points.length - 1];
+        d += ` T ${last.x.toFixed(2)} ${last.y.toFixed(2)}`;
+        return d;
       }
 
-      // Time
-      function tickClock() {
-        const now = new Date();
-        const hh = String(now.getHours()).padStart(2, '0');
-        const mm = String(now.getMinutes()).padStart(2, '0');
-        const ss = String(now.getSeconds()).padStart(2, '0');
-        clockEl.textContent = `${hh}:${mm}:${ss}`;
+      function sampleRibbon(seed, time) {
+        const pts = [];
+        const n = Math.max(22, Math.round(W / 42));
+        const amp = 16 + (complexity * 0.6);
+        const f1 = 0.004 + complexity * 0.0009;
+        const f2 = 0.002 + complexity * 0.0006;
+        const f3 = 0.006 + complexity * 0.0012;
+        for (let i = 0; i < n; i++) {
+          const x = (i / (n - 1)) * (W - 2) + 1;
+          const yN =
+            seed.baseY +
+            0.14 * Math.sin(x * f1 + time * 0.8 + seed.p1) +
+            0.08 * Math.sin(x * f2 - time * 0.6 + seed.p2) +
+            0.05 * Math.sin(x * f3 + time * 1.2 + seed.p3);
+          const y = yN * H;
+          pts.push({ x, y });
+        }
+        return pts;
       }
-      tickClock();
-      const clockTimer = setInterval(tickClock, 1000);
 
-      // Tilt interaction
-      const scene = root.querySelector('#scene');
+      function render(time) {
+        // update strokes based on seeds width
+        ribbons.forEach((r, i) => {
+          const w = seeds[i].width;
+          r.stroke.setAttribute('stroke-width', w.toFixed(2));
+          r.glow.setAttribute('stroke-width', (w * 1.8).toFixed(2));
+        });
+
+        ribbons.forEach((r, i) => {
+          const pts = sampleRibbon(seeds[i], time);
+          const d = buildPath(pts);
+          r.stroke.setAttribute('d', d);
+          r.glow.setAttribute('d', d);
+        });
+      }
+
+      // Pointer tilt
       const fine = matchMedia('(pointer:fine)').matches;
       if (fine) {
         let ticking = false;
-        scene.addEventListener('pointermove', (e) => {
+        frame.addEventListener('pointermove', (e) => {
           if (ticking) return;
           requestAnimationFrame(() => {
-            const rect = scene.getBoundingClientRect();
+            const rect = frame.getBoundingClientRect();
             const x = (e.clientX - rect.left) / rect.width - 0.5;
             const y = (e.clientY - rect.top) / rect.height - 0.5;
-            root.style.setProperty('--ty', (x * 10).toFixed(2) + 'deg');
-            root.style.setProperty('--tx', (-y * 10).toFixed(2) + 'deg');
+            root.style.setProperty('--tilt-y', (x * 10).toFixed(2) + 'deg');
+            root.style.setProperty('--tilt-x', (-y * 8).toFixed(2) + 'deg');
             ticking = false;
           });
           ticking = true;
         });
-        scene.addEventListener('pointerleave', () => {
-          root.style.setProperty('--tx', '0deg');
-          root.style.setProperty('--ty', '0deg');
+        frame.addEventListener('pointerleave', () => {
+          root.style.setProperty('--tilt-x', '0deg');
+          root.style.setProperty('--tilt-y', '0deg');
         });
       }
 
-      // Density
-      function applyDensity(v, shuffle=false) {
-        densityLabel.textContent = 'Rings: ' + v;
-        renderOrbits(parseInt(v, 10), shuffle);
-      }
-      density.addEventListener('input', e => applyDensity(e.target.value));
-      applyDensity(density.value);
-
-      // Speed
-      function applySpeed(v) {
-        root.style.setProperty('--speed', v);
-        speedLabel.textContent = 'Tempo: ' + Number(v).toFixed(2) + '×';
-      }
-      speed.addEventListener('input', e => applySpeed(e.target.value));
-      applySpeed(speed.value);
-
-      // Theme
-      function setTheme(t) {
-        root.dataset.theme = t;
-        swatches.forEach(s => s.classList.toggle('active', s.dataset.theme === t));
-      }
-      swatches.forEach(s => s.addEventListener('click', () => setTheme(s.dataset.theme)));
-
-      // Pause / Play
+      // Pause/Play
       let paused = false;
       pauseBtn.addEventListener('click', () => {
         paused = !paused;
-        stage.querySelectorAll('.carrier').forEach(el => el.style.animationPlayState = paused ? 'paused' : 'running');
-        root.querySelector('.aurora')?.style && (root.querySelector('.aurora').style.animationPlayState = paused ? 'paused' : 'running');
+        running = !paused;
         pauseBtn.textContent = paused ? 'Play' : 'Pause';
       });
 
-      // Shuffle
-      shuffleBtn.addEventListener('click', () => applyDensity(density.value, true));
-
-      // Time-of-day auto theme
+      // Time-of-day theme
       try {
         const hour = new Date().getHours();
-        if (hour >= 6 && hour < 12) setTheme('dawn');
-        else if (hour >= 12 && hour < 18) setTheme('ocean');
-        else setTheme('dusk');
+        if (hour >= 6 && hour < 12) setTheme('mist');
+        else if (hour >= 12 && hour < 18) setTheme('meadow');
+        else setTheme('nocturne');
       } catch {}
 
-      // Clean up if needed (for embedded environments)
-      window.addEventListener('beforeunload', () => clearInterval(clockTimer));
+      // Animation loop
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function loop(ts) {
+        if (!prev) prev = ts;
+        const dt = (ts - prev) / 1000;
+        prev = ts;
+        if (running && !reduce) {
+          t += dt * speed;
+          render(t);
+        }
+        raf = requestAnimationFrame(loop);
+      }
+      let prev = 0, raf = requestAnimationFrame(loop);
+
+      // Clean up
+      window.addEventListener('beforeunload', () => cancelAnimationFrame(raf));
     })();
   </script>
 </section>
