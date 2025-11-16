@@ -73,259 +73,290 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="aurora" data-theme="dusk" aria-label="Aurora Surface">
+<section id="poster" data-mode="day" aria-label="Kinetic Poster">
   <style>
-    #aurora {
-      --fg: #eaf1ff;
-      --muted: rgba(234,241,255,0.78);
-      --stroke: rgba(255,255,255,0.12);
-      --card: rgba(255,255,255,0.06);
-      --accent1: #9b89ff;
-      --accent2: #47d7ff;
-      --glow1: 158, 130, 255; /* violet */
-      --glow2: 71, 215, 255;  /* cyan */
-      --rx: 0deg;
-      --ry: 0deg;
-      --scale: 1;
-      --glint-x: 50%;
-      --glint-y: 50%;
+    /* Design tokens */
+    #poster {
+      --bg: #f7f9fc;
+      --fg: #0b1020;
+      --muted: #5b677a;
+      --stroke: rgba(12,18,28,0.10);
+      --grid: rgba(12,18,28,0.06);
+      --accent: #3b82f6;   /* blue */
+      --accent-2: #8b5cf6; /* violet */
+      --ring: rgba(59,130,246,0.22);
+      --mx: 50%;
+      --my: 50%;
+      --spot-size: 46vmin;
+      --curve: cubic-bezier(.2,.8,.2,1);
       position: relative;
-      border-radius: 22px;
+      border-radius: 28px;
       border: 1px solid var(--stroke);
       color: var(--fg);
-      padding: 28px;
+      padding: clamp(18px, 5vw, 36px);
       overflow: hidden;
       background:
-        radial-gradient(1200px 800px at 10% -20%, rgba(var(--glow2),0.22), transparent 50%),
-        radial-gradient(900px 700px at 115% 10%, rgba(var(--glow1),0.18), transparent 60%),
-        linear-gradient(160deg, #0b1020, #0c0f1e 50%, #0b0c14 100%);
+        radial-gradient(120vmax 80vmax at 20% -10%, #ffffff 0%, transparent 45%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 50%, #eef3fb 110%);
       box-shadow:
-        0 10px 40px rgba(0,0,0,0.45),
-        inset 0 0 0 1px rgba(255,255,255,0.04);
-      transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--scale));
-      transition: transform 500ms cubic-bezier(.2,.8,.2,1);
-      font: 500 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+        0 12px 40px rgba(12,18,28,0.08),
+        inset 0 0 0 1px rgba(255,255,255,0.6);
+      font: 500 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      isolation: isolate;
     }
-    #aurora::before,
-    #aurora::after {
+    /* Soft grid + pointer spotlight */
+    #poster::before,
+    #poster::after {
       content: "";
       position: absolute;
-      inset: -30%;
+      inset: 0;
       pointer-events: none;
     }
-    /* Soft aurora swirl */
-    #aurora::before {
+    #poster::before {
       background:
-        conic-gradient(from 0deg,
-          rgba(var(--glow2),0.00) 0 30deg,
-          rgba(var(--glow2),0.35) 90deg,
-          rgba(var(--glow1),0.40) 150deg,
-          rgba(var(--glow1),0.00) 210deg,
-          rgba(var(--glow2),0.00) 360deg);
-      filter: blur(60px) saturate(160%);
-      opacity: 0.6;
-      animation: aurora-spin 26s linear infinite;
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/24px 24px,
+        linear-gradient(0deg, var(--grid) 1px, transparent 1px) 0 0/24px 24px;
+      mask: radial-gradient(120vmax 90vmax at 70% 10%, rgba(0,0,0,0.9), transparent 70%);
+      opacity: 0.7;
+      mix-blend-mode: multiply;
+    }
+    #poster::after {
+      background:
+        radial-gradient(
+          circle var(--spot-size) at var(--mx) var(--my),
+          rgba(255,255,255,0.9),
+          rgba(255,255,255,0.3) 30%,
+          transparent 60%
+        );
+      mix-blend-mode: screen;
+      transition: opacity .3s var(--curve), transform .3s var(--curve);
+      opacity: 0.9;
       transform: translateZ(0);
+    }
+
+    /* Night mode */
+    #poster[data-mode="night"] {
+      --bg: #0b0f17;
+      --fg: #eaf1ff;
+      --muted: #b7c4df;
+      --stroke: rgba(255,255,255,0.12);
+      --grid: rgba(255,255,255,0.06);
+      --ring: rgba(139,92,246,0.25);
+      background:
+        radial-gradient(120vmax 80vmax at 15% -15%, #1a2236 0%, transparent 45%),
+        linear-gradient(180deg, #0c111b, #0b0f17 60%, #0a0e16 100%);
+      box-shadow:
+        0 18px 60px rgba(0,0,0,0.45),
+        inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+    #poster[data-mode="night"]::after {
+      background:
+        radial-gradient(
+          circle var(--spot-size) at var(--mx) var(--my),
+          rgba(71,215,255,0.25),
+          rgba(155,137,255,0.20) 40%,
+          transparent 60%
+        );
       mix-blend-mode: screen;
-    }
-    /* Moving glint that follows the pointer */
-    #aurora::after {
-      inset: 0;
-      background:
-        radial-gradient(220px 180px at var(--glint-x) var(--glint-y),
-          rgba(255,255,255,0.14),
-          rgba(255,255,255,0.06) 35%,
-          transparent 60%);
-      mix-blend-mode: overlay;
-      transition: opacity .3s ease;
-      opacity: .8;
-    }
-    #aurora.breathe { --scale: 1.018; }
-    #aurora.breathe::before { animation-duration: 14s; opacity: .85; filter: blur(72px) saturate(200%); }
-
-    /* Theme: Dawn warms the spectrum */
-    #aurora[data-theme="dawn"] {
-      --accent1: #ffb86b;
-      --accent2: #ffd2a8;
-      --glow1: 255, 120, 70;
-      --glow2: 255, 205, 130;
-      background:
-        radial-gradient(1200px 800px at 10% -20%, rgba(var(--glow2),0.20), transparent 50%),
-        radial-gradient(900px 700px at 115% 10%, rgba(var(--glow1),0.16), transparent 60%),
-        linear-gradient(160deg, #10121b, #0f1220 50%, #0e0f17 100%);
+      opacity: 0.8;
     }
 
-    /* Decorative orbs */
-    #aurora .orbs { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-    #aurora .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(28px) saturate(140%);
-      mix-blend-mode: screen;
-      opacity: .55;
+    /* Floating geometry */
+    #poster .shapes { position: absolute; inset: -10% -10% -10% -10%; z-index: 0; pointer-events: none; }
+    #poster .s {
+      position: absolute; border-radius: 20px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.1));
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      filter: saturate(110%); transform-style: preserve-3d;
     }
-    #aurora .o1 {
-      width: 42vmin; height: 42vmin; left: -8vmin; top: -10vmin;
-      background: radial-gradient(circle at 30% 30%, rgba(var(--glow2),0.75), rgba(var(--glow1),0.20) 55%, transparent 70%);
-      animation: float1 18s ease-in-out infinite;
+    #poster .s1 { width: 22vmin; height: 22vmin; top: 6%; left: -2%; rotate: -12deg; animation: drift1 22s ease-in-out infinite; }
+    #poster .s2 { width: 18vmin; height: 18vmin; bottom: -4%; right: 2%; rotate: 18deg; animation: drift2 26s ease-in-out infinite; }
+    #poster[data-mode="night"] .s {
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+      box-shadow: 0 14px 40px rgba(0,0,0,0.45);
     }
-    #aurora .o2 {
-      width: 32vmin; height: 32vmin; right: -6vmin; top: 12vmin;
-      background: radial-gradient(circle at 40% 40%, rgba(var(--glow1),0.70), rgba(var(--glow2),0.18) 60%, transparent 75%);
-      animation: float2 22s ease-in-out infinite;
+    @keyframes drift1 { 0%,100% { transform: translate3d(0,0,0) rotateX(0) } 50% { transform: translate3d(4vmin, 2vmin, 0) rotateX(6deg) } }
+    @keyframes drift2 { 0%,100% { transform: translate3d(0,0,0) rotateY(0) } 50% { transform: translate3d(-3vmin, -2vmin, 0) rotateY(8deg) } }
+
+    /* Header */
+    #poster .top { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; margin-bottom: clamp(14px, 2vw, 22px); }
+    #poster .brand {
+      display: inline-flex; align-items: center; gap: 10px; color: var(--muted);
+      letter-spacing: .2px; user-select: none;
     }
-    #aurora .o3 {
-      width: 26vmin; height: 26vmin; left: 20%; bottom: -8vmin;
-      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.12), rgba(var(--glow2),0.20) 50%, transparent 70%);
-      animation: float3 20s ease-in-out infinite;
+    #poster .mark {
+      width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center;
+      background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent));
+      padding: 1px; animation: spin 18s linear infinite;
+      box-shadow: 0 6px 16px var(--ring);
+    }
+    #poster .peg {
+      width: 100%; height: 100%; border-radius: 7px;
+      background: radial-gradient(100% 100% at 30% 30%, #ffffff 0, rgba(255,255,255,0.7) 35%, rgba(255,255,255,0.2) 100%);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5);
+    }
+    #poster .iter { opacity: .85; }
+
+    /* Hero */
+    #poster .hero {
+      position: relative; z-index: 2; margin: clamp(8px, 2vw, 16px) 0 8px 0;
+      line-height: 0.92; letter-spacing: -0.02em; font-weight: 900;
+      font-size: clamp(36px, 7.5vw, 92px);
+      background: linear-gradient(90deg, var(--fg), var(--accent) 50%, var(--accent-2) 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 2px 12px rgba(0,0,0,0.08));
+      will-change: transform;
+      transform-origin: 50% 60%;
+      transition: transform .3s var(--curve);
+    }
+    #poster .word { display: inline-block; white-space: nowrap; }
+    #poster .ch {
+      display: inline-block;
+      transform: translate3d(0,0,0);
+      animation: wave 4.6s ease-in-out infinite;
+      animation-delay: calc(var(--i) * 90ms);
+      will-change: transform;
+      text-shadow:
+        0 1px 0 rgba(255,255,255,0.2),
+        0 10px 30px rgba(59,130,246,0.10);
+    }
+    @keyframes wave {
+      0%,100% { transform: translateY(0) rotate(0deg) }
+      50% { transform: translateY(-10%) rotate(-0.7deg) }
     }
 
-    /* Content layout */
-    #aurora .inner { position: relative; z-index: 2; max-width: 860px; margin: 0 auto; }
-    #aurora .brand {
-      display: flex; align-items: center; gap: 12px; color: var(--muted);
-      letter-spacing: .3px; margin-bottom: 10px;
-    }
-    #aurora .glyph {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: conic-gradient(from 0deg, var(--accent1), var(--accent2), var(--accent1));
-      display: inline-grid; place-items: center; padding: 2px;
-      animation: ring 10s linear infinite;
-    }
-    #aurora .glyph .dot {
-      width: 100%; height: 100%; border-radius: 50%;
-      background:
-        radial-gradient(circle at 40% 35%, rgba(255,255,255,0.22), transparent 55%),
-        linear-gradient(145deg, rgba(0,0,0,0.25), rgba(255,255,255,0.06));
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
-    }
-    #aurora h1 {
-      margin: 0 0 6px 0;
-      font-weight: 800;
-      font-size: clamp(28px, 5.2vw, 52px);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      background: linear-gradient(90deg, #ffffff, var(--accent2) 45%, var(--accent1) 90%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 2px 14px rgba(0,0,0,0.35));
-    }
-    #aurora .lede {
-      margin: 0 0 16px 0; color: var(--muted);
+    /* Copy */
+    #poster .lede {
+      position: relative; z-index: 2; color: var(--muted);
       font-size: clamp(14px, 2.2vw, 18px);
+      margin: 6px 0 18px 0;
+      max-width: 52ch;
     }
-    #aurora .chips {
-      display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 22px 0; padding: 0; list-style: none;
-    }
-    #aurora .chip {
-      padding: 7px 10px; border-radius: 999px; font-size: 13px;
-      color: var(--fg);
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
-      border: 1px solid rgba(255,255,255,0.18);
-      box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset;
-      transition: transform .2s ease, background .2s ease;
-    }
-    #aurora .chip:hover { transform: translateY(-1px); background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.08)); }
 
-    #aurora .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 10px; }
-    #aurora .btn {
+    /* Controls */
+    #poster .controls { position: relative; z-index: 2; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 6px; }
+    #poster .btn {
       -webkit-tap-highlight-color: transparent;
-      appearance: none;
-      border-radius: 14px;
-      padding: 10px 14px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.06);
-      color: var(--fg);
-      cursor: pointer;
-      transition: transform .12s ease, box-shadow .12s ease, background .2s ease, border-color .2s ease;
-      font-weight: 600; letter-spacing: .2px;
-      box-shadow: 0 0 0 rgba(0,0,0,0);
+      appearance: none; cursor: pointer;
+      border: 1px solid var(--stroke);
+      padding: 10px 14px; border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
+      color: var(--fg); font-weight: 700; letter-spacing: .2px;
+      box-shadow: 0 4px 14px rgba(59,130,246,0.10);
+      transition: transform .12s var(--curve), box-shadow .2s var(--curve), background .2s var(--curve), border-color .2s var(--curve);
     }
-    #aurora .btn.primary {
+    #poster .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(59,130,246,0.18); }
+    #poster .btn:active { transform: translateY(0); }
+    #poster .btn.primary {
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06)),
-        linear-gradient(90deg, var(--accent1), var(--accent2));
+        linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.75)),
+        linear-gradient(90deg, var(--accent), var(--accent-2));
       background-blend-mode: overlay, normal;
-      border-color: rgba(255,255,255,0.22);
-      box-shadow: 0 6px 20px rgba(71,215,255,0.18);
+      border-color: rgba(0,0,0,0.08);
+      color: #0b1020;
     }
-    #aurora .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(0,0,0,0.25); }
-    #aurora .btn:active { transform: translateY(0); }
-    #aurora .btn:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
-
-    #aurora .footer { margin-top: 18px; color: var(--muted); display:flex; flex-direction: column; gap:10px; }
-    #aurora .footer .rule {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
-      border-radius: 1px;
+    #poster[data-mode="night"] .btn {
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+      color: var(--fg);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
     }
-    #aurora .footer small { display:flex; gap:8px; align-items:center; opacity:.9; }
-    #aurora .hint {
-      padding: 4px 8px; border-radius: 999px; font-size: 12px; color: #0b1020;
-      background: linear-gradient(90deg, var(--accent2), var(--accent1));
-      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    #poster[data-mode="night"] .btn.primary {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08)),
+        linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #0b1020;
+      border-color: rgba(255,255,255,0.18);
     }
 
-    @keyframes aurora-spin { to { transform: rotate(1turn); } }
-    @keyframes float1 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      50% { transform: translate(6vmin, 2vmin) scale(1.06); }
-    }
-    @keyframes float2 {
-      0%,100% { transform: translate(0,0) scale(1.05); }
-      50% { transform: translate(-5vmin, 3vmin) scale(1.00); }
-    }
-    @keyframes float3 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      50% { transform: translate(2vmin, -3vmin) scale(1.08); }
+    /* Footer */
+    #poster .foot { position: relative; z-index: 2; margin-top: 16px; color: var(--muted); display: flex; flex-direction: column; gap: 10px; }
+    #poster .rule { height: 1px; background: linear-gradient(90deg, transparent, rgba(12,18,28,0.18), transparent); border-radius: 1px; opacity: .7; }
+    #poster[data-mode="night"] .rule { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); }
+    #poster .meta-line { display: flex; align-items: center; gap: 8px; }
+    #poster .hint {
+      padding: 4px 8px; border-radius: 999px; font-size: 12px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: white; box-shadow: 0 2px 10px var(--ring);
     }
 
+    /* Pulse state */
+    #poster.pulse::after { animation: bloom 1.8s var(--curve) forwards; }
+    @keyframes bloom {
+      0% { opacity: .9; transform: scale(0.98); }
+      50% { opacity: 1; transform: scale(1.02); }
+      100% { opacity: .85; transform: scale(1); }
+    }
+
+    /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      #aurora, #aurora * { animation: none !important; transition: none !important; }
-      #aurora::before, #aurora::after { display: none; }
+      #poster, #poster * { animation: none !important; transition: none !important; }
+      #poster::after { display: none; }
+      #poster::before { opacity: .2; }
     }
+    @keyframes spin { to { rotate: 1turn; } }
   </style>
 
-  <div class="orbs" aria-hidden="true">
-    <span class="orb o1"></span>
-    <span class="orb o2"></span>
-    <span class="orb o3"></span>
+  <div class="shapes" aria-hidden="true">
+    <div class="s s1"></div>
+    <div class="s s2"></div>
   </div>
 
-  <div class="inner">
-    <div class="brand">
-      <span class="glyph" aria-hidden="true"><span class="dot"></span></span>
-      <span class="meta">Studio • Iteration 680</span>
+  <div class="top">
+    <div class="brand" aria-label="Brand">
+      <span class="mark" aria-hidden="true"><span class="peg"></span></span>
+      <span class="iter">Studio • Iteration 681</span>
     </div>
-
-    <h1>Aurora Surface</h1>
-    <p class="lede">Calm motion. Clean edges. Honest color.</p>
-
-    <ul class="chips" aria-label="principles">
-      <li class="chip">soft motion</li>
-      <li class="chip">gentle depth</li>
-      <li class="chip">clear hierarchy</li>
-      <li class="chip">accessible contrast</li>
-    </ul>
-
-    <div class="actions">
-      <button class="btn primary" id="breathe" title="Let it breathe">Breathe</button>
-      <button class="btn" id="themeToggle" aria-pressed="false" title="Toggle Dawn/Dusk">Dusk</button>
+    <div class="brand" aria-hidden="true" style="gap:6px;">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--ring);display:inline-block;"></span>
+      <span class="iter">Poster Series</span>
     </div>
+  </div>
 
-    <div class="footer">
-      <div class="rule" aria-hidden="true"></div>
-      <small><span class="hint">Last refresh</span> <span id="last-updated">Last updated: 2025-11-16 13:23:09 EST</span></small>
-    </div>
+  <h1 class="hero" id="hero" aria-label="Kinetic Quiet">
+    <span class="word">
+      <span class="ch" style="--i:0">K</span>
+      <span class="ch" style="--i:1">I</span>
+      <span class="ch" style="--i:2">N</span>
+      <span class="ch" style="--i:3">E</span>
+      <span class="ch" style="--i:4">T</span>
+      <span class="ch" style="--i:5">I</span>
+      <span class="ch" style="--i:6">C</span>
+    </span>
+    <br>
+    <span class="word">
+      <span class="ch" style="--i:7">Q</span>
+      <span class="ch" style="--i:8">U</span>
+      <span class="ch" style="--i:9">I</span>
+      <span class="ch" style="--i:10">E</span>
+      <span class="ch" style="--i:11">T</span>
+    </span>
+  </h1>
+
+  <p class="lede">A poster you can feel. Crisp type, soft light, and motion that listens to you.</p>
+
+  <div class="controls">
+    <button class="btn primary" id="mode">Night</button>
+    <button class="btn" id="pulse">Pulse</button>
+  </div>
+
+  <div class="foot">
+    <div class="rule" aria-hidden="true"></div>
+    <small class="meta-line">
+      <span class="hint">Refreshed</span>
+      <span id="last-updated">Last updated: 2025-11-16 14:13:18 EST</span>
+    </small>
   </div>
 
   <script>
     (function () {
-      const root = document.getElementById('aurora');
+      const root = document.getElementById('poster');
+      const hero = root.querySelector('#hero');
+      const modeBtn = root.querySelector('#mode');
+      const pulseBtn = root.querySelector('#pulse');
       const updated = root.querySelector('#last-updated');
+
+      // Set "last updated"
       try {
         const fmt = new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'medium' });
         updated.textContent = fmt.format(new Date());
@@ -333,49 +364,58 @@
         updated.textContent = new Date().toLocaleString();
       }
 
-      // Theme toggle
-      const themeBtn = root.querySelector('#themeToggle');
-      themeBtn.addEventListener('click', () => {
-        const isDawn = root.dataset.theme === 'dawn';
-        root.dataset.theme = isDawn ? 'dusk' : 'dawn';
-        themeBtn.textContent = isDawn ? 'Dusk' : 'Dawn';
-        themeBtn.setAttribute('aria-pressed', (!isDawn).toString());
+      // Mode toggle
+      modeBtn.addEventListener('click', () => {
+        const night = root.dataset.mode !== 'night';
+        root.dataset.mode = night ? 'night' : 'day';
+        modeBtn.textContent = night ? 'Day' : 'Night';
       });
 
-      // Breathe interaction
-      const breatheBtn = root.querySelector('#breathe');
-      breatheBtn.addEventListener('click', () => {
-        root.classList.add('breathe');
-        setTimeout(() => root.classList.remove('breathe'), 2200);
+      // Pulse interaction
+      pulseBtn.addEventListener('click', () => {
+        root.classList.remove('pulse');
+        // force reflow for restart
+        void root.offsetWidth;
+        root.classList.add('pulse');
+        setTimeout(() => root.classList.remove('pulse'), 1900);
       });
 
-      // Subtle tilt and glint for fine pointers
-      if (matchMedia('(pointer:fine)').matches) {
+      // Magnetic spotlight + subtle tilt for fine pointers
+      const fine = matchMedia('(pointer:fine)').matches;
+      if (fine) {
         let ticking = false;
         root.addEventListener('pointermove', (e) => {
           if (ticking) return;
-          window.requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
             const r = root.getBoundingClientRect();
             const x = (e.clientX - r.left) / r.width;
             const y = (e.clientY - r.top) / r.height;
-            const rx = (0.5 - y) * 6;
-            const ry = (x - 0.5) * 8;
-            root.style.setProperty('--rx', rx.toFixed(2) + 'deg');
-            root.style.setProperty('--ry', ry.toFixed(2) + 'deg');
-            root.style.setProperty('--glint-x', (x * 100).toFixed(2) + '%');
-            root.style.setProperty('--glint-y', (y * 100).toFixed(2) + '%');
+            root.style.setProperty('--mx', (x * 100).toFixed(2) + '%');
+            root.style.setProperty('--my', (y * 100).toFixed(2) + '%');
+            const rx = (0.5 - y) * 4;
+            const ry = (x - 0.5) * 6;
+            hero.style.transform = `perspective(800px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
             ticking = false;
           });
           ticking = true;
         });
         root.addEventListener('pointerleave', () => {
-          root.style.setProperty('--rx', '0deg');
-          root.style.setProperty('--ry', '0deg');
+          hero.style.transform = '';
         });
       }
+
+      // Responsive: enlarge spotlight on focus/hover of controls
+      const hoverSize = () => root.style.setProperty('--spot-size', '62vmin');
+      const normalSize = () => root.style.setProperty('--spot-size', '46vmin');
+      root.querySelectorAll('.btn').forEach(b => {
+        b.addEventListener('pointerenter', hoverSize);
+        b.addEventListener('pointerleave', normalSize);
+        b.addEventListener('focus', hoverSize);
+        b.addEventListener('blur', normalSize);
+      });
     })();
   </script>
-</div>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
