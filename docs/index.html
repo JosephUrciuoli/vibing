@@ -73,314 +73,448 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="poster" data-mode="day" aria-label="Kinetic Poster">
+<section id="poster" data-theme="aurora" aria-label="Orbital Atelier">
   <style>
-    /* Design tokens */
+    /* ————— Tokens & Base ————— */
     #poster {
-      --bg: #f7f9fc;
-      --fg: #0b1020;
-      --muted: #5b677a;
-      --stroke: rgba(12,18,28,0.10);
-      --grid: rgba(12,18,28,0.06);
-      --accent: #3b82f6;   /* blue */
-      --accent-2: #8b5cf6; /* violet */
-      --ring: rgba(59,130,246,0.22);
+      --bg0: #070a12;
+      --bg1: #0b1220;
+      --fg: #e6f0ff;
+      --muted: #a9b8d6;
+      --line: rgba(255,255,255,0.14);
+      --glass: rgba(255,255,255,0.08);
+      --ring: rgba(139,92,246,0.28);
+      --c1: #65d1ff; /* will be overridden by themes */
+      --c2: #9a7cff;
+      --c3: #48e1c8;
       --mx: 50%;
       --my: 50%;
-      --spot-size: 46vmin;
-      --curve: cubic-bezier(.2,.8,.2,1);
+      --orb-size: min(78vmin, 680px);
+      --blur: 40px;
+      --speed: 1;  /* animation multiplier */
       position: relative;
       border-radius: 28px;
-      border: 1px solid var(--stroke);
-      color: var(--fg);
-      padding: clamp(18px, 5vw, 36px);
       overflow: hidden;
+      padding: clamp(18px, 4.8vw, 40px);
+      color: var(--fg);
       background:
-        radial-gradient(120vmax 80vmax at 20% -10%, #ffffff 0%, transparent 45%),
-        linear-gradient(180deg, #ffffff 0%, var(--bg) 50%, #eef3fb 110%);
+        radial-gradient(140% 120% at 20% -10%, #101a2c 0%, transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      border: 1px solid var(--line);
       box-shadow:
-        0 12px 40px rgba(12,18,28,0.08),
-        inset 0 0 0 1px rgba(255,255,255,0.6);
-      font: 500 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        0 24px 90px rgba(0,0,0,0.55),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+      font: 500 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       isolation: isolate;
+      min-height: 420px;
     }
-    /* Soft grid + pointer spotlight */
-    #poster::before,
-    #poster::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
+
+    /* Themes */
+    #poster[data-theme="aurora"] { --c1:#56c8ff; --c2:#8b5cf6; --c3:#53f3c3; --ring: rgba(86,200,255,0.28); }
+    #poster[data-theme="citrus"] { --c1:#ff9a5f; --c2:#ff5d6c; --c3:#ffd36b; --ring: rgba(255,157,111,0.30); }
+    #poster[data-theme="velvet"] { --c1:#ff7ad3; --c2:#a06bff; --c3:#63ffe1; --ring: rgba(255,122,211,0.28); }
+
+    /* Dimming */
+    #poster[data-dim="on"] { --blur: 26px; }
+    #poster[data-dim="on"] .aura { filter: saturate(85%); opacity: .85; }
+    #poster[data-dim="on"] .title { opacity: .95; }
+
+    /* ————— Backdrop: stars, aura, grid ————— */
+    #poster .stars, #poster .aura, #poster .grid {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
     }
-    #poster::before {
+
+    /* Stars */
+    #poster .stars { contain: strict; }
+    #poster .star {
+      position: absolute; width: var(--s); height: var(--s); border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, #fff0 60%);
+      box-shadow: 0 0 12px rgba(255,255,255,0.45);
+      opacity: .9;
+      animation: twinkle calc(4.5s / var(--v)) ease-in-out infinite;
+    }
+    @keyframes twinkle { 0%,100% { transform: scale(1); opacity:.9 } 50% { transform: scale(0.66); opacity:.55 } }
+
+    /* Aurora mist */
+    #poster .aura::before,
+    #poster .aura::after {
+      content: ""; position: absolute; inset: -30%;
       background:
-        linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/24px 24px,
-        linear-gradient(0deg, var(--grid) 1px, transparent 1px) 0 0/24px 24px;
-      mask: radial-gradient(120vmax 90vmax at 70% 10%, rgba(0,0,0,0.9), transparent 70%);
-      opacity: 0.7;
-      mix-blend-mode: multiply;
-    }
-    #poster::after {
-      background:
-        radial-gradient(
-          circle var(--spot-size) at var(--mx) var(--my),
-          rgba(255,255,255,0.9),
-          rgba(255,255,255,0.3) 30%,
-          transparent 60%
+        conic-gradient(from 0turn at var(--mx) var(--my),
+          color-mix(in oklab, var(--c1) 70%, transparent),
+          color-mix(in oklab, var(--c2) 70%, transparent),
+          color-mix(in oklab, var(--c3) 70%, transparent),
+          color-mix(in oklab, var(--c1) 70%, transparent)
         );
+      filter: blur(var(--blur)) saturate(120%);
+      opacity: .65;
       mix-blend-mode: screen;
-      transition: opacity .3s var(--curve), transform .3s var(--curve);
-      opacity: 0.9;
+      transform: translateZ(0) rotate(0turn);
+      animation: swirl calc(36s / var(--speed)) linear infinite;
+    }
+    #poster .aura::after {
+      inset: -20%;
+      background:
+        conic-gradient(from .25turn at calc(var(--mx) + 10%) calc(var(--my) - 6%),
+          color-mix(in oklab, var(--c2) 40%, transparent),
+          color-mix(in oklab, var(--c1) 30%, transparent),
+          transparent 60%,
+          color-mix(in oklab, var(--c3) 30%, transparent)
+        );
+      filter: blur(calc(var(--blur) * 0.8));
+      opacity: .5;
+      animation-duration: calc(52s / var(--speed));
+      animation-direction: reverse;
+    }
+    @keyframes swirl { to { transform: rotate(1turn); } }
+
+    /* Polar grid */
+    #poster .grid {
+      mask: radial-gradient(80% 80% at 50% 50%, rgba(255,255,255,0.5), transparent 70%);
+      background:
+        radial-gradient(120% 120% at 50% 40%, rgba(255,255,255,0.06), transparent 60%),
+        repeating-conic-gradient(from 0deg, rgba(255,255,255,0.07) 0 2deg, transparent 2deg 12deg),
+        radial-gradient(circle at 50% 50%, transparent 36%, rgba(255,255,255,0.08) 37%, transparent 38%),
+        radial-gradient(circle at 50% 50%, transparent 58%, rgba(255,255,255,0.06) 59%, transparent 60%);
+      opacity: .35;
+    }
+
+    /* ————— Header ————— */
+    #poster .top {
+      position: relative; z-index: 2;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: clamp(10px, 2.2vw, 18px);
+    }
+    #poster .brand {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--muted); user-select: none;
+      letter-spacing: .3px;
+    }
+    #poster .sig {
+      width: 28px; height: 28px; display: grid; place-items: center; border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 24px var(--ring), inset 0 0 0 1px rgba(255,255,255,0.1);
+      position: relative; overflow: hidden;
+    }
+    #poster .sig::after {
+      content: ""; position: absolute; inset: -40%;
+      background: conic-gradient(from 0turn, var(--c1), var(--c2), var(--c3), var(--c1));
+      filter: blur(14px); opacity: .9; animation: spin calc(18s / var(--speed)) linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(1turn); } }
+
+    /* ————— Orb + Dial ————— */
+    #poster .scene {
+      position: relative; z-index: 2;
+      display: grid; place-items: center;
+      margin: clamp(8px, 2.2vw, 16px) 0;
+    }
+    #poster .orb {
+      position: relative;
+      width: var(--orb-size); aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(120% 120% at 35% 30%, rgba(255,255,255,0.25), rgba(255,255,255,0.06) 35%, rgba(255,255,255,0.02) 60%, transparent 70%),
+                  radial-gradient(100% 100% at 65% 70%, rgba(255,255,255,0.08), transparent 50%),
+                  linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.06),
+        0 40px 120px color-mix(in oklab, var(--c2) 16%, transparent),
+        0 10px 34px rgba(0,0,0,0.5);
+      overflow: hidden;
       transform: translateZ(0);
     }
-
-    /* Night mode */
-    #poster[data-mode="night"] {
-      --bg: #0b0f17;
-      --fg: #eaf1ff;
-      --muted: #b7c4df;
-      --stroke: rgba(255,255,255,0.12);
-      --grid: rgba(255,255,255,0.06);
-      --ring: rgba(139,92,246,0.25);
-      background:
-        radial-gradient(120vmax 80vmax at 15% -15%, #1a2236 0%, transparent 45%),
-        linear-gradient(180deg, #0c111b, #0b0f17 60%, #0a0e16 100%);
-      box-shadow:
-        0 18px 60px rgba(0,0,0,0.45),
-        inset 0 0 0 1px rgba(255,255,255,0.06);
-    }
-    #poster[data-mode="night"]::after {
-      background:
-        radial-gradient(
-          circle var(--spot-size) at var(--mx) var(--my),
-          rgba(71,215,255,0.25),
-          rgba(155,137,255,0.20) 40%,
-          transparent 60%
-        );
-      mix-blend-mode: screen;
-      opacity: 0.8;
+    #poster .orb::after {
+      /* spotlight follows pointer */
+      content: "";
+      position: absolute; inset: -20%;
+      background: radial-gradient(36vmin 36vmin at var(--mx) var(--my), rgba(255,255,255,0.18), transparent 60%);
+      mix-blend-mode: screen; pointer-events: none;
+      transition: opacity .3s ease, transform .3s ease;
     }
 
-    /* Floating geometry */
-    #poster .shapes { position: absolute; inset: -10% -10% -10% -10%; z-index: 0; pointer-events: none; }
-    #poster .s {
-      position: absolute; border-radius: 20px;
-      border: 1px solid var(--stroke);
-      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.1));
-      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-      filter: saturate(110%); transform-style: preserve-3d;
+    /* Orbits */
+    #poster .orbits { position: absolute; inset: 5%; }
+    #poster .orbit {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 1px dashed rgba(255,255,255,0.12);
+      transform: rotate(0turn);
+      animation: orbit calc(var(--dur) / var(--speed)) linear infinite;
     }
-    #poster .s1 { width: 22vmin; height: 22vmin; top: 6%; left: -2%; rotate: -12deg; animation: drift1 22s ease-in-out infinite; }
-    #poster .s2 { width: 18vmin; height: 18vmin; bottom: -4%; right: 2%; rotate: 18deg; animation: drift2 26s ease-in-out infinite; }
-    #poster[data-mode="night"] .s {
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
-      box-shadow: 0 14px 40px rgba(0,0,0,0.45);
-    }
-    @keyframes drift1 { 0%,100% { transform: translate3d(0,0,0) rotateX(0) } 50% { transform: translate3d(4vmin, 2vmin, 0) rotateX(6deg) } }
-    @keyframes drift2 { 0%,100% { transform: translate3d(0,0,0) rotateY(0) } 50% { transform: translate3d(-3vmin, -2vmin, 0) rotateY(8deg) } }
+    #poster .orbit:nth-child(1) { inset: 4%;  --dur: 38s; }
+    #poster .orbit:nth-child(2) { inset: 12%; --dur: 54s; animation-direction: reverse; }
+    #poster .orbit:nth-child(3) { inset: 22%; --dur: 72s; }
+    @keyframes orbit { to { transform: rotate(1turn); } }
 
-    /* Header */
-    #poster .top { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; margin-bottom: clamp(14px, 2vw, 22px); }
-    #poster .brand {
-      display: inline-flex; align-items: center; gap: 10px; color: var(--muted);
-      letter-spacing: .2px; user-select: none;
+    /* Dial (SVG needles) */
+    #poster .dial {
+      position: absolute; inset: 0; display: block;
+      filter: drop-shadow(0 10px 22px color-mix(in oklab, var(--c1) 16%, transparent));
     }
-    #poster .mark {
-      width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center;
-      background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent));
-      padding: 1px; animation: spin 18s linear infinite;
-      box-shadow: 0 6px 16px var(--ring);
-    }
-    #poster .peg {
-      width: 100%; height: 100%; border-radius: 7px;
-      background: radial-gradient(100% 100% at 30% 30%, #ffffff 0, rgba(255,255,255,0.7) 35%, rgba(255,255,255,0.2) 100%);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5);
-    }
-    #poster .iter { opacity: .85; }
+    #poster .hand { transform-origin: 50% 50%; }
+    #poster .hand--sec line { stroke: var(--c1); }
+    #poster .hand--min line { stroke: var(--c2); }
+    #poster .hand--hour line { stroke: var(--c3); }
+    #poster .hand line { stroke-linecap: round; }
 
-    /* Hero */
-    #poster .hero {
-      position: relative; z-index: 2; margin: clamp(8px, 2vw, 16px) 0 8px 0;
-      line-height: 0.92; letter-spacing: -0.02em; font-weight: 900;
-      font-size: clamp(36px, 7.5vw, 92px);
-      background: linear-gradient(90deg, var(--fg), var(--accent) 50%, var(--accent-2) 100%);
+    /* Title & copy */
+    #poster .title {
+      position: relative; z-index: 2;
+      text-align: center; font-weight: 900; letter-spacing: -0.02em;
+      font-size: clamp(28px, 6.8vw, 84px);
+      line-height: .9; margin-top: clamp(10px, 2.4vw, 18px);
+      background: linear-gradient(90deg, var(--fg), var(--c1) 40%, var(--c2) 70%, var(--c3));
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      filter: drop-shadow(0 2px 12px rgba(0,0,0,0.08));
-      will-change: transform;
-      transform-origin: 50% 60%;
-      transition: transform .3s var(--curve);
+      filter: drop-shadow(0 2px 12px rgba(0,0,0,0.25));
     }
-    #poster .word { display: inline-block; white-space: nowrap; }
-    #poster .ch {
-      display: inline-block;
-      transform: translate3d(0,0,0);
-      animation: wave 4.6s ease-in-out infinite;
-      animation-delay: calc(var(--i) * 90ms);
-      will-change: transform;
-      text-shadow:
-        0 1px 0 rgba(255,255,255,0.2),
-        0 10px 30px rgba(59,130,246,0.10);
-    }
-    @keyframes wave {
-      0%,100% { transform: translateY(0) rotate(0deg) }
-      50% { transform: translateY(-10%) rotate(-0.7deg) }
+    #poster .subtitle {
+      position: relative; z-index: 2; text-align: center; color: var(--muted);
+      margin-top: 8px; font-size: clamp(13px, 2.1vw, 18px);
     }
 
-    /* Copy */
-    #poster .lede {
-      position: relative; z-index: 2; color: var(--muted);
-      font-size: clamp(14px, 2.2vw, 18px);
-      margin: 6px 0 18px 0;
-      max-width: 52ch;
+    /* Time readout */
+    #poster .time {
+      position: relative; z-index: 2;
+      display: flex; justify-content: center; align-items: baseline; gap: 10px;
+      margin-top: 12px; color: var(--fg);
+      font-variant-numeric: tabular-nums; letter-spacing: .5px;
     }
+    #poster .time .num {
+      font-weight: 800; font-size: clamp(18px, 4.6vw, 40px);
+      background: linear-gradient(180deg, #fff, #fff0);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 8px 22px color-mix(in oklab, var(--c2) 18%, transparent);
+      transform: translateZ(0);
+      transition: transform .2s ease;
+    }
+    #poster .time .sep { color: color-mix(in oklab, var(--fg) 78%, transparent); font-weight: 700; opacity: .8; }
 
     /* Controls */
-    #poster .controls { position: relative; z-index: 2; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 6px; }
+    #poster .controls { position: relative; z-index: 2; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
     #poster .btn {
       -webkit-tap-highlight-color: transparent;
-      appearance: none; cursor: pointer;
-      border: 1px solid var(--stroke);
-      padding: 10px 14px; border-radius: 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
+      appearance: none; cursor: pointer; user-select: none;
+      padding: 10px 14px; border-radius: 14px; border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
       color: var(--fg); font-weight: 700; letter-spacing: .2px;
-      box-shadow: 0 4px 14px rgba(59,130,246,0.10);
-      transition: transform .12s var(--curve), box-shadow .2s var(--curve), background .2s var(--curve), border-color .2s var(--curve);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.06);
+      transition: transform .12s ease, box-shadow .25s ease, background .2s ease, border-color .2s ease;
     }
-    #poster .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(59,130,246,0.18); }
+    #poster .btn:hover { transform: translateY(-1px); box-shadow: 0 16px 36px rgba(0,0,0,0.55), 0 0 0 6px var(--ring); }
     #poster .btn:active { transform: translateY(0); }
     #poster .btn.primary {
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.75)),
-        linear-gradient(90deg, var(--accent), var(--accent-2));
+        linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.10)),
+        linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
       background-blend-mode: overlay, normal;
-      border-color: rgba(0,0,0,0.08);
       color: #0b1020;
-    }
-    #poster[data-mode="night"] .btn {
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
-      color: var(--fg);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
-    }
-    #poster[data-mode="night"] .btn.primary {
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08)),
-        linear-gradient(90deg, var(--accent), var(--accent-2));
-      color: #0b1020;
-      border-color: rgba(255,255,255,0.18);
+      border-color: rgba(255,255,255,0.22);
     }
 
     /* Footer */
-    #poster .foot { position: relative; z-index: 2; margin-top: 16px; color: var(--muted); display: flex; flex-direction: column; gap: 10px; }
-    #poster .rule { height: 1px; background: linear-gradient(90deg, transparent, rgba(12,18,28,0.18), transparent); border-radius: 1px; opacity: .7; }
-    #poster[data-mode="night"] .rule { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); }
-    #poster .meta-line { display: flex; align-items: center; gap: 8px; }
-    #poster .hint {
-      padding: 4px 8px; border-radius: 999px; font-size: 12px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      color: white; box-shadow: 0 2px 10px var(--ring);
+    #poster .foot { position: relative; z-index: 2; margin-top: 18px; display: flex; flex-direction: column; gap: 10px; align-items: center; color: var(--muted); }
+    #poster .rule { height: 1px; width: 100%; border-radius: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); opacity: .7; }
+    #poster .meta {
+      display: inline-flex; gap: 10px; align-items: center; font-size: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid var(--line); padding: 6px 10px; border-radius: 999px;
+    }
+    #poster .tag {
+      padding: 4px 8px; border-radius: 999px; font-size: 11px; color: #0b1020;
+      background: linear-gradient(90deg, var(--c1), var(--c2));
+      box-shadow: 0 2px 10px var(--ring);
+      font-weight: 800; letter-spacing: .3px;
     }
 
-    /* Pulse state */
-    #poster.pulse::after { animation: bloom 1.8s var(--curve) forwards; }
-    @keyframes bloom {
-      0% { opacity: .9; transform: scale(0.98); }
-      50% { opacity: 1; transform: scale(1.02); }
-      100% { opacity: .85; transform: scale(1); }
+    /* Interaction: pointer parallax */
+    @media (pointer:fine) {
+      #poster .time .num:hover { transform: translateY(-2px); }
     }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
       #poster, #poster * { animation: none !important; transition: none !important; }
-      #poster::after { display: none; }
-      #poster::before { opacity: .2; }
+      #poster .aura::before, #poster .aura::after { display: none; }
     }
-    @keyframes spin { to { rotate: 1turn; } }
   </style>
 
-  <div class="shapes" aria-hidden="true">
-    <div class="s s1"></div>
-    <div class="s s2"></div>
-  </div>
+  <!-- Background layers -->
+  <div class="stars" aria-hidden="true"></div>
+  <div class="aura" aria-hidden="true"></div>
+  <div class="grid" aria-hidden="true"></div>
 
+  <!-- Header -->
   <div class="top">
-    <div class="brand" aria-label="Brand">
-      <span class="mark" aria-hidden="true"><span class="peg"></span></span>
-      <span class="iter">Studio • Iteration 681</span>
+    <div class="brand">
+      <span class="sig" aria-hidden="true"></span>
+      <span>Orb Studio • Iteration 682</span>
     </div>
     <div class="brand" aria-hidden="true" style="gap:6px;">
-      <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--ring);display:inline-block;"></span>
-      <span class="iter">Poster Series</span>
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--c1);box-shadow:0 0 0 5px var(--ring);display:inline-block;"></span>
+      <span>Generative Poster</span>
     </div>
   </div>
 
-  <h1 class="hero" id="hero" aria-label="Kinetic Quiet">
-    <span class="word">
-      <span class="ch" style="--i:0">K</span>
-      <span class="ch" style="--i:1">I</span>
-      <span class="ch" style="--i:2">N</span>
-      <span class="ch" style="--i:3">E</span>
-      <span class="ch" style="--i:4">T</span>
-      <span class="ch" style="--i:5">I</span>
-      <span class="ch" style="--i:6">C</span>
-    </span>
-    <br>
-    <span class="word">
-      <span class="ch" style="--i:7">Q</span>
-      <span class="ch" style="--i:8">U</span>
-      <span class="ch" style="--i:9">I</span>
-      <span class="ch" style="--i:10">E</span>
-      <span class="ch" style="--i:11">T</span>
-    </span>
-  </h1>
+  <!-- Scene -->
+  <div class="scene">
+    <div class="orb" id="orb">
+      <div class="orbits" aria-hidden="true">
+        <div class="orbit"></div>
+        <div class="orbit"></div>
+        <div class="orbit"></div>
+      </div>
+      <!-- SVG Dial -->
+      <svg class="dial" viewBox="0 0 100 100" aria-hidden="true">
+        <!-- glow ring -->
+        <defs>
+          <radialGradient id="g" cx="50%" cy="50%">
+            <stop offset="0%" stop-color="white" stop-opacity="0.8"/>
+            <stop offset="40%" stop-color="white" stop-opacity="0.1"/>
+            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="50" cy="50" r="46" fill="url(#g)" opacity="0.12"></circle>
 
-  <p class="lede">A poster you can feel. Crisp type, soft light, and motion that listens to you.</p>
-
-  <div class="controls">
-    <button class="btn primary" id="mode">Night</button>
-    <button class="btn" id="pulse">Pulse</button>
+        <!-- hands -->
+        <g class="hand hand--hour" style="transform: rotate(var(--hour, 0deg));">
+          <line x1="50" y1="50" x2="50" y2="35" stroke-width="2.6"/>
+        </g>
+        <g class="hand hand--min" style="transform: rotate(var(--min, 0deg));">
+          <line x1="50" y1="50" x2="50" y2="28" stroke-width="1.8"/>
+        </g>
+        <g class="hand hand--sec" style="transform: rotate(var(--sec, 0deg));">
+          <line x1="50" y1="52" x2="50" y2="22" stroke-width="1.2"/>
+          <circle cx="50" cy="50" r="1.6" fill="var(--c1)" opacity="0.9"></circle>
+        </g>
+      </svg>
+    </div>
   </div>
 
+  <!-- Text -->
+  <h1 class="title">Orbital Atelier</h1>
+  <p class="subtitle">Light, time, and a small electric feeling.</p>
+
+  <!-- Time readout -->
+  <div class="time" aria-live="polite">
+    <span class="num" id="hh">00</span>
+    <span class="sep">:</span>
+    <span class="num" id="mm">00</span>
+    <span class="sep">:</span>
+    <span class="num" id="ss">00</span>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn primary" id="theme">Theme: Aurora</button>
+    <button class="btn" id="dim">Dim</button>
+    <button class="btn" id="motion">Calm</button>
+  </div>
+
+  <!-- Footer -->
   <div class="foot">
     <div class="rule" aria-hidden="true"></div>
-    <small class="meta-line">
-      <span class="hint">Refreshed</span>
-      <span id="last-updated">Last updated: 2025-11-16 14:13:18 EST</span>
+    <small class="meta">
+      <span class="tag">Refreshed</span>
+      <span id="last-updated">Last updated: 2025-11-16 15:18:40 EST</span>
     </small>
   </div>
 
   <script>
-    (function () {
+    (function() {
       const root = document.getElementById('poster');
-      const hero = root.querySelector('#hero');
-      const modeBtn = root.querySelector('#mode');
-      const pulseBtn = root.querySelector('#pulse');
-      const updated = root.querySelector('#last-updated');
+      const orb = root.querySelector('#orb');
+      const hh = root.querySelector('#hh');
+      const mm = root.querySelector('#mm');
+      const ss = root.querySelector('#ss');
+      const last = root.querySelector('#last-updated');
+      const themeBtn = root.querySelector('#theme');
+      const dimBtn = root.querySelector('#dim');
+      const motionBtn = root.querySelector('#motion');
+      const starsHost = root.querySelector('.stars');
 
-      // Set "last updated"
+      // Last updated
       try {
         const fmt = new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'medium' });
-        updated.textContent = fmt.format(new Date());
-      } catch {
-        updated.textContent = new Date().toLocaleString();
+        last.textContent = fmt.format(new Date());
+      } catch { last.textContent = new Date().toLocaleString(); }
+
+      // Stars
+      (function makeStars(n = 72) {
+        const f = document.createDocumentFragment();
+        const r = root.getBoundingClientRect();
+        for (let i = 0; i < n; i++) {
+          const s = document.createElement('span');
+          s.className = 'star';
+          const size = Math.random() < 0.85 ? (Math.random() * 1.8 + 0.6) : (Math.random() * 2.4 + 1.2);
+          const x = Math.random() * 100;
+          const y = Math.random() * 100;
+          s.style.left = x + '%';
+          s.style.top = y + '%';
+          s.style.setProperty('--s', size + 'px');
+          s.style.setProperty('--v', (Math.random() * 1.5 + 0.6).toFixed(2));
+          f.appendChild(s);
+        }
+        starsHost.appendChild(f);
+      })();
+
+      // Time + dial
+      function pad(n) { return String(n).padStart(2, '0'); }
+      function tick() {
+        const now = new Date();
+        const h = now.getHours();
+        const m = now.getMinutes();
+        const s = now.getSeconds();
+        hh.textContent = pad(h);
+        mm.textContent = pad(m);
+        ss.textContent = pad(s);
+        const secDeg = s * 6; // 360/60
+        const minDeg = (m + s / 60) * 6;
+        const hourDeg = ((h % 12) + m / 60) * 30;
+        orb.style.setProperty('--sec', secDeg + 'deg');
+        orb.style.setProperty('--min', minDeg + 'deg');
+        orb.style.setProperty('--hour', hourDeg + 'deg');
       }
+      tick();
+      const timer = setInterval(tick, 1000);
 
-      // Mode toggle
-      modeBtn.addEventListener('click', () => {
-        const night = root.dataset.mode !== 'night';
-        root.dataset.mode = night ? 'night' : 'day';
-        modeBtn.textContent = night ? 'Day' : 'Night';
+      // Theme cycle
+      const themes = ['aurora','citrus','velvet'];
+      function labelTheme(t) {
+        return t.charAt(0).toUpperCase() + t.slice(1);
+      }
+      themeBtn.addEventListener('click', () => {
+        const idx = themes.indexOf(root.dataset.theme || 'aurora');
+        const next = themes[(idx + 1) % themes.length];
+        root.dataset.theme = next;
+        themeBtn.textContent = 'Theme: ' + labelTheme(next);
       });
 
-      // Pulse interaction
-      pulseBtn.addEventListener('click', () => {
-        root.classList.remove('pulse');
-        // force reflow for restart
-        void root.offsetWidth;
-        root.classList.add('pulse');
-        setTimeout(() => root.classList.remove('pulse'), 1900);
+      // Dim toggle
+      dimBtn.addEventListener('click', () => {
+        const on = root.getAttribute('data-dim') === 'on';
+        root.setAttribute('data-dim', on ? 'off' : 'on');
+        dimBtn.textContent = on ? 'Dim' : 'Brighten';
       });
 
-      // Magnetic spotlight + subtle tilt for fine pointers
+      // Motion toggle
+      let calm = false;
+      motionBtn.addEventListener('click', () => {
+        calm = !calm;
+        root.style.setProperty('--speed', calm ? '0.6' : '1');
+        motionBtn.textContent = calm ? 'Lively' : 'Calm';
+      });
+
+      // Auto theme by local time (soft hint)
+      try {
+        const hour = new Date().getHours();
+        if (hour >= 6 && hour < 11) root.dataset.theme = 'citrus';
+        else if (hour >= 18 || hour < 4) root.dataset.theme = 'velvet';
+        themeBtn.textContent = 'Theme: ' + labelTheme(root.dataset.theme);
+      } catch {}
+
+      // Pointer parallax + spotlight
       const fine = matchMedia('(pointer:fine)').matches;
       if (fine) {
         let ticking = false;
@@ -392,27 +526,14 @@
             const y = (e.clientY - r.top) / r.height;
             root.style.setProperty('--mx', (x * 100).toFixed(2) + '%');
             root.style.setProperty('--my', (y * 100).toFixed(2) + '%');
-            const rx = (0.5 - y) * 4;
-            const ry = (x - 0.5) * 6;
-            hero.style.transform = `perspective(800px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
             ticking = false;
           });
           ticking = true;
         });
-        root.addEventListener('pointerleave', () => {
-          hero.style.transform = '';
-        });
       }
 
-      // Responsive: enlarge spotlight on focus/hover of controls
-      const hoverSize = () => root.style.setProperty('--spot-size', '62vmin');
-      const normalSize = () => root.style.setProperty('--spot-size', '46vmin');
-      root.querySelectorAll('.btn').forEach(b => {
-        b.addEventListener('pointerenter', hoverSize);
-        b.addEventListener('pointerleave', normalSize);
-        b.addEventListener('focus', hoverSize);
-        b.addEventListener('blur', normalSize);
-      });
+      // Cleanup if ever removed
+      root.addEventListener('DOMNodeRemoved', () => clearInterval(timer));
     })();
   </script>
 </section>
