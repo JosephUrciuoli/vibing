@@ -73,7 +73,359 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-11-17 11:24:47 EST</span></div>
+<div class="v701" data-theme="dusk" role="region" aria-label="Kinetic aurora showcase">
+  <style>
+    .v701 {
+      --bg: #0b0f1e;
+      --bg-2: #131a33;
+      --fg: #e8f0ff;
+      --muted: #b5c2e3;
+      --line: rgba(255,255,255,0.08);
+      --glass: rgba(255,255,255,0.06);
+      --glass-2: rgba(255,255,255,0.12);
+      --accent-1: #87f8ff;
+      --accent-2: #c7a7ff;
+      --accent-3: #9ef6c2;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--glass-2);
+      background:
+        radial-gradient(1200px 600px at -10% -20%, rgba(135,248,255,0.12), transparent 60%),
+        radial-gradient(1000px 600px at 120% 120%, rgba(199,167,255,0.10), transparent 65%),
+        linear-gradient(180deg, var(--bg-2), var(--bg));
+      color: var(--fg);
+      padding: clamp(20px, 4vw, 44px);
+      min-height: 58vh;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+      font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    .v701[data-theme="dawn"] {
+      --bg: #0b1320;
+      --bg-2: #0e1a2b;
+      --fg: #f2f7ff;
+      --muted: #cbd6ef;
+      --line: rgba(255,255,255,0.10);
+      --glass: rgba(255,255,255,0.08);
+      --glass-2: rgba(255,255,255,0.16);
+      --accent-1: #ffd08a;
+      --accent-2: #b8ffdd;
+      --accent-3: #a7b9ff;
+    }
+
+    /* Subtle technical grid */
+    .v701 .grid {
+      position: absolute;
+      inset: -1px;
+      background:
+        linear-gradient(to right, var(--line) 1px, transparent 1px) 0 0 / 36px 100%,
+        linear-gradient(to bottom, var(--line) 1px, transparent 1px) 0 0 / 100% 36px;
+      mask: radial-gradient(1200px 600px at 50% 40%, black 55%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Aurora layers */
+    .v701 .aurora {
+      position: absolute;
+      inset: -30%;
+      filter: blur(60px) saturate(1.25);
+      mix-blend-mode: screen;
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .v701 .aurora.a1 {
+      background: conic-gradient(
+        from 200deg at 30% 40%,
+        var(--accent-1),
+        rgba(255,255,255,0) 22%,
+        var(--accent-2) 28%,
+        rgba(255,255,255,0) 50%,
+        var(--accent-3) 60%,
+        rgba(255,255,255,0) 82%,
+        var(--accent-1)
+      );
+      animation: v701-spin 46s linear infinite;
+    }
+    .v701 .aurora.a2 {
+      background: radial-gradient(600px 300px at 70% 65%, rgba(135,248,255,0.18), transparent 70%),
+                  radial-gradient(420px 260px at 30% 30%, rgba(199,167,255,0.18), transparent 70%);
+      transform: rotate(8deg) scale(1.05);
+      animation: v701-drift 22s ease-in-out infinite alternate;
+      opacity: 0.35;
+    }
+
+    @keyframes v701-spin { to { transform: rotate(360deg); } }
+    @keyframes v701-drift {
+      0% { transform: rotate(8deg) translateY(-1%) scale(1.00); }
+      100% { transform: rotate(-6deg) translateY(1.5%) scale(1.04); }
+    }
+
+    /* Floating orbs */
+    .v701 .orb {
+      position: absolute;
+      width: var(--size, 22px);
+      height: var(--size, 22px);
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, white, var(--accent-1) 45%, transparent 70%);
+      opacity: 0.24;
+      filter: blur(0.5px);
+      animation: v701-float var(--speed, 14s) ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .v701 .orb.o2 { background: radial-gradient(circle at 30% 30%, white, var(--accent-2) 45%, transparent 70%); opacity: 0.22; }
+    .v701 .orb.o3 { background: radial-gradient(circle at 30% 30%, white, var(--accent-3) 45%, transparent 70%); opacity: 0.20; }
+
+    @keyframes v701-float {
+      0%   { transform: translate3d(var(--x0, 0%), var(--y0, 0%), 0) scale(1); }
+      50%  { transform: translate3d(calc(var(--x0, 0%) + var(--dx, 10%)), calc(var(--y0, 0%) - var(--dy, 14%)), 0) scale(1.06); }
+      100% { transform: translate3d(var(--x0, 0%), var(--y0, 0%), 0) scale(1); }
+    }
+
+    /* The glass panel */
+    .v701 .panel {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid var(--glass-2);
+      border-radius: 18px;
+      padding: clamp(20px, 4.8vw, 56px);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px) saturate(1.1);
+      transform-style: preserve-3d;
+      transition: transform 300ms ease, box-shadow 300ms ease, background 300ms ease, border-color 300ms ease;
+      max-width: min(860px, 92vw);
+      cursor: default;
+    }
+
+    .v701 .panel:hover {
+      box-shadow: 0 18px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .v701 .eyebrow {
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 12px;
+      opacity: 0.9;
+      margin-bottom: 10px;
+    }
+
+    .v701 h1 {
+      font-size: clamp(28px, 5.6vw, 56px);
+      line-height: 1.02;
+      margin: 0 0 10px 0;
+      background: linear-gradient(90deg, var(--fg), rgba(255,255,255,0.85));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .v701 .lead {
+      margin: 0 0 22px 0;
+      font-size: clamp(14px, 1.6vw, 18px);
+      color: var(--muted);
+      max-width: 60ch;
+    }
+
+    .v701 .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 8px 0 24px 0;
+    }
+
+    .v701 .chip {
+      --rim: rgba(255,255,255,0.22);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--rim);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+      color: var(--fg);
+      font-size: 13px;
+      white-space: nowrap;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+      transform: translateZ(20px);
+    }
+
+    .v701 .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--dot, var(--accent-1));
+      box-shadow: 0 0 10px var(--dot, var(--accent-1));
+    }
+
+    .v701 .actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .v701 .toggle {
+      appearance: none;
+      border: 1px solid var(--glass-2);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+      color: var(--fg);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      transform: translateZ(24px);
+    }
+    .v701 .toggle:hover { transform: translateZ(24px) translateY(-1px); box-shadow: 0 10px 28px rgba(0,0,0,0.35); }
+    .v701 .toggle:active { transform: translateZ(24px) translateY(0); }
+
+    .v701 .meta {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .v701 .accent-bar {
+      height: 1px;
+      width: 56px;
+      background: linear-gradient(90deg, transparent, var(--accent-1), var(--accent-2), var(--accent-3), transparent);
+      opacity: 0.9;
+      border-radius: 1px;
+    }
+
+    /* 3D tilt perspective container */
+    .v701 .wrap-tilt {
+      perspective: 1000px;
+      width: 100%;
+      display: grid;
+      place-items: center;
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      .v701 .aurora,
+      .v701 .orb,
+      .v701 .panel,
+      .v701 .toggle { animation: none !important; transition: none !important; }
+      .v701 .aurora { opacity: 0.35; }
+    }
+  </style>
+
+  <div class="grid" aria-hidden="true"></div>
+  <div class="aurora a1" aria-hidden="true"></div>
+  <div class="aurora a2" aria-hidden="true"></div>
+
+  <!-- floating orbs -->
+  <span class="orb" style="--size:18px; --x0:10%; --y0:12%; --dx:8%; --dy:12%; --speed:18s;"></span>
+  <span class="orb o2" style="--size:26px; --x0:80%; --y0:25%; --dx:-10%; --dy:16%; --speed:22s;"></span>
+  <span class="orb o3" style="--size:22px; --x0:20%; --y0:78%; --dx:12%; --dy:10%; --speed:19s;"></span>
+  <span class="orb o2" style="--size:14px; --x0:60%; --y0:70%; --dx:-6%; --dy:8%; --speed:16s;"></span>
+  <span class="orb o3" style="--size:16px; --x0:35%; --y0:42%; --dx:10%; --dy:14%; --speed:21s;"></span>
+
+  <div class="wrap-tilt">
+    <section class="panel" tabindex="0" aria-label="Showcase panel">
+      <div class="eyebrow">Iteration 701 • Quiet momentum</div>
+      <h1>Shape the calm.</h1>
+      <p class="lead">Chromatic auroras glide above a glass surface. Minimal yet alive—balanced for focus, ready to play.</p>
+
+      <div class="chips" aria-hidden="false">
+        <span class="chip"><span class="dot" style="--dot: var(--accent-1)"></span> Serene motion</span>
+        <span class="chip"><span class="dot" style="--dot: var(--accent-2)"></span> Accessible contrast</span>
+        <span class="chip"><span class="dot" style="--dot: var(--accent-3)"></span> Responsive by design</span>
+      </div>
+
+      <div class="actions">
+        <button class="toggle" type="button" aria-pressed="false" title="Toggle day/night">Switch palette</button>
+        <div class="accent-bar" aria-hidden="true"></div>
+      </div>
+
+      <div class="meta">
+        <span id="last-updated">Last updated: 2025-11-17 12:17:45 EST</span>
+        <span aria-hidden="true">•</span>
+        <span>Tip: move your cursor over the card</span>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.currentScript.closest('.v701');
+      const panel = root.querySelector('.panel');
+      const toggle = root.querySelector('.toggle');
+
+      // Last updated timestamp
+      const lu = root.querySelector('#last-updated');
+      try {
+        const now = new Date();
+        const opts = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        lu.textContent = 'Last updated: ' + now.toLocaleString(undefined, opts);
+      } catch(e) {
+        lu.textContent = 'Last updated: ' + new Date().toString();
+      }
+
+      // 3D tilt interaction
+      let raf = null;
+      function tilt(e) {
+        const r = panel.getBoundingClientRect();
+        const x = (e.clientX ?? (r.left + r.width/2)) - r.left;
+        const y = (e.clientY ?? (r.top + r.height/2)) - r.top;
+        const px = (x / r.width) * 2 - 1;   // -1 .. 1
+        const py = (y / r.height) * 2 - 1;  // -1 .. 1
+        const rotX = (-py) * 6; // degrees
+        const rotY = (px) * 6;  // degrees
+        const t = `rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(0)`;
+        panel.style.transform = t;
+      }
+      function resetTilt() { panel.style.transform = 'rotateX(0) rotateY(0)'; }
+
+      const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (motionOK) {
+        panel.addEventListener('mousemove', (e) => {
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => tilt(e));
+        });
+        panel.addEventListener('mouseleave', () => {
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(resetTilt);
+        });
+        panel.addEventListener('focus', () => {
+          panel.style.boxShadow = '0 22px 70px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.10)';
+        });
+        panel.addEventListener('blur', () => {
+          panel.style.boxShadow = '';
+        });
+      }
+
+      // Theme toggling
+      function setTheme(t) { root.setAttribute('data-theme', t); }
+      function currentTheme() { return root.getAttribute('data-theme') || 'dusk'; }
+      toggle.addEventListener('click', () => {
+        const next = currentTheme() === 'dusk' ? 'dawn' : 'dusk';
+        setTheme(next);
+        toggle.setAttribute('aria-pressed', String(next === 'dawn'));
+      });
+
+      // Randomize initial theme subtly
+      if (Math.random() > 0.5) setTheme('dawn');
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
