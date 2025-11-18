@@ -73,7 +73,356 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-11-18 08:30:36 EST</span></div>
+<div id="vibe720" class="scene" data-theme="calm" aria-label="Atmospheric UI Panel">
+  <style>
+    /* Root palette and motion tokens */
+    #vibe720 {
+      --bg-0: #0a0f17;
+      --fg: #eaf2ff;
+      --muted: #b9c7dc;
+      --c1: #6dd3ff;
+      --c2: #c3a3ff;
+      --c3: #64fbd2;
+      --ring: rgba(255, 255, 255, 0.18);
+      --gx: 50%;
+      --gy: 50%;
+      --tiltX: 0deg;
+      --tiltY: 0deg;
+      position: relative;
+      isolation: isolate;
+      border-radius: 20px;
+      padding: 28px;
+      overflow: hidden;
+      color: var(--fg);
+      background:
+        radial-gradient(140% 140% at var(--gx) var(--gy), rgba(255,255,255,0.08), transparent 55%),
+        linear-gradient(180deg, rgba(14,18,26,0.95), rgba(7,10,16,0.95));
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    /* Subtle grid + grain */
+    #vibe720::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.02), rgba(255,255,255,0)) ,
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 40px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 40px);
+      mask: linear-gradient(to bottom, black 50%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Aurora background blobs */
+    #vibe720 .bg {
+      position: absolute;
+      inset: -30%;
+      background:
+        radial-gradient(60% 80% at 15% 20%, color-mix(in oklab, var(--c1) 40%, transparent) 0 40%, transparent 42%),
+        radial-gradient(80% 60% at 85% 35%, color-mix(in oklab, var(--c2) 40%, transparent) 0 40%, transparent 45%),
+        radial-gradient(80% 80% at 40% 85%, color-mix(in oklab, var(--c3) 42%, transparent) 0 45%, transparent 48%);
+      filter: blur(46px) saturate(1.2);
+      animation: vibe720-pan 22s linear infinite;
+      opacity: 0.9;
+      z-index: 0;
+    }
+
+    @keyframes vibe720-pan {
+      0% { transform: translateY(0) rotate(0deg) scale(1.05); }
+      50% { transform: translateY(-2%) rotate(180deg) scale(1.02); }
+      100% { transform: translateY(0) rotate(360deg) scale(1.05); }
+    }
+
+    /* Glass content block */
+    #vibe720 .glass {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient( to bottom right, rgba(255,255,255,0.09), rgba(255,255,255,0.02) );
+      border: 1px solid var(--ring);
+      border-radius: 18px;
+      padding: 26px 24px;
+      backdrop-filter: blur(10px) saturate(1.05);
+      transform: perspective(1000px) rotateX(var(--tiltX)) rotateY(var(--tiltY));
+      transition: transform 300ms cubic-bezier(.2,.7,.2,1), box-shadow 300ms;
+      box-shadow:
+        0 8px 24px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.07);
+    }
+    #vibe720 .glass:hover {
+      box-shadow:
+        0 12px 36px rgba(0,0,0,0.42),
+        inset 0 1px 0 rgba(255,255,255,0.085);
+    }
+
+    /* Typography */
+    #vibe720 .kicker {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--muted);
+      background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      padding: 6px 10px;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.03) inset;
+    }
+    #vibe720 h1 {
+      margin: 12px 0 8px;
+      font-size: clamp(26px, 3.2vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 6px 24px rgba(0,0,0,0.35));
+    }
+    #vibe720 .tagline {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* Mood chips */
+    #vibe720 .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0 18px;
+    }
+    #vibe720 .chip {
+      -webkit-tap-highlight-color: transparent;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 14px;
+      color: var(--fg);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02)) padding-box,
+        linear-gradient(90deg, var(--c1), var(--c2), var(--c3)) border-box;
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      box-shadow:
+        0 4px 16px rgba(0,0,0,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      transition: transform 180ms ease, box-shadow 200ms ease, opacity 200ms ease;
+    }
+    #vibe720 .chip:hover { transform: translateY(-2px); }
+    #vibe720 .chip[aria-pressed="true"] {
+      box-shadow:
+        0 6px 22px color-mix(in oklab, var(--c2) 28%, transparent),
+        inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+    /* Meter */
+    #vibe720 .meter {
+      position: relative;
+      display: grid;
+      gap: 10px;
+    }
+    #vibe720 .bar {
+      position: relative;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.14);
+      overflow: hidden;
+    }
+    #vibe720 .bar span {
+      position: absolute;
+      inset: 0;
+      width: 62%;
+      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+      filter: saturate(1.1);
+      border-radius: 999px;
+      animation: vibe720-meter 7s ease-in-out infinite alternate;
+      box-shadow: 0 0 16px color-mix(in oklab, var(--c2) 20%, transparent);
+    }
+    #vibe720 .meter-label {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+    @keyframes vibe720-meter {
+      0% { width: 28%; }
+      50% { width: 76%; }
+      100% { width: 92%; }
+    }
+
+    /* Floating orbs for depth */
+    #vibe720 .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(42px) saturate(1.2);
+      opacity: 0.5;
+      z-index: 1;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    #vibe720 .o1 {
+      width: 240px; height: 240px; right: -40px; top: -40px;
+      background: radial-gradient(circle at 30% 30%, var(--c1), transparent 60%);
+      animation: vibe720-float1 18s ease-in-out infinite;
+    }
+    #vibe720 .o2 {
+      width: 220px; height: 220px; left: -30px; bottom: -30px;
+      background: radial-gradient(circle at 70% 60%, var(--c3), transparent 60%);
+      animation: vibe720-float2 22s ease-in-out infinite;
+    }
+    #vibe720 .o3 {
+      width: 180px; height: 180px; left: 45%; top: -60px;
+      background: radial-gradient(circle at 50% 50%, var(--c2), transparent 60%);
+      animation: vibe720-float3 26s ease-in-out infinite;
+    }
+    @keyframes vibe720-float1 {
+      0%,100% { transform: translate(0,0) scale(1.0); }
+      50% { transform: translate(-6%, 8%) scale(1.06); }
+    }
+    @keyframes vibe720-float2 {
+      0%,100% { transform: translate(0,0) scale(1.0); }
+      50% { transform: translate(6%, -8%) scale(1.08); }
+    }
+    @keyframes vibe720-float3 {
+      0%,100% { transform: translate(0,0) scale(1.0); }
+      50% { transform: translate(-5%, 5%) scale(1.05); }
+    }
+
+    /* Footer */
+    #vibe720 .foot {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      z-index: 2;
+      position: relative;
+    }
+    #vibe720 .legend {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+    #vibe720 .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: conic-gradient(var(--c1), var(--c2), var(--c3), var(--c1));
+      box-shadow: 0 0 8px color-mix(in oklab, var(--c2) 30%, transparent);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    /* Theme variations via data-theme */
+    #vibe720[data-theme="calm"] { --c1:#6dd3ff; --c2:#c3a3ff; --c3:#64fbd2; }
+    #vibe720[data-theme="focus"] { --c1:#9ad1ff; --c2:#7de1b8; --c3:#ffe59a; }
+    #vibe720[data-theme="vibrant"] { --c1:#ff82a9; --c2:#8d7aff; --c3:#5df1ff; }
+
+    /* Accessibility: reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      #vibe720 .bg,
+      #vibe720 .o1, #vibe720 .o2, #vibe720 .o3,
+      #vibe720 .bar span { animation: none !important; }
+      #vibe720 .glass { transition: none !important; transform: none !important; }
+    }
+  </style>
+
+  <div class="bg" aria-hidden="true"></div>
+
+  <div class="glass" role="region" aria-labelledby="vibe720-h1">
+    <span class="kicker" aria-hidden="true">Studio Quiet • v720</span>
+    <h1 id="vibe720-h1">Less noise. More nuance.</h1>
+    <p class="tagline">Soft gradients, honest type, a hint of motion. Glide your cursor to wake the light.</p>
+
+    <div class="chips" role="group" aria-label="Mood">
+      <button class="chip" data-theme="calm" aria-pressed="true" title="Calm palette">Calm</button>
+      <button class="chip" data-theme="focus" aria-pressed="false" title="Focused palette">Focus</button>
+      <button class="chip" data-theme="vibrant" aria-pressed="false" title="Vibrant palette">Vibrant</button>
+    </div>
+
+    <div class="meter" aria-describedby="vibe720-meter-desc">
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="76">
+        <span aria-hidden="true"></span>
+      </div>
+      <small id="vibe720-meter-desc" class="meter-label">Clarity</small>
+    </div>
+  </div>
+
+  <div class="orb o1" aria-hidden="true"></div>
+  <div class="orb o2" aria-hidden="true"></div>
+  <div class="orb o3" aria-hidden="true"></div>
+
+  <div class="foot">
+    <div class="legend"><span class="dot" aria-hidden="true"></span><span>Ambient interface</span></div>
+    <span id="last-updated">Last updated: 2025-11-18 09:18:23 EST</span>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('vibe720');
+      const glass = root.querySelector('.glass');
+      const chips = root.querySelectorAll('.chip');
+      const updated = root.querySelector('#last-updated');
+
+      // Last updated stamp with local time and short TZ
+      try {
+        const dtf = new Intl.DateTimeFormat([], {
+          year: 'numeric', month: '2-digit', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          timeZoneName: 'short'
+        });
+        const parts = dtf.formatToParts(new Date());
+        const map = Object.fromEntries(parts.map(p => [p.type, p.value]));
+        const stamp = `${map.year}-${map.month}-${map.day} ${map.hour}:${map.minute}:${map.second} ${map.timeZoneName || ''}`.trim();
+        updated.textContent = `Last updated: ${stamp}`;
+      } catch {
+        updated.textContent = `Last updated: ${new Date().toLocaleString()}`;
+      }
+
+      // Interactive light + tilt
+      let rect;
+      function setRect(){ rect = root.getBoundingClientRect(); }
+      setRect();
+      window.addEventListener('resize', setRect);
+
+      root.addEventListener('pointermove', (e) => {
+        if (!rect) setRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const nx = (x / rect.width - 0.5) * 2;   // -1..1
+        const ny = (y / rect.height - 0.5) * 2;  // -1..1
+        root.style.setProperty('--gx', x + 'px');
+        root.style.setProperty('--gy', y + 'px');
+        root.style.setProperty('--tiltX', (-ny * 6).toFixed(2) + 'deg');
+        root.style.setProperty('--tiltY', ( nx * 6).toFixed(2) + 'deg');
+      });
+      root.addEventListener('pointerleave', () => {
+        root.style.setProperty('--tiltX', '0deg');
+        root.style.setProperty('--tiltY', '0deg');
+        root.style.setProperty('--gx', '50%');
+        root.style.setProperty('--gy', '50%');
+      });
+
+      // Theme switching
+      chips.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const theme = btn.getAttribute('data-theme');
+          root.setAttribute('data-theme', theme);
+          chips.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+        });
+      });
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
