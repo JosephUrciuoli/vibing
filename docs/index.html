@@ -73,401 +73,420 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="aurora-740" aria-label="Velvet Motion">
+<section class="solstice-741" aria-label="Daylight Studio">
   <style>
-    .aurora-740 {
-      --fg: #eaf2ff;
-      --muted: #a7b2c2;
-      --acc1: #6ee7ff;
-      --acc2: #7b7bff;
-      --acc3: #ff9ecb;
-      --glass-bg: rgba(255,255,255,0.06);
-      --stroke: rgba(255,255,255,0.16);
-      --mx: 50%;
-      --my: 50%;
-      --rx: 0deg;
-      --ry: 0deg;
-      color: var(--fg);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial;
+    .solstice-741 {
+      /* Dynamic theme tokens */
+      --bg1: #fff6ec;
+      --bg2: #eef7ff;
+      --ink: #152034;
+      --muted: #5c6a7b;
+      --acc1: #ff9a6a;
+      --acc2: #ff75b5;
+      --glow: #ffd59e;
+      --shadow: 0 20px 60px rgba(16, 24, 40, 0.15);
+
       position: relative;
       isolation: isolate;
       border-radius: 28px;
       overflow: hidden;
-      padding: clamp(24px, 4vw, 56px);
+      padding: clamp(18px, 2.8vw, 32px);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, "Noto Sans";
       background:
-        radial-gradient(900px 700px at var(--mx) var(--my), rgba(255,255,255,0.08), transparent 40%),
-        linear-gradient(120deg, #0b0f1a 0%, #0e1322 100%);
-      border: 1px solid rgba(255,255,255,0.08);
+        radial-gradient(1600px 1200px at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.35), transparent 45%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), var(--shadow);
+    }
+    .solstice-741 * { box-sizing: border-box; }
+
+    /* Subtle paper grid */
+    .solstice-741::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 40% 20%, rgba(255,255,255,0.25), transparent 45%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 24px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.02) 0, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 24px);
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+
+    /* Sky scene */
+    .solstice-741 .scene {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    }
+    .solstice-741 .sun {
+      position: absolute;
+      width: clamp(80px, 12vmin, 140px);
+      height: clamp(80px, 12vmin, 140px);
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #fffde6, color-mix(in oklab, var(--glow) 55%, transparent) 60%, transparent 70%);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.08),
-        0 20px 60px rgba(0,0,0,0.45);
+        0 0 0 1px rgba(255,255,255,0.8) inset,
+        0 30px 80px color-mix(in oklab, var(--glow) 30%, transparent),
+        0 8px 30px color-mix(in oklab, var(--acc1) 20%, transparent);
+      filter: saturate(120%);
+      transition: filter 300ms ease;
     }
-    .aurora-740 * { box-sizing: border-box; }
+    .solstice-741.dark .sun { filter: saturate(140%) brightness(1.2); }
 
-    /* Ambient blobs */
-    .aurora-740 .bg {
-      position: absolute;
-      inset: -20%;
-      z-index: 0;
-      filter: blur(36px) saturate(140%);
-      pointer-events: none;
-    }
-    .aurora-740 .blob {
-      position: absolute;
-      border-radius: 50%;
+    .solstice-741 .ring {
+      position: absolute; inset: 0; margin: auto;
+      width: min(90vmin, 720px); height: min(58vmin, 460px);
+      border-radius: 50% / 35%;
+      border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
+      mask: radial-gradient(120% 80% at 50% 50%, black 64%, transparent 66%);
+      animation: spinA 28s linear infinite;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.06));
       opacity: 0.7;
-      mix-blend-mode: screen;
-      will-change: transform;
     }
-    .aurora-740 .b1 {
-      width: 42vmax; height: 42vmax; left: -10%; top: -6%;
-      background: radial-gradient(circle at 30% 30%, var(--acc1), transparent 60%);
-      animation: drift1 24s ease-in-out infinite alternate;
+    .solstice-741 .ring.r2 {
+      width: min(64vmin, 520px); height: min(42vmin, 360px);
+      border-style: dashed;
+      opacity: 0.55;
+      animation: spinB 22s linear infinite reverse;
+      mask: radial-gradient(120% 80% at 50% 50%, black 76%, transparent 78%);
     }
-    .aurora-740 .b2 {
-      width: 36vmax; height: 36vmax; right: -12%; bottom: -8%;
-      background: radial-gradient(circle at 70% 70%, var(--acc2), transparent 55%);
-      animation: drift2 28s ease-in-out infinite alternate;
-    }
-    .aurora-740 .b3 {
-      width: 30vmax; height: 30vmax; left: 50%; top: 65%; transform: translate(-50%, -50%);
-      background: radial-gradient(circle at 50% 50%, var(--acc3), transparent 60%);
-      opacity: 0.5;
-      animation: drift3 30s ease-in-out infinite alternate;
-    }
-    @keyframes drift1 { to { transform: translate(6%, -4%) rotate(8deg) scale(1.06); } }
-    @keyframes drift2 { to { transform: translate(-4%, 6%) rotate(-10deg) scale(1.08); } }
-    @keyframes drift3 { to { transform: translate(-52%, -46%) scale(1.12) rotate(12deg); } }
+    @keyframes spinA { to { transform: rotate(360deg); } }
+    @keyframes spinB { to { transform: rotate(-360deg); } }
 
-    /* Orbital sculpture */
-    .aurora-740 .orbital {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .aurora-740 .ring {
-      position: absolute;
-      width: min(72vmin, 540px);
-      height: min(72vmin, 540px);
-      border-radius: 50%;
-      border: 1px dashed rgba(255,255,255,0.12);
-      mask: radial-gradient(circle at 50% 50%, black 55%, transparent 56%);
-      animation: spin 36s linear infinite;
-      filter: drop-shadow(0 0 10px rgba(255,255,255,0.06));
-    }
-    .aurora-740 .ring.r2 {
-      width: min(56vmin, 420px);
-      height: min(56vmin, 420px);
-      border-style: solid;
-      border-color: rgba(255,255,255,0.08);
-      animation-duration: 26s;
-      animation-direction: reverse;
-      mask: radial-gradient(circle at 50% 50%, black 68%, transparent 69%);
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .aurora-740 .planet {
-      position: absolute;
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff, var(--acc1) 55%, rgba(255,255,255,0.08) 60%);
-      box-shadow: 0 0 12px rgba(255,255,255,0.35), 0 0 40px var(--acc1);
-      transform-origin: center calc(50% - min(28vmin, 210px));
-      animation: orbit 14s linear infinite;
-      opacity: 0.9;
-    }
-    .aurora-740 .planet.p2 {
-      transform-origin: center calc(50% - min(22vmin, 165px));
-      width: 10px; height: 10px;
-      background: radial-gradient(circle at 30% 30%, #fff, var(--acc3) 60%, rgba(255,255,255,0.08) 65%);
-      animation-duration: 9s;
-      filter: saturate(140%);
-    }
-    @keyframes orbit { to { transform: rotate(360deg); } }
-
-    /* Glass content */
-    .aurora-740 .glass {
+    /* Panel */
+    .solstice-741 .panel {
       position: relative;
       z-index: 2;
-      max-width: 820px;
+      max-width: 980px;
       margin: 0 auto;
-      padding: clamp(20px, 3vw, 36px);
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)) var(--glass-bg);
-      border: 1px solid var(--stroke);
-      border-radius: 20px;
-      backdrop-filter: blur(12px) saturate(140%);
-      -webkit-backdrop-filter: blur(12px) saturate(140%);
-      box-shadow:
-        0 10px 40px rgba(0,0,0,0.35),
-        inset 0 1px 0 rgba(255,255,255,0.12);
-      transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
-      transition: transform 300ms ease, box-shadow 300ms ease, background 400ms ease;
+      padding: clamp(20px, 2.6vw, 36px);
+      border-radius: 22px;
+      background: color-mix(in oklab, #ffffff 68%, transparent);
+      border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
+      -webkit-backdrop-filter: blur(10px) saturate(130%);
+      backdrop-filter: blur(10px) saturate(130%);
+      box-shadow: 0 10px 40px rgba(16,24,40,0.12), inset 0 1px 0 rgba(255,255,255,0.7);
+      transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+      transition: transform 300ms ease, box-shadow 300ms ease, background 350ms ease, border-color 350ms ease;
     }
-    .aurora-740 .glass:hover {
-      box-shadow:
-        0 16px 60px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.14),
-        0 0 0 1px rgba(255,255,255,0.02);
-    }
-    .aurora-740 .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    .solstice-741 .panel:hover { box-shadow: 0 16px 60px rgba(16,24,40,0.16), inset 0 1px 0 rgba(255,255,255,0.8); }
+
+    .solstice-741 .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 10px; border-radius: 999px;
+      font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
       color: var(--muted);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 999px;
+      border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+      box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset, 0 3px 10px rgba(16,24,40,0.06);
       user-select: none;
     }
-    .aurora-740 .badge::before {
+    .solstice-741 .badge::before {
       content: "";
       width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle, var(--acc1), var(--acc2));
-      box-shadow: 0 0 10px var(--acc1);
+      background: linear-gradient(90deg, var(--acc1), var(--acc2));
+      box-shadow: 0 0 10px color-mix(in oklab, var(--acc1) 50%, transparent);
     }
-    .aurora-740 .title {
+
+    .solstice-741 .title {
       margin: 14px 0 6px;
-      font-size: clamp(34px, 6.5vw, 64px);
-      line-height: 1.04;
+      font-weight: 900;
       letter-spacing: -0.02em;
-      font-weight: 800;
-      background: linear-gradient(90deg, var(--acc1), var(--acc2), var(--acc3));
-      background-size: 200% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: hue-slide 12s ease-in-out infinite alternate;
+      font-size: clamp(34px, 6.2vw, 64px);
+      line-height: 1.05;
+      background: linear-gradient(90deg, var(--acc1), var(--acc2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-wrap: balance;
     }
-    @keyframes hue-slide { to { background-position: 100% 0; } }
-    .aurora-740 .title em {
-      font-style: normal;
-      opacity: 0.9;
-      text-shadow: 0 0 20px rgba(255,255,255,0.08);
-    }
-    .aurora-740 .subtitle {
-      margin: 8px 0 18px;
+    .solstice-741 .subtitle {
+      margin: 8px 0 20px;
       color: var(--muted);
       font-size: clamp(14px, 2.2vw, 18px);
-      line-height: 1.6;
-      max-width: 58ch;
+      line-height: 1.65;
+      max-width: 62ch;
     }
 
-    .aurora-740 .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 8px;
+    /* Controls */
+    .solstice-741 .controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
     }
-    .aurora-740 .chip {
-      position: relative;
-      appearance: none;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.04);
-      color: var(--fg);
-      padding: 10px 14px;
-      font-size: 13px;
+    @media (min-width: 820px) {
+      .solstice-741 .controls { grid-template-columns: 1fr auto; align-items: start; }
+    }
+    .solstice-741 .modes {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .solstice-741 .mode {
+      appearance: none; cursor: pointer;
       border-radius: 12px;
-      cursor: pointer;
-      transition: transform 200ms ease, background 200ms ease, border-color 200ms ease;
-      overflow: hidden;
+      border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.65));
+      color: var(--ink);
+      padding: 10px 14px; font-size: 13px;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset, 0 6px 16px rgba(16,24,40,0.06);
+      position: relative; overflow: hidden;
     }
-    .aurora-740 .chip:hover {
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
-      border-color: rgba(255,255,255,0.22);
-      transform: translateY(-1px);
+    .solstice-741 .mode:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(16,24,40,0.10); }
+    .solstice-741 .mode.active {
+      border-color: color-mix(in oklab, var(--acc2) 46%, transparent);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 10px 26px color-mix(in oklab, var(--acc2) 18%, transparent);
     }
-    .aurora-740 .chip:active { transform: translateY(0); }
-    .aurora-740 .chip:focus-visible {
-      outline: 2px solid var(--acc2);
-      outline-offset: 2px;
-    }
-    .aurora-740 .chip .ripple {
-      position: absolute;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.45), transparent 60%);
-      transform: translate(-50%, -50%) scale(1);
-      animation: ripple 600ms ease-out forwards;
-      pointer-events: none;
-    }
-    @keyframes ripple { to { transform: translate(-50%, -50%) scale(18); opacity: 0; } }
-
-    .aurora-740 .footer {
-      margin-top: clamp(16px, 3vw, 26px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .aurora-740 .tip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      opacity: 0.9;
-    }
-    .aurora-740 .tip::before {
-      content: "◦";
-      color: var(--acc1);
-      text-shadow: 0 0 8px var(--acc1);
-    }
-    .aurora-740 #last-updated {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: var(--fg);
+    .solstice-741 .mode .dot {
+      width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; display: inline-block;
+      background: radial-gradient(circle at 40% 40%, var(--acc1), var(--acc2));
+      box-shadow: 0 0 8px color-mix(in oklab, var(--acc1) 45%, transparent);
     }
 
+    .solstice-741 .slider-wrap {
+      display: grid; gap: 8px; min-width: 220px;
+      align-content: start;
+    }
+    .solstice-741 .slider-label {
+      font-size: 12px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .solstice-741 input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 28px; background: transparent;
+    }
+    .solstice-741 input[type="range"]::-webkit-slider-runnable-track {
+      height: 8px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--acc1), var(--acc2));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 1px 0 rgba(16,24,40,0.1);
+    }
+    .solstice-741 input[type="range"]::-moz-range-track {
+      height: 8px; border-radius: 999px; background: linear-gradient(90deg, var(--acc1), var(--acc2));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 1px 0 rgba(16,24,40,0.1);
+    }
+    .solstice-741 input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #fff;
+      border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+      margin-top: -7px;
+      box-shadow: 0 6px 16px rgba(16,24,40,0.18), 0 0 0 4px color-mix(in oklab, var(--acc2) 18%, transparent);
+      transition: transform 120ms ease;
+    }
+    .solstice-741 input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.06); }
+    .solstice-741 input[type="range"]::-moz-range-thumb {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #fff; border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+      box-shadow: 0 6px 16px rgba(16,24,40,0.18), 0 0 0 4px color-mix(in oklab, var(--acc2) 18%, transparent);
+    }
+
+    .solstice-741 .toolbar {
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
+    .solstice-741 .ghost {
+      appearance: none; cursor: pointer;
+      border-radius: 999px; padding: 8px 12px; font-size: 13px;
+      color: var(--ink);
+      background: transparent;
+      border: 1px dashed color-mix(in oklab, var(--ink) 22%, transparent);
+      transition: background 180ms ease, transform 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+    .solstice-741 .ghost:hover { background: rgba(255,255,255,0.75); transform: translateY(-1px); }
+    .solstice-741 .ghost.active {
+      color: #fff;
+      background: linear-gradient(90deg, var(--acc1), var(--acc2));
+      border-style: solid;
+      border-color: transparent;
+      box-shadow: 0 8px 20px color-mix(in oklab, var(--acc2) 22%, transparent);
+    }
+
+    /* Footer */
+    .solstice-741 .footer {
+      margin-top: clamp(16px, 2.6vw, 26px);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+      color: var(--muted); font-size: 12px;
+    }
+    .solstice-741 #last-updated {
+      padding: 6px 10px; border-radius: 999px;
+      background: rgba(255,255,255,0.75);
+      border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
+      color: var(--ink);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+    }
+
+    /* Paused state */
+    .solstice-741.paused .ring { animation-play-state: paused; }
+
+    /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      .aurora-740 .blob,
-      .aurora-740 .ring,
-      .aurora-740 .planet,
-      .aurora-740 .title {
-        animation: none !important;
-      }
-      .aurora-740 .glass {
-        transform: none !important;
-      }
+      .solstice-741 .ring { animation: none !important; }
+      .solstice-741 .panel { transform: none !important; }
     }
   </style>
 
-  <div class="bg" aria-hidden="true">
-    <span class="blob b1"></span>
-    <span class="blob b2"></span>
-    <span class="blob b3"></span>
-  </div>
-
-  <div class="orbital" aria-hidden="true">
+  <div class="scene" aria-hidden="true">
     <div class="ring"></div>
     <div class="ring r2"></div>
-    <div class="planet"></div>
-    <div class="planet p2"></div>
+    <div class="sun"></div>
   </div>
 
-  <article class="glass" role="region" aria-label="Interface Card">
-    <div class="badge">Studio 740</div>
-    <h1 class="title">Velvet <em>Motion</em></h1>
-    <p class="subtitle">A minimal stage for your thoughts. Soft light, balanced rhythm, and a dash of wonder.</p>
+  <article class="panel" role="region" aria-label="Daylight Console">
+    <div class="badge">Studio 741</div>
+    <h1 class="title">Daylight, distilled.</h1>
+    <p class="subtitle">A calm canvas where motion is a whisper. Adjust the sky, choose a mood, and let the interface breathe.</p>
 
-    <div class="chips" aria-label="Palette">
-      <button class="chip" data-palette="next">Clarity</button>
-      <button class="chip" data-palette="next">Balance</button>
-      <button class="chip" data-palette="next">Flow</button>
+    <div class="controls">
+      <div class="modes" aria-label="Sky Presets">
+        <button class="mode active" data-mode="dawn"><span class="dot"></span>Dawn</button>
+        <button class="mode" data-mode="noon"><span class="dot"></span>Noon</button>
+        <button class="mode" data-mode="dusk"><span class="dot"></span>Dusk</button>
+        <button class="mode" data-mode="midnight"><span class="dot"></span>Midnight</button>
+      </div>
+
+      <div class="slider-wrap">
+        <div class="slider-label">Arc of the Sun</div>
+        <input type="range" min="0" max="100" step="1" value="25" aria-label="Time of day">
+        <div class="toolbar">
+          <button class="ghost pause">Pause Motion</button>
+          <button class="ghost tip">Tip: move your cursor</button>
+        </div>
+      </div>
     </div>
 
     <div class="footer">
-      <span class="tip">Pro tip: move your cursor</span>
-      <span id="last-updated">Last updated: 2025-11-19 08:30:37 EST</span>
+      <span>“Make it light. Make it true.”</span>
+      <span id="last-updated">Last updated: 2025-11-19 09:18:25 EST</span>
     </div>
   </article>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.aurora-740');
-      const glass = root.querySelector('.glass');
-      const chips = Array.from(root.querySelectorAll('.chip'));
-      const lu = root.querySelector('#last-updated');
+      const root = document.currentScript.closest('.solstice-741');
+      const panel = root.querySelector('.panel');
+      const sun = root.querySelector('.sun');
+      const modes = Array.from(root.querySelectorAll('.mode'));
+      const slider = root.querySelector('input[type="range"]');
+      const pauseBtn = root.querySelector('.ghost.pause');
+      const tipBtn = root.querySelector('.ghost.tip');
+      const last = root.querySelector('#last-updated');
 
-      // Update timestamp
-      function updateTime() {
+      // Timestamp
+      function stamp() {
         try {
           const d = new Date();
           const fmt = new Intl.DateTimeFormat(undefined, {
             year: 'numeric', month: 'short', day: '2-digit',
             hour: '2-digit', minute: '2-digit'
           });
-          lu.textContent = 'Updated ' + fmt.format(d);
-        } catch (e) {
-          lu.textContent = 'Updated ' + new Date().toLocaleString();
+          last.textContent = 'Updated ' + fmt.format(d);
+        } catch {
+          last.textContent = 'Updated ' + new Date().toLocaleString();
         }
       }
-      updateTime();
-
-      // Pointer parallax + light-follow
-      function clamp(n, min, max){ return Math.min(max, Math.max(min, n)); }
-      root.addEventListener('pointermove', (e) => {
-        const rb = root.getBoundingClientRect();
-        const px = clamp((e.clientX - rb.left) / rb.width, 0, 1);
-        const py = clamp((e.clientY - rb.top) / rb.height, 0, 1);
-        root.style.setProperty('--mx', (px * 100).toFixed(2) + '%');
-        root.style.setProperty('--my', (py * 100).toFixed(2) + '%');
-
-        const cb = glass.getBoundingClientRect();
-        const cx = (e.clientX - (cb.left + cb.width / 2)) / cb.width;
-        const cy = (e.clientY - (cb.top + cb.height / 2)) / cb.height;
-        glass.style.setProperty('--ry', (cx * 10).toFixed(2) + 'deg');
-        glass.style.setProperty('--rx', (-cy * 8).toFixed(2) + 'deg');
-      }, { passive: true });
-
-      root.addEventListener('pointerleave', () => {
-        glass.style.setProperty('--ry', '0deg');
-        glass.style.setProperty('--rx', '0deg');
-        root.style.setProperty('--mx', '50%');
-        root.style.setProperty('--my', '50%');
-      });
+      stamp();
 
       // Palettes
-      const palettes = [
-        ['#6ee7ff','#7b7bff','#ff9ecb'],
-        ['#5efce8','#736efe','#b47cff'],
-        ['#ffd08a','#ff6a88','#b16cea'],
-        ['#a0e9ff','#83ffc7','#f9f871'],
-        ['#9be15d','#00e3ae','#57a1ff']
-      ];
-      let pIndex = 0;
-      function applyPalette(i) {
-        const [a,b,c] = palettes[i % palettes.length];
-        root.style.setProperty('--acc1', a);
-        root.style.setProperty('--acc2', b);
-        root.style.setProperty('--acc3', c);
+      const PALETTES = {
+        dawn:   { bg1:'#fff6ec', bg2:'#eef7ff', acc1:'#ff9a6a', acc2:'#ff75b5', ink:'#152034', muted:'#5c6a7b', glow:'#ffd59e', dark:false },
+        noon:   { bg1:'#ecfbff', bg2:'#ffffff', acc1:'#00d4ff', acc2:'#31c96e', ink:'#0f1a2a', muted:'#536275', glow:'#b8f3ff', dark:false },
+        dusk:   { bg1:'#f6edff', bg2:'#fff0f5', acc1:'#8b78ff', acc2:'#ff8bb3', ink:'#160f2e', muted:'#5a5170', glow:'#e2d1ff', dark:false },
+        midnight:{bg1:'#0d1222', bg2:'#171b2e', acc1:'#7bd5ff', acc2:'#9d7bff', ink:'#eaf2ff', muted:'#a9b2c7', glow:'#6cc6ff', dark:true }
+      };
+      function applyPalette(name) {
+        const p = PALETTES[name];
+        if (!p) return;
+        root.style.setProperty('--bg1', p.bg1);
+        root.style.setProperty('--bg2', p.bg2);
+        root.style.setProperty('--acc1', p.acc1);
+        root.style.setProperty('--acc2', p.acc2);
+        root.style.setProperty('--ink', p.ink);
+        root.style.setProperty('--muted', p.muted);
+        root.style.setProperty('--glow', p.glow);
+        root.classList.toggle('dark', !!p.dark);
+        modes.forEach(b => b.classList.toggle('active', b.dataset.mode === name));
       }
-      applyPalette(pIndex);
+      applyPalette('dawn');
 
-      // Chip interactions: ripple + palette shift
-      function rippleAt(btn, x, y) {
-        const r = document.createElement('span');
-        r.className = 'ripple';
-        r.style.left = x + 'px';
-        r.style.top = y + 'px';
-        btn.appendChild(r);
-        setTimeout(() => r.remove(), 620);
-      }
-      chips.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const bb = btn.getBoundingClientRect();
-          rippleAt(btn, e.clientX - bb.left, e.clientY - bb.top);
-          pIndex = (pIndex + 1) % palettes.length;
-          applyPalette(pIndex);
-        });
+      modes.forEach(btn => {
+        btn.addEventListener('click', () => applyPalette(btn.dataset.mode));
       });
 
-      // Gentle auto-cycle of palettes
-      let cycle = setInterval(() => {
-        pIndex = (pIndex + 1) % palettes.length;
-        applyPalette(pIndex);
-      }, 12000);
+      // Parallax and pointer highlight
+      function clamp(n, a, b){ return Math.min(b, Math.max(a, n)); }
+      root.addEventListener('pointermove', (e) => {
+        const R = root.getBoundingClientRect();
+        const px = clamp((e.clientX - R.left)/R.width, 0, 1);
+        const py = clamp((e.clientY - R.top)/R.height, 0, 1);
+        root.style.setProperty('--mx', (px*100).toFixed(2)+'%');
+        root.style.setProperty('--my', (py*100).toFixed(2)+'%');
 
-      // Respect reduced motion
-      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-      function handleRM(e) {
-        if (e.matches) { clearInterval(cycle); }
-        else if (!cycle) {
-          cycle = setInterval(() => {
-            pIndex = (pIndex + 1) % palettes.length;
-            applyPalette(pIndex);
-          }, 12000);
-        }
+        // Tilt panel
+        const C = panel.getBoundingClientRect();
+        const cx = (e.clientX - (C.left + C.width/2)) / C.width;
+        const cy = (e.clientY - (C.top + C.height/2)) / C.height;
+        panel.style.setProperty('--ry', (cx * 9).toFixed(2) + 'deg');
+        panel.style.setProperty('--rx', (-cy * 7).toFixed(2) + 'deg');
+      }, { passive: true });
+      root.addEventListener('pointerleave', () => {
+        panel.style.setProperty('--ry','0deg');
+        panel.style.setProperty('--rx','0deg');
+        root.style.setProperty('--mx','50%');
+        root.style.setProperty('--my','50%');
+      });
+
+      // Sun positioning along an ellipse
+      let rect = null;
+      function updateRect(){ rect = root.getBoundingClientRect(); }
+      updateRect();
+      window.addEventListener('resize', updateRect);
+
+      let t = Number(slider.value) / 100; // 0..1
+      slider.addEventListener('input', () => { t = Number(slider.value)/100; positionSun(); });
+
+      function positionSun() {
+        if (!rect) updateRect();
+        const cx = rect.width * 0.5;
+        const cy = rect.height * 0.56;
+        const rx = Math.min(rect.width, 980) * 0.34;
+        const ry = Math.min(rect.height, 580) * 0.22;
+        const theta = (t * Math.PI * 2); // full loop
+        const x = cx + Math.cos(theta) * rx;
+        const y = cy - Math.sin(theta) * ry;
+        sun.style.left = x + 'px';
+        sun.style.top = y + 'px';
       }
-      if (mq.addEventListener) mq.addEventListener('change', handleRM);
-      else mq.addListener(handleRM); // legacy
+      positionSun();
+
+      // Gentle auto-cycle of time, unless paused
+      let paused = false;
+      function rafLoop() {
+        if (!paused) {
+          // drift speed adapts to viewport; smaller screens move slower
+          const speed = Math.max(0.0004, Math.min(0.0012, rect.width / 200000));
+          t = (t + speed) % 1;
+          slider.value = Math.round(t * 100);
+          positionSun();
+        }
+        requestAnimationFrame(rafLoop);
+      }
+      requestAnimationFrame(rafLoop);
+
+      // Pause toggle
+      pauseBtn.addEventListener('click', () => {
+        paused = !paused;
+        root.classList.toggle('paused', paused);
+        pauseBtn.classList.toggle('active', paused);
+        pauseBtn.textContent = paused ? 'Resume Motion' : 'Pause Motion';
+      });
+
+      // Tip pulse (cute, non-intrusive)
+      tipBtn.addEventListener('click', () => {
+        tipBtn.classList.add('active');
+        setTimeout(() => tipBtn.classList.remove('active'), 800);
+      });
+
+      // Respect reduced motion: stop auto cycle
+      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (mq.matches) paused = true;
+      if (mq.addEventListener) mq.addEventListener('change', e => { paused = e.matches; root.classList.toggle('paused', paused); });
+
     })();
   </script>
 </section>
