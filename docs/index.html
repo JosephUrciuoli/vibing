@@ -73,301 +73,311 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="solstice-741" aria-label="Daylight Studio">
+<section class="atelier-742" aria-label="Luminarium">
   <style>
-    .solstice-741 {
-      /* Dynamic theme tokens */
-      --bg1: #fff6ec;
-      --bg2: #eef7ff;
-      --ink: #152034;
-      --muted: #5c6a7b;
-      --acc1: #ff9a6a;
-      --acc2: #ff75b5;
-      --glow: #ffd59e;
-      --shadow: 0 20px 60px rgba(16, 24, 40, 0.15);
-
+    .atelier-742 {
+      --bg1: #0b1020;
+      --bg2: #151a2f;
+      --ink: #e9f1ff;
+      --muted: #a6b4ce;
+      --a1: #7bd5ff;
+      --a2: #9d7bff;
+      --glass: rgba(255,255,255,0.06);
+      --border: color-mix(in oklab, var(--ink) 12%, transparent);
+      --bloom: 60;
+      --spin: 0deg;
+      --mx: 50%;
+      --my: 50%;
       position: relative;
       isolation: isolate;
       border-radius: 28px;
+      padding: clamp(18px, 3vw, 36px);
       overflow: hidden;
-      padding: clamp(18px, 2.8vw, 32px);
       color: var(--ink);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, "Noto Sans";
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans";
       background:
-        radial-gradient(1600px 1200px at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.35), transparent 45%),
+        radial-gradient(1200px 800px at var(--mx) var(--my), color-mix(in oklab, var(--a1) 8%, transparent), transparent 45%),
         linear-gradient(135deg, var(--bg1), var(--bg2));
-      border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), var(--shadow);
+      border: 1px solid var(--border);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 18px 60px rgba(5, 10, 20, 0.45);
     }
-    .solstice-741 * { box-sizing: border-box; }
+    .atelier-742 * { box-sizing: border-box; }
 
-    /* Subtle paper grid */
-    .solstice-741::before {
+    /* Luminous wash */
+    .atelier-742::before {
+      content: "";
+      position: absolute; inset: -18%;
+      background:
+        conic-gradient(from var(--spin), color-mix(in oklab, var(--a1) 65%, transparent) 0 22%,
+                                   transparent 22% 42%,
+                                   color-mix(in oklab, var(--a2) 60%, transparent) 42% 66%,
+                                   transparent 66% 100%);
+      filter: blur(calc(40px + (var(--bloom) * 0.9px)));
+      opacity: 0.75;
+      mix-blend-mode: screen;
+      transform: scale(1.05);
+      pointer-events: none;
+      animation: swirl 36s linear infinite;
+    }
+    @keyframes swirl { to { transform: rotate(360deg) scale(1.05); } }
+
+    /* Soft grid texture */
+    .atelier-742::after {
       content: "";
       position: absolute; inset: 0;
       background:
-        radial-gradient(circle at 40% 20%, rgba(255,255,255,0.25), transparent 45%),
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 24px),
-        repeating-linear-gradient(90deg, rgba(0,0,0,0.02) 0, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 24px);
+        radial-gradient(600px 420px at var(--mx) var(--my), rgba(255,255,255,0.05), transparent 60%),
+        linear-gradient(0deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 28px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 24px);
       pointer-events: none;
-      mix-blend-mode: overlay;
+      mask: linear-gradient(180deg, rgba(0,0,0,0.9), rgba(0,0,0,0.85));
     }
 
-    /* Sky scene */
-    .solstice-741 .scene {
-      position: absolute; inset: 0; z-index: 0; pointer-events: none;
-    }
-    .solstice-741 .sun {
+    /* Floating orbs */
+    .atelier-742 .backdrop { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    .atelier-742 .orb {
       position: absolute;
-      width: clamp(80px, 12vmin, 140px);
-      height: clamp(80px, 12vmin, 140px);
-      left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
+      width: clamp(140px, 20vmin, 260px);
+      height: clamp(140px, 20vmin, 260px);
       border-radius: 50%;
-      background: radial-gradient(circle at 40% 40%, #fffde6, color-mix(in oklab, var(--glow) 55%, transparent) 60%, transparent 70%);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.8) inset,
-        0 30px 80px color-mix(in oklab, var(--glow) 30%, transparent),
-        0 8px 30px color-mix(in oklab, var(--acc1) 20%, transparent);
-      filter: saturate(120%);
-      transition: filter 300ms ease;
-    }
-    .solstice-741.dark .sun { filter: saturate(140%) brightness(1.2); }
-
-    .solstice-741 .ring {
-      position: absolute; inset: 0; margin: auto;
-      width: min(90vmin, 720px); height: min(58vmin, 460px);
-      border-radius: 50% / 35%;
-      border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
-      mask: radial-gradient(120% 80% at 50% 50%, black 64%, transparent 66%);
-      animation: spinA 28s linear infinite;
-      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.06));
-      opacity: 0.7;
-    }
-    .solstice-741 .ring.r2 {
-      width: min(64vmin, 520px); height: min(42vmin, 360px);
-      border-style: dashed;
+      background: radial-gradient(circle at 30% 30%, color-mix(in oklab, var(--a1) 70%, #ffffff) 0%, var(--a1) 35%, transparent 70%);
+      filter: blur(calc(6px + var(--bloom) * 0.08));
       opacity: 0.55;
-      animation: spinB 22s linear infinite reverse;
-      mask: radial-gradient(120% 80% at 50% 50%, black 76%, transparent 78%);
+      transform: translate3d(0,0,0);
+      animation: floatA 18s ease-in-out infinite;
+      box-shadow: 0 30px 120px color-mix(in oklab, var(--a1) 25%, transparent);
     }
-    @keyframes spinA { to { transform: rotate(360deg); } }
-    @keyframes spinB { to { transform: rotate(-360deg); } }
+    .atelier-742 .orb.o2 {
+      left: auto; right: 6%; top: 12%;
+      background: radial-gradient(circle at 30% 30%, color-mix(in oklab, var(--a2) 70%, #ffffff) 0%, var(--a2) 35%, transparent 70%);
+      animation: floatB 22s ease-in-out infinite reverse;
+      opacity: 0.48;
+      box-shadow: 0 30px 120px color-mix(in oklab, var(--a2) 25%, transparent);
+    }
+    .atelier-742 .orb.o3 {
+      left: 10%; bottom: -4%;
+      background: radial-gradient(circle at 60% 40%, color-mix(in oklab, var(--a1) 40%, var(--a2)) 0%, color-mix(in oklab, var(--a1) 15%, var(--a2)) 35%, transparent 70%);
+      animation: floatC 26s ease-in-out infinite;
+      opacity: 0.42;
+    }
+    .atelier-742 .orb { left: 6%; top: 14%; }
+    @keyframes floatA { 0%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(14px, -16px) scale(1.06);} 100%{ transform: translate(0,0) scale(1);} }
+    @keyframes floatB { 0%{ transform: translate(0,0) scale(0.96);} 50%{ transform: translate(-18px, 12px) scale(1.04);} 100%{ transform: translate(0,0) scale(0.96);} }
+    @keyframes floatC { 0%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(10px, -8px) scale(1.03);} 100%{ transform: translate(0,0) scale(1);} }
 
-    /* Panel */
-    .solstice-741 .panel {
-      position: relative;
-      z-index: 2;
-      max-width: 980px;
-      margin: 0 auto;
-      padding: clamp(20px, 2.6vw, 36px);
+    /* Island (glass card) */
+    .atelier-742 .island {
+      position: relative; z-index: 2;
+      max-width: 1000px; margin: 0 auto;
+      padding: clamp(20px, 3.2vw, 42px);
       border-radius: 22px;
-      background: color-mix(in oklab, #ffffff 68%, transparent);
-      border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
-      -webkit-backdrop-filter: blur(10px) saturate(130%);
-      backdrop-filter: blur(10px) saturate(130%);
-      box-shadow: 0 10px 40px rgba(16,24,40,0.12), inset 0 1px 0 rgba(255,255,255,0.7);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--glass) 82%, transparent), color-mix(in oklab, var(--glass) 60%, transparent));
+      -webkit-backdrop-filter: blur(12px) saturate(140%);
+      backdrop-filter: blur(12px) saturate(140%);
+      border: 1px solid color-mix(in oklab, var(--ink) 16%, transparent);
+      box-shadow: 0 12px 44px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
       transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-      transition: transform 300ms ease, box-shadow 300ms ease, background 350ms ease, border-color 350ms ease;
+      transition: transform 280ms ease, box-shadow 280ms ease, background 280ms ease, border-color 280ms ease;
     }
-    .solstice-741 .panel:hover { box-shadow: 0 16px 60px rgba(16,24,40,0.16), inset 0 1px 0 rgba(255,255,255,0.8); }
+    .atelier-742 .island:hover { box-shadow: 0 18px 70px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.1); }
 
-    .solstice-741 .badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 10px; border-radius: 999px;
-      font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    .atelier-742 .pill {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 7px 12px;
+      font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
       color: var(--muted);
-      border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
-      box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset, 0 3px 10px rgba(16,24,40,0.06);
+      border-radius: 999px;
+      border: 1px solid color-mix(in oklab, var(--ink) 18%, transparent);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 2px 10px rgba(0,0,0,0.25);
       user-select: none;
     }
-    .solstice-741 .badge::before {
+    .atelier-742 .pill::before {
       content: "";
       width: 8px; height: 8px; border-radius: 50%;
-      background: linear-gradient(90deg, var(--acc1), var(--acc2));
-      box-shadow: 0 0 10px color-mix(in oklab, var(--acc1) 50%, transparent);
+      background: linear-gradient(90deg, var(--a1), var(--a2));
+      box-shadow: 0 0 12px color-mix(in oklab, var(--a1) 50%, transparent);
     }
 
-    .solstice-741 .title {
-      margin: 14px 0 6px;
+    .atelier-742 .title {
+      margin: 14px 0 8px;
       font-weight: 900;
       letter-spacing: -0.02em;
-      font-size: clamp(34px, 6.2vw, 64px);
-      line-height: 1.05;
-      background: linear-gradient(90deg, var(--acc1), var(--acc2));
+      font-size: clamp(36px, 6.6vw, 72px);
+      line-height: 1.02;
+      background: linear-gradient(90deg, var(--a1), var(--a2));
       -webkit-background-clip: text; background-clip: text; color: transparent;
       text-wrap: balance;
     }
-    .solstice-741 .subtitle {
-      margin: 8px 0 20px;
+    .atelier-742 .lede {
+      margin: 8px 0 22px;
       color: var(--muted);
       font-size: clamp(14px, 2.2vw, 18px);
-      line-height: 1.65;
+      line-height: 1.7;
       max-width: 62ch;
+      text-wrap: pretty;
     }
 
     /* Controls */
-    .solstice-741 .controls {
-      display: grid;
+    .atelier-742 .controls {
+      display: grid; gap: 14px;
       grid-template-columns: 1fr;
-      gap: 16px;
+      align-items: start;
     }
-    @media (min-width: 820px) {
-      .solstice-741 .controls { grid-template-columns: 1fr auto; align-items: start; }
+    @media (min-width: 900px) {
+      .atelier-742 .controls { grid-template-columns: 1.2fr 0.8fr auto; }
     }
-    .solstice-741 .modes {
-      display: flex; flex-wrap: wrap; gap: 10px;
-    }
-    .solstice-741 .mode {
+    .atelier-742 .palettes { display: flex; flex-wrap: wrap; gap: 10px; }
+    .atelier-742 .chip {
       appearance: none; cursor: pointer;
-      border-radius: 12px;
-      border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.65));
-      color: var(--ink);
-      padding: 10px 14px; font-size: 13px;
-      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
-      box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset, 0 6px 16px rgba(16,24,40,0.06);
-      position: relative; overflow: hidden;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 12px; border-radius: 12px;
+      font-size: 13px; color: var(--ink);
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid color-mix(in oklab, var(--ink) 18%, transparent);
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.08) inset, 0 8px 18px rgba(0,0,0,0.25);
     }
-    .solstice-741 .mode:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(16,24,40,0.10); }
-    .solstice-741 .mode.active {
-      border-color: color-mix(in oklab, var(--acc2) 46%, transparent);
-      box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 10px 26px color-mix(in oklab, var(--acc2) 18%, transparent);
+    .atelier-742 .chip:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(0,0,0,0.35); }
+    .atelier-742 .chip.active {
+      border-color: color-mix(in oklab, var(--a2) 50%, transparent);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.12) inset, 0 14px 30px color-mix(in oklab, var(--a2) 22%, rgba(0,0,0,0.45));
+      background: linear-gradient(180deg, color-mix(in oklab, var(--a1) 14%, transparent), color-mix(in oklab, var(--a2) 10%, transparent));
     }
-    .solstice-741 .mode .dot {
-      width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; display: inline-block;
-      background: radial-gradient(circle at 40% 40%, var(--acc1), var(--acc2));
-      box-shadow: 0 0 8px color-mix(in oklab, var(--acc1) 45%, transparent);
+    .atelier-742 .chip i {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: linear-gradient(90deg, var(--a1), var(--a2));
+      box-shadow: 0 0 8px color-mix(in oklab, var(--a1) 45%, transparent);
+      display: inline-block;
     }
 
-    .solstice-741 .slider-wrap {
-      display: grid; gap: 8px; min-width: 220px;
-      align-content: start;
-    }
-    .solstice-741 .slider-label {
+    .atelier-742 .sliders { display: grid; gap: 10px; min-width: 220px; align-content: start; }
+    .atelier-742 .label {
+      display: grid; gap: 8px;
       font-size: 12px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;
     }
-    .solstice-741 input[type="range"] {
+    .atelier-742 input[type="range"] {
       -webkit-appearance: none; appearance: none;
       width: 100%; height: 28px; background: transparent;
     }
-    .solstice-741 input[type="range"]::-webkit-slider-runnable-track {
+    .atelier-742 input[type="range"]::-webkit-slider-runnable-track {
       height: 8px; border-radius: 999px;
-      background: linear-gradient(90deg, var(--acc1), var(--acc2));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 1px 0 rgba(16,24,40,0.1);
+      background: linear-gradient(90deg, var(--a1), var(--a2));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 1px 0 rgba(0,0,0,0.5);
     }
-    .solstice-741 input[type="range"]::-moz-range-track {
-      height: 8px; border-radius: 999px; background: linear-gradient(90deg, var(--acc1), var(--acc2));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 1px 0 rgba(16,24,40,0.1);
+    .atelier-742 input[type="range"]::-moz-range-track {
+      height: 8px; border-radius: 999px; background: linear-gradient(90deg, var(--a1), var(--a2));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 1px 0 rgba(0,0,0,0.5);
     }
-    .solstice-741 input[type="range"]::-webkit-slider-thumb {
+    .atelier-742 input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none; appearance: none;
       width: 22px; height: 22px; border-radius: 50%;
-      background: #fff;
-      border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+      background: #0f1325;
+      border: 1px solid color-mix(in oklab, var(--ink) 18%, transparent);
       margin-top: -7px;
-      box-shadow: 0 6px 16px rgba(16,24,40,0.18), 0 0 0 4px color-mix(in oklab, var(--acc2) 18%, transparent);
-      transition: transform 120ms ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6), 0 0 0 4px color-mix(in oklab, var(--a2) 26%, transparent);
+      transition: transform 120ms ease, background 180ms ease;
     }
-    .solstice-741 input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.06); }
-    .solstice-741 input[type="range"]::-moz-range-thumb {
+    .atelier-742 input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.06); background: #141a33; }
+    .atelier-742 input[type="range"]::-moz-range-thumb {
       width: 22px; height: 22px; border-radius: 50%;
-      background: #fff; border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
-      box-shadow: 0 6px 16px rgba(16,24,40,0.18), 0 0 0 4px color-mix(in oklab, var(--acc2) 18%, transparent);
+      background: #0f1325; border: 1px solid color-mix(in oklab, var(--ink) 18%, transparent);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6), 0 0 0 4px color-mix(in oklab, var(--a2) 26%, transparent);
     }
 
-    .solstice-741 .toolbar {
-      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
-    }
-    .solstice-741 .ghost {
+    .atelier-742 .actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .atelier-742 .ghost {
       appearance: none; cursor: pointer;
       border-radius: 999px; padding: 8px 12px; font-size: 13px;
       color: var(--ink);
       background: transparent;
-      border: 1px dashed color-mix(in oklab, var(--ink) 22%, transparent);
-      transition: background 180ms ease, transform 180ms ease, border-color 180ms ease, color 180ms ease;
+      border: 1px dashed color-mix(in oklab, var(--ink) 26%, transparent);
+      transition: background 180ms ease, transform 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
     }
-    .solstice-741 .ghost:hover { background: rgba(255,255,255,0.75); transform: translateY(-1px); }
-    .solstice-741 .ghost.active {
-      color: #fff;
-      background: linear-gradient(90deg, var(--acc1), var(--acc2));
-      border-style: solid;
-      border-color: transparent;
-      box-shadow: 0 8px 20px color-mix(in oklab, var(--acc2) 22%, transparent);
+    .atelier-742 .ghost:hover { background: rgba(255,255,255,0.06); transform: translateY(-1px); }
+    .atelier-742 .ghost.active {
+      color: #0b1020;
+      background: linear-gradient(90deg, var(--a1), var(--a2));
+      border-style: solid; border-color: transparent;
+      box-shadow: 0 8px 24px color-mix(in oklab, var(--a2) 30%, rgba(0,0,0,0.6));
     }
 
     /* Footer */
-    .solstice-741 .footer {
+    .atelier-742 .foot {
       margin-top: clamp(16px, 2.6vw, 26px);
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
       color: var(--muted); font-size: 12px;
     }
-    .solstice-741 #last-updated {
+    .atelier-742 #last-updated {
       padding: 6px 10px; border-radius: 999px;
-      background: rgba(255,255,255,0.75);
-      border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid color-mix(in oklab, var(--ink) 18%, transparent);
       color: var(--ink);
-      box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.12) inset;
     }
 
-    /* Paused state */
-    .solstice-741.paused .ring { animation-play-state: paused; }
+    /* Paused & glow states */
+    .atelier-742.paused::before,
+    .atelier-742.paused .orb { animation-play-state: paused !important; }
+    .atelier-742.glow .island { box-shadow: 0 22px 90px color-mix(in oklab, var(--a2) 22%, rgba(0,0,0,0.55)), inset 0 1px 0 rgba(255,255,255,0.12); }
+    .atelier-742.glow::before { opacity: 0.88; }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      .solstice-741 .ring { animation: none !important; }
-      .solstice-741 .panel { transform: none !important; }
+      .atelier-742::before,
+      .atelier-742 .orb { animation: none !important; }
+      .atelier-742 .island { transform: none !important; }
     }
   </style>
 
-  <div class="scene" aria-hidden="true">
-    <div class="ring"></div>
-    <div class="ring r2"></div>
-    <div class="sun"></div>
+  <div class="backdrop" aria-hidden="true">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
   </div>
 
-  <article class="panel" role="region" aria-label="Daylight Console">
-    <div class="badge">Studio 741</div>
-    <h1 class="title">Daylight, distilled.</h1>
-    <p class="subtitle">A calm canvas where motion is a whisper. Adjust the sky, choose a mood, and let the interface breathe.</p>
+  <article class="island" role="region" aria-label="Luminarium Console">
+    <span class="pill">Luminarium 742</span>
+    <h1 class="title">Sculpted light.</h1>
+    <p class="lede">A nocturne of glass and glow. Choose a palette, dial the bloom, and let the scene breathe around your cursor.</p>
 
     <div class="controls">
-      <div class="modes" aria-label="Sky Presets">
-        <button class="mode active" data-mode="dawn"><span class="dot"></span>Dawn</button>
-        <button class="mode" data-mode="noon"><span class="dot"></span>Noon</button>
-        <button class="mode" data-mode="dusk"><span class="dot"></span>Dusk</button>
-        <button class="mode" data-mode="midnight"><span class="dot"></span>Midnight</button>
+      <div class="palettes" aria-label="Palettes">
+        <button class="chip active" data-p="prism"><i></i> Prism</button>
+        <button class="chip" data-p="mist"><i></i> Mist</button>
+        <button class="chip" data-p="noir"><i></i> Noir</button>
+        <button class="chip" data-p="coral"><i></i> Coral</button>
       </div>
 
-      <div class="slider-wrap">
-        <div class="slider-label">Arc of the Sun</div>
-        <input type="range" min="0" max="100" step="1" value="25" aria-label="Time of day">
-        <div class="toolbar">
-          <button class="ghost pause">Pause Motion</button>
-          <button class="ghost tip">Tip: move your cursor</button>
-        </div>
+      <div class="sliders">
+        <label class="label">Bloom
+          <input type="range" min="0" max="100" step="1" value="60" aria-label="Bloom intensity">
+        </label>
+      </div>
+
+      <div class="actions">
+        <button class="ghost pause">Pause Motion</button>
+        <button class="ghost glow">Glow</button>
       </div>
     </div>
 
-    <div class="footer">
-      <span>“Make it light. Make it true.”</span>
-      <span id="last-updated">Last updated: 2025-11-19 09:18:25 EST</span>
+    <div class="foot">
+      <span class="quote">“Less noise, more nuance.”</span>
+      <span id="last-updated">Last updated: 2025-11-19 10:19:55 EST</span>
     </div>
   </article>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.solstice-741');
-      const panel = root.querySelector('.panel');
-      const sun = root.querySelector('.sun');
-      const modes = Array.from(root.querySelectorAll('.mode'));
+      const root = document.currentScript.closest('.atelier-742');
+      const island = root.querySelector('.island');
+      const chips = Array.from(root.querySelectorAll('.chip'));
       const slider = root.querySelector('input[type="range"]');
       const pauseBtn = root.querySelector('.ghost.pause');
-      const tipBtn = root.querySelector('.ghost.tip');
+      const glowBtn = root.querySelector('.ghost.glow');
       const last = root.querySelector('#last-updated');
 
-      // Timestamp
       function stamp() {
         try {
           const d = new Date();
@@ -382,93 +392,40 @@
       }
       stamp();
 
-      // Palettes
       const PALETTES = {
-        dawn:   { bg1:'#fff6ec', bg2:'#eef7ff', acc1:'#ff9a6a', acc2:'#ff75b5', ink:'#152034', muted:'#5c6a7b', glow:'#ffd59e', dark:false },
-        noon:   { bg1:'#ecfbff', bg2:'#ffffff', acc1:'#00d4ff', acc2:'#31c96e', ink:'#0f1a2a', muted:'#536275', glow:'#b8f3ff', dark:false },
-        dusk:   { bg1:'#f6edff', bg2:'#fff0f5', acc1:'#8b78ff', acc2:'#ff8bb3', ink:'#160f2e', muted:'#5a5170', glow:'#e2d1ff', dark:false },
-        midnight:{bg1:'#0d1222', bg2:'#171b2e', acc1:'#7bd5ff', acc2:'#9d7bff', ink:'#eaf2ff', muted:'#a9b2c7', glow:'#6cc6ff', dark:true }
+        prism: { bg1:'#0b1020', bg2:'#151a2f', a1:'#7bd5ff', a2:'#9d7bff', ink:'#e9f1ff', muted:'#a6b4ce', glass:'rgba(255,255,255,0.06)' },
+        mist:  { bg1:'#f4f7fb', bg2:'#e9f0ff', a1:'#87a8ff', a2:'#5de0d1', ink:'#0f1a2a', muted:'#566376', glass:'rgba(255,255,255,0.72)' },
+        noir:  { bg1:'#05070d', bg2:'#0c0f18', a1:'#ff9a6a', a2:'#ffd36e', ink:'#f5f7ff', muted:'#9aa6bd', glass:'rgba(255,255,255,0.05)' },
+        coral: { bg1:'#1a1220', bg2:'#28151e', a1:'#ff7aa1', a2:'#ffd1a1', ink:'#fdeffc', muted:'#d3b9c9', glass:'rgba(255,255,255,0.07)' }
       };
-      function applyPalette(name) {
-        const p = PALETTES[name];
-        if (!p) return;
+
+      function applyPalette(key) {
+        const p = PALETTES[key]; if (!p) return;
         root.style.setProperty('--bg1', p.bg1);
         root.style.setProperty('--bg2', p.bg2);
-        root.style.setProperty('--acc1', p.acc1);
-        root.style.setProperty('--acc2', p.acc2);
+        root.style.setProperty('--a1', p.a1);
+        root.style.setProperty('--a2', p.a2);
         root.style.setProperty('--ink', p.ink);
         root.style.setProperty('--muted', p.muted);
-        root.style.setProperty('--glow', p.glow);
-        root.classList.toggle('dark', !!p.dark);
-        modes.forEach(b => b.classList.toggle('active', b.dataset.mode === name));
+        root.style.setProperty('--glass', p.glass);
+        // Contrast tweaks for light palette
+        const light = (key === 'mist');
+        root.style.setProperty('--border', light ? 'color-mix(in oklab, #112 20%, transparent)' : 'color-mix(in oklab, var(--ink) 12%, transparent)');
+        chips.forEach(c => c.classList.toggle('active', c.dataset.p === key));
       }
-      applyPalette('dawn');
+      applyPalette('prism');
 
-      modes.forEach(btn => {
-        btn.addEventListener('click', () => applyPalette(btn.dataset.mode));
-      });
+      chips.forEach(btn => btn.addEventListener('click', () => applyPalette(btn.dataset.p)));
 
-      // Parallax and pointer highlight
-      function clamp(n, a, b){ return Math.min(b, Math.max(a, n)); }
-      root.addEventListener('pointermove', (e) => {
-        const R = root.getBoundingClientRect();
-        const px = clamp((e.clientX - R.left)/R.width, 0, 1);
-        const py = clamp((e.clientY - R.top)/R.height, 0, 1);
-        root.style.setProperty('--mx', (px*100).toFixed(2)+'%');
-        root.style.setProperty('--my', (py*100).toFixed(2)+'%');
-
-        // Tilt panel
-        const C = panel.getBoundingClientRect();
-        const cx = (e.clientX - (C.left + C.width/2)) / C.width;
-        const cy = (e.clientY - (C.top + C.height/2)) / C.height;
-        panel.style.setProperty('--ry', (cx * 9).toFixed(2) + 'deg');
-        panel.style.setProperty('--rx', (-cy * 7).toFixed(2) + 'deg');
-      }, { passive: true });
-      root.addEventListener('pointerleave', () => {
-        panel.style.setProperty('--ry','0deg');
-        panel.style.setProperty('--rx','0deg');
-        root.style.setProperty('--mx','50%');
-        root.style.setProperty('--my','50%');
-      });
-
-      // Sun positioning along an ellipse
-      let rect = null;
-      function updateRect(){ rect = root.getBoundingClientRect(); }
-      updateRect();
-      window.addEventListener('resize', updateRect);
-
-      let t = Number(slider.value) / 100; // 0..1
-      slider.addEventListener('input', () => { t = Number(slider.value)/100; positionSun(); });
-
-      function positionSun() {
-        if (!rect) updateRect();
-        const cx = rect.width * 0.5;
-        const cy = rect.height * 0.56;
-        const rx = Math.min(rect.width, 980) * 0.34;
-        const ry = Math.min(rect.height, 580) * 0.22;
-        const theta = (t * Math.PI * 2); // full loop
-        const x = cx + Math.cos(theta) * rx;
-        const y = cy - Math.sin(theta) * ry;
-        sun.style.left = x + 'px';
-        sun.style.top = y + 'px';
+      // Bloom slider drives CSS blur/intensity
+      function setBloom(v) {
+        root.style.setProperty('--bloom', String(v));
       }
-      positionSun();
+      slider.addEventListener('input', e => setBloom(e.target.value));
+      setBloom(slider.value);
 
-      // Gentle auto-cycle of time, unless paused
+      // Pause / resume
       let paused = false;
-      function rafLoop() {
-        if (!paused) {
-          // drift speed adapts to viewport; smaller screens move slower
-          const speed = Math.max(0.0004, Math.min(0.0012, rect.width / 200000));
-          t = (t + speed) % 1;
-          slider.value = Math.round(t * 100);
-          positionSun();
-        }
-        requestAnimationFrame(rafLoop);
-      }
-      requestAnimationFrame(rafLoop);
-
-      // Pause toggle
       pauseBtn.addEventListener('click', () => {
         paused = !paused;
         root.classList.toggle('paused', paused);
@@ -476,17 +433,47 @@
         pauseBtn.textContent = paused ? 'Resume Motion' : 'Pause Motion';
       });
 
-      // Tip pulse (cute, non-intrusive)
-      tipBtn.addEventListener('click', () => {
-        tipBtn.classList.add('active');
-        setTimeout(() => tipBtn.classList.remove('active'), 800);
+      // Glow accent
+      glowBtn.addEventListener('click', () => {
+        const on = root.classList.toggle('glow');
+        glowBtn.classList.toggle('active', on);
       });
 
-      // Respect reduced motion: stop auto cycle
-      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-      if (mq.matches) paused = true;
-      if (mq.addEventListener) mq.addEventListener('change', e => { paused = e.matches; root.classList.toggle('paused', paused); });
+      // Pointer parallax and gradient focus
+      function clamp(n,a,b){ return Math.min(b, Math.max(a, n)); }
+      root.addEventListener('pointermove', (e) => {
+        const R = root.getBoundingClientRect();
+        const px = clamp((e.clientX - R.left)/R.width, 0, 1);
+        const py = clamp((e.clientY - R.top)/R.height, 0, 1);
+        root.style.setProperty('--mx', (px*100).toFixed(2)+'%');
+        root.style.setProperty('--my', (py*100).toFixed(2)+'%');
 
+        const C = island.getBoundingClientRect();
+        const cx = (e.clientX - (C.left + C.width/2)) / C.width;
+        const cy = (e.clientY - (C.top + C.height/2)) / C.height;
+        island.style.setProperty('--ry', (cx * 10).toFixed(2) + 'deg');
+        island.style.setProperty('--rx', (-cy * 8).toFixed(2) + 'deg');
+      }, { passive: true });
+      root.addEventListener('pointerleave', () => {
+        island.style.setProperty('--ry','0deg');
+        island.style.setProperty('--rx','0deg');
+        root.style.setProperty('--mx','50%');
+        root.style.setProperty('--my','50%');
+      });
+
+      // Gentle conic spin via JS variable to allow pausing
+      let theta = 0;
+      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      function tick() {
+        if (!paused && !mq.matches) {
+          theta = (theta + 0.22) % 360;
+          root.style.setProperty('--spin', theta + 'deg');
+        }
+        requestAnimationFrame(tick);
+      }
+      if (mq.matches) { paused = true; root.classList.add('paused'); }
+      if (mq.addEventListener) mq.addEventListener('change', e => { paused = e.matches; root.classList.toggle('paused', paused); });
+      requestAnimationFrame(tick);
     })();
   </script>
 </section>
