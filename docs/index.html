@@ -73,7 +73,494 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-11-21 15:20:06 EST</span></div>
+<section id="vibe791" class="vista-aurora" aria-label="Aurora Interface">
+  <style>
+    /* Scoped styles */
+    #vibe791 {
+      --bg: #0a0f16;
+      --panel: rgba(255,255,255,0.08);
+      --panel-2: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.16);
+      --text: #eaf2ff;
+      --muted: #b7c4d9;
+      --accent-1: #7ad7ff;
+      --accent-2: #b28dff;
+      --accent-3: #78ffd3;
+      --ring: rgba(122,215,255,0.55);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --mx: 50%;
+      --my: 50%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      padding: 28px;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 800px at var(--mx) var(--my),
+          rgba(122,215,255,0.18) 0%,
+          rgba(178,141,255,0.16) 35%,
+          rgba(120,255,211,0.12) 60%,
+          rgba(10,15,22,0.6) 100%),
+        linear-gradient(180deg, #0a0f16, #0b1119 60%, #0a0f16);
+      box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.04);
+      isolation: isolate;
+      min-height: 420px;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    /* Light theme */
+    #vibe791[data-theme="light"] {
+      --bg: #f6f9ff;
+      --panel: rgba(255,255,255,0.7);
+      --panel-2: rgba(255,255,255,0.55);
+      --border: rgba(10,15,22,0.12);
+      --text: #12171f;
+      --muted: #4c5a6f;
+      --accent-1: #0077ff;
+      --accent-2: #7b4dff;
+      --accent-3: #00b894;
+      --ring: rgba(0,119,255,0.35);
+      background:
+        radial-gradient(1200px 800px at var(--mx) var(--my),
+          rgba(0,119,255,0.17) 0%,
+          rgba(123,77,255,0.13) 35%,
+          rgba(0,184,148,0.10) 60%,
+          rgba(246,249,255,0.8) 100%),
+        linear-gradient(180deg, #eef4ff, #ffffff 60%, #eef4ff);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(0,0,0,0.03);
+    }
+
+    /* Subtle grid overlay */
+    #vibe791 .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mix-blend-mode: overlay;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    #vibe791[data-theme="light"] .grid {
+      background-image:
+        linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
+      opacity: 0.55;
+      mix-blend-mode: multiply;
+    }
+
+    /* Floating glow blooms */
+    #vibe791 .bloom {
+      position: absolute;
+      filter: blur(60px);
+      opacity: 0.35;
+      pointer-events: none;
+      transform: translateZ(0);
+      animation: float-bloom 14s ease-in-out infinite alternate;
+    }
+    #vibe791 .b1 { width: 320px; height: 320px; left: -60px; top: -40px; background: radial-gradient(circle, var(--accent-2), transparent 60%); }
+    #vibe791 .b2 { width: 280px; height: 280px; right: -40px; bottom: -60px; background: radial-gradient(circle, var(--accent-3), transparent 60%); animation-delay: 1.2s; }
+    @keyframes float-bloom {
+      from { transform: translate3d(0,0,0) scale(1); }
+      to { transform: translate3d(20px, -16px, 0) scale(1.06); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #vibe791 .bloom { animation: none; }
+    }
+
+    /* Canvas backdrop of soft particles */
+    #vibe791 canvas.sky {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.45;
+      filter: saturate(115%) blur(0.2px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    #vibe791[data-theme="light"] canvas.sky {
+      opacity: 0.30;
+      filter: saturate(110%) blur(0.3px);
+    }
+
+    /* Top bar */
+    #vibe791 .top {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    #vibe791 .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, var(--panel), transparent);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+      transition: transform 250ms ease, box-shadow 250ms ease;
+      will-change: transform;
+    }
+    #vibe791 .brand:hover { transform: translateY(-2px); box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.06); }
+    #vibe791 .dot {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: conic-gradient(from 130deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-1));
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.06), 0 6px 16px rgba(0,0,0,0.25);
+    }
+    #vibe791 .wordmark {
+      font-weight: 700; letter-spacing: 0.2px; color: var(--text);
+    }
+
+    #vibe791 .theme-toggle {
+      position: relative;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 200ms ease, background 200ms ease, box-shadow 200ms ease;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+    #vibe791 .theme-toggle:hover { transform: translateY(-1px); }
+    #vibe791 .theme-toggle .icon {
+      width: 18px; height: 18px; position: relative;
+      display: inline-block; border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, var(--accent-1), transparent 60%);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.06) inset;
+    }
+    #vibe791[data-theme="light"] .theme-toggle .icon { background: radial-gradient(circle at 40% 40%, #ffda6b, transparent 60%); }
+    #vibe791 .theme-toggle span { font-weight: 600; font-size: 12px; color: var(--muted); }
+
+    /* Hero panel */
+    #vibe791 .hero {
+      position: relative;
+      z-index: 2;
+      border-radius: 20px;
+      padding: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.06);
+      transform-style: preserve-3d;
+      transition: transform 200ms ease;
+    }
+    #vibe791 .kick {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--panel), transparent);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-weight: 600; font-size: 12px; letter-spacing: 0.3px;
+    }
+    #vibe791 .kick i {
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent-3); box-shadow: 0 0 12px var(--accent-3);
+    }
+    #vibe791 h1 {
+      margin: 14px 0 8px 0;
+      font-size: clamp(28px, 5vw, 48px);
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--text), rgba(255,255,255,0.75));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    #vibe791 p.sub {
+      margin: 0 0 18px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    #vibe791 .cta {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      margin: 14px 0 8px 0;
+    }
+    #vibe791 .btn {
+      position: relative;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      color: var(--text);
+      font-weight: 700; letter-spacing: 0.2px;
+      text-decoration: none;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+      will-change: transform;
+    }
+    #vibe791 .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.25); }
+    #vibe791 .btn.primary {
+      background: linear-gradient(180deg, rgba(122,215,255,0.20), rgba(178,141,255,0.20));
+      box-shadow: 0 0 0 0 rgba(122,215,255,0.0);
+    }
+    #vibe791 .btn.primary::after {
+      content: ""; position: absolute; inset: 0;
+      border-radius: inherit;
+      box-shadow: 0 0 0 0 var(--ring);
+      transition: box-shadow 240ms ease;
+    }
+    #vibe791 .btn.primary:hover::after { box-shadow: 0 0 0 8px var(--ring); }
+
+    /* Feature chips */
+    #vibe791 .chips {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+    #vibe791 .chip {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, var(--panel), transparent);
+      border: 1px solid var(--border);
+      color: var(--muted); font-weight: 600; font-size: 12px;
+    }
+    #vibe791 .chip i {
+      width: 10px; height: 10px; border-radius: 3px;
+      background: var(--accent-1);
+      box-shadow: 0 8px 18px rgba(122,215,255,0.55);
+    }
+    #vibe791 .chip:nth-child(2) i { background: var(--accent-2); box-shadow: 0 8px 18px rgba(178,141,255,0.55); }
+    #vibe791 .chip:nth-child(3) i { background: var(--accent-3); box-shadow: 0 8px 18px rgba(120,255,211,0.55); }
+
+    /* Footer */
+    #vibe791 .foot {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, var(--panel), transparent);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    #vibe791 .meter {
+      flex: 1;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.10), transparent);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+    #vibe791 .meter .fill {
+      height: 100%;
+      width: 28%;
+      background: linear-gradient(90deg, var(--accent-3), var(--accent-1));
+      box-shadow: 0 6px 18px rgba(122,215,255,0.35);
+      animation: breathe 4.8s ease-in-out infinite;
+      transform-origin: left center;
+    }
+    @keyframes breathe {
+      0%, 100% { transform: scaleX(1); }
+      50% { transform: scaleX(1.35); }
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      #vibe791 { padding: 20px; }
+      #vibe791 .chips { grid-template-columns: 1fr; }
+      #vibe791 .foot { flex-direction: column; align-items: stretch; gap: 10px; }
+    }
+  </style>
+
+  <canvas class="sky" aria-hidden="true"></canvas>
+  <div class="grid" aria-hidden="true"></div>
+  <div class="bloom b1" aria-hidden="true"></div>
+  <div class="bloom b2" aria-hidden="true"></div>
+
+  <div class="top">
+    <div class="brand" aria-label="Studio Aurora">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="wordmark">Aurora Surface</span>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="Toggle theme">
+      <span class="icon" aria-hidden="true"></span>
+      <span>Theme</span>
+    </button>
+  </div>
+
+  <div class="hero" id="hero">
+    <span class="kick"><i aria-hidden="true"></i> Designed in Motion</span>
+    <h1>Shaped by Light</h1>
+    <p class="sub">A living surface—calm gradients, crisp type, meaningful motion.</p>
+    <div class="cta">
+      <a href="#" class="btn primary" role="button" aria-label="Explore the motion">Explore the Motion</a>
+      <a href="#" class="btn ghost" role="button" aria-label="See the details">See the Details</a>
+    </div>
+    <div class="chips" aria-label="Highlights">
+      <div class="chip"><i aria-hidden="true"></i> Glassy depth</div>
+      <div class="chip"><i aria-hidden="true"></i> Natural parallax</div>
+      <div class="chip"><i aria-hidden="true"></i> Accessible contrast</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="meter" aria-label="Serenity level">
+      <div class="fill"></div>
+    </div>
+    <span id="last-updated" aria-live="polite"></span>
+  </div>
+
+  <script>
+    (function() {
+      const root = document.getElementById('vibe791');
+      const hero = document.getElementById('hero');
+      const canvas = root.querySelector('canvas.sky');
+      const ctx = canvas.getContext('2d', { alpha: true });
+      let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let orbs = [];
+      let rafId = null;
+
+      // Theme init
+      const storageKey = 'vibe791-theme';
+      const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      const saved = localStorage.getItem(storageKey);
+      root.setAttribute('data-theme', saved ? saved : (prefersLight ? 'light' : 'dark'));
+
+      // Toggle theme
+      root.querySelector('.theme-toggle').addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        root.setAttribute('data-theme', current);
+        localStorage.setItem(storageKey, current);
+        // repaint to adjust canvas composite feel
+        paint(true);
+      });
+
+      // Last updated
+      const lu = root.querySelector('#last-updated');
+      try {
+        const now = new Date();
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        lu.textContent = `Last updated: ${now.toLocaleString([], { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' })} ${tz}`;
+      } catch(e) {
+        lu.textContent = 'Last updated: ' + new Date().toString();
+      }
+
+      // Mouse reactive vars + tilt
+      const setMouseVars = (e) => {
+        const rect = root.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        root.style.setProperty('--mx', x + '%');
+        root.style.setProperty('--my', y + '%');
+
+        // tilt hero
+        const cx = e.clientX - (rect.left + rect.width / 2);
+        const cy = e.clientY - (rect.top + rect.height / 2);
+        const maxTilt = 6;
+        const rx = (cy / (rect.height / 2)) * -maxTilt;
+        const ry = (cx / (rect.width / 2)) * maxTilt;
+        hero.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateZ(0)`;
+      };
+      root.addEventListener('mousemove', setMouseVars);
+      root.addEventListener('mouseleave', () => {
+        hero.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+
+      // Canvas sizing
+      function resize() {
+        const rect = root.getBoundingClientRect();
+        w = Math.max(1, Math.floor(rect.width));
+        h = Math.max(1, Math.floor(rect.height));
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        initOrbs();
+      }
+
+      function rand(min, max) { return Math.random() * (max - min) + min; }
+
+      function initOrbs() {
+        const count = Math.max(18, Math.floor((w * h) / 30000));
+        orbs = [];
+        for (let i = 0; i < count; i++) {
+          orbs.push({
+            x: rand(0, w),
+            y: rand(0, h),
+            r: rand(12, 32),
+            vx: rand(-0.25, 0.25),
+            vy: rand(-0.25, 0.25),
+            hue: rand(170, 290),
+            alpha: rand(0.25, 0.6)
+          });
+        }
+      }
+
+      function step() {
+        const theme = root.getAttribute('data-theme');
+        ctx.clearRect(0, 0, w, h);
+        ctx.globalCompositeOperation = theme === 'light' ? 'multiply' : 'lighter';
+
+        for (let i = 0; i < orbs.length; i++) {
+          const o = orbs[i];
+          o.x += o.vx; o.y += o.vy;
+          if (o.x < -50) o.x = w + 50;
+          if (o.x > w + 50) o.x = -50;
+          if (o.y < -50) o.y = h + 50;
+          if (o.y > h + 50) o.y = -50;
+
+          const grad = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r * 2.2);
+          grad.addColorStop(0, `hsla(${o.hue}, 90%, ${theme === 'light' ? 60 : 70}%, ${o.alpha})`);
+          grad.addColorStop(1, `hsla(${o.hue}, 90%, ${theme === 'light' ? 60 : 70}%, 0)`);
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(o.x, o.y, o.r * 2.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function paint(forceOnce) {
+        step();
+        if (!forceOnce) {
+          rafId = requestAnimationFrame(paint);
+        }
+      }
+
+      // Respect reduced motion
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const onResize = () => { resize(); if (!reduceMotion) { cancelAnimationFrame(rafId); paint(); } else { paint(true); } };
+
+      // Init
+      resize();
+      if (!reduceMotion) paint();
+      window.addEventListener('resize', onResize, { passive: true });
+
+      // Cleanup if needed (in case of hot swap)
+      const observer = new MutationObserver(() => {
+        if (!document.body.contains(root)) {
+          cancelAnimationFrame(rafId);
+          window.removeEventListener('resize', onResize);
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
