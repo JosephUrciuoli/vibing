@@ -73,7 +73,357 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-11-23 04:17:06 EST</span></div>
+<section class="aurora-poster" aria-label="Kinetic Aurora">
+  <style>
+    .aurora-poster {
+      --bg: #0a0e14;
+      --fg: #f3f7ff;
+      --muted: #c7d0e3;
+      --accent-a: 210 90% 62%;
+      --accent-b: 266 85% 60%;
+      --accent-c: 164 90% 55%;
+      --radius: 18px;
+      --speed: 22s;
+      --tiltX: 0deg;
+      --tiltY: 0deg;
+      --shine: rgba(255,255,255,0.5);
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      padding: clamp(20px, 4vw, 44px);
+      color: var(--fg);
+      background:
+        radial-gradient(1400px 700px at 15% -10%, hsl(210 60% 14%), transparent 60%),
+        radial-gradient(1200px 600px at 80% 110%, hsl(230 50% 10%), transparent 60%),
+        linear-gradient(180deg, #0a0e14, #070b10);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.06),
+        0 18px 60px rgba(0,0,0,0.45);
+      font: 400 16px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, Apple Color Emoji, Segoe UI Emoji;
+      isolation: isolate;
+      min-height: clamp(320px, 48vh, 520px);
+    }
+
+    /* Subtle grid texture */
+    .aurora-poster .grid {
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      background:
+        linear-gradient(transparent, rgba(255,255,255,0.02)),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.035), rgba(255,255,255,0.035) 1px, transparent 1px, transparent 24px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.035), rgba(255,255,255,0.035) 1px, transparent 1px, transparent 24px);
+      mask: radial-gradient(100% 100% at 50% 50%, black 55%, transparent 100%);
+      z-index: 1;
+    }
+
+    /* Luminous orbs */
+    .aurora-poster .orb {
+      position: absolute;
+      width: 48vmax; height: 48vmax;
+      filter: blur(40px) saturate(120%);
+      border-radius: 50%;
+      mix-blend-mode: screen;
+      opacity: 0.75;
+      animation: drift var(--speed) linear infinite;
+      transform: translate3d(0,0,0);
+      z-index: 0;
+    }
+    .aurora-poster .o1 { background: radial-gradient(closest-side, hsl(var(--accent-a) / .7), transparent 70%); top: -20vmax; left: -16vmax; animation-delay: -5s; }
+    .aurora-poster .o2 { background: radial-gradient(closest-side, hsl(var(--accent-b) / .65), transparent 70%); bottom: -18vmax; right: -12vmax; animation-delay: -11s; }
+    .aurora-poster .o3 { background: radial-gradient(closest-side, hsl(var(--accent-c) / .6), transparent 70%); top: 10vmax; left: 35%; animation-delay: -17s; width: 36vmax; height: 36vmax; }
+
+    @keyframes drift {
+      0%   { transform: translate3d(-6%, -4%, 0) rotate(0.001deg); }
+      50%  { transform: translate3d(8%, 6%, 0) rotate(0.001deg); }
+      100% { transform: translate3d(-6%, -4%, 0) rotate(0.001deg); }
+    }
+
+    /* Frosted glass card */
+    .aurora-poster .card {
+      position: relative;
+      z-index: 2;
+      border-radius: calc(var(--radius) - 6px);
+      padding: clamp(18px, 4vw, 32px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: saturate(140%) blur(10px);
+      box-shadow:
+        0 10px 40px rgba(0,0,0,0.25),
+        0 1px 0 rgba(255,255,255,0.2) inset;
+      transform: perspective(900px) rotateX(var(--tiltX)) rotateY(var(--tiltY));
+      transition: transform 180ms ease, box-shadow 200ms ease;
+    }
+    .aurora-poster .card::before {
+      content:"";
+      position:absolute; inset:0;
+      border-radius: inherit;
+      padding: 1px; /* border width */
+      background: conic-gradient(from 0deg,
+        hsl(var(--accent-a) / .6),
+        hsl(var(--accent-b) / .6),
+        hsl(var(--accent-c) / .6),
+        hsl(var(--accent-a) / .6));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+              mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      opacity: .6;
+      filter: blur(0.3px);
+      animation: hueSpin calc(var(--speed) * 2) linear infinite;
+      pointer-events: none;
+    }
+    @keyframes hueSpin { to { filter: hue-rotate(360deg) blur(0.3px); } }
+
+    .aurora-poster .shine {
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,0.14) 50%, transparent 65%);
+      transform: translateX(-120%);
+      animation: sweep 8s ease-in-out infinite;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+    @keyframes sweep {
+      0%, 20% { transform: translateX(-120%); }
+      45%, 55% { transform: translateX(120%); }
+      100% { transform: translateX(120%); }
+    }
+
+    /* Typographic rhythm */
+    .aurora-poster h1 {
+      margin: 0 0 10px 0;
+      font-size: clamp(28px, 5.5vw, 54px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 24px rgba(38, 139, 255, 0.16);
+    }
+    .aurora-poster p.lead {
+      margin: 0 0 16px 0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.7vw, 18px);
+    }
+    .aurora-poster .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: hsl(var(--accent-a));
+      background: rgba(113,168,255,0.12);
+      border: 1px solid rgba(113,168,255,0.25);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      font-size: 12px;
+      margin-bottom: 10px;
+      backdrop-filter: blur(3px);
+    }
+    .aurora-poster .kicker .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: hsl(var(--accent-a));
+      box-shadow: 0 0 12px hsl(var(--accent-a) / .8);
+    }
+
+    /* Controls */
+    .aurora-poster .controls {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      margin-top: 14px;
+    }
+    .aurora-poster .control {
+      display: grid; gap: 6px;
+    }
+    .aurora-poster label {
+      font-size: 12px; color: #d8e1f3; opacity: .9; letter-spacing: .02em;
+    }
+    .aurora-poster .value {
+      font-variant-numeric: tabular-nums;
+      color: #eaf1ff;
+      opacity: .8;
+      margin-left: 6px;
+    }
+    .aurora-poster input[type="range"] {
+      -webkit-appearance: none; appearance: none; height: 34px;
+      background: transparent; width: 100%;
+    }
+    .aurora-poster input[type="range"]::-webkit-slider-runnable-track {
+      height: 8px; border-radius: 999px;
+      background: linear-gradient(90deg,
+        hsl(var(--accent-a) / .6), hsl(var(--accent-b) / .6), hsl(var(--accent-c) / .6));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.22), 0 1px 12px rgba(0,0,0,0.35);
+    }
+    .aurora-poster input[type="range"]::-moz-range-track {
+      height: 8px; border-radius: 999px;
+      background: linear-gradient(90deg,
+        hsl(var(--accent-a) / .6), hsl(var(--accent-b) / .6), hsl(var(--accent-c) / .6));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.22), 0 1px 12px rgba(0,0,0,0.35);
+    }
+    .aurora-poster input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: white;
+      border: 2px solid rgba(255,255,255,0.6);
+      box-shadow: 0 0 0 6px rgba(255,255,255,0.12), 0 6px 24px rgba(38,139,255,0.45);
+      margin-top: -7px;
+    }
+    .aurora-poster input[type="range"]::-moz-range-thumb {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: white;
+      border: 2px solid rgba(255,255,255,0.6);
+      box-shadow: 0 0 0 6px rgba(255,255,255,0.12), 0 6px 24px rgba(38,139,255,0.45);
+    }
+
+    .aurora-poster .btn {
+      -webkit-tap-highlight-color: transparent;
+      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      color: var(--fg);
+      font-weight: 600;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+      transition: transform .15s ease, background .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .aurora-poster .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.28);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+    }
+    .aurora-poster .btn .pulse {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: hsl(var(--accent-a));
+      box-shadow: 0 0 0 0 hsl(var(--accent-a) / .6);
+      animation: pulse 2.2s ease-out infinite;
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 hsl(var(--accent-a) / .6); }
+      70%  { box-shadow: 0 0 0 10px hsl(var(--accent-a) / 0); }
+      100% { box-shadow: 0 0 0 0 hsl(var(--accent-a) / 0); }
+    }
+
+    .aurora-poster .footer {
+      display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: baseline;
+      margin-top: 16px; color: var(--muted);
+      font-size: 12px;
+      opacity: .9;
+    }
+    .aurora-poster .stamp {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 6px 10px; border-radius: 999px;
+      color: #e7eeff;
+    }
+    .aurora-poster .mono { font-variant-numeric: tabular-nums; opacity: .85; }
+
+    /* Pause state */
+    .aurora-poster[data-state="paused"] .orb,
+    .aurora-poster[data-state="paused"] .card::before,
+    .aurora-poster[data-state="paused"] .shine {
+      animation-play-state: paused !important;
+    }
+    .aurora-poster[data-state="paused"] .btn .pulse { animation-play-state: paused !important; opacity: .6; }
+
+    /* Responsive stacking */
+    @media (max-width: 560px) {
+      .aurora-poster .controls { grid-template-columns: 1fr; }
+      .aurora-poster .btn { justify-content: center; }
+    }
+  </style>
+
+  <div class="grid" aria-hidden="true"></div>
+  <div class="orb o1" aria-hidden="true"></div>
+  <div class="orb o2" aria-hidden="true"></div>
+  <div class="orb o3" aria-hidden="true"></div>
+
+  <div class="card" id="kineticCard">
+    <div class="shine" aria-hidden="true"></div>
+
+    <div class="kicker"><span class="dot" aria-hidden="true"></span> Iteration 824</div>
+    <h1>Lucid Drift</h1>
+    <p class="lead">A quiet kinetic poster. Gentle motion, soft light, and room to think.</p>
+
+    <div class="controls" role="group" aria-label="Animation controls">
+      <div class="control">
+        <label for="tempo">Tempo <span class="value mono" id="tempoValue">22s</span></label>
+        <input id="tempo" type="range" min="8" max="40" step="1" value="22" aria-label="Animation speed in seconds">
+      </div>
+      <button class="btn" id="toggle" aria-pressed="false" title="Pause or resume motion">
+        <span class="pulse" aria-hidden="true"></span>
+        <span class="btn-text">Pause motion</span>
+      </button>
+    </div>
+
+    <div class="footer">
+      <span class="stamp">Designed to be calm yet alive</span>
+      <span class="mono">•</span>
+      <span class="mono">Hues breathe; edges whisper.</span>
+      <span class="mono">•</span>
+      <span id="last-updated" class="mono"></span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.currentScript.closest('.aurora-poster');
+      const card = root.querySelector('#kineticCard');
+      const tempo = root.querySelector('#tempo');
+      const tempoValue = root.querySelector('#tempoValue');
+      const toggle = root.querySelector('#toggle');
+      const last = root.querySelector('#last-updated');
+
+      // Last updated stamp
+      try {
+        const now = new Date();
+        const fmt = new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'short', timeZoneName: 'short' });
+        last.textContent = 'Last updated: ' + fmt.format(now);
+      } catch (e) {
+        last.textContent = 'Last updated: ' + new Date().toLocaleString();
+      }
+
+      // Tempo control
+      function setSpeed(val) {
+        const s = Math.max(8, Math.min(40, Number(val) || 22));
+        root.style.setProperty('--speed', s + 's');
+        tempoValue.textContent = s + 's';
+      }
+      setSpeed(tempo.value);
+      tempo.addEventListener('input', (e) => setSpeed(e.target.value));
+
+      // Pause/resume
+      toggle.addEventListener('click', () => {
+        const paused = root.getAttribute('data-state') === 'paused';
+        root.setAttribute('data-state', paused ? 'playing' : 'paused');
+        toggle.setAttribute('aria-pressed', String(!paused));
+        toggle.querySelector('.btn-text').textContent = paused ? 'Pause motion' : 'Resume motion';
+      });
+
+      // Subtle 3D tilt based on pointer
+      let raf = null;
+      function onMove(e) {
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+          const tiltX = ((0.5 - y) * 6).toFixed(2) + 'deg';
+          const tiltY = ((x - 0.5) * 8).toFixed(2) + 'deg';
+          root.style.setProperty('--tiltX', tiltX);
+          root.style.setProperty('--tiltY', tiltY);
+        });
+      }
+      root.addEventListener('pointermove', onMove);
+      root.addEventListener('pointerleave', () => {
+        root.style.setProperty('--tiltX', '0deg');
+        root.style.setProperty('--tiltY', '0deg');
+      }, { passive: true });
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
