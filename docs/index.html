@@ -73,354 +73,542 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="aurora-poster" aria-label="Kinetic Aurora">
+<section class="solaris" aria-label="Solaris Sundial">
   <style>
-    .aurora-poster {
-      --bg: #0a0e14;
-      --fg: #f3f7ff;
-      --muted: #c7d0e3;
-      --accent-a: 210 90% 62%;
-      --accent-b: 266 85% 60%;
-      --accent-c: 164 90% 55%;
-      --radius: 18px;
-      --speed: 22s;
-      --tiltX: 0deg;
-      --tiltY: 0deg;
-      --shine: rgba(255,255,255,0.5);
+    .solaris {
+      --sky-top: hsl(230 70% 9%);
+      --sky-bottom: hsl(248 60% 5%);
+      --horizon: hsl(260 60% 12%);
+      --ring: hsl(205 100% 70%);
+      --text: #eef2ff;
+      --muted: #cbd5e1;
+      --glow: 0 20px 80px rgba(0,0,0,.45);
+      --radius: 22px;
       position: relative;
       border-radius: var(--radius);
       overflow: hidden;
-      padding: clamp(20px, 4vw, 44px);
-      color: var(--fg);
+      min-height: clamp(360px, 56vh, 760px);
+      padding: clamp(18px, 4.5vw, 48px);
+      color: var(--text);
       background:
-        radial-gradient(1400px 700px at 15% -10%, hsl(210 60% 14%), transparent 60%),
-        radial-gradient(1200px 600px at 80% 110%, hsl(230 50% 10%), transparent 60%),
-        linear-gradient(180deg, #0a0e14, #070b10);
+        radial-gradient(1200px 600px at 50% 130%, var(--horizon) 10%, transparent 60%),
+        linear-gradient(180deg, var(--sky-top), var(--sky-bottom));
       box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.06),
-        0 18px 60px rgba(0,0,0,0.45);
-      font: 400 16px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, Apple Color Emoji, Segoe UI Emoji;
+        inset 0 0 0 1px rgba(255,255,255,.05),
+        0 22px 70px rgba(0,0,0,.5);
+      font: 500 16px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Roboto, "Helvetica Neue", Arial;
       isolation: isolate;
-      min-height: clamp(320px, 48vh, 520px);
     }
 
-    /* Subtle grid texture */
-    .aurora-poster .grid {
+    /* soft halo grain */
+    .solaris .grain {
       position: absolute;
-      inset: -1px;
+      inset: -2px;
       pointer-events: none;
+      mix-blend-mode: soft-light;
+      opacity: .5;
       background:
-        linear-gradient(transparent, rgba(255,255,255,0.02)),
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.035), rgba(255,255,255,0.035) 1px, transparent 1px, transparent 24px),
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.035), rgba(255,255,255,0.035) 1px, transparent 1px, transparent 24px);
-      mask: radial-gradient(100% 100% at 50% 50%, black 55%, transparent 100%);
-      z-index: 1;
-    }
-
-    /* Luminous orbs */
-    .aurora-poster .orb {
-      position: absolute;
-      width: 48vmax; height: 48vmax;
-      filter: blur(40px) saturate(120%);
-      border-radius: 50%;
-      mix-blend-mode: screen;
-      opacity: 0.75;
-      animation: drift var(--speed) linear infinite;
-      transform: translate3d(0,0,0);
+        radial-gradient(200% 140% at 70% -20%, rgba(255,255,255,.07), transparent 60%),
+        radial-gradient(170% 130% at -10% 120%, rgba(255,255,255,.05), transparent 60%),
+        repeating-conic-gradient(from 0deg, rgba(255,255,255,.02) 0 6deg, transparent 6deg 12deg);
       z-index: 0;
     }
-    .aurora-poster .o1 { background: radial-gradient(closest-side, hsl(var(--accent-a) / .7), transparent 70%); top: -20vmax; left: -16vmax; animation-delay: -5s; }
-    .aurora-poster .o2 { background: radial-gradient(closest-side, hsl(var(--accent-b) / .65), transparent 70%); bottom: -18vmax; right: -12vmax; animation-delay: -11s; }
-    .aurora-poster .o3 { background: radial-gradient(closest-side, hsl(var(--accent-c) / .6), transparent 70%); top: 10vmax; left: 35%; animation-delay: -17s; width: 36vmax; height: 36vmax; }
 
-    @keyframes drift {
-      0%   { transform: translate3d(-6%, -4%, 0) rotate(0.001deg); }
-      50%  { transform: translate3d(8%, 6%, 0) rotate(0.001deg); }
-      100% { transform: translate3d(-6%, -4%, 0) rotate(0.001deg); }
+    /* distant stars */
+    .solaris .stars {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(2px 2px at 10% 20%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 80% 30%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 60% 70%, #fff, transparent 60%),
+        radial-gradient(1px 1px at 30% 85%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 25% 35%, #fff, transparent 60%),
+        radial-gradient(1px 1px at 70% 15%, #fff, transparent 60%),
+        radial-gradient(1px 1px at 45% 55%, #fff, transparent 60%),
+        radial-gradient(2px 2px at 90% 80%, #fff, transparent 60%);
+      filter: drop-shadow(0 0 6px rgba(255,255,255,.2));
+      opacity: .0; /* raised by JS at night */
+      transition: opacity .8s ease;
+      z-index: 0;
+      pointer-events: none;
     }
 
-    /* Frosted glass card */
-    .aurora-poster .card {
+    .solaris .header {
       position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: clamp(16px, 3vw, 26px);
       z-index: 2;
-      border-radius: calc(var(--radius) - 6px);
-      padding: clamp(18px, 4vw, 32px);
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: saturate(140%) blur(10px);
-      box-shadow:
-        0 10px 40px rgba(0,0,0,0.25),
-        0 1px 0 rgba(255,255,255,0.2) inset;
-      transform: perspective(900px) rotateX(var(--tiltX)) rotateY(var(--tiltY));
-      transition: transform 180ms ease, box-shadow 200ms ease;
     }
-    .aurora-poster .card::before {
-      content:"";
-      position:absolute; inset:0;
-      border-radius: inherit;
-      padding: 1px; /* border width */
-      background: conic-gradient(from 0deg,
-        hsl(var(--accent-a) / .6),
-        hsl(var(--accent-b) / .6),
-        hsl(var(--accent-c) / .6),
-        hsl(var(--accent-a) / .6));
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-              mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude;
-      opacity: .6;
-      filter: blur(0.3px);
-      animation: hueSpin calc(var(--speed) * 2) linear infinite;
-      pointer-events: none;
-    }
-    @keyframes hueSpin { to { filter: hue-rotate(360deg) blur(0.3px); } }
-
-    .aurora-poster .shine {
-      position: absolute; inset: 0;
-      border-radius: inherit;
-      background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,0.14) 50%, transparent 65%);
-      transform: translateX(-120%);
-      animation: sweep 8s ease-in-out infinite;
-      mix-blend-mode: overlay;
-      pointer-events: none;
-    }
-    @keyframes sweep {
-      0%, 20% { transform: translateX(-120%); }
-      45%, 55% { transform: translateX(120%); }
-      100% { transform: translateX(120%); }
-    }
-
-    /* Typographic rhythm */
-    .aurora-poster h1 {
-      margin: 0 0 10px 0;
-      font-size: clamp(28px, 5.5vw, 54px);
-      line-height: 1.02;
-      letter-spacing: -0.02em;
-      text-shadow: 0 2px 24px rgba(38, 139, 255, 0.16);
-    }
-    .aurora-poster p.lead {
-      margin: 0 0 16px 0;
-      color: var(--muted);
-      font-size: clamp(14px, 1.7vw, 18px);
-    }
-    .aurora-poster .kicker {
+    .solaris .kicker {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      color: hsl(var(--accent-a));
-      background: rgba(113,168,255,0.12);
-      border: 1px solid rgba(113,168,255,0.25);
-      padding: 6px 10px;
+      padding: 6px 12px;
       border-radius: 999px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.18);
       font-size: 12px;
-      margin-bottom: 10px;
-      backdrop-filter: blur(3px);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-shadow: 0 1px 12px rgba(255,255,255,.12);
     }
-    .aurora-poster .kicker .dot {
+    .solaris .kicker .dot {
       width: 8px; height: 8px; border-radius: 50%;
-      background: hsl(var(--accent-a));
-      box-shadow: 0 0 12px hsl(var(--accent-a) / .8);
+      background: var(--ring);
+      box-shadow: 0 0 10px var(--ring);
+    }
+    .solaris .title {
+      margin: 0;
+      font-size: clamp(28px, 6vw, 64px);
+      letter-spacing: -0.02em;
+      line-height: 1.02;
+      text-shadow: 0 4px 42px rgba(0,0,0,.35), 0 2px 14px rgba(25,135,255,.25);
+    }
+    .solaris .tagline {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.6vw, 18px);
+    }
+
+    /* Dial */
+    .solaris .dial-wrap {
+      display: grid;
+      place-items: center;
+      margin: clamp(8px, 3vw, 22px) 0;
+      z-index: 2;
+    }
+    .solaris .dial {
+      position: relative;
+      width: clamp(240px, 45vmin, 520px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(50% 50% at 50% 50%, rgba(255,255,255,.08), rgba(255,255,255,.02) 60%, transparent 62%),
+        radial-gradient(60% 60% at 50% 50%, rgba(255,255,255,.05), transparent 62%);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.06),
+        0 18px 60px rgba(0,0,0,.35);
+      overflow: hidden;
+      transform: translateZ(0);
+    }
+    .solaris .ticks {
+      position: absolute; inset: 8%;
+      border-radius: 50%;
+      background:
+        conic-gradient(from -90deg,
+          rgba(255,255,255,.18) 0 0.5deg, transparent 0.5deg 6deg);
+      mask: radial-gradient(closest-side, transparent calc(100% - 2px), black calc(100% - 0px));
+      opacity: .7;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,.1));
+    }
+    .solaris .ring {
+      position: absolute; inset: 4%;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, rgba(255,255,255,.06), rgba(255,255,255,.0));
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: inset 0 0 40px rgba(255,255,255,.05);
+      animation: ring-spin 28s linear infinite;
+    }
+    .solaris .ring.r2 { inset: 10%; animation-duration: 46s; opacity: .7; }
+    @keyframes ring-spin { to { transform: rotate(360deg); } }
+
+    .solaris .body {
+      position: absolute; inset: 0; display: grid; place-items: center;
+    }
+    .solaris .orbit { position: absolute; inset: 2%; border-radius: 50%; }
+
+    .solaris .node {
+      --angle: 0deg;
+      --r: 42%;
+      position: absolute;
+      top: 50%; left: 50%;
+      width: clamp(18px, 2.8vmin, 24px); height: clamp(18px, 2.8vmin, 24px);
+      border-radius: 50%;
+      transform: translate(-50%,-50%) rotate(var(--angle)) translate(var(--r)) rotate(calc(-1 * var(--angle)));
+      box-shadow: 0 0 0 2px rgba(255,255,255,.2), 0 0 24px rgba(255,255,255,.25);
+      transition: opacity .6s ease;
+    }
+    .solaris .sun {
+      background: radial-gradient(circle at 30% 30%, #fff, hsl(45 100% 65%) 40%, hsl(35 98% 55%) 65%, transparent 68%);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.35),
+        0 0 40px hsl(42 100% 60% / .7),
+        0 0 120px hsl(42 100% 60% / .35);
+    }
+    .solaris .moon {
+      background: radial-gradient(circle at 65% 35%, hsl(210 20% 98%), hsl(220 16% 80%) 60%, transparent 65%),
+                  radial-gradient(circle at 40% 60%, rgba(0,0,0,.15), transparent 45%);
+      filter: saturate(80%);
+      width: clamp(14px, 2.2vmin, 18px); height: clamp(14px, 2.2vmin, 18px);
+      --r: 48%;
+      opacity: .8;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.25),
+        0 0 24px rgba(180,200,255,.3);
+    }
+
+    .solaris .center {
+      position: absolute; inset: 24% 24%;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      background: radial-gradient(60% 60% at 50% 50%, rgba(255,255,255,.06), rgba(255,255,255,.02) 70%, transparent 72%);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: inset 0 0 40px rgba(255,255,255,.08);
+    }
+
+    .solaris .time {
+      display: inline-flex; align-items: baseline; gap: 10px;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 2px 20px rgba(0,0,0,.45);
+    }
+    .solaris .clock {
+      font-size: clamp(28px, 5.2vw, 54px);
+      letter-spacing: -0.02em;
+    }
+    .solaris .sec, .solaris .ampm {
+      font-size: clamp(12px, 1.6vw, 14px);
+      color: var(--muted);
+      opacity: .9;
+      transform: translateY(2px);
     }
 
     /* Controls */
-    .aurora-poster .controls {
+    .solaris .controls {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 12px;
+      gap: 14px;
       align-items: center;
-      margin-top: 14px;
+      margin-top: clamp(10px, 2.2vw, 18px);
+      z-index: 2;
     }
-    .aurora-poster .control {
-      display: grid; gap: 6px;
+    @media (max-width: 560px) { .solaris .controls { grid-template-columns: 1fr; } }
+
+    .solaris .label {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12px; color: var(--muted);
+      margin-bottom: 6px;
+      letter-spacing: .02em;
     }
-    .aurora-poster label {
-      font-size: 12px; color: #d8e1f3; opacity: .9; letter-spacing: .02em;
+    .solaris .value { color: #eaf1ff; opacity: .85; margin-left: 10px; font-variant-numeric: tabular-nums; }
+
+    .solaris input[type="range"] {
+      -webkit-appearance: none; appearance: none; width: 100%; height: 36px; background: transparent;
     }
-    .aurora-poster .value {
-      font-variant-numeric: tabular-nums;
-      color: #eaf1ff;
-      opacity: .8;
-      margin-left: 6px;
+    .solaris input[type="range"]::-webkit-slider-runnable-track,
+    .solaris input[type="range"]::-moz-range-track {
+      height: 10px; border-radius: 999px;
+      background: linear-gradient(90deg, hsl(200 80% 60%), hsl(40 90% 60%), hsl(260 70% 65%));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), 0 1px 14px rgba(0,0,0,.35);
     }
-    .aurora-poster input[type="range"] {
-      -webkit-appearance: none; appearance: none; height: 34px;
-      background: transparent; width: 100%;
-    }
-    .aurora-poster input[type="range"]::-webkit-slider-runnable-track {
-      height: 8px; border-radius: 999px;
-      background: linear-gradient(90deg,
-        hsl(var(--accent-a) / .6), hsl(var(--accent-b) / .6), hsl(var(--accent-c) / .6));
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.22), 0 1px 12px rgba(0,0,0,0.35);
-    }
-    .aurora-poster input[type="range"]::-moz-range-track {
-      height: 8px; border-radius: 999px;
-      background: linear-gradient(90deg,
-        hsl(var(--accent-a) / .6), hsl(var(--accent-b) / .6), hsl(var(--accent-c) / .6));
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.22), 0 1px 12px rgba(0,0,0,0.35);
-    }
-    .aurora-poster input[type="range"]::-webkit-slider-thumb {
+    .solaris input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none; appearance: none;
-      width: 22px; height: 22px; border-radius: 50%;
-      background: white;
-      border: 2px solid rgba(255,255,255,0.6);
-      box-shadow: 0 0 0 6px rgba(255,255,255,0.12), 0 6px 24px rgba(38,139,255,0.45);
+      width: 24px; height: 24px; border-radius: 50%;
+      background: #fff;
+      border: 2px solid rgba(255,255,255,.6);
+      box-shadow: 0 0 0 6px rgba(255,255,255,.12), 0 8px 28px rgba(38,139,255,.45);
       margin-top: -7px;
     }
-    .aurora-poster input[type="range"]::-moz-range-thumb {
-      width: 22px; height: 22px; border-radius: 50%;
-      background: white;
-      border: 2px solid rgba(255,255,255,0.6);
-      box-shadow: 0 0 0 6px rgba(255,255,255,0.12), 0 6px 24px rgba(38,139,255,0.45);
+    .solaris input[type="range"]::-moz-range-thumb {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: #fff;
+      border: 2px solid rgba(255,255,255,.6);
+      box-shadow: 0 0 0 6px rgba(255,255,255,.12), 0 8px 28px rgba(38,139,255,.45);
     }
 
-    .aurora-poster .btn {
+    .solaris .btn {
       -webkit-tap-highlight-color: transparent;
       cursor: pointer;
-      display: inline-flex; align-items: center; gap: 8px;
+      display: inline-flex; align-items: center; gap: 10px;
       padding: 10px 14px;
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
-      color: var(--fg);
-      font-weight: 600;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
-      transition: transform .15s ease, background .2s ease, box-shadow .2s ease, border-color .2s ease;
+      border: 1px solid rgba(255,255,255,.18);
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+      font-weight: 700;
+      letter-spacing: .01em;
+      box-shadow: 0 6px 26px rgba(0,0,0,.28);
+      transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
     }
-    .aurora-poster .btn:hover {
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,0.28);
-      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
-    }
-    .aurora-poster .btn .pulse {
+    .solaris .btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,.28); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    .solaris .btn .pulse {
       width: 8px; height: 8px; border-radius: 50%;
-      background: hsl(var(--accent-a));
-      box-shadow: 0 0 0 0 hsl(var(--accent-a) / .6);
+      background: var(--ring);
+      box-shadow: 0 0 0 0 var(--ring);
       animation: pulse 2.2s ease-out infinite;
     }
     @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0 hsl(var(--accent-a) / .6); }
-      70%  { box-shadow: 0 0 0 10px hsl(var(--accent-a) / 0); }
-      100% { box-shadow: 0 0 0 0 hsl(var(--accent-a) / 0); }
+      0%   { box-shadow: 0 0 0 0 hsl(205 100% 70% / .6); }
+      70%  { box-shadow: 0 0 0 12px hsl(205 100% 70% / 0); }
+      100% { box-shadow: 0 0 0 0 hsl(205 100% 70% / 0); }
     }
 
-    .aurora-poster .footer {
-      display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: baseline;
-      margin-top: 16px; color: var(--muted);
+    /* Footer */
+    .solaris .footer {
+      display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: baseline;
+      margin-top: clamp(12px, 2.6vw, 20px);
+      color: var(--muted);
       font-size: 12px;
-      opacity: .9;
+      z-index: 2;
     }
-    .aurora-poster .stamp {
+    .solaris .badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.16);
-      padding: 6px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.16);
+      padding: 6px 10px;
+      border-radius: 999px;
       color: #e7eeff;
     }
-    .aurora-poster .mono { font-variant-numeric: tabular-nums; opacity: .85; }
-
-    /* Pause state */
-    .aurora-poster[data-state="paused"] .orb,
-    .aurora-poster[data-state="paused"] .card::before,
-    .aurora-poster[data-state="paused"] .shine {
-      animation-play-state: paused !important;
+    .solaris .quote {
+      position: relative;
+      margin-top: 8px;
+      font-style: italic;
+      color: #d8e1f3;
+      opacity: .95;
+      transition: opacity .6s ease, transform .6s ease;
     }
-    .aurora-poster[data-state="paused"] .btn .pulse { animation-play-state: paused !important; opacity: .6; }
-
-    /* Responsive stacking */
-    @media (max-width: 560px) {
-      .aurora-poster .controls { grid-template-columns: 1fr; }
-      .aurora-poster .btn { justify-content: center; }
+    .solaris .quote.fade {
+      opacity: .0; transform: translateY(6px);
     }
   </style>
 
-  <div class="grid" aria-hidden="true"></div>
-  <div class="orb o1" aria-hidden="true"></div>
-  <div class="orb o2" aria-hidden="true"></div>
-  <div class="orb o3" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="stars" aria-hidden="true"></div>
 
-  <div class="card" id="kineticCard">
-    <div class="shine" aria-hidden="true"></div>
+  <div class="header">
+    <div>
+      <div class="kicker"><span class="dot" aria-hidden="true"></span> Iteration 825</div>
+      <h1 class="title">SOLARIS</h1>
+      <p class="tagline">Time, drawn in light. A living sundial for the screen.</p>
+    </div>
+  </div>
 
-    <div class="kicker"><span class="dot" aria-hidden="true"></span> Iteration 824</div>
-    <h1>Lucid Drift</h1>
-    <p class="lead">A quiet kinetic poster. Gentle motion, soft light, and room to think.</p>
+  <div class="dial-wrap">
+    <div class="dial" id="dial" aria-label="A circular dial with sun and moon representing the time of day">
+      <div class="ring r1" aria-hidden="true"></div>
+      <div class="ring r2" aria-hidden="true"></div>
+      <div class="ticks" aria-hidden="true"></div>
 
-    <div class="controls" role="group" aria-label="Animation controls">
-      <div class="control">
-        <label for="tempo">Tempo <span class="value mono" id="tempoValue">22s</span></label>
-        <input id="tempo" type="range" min="8" max="40" step="1" value="22" aria-label="Animation speed in seconds">
+      <div class="body">
+        <div class="orbit">
+          <div class="node sun" id="sun" aria-hidden="true"></div>
+          <div class="node moon" id="moon" aria-hidden="true"></div>
+        </div>
       </div>
-      <button class="btn" id="toggle" aria-pressed="false" title="Pause or resume motion">
-        <span class="pulse" aria-hidden="true"></span>
-        <span class="btn-text">Pause motion</span>
-      </button>
-    </div>
 
-    <div class="footer">
-      <span class="stamp">Designed to be calm yet alive</span>
-      <span class="mono">•</span>
-      <span class="mono">Hues breathe; edges whisper.</span>
-      <span class="mono">•</span>
-      <span id="last-updated" class="mono"></span>
+      <div class="center" aria-hidden="true"></div>
+
+      <div class="body">
+        <div class="time" aria-live="polite">
+          <span class="clock" id="clock">--:--</span>
+          <span class="sec" id="sec">--</span>
+          <span class="ampm" id="ampm">--</span>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="controls" role="group" aria-label="Sky controls">
+    <div class="control">
+      <div class="label">
+        <span>Scrub the day</span>
+        <span class="value" id="scrubValue">LIVE</span>
+      </div>
+      <input id="scrub" type="range" min="0" max="24" step="0.05" value="0" aria-label="Choose hour of day">
+    </div>
+    <button class="btn" id="toggleLive" aria-pressed="true" title="Toggle live sky">
+      <span class="pulse" aria-hidden="true"></span>
+      <span class="btn-text">Live sky</span>
+    </button>
+  </div>
+
+  <div class="footer">
+    <span class="badge">Designed for quiet focus</span>
+    <span>•</span>
+    <span id="last-updated">Last updated: 2025-11-23 06:13:52 EST</span>
+    <div class="quote" id="quote">“Make space; let the light do the talking.”</div>
   </div>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.aurora-poster');
-      const card = root.querySelector('#kineticCard');
-      const tempo = root.querySelector('#tempo');
-      const tempoValue = root.querySelector('#tempoValue');
-      const toggle = root.querySelector('#toggle');
+      const root = document.currentScript.closest('.solaris');
+      const stars = root.querySelector('.stars');
+      const sun = root.querySelector('#sun');
+      const moon = root.querySelector('#moon');
+      const clock = root.querySelector('#clock');
+      const sec = root.querySelector('#sec');
+      const ampm = root.querySelector('#ampm');
+      const scrub = root.querySelector('#scrub');
+      const scrubValue = root.querySelector('#scrubValue');
+      const toggleLive = root.querySelector('#toggleLive');
+      const quoteEl = root.querySelector('#quote');
       const last = root.querySelector('#last-updated');
 
       // Last updated stamp
       try {
         const now = new Date();
-        const fmt = new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'short', timeZoneName: 'short' });
+        const fmt = new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'short' });
         last.textContent = 'Last updated: ' + fmt.format(now);
       } catch (e) {
         last.textContent = 'Last updated: ' + new Date().toLocaleString();
       }
 
-      // Tempo control
-      function setSpeed(val) {
-        const s = Math.max(8, Math.min(40, Number(val) || 22));
-        root.style.setProperty('--speed', s + 's');
-        tempoValue.textContent = s + 's';
-      }
-      setSpeed(tempo.value);
-      tempo.addEventListener('input', (e) => setSpeed(e.target.value));
+      const quotes = [
+        '“Make space; let the light do the talking.”',
+        '“Quiet is a feature.”',
+        '“Design is the choreography of attention.”',
+        '“Edges whisper; centers glow.”',
+        '“Clarity loves restraint.”'
+      ];
+      let qi = 0;
 
-      // Pause/resume
-      toggle.addEventListener('click', () => {
-        const paused = root.getAttribute('data-state') === 'paused';
-        root.setAttribute('data-state', paused ? 'playing' : 'paused');
-        toggle.setAttribute('aria-pressed', String(!paused));
-        toggle.querySelector('.btn-text').textContent = paused ? 'Pause motion' : 'Resume motion';
+      let live = true;
+      let raf;
+      let lastTick = 0;
+
+      function clamp01(v){ return Math.max(0, Math.min(1, v)); }
+      function lerp(a,b,t){ return a + (b-a) * t; }
+      function hsl(h,s,l){ return `hsl(${h} ${s}% ${l}%)`; }
+
+      function setSky(phase) {
+        // phase: 0..1, 0 = midnight, 0.5 = noon
+        const twoPi = Math.PI * 2;
+        const daylight = (Math.cos((phase - 0.5) * twoPi) + 1) / 2; // 0 at midnight, 1 at noon
+        const twilight = clamp01(Math.exp(-Math.pow((phase - 0.25)/0.12, 2)) + Math.exp(-Math.pow((phase - 0.75)/0.12, 2)));
+
+        // Sky top/bottom hues blend from night violet to day azure
+        const topHue = lerp(255, 205, daylight);
+        const topLight = lerp(10, 78, daylight);
+        const botHue = lerp(250, 200, daylight);
+        const botLight = lerp(6, 62, daylight);
+
+        // Horizon warms at twilight
+        const warmHue = 28, warmSat = 90, warmLight = 62;
+        const dayHue = 200, daySat = 80, dayLight = 55;
+        const nightHue = 260, nightSat = 60, nightLight = 12;
+
+        const horizonH = lerp(lerp(nightHue, dayHue, daylight), warmHue, clamp01(twilight));
+        const horizonS = lerp(lerp(nightSat, daySat, daylight), warmSat, clamp01(twilight));
+        const horizonL = lerp(lerp(nightLight, dayLight, daylight), warmLight, clamp01(twilight));
+
+        root.style.setProperty('--sky-top', hsl(topHue, 65, topLight));
+        root.style.setProperty('--sky-bottom', hsl(botHue, 70, botLight));
+        root.style.setProperty('--horizon', hsl(horizonH, horizonS, horizonL));
+
+        // Ring accent follows day hue
+        root.style.setProperty('--ring', hsl(lerp(205, 46, clamp01(twilight*0.8)), 90, lerp(70, 60, clamp01(twilight*0.8))));
+
+        // Stars visible at night
+        stars.style.opacity = String(Math.pow(1 - daylight, 0.9));
+
+        // Sun/Moon position + visibility
+        const angle = (phase * 360) - 90; // -90 places 0 at top
+        sun.style.setProperty('--angle', angle + 'deg');
+        moon.style.setProperty('--angle', (angle + 180) + 'deg');
+
+        sun.style.opacity = String(0.15 + 0.85 * daylight);
+        moon.style.opacity = String(0.1 + 0.9 * (1 - daylight));
+      }
+
+      function updateTimeDisplay(d) {
+        const hh = d.getHours();
+        const mm = d.getMinutes();
+        const ss = d.getSeconds();
+        const h12 = ((hh + 11) % 12) + 1;
+        clock.textContent = String(h12).padStart(2,'0') + ':' + String(mm).padStart(2,'0');
+        sec.textContent = String(ss).padStart(2,'0');
+        ampm.textContent = hh >= 12 ? 'PM' : 'AM';
+      }
+
+      function currentPhaseFromDate(d) {
+        return (d.getHours() + d.getMinutes()/60 + d.getSeconds()/3600) / 24;
+      }
+
+      function tick(now) {
+        if (!live) return;
+        const d = new Date();
+        setSky(currentPhaseFromDate(d));
+        updateTimeDisplay(d);
+
+        if (!lastTick || now - lastTick > 6000) {
+          rotateQuote();
+          lastTick = now;
+        }
+        raf = requestAnimationFrame(tick);
+      }
+
+      function start() {
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(tick);
+      }
+
+      function stop() {
+        cancelAnimationFrame(raf);
+      }
+
+      function rotateQuote() {
+        if (!quoteEl) return;
+        quoteEl.classList.add('fade');
+        setTimeout(() => {
+          qi = (qi + 1) % quotes.length;
+          quoteEl.textContent = quotes[qi];
+          quoteEl.classList.remove('fade');
+        }, 320);
+      }
+
+      // Controls
+      toggleLive.addEventListener('click', () => {
+        live = !live;
+        toggleLive.setAttribute('aria-pressed', String(live));
+        toggleLive.querySelector('.btn-text').textContent = live ? 'Live sky' : 'Scrub mode';
+        scrubValue.textContent = live ? 'LIVE' : `${Number(scrub.value).toFixed(2)} h`;
+        if (live) {
+          start();
+        } else {
+          stop();
+        }
       });
 
-      // Subtle 3D tilt based on pointer
-      let raf = null;
+      function scrubUpdate() {
+        if (live) return;
+        const hours = Number(scrub.value);
+        scrubValue.textContent = `${hours.toFixed(2)} h`;
+        const fakeDate = new Date();
+        fakeDate.setHours(Math.floor(hours), Math.floor((hours % 1) * 60), Math.floor(((hours*60) % 1) * 60));
+        updateTimeDisplay(fakeDate);
+        setSky(hours / 24);
+      }
+      scrub.addEventListener('input', scrubUpdate);
+
+      // Initialize
+      live = true;
+      toggleLive.setAttribute('aria-pressed', 'true');
+      toggleLive.querySelector('.btn-text').textContent = 'Live sky';
+      scrubValue.textContent = 'LIVE';
+      setSky(currentPhaseFromDate(new Date()));
+      updateTimeDisplay(new Date());
+      start();
+
+      // Tilt shimmer on pointer
+      const dial = root.querySelector('#dial');
+      let tiltRaf = null;
       function onMove(e) {
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          const rect = card.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width;
-          const y = (e.clientY - rect.top) / rect.height;
-          const tiltX = ((0.5 - y) * 6).toFixed(2) + 'deg';
-          const tiltY = ((x - 0.5) * 8).toFixed(2) + 'deg';
-          root.style.setProperty('--tiltX', tiltX);
-          root.style.setProperty('--tiltY', tiltY);
+        if (!dial) return;
+        if (tiltRaf) cancelAnimationFrame(tiltRaf);
+        tiltRaf = requestAnimationFrame(() => {
+          const rect = dial.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          dial.style.transform = `rotateX(${(-y*6).toFixed(2)}deg) rotateY(${(x*8).toFixed(2)}deg)`;
         });
       }
-      root.addEventListener('pointermove', onMove);
-      root.addEventListener('pointerleave', () => {
-        root.style.setProperty('--tiltX', '0deg');
-        root.style.setProperty('--tiltY', '0deg');
-      }, { passive: true });
+      dial.addEventListener('pointermove', onMove);
+      dial.addEventListener('pointerleave', () => { dial.style.transform = 'rotateX(0deg) rotateY(0deg)'; }, { passive: true });
     })();
   </script>
 </section>
