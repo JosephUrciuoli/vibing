@@ -73,243 +73,228 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="vibe-833" aria-label="Kinetic Tapestry" data-palette="calm" data-paused="false">
+<section class="vibe-834" aria-label="Orbital Garden" data-theme="dusk" data-paused="false">
   <style>
-    .vibe-833 {
-      --paper: #f4f6fb;
-      --ink: #0c1020;
-      --muted: #5e6478;
-      --line: rgba(12,16,32,0.12);
+    .vibe-834 {
+      --bg-0: #0b1021;
+      --bg-1: #0e1734;
+      --bg-2: #111b42;
+      --fg: #e6ecff;
+      --muted: #aab3d1;
+      --line: rgba(230, 236, 255, 0.08);
 
-      /* Motion + field */
-      --tempo: 1;
-      --density: 1.1;
-      --warp: 0.6;
+      --h1: 210; /* blue */
+      --h2: 270; /* violet */
+      --h3: 165; /* aqua */
+      --accent: 48; /* gold */
+
+      --speed: 1.0;
+      --trails: 0.12;
+      --grav: 0.7;
+
       --mx: 0;
       --my: 0;
 
-      /* Palette anchors (hues) */
-      --h1: 210; /* calm blues */
-      --h2: 176;
-      --h3: 262;
-
       position: relative;
-      isolation: isolate;
       max-width: 1200px;
       margin: 0 auto;
-      padding: clamp(18px, 3.6vw, 40px);
+      padding: clamp(18px, 4vw, 42px);
       border-radius: 28px;
-      color: var(--ink);
+      color: var(--fg);
       background:
-        radial-gradient(120% 100% at 20% -10%, rgba(255,255,255,0.9), transparent 60%),
-        linear-gradient(180deg, #ffffff, var(--paper));
+        radial-gradient(140% 120% at calc(50% + 18% * var(--mx)) calc(0% + 12% * var(--my)), rgba(255,255,255,0.06), transparent 60%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2) 60%, var(--bg-0));
       box-shadow:
-        0 40px 120px rgba(0,0,0,0.10),
+        0 40px 120px rgba(2,8,38,0.6),
         0 0 0 1px var(--line) inset;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      isolation: isolate;
       overflow: clip;
       transform-style: preserve-3d;
     }
 
-    /* Ambient veil + grain */
-    .vibe-833 .veil,
-    .vibe-833 .grain {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .vibe-833 .veil {
+    /* Ambient layers */
+    .vibe-834 .plasma,
+    .vibe-834 .grain { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+    .vibe-834 .plasma {
       background:
-        conic-gradient(from calc(1turn * var(--mx)) at 80% 10%,
-          hsl(var(--h1) 80% 70% / 0.18),
-          hsl(var(--h2) 80% 70% / 0.10),
-          hsl(var(--h3) 80% 70% / 0.12),
+        conic-gradient(from calc(1turn * (0.25 + var(--mx)/2)) at 75% 10%,
+          hsl(var(--h3) 70% 60% / 0.16),
+          hsl(var(--h2) 70% 58% / 0.10),
+          hsl(var(--h1) 70% 58% / 0.12),
           transparent 70%);
-      filter: blur(24px) saturate(120%);
-      mix-blend-mode: multiply;
-      animation: v833-veil calc(60s / var(--tempo)) linear infinite;
+      filter: blur(40px) saturate(115%);
+      mix-blend-mode: screen;
+      animation: v834-plasma 50s linear infinite;
       opacity: 0.8;
     }
-    @keyframes v833-veil { to { transform: rotate(1turn) } }
-    .vibe-833 .grain {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    @keyframes v834-plasma { to { transform: rotate(1turn) } }
+    .vibe-834 .grain {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 220px 220px;
       mix-blend-mode: soft-light;
-      opacity: 0.25;
-      animation: v833-grain 14s steps(10) infinite;
+      opacity: .25;
+      animation: v834-grain 10s steps(10) infinite;
     }
-    @keyframes v833-grain {
+    @keyframes v834-grain {
       0%,100% { transform: translate(0,0) }
-      25% { transform: translate(1%, -1%) }
+      25% { transform: translate(1.2%, -1.2%) }
       50% { transform: translate(-1%, 1%) }
       75% { transform: translate(1%, 1%) }
     }
 
     /* Layout */
-    .vibe-833 .frame {
+    .vibe-834 .frame {
       position: relative;
       z-index: 2;
       display: grid;
-      gap: clamp(14px, 2.8vw, 20px);
+      gap: clamp(16px, 3vw, 24px);
     }
 
-    /* Masthead */
-    .vibe-833 .mast {
+    .vibe-834 .mast {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 14px;
+      gap: clamp(10px, 2vw, 18px);
       align-items: start;
     }
-    @media (max-width: 880px) { .vibe-833 .mast { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) { .vibe-834 .mast { grid-template-columns: 1fr; } }
 
-    .vibe-833 .badge {
+    .vibe-834 .badge {
       display: inline-flex;
       align-items: center;
       gap: 10px;
       padding: 8px 12px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.75);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      color: var(--muted);
+      font-size: 11px;
       font-weight: 800;
       letter-spacing: .14em;
-      font-size: 11px;
       text-transform: uppercase;
-      color: var(--muted);
-      box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.25);
     }
-
-    .vibe-833 .title {
+    .vibe-834 .title {
       margin: 8px 0 0 0;
-      font-size: clamp(40px, 9vw, 110px);
-      line-height: .90;
+      font-size: clamp(42px, 9vw, 112px);
+      line-height: .9;
       letter-spacing: -0.02em;
       background: linear-gradient(90deg,
-        hsl(var(--h1) 90% 45%),
-        hsl(var(--h2) 90% 42%),
-        hsl(var(--h3) 90% 46%));
+        hsl(var(--h1) 90% 62%),
+        hsl(var(--h2) 90% 58%),
+        hsl(var(--h3) 90% 62%));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      filter: drop-shadow(0 18px 50px rgba(0,0,0,0.12));
-      transform: translateZ(40px);
+      filter: drop-shadow(0 18px 60px rgba(0,0,0,0.3));
+      transform: translateZ(50px);
     }
-    .vibe-833 .sub {
+    .vibe-834 .sub {
       margin: 6px 0 0 0;
       max-width: 70ch;
       color: var(--muted);
-      font-size: clamp(14px, 2.4vw, 18px);
+      font-size: clamp(14px, 2.2vw, 18px);
       text-wrap: pretty;
     }
 
-    .vibe-833 .toolbar {
+    .vibe-834 .toolbar {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       justify-content: flex-end;
       align-content: start;
     }
-    .vibe-833 .seg {
+    .vibe-834 .seg,
+    .vibe-834 .knob {
       display: inline-flex;
-      gap: 6px;
-      padding: 6px;
-      border-radius: 999px;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 12px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.7);
-      box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      box-shadow: 0 10px 28px rgba(0,0,0,0.28);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
-    .vibe-833 .seg button {
+    .vibe-834 .seg button {
       appearance: none;
       border: 0;
       background: transparent;
-      color: var(--ink);
+      color: var(--fg);
       padding: 8px 12px;
-      border-radius: 999px;
+      border-radius: 10px;
       font-size: 13px;
       font-weight: 700;
       letter-spacing: .02em;
       cursor: pointer;
       transition: background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
     }
-    .vibe-833 .seg button:hover { transform: translateY(-1px); }
-    .vibe-833 .seg button[aria-pressed="true"] {
-      background: linear-gradient(180deg, rgba(12,16,32,0.06), rgba(12,16,32,0.02));
-      box-shadow: 0 10px 24px rgba(0,0,0,0.08), 0 0 0 1px var(--line) inset;
+    .vibe-834 .seg button:hover { transform: translateY(-1px); }
+    .vibe-834 .seg button[aria-pressed="true"] {
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+      box-shadow: 0 10px 24px rgba(0,0,0,0.24), 0 0 0 1px var(--line) inset;
     }
-
-    .vibe-833 .knob {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.7);
-      box-shadow: 0 10px 22px rgba(0,0,0,0.08);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-    .vibe-833 .knob label {
+    .vibe-834 .knob label {
       font-size: 11px;
+      color: var(--muted);
       letter-spacing: .12em;
       text-transform: uppercase;
-      color: var(--muted);
       white-space: nowrap;
     }
-    .vibe-833 .range {
+    .vibe-834 .range {
       -webkit-appearance: none;
       appearance: none;
       width: 150px; height: 26px;
       background: transparent;
       cursor: pointer;
     }
-    .vibe-833 .range::-webkit-slider-runnable-track,
-    .vibe-833 .range::-moz-range-track {
+    .vibe-834 .range::-webkit-slider-runnable-track,
+    .vibe-834 .range::-moz-range-track {
       height: 8px;
       border-radius: 999px;
       border: 1px solid var(--line);
       background:
         linear-gradient(90deg,
-          hsl(var(--h1) 90% 50%),
-          hsl(var(--h2) 90% 50%),
-          hsl(var(--h3) 90% 50%));
+          hsl(var(--h1) 90% 56% / .9),
+          hsl(var(--h2) 90% 56% / .9),
+          hsl(var(--h3) 90% 56% / .9));
     }
-    .vibe-833 .range::-webkit-slider-thumb,
-    .vibe-833 .range::-moz-range-thumb {
+    .vibe-834 .range::-webkit-slider-thumb,
+    .vibe-834 .range::-moz-range-thumb {
       -webkit-appearance: none;
       appearance: none;
       margin-top: -6px;
       width: 18px; height: 18px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff, #e6ecff);
-      border: 1px solid rgba(12,16,32,0.14);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.18), 0 0 0 6px rgba(86,110,255,0.14);
+      background: radial-gradient(circle at 30% 30%, #fff, #dfe7ff);
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.5), 0 0 0 6px rgba(86,110,255,0.14);
     }
 
     /* Stage */
-    .vibe-833 .stage {
+    .vibe-834 .stage {
       position: relative;
-      border-radius: 20px;
+      border-radius: 22px;
       overflow: hidden;
       border: 1px solid var(--line);
-      min-height: clamp(320px, 48vw, 560px);
-      background: linear-gradient(180deg, rgba(12,16,32,0.02), rgba(12,16,32,0.04));
-      box-shadow: 0 28px 80px rgba(0,0,0,0.12);
-      transform: translateZ(36px);
+      min-height: clamp(380px, 52vw, 640px);
+      background:
+        radial-gradient(120% 100% at 50% 20%, rgba(255,255,255,0.06), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      box-shadow: 0 28px 80px rgba(0,0,0,0.5), 0 2px 0 1px rgba(255,255,255,0.02) inset;
+      transform: translateZ(40px);
     }
-    .vibe-833 .canvas { position: absolute; inset: 0; }
-
-    .vibe-833 .stage .caption {
+    .vibe-834 .canvas { position: absolute; inset: 0; }
+    .vibe-834 .stage .caption {
       position: absolute;
       left: 14px; bottom: 14px;
       padding: 8px 10px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.66);
+      background: rgba(10,12,24,0.6);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       font-size: 12px;
@@ -317,37 +302,38 @@
       z-index: 2;
     }
 
-    /* Cards */
-    .vibe-833 .cards {
+    /* Legend cards */
+    .vibe-834 .legend {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: clamp(10px, 2.4vw, 16px);
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(10px, 2.2vw, 16px);
     }
-    @media (max-width: 980px) { .vibe-833 .cards { grid-template-columns: 1fr; } }
-    .vibe-833 .card {
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.72);
-      box-shadow: 0 18px 50px rgba(0,0,0,0.10);
-      padding: clamp(12px, 2.2vw, 16px);
+    @media (max-width: 980px) { .vibe-834 .legend { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .vibe-834 .legend { grid-template-columns: 1fr; } }
+    .vibe-834 .chip {
       display: grid;
       gap: 6px;
+      padding: clamp(12px, 2vw, 16px);
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      box-shadow: 0 18px 50px rgba(0,0,0,0.32);
     }
-    .vibe-833 .card h3 {
+    .vibe-834 .chip h3 {
       margin: 0;
       font-size: 12px;
       letter-spacing: .14em;
       text-transform: uppercase;
-      color: hsl(var(--h1) 30% 36%);
+      color: hsl(var(--accent) 70% 64%);
     }
-    .vibe-833 .card p {
+    .vibe-834 .chip p {
       margin: 0;
       color: var(--muted);
       font-size: 14px;
     }
 
     /* Footer */
-    .vibe-833 .foot {
+    .vibe-834 .foot {
       margin-top: clamp(12px, 2.2vw, 18px);
       padding-top: 12px;
       border-top: 1px dashed var(--line);
@@ -359,84 +345,88 @@
       font-size: 12px;
     }
 
-    /* Palettes */
-    .vibe-833[data-palette="calm"] { --h1: 210; --h2: 176; --h3: 262; }
-    .vibe-833[data-palette="neon"] { --h1: 318; --h2: 188; --h3: 84; }
-    .vibe-833[data-palette="mono"] { --h1: 220; --h2: 220; --h3: 220; }
+    /* Themes */
+    .vibe-834[data-theme="dusk"] { --bg-0: #0b1021; --bg-1: #0e1734; --bg-2: #111b42; --h1: 210; --h2: 270; --h3: 165; --accent: 48; }
+    .vibe-834[data-theme="dawn"] { --bg-0: #15121a; --bg-1: #1e1420; --bg-2: #23182a; --h1: 12; --h2: 320; --h3: 42; --accent: 18; }
+    .vibe-834[data-theme="mono"] { --bg-0: #0a0d14; --bg-1: #0e121b; --bg-2: #121722; --h1: 220; --h2: 220; --h3: 220; --accent: 220; }
 
     /* Pause motion */
-    .vibe-833[data-paused="true"] .veil,
-    .vibe-833[data-paused="true"] .grain { animation-play-state: paused !important; }
+    .vibe-834[data-paused="true"] .plasma,
+    .vibe-834[data-paused="true"] .grain { animation-play-state: paused !important; }
 
     @media (prefers-reduced-motion: reduce) {
-      .vibe-833 * { animation: none !important; transition: none !important; transform: none !important; }
+      .vibe-834 * { animation: none !important; transition: none !important; transform: none !important; }
     }
   </style>
 
-  <div class="veil" aria-hidden="true"></div>
+  <div class="plasma" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
   <div class="frame">
     <div class="mast">
       <div>
-        <span class="badge" aria-hidden="true">No. 833 • Tapestry</span>
-        <h1 class="title">Kinetic Tapestry</h1>
-        <p class="sub">Threads of color woven by motion. Tilt, pull, and tune the field until it feels like music.</p>
+        <span class="badge" aria-hidden="true">No. 834 • Orrery</span>
+        <h1 class="title">Orbital Garden</h1>
+        <p class="sub">A clockwork of light and gravity. Nudge the cosmos, tune its pace, and watch the night bloom.</p>
       </div>
 
       <div class="toolbar" role="group" aria-label="Controls">
-        <span class="seg" role="group" aria-label="Palette">
-          <button type="button" data-p="calm" aria-pressed="true">Calm</button>
-          <button type="button" data-p="neon" aria-pressed="false">Neon</button>
-          <button type="button" data-p="mono" aria-pressed="false">Mono</button>
+        <span class="seg" role="group" aria-label="Theme">
+          <button type="button" data-theme="dusk" aria-pressed="true">Dusk</button>
+          <button type="button" data-theme="dawn" aria-pressed="false">Dawn</button>
+          <button type="button" data-theme="mono" aria-pressed="false">Mono</button>
         </span>
         <button class="seg" type="button" data-action="pause" aria-pressed="false" aria-label="Pause motion">
           <span style="padding:8px 12px;font-weight:700;">Pause</span>
         </button>
         <span class="knob">
-          <label for="tempo833">Tempo</label>
-          <input id="tempo833" class="range" type="range" min="0.6" max="2" step="0.01" value="1" aria-label="Adjust motion tempo">
+          <label for="speed834">Speed</label>
+          <input id="speed834" class="range" type="range" min="0.4" max="2.2" step="0.01" value="1.0" aria-label="Adjust orbital speed">
         </span>
         <span class="knob">
-          <label for="density833">Density</label>
-          <input id="density833" class="range" type="range" min="0.7" max="2" step="0.01" value="1.1" aria-label="Adjust weave density">
+          <label for="trails834">Trails</label>
+          <input id="trails834" class="range" type="range" min="0.02" max="0.3" step="0.01" value="0.12" aria-label="Adjust trail persistence">
         </span>
         <span class="knob">
-          <label for="warp833">Warp</label>
-          <input id="warp833" class="range" type="range" min="0" max="1.2" step="0.01" value="0.6" aria-label="Adjust warp intensity">
+          <label for="grav834">Gravity</label>
+          <input id="grav834" class="range" type="range" min="0" max="1.4" step="0.01" value="0.7" aria-label="Adjust pointer gravity">
         </span>
       </div>
     </div>
 
-    <div class="stage" aria-label="Weave field">
+    <div class="stage" aria-label="Orbital stage">
       <canvas class="canvas" aria-hidden="true"></canvas>
-      <span class="caption">Drag the air; the cloth will follow.</span>
+      <span class="caption">Drag to bend space. Click to launch a comet. Double‑click toggles pause.</span>
     </div>
 
-    <div class="cards" role="list">
-      <article class="card" role="listitem">
-        <h3>Weave</h3>
-        <p>Two families of lines—warp and weft—interlace with luminous blending to form a living fabric.</p>
+    <div class="legend" role="list">
+      <article class="chip" role="listitem">
+        <h3>Clockwork</h3>
+        <p>Nested orbits glide in golden ratios. Small worlds whisper around the anchor.</p>
       </article>
-      <article class="card" role="listitem">
-        <h3>Warp</h3>
-        <p>Pointer gravity bends space locally; distant threads sway gently, keeping the field calm.</p>
+      <article class="chip" role="listitem">
+        <h3>Glow</h3>
+        <p>Light blooms with additive color. Blues, violets, and aquas blend like ink in air.</p>
       </article>
-      <article class="card" role="listitem">
-        <h3>Flow</h3>
-        <p>Tempo changes cadence. Density tightens fibers. Palettes repaint the loom without a reload.</p>
+      <article class="chip" role="listitem">
+        <h3>Gravity</h3>
+        <p>Your pointer bends trajectories—the nearer the pass, the stronger the curve.</p>
+      </article>
+      <article class="chip" role="listitem">
+        <h3>Tempo</h3>
+        <p>Speed quickens cadence; trails choose memory. Find a pace that feels like night.</p>
       </article>
     </div>
   </div>
 
   <div class="foot">
-    <span>“Design is choreography—let the pixels breathe.”</span>
-    <span id="last-updated">Last updated: 2025-11-23 14:13:48 EST</span>
+    <span>“Simplicity is space for wonder.”</span>
+    <span id="last-updated">Last updated: 2025-11-23 15:19:35 EST</span>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.vibe-833');
+      const root = document.currentScript.closest('.vibe-834');
       if (!root) return;
 
       // Last updated
@@ -454,22 +444,24 @@
       const ctx = canvas.getContext('2d', { alpha: true });
       let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
 
-      const tempo = root.querySelector('#tempo833');
-      const density = root.querySelector('#density833');
-      const warp = root.querySelector('#warp833');
+      const speed = root.querySelector('#speed834');
+      const trails = root.querySelector('#trails834');
+      const grav = root.querySelector('#grav834');
       const pauseBtn = root.querySelector('[data-action="pause"]');
-      const paletteButtons = root.querySelectorAll('[data-p]');
+      const themeButtons = root.querySelectorAll('[data-theme]');
 
       // State
       let t = 0;
       let running = true;
       let paused = false;
       let rafId = null;
-      let mouse = { x: -9999, y: -9999, inside: false };
+      const mouse = { x: -9999, y: -9999, inside: false };
+
+      const stars = [];
+      const comets = [];
 
       // Helpers
-      const getVar = (name, fallback = 1) => parseFloat(getComputedStyle(root).getPropertyValue(name)) || fallback;
-
+      const cssNum = (name, fallback = 1) => parseFloat(getComputedStyle(root).getPropertyValue(name)) || fallback;
       const hsla = (h, s = 90, l = 50, a = 1) => `hsla(${h}, ${s}%, ${l}%, ${a})`;
 
       function resize() {
@@ -478,18 +470,28 @@
         canvas.height = Math.floor(rect.height * dpr);
         canvas.style.width = rect.width + 'px';
         canvas.style.height = rect.height + 'px';
+        initStars();
         draw(true);
       }
 
-      function setTempo() {
-        root.style.setProperty('--tempo', tempo.value);
+      function initStars() {
+        stars.length = 0;
+        const w = canvas.width, h = canvas.height;
+        const count = Math.floor((w*h) / (11000 * dpr));
+        for (let i = 0; i < count; i++) {
+          stars.push({
+            x: Math.random()*w,
+            y: Math.random()*h,
+            z: Math.random()*1 + 0.4, // parallax depth
+            tw: Math.random()*6.28,
+            r: Math.random()*1.2 + 0.3
+          });
+        }
       }
-      function setDensity() {
-        root.style.setProperty('--density', density.value);
-      }
-      function setWarp() {
-        root.style.setProperty('--warp', warp.value);
-      }
+
+      function setSpeed(){ root.style.setProperty('--speed', speed.value); }
+      function setTrails(){ root.style.setProperty('--trails', trails.value); }
+      function setGrav(){ root.style.setProperty('--grav', grav.value); }
 
       function setPaused(p) {
         paused = p;
@@ -500,139 +502,185 @@
         else if (running && !matchMedia('(prefers-reduced-motion: reduce)').matches) loop();
       }
 
-      // Palette switching
-      paletteButtons.forEach(btn => {
+      // Themes
+      themeButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-          const p = btn.getAttribute('data-p');
-          root.setAttribute('data-palette', p);
-          paletteButtons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+          const th = btn.getAttribute('data-theme');
+          root.setAttribute('data-theme', th);
+          themeButtons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
           draw(true);
         });
       });
 
-      // Pointer influence + ambient parallax hooks
+      // Pointer
       function onMove(e){
-        const r = root.getBoundingClientRect();
-        mouse.x = (e.clientX - canvas.getBoundingClientRect().left) * dpr;
-        mouse.y = (e.clientY - canvas.getBoundingClientRect().top) * dpr;
+        const r = canvas.getBoundingClientRect();
+        mouse.x = (e.clientX - r.left) * dpr;
+        mouse.y = (e.clientY - r.top) * dpr;
         mouse.inside = true;
-        const mx = ((e.clientX - r.left) / r.width) - 0.5;
-        const my = ((e.clientY - r.top) / r.height) - 0.5;
+
+        const rr = root.getBoundingClientRect();
+        const mx = ((e.clientX - rr.left) / rr.width) - 0.5;
+        const my = ((e.clientY - rr.top) / rr.height) - 0.5;
         root.style.setProperty('--mx', mx.toFixed(4));
         root.style.setProperty('--my', my.toFixed(4));
       }
-      function onLeave(){
-        mouse.inside = false;
-      }
+      function onLeave(){ mouse.inside = false; }
+
       root.addEventListener('pointermove', onMove, { passive: true });
       root.addEventListener('pointerleave', onLeave, { passive: true });
 
-      // Controls
-      tempo.addEventListener('input', setTempo, { passive: true });
-      density.addEventListener('input', setDensity, { passive: true });
-      warp.addEventListener('input', setWarp, { passive: true });
-      setTempo(); setDensity(); setWarp();
-
+      // Interactions
       pauseBtn.addEventListener('click', () => setPaused(!paused));
+      root.querySelector('.stage').addEventListener('click', (e) => {
+        spawnComet(e);
+      });
+      root.querySelector('.stage').addEventListener('dblclick', () => setPaused(!paused));
 
-      // Draw weave
+      speed.addEventListener('input', setSpeed, { passive: true });
+      trails.addEventListener('input', setTrails, { passive: true });
+      grav.addEventListener('input', setGrav, { passive: true });
+      setSpeed(); setTrails(); setGrav();
+
+      // Orrery config
+      const planets = [
+        { r: 0.16, size: 2.4, speed: 1.8, hue: () => cssNum('--h1',210) },
+        { r: 0.28, size: 3.2, speed: 1.2, hue: () => cssNum('--h2',270) },
+        { r: 0.41, size: 4.0, speed: 0.8, hue: () => cssNum('--h3',165) },
+        { r: 0.56, size: 2.8, speed: 0.62, hue: () => cssNum('--accent',48) },
+        { r: 0.72, size: 3.8, speed: 0.48, hue: () => cssNum('--h1',210) + 30 }
+      ];
+
+      function spawnComet(evt){
+        const rect = canvas.getBoundingClientRect();
+        const x = (evt.clientX - rect.left) * dpr;
+        const y = (evt.clientY - rect.top) * dpr;
+        const angle = Math.random() * Math.PI * 2;
+        const speedV = 2.2 * dpr + Math.random()*1.8*dpr;
+        comets.push({
+          x, y,
+          vx: Math.cos(angle) * speedV,
+          vy: Math.sin(angle) * speedV,
+          life: 1,
+          hue: [cssNum('--h1',210), cssNum('--h2',270), cssNum('--h3',165)][Math.floor(Math.random()*3)]
+        });
+      }
+
+      // Draw
       function draw(staticOnly = false) {
         if (!ctx) return;
         const w = canvas.width, h = canvas.height;
-        ctx.clearRect(0, 0, w, h);
+        const cx = w/2, cy = h/2;
+        const minDim = Math.min(w, h);
+        const spd = cssNum('--speed',1);
 
-        const tempoVal = getVar('--tempo', 1);
-        if (!paused && !staticOnly) t += 0.0105 * tempoVal;
+        if (!paused && !staticOnly) t += 0.0095 * spd;
 
-        const dens = getVar('--density', 1.1);
-        const warpAmt = getVar('--warp', 0.6);
+        // Fade for trails
+        ctx.globalCompositeOperation = 'source-over';
+        const fade = Math.min(0.9, Math.max(0.02, cssNum('--trails',0.12)));
+        ctx.fillStyle = `rgba(7,10,20,${fade})`;
+        ctx.fillRect(0, 0, w, h);
 
-        const h1 = parseFloat(getComputedStyle(root).getPropertyValue('--h1')) || 210;
-        const h2 = parseFloat(getComputedStyle(root).getPropertyValue('--h2')) || 176;
-        const h3 = parseFloat(getComputedStyle(root).getPropertyValue('--h3')) || 262;
-
-        const stepY = Math.max(6 * dpr, 26 * dpr / (dens * 1.2));
-        const stepX = Math.max(4 * dpr, 14 * dpr / (dens * 1.2));
-
-        // Smooth warp radius and pull
-        const radius = Math.min(w, h) * 0.28;
-        const pull = 60 * dpr * warpAmt;
-
-        ctx.globalCompositeOperation = 'lighter';
-
-        // WEFT (horizontal)
-        for (let y = 0; y <= h; y += stepY) {
-          const ny = y / h;
-          const hue = h1 + (h2 - h1) * ny + Math.sin(t * 0.8 + ny * 6) * 6;
+        // Stars
+        for (let i = 0; i < stars.length; i++) {
+          const s = stars[i];
+          const tw = (Math.sin(t*2 + s.tw) * 0.5 + 0.5) * 0.8 + 0.2;
+          const px = s.x + (cx - s.x) * 0.02 * s.z * (cssNum('--mx',0));
+          const py = s.y + (cy - s.y) * 0.02 * s.z * (cssNum('--my',0));
+          ctx.fillStyle = `rgba(220,230,255,${0.2 + tw*0.5})`;
           ctx.beginPath();
-          for (let x = 0; x <= w; x += stepX) {
-            const nx = x / w;
-            const curve =
-              Math.sin(nx * Math.PI * 2.2 + t * 1.1) * (h * 0.04) +
-              Math.sin(nx * Math.PI * 5.0 - t * 0.8) * (h * 0.015);
-            let yy = y + curve;
-
-            if (mouse.inside) {
-              const dx = x - mouse.x, dy = y - mouse.y;
-              const d2 = dx*dx + dy*dy;
-              const f = Math.exp(-d2 / (radius*radius));
-              yy += (dy / Math.sqrt(d2 + 1)) * pull * f;
-            }
-
-            if (x === 0) ctx.moveTo(x, yy);
-            else ctx.lineTo(x, yy);
-          }
-          ctx.lineWidth = 1.35 * dpr;
-          ctx.strokeStyle = hsla(hue, 88, 50, 0.45);
-          ctx.shadowColor = hsla(hue, 88, 60, 0.18);
-          ctx.shadowBlur = 12 * dpr;
-          ctx.stroke();
-        }
-
-        // WARP (vertical)
-        for (let x = 0; x <= w; x += stepY) {
-          const nx = x / w;
-          const hue = h2 + (h3 - h2) * nx + Math.cos(t * 0.7 + nx * 6) * 6;
-          ctx.beginPath();
-          for (let y = 0; y <= h; y += stepX) {
-            const ny = y / h;
-            const curve =
-              Math.sin(ny * Math.PI * 2.0 - t * 0.9) * (w * 0.035) +
-              Math.sin(ny * Math.PI * 4.4 + t * 0.7) * (w * 0.014);
-            let xx = x + curve;
-
-            if (mouse.inside) {
-              const dx = x - mouse.x, dy = y - mouse.y;
-              const d2 = dx*dx + dy*dy;
-              const f = Math.exp(-d2 / (radius*radius));
-              xx += (dx / Math.sqrt(d2 + 1)) * pull * f;
-            }
-
-            if (y === 0) ctx.moveTo(xx, y);
-            else ctx.lineTo(xx, y);
-          }
-          ctx.lineWidth = 1.1 * dpr;
-          ctx.strokeStyle = hsla(hue, 88, 46, 0.35);
-          ctx.shadowColor = hsla(hue, 88, 58, 0.16);
-          ctx.shadowBlur = 10 * dpr;
-          ctx.stroke();
-        }
-
-        // Soft bloom pips
-        for (let i = 0; i < 6; i++) {
-          const px = (0.15 + i * 0.14 + Math.sin(t * (0.3 + i * 0.07)) * 0.06) * w;
-          const py = (0.3 + Math.cos(t * (0.4 + i * 0.09) + i) * 0.18) * h;
-          const hue = [h1,h2,h3][i % 3];
-          const g = ctx.createRadialGradient(px, py, 0, px, py, 28 * dpr);
-          g.addColorStop(0, 'rgba(255,255,255,0.9)');
-          g.addColorStop(1, hsla(hue, 90, 55, 0));
-          ctx.fillStyle = g;
-          ctx.beginPath();
-          ctx.arc(px, py, 9 * dpr, 0, Math.PI * 2);
+          ctx.arc(px, py, s.r * dpr, 0, Math.PI*2);
           ctx.fill();
         }
 
-        ctx.globalCompositeOperation = 'source-over';
+        ctx.save();
+        ctx.translate(cx, cy);
+
+        // Orbits (rings)
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < planets.length; i++) {
+          const p = planets[i];
+          const R = p.r * minDim * 0.9;
+          const hue = typeof p.hue === 'function' ? p.hue() : p.hue;
+          ctx.lineWidth = 1 * dpr;
+          const grad = ctx.createRadialGradient(0,0,R*0.98, 0,0,R);
+          grad.addColorStop(0, hsla(hue, 70, 55, 0.05));
+          grad.addColorStop(1, hsla(hue, 80, 60, 0.18));
+          ctx.strokeStyle = grad;
+          ctx.beginPath();
+          ctx.arc(0,0,R,0,Math.PI*2);
+          ctx.stroke();
+        }
+
+        // Central sun
+        const sunHue = cssNum('--accent',48);
+        const sunG = ctx.createRadialGradient(0,0,0,0,0, minDim*0.12);
+        sunG.addColorStop(0, 'rgba(255,255,255,0.95)');
+        sunG.addColorStop(1, hsla(sunHue, 90, 62, 0));
+        ctx.fillStyle = sunG;
+        ctx.beginPath(); ctx.arc(0,0,minDim*0.12,0,Math.PI*2); ctx.fill();
+
+        // Planets
+        for (let i = 0; i < planets.length; i++) {
+          const p = planets[i];
+          const R = p.r * minDim * 0.9;
+          const hue = typeof p.hue === 'function' ? p.hue() : p.hue;
+          const angle = t * p.speed * 3.2 + i * 0.6;
+
+          let x = Math.cos(angle) * R;
+          let y = Math.sin(angle) * R;
+
+          // Pointer gravity lens
+          if (mouse.inside) {
+            const gx = mouse.x - cx, gy = mouse.y - cy;
+            const dx = x - gx, dy = y - gy;
+            const d2 = dx*dx + dy*dy;
+            const gAmt = cssNum('--grav',0.7);
+            const pull = Math.min(18*dpr, (R * 0.04) * gAmt);
+            const f = Math.exp(-d2 / (R*R*0.9));
+            x -= (dx / Math.sqrt(d2 + 1)) * pull * f;
+            y -= (dy / Math.sqrt(d2 + 1)) * pull * f;
+          }
+
+          // Glow
+          const g = ctx.createRadialGradient(x,y,0,x,y, p.size*12*dpr);
+          g.addColorStop(0, 'rgba(255,255,255,0.9)');
+          g.addColorStop(1, hsla(hue, 90, 60, 0));
+          ctx.fillStyle = g;
+          ctx.beginPath(); ctx.arc(x, y, p.size*3*dpr, 0, Math.PI*2); ctx.fill();
+
+          // Core
+          ctx.fillStyle = hsla(hue, 90, 60, 0.9);
+          ctx.beginPath(); ctx.arc(x, y, p.size*dpr, 0, Math.PI*2); ctx.fill();
+        }
+
+        // Comets
+        for (let i = comets.length - 1; i >= 0; i--) {
+          const c = comets[i];
+          c.life -= 0.006 * spd;
+          // slight drift
+          c.vx *= 0.996; c.vy *= 0.996;
+          c.x += c.vx; c.y += c.vy;
+
+          // tail
+          ctx.strokeStyle = hsla(c.hue, 90, 66, 0.6 * Math.max(0, c.life));
+          ctx.lineWidth = 2 * dpr;
+          ctx.beginPath();
+          ctx.moveTo(c.x, c.y);
+          ctx.lineTo(c.x - c.vx*6, c.y - c.vy*6);
+          ctx.stroke();
+
+          // head
+          ctx.fillStyle = hsla(c.hue, 90, 70, 0.7 * Math.max(0, c.life));
+          ctx.beginPath(); ctx.arc(c.x, c.y, 1.8*dpr, 0, Math.PI*2); ctx.fill();
+
+          if (c.life <= 0 || c.x < -20 || c.y < -20 || c.x > canvas.width+20 || c.y > canvas.height+20) {
+            comets.splice(i,1);
+          }
+        }
+
+        ctx.restore();
       }
 
       function loop() {
