@@ -73,7 +73,396 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-11-24 13:28:04 EST</span></div>
+<div id="v854" class="v854" data-theme="dusk" data-motion="flow">
+  <style>
+    /* Scoped variables and reset */
+    #v854 {
+      --radius: 22px;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+      --fg: #eef3ff;
+      --muted: #c8d0e6cc;
+      --card: rgba(18, 20, 28, 0.42);
+      --line: rgba(255, 255, 255, 0.14);
+      --accent: #8ef1ff;
+      --accent2: #5a8bff;
+      --glow: 0 0 30px rgba(142, 241, 255, 0.35);
+      --bg-a: #0b1020;
+      --bg-b: #121a2e;
+
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      padding: clamp(20px, 5vw, 48px);
+      color: var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      isolation: isolate;
+      box-shadow: var(--shadow);
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(90, 139, 255, 0.08), transparent 60%),
+                  radial-gradient(900px 700px at 90% 80%, rgba(142, 241, 255, 0.08), transparent 60%),
+                  linear-gradient(160deg, var(--bg-a), var(--bg-b));
+    }
+    #v854 * { box-sizing: border-box; }
+
+    /* Animated ambient halo */
+    #v854 .bg {
+      position: absolute;
+      inset: -20%;
+      background:
+        conic-gradient(from 0deg, rgba(142,241,255,0.08), rgba(90,139,255,0.08), rgba(255,153,255,0.08), rgba(142,241,255,0.08));
+      filter: blur(40px) saturate(140%);
+      transform-origin: 50% 50%;
+      animation: v854-rotate 28s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    #v854 .grid {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(1000px 700px at 75% 20%, rgba(255,255,255,0.06), transparent 60%),
+        repeating-linear-gradient(0deg, transparent 0 28px, rgba(255,255,255,0.035) 28px 29px),
+        repeating-linear-gradient(90deg, transparent 0 28px, rgba(255,255,255,0.03) 28px 29px);
+      mask-image: radial-gradient(80% 80% at 50% 50%, black, transparent 85%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    #v854 .grain {
+      position: absolute; inset: -200%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.065"/></svg>') center/200px repeat;
+      mix-blend-mode: soft-light;
+      animation: v854-pan 18s linear infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Floating orbs */
+    #v854 .orb {
+      position: absolute;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      filter: blur(18px);
+      opacity: 0.55;
+      mix-blend-mode: screen;
+      background: radial-gradient(circle at 30% 30%, rgba(142,241,255,0.9), rgba(142,241,255,0.25) 55%, transparent 70%);
+      z-index: 0;
+    }
+    #v854 .orb.o1 { top: -60px; left: -40px; animation: v854-float-a 16s ease-in-out infinite; }
+    #v854 .orb.o2 { bottom: -80px; right: -30px; background: radial-gradient(circle at 70% 40%, rgba(90,139,255,0.9), rgba(90,139,255,0.25) 55%, transparent 70%); animation: v854-float-b 20s ease-in-out infinite; }
+    #v854 .orb.o3 { top: 40%; left: 55%; width: 200px; height: 200px; background: radial-gradient(circle at 50% 50%, rgba(255,153,255,0.9), rgba(255,153,255,0.25) 55%, transparent 70%); animation: v854-float-c 22s ease-in-out infinite; }
+
+    /* Glass card */
+    #v854 .card {
+      position: relative;
+      z-index: 3;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border-radius: clamp(16px, 3vw, 22px);
+      padding: clamp(20px, 4.5vw, 42px);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(14px) saturate(130%);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.04);
+      transform-style: preserve-3d;
+      transition: transform 250ms ease, box-shadow 250ms ease, background 250ms ease;
+    }
+    #v854 .card::after {
+      content: "";
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(600px 400px at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.10), transparent 70%);
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    /* Type */
+    #v854 .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      backdrop-filter: blur(3px);
+    }
+    #v854 h1 {
+      margin: 14px 0 10px 0;
+      font-size: clamp(28px, 6vw, 54px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.03);
+    }
+    #v854 p.lead {
+      margin: 0 0 18px 0;
+      font-size: clamp(14px, 2.4vw, 18px);
+      color: var(--muted);
+    }
+
+    /* Controls */
+    #v854 .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 12px;
+      align-items: center;
+      margin: 18px 0 8px;
+    }
+    #v854 .swatch {
+      --s: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      color: var(--fg);
+      cursor: pointer;
+      font-size: 13px;
+      transition: transform 140ms ease, box-shadow 200ms ease, background 200ms ease;
+      box-shadow: inset 0 0 0 9999px rgba(255,255,255,0.0);
+    }
+    #v854 .swatch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    #v854 .swatch .dot {
+      width: var(--s); height: var(--s); border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+    }
+    #v854 .swatch[data-theme="dawn"] .dot { background: linear-gradient(135deg, #f7d1ff, #ffd3a3); }
+    #v854 .swatch[data-theme="dusk"] .dot { background: linear-gradient(135deg, #5a8bff, #0b1020); }
+    #v854 .swatch[data-theme="neon"] .dot { background: linear-gradient(135deg, #39ffb8, #5a00ff); }
+    #v854 .swatch.active {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35), var(--glow);
+      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
+    }
+
+    #v854 .toggle {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      color: var(--fg);
+      cursor: pointer;
+      font-size: 13px;
+      transition: background 200ms ease, box-shadow 200ms ease;
+    }
+    #v854 .toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    #v854 .toggle .knob {
+      width: 34px; height: 18px; border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid var(--line);
+      position: relative;
+    }
+    #v854 .toggle .knob::after {
+      content:""; position:absolute; top:50%; left:2px; transform: translateY(-50%);
+      width: 14px; height: 14px; border-radius: 50%;
+      background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: left 220ms ease, background 220ms ease;
+    }
+    #v854[data-motion="still"] .toggle .knob::after { left: 18px; background: #9aa7ff; }
+
+    /* Meta */
+    #v854 .meta {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      margin-top: 14px; color: var(--muted); font-size: 12px;
+      border-top: 1px solid var(--line); padding-top: 12px;
+    }
+    #v854 .tip { opacity: 0.85; }
+
+    /* Theme variants via data-theme */
+    #v854[data-theme="dawn"] {
+      --bg-a: #1d1226;
+      --bg-b: #311a3b;
+      --accent: #ffb86b;
+      --accent2: #ff79c6;
+      --glow: 0 0 30px rgba(255, 184, 107, 0.35);
+    }
+    #v854[data-theme="dusk"] {
+      --bg-a: #0b1020;
+      --bg-b: #121a2e;
+      --accent: #8ef1ff;
+      --accent2: #5a8bff;
+      --glow: 0 0 30px rgba(142, 241, 255, 0.35);
+    }
+    #v854[data-theme="neon"] {
+      --bg-a: #030a0a;
+      --bg-b: #05121b;
+      --accent: #39ffb8;
+      --accent2: #5a00ff;
+      --glow: 0 0 30px rgba(57,255,184,0.35);
+    }
+
+    /* Motion controls */
+    #v854[data-motion="still"] .animate { animation-play-state: paused !important; }
+    @media (prefers-reduced-motion: reduce) {
+      #v854 .animate { animation: none !important; }
+      #v854 .card { transition: none; }
+    }
+
+    /* Keyframes */
+    @keyframes v854-rotate { to { transform: rotate(360deg); } }
+    @keyframes v854-pan { to { transform: translate3d(20%,15%,0); } }
+    @keyframes v854-float-a { 0%,100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(18px, 14px, 0); } }
+    @keyframes v854-float-b { 0%,100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(-20px, -10px, 0); } }
+    @keyframes v854-float-c { 0%,100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(12px, -16px, 0); } }
+
+    /* Hover/touch polish */
+    #v854 .swatch:hover { transform: translateY(-1px); }
+    #v854 .toggle:hover { box-shadow: var(--glow); }
+  </style>
+
+  <div class="bg animate"></div>
+  <div class="grain animate"></div>
+  <div class="grid"></div>
+  <span class="orb o1 animate"></span>
+  <span class="orb o2 animate"></span>
+  <span class="orb o3 animate"></span>
+
+  <section class="card" id="v854-card" aria-live="polite">
+    <div class="eyebrow">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l2.4 4.86 5.37.78-3.89 3.79.92 5.36L12 15.9l-4.8 2.53.92-5.36-3.89-3.79 5.37-.78L12 3z" stroke="currentColor" stroke-opacity=".5"/></svg>
+      Edition 854
+    </div>
+
+    <h1>Kinetic Quiet</h1>
+    <p class="lead">A luminous study in motion, material, and restraint. Slide into calm; let the edges breathe.</p>
+
+    <div class="controls" role="group" aria-label="Appearance controls">
+      <button class="swatch active" data-theme="dusk" type="button" aria-pressed="true">
+        <span class="dot" aria-hidden="true"></span>
+        Dusk
+      </button>
+      <button class="swatch" data-theme="dawn" type="button" aria-pressed="false">
+        <span class="dot" aria-hidden="true"></span>
+        Dawn
+      </button>
+      <button class="swatch" data-theme="neon" type="button" aria-pressed="false">
+        <span class="dot" aria-hidden="true"></span>
+        Neon
+      </button>
+
+      <button class="toggle" id="v854-motion" type="button" aria-pressed="true" title="Toggle motion">
+        Motion
+        <span class="knob" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <div class="meta">
+      <span class="tip">Tip: Move your cursor over the card.</span>
+      <span id="last-updated">Last updated: 2025-11-24 14:15:55 EST</span>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      const root = document.getElementById('v854');
+      const card = document.getElementById('v854-card');
+      const motionBtn = document.getElementById('v854-motion');
+      const themeButtons = Array.from(root.querySelectorAll('.swatch'));
+      const updated = document.getElementById('last-updated');
+
+      // Last updated timestamp
+      try {
+        const now = new Date();
+        const opts = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+        updated.textContent = 'Last updated: ' + now.toLocaleString(undefined, opts);
+      } catch (e) {
+        updated.textContent = 'Last updated: just now';
+      }
+
+      // Load persisted theme
+      const savedTheme = localStorage.getItem('v854-theme');
+      if (savedTheme) {
+        root.setAttribute('data-theme', savedTheme);
+        themeButtons.forEach(b => {
+          const active = b.getAttribute('data-theme') === savedTheme;
+          b.classList.toggle('active', active);
+          b.setAttribute('aria-pressed', String(active));
+        });
+      }
+
+      // Reduced motion default
+      const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) {
+        root.setAttribute('data-motion', 'still');
+        motionBtn.setAttribute('aria-pressed', 'false');
+      }
+
+      // Theme switching
+      themeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const t = btn.getAttribute('data-theme');
+          root.setAttribute('data-theme', t);
+          localStorage.setItem('v854-theme', t);
+          themeButtons.forEach(b => {
+            const active = b === btn;
+            b.classList.toggle('active', active);
+            b.setAttribute('aria-pressed', String(active));
+          });
+        });
+      });
+
+      // Motion toggle
+      const setMotion = (flowing) => {
+        root.setAttribute('data-motion', flowing ? 'flow' : 'still');
+        motionBtn.setAttribute('aria-pressed', String(flowing));
+      };
+      motionBtn.addEventListener('click', () => {
+        const flowing = root.getAttribute('data-motion') !== 'still';
+        setMotion(flowing ? false : true);
+      });
+
+      // Subtle tilt/glare interaction
+      let raf = null;
+      let targetX = 0, targetY = 0, curX = 0, curY = 0;
+
+      const updateTilt = () => {
+        const dx = targetX - curX;
+        const dy = targetY - curY;
+        curX += dx * 0.12;
+        curY += dy * 0.12;
+
+        card.style.transform = `perspective(900px) rotateX(${curY}deg) rotateY(${curX}deg)`;
+        raf = requestAnimationFrame(updateTilt);
+      };
+
+      const onMove = (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX || (e.touches && e.touches[0].clientX) || rect.left) - rect.left;
+        const y = (e.clientY || (e.touches && e.touches[0].clientY) || rect.top) - rect.top;
+        const rx = ((y / rect.height) - 0.5) * -8;
+        const ry = ((x / rect.width) - 0.5) * 8;
+        targetX = ry;
+        targetY = rx;
+        card.style.setProperty('--mx', `${(x / rect.width) * 100}%`);
+        card.style.setProperty('--my', `${(y / rect.height) * 100}%`);
+        if (!raf) raf = requestAnimationFrame(updateTilt);
+      };
+
+      const onLeave = () => {
+        targetX = 0; targetY = 0;
+        if (!raf) raf = requestAnimationFrame(updateTilt);
+      };
+
+      root.addEventListener('mousemove', onMove);
+      root.addEventListener('touchmove', onMove, { passive: true });
+      root.addEventListener('mouseleave', onLeave);
+      root.addEventListener('touchend', onLeave);
+
+      // Clean up if removed
+      const cleanup = () => { if (raf) cancelAnimationFrame(raf); raf = null; };
+      window.addEventListener('beforeunload', cleanup);
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
