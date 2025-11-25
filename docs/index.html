@@ -73,163 +73,139 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="vibe871" class="nocturne">
+<div id="vibe872" class="loom night">
   <style>
-    /* Scope to #vibe871 */
-    #vibe871 {
-      --h: 268;
-      --a1: hsl(var(--h) 86% 62%);
-      --a2: hsl(calc(var(--h) + 36) 84% 60%);
-      --a3: hsl(calc(var(--h) + 72) 78% 58%);
-      --bg1: #070a12;
-      --bg2: #0c1426;
-      --fg: #eaf1ff;
-      --muted: #98a6c6;
-      --line: rgba(255,255,255,0.10);
-      --glass: rgba(14, 21, 36, 0.55);
-      --shadow: 0 22px 70px rgba(0,0,0,.55);
-      --rA: 36s;
-      --rB: -48s;
-      --rC: 64s;
-      --twinkle: 3.5s;
-      --mx: 0;
-      --my: 0;
+    /* Scope everything to #vibe872 */
+    #vibe872 {
+      --base: 208;
+      --c1: hsl(var(--base) 88% 62%);
+      --c2: hsl(calc(var(--base) + 48) 84% 58%);
+      --c3: hsl(calc(var(--base) - 36) 80% 60%);
+      --ink: #0a0f1a;
+      --paper: #0f1726;
+      --paper-2: #0a1324;
+      --fg: #eaf0ff;
+      --muted: #9fb0d8;
+      --line: rgba(255,255,255,0.12);
+      --glass: rgba(255,255,255,0.06);
+      --shadow: 0 24px 70px rgba(0,0,0,.55);
+      --tempo: 12;        /* seconds baseline for weave */
+      --sway: 18%;        /* horizontal excursion of ribbons */
+      --mx: 0;            /* pointer tilt X */
+      --my: 0;            /* pointer tilt Y */
+      --grain: rgba(255,255,255,0.03);
       color: var(--fg);
-      font: 500 16px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font: 500 16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
       letter-spacing: -0.01em;
+      user-select: none;
     }
-    #vibe871.daybreak {
-      --bg1: #f7faff;
-      --bg2: #e9f1ff;
-      --fg: #0c1324;
-      --muted: #566182;
-      --line: rgba(12,19,36,0.12);
+    #vibe872.day {
+      --ink: #f7faff;
+      --paper: #f0f5ff;
+      --paper-2: #e7efff;
+      --fg: #0b1322;
+      --muted: #53607e;
+      --line: rgba(12,19,36,0.14);
       --glass: rgba(255,255,255,0.65);
-      --shadow: 0 18px 60px rgba(8,18,40,.18);
+      --shadow: 0 18px 60px rgba(8,18,40,.16);
+      --grain: rgba(0,0,0,0.02);
     }
-    #vibe871 .poster {
+
+    /* Board */
+    #vibe872 .board {
       position: relative;
       overflow: hidden;
       border-radius: 28px;
-      padding: 26px;
-      min-height: 480px;
+      padding: 22px;
+      min-height: clamp(540px, 64vh, 880px);
       background:
-        radial-gradient(1200px 700px at 10% -10%, color-mix(in oklab, var(--a1) 18%, transparent), transparent 60%),
-        radial-gradient(900px 600px at 100% 120%, color-mix(in oklab, var(--a3) 16%, transparent), transparent 62%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
+        radial-gradient(1200px 800px at 5% -10%, color-mix(in oklab, var(--c1) 18%, transparent), transparent 60%),
+        radial-gradient(900px 700px at 110% 120%, color-mix(in oklab, var(--c2) 16%, transparent), transparent 64%),
+        linear-gradient(160deg, var(--paper), var(--paper-2));
       border: 1px solid var(--line);
       box-shadow: inset 0 -1px 0 rgba(255,255,255,0.06), var(--shadow);
       isolation: isolate;
-      transform-style: preserve-3d;
     }
-    #vibe871 .glow {
-      position: absolute;
+    #vibe872 .board::after {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(100% 120% at 50% 0%, rgba(255,255,255,0.04), transparent 40%),
+        radial-gradient(100% 120% at 50% 100%, rgba(0,0,0,0.08), transparent 42%),
+        repeating-linear-gradient(90deg, transparent 0 38px, var(--grain) 38px 39px);
+      mix-blend-mode: overlay;
       pointer-events: none;
-      border-radius: 50%;
-      filter: blur(42px) saturate(120%);
-      opacity: .5;
-      mix-blend-mode: screen;
-      transform: translateZ(0);
-      animation: float 28s ease-in-out infinite alternate;
-    }
-    #vibe871.daybreak .glow { mix-blend-mode: multiply; }
-    #vibe871 .glow.g1 { width: 420px; aspect-ratio: 1; left: -120px; top: -160px; background: radial-gradient(circle at 30% 30%, var(--a1), transparent 60%); }
-    #vibe871 .glow.g2 { width: 320px; aspect-ratio: 1; right: -100px; bottom: -120px; background: radial-gradient(circle at 70% 70%, var(--a2), transparent 60%); animation-duration: 36s; }
-    @keyframes float {
-      0% { transform: translate3d(0,0,0); }
-      100% { transform: translate3d(40px,-26px,0); }
     }
 
     /* Header */
-    #vibe871 .head {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 14px;
-      align-items: center;
+    #vibe872 .head {
+      display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center;
+      position: relative; z-index: 3;
       margin-bottom: 10px;
     }
-    #vibe871 .brand {
-      display: grid;
-      grid-auto-flow: column;
-      gap: 14px;
-      align-items: center;
+    #vibe872 .brand {
+      display: grid; grid-auto-flow: column; gap: 14px; align-items: center;
     }
-    #vibe871 .logo {
-      width: 38px; height: 38px; border-radius: 12px;
-      background: conic-gradient(from 120deg, var(--a1), var(--a2), var(--a3), var(--a1));
-      box-shadow: inset 0 1px 2px rgba(255,255,255,.35), 0 8px 28px color-mix(in oklab, var(--a2) 35%, transparent);
-      position: relative;
+    #vibe872 .glyph {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: conic-gradient(from 140deg, var(--c1), var(--c2), var(--c3), var(--c1));
+      box-shadow: inset 0 1px 2px rgba(255,255,255,.35), 0 10px 28px color-mix(in oklab, var(--c2) 35%, transparent);
+      position: relative; overflow: hidden;
     }
-    #vibe871 .logo::after {
+    #vibe872 .glyph::after {
       content:"";
       position:absolute; inset:2px; border-radius:10px;
-      background: radial-gradient(120% 100% at 50% 0%, rgba(255,255,255,.8), rgba(255,255,255,.12));
+      background: radial-gradient(140% 100% at 50% 0%, rgba(255,255,255,.9), rgba(255,255,255,.1));
       mix-blend-mode: overlay;
     }
-    #vibe871 h1 {
+    #vibe872 h1 {
       margin: 0;
-      font: 800 22px/1.15 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      letter-spacing: -0.02em;
+      font: 900 clamp(18px, 4vw, 26px)/1.1 ui-sans-serif, system-ui, -apple-system;
+      letter-spacing: -0.025em;
     }
-    #vibe871 .tag {
-      font-size: 13px; color: var(--muted);
-      margin-top: 2px;
-    }
+    #vibe872 .tag { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
-    /* Dock controls */
-    #vibe871 .dock {
-      display: grid;
-      grid-auto-flow: column;
-      gap: 10px;
-      align-items: center;
-      justify-content: end;
+    /* Controls */
+    #vibe872 .dock {
+      display: grid; grid-auto-flow: column; gap: 10px; align-items: center; justify-content: end;
     }
-    #vibe871 .btn {
+    #vibe872 .btn {
       -webkit-tap-highlight-color: transparent;
-      appearance: none;
-      border: 1px solid rgba(255,255,255,.18);
+      appearance: none; cursor: pointer;
+      border: 1px solid var(--line);
       background: var(--glass);
       color: var(--fg);
       backdrop-filter: blur(10px) saturate(140%);
       border-radius: 999px;
       padding: 8px 12px;
-      display: inline-grid;
-      grid-auto-flow: column;
-      gap: 8px;
-      align-items: center;
-      cursor: pointer;
+      display: inline-grid; grid-auto-flow: column; gap: 8px; align-items: center;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
       box-shadow: 0 8px 22px rgba(0,0,0,.12);
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+      font-weight: 600;
     }
-    #vibe871 .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0,0,0,.18); }
-    #vibe871 .btn svg { width: 18px; height: 18px; }
-    #vibe871 .sun { opacity: 0.18; transform: rotate(24deg); transition: 280ms ease; }
-    #vibe871.daybreak .sun { opacity: 1; transform: rotate(0deg); }
-    #vibe871 .moon { opacity: 1; transition: 280ms ease; }
-    #vibe871.daybreak .moon { opacity: 0.18; transform: translateY(2px) scale(.96); }
-
-    #vibe871 .slider {
-      display: grid; grid-template-columns: auto 1fr; gap: 8px; align-items: center;
-      padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18);
+    #vibe872 .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0,0,0,.18); }
+    #vibe872 .btn svg { width: 18px; height: 18px; }
+    #vibe872 .knob {
+      display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center;
+      padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line);
       background: var(--glass);
       backdrop-filter: blur(10px) saturate(140%);
       box-shadow: 0 8px 22px rgba(0,0,0,.12);
+      color: var(--muted);
+      font-size: 12px; letter-spacing: .04em; text-transform: uppercase;
     }
-    #vibe871 .slider span { font-size: 12px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
-    #vibe871 input[type="range"] {
-      appearance: none; width: 160px; height: 6px; border-radius: 6px;
-      background: linear-gradient(90deg, color-mix(in oklab, var(--a1) 60%, transparent), color-mix(in oklab, var(--a2) 60%, transparent));
+    #vibe872 input[type="range"] {
+      appearance: none; width: min(30vw, 200px); height: 6px; border-radius: 6px;
+      background: linear-gradient(90deg, color-mix(in oklab, var(--c1) 55%, transparent), color-mix(in oklab, var(--c2) 55%, transparent));
       outline: none; cursor: pointer;
     }
-    #vibe871 input[type="range"]::-webkit-slider-thumb {
+    #vibe872 input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #fff, #e9edf8);
       border: 1px solid rgba(0,0,0,0.08);
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
-    #vibe871 input[type="range"]::-moz-range-thumb {
+    #vibe872 input[type="range"]::-moz-range-thumb {
       width: 18px; height: 18px; border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #fff, #e9edf8);
       border: 1px solid rgba(0,0,0,0.08);
@@ -237,233 +213,213 @@
     }
 
     /* Stage */
-    #vibe871 .stage {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      place-items: center;
-      padding: 18px 8px 8px 8px;
-      min-height: clamp(360px, 56vh, 640px);
+    #vibe872 .stage {
+      position: relative; z-index: 1;
+      margin-top: 8px;
+      border-radius: 22px;
+      padding: clamp(12px, 3vw, 18px);
+      min-height: clamp(420px, 54vh, 720px);
+      background:
+        radial-gradient(1000px 800px at 50% 90%, rgba(255,255,255,0.04), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.02), transparent 30%);
+      border: 1px dashed var(--line);
+      overflow: hidden;
     }
-    #vibe871 .stars {
+    #vibe872 .grid {
       position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(0deg, transparent 0 38px, rgba(255,255,255,.06) 38px 39px),
+        repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,.06) 38px 39px);
+      opacity: .15;
+      mix-blend-mode: soft-light;
       pointer-events: none;
       z-index: 0;
     }
-    #vibe871 .star {
-      position: absolute;
-      width: 2px; height: 2px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--a1) 40%, transparent));
-      box-shadow: 0 0 10px color-mix(in oklab, var(--a1) 30%, transparent);
-      opacity: .8;
-      animation: twinkle var(--twinkle) ease-in-out infinite;
-    }
-    @keyframes twinkle {
-      0%,100% { transform: scale(1); opacity: .55; }
-      50% { transform: scale(1.5); opacity: 1; }
-    }
-
-    #vibe871 .dial {
-      position: relative;
-      width: clamp(260px, 46vw, 560px);
-      aspect-ratio: 1;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      transform: rotateX(calc(var(--my) * -8deg)) rotateY(calc(var(--mx) * 8deg));
+    #vibe872 .ribbons {
+      position: absolute; inset: 0;
+      transform-style: preserve-3d;
+      perspective: 1200px;
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,.25));
+      z-index: 1;
+      transform: rotateX(calc(var(--my) * 10deg)) rotateY(calc(var(--mx) * -10deg));
       transition: transform 300ms cubic-bezier(.2,.7,.2,1);
     }
-    #vibe871 .ring {
-      position: absolute; inset: 0; border-radius: 50%;
-      filter: drop-shadow(0 10px 30px rgba(0,0,0,.25));
-    }
-    #vibe871 .r1 {
-      background: repeating-conic-gradient(from 0deg,
-        color-mix(in oklab, var(--a1) 85%, transparent) 0 12deg,
-        transparent 12deg 18deg);
-      -webkit-mask: radial-gradient(circle at 50% 50%,
-        transparent 0 44%,
-        #000 44% 50%,
-        transparent 50% 100%);
-      animation: spin var(--rA) linear infinite;
-    }
-    #vibe871 .r2 {
-      inset: 6%;
-      background: repeating-conic-gradient(from 30deg,
-        color-mix(in oklab, var(--a2) 90%, transparent) 0 6deg,
-        transparent 6deg 12deg);
-      -webkit-mask: radial-gradient(circle,
-        transparent 0 32%,
-        #000 32% 38%,
-        transparent 38% 100%);
-      animation: spin var(--rB) linear infinite;
-    }
-    #vibe871 .r3 {
-      inset: 14%;
-      background: conic-gradient(from 0deg,
-        color-mix(in oklab, var(--a3) 85%, transparent) 0 25%,
-        transparent 25% 100%);
-      -webkit-mask: radial-gradient(circle,
-        transparent 0 18%,
-        #000 18% 24%,
-        transparent 24% 100%);
-      animation: spin var(--rC) linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(1turn); } }
+    #vibe872.paused .ribbons { transition: none; }
 
-    #vibe871 .axis {
+    #vibe872 .rib {
+      --th: 22px;
+      --z: 0px;
+      --rot: 0deg;
+      --alpha: .95;
+      position: absolute;
+      height: var(--th);
+      left: -14%;
+      right: -14%;
+      border-radius: 999px;
+      background:
+        linear-gradient(90deg, color-mix(in oklab, var(--c1) 80%, transparent), color-mix(in oklab, var(--c2) 80%, transparent), color-mix(in oklab, var(--c3) 80%, transparent));
+      background-size: 200% 100%;
+      opacity: var(--alpha);
+      transform: translate3d(0,0,var(--z)) rotateZ(var(--rot));
+      animation:
+        weave var(--dur, 12s) ease-in-out infinite,
+        shimmer 8s ease-in-out infinite alternate;
+      will-change: transform, background-position, filter, opacity;
+      mix-blend-mode: screen;
+      filter: blur(var(--blur, 0.4px)) saturate(115%);
+    }
+    #vibe872.day .rib { mix-blend-mode: multiply; }
+    #vibe872 .rib::before {
+      content:"";
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(120% 140% at 10% 50%, rgba(255,255,255,.45), transparent 40%),
+                  radial-gradient(120% 140% at 90% 50%, rgba(255,255,255,.25), transparent 42%);
+      pointer-events: none;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    @keyframes weave {
+      0%   { transform: translate3d(calc(var(--mx) * -20px), 0, var(--z)) rotateZ(var(--rot)) translateX(calc(var(--sway) * -1)); }
+      50%  { transform: translate3d(calc(var(--mx) *  20px), 0, var(--z)) rotateZ(var(--rot)) translateX(var(--sway)); }
+      100% { transform: translate3d(calc(var(--mx) * -20px), 0, var(--z)) rotateZ(var(--rot)) translateX(calc(var(--sway) * -1)); }
+    }
+
+    /* Spark clicks */
+    #vibe872 .spark {
       position: absolute;
       width: 10px; height: 10px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff, #e9edf8);
-      border: 1px solid rgba(0,0,0,.08);
-      box-shadow: 0 6px 18px rgba(0,0,0,.25), 0 0 0 6px color-mix(in oklab, var(--a2) 12%, transparent);
-      z-index: 2;
-    }
-    #vibe871 .note {
-      position: absolute;
-      inset: auto 0 8% 0;
-      text-align: center;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-size: 12px;
-      color: var(--muted);
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    /* Ripple pings on click */
-    #vibe871 .ping {
-      position: absolute;
-      width: 12px; height: 12px; border-radius: 50%;
-      background: radial-gradient(circle at 50% 50%, #fff, color-mix(in oklab, var(--a1) 30%, transparent));
-      box-shadow: 0 0 0 0 color-mix(in oklab, var(--a1) 60%, transparent);
+      background: radial-gradient(circle at 40% 40%, #fff, color-mix(in oklab, var(--c1) 45%, transparent));
       transform: translate(-50%, -50%);
-      animation: ping 900ms ease-out forwards;
       pointer-events: none;
+      filter: blur(0.2px);
+      animation: pop 900ms ease-out forwards;
       mix-blend-mode: screen;
     }
-    @keyframes ping {
-      0% { opacity: 1; box-shadow: 0 0 0 0 color-mix(in oklab, var(--a1) 40%, transparent); }
-      70% { opacity: .8; box-shadow: 0 0 0 40px color-mix(in oklab, var(--a2) 18%, transparent); }
-      100% { opacity: 0; box-shadow: 0 0 0 70px transparent; }
+    @keyframes pop {
+      0% { opacity: 1; box-shadow: 0 0 0 0 color-mix(in oklab, var(--c1) 40%, transparent); }
+      60% { opacity: 1; box-shadow: 0 0 0 36px color-mix(in oklab, var(--c2) 18%, transparent); }
+      100% { opacity: 0; box-shadow: 0 0 0 66px transparent; }
     }
 
     /* Footer */
-    #vibe871 .foot {
+    #vibe872 .foot {
       position: relative; z-index: 2; margin-top: 14px;
       display: grid; grid-template-columns: 1fr auto; align-items: center;
       gap: 10px; color: var(--muted);
       border-top: 1px dashed var(--line); padding-top: 12px;
       font-size: 12px;
     }
-    #vibe871 .hint {
-      display: grid; grid-auto-flow: column; gap: 10px; align-items: center;
-    }
-    #vibe871 .pulse {
+    #vibe872 .hint { display: grid; grid-auto-flow: column; gap: 10px; align-items: center; }
+    #vibe872 .pulse {
       width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--a1) 40%, transparent));
+      background: radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--c1) 40%, transparent));
       border: 1px solid rgba(0,0,0,0.06);
-      box-shadow: 0 3px 8px color-mix(in oklab, var(--a1) 35%, transparent);
+      box-shadow: 0 3px 8px color-mix(in oklab, var(--c1) 35%, transparent);
       animation: dot 3s ease-in-out infinite;
     }
     @keyframes dot { 0%,100% { transform: scale(1); opacity: .9; } 50% { transform: scale(1.25); opacity: 1; } }
 
     /* Focus states */
-    #vibe871 :is(button, input, .dial):focus-visible {
-      outline: 2px solid color-mix(in oklab, var(--a2) 50%, var(--a1));
+    #vibe872 :is(button, input, .stage):focus-visible {
+      outline: 2px solid color-mix(in oklab, var(--c2) 50%, var(--c1));
       outline-offset: 2px; border-radius: 14px;
     }
 
-    @media (max-width: 720px) {
-      #vibe871 .stage { min-height: 420px; }
-      #vibe871 .dock { grid-auto-flow: row; justify-content: stretch; }
-      #vibe871 .slider { grid-template-columns: 1fr; }
+    @media (max-width: 760px) {
+      #vibe872 .dock { grid-auto-flow: row; justify-content: stretch; }
+      #vibe872 .knob { grid-template-columns: 1fr; }
+      #vibe872 .stage { min-height: 480px; }
     }
     @media (prefers-reduced-motion: reduce) {
-      #vibe871 .glow, #vibe871 .ring, #vibe871 .star, #vibe871 .pulse { animation: none !important; }
-      #vibe871 .dial { transition: none !important; }
+      #vibe872 .rib, #vibe872 .pulse { animation: none !important; }
+      #vibe872 .ribbons { transition: none !important; }
     }
   </style>
 
-  <div class="poster" aria-label="Quiet Observatory kinetic poster">
-    <div class="glow g1" aria-hidden="true"></div>
-    <div class="glow g2" aria-hidden="true"></div>
-
+  <div class="board" aria-label="Chroma Loom — interactive ribbon tapestry">
     <div class="head">
       <div class="brand">
-        <span class="logo" aria-hidden="true"></span>
+        <span class="glyph" aria-hidden="true"></span>
         <div>
-          <h1>Quiet Observatory</h1>
-          <div class="tag">Kinetic calm. Orbiting light.</div>
+          <h1>Chroma Loom</h1>
+          <div class="tag">Weaving light. Bend it with your cursor.</div>
         </div>
       </div>
       <div class="dock">
-        <button class="btn" id="theme" aria-pressed="true" title="Toggle day/night">
+        <button class="btn" id="swapTheme" title="Toggle day/night" aria-pressed="true">
           <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-            <circle cx="12" cy="12" r="4" stroke-width="1.5"></circle>
-            <g stroke-width="1.5">
-              <line x1="12" y1="2" x2="12" y2="5"></line>
-              <line x1="12" y1="19" x2="12" y2="22"></line>
-              <line x1="2" y1="12" x2="5" y2="12"></line>
-              <line x1="19" y1="12" x2="22" y2="12"></line>
-              <line x1="4.2" y1="4.2" x2="6.4" y2="6.4"></line>
-              <line x1="17.6" y1="17.6" x2="19.8" y2="19.8"></line>
-              <line x1="17.6" y1="6.4" x2="19.8" y2="4.2"></line>
-              <line x1="4.2" y1="19.8" x2="6.4" y2="17.6"></line>
+            <circle cx="12" cy="12" r="4" stroke-width="1.6"></circle>
+            <g stroke-width="1.6">
+              <line x1="12" y1="1.5" x2="12" y2="5"></line>
+              <line x1="12" y1="19" x2="12" y2="22.5"></line>
+              <line x1="1.5" y1="12" x2="5" y2="12"></line>
+              <line x1="19" y1="12" x2="22.5" y2="12"></line>
+              <line x1="4" y1="4" x2="6.5" y2="6.5"></line>
+              <line x1="17.5" y1="17.5" x2="20" y2="20"></line>
+              <line x1="17.5" y1="6.5" x2="20" y2="4"></line>
+              <line x1="4" y1="20" x2="6.5" y2="17.5"></line>
             </g>
           </svg>
-          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-            <path stroke-width="1.5" d="M21 13.5A8.5 8.5 0 1 1 10.5 3a7 7 0 0 0 10.5 10.5Z"></path>
-          </svg>
+          Theme
         </button>
-        <button class="btn" id="hue" title="Shift palette">
+        <button class="btn" id="palette" title="Randomize palette">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-            <circle cx="12" cy="12" r="9" stroke-width="1.5"></circle>
-            <path d="M12 3v18M3 12h18" stroke-width="1.5"></path>
+            <circle cx="12" cy="12" r="9" stroke-width="1.6"></circle>
+            <path d="M12 3v18M3 12h18" stroke-width="1.6"></path>
           </svg>
-          Shift
+          Hue
         </button>
-        <label class="slider" for="drift" title="Adjust motion & twinkle">
-          <span>Drift</span>
-          <input id="drift" type="range" min="0" max="100" value="48" />
+        <label class="knob" for="tempo">
+          Tempo
+          <input id="tempo" type="range" min="4" max="28" value="12" />
+          <span aria-hidden="true">⟷</span>
         </label>
+        <label class="knob" for="density">
+          Density
+          <input id="density" type="range" min="6" max="28" value="14" />
+          <span aria-hidden="true">⋰</span>
+        </label>
+        <button class="btn" id="pause" title="Pause/Play">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+            <path d="M8 6v12M16 6v12" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+          Pause
+        </button>
       </div>
     </div>
 
-    <div class="stage">
-      <div class="stars" aria-hidden="true"></div>
-      <div class="dial" id="dial" tabindex="0" aria-label="Orbit rings that rotate at varying tempos">
-        <div class="ring r1"></div>
-        <div class="ring r2"></div>
-        <div class="ring r3"></div>
-        <div class="axis" aria-hidden="true"></div>
-        <div class="note">Tap the orbit</div>
-      </div>
+    <div class="stage" id="stage" tabindex="0" aria-label="Ribbons that weave and shimmer">
+      <div class="grid" aria-hidden="true"></div>
+      <div class="ribbons" id="ribbons" aria-hidden="true"></div>
     </div>
 
     <div class="foot">
       <div class="hint">
         <span class="pulse" aria-hidden="true"></span>
-        <span>Gently move your cursor—space tilts.</span>
+        <span>Move to tilt; click to spark; press Space to pause.</span>
       </div>
-      <span id="last-updated">Last updated: 2025-11-25 09:18:43 EST</span>
+      <span id="last-updated">Last updated: 2025-11-25 10:20:21 EST</span>
     </div>
   </div>
 
   <script>
     (function () {
-      const root = document.getElementById('vibe871');
-      const poster = root.querySelector('.poster');
-      const starsHost = root.querySelector('.stars');
-      const dial = root.querySelector('#dial');
-      const themeBtn = root.querySelector('#theme');
-      const hueBtn = root.querySelector('#hue');
-      const drift = root.querySelector('#drift');
+      const root = document.getElementById('vibe872');
+      const ribbonsHost = root.querySelector('#ribbons');
+      const stage = root.querySelector('#stage');
+      const tempo = root.querySelector('#tempo');
+      const density = root.querySelector('#density');
+      const paletteBtn = root.querySelector('#palette');
+      const themeBtn = root.querySelector('#swapTheme');
+      const pauseBtn = root.querySelector('#pause');
       const updated = root.querySelector('#last-updated');
 
       // Live "last updated" clock
-      function updateTime() {
+      function tick() {
         const d = new Date();
         try {
           updated.textContent = d.toLocaleString(undefined, {
@@ -475,100 +431,119 @@
           updated.textContent = d.toString();
         }
       }
-      updateTime();
-      const tInterval = setInterval(updateTime, 1000);
+      tick();
+      const tInterval = setInterval(tick, 1000);
 
       // Theme persistence
-      const saved = localStorage.getItem('observatory-theme');
-      if (saved === 'daybreak') {
-        root.classList.remove('nocturne');
-        root.classList.add('daybreak');
+      const savedTheme = localStorage.getItem('loom-theme');
+      if (savedTheme === 'day') {
+        root.classList.remove('night'); root.classList.add('day');
         themeBtn.setAttribute('aria-pressed', 'false');
       }
       themeBtn.addEventListener('click', () => {
-        const isDay = root.classList.toggle('daybreak');
-        root.classList.toggle('nocturne', !isDay);
+        const isDay = root.classList.toggle('day');
+        root.classList.toggle('night', !isDay);
         themeBtn.setAttribute('aria-pressed', isDay ? 'false' : 'true');
-        localStorage.setItem('observatory-theme', isDay ? 'daybreak' : 'nocturne');
+        localStorage.setItem('loom-theme', isDay ? 'day' : 'night');
       });
 
       // Palette shuffle
-      hueBtn.addEventListener('click', () => {
+      function shuffleHue() {
         const h = Math.floor(Math.random() * 360);
-        root.style.setProperty('--h', h);
-      });
+        root.style.setProperty('--base', h);
+      }
+      paletteBtn.addEventListener('click', shuffleHue);
 
-      // Stars generator
-      function seedStars(count) {
-        starsHost.innerHTML = '';
-        const rect = poster.getBoundingClientRect();
+      // Ribbons generator
+      function generate(count) {
+        ribbonsHost.innerHTML = '';
+        const H = ribbonsHost.getBoundingClientRect().height || 600;
         for (let i = 0; i < count; i++) {
-          const s = document.createElement('span');
-          s.className = 'star';
-          const size = Math.random() * 2 + 1;
-          s.style.width = size + 'px';
-          s.style.height = size + 'px';
-          s.style.left = (Math.random() * 100).toFixed(3) + '%';
-          s.style.top = (Math.random() * 100).toFixed(3) + '%';
-          const dur = (2.2 + Math.random() * 3.2).toFixed(2) + 's';
-          s.style.animationDuration = dur;
-          s.style.animationDelay = (Math.random() * 2).toFixed(2) + 's';
-          starsHost.appendChild(s);
+          const r = document.createElement('span');
+          r.className = 'rib';
+          // Position & depth
+          const top = (8 + Math.random() * 84); // %
+          const rot = (Math.random() * 6 - 3).toFixed(2) + 'deg';
+          const z = (Math.random() * 600 - 300); // -300..300
+          const blur = (Math.abs(z) / 260 + 0.3).toFixed(2) + 'px';
+          const alpha = (0.55 + (300 - Math.abs(z)) / 700).toFixed(2);
+          // Thickness and duration
+          const th = (12 + Math.random() * 26).toFixed(1) + 'px';
+          const dur = (Number(tempo.value) * (0.8 + Math.random() * 0.8)).toFixed(2) + 's';
+          r.style.top = top.toFixed(2) + '%';
+          r.style.setProperty('--th', th);
+          r.style.setProperty('--z', z.toFixed(1) + 'px');
+          r.style.setProperty('--rot', rot);
+          r.style.setProperty('--blur', blur);
+          r.style.setProperty('--alpha', alpha);
+          r.style.setProperty('--dur', dur);
+          r.style.animationDelay = (Math.random() * 2).toFixed(2) + 's';
+          ribbonsHost.appendChild(r);
         }
       }
-      seedStars(90);
+      generate(Number(density.value));
 
-      // Drift control: speeds + twinkle rate
-      function applyDrift(v) {
-        const n = Number(v);
-        const a = 16 + (n / 100) * 64; // seconds
-        const b = 20 + (n / 100) * 76;
-        const c = 24 + (n / 100) * 88;
-        root.style.setProperty('--rA', a.toFixed(2) + 's');
-        root.style.setProperty('--rB', (-b).toFixed(2) + 's');
-        root.style.setProperty('--rC', c.toFixed(2) + 's');
-        const tw = (4.2 - (n / 100) * 2.6); // seconds
-        root.style.setProperty('--twinkle', Math.max(1.2, tw).toFixed(2) + 's');
+      // Controls
+      tempo.addEventListener('input', () => {
+        root.style.setProperty('--tempo', tempo.value);
+        // Refresh durations smoothly
+        [...ribbonsHost.children].forEach(el => {
+          el.style.setProperty('--dur', (Number(tempo.value) * (0.8 + Math.random() * 0.8)).toFixed(2) + 's');
+        });
+      });
+      density.addEventListener('input', () => generate(Number(density.value)));
+
+      // Pause/Play
+      let paused = false;
+      function setPaused(p) {
+        paused = p;
+        root.classList.toggle('paused', p);
+        [...ribbonsHost.children].forEach(el => el.style.animationPlayState = p ? 'paused' : 'running');
+        pauseBtn.innerHTML = p
+          ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M6 6l12 6-12 6V6z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path></svg>Play'
+          : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M8 6v12M16 6v12" stroke-width="2" stroke-linecap="round"></path></svg>Pause';
       }
-      applyDrift(drift.value);
-      drift.addEventListener('input', (e) => applyDrift(e.target.value));
+      pauseBtn.addEventListener('click', () => setPaused(!paused));
+      stage.addEventListener('keydown', (e) => {
+        if (e.key === ' ') { setPaused(!paused); e.preventDefault(); }
+        if (e.key.toLowerCase() === 'r') { shuffleHue(); }
+      });
 
-      // Pointer parallax
+      // Pointer tilt
       function onPointer(e) {
-        const rect = poster.getBoundingClientRect();
+        const rect = stage.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width;
         const y = (e.clientY - rect.top) / rect.height;
         root.style.setProperty('--mx', (x - 0.5).toFixed(3));
         root.style.setProperty('--my', (y - 0.5).toFixed(3));
       }
-      poster.addEventListener('pointermove', onPointer);
-      poster.addEventListener('pointerleave', () => {
+      stage.addEventListener('pointermove', onPointer);
+      stage.addEventListener('pointerleave', () => {
         root.style.setProperty('--mx', '0');
         root.style.setProperty('--my', '0');
       });
 
-      // Ripples on the dial
-      function ping(x, y) {
-        const p = document.createElement('span');
-        p.className = 'ping';
-        p.style.left = x + 'px';
-        p.style.top = y + 'px';
-        dial.appendChild(p);
-        p.addEventListener('animationend', () => p.remove());
+      // Sparks on click
+      function sparkAt(x, y) {
+        const s = document.createElement('span');
+        s.className = 'spark';
+        s.style.left = x + 'px';
+        s.style.top = y + 'px';
+        stage.appendChild(s);
+        s.addEventListener('animationend', () => s.remove());
       }
-      dial.addEventListener('click', (e) => {
-        const r = dial.getBoundingClientRect();
-        ping(e.clientX - r.left, e.clientY - r.top);
-      });
-      dial.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          const r = dial.getBoundingClientRect();
-          ping(r.width / 2, r.height / 2);
-          e.preventDefault();
-        }
+      stage.addEventListener('click', (e) => {
+        const r = stage.getBoundingClientRect();
+        sparkAt(e.clientX - r.left, e.clientY - r.top);
       });
 
-      // Cleanup on unload
+      // Initial palette variation on first load
+      if (!localStorage.getItem('loom-first')) {
+        shuffleHue();
+        localStorage.setItem('loom-first', '1');
+      }
+
+      // Cleanup
       window.addEventListener('beforeunload', () => clearInterval(tInterval));
     })();
   </script>
