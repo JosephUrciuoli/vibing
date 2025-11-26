@@ -73,466 +73,462 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div class="vibe-portal" data-theme="dusk" aria-label="Aurora Surface">
+<div class="atelier" data-theme="paper" aria-label="Time Garden">
   <style>
-    .vibe-portal {
-      --bg: #070a10;
-      --ink: #e9f1ff;
-      --muted: #b6c3d8;
-      --line: rgba(255,255,255,0.14);
-      --glass: rgba(255,255,255,0.06);
-      --a1: #7fe3ff;
-      --a2: #ff86d8;
-      --a3: #9aff8a;
-      --a4: #e2b3ff;
-      --glow: 0 10px 30px rgba(127, 227, 255, 0.25), 0 2px 10px rgba(0,0,0,0.4);
+    .atelier {
+      --surface: #f7f9fc;
+      --ink: #0d1627;
+      --muted: #47566e;
+      --line: rgba(13,22,39,0.12);
+      --soft-line: rgba(13,22,39,0.06);
+      --card: rgba(255,255,255,0.75);
+      --shadow: 0 20px 60px rgba(13,22,39,0.12), 0 2px 10px rgba(13,22,39,0.06);
+      --accent-h: 214;
+      --accent-s: 90%;
+      --accent-l: 55%;
+      --accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+      --accent-2: hsl(calc(var(--accent-h) + 40) var(--accent-s) 62%);
       position: relative;
-      padding: clamp(20px, 5vw, 36px);
-      border-radius: 22px;
+      border-radius: 26px;
+      padding: clamp(18px, 4vw, 38px);
       color: var(--ink);
-      background: radial-gradient(1200px 600px at 15% 15%, rgba(127,227,255,0.12), transparent 60%),
-                  radial-gradient(900px 500px at 85% 10%, rgba(255,134,216,0.13), transparent 60%),
-                  radial-gradient(800px 400px at 50% 120%, rgba(154,255,138,0.10), transparent 60%),
-                  var(--bg);
-      border: 1px solid var(--line);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03), 0 30px 80px rgba(0,0,0,0.5);
+      background:
+        radial-gradient(1600px 900px at calc(60% + var(--mx, 0px)) calc(-20% + var(--my, 0px)), rgba(13,22,39,0.06), transparent 55%),
+        radial-gradient(1400px 900px at calc(10% + var(--mx, 0px)) calc(110% + var(--my, 0px)), rgba(13,22,39,0.07), transparent 55%),
+        var(--surface);
+      border: 1px solid var(--soft-line);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), var(--shadow);
       overflow: clip;
       isolation: isolate;
-      backdrop-filter: saturate(110%);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Apple Color Emoji, Segoe UI Emoji;
     }
 
-    /* Dynamic background glows */
-    .vibe-portal .bg {
+    /* Theme: Ink (noir) */
+    .atelier[data-theme="ink"]{
+      --surface: #070a12;
+      --ink: #e9f1ff;
+      --muted: #a7b4ca;
+      --line: rgba(255,255,255,0.14);
+      --soft-line: rgba(255,255,255,0.08);
+      --card: rgba(255,255,255,0.06);
+      --shadow: 0 20px 70px rgba(0,0,0,0.55), 0 1px 0 rgba(255,255,255,0.04) inset;
+    }
+
+    /* Backdrop grid + halo */
+    .atelier .veil {
       position: absolute;
-      inset: -30%;
+      inset: 0;
       z-index: 0;
-      filter: blur(60px) saturate(120%);
       pointer-events: none;
     }
-    .vibe-portal .blob {
-      position: absolute;
-      width: 48vmax; height: 48vmax;
-      border-radius: 50%;
-      opacity: 0.22;
-      mix-blend-mode: screen;
-      transform: translate3d(0,0,0);
-      animation: float 22s ease-in-out infinite;
+    .atelier .veil::before,
+    .atelier .veil::after{
+      content:"";
+      position:absolute; inset:0;
     }
-    .vibe-portal .b1 { background: radial-gradient(circle at 30% 30%, var(--a1), transparent 50%); top: -10%; left: -8%; animation-delay: -2s; }
-    .vibe-portal .b2 { background: radial-gradient(circle at 60% 50%, var(--a2), transparent 55%); right: -15%; top: 0%; animation-delay: -6s; }
-    .vibe-portal .b3 { background: radial-gradient(circle at 45% 60%, var(--a3), transparent 55%); bottom: -20%; left: 10%; animation-delay: -10s; }
-    @keyframes float {
-      0%,100% { transform: translate3d(var(--mx,0px), var(--my,0px), 0) scale(1); }
-      50%     { transform: translate3d(calc(var(--mx,0px) * 0.4), calc(var(--my,0px) * 0.4), 0) scale(1.05); }
+    .atelier .veil::before{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.5), transparent 30%) 0 0/100% 100%,
+        repeating-linear-gradient(90deg, transparent 0 28px, var(--soft-line) 28px 29px),
+        repeating-linear-gradient(0deg,  transparent 0 28px, var(--soft-line) 28px 29px);
+      mask: radial-gradient(120% 90% at 50% 40%, black 40%, transparent 100%);
+      opacity: 0.6;
     }
-
-    /* Decorative aurora sweep */
-    .vibe-portal::after {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      z-index: 1;
-      background: conic-gradient(from var(--spin, 0deg), rgba(255,255,255,0.04), rgba(255,255,255,0.0) 30% 70%, rgba(255,255,255,0.06));
-      mask: radial-gradient(150% 100% at 50% 0%, black, transparent 50%),
-            linear-gradient(black, black);
-      -webkit-mask-composite: xor;
-              mask-composite: exclude;
-      animation: spin 26s linear infinite;
-      pointer-events: none;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    .atelier .veil::after{
+      background:
+        radial-gradient(600px 300px at calc(20% + var(--mx,0px)) calc(10% + var(--my,0px)), color-mix(in oklab, var(--accent) 25%, transparent), transparent 70%),
+        radial-gradient(800px 500px at calc(80% + var(--mx,0px)) calc(90% + var(--my,0px)), color-mix(in oklab, var(--accent-2) 22%, transparent), transparent 70%);
+      filter: blur(20px) saturate(120%);
+      opacity: 0.8;
     }
 
-    /* Hero */
-    .hero {
+    /* Layout */
+    .atelier .grid {
       position: relative;
-      z-index: 2;
+      z-index: 1;
       display: grid;
-      gap: 14px;
-      margin-bottom: 24px;
+      grid-template-columns: 1.1fr 1fr;
+      gap: clamp(16px, 3vw, 28px);
+      align-items: center;
     }
-    .badge {
-      width: fit-content;
+    @media (max-width: 860px){
+      .atelier .grid { grid-template-columns: 1fr; }
+    }
+
+    /* Heading */
+    .atelier .mast {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+    .atelier .chip {
+      width: max-content;
       padding: 6px 10px;
       border-radius: 999px;
-      font-size: 12px;
-      letter-spacing: 0.14em;
+      font-size: 11px;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--ink);
-      background: linear-gradient(90deg, rgba(127,227,255,0.18), rgba(255,134,216,0.18));
-      border: 1px solid rgba(255,255,255,0.18);
+      background: linear-gradient(90deg, color-mix(in oklab, var(--accent) 15%, transparent), color-mix(in oklab, var(--accent-2) 15%, transparent));
+      border: 1px solid var(--line);
       backdrop-filter: blur(6px);
     }
-    .hero h1 {
+    .atelier h1 {
       margin: 0;
-      font-weight: 700;
-      line-height: 1.04;
-      font-size: clamp(32px, 6.2vw, 64px);
+      font-weight: 800;
       letter-spacing: -0.02em;
-      text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+      line-height: 1.02;
+      font-size: clamp(36px, 6.6vw, 84px);
+      text-wrap: balance;
     }
-    .accent {
-      background: linear-gradient(90deg, var(--a1), var(--a2), var(--a4));
-      -webkit-background-clip: text;
-              background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 10px 30px rgba(127,227,255,0.15));
+    .atelier .accent {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 6px 18px color-mix(in oklab, var(--accent) 30%, transparent));
+      white-space: nowrap;
     }
-    .hero p {
+    .atelier .lede {
       margin: 0;
-      max-width: 72ch;
       color: var(--muted);
       font-size: clamp(14px, 1.6vw, 18px);
+      max-width: 60ch;
     }
 
     /* Controls */
-    .controls {
-      display: flex;
-      gap: 10px;
-      margin-top: 8px;
-      flex-wrap: wrap;
+    .atelier .controls {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px;
     }
-    .btn {
+    .atelier .btn {
       cursor: pointer;
       padding: 10px 14px;
-      border-radius: 12px;
+      border-radius: 14px;
       border: 1px solid var(--line);
-      color: var(--ink);
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-      box-shadow: var(--glow);
-      transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
-      will-change: transform;
-      font-weight: 600;
-      font-size: 14px;
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn:active { transform: translateY(0); }
-
-    /* Cards */
-    .cards {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
-      margin-top: 8px;
-    }
-    .card {
-      grid-column: span 4;
-      min-height: 140px;
-      padding: 18px;
-      border-radius: 16px;
-      background: linear-gradient(180deg, var(--glass), rgba(255,255,255,0.02));
-      border: 1px solid var(--line);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.04);
-      position: relative;
-      overflow: hidden;
-      transition: transform 300ms ease, box-shadow 300ms ease;
-      transform-style: preserve-3d;
-    }
-    .card:hover {
-      box-shadow: 0 18px 45px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.06);
-      transform: translateY(-2px);
-    }
-    .card::after {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      background: radial-gradient(200px 80px at var(--hx, 50%) var(--hy, 50%), rgba(127,227,255,0.20), transparent 45%),
-                  radial-gradient(150px 60px at calc(var(--hx, 50%) + 60px) calc(var(--hy, 50%) + 20px), rgba(255,134,216,0.16), transparent 40%);
-      opacity: 0;
-      transition: opacity 280ms ease;
-      pointer-events: none;
-    }
-    .card:hover::after { opacity: 1; }
-    .card h3 { margin: 0 0 6px 0; font-size: 18px; letter-spacing: 0.01em; }
-    .card p { margin: 0; color: var(--muted); font-size: 14px; }
-
-    .card .tick {
-      position: absolute;
-      inset: auto 12px 12px auto;
-      height: 9px;
-      width: 42%;
-      background: linear-gradient(90deg, var(--a3), transparent);
-      opacity: 0.7;
-      border-radius: 12px;
-      filter: blur(0.3px);
-    }
-
-    /* Footer meta */
-    .meta {
-      margin-top: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 2;
-      color: var(--muted);
-      font-size: 12px;
-      border-top: 1px dashed rgba(255,255,255,0.14);
-      padding-top: 12px;
-    }
-    .tip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      opacity: 0.9;
-    }
-    .pulse {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--a1);
-      box-shadow: 0 0 0 0 rgba(127,227,255,0.5);
-      animation: pulse 2.4s ease-out infinite;
-    }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(127,227,255,0.55); }
-      70% { box-shadow: 0 0 0 12px rgba(127,227,255,0); }
-      100% { box-shadow: 0 0 0 0 rgba(127,227,255,0); }
-    }
-
-    /* Stars (generated) */
-    .star {
-      position: absolute;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 3;
-      opacity: 0.9;
-      transform: translate(-50%, -50%) scale(0.6);
-      animation: pop 900ms ease forwards;
-      filter: drop-shadow(0 0 10px currentColor);
-    }
-    @keyframes pop {
-      0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-      60% { opacity: 1; }
-      100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
-    }
-
-    /* Dawn theme */
-    .vibe-portal[data-theme="dawn"] {
-      --bg: #f6fafc;
-      --ink: #0d1726;
-      --muted: #38465b;
-      --line: rgba(12, 23, 38, 0.14);
-      --glass: rgba(255,255,255,0.7);
-      --a1: #1d8cff;
-      --a2: #ff6aa7;
-      --a3: #2ecb70;
-      --a4: #8b5cf6;
-      background: radial-gradient(1200px 600px at 20% 10%, rgba(29,140,255,0.14), transparent 60%),
-                  radial-gradient(900px 500px at 80% -10%, rgba(255,106,167,0.12), transparent 60%),
-                  radial-gradient(800px 400px at 50% 120%, rgba(46,203,112,0.10), transparent 60%),
-                  var(--bg);
-      border: 1px solid var(--line);
-    }
-    .vibe-portal[data-theme="dawn"] .badge {
-      background: linear-gradient(90deg, rgba(29,140,255,0.18), rgba(46,203,112,0.18));
-      color: var(--ink);
-    }
-    .vibe-portal[data-theme="dawn"] .btn {
       background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
       color: var(--ink);
+      font-weight: 700; font-size: 13px;
+      box-shadow: var(--shadow);
+      transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
     }
-    .vibe-portal[data-theme="dawn"] .cards .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.5));
+    .atelier[data-theme="ink"] .btn {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      color: var(--ink);
+    }
+    .atelier .btn:hover { transform: translateY(-1px); }
+    .atelier .btn:active { transform: translateY(0); }
+
+    /* Stage: Orbital Dial */
+    .atelier .stage {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      min-height: clamp(260px, 42vmin, 520px);
+      padding: clamp(8px, 2vw, 20px);
+      border-radius: 22px;
+      background: linear-gradient(180deg, var(--card), color-mix(in oklab, var(--card) 80%, transparent));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transform-style: preserve-3d;
+    }
+    .atelier .dial {
+      position: relative;
+      width: clamp(220px, 40vmin, 440px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      transform: perspective(900px) rotateX(calc(var(--tiltY, 0deg))) rotateY(calc(var(--tiltX, 0deg)));
+      transition: transform 300ms ease;
+    }
+    .atelier .ring {
+      position: absolute; inset: 10%;
+      border-radius: 50%;
+      background:
+        radial-gradient(closest-side, transparent calc(100% - 2px), var(--line) calc(100% - 1px), transparent 100%),
+        conic-gradient(from 0deg, color-mix(in oklab, var(--accent) 16%, transparent), transparent 55%, color-mix(in oklab, var(--accent-2) 16%, transparent));
+      mask: radial-gradient(closest-side, transparent calc(100% - 10px), black calc(100% - 4px));
+      filter: drop-shadow(0 8px 22px color-mix(in oklab, var(--accent) 20%, transparent));
+      opacity: 0.9;
+    }
+    .atelier .ring.r2 { inset: 22%; opacity: 0.8; }
+    .atelier .ring.r3 { inset: 34%; opacity: 0.7; }
+
+    .atelier .sweep {
+      position: absolute; inset: 10%;
+      border-radius: 50%;
+      background: conic-gradient(from var(--angle, 0deg), var(--accent) 0deg, transparent 35deg);
+      mask: radial-gradient(closest-side, transparent calc(100% - 12px), black calc(100% - 6px));
+      mix-blend-mode: plus-lighter;
+      opacity: 0.8;
+      transition: opacity 300ms ease;
+    }
+    .atelier.zen .sweep { opacity: 0.25; }
+
+    .atelier .planet {
+      position: absolute; left: 50%; top: 50%;
+      width: 12px; height: 12px; border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 35% 35%, white 5%, var(--accent) 45%, color-mix(in oklab, var(--accent) 50%, black) 100%);
+      box-shadow: 0 6px 16px color-mix(in oklab, var(--accent) 30%, transparent);
+    }
+    .atelier .planet.p2 {
+      width: 10px; height: 10px;
+      background: radial-gradient(circle at 35% 35%, white 5%, var(--accent-2) 45%, color-mix(in oklab, var(--accent-2) 50%, black) 100%);
+      box-shadow: 0 6px 16px color-mix(in oklab, var(--accent-2) 35%, transparent);
+    }
+    .atelier .planet.p3 {
+      width: 8px; height: 8px; opacity: 0.9;
+      background: radial-gradient(circle at 35% 35%, white 5%, color-mix(in oklab, var(--accent) 65%, var(--accent-2)) 45%, color-mix(in oklab, var(--accent) 45%, black) 100%);
     }
 
-    @media (max-width: 900px) {
-      .card { grid-column: span 6; }
+    /* Readout */
+    .atelier .readout {
+      position: absolute; bottom: 14px; left: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 8px 10px;
+      display: grid; gap: 2px;
+      color: var(--ink);
+      font-feature-settings: "tnum" 1, "ss01" 1;
+      box-shadow: var(--shadow);
     }
-    @media (max-width: 620px) {
-      .cards { grid-template-columns: repeat(6, 1fr); }
-      .card { grid-column: span 6; }
-      .controls { width: 100%; }
+    .atelier[data-theme="ink"] .readout {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      color: var(--ink);
     }
+    .atelier .readout .big { font-size: 18px; font-weight: 800; letter-spacing: 0.06em; }
+    .atelier .readout .small { font-size: 12px; color: var(--muted); }
+
+    /* Notes */
+    .atelier .notes {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: repeat(12, 1fr);
+      gap: 12px; margin-top: 12px;
+    }
+    .atelier .note {
+      grid-column: span 4;
+      padding: 16px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, var(--card), color-mix(in oklab, var(--card) 85%, transparent));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transition: transform 260ms ease, box-shadow 260ms ease;
+    }
+    .atelier .note:hover { transform: translateY(-2px); }
+    .atelier .note h3 { margin: 0 0 6px 0; font-size: 16px; }
+    .atelier .note p { margin: 0; color: var(--muted); font-size: 14px; }
+    .atelier .note .edge {
+      position: absolute; inset: -1px -1px auto -1px; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      opacity: 0.8;
+      filter: blur(0.4px);
+    }
+
+    @media (max-width: 900px){ .atelier .note{ grid-column: span 6; } }
+    @media (max-width: 620px){ .atelier .notes{ grid-template-columns: repeat(6, 1fr);} .atelier .note{ grid-column: span 6; } }
+
+    /* Footer */
+    .atelier .meta {
+      margin-top: 14px; padding-top: 12px;
+      border-top: 1px dashed var(--line);
+      display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+      color: var(--muted); font-size: 12px;
+      position: relative; z-index: 1;
+    }
+    .atelier .tip {
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .atelier .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 60%, transparent);
+      animation: pulseDot 2.6s ease-out infinite;
+    }
+    @keyframes pulseDot {
+      0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 50%, transparent); }
+      70% { box-shadow: 0 0 0 12px color-mix(in oklab, var(--accent) 0%, transparent); }
+      100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 0%, transparent); }
+    }
+
+    /* Ripple clicks */
+    .atelier .ripple {
+      position: absolute;
+      width: 12px; height: 12px; border-radius: 999px;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--accent) 65%, white) 0%, transparent 60%);
+      animation: ripple 800ms ease-out forwards;
+      mix-blend-mode: plus-lighter;
+      opacity: 0.6;
+      z-index: 2;
+    }
+    @keyframes ripple {
+      to { width: 260px; height: 260px; opacity: 0; }
+    }
+
+    /* Zen mode */
+    .atelier.zen .veil::before { opacity: 0.2; }
+    .atelier.zen .veil::after { opacity: 0.35; filter: blur(18px) saturate(110%); }
+    .atelier.zen .btn:not([data-action="zen"]) { opacity: 0.8; }
+
   </style>
 
-  <div class="bg" aria-hidden="true">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="blob b3"></div>
+  <div class="veil" aria-hidden="true"></div>
+
+  <div class="grid">
+    <section class="mast">
+      <span class="chip">Iteration 895 • Time Garden</span>
+      <h1>Let your minutes <span class="accent">bloom</span>.</h1>
+      <p class="lede">A kinetic dial that keeps gentle time. Fewer edges, more air. Touch to ripple, move to tilt, and breathe while the orbits glide.</p>
+      <div class="controls">
+        <button class="btn" data-action="theme" aria-label="Toggle theme">Noir / Daybreak</button>
+        <button class="btn" data-action="zen" aria-label="Toggle Zen mode">Zen</button>
+        <button class="btn" data-action="shuffle" aria-label="Shuffle accent hue">Shuffle Hue</button>
+        <button class="btn" data-action="pause" aria-label="Pause or resume orbits">Pause</button>
+      </div>
+    </section>
+
+    <section class="stage" aria-label="Orbital dial stage">
+      <div class="dial" role="img" aria-label="Three orbits representing seconds, minutes, and hours">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="ring r3"></div>
+        <div class="sweep"></div>
+        <div class="planet p1" aria-hidden="true"></div>
+        <div class="planet p2" aria-hidden="true"></div>
+        <div class="planet p3" aria-hidden="true"></div>
+      </div>
+      <div class="readout" aria-live="polite">
+        <span class="big" id="t-time">--:--:--</span>
+        <span class="small" id="t-date">—</span>
+      </div>
+    </section>
   </div>
 
-  <section class="hero">
-    <span class="badge">Iteration 894 • Aurora Surface</span>
-    <h1><span class="accent">Orbit</span> is a calm interface for attention.</h1>
-    <p>Glassy layers, kinetic color, and space to breathe. Move your cursor to shift the sky; tap to scatter stardust.</p>
-    <div class="controls">
-      <button class="btn" data-action="toggle-theme" aria-label="Toggle theme">Toggle Dawn/Dusk</button>
-      <button class="btn" data-action="breathe" aria-label="Breathe animation">Breathe</button>
-      <button class="btn" data-action="shuffle" aria-label="Shuffle hues">Shuffle Hues</button>
-    </div>
-  </section>
-
-  <section class="cards" aria-label="Highlights">
-    <article class="card" tabindex="0">
-      <h3>Clarity</h3>
-      <p>High contrast type and soft gradients guide the eye—not the other way around.</p>
-      <span class="tick"></span>
+  <section class="notes" aria-label="Design Tenets">
+    <article class="note" tabindex="0">
+      <span class="edge" aria-hidden="true"></span>
+      <h3>Quiet Contrast</h3>
+      <p>Bright where it helps, dim where it doesn’t. Contrast supports, not shouts.</p>
     </article>
-    <article class="card" tabindex="0">
-      <h3>Poise</h3>
-      <p>Motion with manners: subtle, responsive, and always interruptible.</p>
-      <span class="tick"></span>
+    <article class="note" tabindex="0">
+      <span class="edge" aria-hidden="true"></span>
+      <h3>Living Geometry</h3>
+      <p>Time as motion. Orbits map the present with calm, legible curves.</p>
     </article>
-    <article class="card" tabindex="0">
-      <h3>Play</h3>
-      <p>Small joys matter. A sprinkle of delight keeps interfaces human.</p>
-      <span class="tick"></span>
+    <article class="note" tabindex="0">
+      <span class="edge" aria-hidden="true"></span>
+      <h3>Touch for Delight</h3>
+      <p>Small ripples, soft tilts—play without distraction.</p>
     </article>
   </section>
 
   <div class="meta">
-    <span class="tip"><span class="pulse" aria-hidden="true"></span>Move the pointer or tap to make stars.</span>
-    <span id="last-updated">Last updated: 2025-11-26 10:17:39 EST</span>
+    <span class="tip"><span class="dot" aria-hidden="true"></span>Move to tilt the dial; tap anywhere to ripple.</span>
+    <span id="last-updated">Last updated: 2025-11-26 11:23:32 EST</span>
   </div>
 
   <script>
-    (function () {
-      const el = document.currentScript.parentElement;
-      const bg = el.querySelector('.bg');
-      const blobs = el.querySelectorAll('.blob');
-      const cards = el.querySelectorAll('.card');
-      const btns = el.querySelectorAll('.btn');
-      const updated = el.querySelector('#last-updated');
+    (function(){
+      const root = document.currentScript.parentElement;
+      const dial = root.querySelector('.dial');
+      const sweep = root.querySelector('.sweep');
+      const p1 = root.querySelector('.planet.p1'); // seconds
+      const p2 = root.querySelector('.planet.p2'); // minutes
+      const p3 = root.querySelector('.planet.p3'); // hours
+      const tTime = root.querySelector('#t-time');
+      const tDate = root.querySelector('#t-date');
+      const updated = root.querySelector('#last-updated');
+      const btns = root.querySelectorAll('.btn');
 
-      // Last updated timestamp (local)
-      const fmt = new Intl.DateTimeFormat(undefined, {
-        year: 'numeric', month: 'short', day: '2-digit',
-        hour: '2-digit', minute: '2-digit', second: '2-digit'
-      });
-      updated.textContent = 'Last updated: ' + fmt.format(new Date());
+      // Timestamp
+      const df = new Intl.DateTimeFormat(undefined, { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' });
+      updated.textContent = 'Last updated: ' + df.format(new Date());
 
-      // Pointer parallax for background
-      const rectFor = () => el.getBoundingClientRect();
-      let aimX = 0, aimY = 0, mx = 0, my = 0;
-      function move(e) {
-        const r = rectFor();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        aimX = x * 40; // px
-        aimY = y * 40;
-        // hover glow for cards
-        cards.forEach(card => {
-          const cr = card.getBoundingClientRect();
-          const cx = Math.min(Math.max((e.clientX - cr.left) / cr.width * 100, 0), 100);
-          const cy = Math.min(Math.max((e.clientY - cr.top) / cr.height * 100, 0), 100);
-          card.style.setProperty('--hx', cx + '%');
-          card.style.setProperty('--hy', cy + '%');
-        });
+      // Date readout
+      const dateFormat = new Intl.DateTimeFormat(undefined, { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+
+      // Layout-dependent radii
+      let r1=0, r2=0, r3=0, paused=false, zen=false;
+      function resize(){
+        const size = dial.getBoundingClientRect().width;
+        r1 = size * 0.41;
+        r2 = size * 0.31;
+        r3 = size * 0.21;
       }
-      el.addEventListener('pointermove', move);
+      new ResizeObserver(resize).observe(dial);
 
-      // Smooth lerp
-      function raf() {
-        mx += (aimX - mx) * 0.06;
-        my += (aimY - my) * 0.06;
-        blobs.forEach(b => {
-          b.style.setProperty('--mx', mx + 'px');
-          b.style.setProperty('--my', my + 'px');
-        });
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
+      // Animation loop
+      function render(){
+        if(!paused){
+          const now = new Date();
+          const ms = now.getMilliseconds();
+          const s = now.getSeconds() + ms/1000;
+          const m = now.getMinutes() + s/60;
+          const h = (now.getHours()%12) + m/60;
 
-      // Star burst on tap/click
-      function burst(x, y) {
-        const colors = [getCSS('--a1'), getCSS('--a2'), getCSS('--a3'), getCSS('--a4')];
-        for (let i = 0; i < 12; i++) {
-          const s = document.createElement('span');
-          s.className = 'star';
-          s.style.left = x + 'px';
-          s.style.top = y + 'px';
-          s.style.color = colors[(i + Math.floor(Math.random() * colors.length)) % colors.length];
-          const angle = (Math.PI * 2) * (i / 12) + Math.random() * 0.6;
-          const dist = 40 + Math.random() * 60;
-          s.style.setProperty('--dx', (Math.cos(angle) * dist) + 'px');
-          s.style.setProperty('--dy', (Math.sin(angle) * dist) + 'px');
-          el.appendChild(s);
-          setTimeout(() => s.remove(), 900);
+          const sAng = (s/60)*360;
+          const mAng = (m/60)*360;
+          const hAng = (h/12)*360;
+
+          sweep.style.setProperty('--angle', sAng + 'deg');
+
+          const center = 'translate(-50%, -50%)';
+          p1.style.transform = center + ' rotate(' + sAng + 'deg) translateX(' + r1 + 'px) rotate(' + (-sAng) + 'deg)';
+          p2.style.transform = center + ' rotate(' + mAng + 'deg) translateX(' + r2 + 'px) rotate(' + (-mAng) + 'deg)';
+          p3.style.transform = center + ' rotate(' + hAng + 'deg) translateX(' + r3 + 'px) rotate(' + (-hAng) + 'deg)';
+
+          // Readout
+          tTime.textContent = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+          tDate.textContent = dateFormat.format(now);
         }
+        requestAnimationFrame(render);
       }
-      el.addEventListener('pointerdown', (e) => {
-        const r = rectFor();
-        // Only burst if within component
-        if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
-          burst(e.clientX - r.left, e.clientY - r.top);
-        }
+      requestAnimationFrame(render);
+
+      // Pointer tilt + parallax
+      function onMove(e){
+        const r = root.getBoundingClientRect();
+        const x = (e.clientX - r.left)/r.width - 0.5;
+        const y = (e.clientY - r.top)/r.height - 0.5;
+        const maxTilt = 8;
+        root.style.setProperty('--mx', (x*40)+'px');
+        root.style.setProperty('--my', (y*40)+'px');
+        dial.style.setProperty('--tiltX', (x*maxTilt)+'deg');
+        dial.style.setProperty('--tiltY', (-y*maxTilt)+'deg');
+      }
+      root.addEventListener('pointermove', onMove);
+
+      // Ripples on tap
+      root.addEventListener('pointerdown', (e)=>{
+        const r = root.getBoundingClientRect();
+        const x = e.clientX - r.left, y = e.clientY - r.top;
+        const drop = document.createElement('span');
+        drop.className = 'ripple';
+        drop.style.left = x+'px'; drop.style.top = y+'px';
+        root.appendChild(drop);
+        drop.addEventListener('animationend', ()=> drop.remove());
       });
 
       // Controls
-      btns.forEach(btn => btn.addEventListener('click', (e) => {
-        const action = e.currentTarget.getAttribute('data-action');
-        if (action === 'toggle-theme') toggleTheme();
-        if (action === 'breathe') breathe();
-        if (action === 'shuffle') shuffleHues();
+      btns.forEach(b=> b.addEventListener('click', (e)=>{
+        const a = e.currentTarget.getAttribute('data-action');
+        if(a==='theme'){ root.dataset.theme = root.dataset.theme === 'ink' ? 'paper' : 'ink'; }
+        if(a==='zen'){ zen=!zen; root.classList.toggle('zen', zen); }
+        if(a==='shuffle'){ shuffleHue(); }
+        if(a==='pause'){ paused = !paused; e.currentTarget.textContent = paused ? 'Resume' : 'Pause'; }
       }));
 
-      function toggleTheme() {
-        el.dataset.theme = el.dataset.theme === 'dawn' ? 'dusk' : 'dawn';
-      }
-      let breatheOn = false;
-      function breathe() {
-        breatheOn = !breatheOn;
-        const dur = breatheOn ? '14s' : '22s';
-        blobs.forEach(b => b.style.animationDuration = dur);
+      function shuffleHue(){
+        const h = Math.floor(Math.random()*360);
+        root.style.setProperty('--accent-h', h);
       }
 
-      function shuffleHues() {
-        // shift accent hues slightly for a fresh palette
-        const hsl = toHSL(getCSS('--a1'));
-        const delta = (Math.random() * 60 - 30);
-        setCSS('--a1', fromHSL({ h: mod(hsl.h + delta), s: hsl.s, l: hsl.l }));
-        setCSS('--a2', fromHSL({ h: mod(hsl.h + delta + 60), s: hsl.s, l: hsl.l }));
-        setCSS('--a3', fromHSL({ h: mod(hsl.h + delta + 120), s: hsl.s, l: hsl.l }));
-        setCSS('--a4', fromHSL({ h: mod(hsl.h + delta + 180), s: hsl.s, l: hsl.l }));
-      }
-
-      // Utilities
-      function getCSS(name) {
-        return getComputedStyle(el).getPropertyValue(name).trim();
-      }
-      function setCSS(name, val) {
-        el.style.setProperty(name, val);
-      }
-      function toHSL(hex) {
-        // #rrggbb to h,s,l (0-360, 0-100, 0-100)
-        const c = hex.replace('#','');
-        const r = parseInt(c.slice(0,2),16)/255;
-        const g = parseInt(c.slice(2,4),16)/255;
-        const b = parseInt(c.slice(4,6),16)/255;
-        const max = Math.max(r,g,b), min = Math.min(r,g,b);
-        let h, s, l = (max + min)/2;
-        if (max === min) { h = s = 0; }
-        else {
-          const d = max - min;
-          s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-          switch(max){
-            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-            case g: h = (b - r) / d + 2; break;
-            case b: h = (r - g) / d + 4; break;
-          }
-          h *= 60;
-        }
-        return { h, s: s*100, l: l*100 };
-      }
-      function fromHSL({h,s,l}) {
-        h = Math.max(0, Math.min(360, h));
-        s = Math.max(0, Math.min(100, s));
-        l = Math.max(0, Math.min(100, l));
-        return `hsl(${h} ${s}% ${l}%)`;
-      }
-      function mod(n){ return (n%360+360)%360; }
-
-      // Accessibility: allow keyboard to trigger glow
-      cards.forEach(c => {
-        c.addEventListener('focus', () => c.style.setProperty('--hx', '50%'));
-        c.addEventListener('blur',  () => c.style.removeProperty('--hx'));
-      });
+      // Initial
+      resize();
     })();
   </script>
 </div>
