@@ -73,507 +73,452 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="atelier" role="region" aria-label="Lucid Surface — an interactive vignette">
+<div id="atelier" role="region" aria-label="Sundial Studio — a living timepiece">
   <style>
-    /* Scoped to #atelier */
+    /* Scope everything to #atelier */
     #atelier {
-      --bg: #0a0f1e;
-      --bg-2: #0f1a33;
-      --fg: #eaf0ff;
-      --muted: #b8c1d9;
-      --line: rgba(255,255,255,0.12);
-      --card: rgba(255,255,255,0.06);
-      --accent-1: #75ffe0;
-      --accent-2: #6aa9ff;
-      --accent-3: #f5b6ff;
-      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --bg-1: #fbfcff;
+      --bg-2: #e9f2ff;
+      --ink: #0c1324;
+      --muted: #516079;
+      --ring: rgba(12,19,36,0.12);
+      --glass: rgba(255,255,255,0.55);
+      --accent: #3a7bff;
+      --accent-2: #00c1ab;
+      --glow: rgba(58,123,255,0.25);
+      --shadow-1: 0 12px 40px rgba(21,32,64,0.12);
+      --shadow-2: 0 8px 24px rgba(21,32,64,0.18);
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(0,193,171,0.10), transparent 60%),
+                  linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      color: var(--ink);
+      border-radius: 20px;
+      border: 1px solid var(--ring);
+      padding: clamp(18px, 4vw, 28px);
+      box-shadow: var(--shadow-1);
+      isolation: isolate;
       position: relative;
       overflow: hidden;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background:
-        radial-gradient(1200px 700px at 10% -10%, rgba(117,255,224,0.12), transparent 60%),
-        radial-gradient(900px 600px at 110% 10%, rgba(106,169,255,0.10), transparent 60%),
-        linear-gradient(180deg, var(--bg), var(--bg-2));
-      color: var(--fg);
-      padding: 28px;
-      isolation: isolate;
-      box-shadow: var(--shadow);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
     }
-    #atelier[data-theme="light"] {
-      --bg: #f7f9ff;
-      --bg-2: #e9f1ff;
-      --fg: #0d1321;
-      --muted: #47556b;
-      --line: rgba(13,19,33,0.12);
-      --card: rgba(255,255,255,0.65);
-      --accent-1: #0bb;
-      --accent-2: #5a7bff;
-      --accent-3: #ff79c6;
-      --shadow: 0 10px 30px rgba(0,0,0,0.08);
-      background:
-        radial-gradient(1200px 700px at -10% 0%, rgba(0,187,187,0.12), transparent 60%),
-        radial-gradient(900px 600px at 110% 0%, rgba(90,123,255,0.10), transparent 60%),
-        linear-gradient(180deg, var(--bg), var(--bg-2));
+    #atelier[data-theme="dark"] {
+      --bg-1: #070b12;
+      --bg-2: #0d1524;
+      --ink: #eaf1ff;
+      --muted: #9fb0cc;
+      --ring: rgba(234,241,255,0.14);
+      --glass: rgba(18,24,36,0.6);
+      --accent: #7cc0ff;
+      --accent-2: #76ffd7;
+      --glow: rgba(124,192,255,0.25);
+      --shadow-1: 0 12px 40px rgba(0,0,0,0.35);
+      --shadow-2: 0 8px 24px rgba(0,0,0,0.35);
+      background: radial-gradient(1100px 700px at -10% 0%, rgba(118,255,215,0.10), transparent 60%),
+                  linear-gradient(180deg, var(--bg-1), var(--bg-2));
     }
+    #atelier[data-mood="dawn"] { --accent: #ff8a5b; --accent-2: #ffd86a; }
+    #atelier[data-mood="noon"] { --accent: #3a7bff; --accent-2: #00c1ab; }
+    #atelier[data-mood="dusk"] { --accent: #b389ff; --accent-2: #ff7ba6; }
 
-    /* Aurora veil */
+    /* Ambient aurora veil */
     #atelier::before, #atelier::after {
       content: "";
       position: absolute;
-      inset: -20% -10%;
+      inset: -30% -10% -10% -10%;
       background:
-        radial-gradient(60% 100% at 10% 20%, rgba(117,255,224,0.18), transparent 60%),
-        radial-gradient(80% 80% at 90% 10%, rgba(245,182,255,0.18), transparent 60%);
-      filter: blur(48px) saturate(110%);
-      z-index: 0;
-      animation: drift 22s ease-in-out infinite alternate;
+        radial-gradient(50% 80% at 10% 10%, color-mix(in oklab, var(--accent) 35%, transparent), transparent 60%),
+        radial-gradient(60% 60% at 90% 0%, color-mix(in oklab, var(--accent-2) 35%, transparent), transparent 60%);
+      filter: blur(48px) saturate(120%);
+      opacity: 0.7;
       pointer-events: none;
-    }
-    #atelier::after {
-      animation-duration: 28s;
-      animation-direction: alternate-reverse;
-      opacity: 0.85;
       mix-blend-mode: screen;
+      animation: veil-drift 26s ease-in-out infinite alternate;
+      z-index: 0;
     }
-    @keyframes drift {
-      0% { transform: translate3d(0, -2%, 0) rotate(0deg) scale(1.02); }
-      50% { transform: translate3d(-2%, 2%, 0) rotate(8deg) scale(1.05); }
-      100% { transform: translate3d(2%, 0%, 0) rotate(-6deg) scale(1.08); }
+    #atelier::after { animation-duration: 34s; animation-direction: alternate-reverse; opacity: 0.55; }
+    @keyframes veil-drift {
+      0% { transform: translate3d(-2%, -2%, 0) rotate(0deg) scale(1.02); }
+      50% { transform: translate3d(2%, 0%, 0) rotate(8deg) scale(1.06); }
+      100% { transform: translate3d(-1%, 2%, 0) rotate(-6deg) scale(1.04); }
     }
-    [data-paused="true"]::before, [data-paused="true"]::after,
-    [data-paused="true"] .orb, [data-paused="true"] .glow,
-    [data-paused="true"] .pulse {
-      animation-play-state: paused !important;
-    }
+    [data-paused="true"]::before, [data-paused="true"]::after { animation-play-state: paused !important; }
 
     /* Top bar */
-    #atelier .bar {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
+    #atelier .top {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; position: relative; z-index: 2; margin-bottom: 14px;
     }
     #atelier .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      letter-spacing: 0.4px;
-      user-select: none;
+      display: flex; align-items: center; gap: 10px; user-select: none;
     }
-    #atelier .logo {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
+    #atelier .mark {
+      width: 30px; height: 30px; border-radius: 12px;
+      background: conic-gradient(from 180deg, var(--accent), var(--accent-2), var(--accent));
+      position: relative; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5), var(--shadow-2);
+    }
+    #atelier[data-theme="dark"] .mark { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15), var(--shadow-2); }
+    #atelier .mark::after {
+      content: ""; position: absolute; inset: 2px; border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0));
+      mix-blend-mode: overlay;
+    }
+    #atelier h1 {
+      margin: 0; font-size: 14px; letter-spacing: 0.35px; font-weight: 700; opacity: 0.9;
+    }
+    #atelier .chips { display: flex; gap: 8px; }
+    #atelier .chip {
+      appearance: none; border: 1px solid var(--ring); background: var(--glass); color: var(--ink);
+      border-radius: 999px; padding: 7px 11px; font-size: 12px; font-weight: 700; letter-spacing: 0.25px;
+      display: inline-flex; align-items: center; gap: 8px; cursor: pointer; backdrop-filter: blur(4px) saturate(120%);
+      transition: transform 160ms ease, border-color 200ms ease;
+    }
+    #atelier .chip:hover { transform: translateY(-1px); border-color: color-mix(in oklab, var(--accent) 35%, var(--ring)); }
+
+    /* Stage */
+    #atelier .stage {
+      position: relative; z-index: 1; border: 1px solid var(--ring); border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.25));
+      box-shadow: var(--shadow-1); overflow: hidden; padding: clamp(16px, 4vw, 24px);
+      backdrop-filter: blur(6px) saturate(140%);
+    }
+    #atelier[data-theme="dark"] .stage { background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); }
+
+    /* Dial */
+    #atelier .dial-wrap { display: grid; place-items: center; }
+    #atelier .dial {
+      width: min(78vw, 540px); aspect-ratio: 1 / 1; border-radius: 50%;
+      position: relative; background:
+        radial-gradient(circle at 50% 35%, rgba(255,255,255,0.85), rgba(255,255,255,0.55) 38%, rgba(255,255,255,0.2) 70%, transparent 75%);
+      box-shadow: 0 60px 120px var(--glow), inset 0 0 0 1px var(--ring);
+      transform-style: preserve-3d; will-change: transform;
+      transition: box-shadow 300ms ease;
+    }
+    #atelier[data-theme="dark"] .dial {
+      background: radial-gradient(circle at 50% 35%, rgba(255,255,255,0.08), rgba(255,255,255,0.03) 42%, transparent 70%);
+    }
+    #atelier .halo {
+      position: absolute; inset: -40% -20%; filter: blur(40px); opacity: 0.7; z-index: 0; pointer-events: none;
       background:
-        conic-gradient(from 180deg at 50% 50%, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-1));
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25), 0 6px 18px rgba(0,0,0,0.25);
-      position: relative;
+        radial-gradient(40% 60% at 70% 30%, color-mix(in oklab, var(--accent) 28%, transparent), transparent 60%),
+        radial-gradient(50% 60% at 20% 60%, color-mix(in oklab, var(--accent-2) 28%, transparent), transparent 60%);
+      animation: halo 22s ease-in-out infinite alternate;
     }
-    #atelier .logo::after {
-      content: "";
-      position: absolute;
-      inset: 2px;
-      border-radius: 8px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0.0));
-      mix-blend-mode: overlay;
+    @keyframes halo { from { transform: translate3d(-1%,0,0) } to { transform: translate3d(1%,1%,0) } }
+    [data-paused="true"] .halo { animation-play-state: paused !important; }
+
+    /* Rings */
+    #atelier .ring {
+      position: absolute; inset: 5.5%; border-radius: 50%;
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 54%, #000 54.5%, #000 62%, transparent 62.5%);
+              mask: radial-gradient(circle at 50% 50%, transparent 54%, #000 54.5%, #000 62%, transparent 62.5%);
     }
-    #atelier .brand h1 {
-      font-size: 14px;
-      margin: 0;
-      color: var(--fg);
-      opacity: 0.9;
-      font-weight: 600;
+    #atelier .ring--ticks {
+      background:
+        conic-gradient(from -90deg,
+          color-mix(in oklab, var(--ink) 26%, transparent) 0.5deg,
+          transparent 0.5deg 6deg) ;
+      background-size: 100% 100%;
     }
-    #atelier .controls {
-      display: flex;
-      gap: 8px;
+    #atelier .ring--progress {
+      background:
+        conic-gradient(from -90deg,
+          color-mix(in oklab, var(--accent) 84%, transparent) 0 var(--sec),
+          transparent var(--sec) 360deg);
+      filter: drop-shadow(0 8px 28px var(--glow));
+      transition: background 80ms linear;
     }
-    #atelier .btn {
-      appearance: none;
-      border: 1px solid var(--line);
-      background: var(--card);
-      color: var(--fg);
+
+    /* Hands */
+    #atelier .hand {
+      position: absolute; left: 50%; top: 50%;
+      transform-origin: 50% 88%;
       border-radius: 12px;
-      padding: 8px 12px;
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      cursor: pointer;
-      transition: transform 180ms ease, background 200ms ease, border-color 200ms ease;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: saturate(120%) blur(4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
     }
-    #atelier .btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.22); }
-    #atelier .btn:active { transform: translateY(0); }
-    #atelier .btn svg { width: 14px; height: 14px; }
+    #atelier .hand--hour {
+      width: 8px; height: 26%; translate: -50% -86%;
+      background: linear-gradient(180deg, var(--ink), color-mix(in oklab, var(--ink) 30%, transparent));
+      transform: rotate(var(--hour));
+    }
+    #atelier .hand--min {
+      width: 6px; height: 34%; translate: -50% -86%;
+      background: linear-gradient(180deg, var(--ink), color-mix(in oklab, var(--ink) 20%, transparent));
+      transform: rotate(var(--min));
+    }
+    #atelier .hand--sec {
+      width: 2px; height: 40%; translate: -50% -86%;
+      background: linear-gradient(180deg, var(--accent), color-mix(in oklab, var(--accent) 40%, transparent));
+      transform: rotate(var(--sec));
+      box-shadow: 0 10px 30px var(--glow);
+    }
+    #atelier .cap {
+      position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, #dfe8ff);
+      border: 1px solid var(--ring);
+      box-shadow: var(--shadow-2);
+    }
+    #atelier[data-theme="dark"] .cap { background: radial-gradient(circle at 30% 30%, #b9c9ff, #556aa1); }
 
-    /* Hero */
-    #atelier .frame {
-      position: relative;
-      z-index: 1;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-      padding: 28px;
-      overflow: hidden;
+    /* Readout */
+    #atelier .readout {
+      position: absolute; inset: 50% auto auto 50%; translate: -50% -50%;
+      width: 70%; text-align: center; pointer-events: none;
     }
-    #atelier .title {
-      font-size: clamp(28px, 5vw, 52px);
-      line-height: 1.05;
-      margin: 4px 0 10px;
-      letter-spacing: -0.02em;
-      background: linear-gradient(90deg, var(--fg), var(--accent-1), var(--fg));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.2));
+    #atelier .time {
+      font-size: clamp(28px, 6vw, 46px); font-weight: 800; letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--ink), var(--accent));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.08));
     }
-    #atelier .subtitle {
-      margin: 0 0 18px 0;
-      color: var(--muted);
-      font-size: clamp(14px, 1.8vw, 18px);
-      max-width: 65ch;
+    #atelier .date {
+      font-size: clamp(12px, 2.2vw, 14px); color: var(--muted); margin-top: 6px;
     }
 
-    /* Orbs */
-    #atelier .orb {
-      position: absolute;
-      border-radius: 999px;
-      filter: blur(14px) saturate(120%);
-      opacity: 0.7;
+    /* Motes (ambient particles) */
+    #atelier .motes { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    #atelier .mote {
+      position: absolute; width: 6px; height: 6px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0));
+      opacity: 0.35; filter: blur(0.2px);
+      animation: mote 14s ease-in-out infinite;
       mix-blend-mode: screen;
-      z-index: 0;
-      animation: float 18s ease-in-out infinite alternate;
     }
-    #atelier .o1 { width: 160px; height: 160px; background: radial-gradient(circle at 30% 30%, var(--accent-1), transparent 60%); top: 18%; left: 6%; animation-duration: 20s; }
-    #atelier .o2 { width: 220px; height: 220px; background: radial-gradient(circle at 40% 40%, var(--accent-2), transparent 60%); bottom: -20px; right: 10%; animation-duration: 24s; }
-    #atelier .o3 { width: 130px; height: 130px; background: radial-gradient(circle at 50% 50%, var(--accent-3), transparent 60%); top: 6%; right: 40%; animation-duration: 26s; }
-    @keyframes float {
-      0% { transform: translate3d(0,0,0) scale(1); }
-      100% { transform: translate3d(0,16px,0) scale(1.08); }
+    @keyframes mote {
+      0%,100% { transform: translate3d(0, -6px, 0) scale(1); }
+      50% { transform: translate3d(0, 10px, 0) scale(1.12); }
+    }
+    [data-paused="true"] .mote { animation-play-state: paused !important; }
+
+    /* Panel */
+    #atelier .panel {
+      display: grid; gap: 12px; margin-top: 14px;
+    }
+    #atelier .line {
+      margin: 0; color: var(--muted); font-size: clamp(13px, 2.4vw, 15px);
+    }
+    #atelier .moods { display: flex; gap: 8px; flex-wrap: wrap; }
+    #atelier .mood {
+      appearance: none; border: 1px dashed var(--ring); background: transparent; color: var(--ink);
+      border-radius: 999px; padding: 8px 12px; font-size: 12px; font-weight: 800; letter-spacing: 0.3px;
+      cursor: pointer; transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+    #atelier .mood:hover { transform: translateY(-1px); border-color: color-mix(in oklab, var(--accent) 35%, var(--ring)); }
+    #atelier .mood[aria-pressed="true"] {
+      background: linear-gradient(90deg, color-mix(in oklab, var(--accent) 18%, transparent), color-mix(in oklab, var(--accent-2) 18%, transparent));
+      border-style: solid;
     }
 
-    /* Grid cards */
-    #atelier .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 14px;
-      margin-top: 14px;
-    }
-    @media (max-width: 760px) {
-      #atelier .grid { grid-template-columns: 1fr; }
-    }
-    #atelier .card {
-      position: relative;
-      border: 1px solid var(--line);
-      background: var(--card);
-      border-radius: 14px;
-      padding: 16px;
-      overflow: hidden;
-      transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease, background 200ms ease;
-      backdrop-filter: blur(8px) saturate(120%);
-    }
-    #atelier .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255,255,255,0.24);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.20);
-      background: linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.04));
-    }
-    #atelier .card h3 {
-      margin: 0 0 6px 0;
-      font-size: 16px;
-      letter-spacing: 0.2px;
-    }
-    #atelier .card p {
-      margin: 0;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    #atelier .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      padding: 6px 9px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
-      color: var(--fg);
-      margin-bottom: 12px;
-      letter-spacing: 0.3px;
-    }
-    #atelier .spark {
-      width: 8px; height: 8px; border-radius: 99px;
-      background: radial-gradient(circle at 30% 30%, var(--accent-1), var(--accent-2));
-      box-shadow: 0 0 16px var(--accent-1), 0 0 24px var(--accent-2);
-    }
-
-    /* Call to actions */
-    #atelier .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-    #atelier .cta {
-      appearance: none;
-      border: 0;
-      background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
-      color: #07121f;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      border-radius: 12px;
-      padding: 10px 14px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: transform 160ms ease, filter 200ms ease;
-      box-shadow: 0 10px 20px rgba(106,169,255,0.25);
-    }
-    #atelier .cta.secondary {
-      background: linear-gradient(90deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
-      color: var(--fg);
-      border: 1px solid var(--line);
-      box-shadow: none;
-    }
-    #atelier .cta:hover { transform: translateY(-2px); }
-    #atelier .cta:active { transform: translateY(0); }
-    #atelier .ripple {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.6);
-      animation: ripple 600ms ease-out forwards;
-      mix-blend-mode: overlay;
-    }
-    @keyframes ripple {
-      from { width: 0; height: 0; opacity: 0.7; }
-      to { width: 420px; height: 420px; opacity: 0; }
-    }
-
-    /* Footer meta */
+    /* Footer */
     #atelier .meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 16px;
-      border-top: 1px dashed var(--line);
-      padding-top: 12px;
-    }
-    #atelier .kbd {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      background: rgba(255,255,255,0.10);
-      border: 1px solid var(--line);
-      padding: 2px 6px;
-      border-radius: 6px;
-      color: var(--fg);
+      margin-top: 16px; border-top: 1px dashed var(--ring);
+      padding-top: 10px; display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; color: var(--muted); font-size: 12px;
     }
 
-    /* Subtle grain */
-    #atelier .grain {
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
-      background-size: 2px 2px;
-      opacity: 0.15;
-      mix-blend-mode: soft-light;
-      pointer-events: none;
-      z-index: 0;
+    /* Tilt responsiveness */
+    @media (max-width: 720px) {
+      #atelier .dial { width: min(92vw, 520px); }
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      #atelier * { animation-duration: 0.001s !important; animation-iteration-count: 1 !important; transition: none !important; }
     }
   </style>
 
-  <div class="bar">
+  <div class="top">
     <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
-      <h1>Lucid Surface</h1>
+      <div class="mark" aria-hidden="true"></div>
+      <h1>Sundial Studio</h1>
     </div>
-    <div class="controls">
-      <button class="btn" id="toggle-theme" aria-label="Toggle theme" title="Toggle theme">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-          <path d="M12 3a1 1 0 0 1 1 1v1.1a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1Zm0 15.9a1 1 0 0 1 1 1V21a1 1 0 1 1-2 0v-1.1a1 1 0 0 1 1-1Zm7.07-11.97a1 1 0 0 1 0 1.41l-.78.78a1 1 0 1 1-1.41-1.41l.78-.78a1 1 0 0 1 1.41 0ZM6.12 18.36a1 1 0 0 1 0 1.42l-.78.78a1 1 0 1 1-1.41-1.42l.78-.78a1 1 0 0 1 1.41 0ZM21 13a1 1 0 0 1-1-1h-1.1a1 1 0 0 1 0-2H20a1 1 0 1 1 0 2h1.1A1 1 0 0 1 21 13ZM5 13a1 1 0 0 1-1-1H2.9a1 1 0 0 1 0-2H4a1 1 0 1 1 0 2h1.1A1 1 0 0 1 5 13Z"/>
-          <circle cx="12" cy="12" r="3.5"></circle>
-        </svg>
-        Theme
-      </button>
-      <button class="btn" id="toggle-motion" aria-label="Pause or play motion" title="Pause/Play motion">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5h3v14H8zM13 5h3v14h-3z"/></svg>
-        Motion
-      </button>
+    <div class="chips">
+      <button class="chip" id="toggle-theme" aria-label="Toggle theme">Theme</button>
+      <button class="chip" id="toggle-pause" aria-label="Pause or play motion">Pause</button>
     </div>
   </div>
 
-  <div class="frame" id="stage">
-    <div class="orb o1" aria-hidden="true"></div>
-    <div class="orb o2" aria-hidden="true"></div>
-    <div class="orb o3" aria-hidden="true"></div>
-
-    <h2 class="title">Quiet Boldness, in Motion</h2>
-    <p class="subtitle">A study in calm gradients, honest typography, and small, satisfying interactions. Touch, hover, and move your cursor—everything responds gently.</p>
-
-    <div class="actions">
-      <button class="cta" id="cta-explore">
-        Explore Motions
-      </button>
-      <button class="cta secondary" id="cta-palette">
-        Feel the Palette
-      </button>
+  <div class="stage" id="stage">
+    <div class="halo" aria-hidden="true"></div>
+    <div class="dial-wrap">
+      <div class="dial" id="dial" role="img" aria-label="Live clock with progress ring">
+        <div class="ring ring--ticks" aria-hidden="true"></div>
+        <div class="ring ring--progress" aria-hidden="true"></div>
+        <div class="hand hand--hour"></div>
+        <div class="hand hand--min"></div>
+        <div class="hand hand--sec"></div>
+        <div class="cap" aria-hidden="true"></div>
+        <div class="readout" aria-live="polite" aria-atomic="true">
+          <div class="time" id="readout-time">00:00:00</div>
+          <div class="date" id="readout-date">—</div>
+        </div>
+      </div>
     </div>
+    <div class="motes" id="motes" aria-hidden="true"></div>
+  </div>
 
-    <div class="grid">
-      <div class="card">
-        <div class="badge"><span class="spark"></span> Tactile Type</div>
-        <h3>Typography that breathes</h3>
-        <p>Readable sizes, firm rhythm, and a whisper of contrast—crafted to be seen and felt.</p>
-      </div>
-      <div class="card">
-        <div class="badge"><span class="spark"></span> Kinetic Calm</div>
-        <h3>Motion with manners</h3>
-        <p>Subtle parallax and soft pulses—responsive to your presence, respectful of your focus.</p>
-      </div>
-      <div class="card">
-        <div class="badge"><span class="spark"></span> Color Poetry</div>
-        <h3>Chromatic whisper</h3>
-        <p>Seafoam, periwinkle, and orchid—balanced for clarity, tuned for delight.</p>
-      </div>
+  <div class="panel">
+    <p class="line">A quiet instrument for the day. It shifts with the hour—dawn warms, noon clarifies, dusk unwinds.</p>
+    <div class="moods" role="group" aria-label="Select mood">
+      <button class="mood" data-mood="dawn" aria-pressed="false">Dawn</button>
+      <button class="mood" data-mood="noon" aria-pressed="true">Noon</button>
+      <button class="mood" data-mood="dusk" aria-pressed="false">Dusk</button>
     </div>
   </div>
 
   <div class="meta">
-    <div>
-      <span id="last-updated">Last updated: 2025-11-27 23:22:07 EST</span>
-    </div>
-    <div>
-      Tip: press <span class="kbd">T</span> to toggle theme, <span class="kbd">M</span> to pause motion
-    </div>
+    <span id="last-updated">Last updated: 2025-11-28 00:18:59 EST</span>
+    <span class="help">Tip: press T to toggle theme, Space to pause</span>
   </div>
 
-  <div class="grain" aria-hidden="true"></div>
-
   <script>
-    (function () {
+    (function() {
       const root = document.getElementById('atelier');
       const stage = document.getElementById('stage');
-      const themeBtn = document.getElementById('toggle-theme');
-      const motionBtn = document.getElementById('toggle-motion');
+      const dial = document.getElementById('dial');
+      const timeEl = document.getElementById('readout-time');
+      const dateEl = document.getElementById('readout-date');
       const last = document.getElementById('last-updated');
-      const ctaExplore = document.getElementById('cta-explore');
-      const ctaPalette = document.getElementById('cta-palette');
+      const btnTheme = document.getElementById('toggle-theme');
+      const btnPause = document.getElementById('toggle-pause');
+      const motesWrap = document.getElementById('motes');
+      const moodBtns = Array.from(document.querySelectorAll('.mood'));
+      let paused = false;
+      let raf = null;
 
-      // Last updated timestamp (local)
+      // Last updated
       try {
         const now = new Date();
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Local';
         const fmt = new Intl.DateTimeFormat([], { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' });
         last.textContent = 'Last updated: ' + fmt.format(now) + ' • ' + tz;
-      } catch {
-        last.textContent = 'Last updated: just now';
-      }
+      } catch { last.textContent = 'Last updated: just now'; }
 
-      // Respect system preference
+      // Theme preference
       const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-      if (prefersLight) root.setAttribute('data-theme', 'light');
+      if (prefersLight) root.setAttribute('data-theme', 'light'); else root.setAttribute('data-theme', 'dark');
 
-      // Theme toggle
-      function toggleTheme() {
-        const isLight = root.getAttribute('data-theme') === 'light';
-        root.setAttribute('data-theme', isLight ? 'dark' : 'light');
+      // Auto mood by hour
+      function autoMood() {
+        const h = new Date().getHours();
+        if (h >= 5 && h < 9) return 'dawn';
+        if (h >= 9 && h < 17) return 'noon';
+        if (h >= 17 && h < 21) return 'dusk';
+        return root.getAttribute('data-theme') === 'dark' ? 'dusk' : 'noon';
       }
-      themeBtn.addEventListener('click', toggleTheme);
-
-      // Motion toggle
-      function toggleMotion() {
-        const paused = root.getAttribute('data-paused') === 'true';
-        root.setAttribute('data-paused', paused ? 'false' : 'true');
-        motionBtn.innerHTML = paused
-          ? '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5h3v14H8zM13 5h3v14h-3z"/></svg> Motion'
-          : '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg> Motion';
+      function setMood(m) {
+        root.setAttribute('data-mood', m);
+        moodBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.mood === m ? 'true' : 'false'));
       }
-      motionBtn.addEventListener('click', toggleMotion);
+      setMood(autoMood());
 
-      // Keyboard shortcuts
-      root.addEventListener('keydown', (e) => {
-        if (e.key.toLowerCase() === 't') toggleTheme();
-        if (e.key.toLowerCase() === 'm') toggleMotion();
-      });
-      // Make region focusable for shortcuts
-      root.setAttribute('tabindex', '0');
-
-      // Parallax on move
-      const orbs = stage.querySelectorAll('.orb');
-      let raf = null;
-      function onMove(e) {
+      // Motes
+      function spawnMotes(n = 28) {
         const rect = stage.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          orbs.forEach((el, i) => {
-            const depth = (i + 1) * 8;
-            el.style.transform = 'translate3d(' + (-x * depth) + 'px,' + (-y * depth + 12) + 'px,0) scale(' + (1.02 + i * 0.02) + ')';
-          });
-        });
+        const maxW = rect.width, maxH = rect.height;
+        for (let i=0; i<n; i++) {
+          const s = document.createElement('span');
+          s.className = 'mote';
+          const x = Math.random()*100;
+          const y = Math.random()*100;
+          const d = 10 + Math.random()*16;
+          const delay = -Math.random()*d;
+          const size = 2 + Math.random()*5;
+          s.style.left = x + '%';
+          s.style.top = y + '%';
+          s.style.width = size + 'px';
+          s.style.height = size + 'px';
+          s.style.animationDuration = d + 's';
+          s.style.animationDelay = delay + 's';
+          s.style.opacity = 0.25 + Math.random()*0.35;
+          motesWrap.appendChild(s);
+        }
       }
+      spawnMotes();
+
+      // Clock loop
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function tick() {
+        if (paused) return;
+        const now = new Date();
+        const h = now.getHours(), m = now.getMinutes(), s = now.getSeconds(), ms = now.getMilliseconds();
+        const hourDeg = ((h % 12) + m/60) * 30;
+        const minDeg = (m + s/60) * 6;
+        const secDeg = (s + ms/1000) * 6;
+
+        root.style.setProperty('--hour', hourDeg + 'deg');
+        root.style.setProperty('--min', minDeg + 'deg');
+        root.style.setProperty('--sec', secDeg + 'deg');
+
+        const pad = (n) => String(n).padStart(2,'0');
+        timeEl.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+
+        try {
+          dateEl.textContent = new Intl.DateTimeFormat([], { weekday:'long', month:'short', day:'numeric' }).format(now);
+        } catch {
+          dateEl.textContent = now.toDateString();
+        }
+
+        if (!reduce) raf = requestAnimationFrame(tick);
+      }
+
+      // Start ticking
+      if (!reduce) {
+        paused = false; raf = requestAnimationFrame(tick);
+      } else {
+        paused = true;
+        tick(); // update once
+        setInterval(() => { if (root.getAttribute('data-paused') !== 'true') tick(); }, 1000);
+      }
+
+      // Tilt interaction
+      function onMove(e) {
+        if (root.getAttribute('data-paused') === 'true') return;
+        const rect = stage.getBoundingClientRect();
+        const cx = rect.left + rect.width/2;
+        const cy = rect.top + rect.height/2;
+        const x = (e.clientX - cx) / rect.width;
+        const y = (e.clientY - cy) / rect.height;
+        const rx = y * -10;
+        const ry = x * 12;
+        dial.style.transform = 'rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+      }
+      function resetTilt() { dial.style.transform = 'rotateX(0deg) rotateY(0deg)'; }
       stage.addEventListener('mousemove', onMove);
+      stage.addEventListener('mouseleave', resetTilt);
       stage.addEventListener('touchmove', (e) => {
-        if (!e.touches || !e.touches[0]) return;
+        if (!e.touches[0]) return;
         onMove({ clientX: e.touches[0].clientX, clientY: e.touches[0].clientY });
       }, { passive: true });
+      stage.addEventListener('touchend', resetTilt);
 
-      // Ripple for CTAs
-      function ripple(e) {
-        const btn = e.currentTarget;
-        const r = document.createElement('span');
-        r.className = 'ripple';
-        const rect = btn.getBoundingClientRect();
-        const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-        const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-        r.style.left = x + 'px';
-        r.style.top = y + 'px';
-        btn.appendChild(r);
-        setTimeout(() => r.remove(), 650);
-      }
-      ctaExplore.addEventListener('click', ripple);
-      ctaPalette.addEventListener('click', ripple);
-      ctaExplore.addEventListener('touchstart', ripple, { passive: true });
-      ctaPalette.addEventListener('touchstart', ripple, { passive: true });
-
-      // Palette pulse demo
-      function pulsePalette() {
-        root.classList.add('pulse');
-        setTimeout(() => root.classList.remove('pulse'), 700);
-      }
-      ctaPalette.addEventListener('click', () => {
-        // Cycle accents quickly
-        const accents = [
-          ['#75ffe0', '#6aa9ff', '#f5b6ff'],
-          ['#ffd16a', '#8ef7ff', '#ff9bd3'],
-          ['#7cffc4', '#b3a1ff', '#ffd6a5']
-        ];
-        const pick = accents[Math.floor(Math.random() * accents.length)];
-        root.style.setProperty('--accent-1', pick[0]);
-        root.style.setProperty('--accent-2', pick[1]);
-        root.style.setProperty('--accent-3', pick[2]);
-        pulsePalette();
+      // Theme toggle
+      btnTheme.addEventListener('click', () => {
+        const isLight = root.getAttribute('data-theme') === 'light';
+        root.setAttribute('data-theme', isLight ? 'dark' : 'light');
+        setMood(autoMood());
       });
 
-      // Reduce motion preference
-      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        root.setAttribute('data-paused', 'true');
+      // Pause toggle
+      function setPaused(state) {
+        paused = state;
+        root.setAttribute('data-paused', state ? 'true' : 'false');
+        btnPause.textContent = state ? 'Play' : 'Pause';
+        if (!state && !reduce) { cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); }
       }
+      btnPause.addEventListener('click', () => setPaused(!paused));
+
+      // Mood buttons
+      moodBtns.forEach(btn => {
+        btn.addEventListener('click', () => setMood(btn.dataset.mood));
+      });
+
+      // Keyboard shortcuts
+      root.setAttribute('tabindex', '0');
+      root.addEventListener('keydown', (e) => {
+        const key = e.key.toLowerCase();
+        if (key === 't') btnTheme.click();
+        if (key === ' ') { e.preventDefault(); btnPause.click(); }
+      });
     })();
   </script>
 </div>
