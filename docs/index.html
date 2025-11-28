@@ -73,329 +73,281 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="orrery" role="region" aria-label="Orbital Almanac — a kinetic time garden" data-theme="dark" data-accent="aurora">
+<section id="bloom" role="region" aria-label="Gradient Bloom — a living poster clock" data-theme="dark" data-palette="iris">
   <style>
-    /* Scope all styles to #orrery */
-    #orrery {
-      --bg-1: #060911;
-      --bg-2: #0b1430;
-      --ink: #e9f1ff;
-      --muted: #97a6c7;
-      --ring: rgba(233,241,255,0.15);
+    /* Scope all styles to #bloom */
+    #bloom {
+      --bg-1: #070a12;
+      --bg-2: #0b1b2f;
+      --ink: #edf4ff;
+      --muted: #9fb0cc;
+      --ring: rgba(237,244,255,0.14);
       --glass: rgba(255,255,255,0.06);
-      --shadow-1: 0 18px 56px rgba(0,0,0,0.45);
-      --shadow-2: 0 10px 28px rgba(0,0,0,0.45);
+      --shadow-1: 0 24px 80px rgba(0,0,0,0.45);
+      --shadow-2: 0 10px 30px rgba(0,0,0,0.4);
 
-      /* Accent families */
-      --a1: #80e3ff;
-      --a2: #9affc9;
-      --a3: #bba6ff;
-      --glow: rgba(128,227,255,0.25);
+      /* Palette slots */
+      --p1: #7a7dff; --p2: #9aebff; --p3: #caa7ff; --p4: #70ffd1;
 
-      background: radial-gradient(1200px 800px at 120% -10%, rgba(178,134,255,0.12), transparent 60%),
-                  linear-gradient(180deg, var(--bg-1), var(--bg-2));
-      color: var(--ink);
-      border-radius: 22px;
+      position: relative;
+      border-radius: 26px;
       border: 1px solid var(--ring);
       padding: clamp(18px, 4vw, 28px);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro", Inter, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      letter-spacing: 0.2px;
+      background:
+        radial-gradient(1100px 700px at 120% -10%, color-mix(in oklab, var(--p3) 16%, transparent), transparent 60%),
+        radial-gradient(900px 600px at -20% 120%, color-mix(in oklab, var(--p2) 12%, transparent), transparent 60%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
       box-shadow: var(--shadow-1);
-      position: relative;
       overflow: hidden;
       isolation: isolate;
-      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Text", Inter, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      letter-spacing: 0.2px;
     }
-
-    /* Light theme */
-    #orrery[data-theme="light"] {
-      --bg-1: #fbfcff;
-      --bg-2: #eaf1ff;
-      --ink: #0b1330;
-      --muted: #576688;
-      --ring: rgba(12,19,48,0.14);
-      --glass: rgba(255,255,255,0.6);
-      --shadow-1: 0 18px 56px rgba(15,26,52,0.18);
-      --shadow-2: 0 10px 28px rgba(15,26,52,0.18);
-      --glow: rgba(64,152,255,0.22);
-      background: radial-gradient(1200px 800px at -10% -10%, rgba(0,193,171,0.12), transparent 60%),
-                  linear-gradient(180deg, var(--bg-1), var(--bg-2));
-    }
-
-    /* Accent palettes */
-    #orrery[data-accent="aurora"] { --a1: #7cc8ff; --a2: #8bffd9; --a3: #c9a4ff; }
-    #orrery[data-accent="ocean"]  { --a1: #4cc1ff; --a2: #00d5ff; --a3: #0096ff; }
-    #orrery[data-accent="rose"]   { --a1: #ff86b6; --a2: #ffc46a; --a3: #ff9e8a; }
-
-    /* Moving gradient veil */
-    #orrery::before, #orrery::after {
+    #bloom::before {
       content: "";
-      position: absolute; inset: -20% -10%;
+      position: absolute; inset: -30% -20%;
       background:
-        radial-gradient(60% 80% at 10% 10%, color-mix(in oklab, var(--a1) 28%, transparent), transparent 65%),
-        radial-gradient(50% 70% at 90% 20%, color-mix(in oklab, var(--a2) 28%, transparent), transparent 65%),
-        radial-gradient(40% 60% at 40% 90%, color-mix(in oklab, var(--a3) 22%, transparent), transparent 65%);
-      filter: blur(48px) saturate(120%);
-      opacity: 0.7;
+        radial-gradient(60% 60% at 30% 30%, color-mix(in oklab, var(--p1) 20%, transparent), transparent 65%),
+        radial-gradient(60% 60% at 70% 70%, color-mix(in oklab, var(--p4) 18%, transparent), transparent 65%);
+      filter: blur(60px) saturate(120%);
       mix-blend-mode: screen;
-      animation: veilShift 28s ease-in-out infinite alternate;
+      opacity: 0.6;
+      animation: drift 28s ease-in-out infinite alternate;
       pointer-events: none;
       z-index: 0;
     }
-    #orrery::after { animation-duration: 36s; animation-direction: alternate-reverse; opacity: 0.5; }
-    @keyframes veilShift {
-      0% { transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1.02); }
-      50% { transform: translate3d(2%, 1%, 0) rotate(6deg) scale(1.05); }
-      100% { transform: translate3d(-1%, 2%, 0) rotate(-5deg) scale(1.03); }
+    @keyframes drift {
+      0% { transform: translate3d(-2%, -2%, 0) rotate(-6deg) scale(1.02); }
+      50% { transform: translate3d(2%, 1%, 0) rotate(8deg) scale(1.05); }
+      100% { transform: translate3d(-1%, 2%, 0) rotate(-4deg) scale(1.03); }
     }
-    [data-paused="true"]::before, [data-paused="true"]::after { animation-play-state: paused !important; }
+    #bloom[data-paused="true"]::before { animation-play-state: paused !important; }
+
+    /* Light theme */
+    #bloom[data-theme="light"] {
+      --bg-1: #fbfcff;
+      --bg-2: #e9f1ff;
+      --ink: #0b1330;
+      --muted: #51607f;
+      --ring: rgba(12,19,48,0.14);
+      --glass: rgba(255,255,255,0.6);
+      --shadow-1: 0 24px 80px rgba(15,26,52,0.18);
+      --shadow-2: 0 10px 30px rgba(15,26,52,0.18);
+      background:
+        radial-gradient(1100px 700px at -15% -10%, color-mix(in oklab, var(--p2) 14%, transparent), transparent 60%),
+        radial-gradient(900px 600px at 110% 120%, color-mix(in oklab, var(--p3) 10%, transparent), transparent 60%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    }
+
+    /* Palettes */
+    #bloom[data-palette="iris"]   { --p1:#7a7dff; --p2:#9aebff; --p3:#caa7ff; --p4:#70ffd1; }
+    #bloom[data-palette="citrus"] { --p1:#ff9a3c; --p2:#ffd764; --p3:#ff85b0; --p4:#a4ff8c; }
+    #bloom[data-palette="blush"]  { --p1:#ff6aa6; --p2:#ffc3e1; --p3:#ffd4a7; --p4:#b3f4ff; }
+    #bloom[data-palette="lagoon"] { --p1:#19b1ff; --p2:#00e6d0; --p3:#9ebeff; --p4:#61ffa6; }
 
     /* Top bar */
-    #orrery .top {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 14px; position: relative; z-index: 2; margin-bottom: 16px;
+    #bloom .topbar {
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 14px; position: relative; z-index: 2; margin-bottom: 14px;
     }
-    #orrery .brand { display: flex; align-items: center; gap: 12px; user-select: none; }
-    #orrery .logo {
-      width: 34px; height: 34px; border-radius: 12px; position: relative;
-      background: conic-gradient(from 180deg, var(--a1), var(--a2), var(--a3), var(--a1));
+    #bloom .brand { display:flex; align-items:center; gap:12px; user-select:none; }
+    #bloom .glyph {
+      width: 36px; height: 36px; border-radius: 12px; position: relative;
+      background: conic-gradient(from 180deg, var(--p1), var(--p2), var(--p3), var(--p4), var(--p1));
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25), var(--shadow-2);
     }
-    #orrery[data-theme="light"] .logo { box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06), var(--shadow-2); }
-    #orrery .logo::after {
+    #bloom[data-theme="light"] .glyph { box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06), var(--shadow-2); }
+    #bloom .glyph::after {
       content:""; position:absolute; inset:2px; border-radius:10px;
       background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0));
       mix-blend-mode: overlay;
     }
-    #orrery h1 {
-      margin: 0; font-weight: 800; font-size: 15px; letter-spacing: 0.4px; opacity: 0.92;
-    }
-    #orrery .actions { display:flex; gap: 8px; }
-    #orrery .chip {
-      appearance: none; border: 1px solid var(--ring); background: var(--glass); color: var(--ink);
+    #bloom h1 { margin:0; font-weight:900; font-size: 16px; letter-spacing: 0.4px; opacity:0.95; }
+    #bloom .actions { display:flex; gap:8px; }
+    #bloom .chip {
+      appearance: none; border:1px solid var(--ring); background: var(--glass); color: var(--ink);
       border-radius: 999px; padding: 8px 12px; font-size: 12px; font-weight: 800; letter-spacing: 0.3px;
       display:inline-flex; align-items:center; gap:8px; cursor:pointer;
-      backdrop-filter: blur(6px) saturate(130%); transition: transform 160ms ease, border-color 160ms ease;
+      backdrop-filter: blur(8px) saturate(130%); transition: transform 160ms ease, border-color 160ms ease;
     }
-    #orrery .chip:hover { transform: translateY(-1px); border-color: color-mix(in oklab, var(--a1) 45%, var(--ring)); }
+    #bloom .chip:hover { transform: translateY(-1px); border-color: color-mix(in oklab, var(--p1) 45%, var(--ring)); }
 
-    /* Scene */
-    #orrery .scene {
-      position: relative; z-index: 1; border: 1px solid var(--ring); border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-      box-shadow: var(--shadow-1); overflow: hidden; padding: clamp(18px, 4vw, 24px);
+    /* Stage */
+    #bloom .stage {
+      position: relative; z-index: 1;
+      border: 1px solid var(--ring); border-radius: 20px; overflow: hidden;
       min-height: min(76vw, 520px);
-      display: grid; place-items: center;
-      perspective: 1000px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
       backdrop-filter: blur(6px) saturate(140%);
+      box-shadow: var(--shadow-1);
+      display: grid; place-items: center;
     }
-    #orrery[data-theme="light"] .scene {
+    #bloom[data-theme="light"] .stage {
       background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.24));
     }
+    #bloom canvas#bg { position:absolute; inset:0; width:100%; height:100%; display:block; }
 
-    /* Starfield */
-    #orrery .stars { position:absolute; inset:0; z-index:0; pointer-events:none; }
-    #orrery .star {
-      position:absolute; width: 2px; height: 2px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,0));
-      opacity: 0.65; filter: blur(0.2px); animation: twinkle 6s ease-in-out infinite;
-      mix-blend-mode: screen;
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.25; transform: scale(1); }
-      50% { opacity: 0.85; transform: scale(1.6); }
-    }
-    [data-paused="true"] .star { animation-play-state: paused !important; }
-
-    /* Orrery core */
-    #orrery .orbital {
-      position: relative; width: min(82vw, 560px); aspect-ratio: 1/1;
+    /* Capsule */
+    #bloom .capsule {
+      position: relative;
+      display: grid; gap: 8px; justify-items: center; text-align: center;
+      padding: clamp(16px, 5vw, 22px) clamp(16px, 6vw, 28px);
+      border-radius: 18px;
+      border: 1px solid var(--ring);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
       transform-style: preserve-3d;
-      transition: transform 300ms ease;
+      will-change: transform;
     }
-    #orrery .sun {
-      position: absolute; inset: 50% auto auto 50%; translate:-50% -50%;
-      width: 92px; height: 92px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #fff, color-mix(in oklab, var(--a1) 35%, #fff) 45%, color-mix(in oklab, var(--a3) 35%, #000) 80%);
-      box-shadow: 0 0 0 1px var(--ring), 0 0 120px color-mix(in oklab, var(--a1) 35%, transparent), 0 40px 120px var(--glow);
+    #bloom .capsule::before {
+      content: "";
+      position: absolute; inset: -28px; border-radius: 22px; z-index: -1;
+      background:
+        conic-gradient(from var(--spin, 0deg), color-mix(in oklab, var(--p1) 45%, transparent) 0 25%,
+                                         color-mix(in oklab, var(--p2) 45%, transparent) 25% 50%,
+                                         color-mix(in oklab, var(--p3) 45%, transparent) 50% 75%,
+                                         color-mix(in oklab, var(--p4) 45%, transparent) 75% 100%);
+      filter: blur(22px) saturate(140%);
+      opacity: 0.6;
+      animation: spin 28s linear infinite;
     }
+    #bloom[data-paused="true"] .capsule::before { animation-play-state: paused !important; }
+    @keyframes spin { to { --spin: 360deg; } }
 
-    /* Orbits */
-    #orrery .orbit {
-      position: absolute; inset: 50% auto auto 50%; translate: -50% -50%;
-      border-radius: 50%; pointer-events: none;
-      box-shadow: 0 0 0 1px var(--ring);
-      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 47%, #000 47.2%, #000 52.8%, transparent 53%);
-              mask: radial-gradient(circle at 50% 50%, transparent 47%, #000 47.2%, #000 52.8%, transparent 53%);
-    }
-    #orrery .orbit.hour   { width: 62%; height: 62%; background:
-      conic-gradient(from -90deg, color-mix(in oklab, var(--a1) 16%, transparent) 0 4deg, transparent 4deg 30deg); }
-    #orrery .orbit.minute { width: 78%; height: 78%; background:
-      conic-gradient(from -90deg, color-mix(in oklab, var(--a2) 16%, transparent) 0 2deg, transparent 2deg 12deg); }
-    #orrery .orbit.second { width: 92%; height: 92%; background:
-      conic-gradient(from -90deg, color-mix(in oklab, var(--a3) 16%, transparent) 0 1deg, transparent 1deg 6deg); }
-
-    /* Planets (positioned via rotate() translateX()) */
-    #orrery .planet {
-      position: absolute; left: 50%; top: 50%; translate: -50% -50%;
-      transform-origin: 50% 50%;
-      filter: drop-shadow(0 8px 24px var(--glow));
-    }
-    #orrery .planet .body {
-      display:block; border-radius: 50%; border: 1px solid var(--ring);
-    }
-    #orrery .planet.hour {
-      transform: rotate(var(--hour-angle)) translateX(calc(31%));
-    }
-    #orrery .planet.hour .body {
-      width: 18px; height: 18px; background:
-        radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--a1) 40%, #cfe6ff));
-    }
-
-    #orrery .planet.minute {
-      transform: rotate(var(--minute-angle)) translateX(calc(39%));
-    }
-    #orrery .planet.minute .body {
-      width: 14px; height: 14px; background:
-        radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--a2) 40%, #defaf1));
-    }
-
-    #orrery .planet.second {
-      transform: rotate(var(--second-angle)) translateX(calc(46%));
-    }
-    #orrery .planet.second .body {
-      width: 10px; height: 10px; background:
-        radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--a3) 60%, #f2e8ff));
-      box-shadow: 0 0 0 1px var(--ring), 0 0 42px color-mix(in oklab, var(--a3) 45%, transparent);
-    }
-    #orrery .planet.second .trail {
-      content:""; position:absolute; inset:auto auto 50% 50%;
-      width: 100px; height: 100px; border-radius: 50%;
-      transform: translate(-50%, 10px);
-      background: conic-gradient(from -90deg, color-mix(in oklab, var(--a3) 35%, transparent), transparent 60%);
-      filter: blur(10px); opacity: 0.6; pointer-events: none; mask: radial-gradient(circle, transparent 45%, #000 55%);
-    }
-
-    /* Readout */
-    #orrery .readout {
-      position: absolute; inset: auto 16px 16px 16px; z-index: 2;
-      display: grid; justify-items: center; gap: 6px; pointer-events: none;
-    }
-    #orrery .time {
-      font-size: clamp(30px, 6.8vw, 56px); font-weight: 900; letter-spacing: -0.02em;
-      background: linear-gradient(90deg, var(--ink), var(--a1));
+    #bloom .time {
+      font-size: clamp(40px, 8vw, 64px); font-weight: 900; letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--ink), var(--p1));
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.2));
-      text-align: center;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.25));
     }
-    #orrery .date {
-      font-size: clamp(12px, 2.4vw, 14px); color: var(--muted); text-align: center;
+    #bloom .date {
+      font-size: clamp(12px, 2.4vw, 14px); color: var(--muted);
     }
 
     /* Panel */
-    #orrery .panel {
-      display: grid; gap: 12px; margin-top: 16px;
-    }
-    #orrery .tagline { margin: 0; color: var(--muted); font-size: clamp(13px, 2.4vw, 15px); }
-    #orrery .accent-pills { display: flex; gap: 8px; flex-wrap: wrap; }
-    #orrery .pill {
+    #bloom .panel { display: grid; gap: 14px; margin-top: 16px; }
+    #bloom .tagline { margin: 0; color: var(--muted); font-size: clamp(13px, 2.4vw, 15px); }
+    #bloom .controls { display: grid; gap: 12px; }
+    #bloom .pills { display:flex; gap:8px; flex-wrap: wrap; }
+    #bloom .pill {
       appearance: none; border: 1px dashed var(--ring); background: transparent; color: var(--ink);
-      border-radius: 999px; padding: 8px 12px; font-size: 12px; font-weight: 800;
-      letter-spacing: 0.3px; cursor: pointer; transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+      border-radius: 999px; padding: 8px 12px; font-size: 12px; font-weight: 800; letter-spacing: 0.3px;
+      cursor: pointer; transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
     }
-    #orrery .pill:hover { transform: translateY(-1px); border-color: color-mix(in oklab, var(--a1) 45%, var(--ring)); }
-    #orrery .pill[aria-pressed="true"] {
-      background: linear-gradient(90deg, color-mix(in oklab, var(--a1) 18%, transparent), color-mix(in oklab, var(--a2) 18%, transparent));
+    #bloom .pill:hover { transform: translateY(-1px); border-color: color-mix(in oklab, var(--p1) 45%, var(--ring)); }
+    #bloom .pill[aria-pressed="true"] {
+      background: linear-gradient(90deg, color-mix(in oklab, var(--p1) 18%, transparent), color-mix(in oklab, var(--p2) 18%, transparent));
       border-style: solid;
     }
 
+    /* Slider */
+    #bloom .slider { display:flex; align-items:center; gap:10px; color: var(--muted); font-size: 12px; }
+    #bloom .slider input[type="range"] {
+      -webkit-appearance: none; appearance: none; width: 180px; height: 28px; background: transparent;
+    }
+    #bloom .slider input[type="range"]::-webkit-slider-runnable-track {
+      height: 6px; border-radius: 999px; background:
+        linear-gradient(90deg, color-mix(in oklab, var(--p1) 35%, transparent), color-mix(in oklab, var(--p4) 35%, transparent));
+      border: 1px solid var(--ring);
+    }
+    #bloom .slider input[type="range"]::-moz-range-track {
+      height: 6px; border-radius: 999px; background:
+        linear-gradient(90deg, color-mix(in oklab, var(--p1) 35%, transparent), color-mix(in oklab, var(--p4) 35%, transparent));
+      border: 1px solid var(--ring);
+    }
+    #bloom .slider input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      margin-top: -6px; background: conic-gradient(var(--p1), var(--p2), var(--p3), var(--p4), var(--p1));
+      border: 2px solid rgba(255,255,255,0.75); box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+      cursor: pointer;
+    }
+    #bloom .slider input[type="range"]::-moz-range-thumb {
+      width: 18px; height:18px; border-radius:50%;
+      background: conic-gradient(var(--p1), var(--p2), var(--p3), var(--p4), var(--p1));
+      border: 2px solid rgba(255,255,255,0.75); box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+      cursor: pointer;
+    }
+
     /* Footer */
-    #orrery .meta {
+    #bloom .meta {
       margin-top: 16px; border-top: 1px dashed var(--ring);
       padding-top: 10px; display:flex; align-items:center; justify-content: space-between;
       gap: 10px; color: var(--muted); font-size: 12px;
     }
 
-    /* Tilt responsiveness */
+    /* Responsiveness */
     @media (max-width: 720px) {
-      #orrery .orbital { width: min(92vw, 560px); }
-      #orrery .sun { width: 78px; height: 78px; }
+      #bloom .stage { min-height: min(96vw, 480px); }
     }
 
     /* Reduce motion */
     @media (prefers-reduced-motion: reduce) {
-      #orrery * { animation-duration: 0.001s !important; animation-iteration-count: 1 !important; transition: none !important; }
+      #bloom * { animation-duration: 0.001s !important; animation-iteration-count: 1 !important; transition: none !important; }
     }
   </style>
 
-  <div class="top">
+  <div class="topbar">
     <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
-      <h1>Orbital Almanac</h1>
+      <div class="glyph" aria-hidden="true"></div>
+      <h1>Gradient Bloom</h1>
     </div>
     <div class="actions">
-      <button class="chip" id="toggle-theme" aria-label="Toggle theme">Theme</button>
-      <button class="chip" id="toggle-pause" aria-label="Pause or play motion">Pause</button>
+      <button class="chip" id="btn-theme" aria-label="Toggle theme">Theme</button>
+      <button class="chip" id="btn-pause" aria-label="Pause or play motion">Pause</button>
     </div>
   </div>
 
-  <div class="scene" id="scene" aria-label="Animated orrery showing current time">
-    <div class="stars" id="stars" aria-hidden="true"></div>
-
-    <div class="orbital" id="orbital" role="img" aria-label="Three planetary orbits for hours, minutes, and seconds">
-      <div class="sun" aria-hidden="true"></div>
-
-      <div class="orbit hour" aria-hidden="true"></div>
-      <div class="orbit minute" aria-hidden="true"></div>
-      <div class="orbit second" aria-hidden="true"></div>
-
-      <div class="planet hour" aria-hidden="true">
-        <span class="body"></span>
-      </div>
-      <div class="planet minute" aria-hidden="true">
-        <span class="body"></span>
-      </div>
-      <div class="planet second" aria-hidden="true">
-        <span class="body"></span>
-        <span class="trail" aria-hidden="true"></span>
-      </div>
-    </div>
-
-    <div class="readout" aria-live="polite" aria-atomic="true">
-      <div class="time" id="time">00:00:00</div>
+  <div class="stage" id="stage" aria-label="Generative color field framing the current time">
+    <canvas id="bg" aria-hidden="true"></canvas>
+    <div class="capsule" id="capsule" aria-live="polite" aria-atomic="true">
+      <div class="time" id="time">00:00</div>
       <div class="date" id="date">—</div>
     </div>
   </div>
 
   <div class="panel">
-    <p class="tagline">A calm kinetic clock. Planets sweep the hours, minutes, and seconds in quiet arcs.</p>
-    <div class="accent-pills" role="group" aria-label="Select accent">
-      <button class="pill" data-accent="aurora" aria-pressed="true">Aurora</button>
-      <button class="pill" data-accent="ocean" aria-pressed="false">Ocean</button>
-      <button class="pill" data-accent="rose" aria-pressed="false">Rose</button>
+    <p class="tagline">A living poster. Color petals breathe around the current moment.</p>
+    <div class="controls">
+      <div class="pills" role="group" aria-label="Select palette">
+        <button class="pill" data-palette="iris" aria-pressed="true">Iris</button>
+        <button class="pill" data-palette="citrus" aria-pressed="false">Citrus</button>
+        <button class="pill" data-palette="blush" aria-pressed="false">Blush</button>
+        <button class="pill" data-palette="lagoon" aria-pressed="false">Lagoon</button>
+      </div>
+      <label class="slider" for="density">
+        <span>Density</span>
+        <input type="range" id="density" min="6" max="28" value="14" />
+      </label>
     </div>
   </div>
 
   <div class="meta">
-    <span id="last-updated">Last updated: 2025-11-28 01:29:04 EST</span>
-    <span class="hint">Tip: press T to toggle theme, Space to pause</span>
+    <span id="last-updated">Last updated: 2025-11-28 03:25:54 EST</span>
+    <span class="hint">Tip: press T for theme, Space to pause, P to cycle palettes</span>
   </div>
 
   <script>
-    (function() {
-      const root = document.getElementById('orrery');
-      const scene = document.getElementById('scene');
-      const orbital = document.getElementById('orbital');
+    (function () {
+      const root = document.getElementById('bloom');
+      const stage = document.getElementById('stage');
+      const canvas = document.getElementById('bg');
+      const ctx = canvas.getContext('2d');
       const timeEl = document.getElementById('time');
       const dateEl = document.getElementById('date');
       const last = document.getElementById('last-updated');
-      const starsWrap = document.getElementById('stars');
-      const btnTheme = document.getElementById('toggle-theme');
-      const btnPause = document.getElementById('toggle-pause');
-      const accentBtns = Array.from(document.querySelectorAll('#orrery .pill'));
+      const btnTheme = document.getElementById('btn-theme');
+      const btnPause = document.getElementById('btn-pause');
+      const pills = Array.from(document.querySelectorAll('#bloom .pill'));
+      const densityInput = document.getElementById('density');
+      const capsule = document.getElementById('capsule');
 
       let paused = false;
       let raf = null;
-      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let orbs = [];
+      let targetCount = +densityInput.value;
+      let mouse = { x: 0, y: 0, active: false };
+      let reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       // Last updated
       try {
@@ -407,84 +359,120 @@
         last.textContent = 'Last updated: just now';
       }
 
-      // Theme preference default
+      // Theme pref
       const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
       root.setAttribute('data-theme', prefersLight ? 'light' : 'dark');
 
-      // Stars
-      function spawnStars(n = 72) {
-        const rect = scene.getBoundingClientRect();
-        const count = Math.max(32, Math.min(n, Math.round(rect.width / 8)));
-        for (let i = 0; i < count; i++) {
-          const s = document.createElement('span');
-          s.className = 'star';
-          s.style.left = (Math.random() * 100) + '%';
-          s.style.top = (Math.random() * 100) + '%';
-          const size = 1 + Math.random() * 2.5;
-          s.style.width = size + 'px';
-          s.style.height = size + 'px';
-          s.style.animationDuration = (4 + Math.random() * 6) + 's';
-          s.style.animationDelay = (-Math.random() * 6) + 's';
-          s.style.opacity = 0.2 + Math.random() * 0.7;
-          starsWrap.appendChild(s);
-        }
+      // Size canvas
+      function fit() {
+        const rect = stage.getBoundingClientRect();
+        const dpr = Math.min(2, window.devicePixelRatio || 1);
+        canvas.width = Math.floor(rect.width * dpr);
+        canvas.height = Math.floor(rect.height * dpr);
+        canvas.style.width = rect.width + 'px';
+        canvas.style.height = rect.height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
-      spawnStars();
+      fit();
+      window.addEventListener('resize', () => { fit(); });
+
+      // Read palette colors from CSS
+      function palette() {
+        const cs = getComputedStyle(root);
+        return [cs.getPropertyValue('--p1'), cs.getPropertyValue('--p2'), cs.getPropertyValue('--p3'), cs.getPropertyValue('--p4')].map(c => c.trim());
+      }
+
+      // Create orbs
+      function makeOrbs(count) {
+        const rect = stage.getBoundingClientRect();
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const cols = palette();
+
+        orbs = new Array(count).fill(0).map((_, i) => {
+          const r = Math.min(cx, cy) * (0.25 + Math.random() * 0.65);
+          const ang = Math.random() * Math.PI * 2;
+          const speed = (0.0008 + Math.random() * 0.002) * (Math.random() > 0.5 ? 1 : -1);
+          const size = 80 + Math.random() * 200;
+          const wobble = 0.6 + Math.random() * 1.2;
+          const color = cols[i % cols.length];
+          return { cx, cy, r, ang, speed, size, wobble, color };
+        });
+      }
+      makeOrbs(targetCount);
+
+      // Draw frame
+      function frame() {
+        if (paused) return;
+        const rect = stage.getBoundingClientRect();
+        ctx.clearRect(0, 0, rect.width, rect.height);
+
+        // Bloom field
+        ctx.globalCompositeOperation = 'lighter';
+        orbs.forEach((o, idx) => {
+          o.ang += o.speed;
+          const radiusX = o.r * (1 + Math.sin(o.ang * o.wobble) * 0.12);
+          const radiusY = o.r * (1 + Math.cos(o.ang * o.wobble) * 0.12);
+          let x = o.cx + Math.cos(o.ang) * radiusX;
+          let y = o.cy + Math.sin(o.ang) * radiusY;
+
+          // Pointer influence
+          if (mouse.active) {
+            const dx = mouse.x - x;
+            const dy = mouse.y - y;
+            x += dx * 0.06 * (idx % 3 ? 0.5 : 1);
+            y += dy * 0.06 * (idx % 3 ? 0.5 : 1);
+          }
+
+          const g = ctx.createRadialGradient(x, y, 0, x, y, o.size);
+          g.addColorStop(0, o.color.replace(')', ', 0.65)').replace('rgb', 'rgba'));
+          g.addColorStop(0.4, o.color.replace(')', ', 0.28)').replace('rgb', 'rgba'));
+          g.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(x, y, o.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.globalCompositeOperation = 'source-over';
+
+        raf = requestAnimationFrame(frame);
+      }
 
       // Time loop
-      function tick() {
-        if (paused) return;
+      function updateTime() {
         const now = new Date();
-        const h = now.getHours(), m = now.getMinutes(), s = now.getSeconds(), ms = now.getMilliseconds();
-
-        const hourDeg = ((h % 12) + m / 60) * 30;         // 360/12
-        const minDeg  = (m + s / 60) * 6;                 // 360/60
-        const secDeg  = (s + ms / 1000) * 6;              // 360/60
-
-        root.style.setProperty('--hour-angle', hourDeg + 'deg');
-        root.style.setProperty('--minute-angle', minDeg + 'deg');
-        root.style.setProperty('--second-angle', secDeg + 'deg');
-
+        const h = now.getHours(), m = now.getMinutes();
         const pad = (n) => String(n).padStart(2, '0');
-        timeEl.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
-
+        timeEl.textContent = pad(h) + ':' + pad(m);
         try {
           dateEl.textContent = new Intl.DateTimeFormat([], { weekday:'long', month:'short', day:'numeric' }).format(now);
         } catch {
           dateEl.textContent = now.toDateString();
         }
-
-        if (!reduce) raf = requestAnimationFrame(tick);
       }
+      updateTime();
+      setInterval(updateTime, 1000 * (reduce ? 5 : 1));
 
-      // Start ticking
-      if (!reduce) {
-        paused = false; raf = requestAnimationFrame(tick);
-      } else {
-        paused = true; tick();
-        setInterval(() => { if (root.getAttribute('data-paused') !== 'true') tick(); }, 1000);
-      }
+      // Pointer interactions (parallax + attractor)
+      function pointer(e) {
+        const rect = stage.getBoundingClientRect();
+        const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+        const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+        mouse.x = x; mouse.y = y; mouse.active = true;
 
-      // Tilt interaction
-      function onMove(e) {
-        if (root.getAttribute('data-paused') === 'true') return;
-        const rect = scene.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        const x = (e.clientX - cx) / rect.width;
-        const y = (e.clientY - cy) / rect.height;
-        const rx = y * -10;
-        const ry = x * 12;
-        orbital.style.transform = 'rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+        const cx = rect.width / 2, cy = rect.height / 2;
+        const nx = (x - cx) / rect.width;
+        const ny = (y - cy) / rect.height;
+        capsule.style.transform = 'translate3d(' + (nx * 14) + 'px,' + (ny * 10) + 'px,0) rotateX(' + (ny * -6) + 'deg) rotateY(' + (nx * 8) + 'deg)';
       }
-      function resetTilt() { orbital.style.transform = 'rotateX(0deg) rotateY(0deg)'; }
-      scene.addEventListener('mousemove', onMove);
-      scene.addEventListener('mouseleave', resetTilt);
-      scene.addEventListener('touchmove', (e) => {
-        if (!e.touches[0]) return;
-        onMove({ clientX: e.touches[0].clientX, clientY: e.touches[0].clientY });
-      }, { passive: true });
-      scene.addEventListener('touchend', resetTilt);
+      function leave() {
+        mouse.active = false;
+        capsule.style.transform = 'translate3d(0,0,0) rotateX(0deg) rotateY(0deg)';
+      }
+      stage.addEventListener('mousemove', pointer);
+      stage.addEventListener('mouseleave', leave);
+      stage.addEventListener('touchmove', pointer, { passive: true });
+      stage.addEventListener('touchend', leave);
 
       // Theme toggle
       btnTheme.addEventListener('click', () => {
@@ -497,27 +485,53 @@
         paused = state;
         root.setAttribute('data-paused', state ? 'true' : 'false');
         btnPause.textContent = state ? 'Play' : 'Pause';
-        if (!state && !reduce) { cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); }
+        if (!state && !reduce) { cancelAnimationFrame(raf); raf = requestAnimationFrame(frame); }
       }
       btnPause.addEventListener('click', () => setPaused(!paused));
 
-      // Accent buttons
-      function setAccent(a) {
-        root.setAttribute('data-accent', a);
-        accentBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.accent === a ? 'true' : 'false'));
+      // Palette switching
+      function setPalette(name) {
+        root.setAttribute('data-palette', name);
+        pills.forEach(b => b.setAttribute('aria-pressed', b.dataset.palette === name ? 'true' : 'false'));
+        makeOrbs(+densityInput.value);
       }
-      accentBtns.forEach(b => b.addEventListener('click', () => setAccent(b.dataset.accent)));
+      pills.forEach(b => b.addEventListener('click', () => setPalette(b.dataset.palette)));
+
+      // Density
+      densityInput.addEventListener('input', () => {
+        targetCount = +densityInput.value;
+        makeOrbs(targetCount);
+      });
 
       // Keyboard shortcuts
       root.setAttribute('tabindex', '0');
       root.addEventListener('keydown', (e) => {
-        const key = e.key.toLowerCase();
-        if (key === 't') btnTheme.click();
-        if (key === ' ') { e.preventDefault(); btnPause.click(); }
+        const k = e.key.toLowerCase();
+        if (k === 't') btnTheme.click();
+        if (k === ' ') { e.preventDefault(); btnPause.click(); }
+        if (k === 'p') {
+          const names = ['iris','citrus','blush','lagoon'];
+          const cur = root.getAttribute('data-palette');
+          const idx = names.indexOf(cur);
+          setPalette(names[(idx + 1) % names.length]);
+        }
       });
+
+      // Start animation respecting motion pref
+      if (!reduce) {
+        paused = false;
+        raf = requestAnimationFrame(frame);
+      } else {
+        paused = true;
+        root.setAttribute('data-paused', 'true');
+        // Draw a still frame
+        makeOrbs(+densityInput.value);
+        frame();
+        cancelAnimationFrame(raf);
+      }
     })();
   </script>
-</div>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
