@@ -73,184 +73,189 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="orion999" data-theme="night" data-trails="on" tabindex="0" role="region" aria-label="Orbital Atelier — a kinetic drafting table of moving orbits you can tug with your pointer">
+<div id="loom1000" data-theme="twilight" data-trails="on" tabindex="0" role="region" aria-label="Aurora Loom — sculpt light ribbons with your cursor">
   <style>
-    /* Design Tokens */
-    #orion999{
-      --night-bg1:#070b16; --night-bg2:#0e1630;
-      --day-bg1:#f7fbff;  --day-bg2:#dde9ff;
-      --ink-night:#eef3ff; --muted-night:#9fb0ff;
-      --ink-day:#0e1323;   --muted-day:#596a8a;
+    /* Tokens */
+    #loom1000{
+      --tw-bg1:#0a0f1c; --tw-bg2:#1a2440;
+      --da-bg1:#fbfcff; --da-bg2:#e8f1ff;
+      --ink-tw:#eef3ff; --muted-tw:#a9b6d9;
+      --ink-da:#0e1323; --muted-da:#5b6d90;
 
-      --a1:#77c9ff; --a2:#7c8bff; --a3:#fda8ff; --a4:#56ffd2;
-      --ring:#ffffff22; --edge:#ffffff26;
-      --glass: rgba(255,255,255,.10);
+      --p1:#6bdcff; --p2:#8d7aff; --p3:#ff9ad6; --p4:#5effc7;
+      --edge:#ffffff26; --glass: rgba(255,255,255,.08);
 
       position:relative; isolation:isolate;
-      min-height:76vh; padding: clamp(14px, 3.6vw, 30px);
-      border-radius:36px; overflow:hidden;
-      color:var(--ink);
+      min-height:78vh; padding:clamp(12px,3.8vw,36px);
+      border-radius:34px; overflow:hidden;
+      color:var(--ink); background:linear-gradient(180deg,var(--bg1),var(--bg2));
       font-family: ui-sans-serif, -apple-system, Inter, "SF Pro", Segoe UI, Roboto, "Noto Sans", Arial, sans-serif;
-      background:
-        radial-gradient(1200px 900px at 70% 24%, color-mix(in oklab, var(--a3) 18%, transparent), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
       box-shadow:
-        0 1px 0 rgba(255,255,255,.05) inset,
+        0 1px 0 rgba(255,255,255,.04) inset,
         0 0 0 1px rgba(255,255,255,.08) inset,
-        0 70px 240px rgba(0,0,0,.60);
+        0 70px 220px rgba(0,0,0,.55);
     }
-    #orion999[data-theme="night"]{ --bg1:var(--night-bg1); --bg2:var(--night-bg2); --ink:var(--ink-night); --muted:var(--muted-night); }
-    #orion999[data-theme="day"]  { --bg1:var(--day-bg1);  --bg2:var(--day-bg2);  --ink:var(--ink-day);  --muted:var(--muted-day);  }
+    #loom1000[data-theme="twilight"]{ --bg1:var(--tw-bg1); --bg2:var(--tw-bg2); --ink:var(--ink-tw); --muted:var(--muted-tw); }
+    #loom1000[data-theme="dawn"]{ --bg1:var(--da-bg1); --bg2:var(--da-bg2); --ink:var(--ink-da); --muted:var(--muted-da); }
+
+    /* Soft aurora bloom behind everything */
+    #loom1000::before{
+      content:""; position:absolute; inset:-30% -10% auto -10%; height:60%;
+      background:
+        radial-gradient(800px 400px at 70% 40%, color-mix(in oklab, var(--p1) 16%, transparent) 0, transparent 70%),
+        radial-gradient(600px 320px at 30% 30%, color-mix(in oklab, var(--p3) 14%, transparent) 0, transparent 70%);
+      filter: blur(50px) saturate(120%);
+      opacity:.7; pointer-events:none; z-index:0;
+    }
 
     /* Chrome */
-    #orion999 .chrome{
-      position:relative; z-index:3; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
-      border:1px solid var(--edge); border-radius:22px; padding:10px 12px;
+    #loom1000 .chrome{
+      position:relative; z-index:3; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
       background: color-mix(in oklab, var(--glass) 80%, transparent);
+      border:1px solid var(--edge); border-radius:20px; padding:10px 12px;
       backdrop-filter: blur(14px) saturate(120%);
-      box-shadow: 0 14px 36px rgba(0,0,0,.28);
+      box-shadow: 0 16px 40px rgba(0,0,0,.28);
     }
-    #orion999 .brand{ display:flex; align-items:center; gap:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:900; font-size:12px; color:var(--muted); }
-    #orion999 .logo{ width:24px; height:24px; display:block; filter: drop-shadow(0 2px 8px rgba(0,0,0,.35)); }
-    #orion999 .logo .ring{ transform-origin:50% 50%; animation: spin999 14s linear infinite; }
-    @keyframes spin999{ to{ transform: rotate(360deg); } }
+    #loom1000 .brand{ display:flex; align-items:center; gap:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:900; font-size:12px; color:var(--muted); }
+    #loom1000 .logo{ width:28px; height:28px; display:block; }
+    #loom1000 .logo .bar{ transform-origin:50% 50%; animation: rise 4s ease-in-out infinite; }
+    #loom1000 .logo .bar:nth-child(2){ animation-delay: .2s; }
+    #loom1000 .logo .bar:nth-child(3){ animation-delay: .4s; }
+    @keyframes rise{ 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-2px) } }
 
-    #orion999 .actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-    #orion999 button, #orion999 .toggle, #orion999 .slider{
+    #loom1000 .actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    #loom1000 button, #loom1000 .toggle, #loom1000 .slider{
       appearance:none; border:1px solid var(--edge); color:var(--ink);
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
       border-radius:12px; padding:8px 12px; font-weight:800; cursor:pointer;
       transition: transform 120ms ease, box-shadow 220ms ease, background 240ms ease, color .2s ease;
       box-shadow: 0 2px 0 rgba(0,0,0,.28); user-select:none; font-size:12px;
     }
-    #orion999 button:hover{ transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0,0,0,.24); }
-    #orion999 .toggle, #orion999 .slider{ display:inline-flex; align-items:center; gap:10px; color:var(--muted); }
-    #orion999 .toggle input{
+    #loom1000 button:hover{ transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0,0,0,.24); }
+    #loom1000 .toggle, #loom1000 .slider{ display:inline-flex; align-items:center; gap:10px; color:var(--muted); }
+
+    #loom1000 .toggle input{
       appearance:none; width:44px; height:24px; border-radius:999px; background: rgba(255,255,255,.12); position:relative; border:1px solid var(--edge);
     }
-    #orion999 .toggle input::after{
+    #loom1000 .toggle input::after{
       content:""; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid var(--edge);
       box-shadow:0 2px 6px rgba(0,0,0,.18); transition: transform 160ms ease;
     }
-    #orion999 .toggle input:checked{ background: linear-gradient(90deg, var(--a1), var(--a4)); }
-    #orion999 .toggle input:checked::after{ transform: translateX(18px); }
+    #loom1000 .toggle input:checked{ background: linear-gradient(90deg, var(--p1), var(--p4)); }
+    #loom1000 .toggle input:checked::after{ transform: translateX(18px); }
 
-    #orion999 .slider input[type="range"]{ width:160px; height:18px; background:transparent; -webkit-appearance:none; }
-    #orion999 .slider input[type="range"]::-webkit-slider-runnable-track{ height:6px; border-radius:999px; background: linear-gradient(90deg, var(--a2), var(--a3)); opacity:.9; }
-    #orion999 .slider input[type="range"]::-webkit-slider-thumb{
+    #loom1000 .slider input[type="range"]{ width:160px; height:18px; background:transparent; -webkit-appearance:none; }
+    #loom1000 .slider input[type="range"]::-webkit-slider-runnable-track{ height:6px; border-radius:999px; background: linear-gradient(90deg, var(--p2), var(--p3)); opacity:.95; }
+    #loom1000 .slider input[type="range"]::-webkit-slider-thumb{
       -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid var(--edge); margin-top:-6px;
       box-shadow:0 2px 6px rgba(0,0,0,.18);
     }
-    #orion999 .slider input[type="range"]::-moz-range-track{ height:6px; border-radius:999px; background: linear-gradient(90deg, var(--a2), var(--a3)); opacity:.9; }
-    #orion999 .slider input[type="range"]::-moz-range-thumb{
+    #loom1000 .slider input[type="range"]::-moz-range-track{ height:6px; border-radius:999px; background: linear-gradient(90deg, var(--p2), var(--p3)); opacity:.95; }
+    #loom1000 .slider input[type="range"]::-moz-range-thumb{
       width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid var(--edge); box-shadow:0 2px 6px rgba(0,0,0,.18);
     }
 
     /* Stage */
-    #orion999 .stage{
+    #loom1000 .stage{
       position:relative; z-index:1; margin-top:16px;
-      border:1px solid var(--edge); border-radius:28px; overflow:hidden;
+      border:1px solid var(--edge); border-radius:26px; overflow:hidden;
       background: linear-gradient(180deg, color-mix(in oklab, var(--glass) 64%, transparent), color-mix(in oklab, var(--glass) 30%, transparent));
-      backdrop-filter: blur(12px) saturate(130%);
+      backdrop-filter: blur(10px) saturate(130%);
       box-shadow: 0 22px 70px rgba(0,0,0,.34);
-      min-height: clamp(480px, 64vh, 780px);
+      min-height: clamp(520px, 66vh, 820px);
     }
-    #orion999 .stage::before{
-      content:""; position:absolute; inset:-40% -20% auto -20%; height:60%;
-      background: radial-gradient(closest-side, color-mix(in oklab, var(--a1) 10%, transparent), transparent 60%);
-      filter: blur(40px); opacity:.6; pointer-events:none;
+    #loom1000 canvas{ position:absolute; inset:0; width:100%; height:100%; filter:saturate(120%); }
+    #loom1000 .title{
+      position:relative; z-index:2; display:grid; place-items:center; text-align:center; min-height:100%;
+      text-shadow: 0 6px 18px rgba(0,0,0,.25); pointer-events:none;
     }
-    #orion999 canvas{
-      position:absolute; inset:0; width:100%; height:100%;
-      filter: saturate(118%);
-    }
-    #orion999 .title{
-      position:relative; z-index:2; pointer-events:none; display:grid; place-items:center; text-align:center; inset:0; min-height:100%;
-      text-shadow: 0 6px 18px rgba(0,0,0,.25);
-    }
-    #orion999 .hero{
+    #loom1000 .hero{
       margin:0; font-weight:1000; letter-spacing:-.02em; line-height:.9;
-      font-size: clamp(46px, 10.6vw, 132px);
+      font-size: clamp(44px, 9.8vw, 128px);
       color: transparent;
-      background: linear-gradient(90deg, var(--a1), var(--a4), var(--a3), var(--a2), var(--a1));
-      background-size: 240% 100%;
+      background: linear-gradient(100deg, var(--p1), var(--p4), var(--p3), var(--p2), var(--p1));
+      background-size: 260% 100%;
       -webkit-background-clip: text; background-clip: text;
-      animation: sheen999 22s linear infinite;
+      animation: huepan 20s linear infinite;
     }
-    @keyframes sheen999{ 0%{ background-position: 0% 0; } 100%{ background-position: 200% 0; } }
-    #orion999 .lede{ margin:12px auto 0; color:var(--muted); font-size: clamp(13px, 1.6vw, 18px); line-height:1.7; text-wrap:balance; max-width:72ch; }
+    @keyframes huepan{ 0%{ background-position: 0% 0; } 100%{ background-position: 200% 0; } }
+
+    #loom1000 .lede{ margin:12px auto 0; color:var(--muted); font-size: clamp(13px, 1.6vw, 18px); line-height:1.7; max-width:72ch; text-wrap:balance; }
 
     /* Meta */
-    #orion999 .meta{
+    #loom1000 .meta{
       margin-top:14px; color:var(--muted); font-size:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
     }
 
     /* Focus */
-    #orion999 :is(button, input, [tabindex]):focus-visible{
-      outline: 2px solid color-mix(in oklab, var(--a1) 55%, #fff);
+    #loom1000 :is(button, input, [tabindex]):focus-visible{
+      outline: 2px solid color-mix(in oklab, var(--p1) 55%, #fff);
       outline-offset: 2px;
     }
 
     @media (max-width: 880px){
-      #orion999 .slider input[type="range"]{ width:130px; }
-      #orion999 .hero{ font-size: clamp(44px, 12vw, 112px); }
+      #loom1000 .slider input[type="range"]{ width:130px; }
+      #loom1000 .hero{ font-size: clamp(42px, 12vw, 112px); }
     }
     @media (prefers-reduced-motion: reduce){
-      #orion999 .hero, #orion999 .logo .ring{ animation: none !important; }
-      #orion999 canvas{ filter: none; }
+      #loom1000 .hero, #loom1000 .logo .bar{ animation: none !important; }
+      #loom1000 canvas{ filter:none; }
     }
   </style>
 
   <div class="chrome">
     <div class="brand">
-      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+      <svg class="logo" viewBox="0 0 48 28" aria-hidden="true">
         <defs>
-          <linearGradient id="lg999" x1="0" y1="0" x2="32" y2="32">
-            <stop offset="0%" stop-color="var(--a1)"/><stop offset="50%" stop-color="var(--a4)"/><stop offset="100%" stop-color="var(--a3)"/>
+          <linearGradient id="loomg" x1="0" y1="0" x2="48" y2="0">
+            <stop offset="0%" stop-color="var(--p1)"/><stop offset="50%" stop-color="var(--p4)"/><stop offset="100%" stop-color="var(--p3)"/>
           </linearGradient>
         </defs>
-        <g>
-          <circle cx="16" cy="16" r="6" fill="url(#lg999)" opacity=".95"/>
-          <circle class="ring" cx="16" cy="16" r="12" fill="none" stroke="url(#lg999)" stroke-width="2" stroke-linecap="round" stroke-dasharray="14 10"/>
-        </g>
+        <rect class="bar" x="2" y="6" width="12" height="16" rx="8" fill="url(#loomg)"/>
+        <rect class="bar" x="18" y="4" width="12" height="20" rx="8" fill="url(#loomg)"/>
+        <rect class="bar" x="34" y="6" width="12" height="16" rx="8" fill="url(#loomg)"/>
       </svg>
-      <span>Orbital Atelier • 999</span>
+      <span>Aurora Loom • 1000</span>
     </div>
     <div class="actions">
-      <button id="random999" title="Randomize system">Randomize</button>
-      <label class="slider" title="Speed">
-        Speed
-        <input type="range" id="speed999" min="0.30" max="2.00" step="0.01" value="1.00">
+      <button id="random1000" title="Randomize palette">Randomize</button>
+      <label class="slider" title="Wind">
+        Wind
+        <input type="range" id="wind1000" min="0.25" max="2.00" step="0.01" value="1.00">
       </label>
       <label class="toggle" title="Trails">
         Trails
-        <input type="checkbox" id="trails999" checked>
+        <input type="checkbox" id="trails1000" checked>
       </label>
       <label class="toggle" title="Theme">
-        Day
-        <input type="checkbox" id="theme999">
+        Dawn
+        <input type="checkbox" id="theme1000">
       </label>
-      <button id="pause999" title="Pause/Play">Pause</button>
+      <label class="toggle" title="Breathe">
+        Breathe
+        <input type="checkbox" id="breathe1000" checked>
+      </label>
+      <button id="pause1000" title="Pause/Play">Pause</button>
     </div>
   </div>
 
-  <div class="stage" role="img" aria-label="A drafting table of orbits: lines, satellites, and a starfield glide and respond to your pointer">
-    <canvas id="sky999"></canvas>
+  <div class="stage" role="img" aria-label="Luminous ribbons weave and respond to your cursor like a living loom of light">
+    <canvas id="loom-canvas"></canvas>
     <div class="title">
-      <h1 class="hero">Compose orbits.</h1>
-      <p class="lede">Drag to tug the system. D theme • T trails • R randomize • Space pause</p>
+      <h1 class="hero">Weave the light.</h1>
+      <p class="lede">Move your pointer to sculpt ribbons. D theme • T trails • R randomize • B breathe • Space pause</p>
     </div>
   </div>
 
   <div class="meta">
-    <span id="last-updated">Last updated: 2025-12-01 08:34:14 EST</span>
-    <span class="keys">Keys: D theme • T trails • R randomize • Space pause</span>
+    <span id="last-updated">Last updated: 2025-12-01 09:19:59 EST</span>
+    <span class="keys">Keys: D theme • T trails • R randomize • B breathe • Space pause</span>
   </div>
 
   <script>
     (function(){
-      const root = document.getElementById('orion999');
-      const canvas = root.querySelector('#sky999');
+      const root = document.getElementById('loom1000');
+      const canvas = root.querySelector('#loom-canvas');
       const ctx = canvas.getContext('2d', { alpha: true });
 
       // Timestamp
@@ -261,19 +266,42 @@
       }catch{}
 
       // Controls
-      const randomBtn = root.querySelector('#random999');
-      const speed = root.querySelector('#speed999');
-      const trailsToggle = root.querySelector('#trails999');
-      const themeToggle = root.querySelector('#theme999');
-      const pauseBtn = root.querySelector('#pause999');
+      const randomBtn = root.querySelector('#random1000');
+      const wind = root.querySelector('#wind1000');
+      const trailsToggle = root.querySelector('#trails1000');
+      const themeToggle = root.querySelector('#theme1000');
+      const breatheToggle = root.querySelector('#breathe1000');
+      const pauseBtn = root.querySelector('#pause1000');
+
+      let paused = false;
 
       function sync(){
         root.setAttribute('data-trails', trailsToggle.checked ? 'on' : 'off');
-        root.setAttribute('data-theme', themeToggle.checked ? 'day' : 'night');
+        root.setAttribute('data-theme', themeToggle.checked ? 'dawn' : 'twilight');
         pauseBtn.textContent = paused ? 'Play' : 'Pause';
       }
       trailsToggle.addEventListener('change', sync);
       themeToggle.addEventListener('change', sync);
+      breatheToggle.addEventListener('change', ()=>{ breathe = breatheToggle.checked; });
+      pauseBtn.addEventListener('click', ()=>{ paused = !paused; if(!paused){ t0 = performance.now(); } sync(); });
+
+      // Palettes
+      const PALETTES = [
+        ['#6bdcff','#8d7aff','#ff9ad6','#5effc7'],
+        ['#ffb377','#ffd56f','#9ea6ff','#9df5ff'],
+        ['#a786ff','#7ad5ff','#ff7ad5','#a7b3ff'],
+        ['#20c7a6','#5be3c3','#9ae2ff','#46ffd9'],
+        ['#78f7d0','#74c8ff','#f4a0ff','#ffe58a']
+      ];
+      let paletteIndex = 0;
+      function applyPalette(){
+        const cols = PALETTES[paletteIndex % PALETTES.length];
+        root.style.setProperty('--p1', cols[0]);
+        root.style.setProperty('--p2', cols[1]);
+        root.style.setProperty('--p3', cols[2]);
+        root.style.setProperty('--p4', cols[3]);
+      }
+      applyPalette();
 
       // DPR + sizing
       let dpr = Math.max(1, Math.min(2, window.devicePixelRatio||1));
@@ -282,180 +310,127 @@
         const r = canvas.getBoundingClientRect();
         canvas.width = Math.max(300, Math.floor(r.width * dpr));
         canvas.height = Math.max(300, Math.floor(r.height * dpr));
-        seedStars();
+        seedThreads();
       }
       resize();
       let rsTO; window.addEventListener('resize', ()=>{ clearTimeout(rsTO); rsTO = setTimeout(resize, 120); }, {passive:true});
 
-      // System
-      const PALETTES = [
-        ['#77c9ff', '#7c8bff', '#fda8ff', '#56ffd2'],
-        ['#ff9d7e', '#ffd36f', '#9ea6ff', '#9df5ff'],
-        ['#bb86ff', '#7ad5ff', '#ff7ad5', '#a7b3ff'],
-        ['#20c7a6', '#5be3c3', '#9ae2ff', '#46ffd9']
-      ];
-      let paletteIndex = 0;
-
-      const planets = [];
-      const orbits = [];
-      let paused = false;
-
+      // Threads
+      const threads = [];
+      let breathe = true;
       function rand(min,max){ return Math.random()*(max-min)+min; }
-      function choice(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-
-      function seedSystem(){
-        planets.length = 0; orbits.length = 0;
-        const cols = PALETTES[paletteIndex];
-        const w = canvas.width, h = canvas.height;
-        const cmax = Math.min(w,h) * 0.45;
-        const count = 10;
+      function seedThreads(){
+        threads.length = 0;
+        const h = canvas.height;
+        const count = 36;
         for(let i=0;i<count;i++){
-          const r = (i+1)/(count+1) * cmax * rand(0.82,1.02);
-          const ang = rand(0, Math.PI*2);
-          const size = Math.max(2, r * rand(0.015, 0.030));
-          const speedMul = rand(0.18, 0.55) * (Math.random() < 0.25 ? -1 : 1);
-          planets.push({
-            r, ang, size, hue: cols[i % cols.length],
-            w: speedMul,
-            wobble: rand(0.94, 1.06),
-            glow: rand(0.10, 0.26)
-          });
-          orbits.push({ r, alpha: rand(0.12, 0.30) });
-        }
-      }
-
-      // Stars
-      const stars = [];
-      function seedStars(){
-        stars.length = 0;
-        const w = canvas.width, h = canvas.height;
-        const count = Math.floor((w*h)/5000);
-        for(let i=0;i<count;i++){
-          stars.push({
-            x: Math.random()*w, y: Math.random()*h,
-            a: Math.random()*Math.PI*2,
-            s: Math.random()*0.7 + 0.3,
-            b: Math.random()*0.6 + 0.2
+          const y = (i+0.5) / (count+1);
+          threads.push({
+            baseY: y * h,
+            amp: rand(20, 130) * dpr,
+            freq: rand(0.003, 0.010),
+            speed: rand(-0.6, 0.8),
+            th: rand(0.6, 2.0) * dpr,
+            jitter: rand(0, 6),
+            hue: PALETTES[paletteIndex % PALETTES.length][i % 4],
+            seed: rand(0, 1000)
           });
         }
       }
+      seedThreads();
 
-      // Interaction: tug center toward pointer when dragging
-      const center = { x: 0.5, y: 0.5 };
-      const targetCenter = { x: 0.5, y: 0.5 };
-      let dragging = false;
-
-      function setTug(e){
+      // Pointer
+      const pointer = { x: 0.5, y: 0.5, down: false };
+      canvas.addEventListener('pointermove', (e)=>{
         const rect = canvas.getBoundingClientRect();
-        const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
-        const y = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
-        const nx = x / rect.width;
-        const ny = y / rect.height;
-        targetCenter.x = nx; targetCenter.y = ny;
-      }
-      canvas.addEventListener('pointermove', (e)=>{ setTug(e); if(dragging){ targetCenter.x = (targetCenter.x*0.7 + 0.15); targetCenter.y = (targetCenter.y*0.7 + 0.15); } }, {passive:true});
-      canvas.addEventListener('pointerdown', (e)=>{ dragging = true; setTug(e); }, {passive:true});
-      window.addEventListener('pointerup', ()=>{ dragging=false; }, {passive:true});
-
-      // Init
-      seedStars();
-      seedSystem();
+        pointer.x = (e.clientX - rect.left) / rect.width;
+        pointer.y = (e.clientY - rect.top) / rect.height;
+      }, {passive:true});
+      canvas.addEventListener('pointerdown', ()=>{ pointer.down = true; }, {passive:true});
+      window.addEventListener('pointerup', ()=>{ pointer.down = false; }, {passive:true});
 
       // Reduced motion
       let REDUCE=false;
       try{ REDUCE = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch{}
-      if(REDUCE){ speed.value = '0.60'; }
+      if(REDUCE){ wind.value = '0.65'; }
 
       // Render
       let t0 = performance.now();
       function render(now){
         if(paused){ requestAnimationFrame(render); return; }
         const dt = Math.min(0.04, (now-(t0||now))/1000); t0=now;
-
+        const tempo = Math.max(0.25, Math.min(2, parseFloat(wind.value)||1));
         const w = canvas.width, h = canvas.height;
-        const tempo = Math.max(0.2, Math.min(2, parseFloat(speed.value)||1));
 
-        // Easing center
-        center.x += (targetCenter.x - center.x) * (dragging ? 0.12 : 0.06);
-        center.y += (targetCenter.y - center.y) * (dragging ? 0.12 : 0.06);
-        const cx = w * center.x, cy = h * center.y;
-
-        // Background gradient
-        const g = ctx.createLinearGradient(0,0,0,h);
-        g.addColorStop(0, getComputedStyle(root).getPropertyValue('--bg1').trim());
-        g.addColorStop(1, getComputedStyle(root).getPropertyValue('--bg2').trim());
-
-        // Clear or trail
+        // Clear / trails
         if(root.getAttribute('data-trails')==='on'){
           ctx.globalCompositeOperation = 'source-over';
-          ctx.fillStyle = 'rgba(0,0,0,' + (root.getAttribute('data-theme')==='night' ? 0.10 : 0.04) + ')';
+          ctx.fillStyle = 'rgba(0,0,0,' + (root.getAttribute('data-theme')==='twilight' ? 0.10 : 0.05) + ')';
           ctx.fillRect(0,0,w,h);
-          // subtle gradient wash
-          ctx.globalAlpha = 0.20; ctx.fillStyle = g; ctx.fillRect(0,0,w,h); ctx.globalAlpha = 1;
         }else{
+          const g = ctx.createLinearGradient(0,0,0,h);
+          const styles = getComputedStyle(root);
+          g.addColorStop(0, styles.getPropertyValue('--bg1').trim());
+          g.addColorStop(1, styles.getPropertyValue('--bg2').trim());
           ctx.globalCompositeOperation = 'source-over';
           ctx.fillStyle = g; ctx.fillRect(0,0,w,h);
         }
 
-        // Stars
-        ctx.globalCompositeOperation = 'screen';
-        for(const s of stars){
-          s.a += dt * 0.8;
-          const twinkle = (Math.sin(s.a) * 0.5 + 0.5) * s.b;
-          ctx.fillStyle = 'rgba(255,255,255,' + (0.18 + twinkle) + ')';
-          ctx.fillRect(s.x, s.y, dpr, dpr);
-        }
+        // Ribbons
+        ctx.lineJoin = 'round'; ctx.lineCap = 'round';
 
-        // Orbits
-        ctx.globalCompositeOperation = 'lighter';
-        for(const o of orbits){
-          ctx.strokeStyle = 'rgba(255,255,255,' + o.alpha + ')';
-          ctx.lineWidth = 1.2 * dpr;
-          ctx.beginPath();
-          ctx.arc(cx, cy, o.r, 0, Math.PI*2);
-          ctx.stroke();
-        }
+        const px = pointer.x * w, py = pointer.y * h;
+        for(const t of threads){
+          t.seed += dt * t.speed * tempo;
 
-        // Planets
-        for(const p of planets){
-          p.ang += p.w * dt * tempo * 0.75;
+          const thickness = t.th;
+          const amp = t.amp * (breathe ? (1.0 + 0.18*Math.sin(now*0.0012 + t.seed)) : 1);
 
-          // gentle radial wobble
-          const rr = p.r * (1 + Math.sin(now*0.001 + p.r)*0.003 * p.wobble);
-          const x = cx + Math.cos(p.ang) * rr;
-          const y = cy + Math.sin(p.ang) * rr;
+          // stroke layers for glow
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.strokeStyle = t.hue + (root.getAttribute('data-theme')==='twilight' ? 'cc' : '99');
+          ctx.lineWidth = thickness * 2.2;
 
-          // gravitational tug toward pointer (soft)
-          const gx = (cx - x) * 0.00002;
-          const gy = (cy - y) * 0.00002;
-          p.w += (gx + gy) * (dragging ? 18 : 6);
+          drawThread(t, amp, px, py, w, h, 10*dpr);
 
-          // halo
-          const grad = ctx.createRadialGradient(x, y, 0, x, y, p.size*8);
-          grad.addColorStop(0, p.hue + (p.hue.length===7 ? 'cc':''));
-          grad.addColorStop(0.35, p.hue + (p.hue.length===7 ? '55':''));
-          grad.addColorStop(1, '#0000');
-          ctx.fillStyle = grad;
-          ctx.beginPath(); ctx.arc(x, y, p.size*6, 0, Math.PI*2); ctx.fill();
-
-          // core
-          ctx.fillStyle = '#ffffff' + (root.getAttribute('data-theme')==='night' ? 'aa' : '88');
-          ctx.beginPath(); ctx.arc(x, y, Math.max(2, p.size), 0, Math.PI*2); ctx.fill();
+          // crisp core
+          ctx.globalCompositeOperation = 'screen';
+          ctx.strokeStyle = '#ffffff88';
+          ctx.lineWidth = Math.max(1, thickness);
+          drawThread(t, amp*0.96, px, py, w, h, 10*dpr);
         }
 
         requestAnimationFrame(render);
       }
+
+      function drawThread(t, amp, px, py, w, h, step){
+        ctx.beginPath();
+        for(let x=0; x<=w; x+=step){
+          // field
+          const base = t.baseY;
+          const y = base
+            + Math.sin(x * t.freq + t.seed*2.0) * amp
+            + Math.cos((x * 0.5 * t.freq) - t.seed) * (amp * 0.22)
+            + Math.sin((x * 0.13 * t.freq) + t.seed*3.1) * (amp * 0.12);
+
+          // pointer influence
+          const dx = x - px; const dy = y - py;
+          const d2 = dx*dx + dy*dy;
+          const influence = Math.exp(-d2 / (w*h*0.15)) * (pointer.down ? 18 : 10);
+          const y2 = y + (dy/Math.sqrt(d2+0.0001)) * influence;
+
+          if(x===0){ ctx.moveTo(x, y2); } else { ctx.lineTo(x, y2 + Math.sin(x*0.02 + t.seed*6)*t.jitter); }
+        }
+        ctx.stroke();
+      }
+
       requestAnimationFrame(render);
 
-      // Randomize system
+      // Randomize
       randomBtn.addEventListener('click', ()=>{
         paletteIndex = (paletteIndex + 1) % PALETTES.length;
-        seedSystem();
-      });
-
-      // Pause
-      pauseBtn.addEventListener('click', ()=>{
-        paused = !paused; if(!paused){ t0 = performance.now(); } sync();
+        applyPalette();
+        seedThreads();
       });
 
       // Keyboard
@@ -463,6 +438,7 @@
         if(e.key==='d' || e.key==='D'){ e.preventDefault(); themeToggle.checked = !themeToggle.checked; sync(); }
         if(e.key==='t' || e.key==='T'){ e.preventDefault(); trailsToggle.checked = !trailsToggle.checked; sync(); }
         if(e.key==='r' || e.key==='R'){ e.preventDefault(); randomBtn.click(); }
+        if(e.key==='b' || e.key==='B'){ e.preventDefault(); breatheToggle.checked = !breatheToggle.checked; breathe = breatheToggle.checked; }
         if(e.key===' '){ e.preventDefault(); pauseBtn.click(); }
       }, {passive:false});
 
