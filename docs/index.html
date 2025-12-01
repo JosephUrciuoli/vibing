@@ -73,267 +73,288 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="loom995" data-theme="polar" role="region" aria-label="Aurora Loom — generative light ribbons you steer" tabindex="0">
+<div id="kinetic996" data-theme="noon" data-grid="on" role="region" aria-label="Solstice Clock — a kinetic typographic timepiece you can tune" tabindex="0">
   <style>
     /* Design tokens */
-    #loom995{
-      --ink:#0b1020;
-      --muted:color-mix(in oklab, var(--ink) 70%, #fff 30%);
+    #kinetic996{
+      --ink:#0e1323;
+      --muted:color-mix(in oklab, var(--ink) 68%, #ffffff 32%);
       --edge:rgba(0,0,0,.12);
-      --glass:rgba(255,255,255,.65);
-      --bg1:#f8fbff; --bg2:#eaf3ff;
-      --p:#4fb2ff; --q:#8ef0d3; --r:#caa8ff;
-      --halo1:color-mix(in oklab, var(--p) 38%, transparent);
-      --halo2:color-mix(in oklab, var(--r) 30%, transparent);
+      --glass:rgba(255,255,255,.58);
+      --bg1:#f7fbff; --bg2:#e9f3ff;
+      --p:#6fb8ff; --q:#9ff3ce; --r:#caa9ff;
       --mx:.5; --my:.5;
       --rx:0deg; --ry:0deg;
-      --tempo:1.0;
-      --bloom: 1; /* 0/1 */
-      --trail: .08; /* opacity of trailing veil */
+      --tempo:1.00;
+      --veil:.06;          /* 0..1 canvas veil/trails */
+      --refract:1;         /* 0/1 bloom-ish */
+      --gridAlpha:.35;     /* grid overlay strength */
       position:relative; isolation:isolate;
-      border-radius:40px; overflow:hidden;
       min-height:76vh;
-      padding: clamp(14px, 3vw, 28px);
+      padding: clamp(14px, 3.2vw, 28px);
+      border-radius:36px;
+      overflow:hidden;
       color:var(--ink);
       font-family: ui-sans-serif, -apple-system, Inter, "SF Pro", Segoe UI, Roboto, "Noto Sans", Arial, sans-serif;
       background:
-        radial-gradient(1200px 800px at calc(var(--mx)*100%) calc(var(--my)*100%), color-mix(in oklab, var(--p) 16%, transparent), transparent 60%),
+        radial-gradient(1200px 900px at calc(var(--mx)*100%) calc(var(--my)*100%), color-mix(in oklab, var(--p) 16%, transparent), transparent 60%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
       box-shadow:
         0 1px 0 rgba(0,0,0,.06) inset,
         0 0 0 1px rgba(0,0,0,.08) inset,
-        0 70px 200px rgba(40,56,120,.16);
+        0 70px 220px rgba(40,56,120,.18);
     }
 
     /* Themes */
-    #loom995[data-theme="polar"]{
-      --ink:#0b1020; --bg1:#f8fbff; --bg2:#eaf3ff;
-      --p:#4fb2ff; --q:#8ef0d3; --r:#caa8ff;
+    #kinetic996[data-theme="noon"]{
+      --ink:#0e1323; --bg1:#f7fbff; --bg2:#e9f3ff;
+      --p:#6fb8ff; --q:#9ff3ce; --r:#caa9ff;
+      --glass:rgba(255,255,255,.62);
     }
-    #loom995[data-theme="dusk"]{
-      --ink:#0f0d1a; --bg1:#fff7fa; --bg2:#ffe8f1;
-      --p:#ff7ab0; --q:#ffc66c; --r:#9aa8ff;
-    }
-    #loom995[data-theme="abyss"]{
+    #kinetic996[data-theme="midnight"]{
       --ink:#eaf1ff; color:#eaf1ff; --edge:rgba(255,255,255,.14);
-      --bg1:#080a12; --bg2:#11182a;
-      --p:#6ea8ff; --q:#44ffd4; --r:#ff9df4;
+      --bg1:#070a12; --bg2:#0f1630;
+      --p:#7aa6ff; --q:#4ff3d4; --r:#ff99e7;
       --glass:rgba(255,255,255,.08);
       box-shadow:
         0 1px 0 rgba(255,255,255,.05) inset,
         0 0 0 1px rgba(255,255,255,.08) inset,
-        0 70px 220px rgba(0,0,0,.60);
+        0 70px 240px rgba(0,0,0,.60);
     }
-    #loom995[data-theme="mint"]{
-      --ink:#0f1b17; --bg1:#eafff7; --bg2:#dcf7ef;
-      --p:#22c6a3; --q:#51e6ff; --r:#a2ffd9;
+    #kinetic996[data-theme="dawn"]{
+      --ink:#1c0f17; --bg1:#fff7f3; --bg2:#ffe7ee;
+      --p:#ff8aa3; --q:#ffd36f; --r:#9ea6ff;
+      --glass:rgba(255,255,255,.58);
+    }
+    #kinetic996[data-theme="forest"]{
+      --ink:#0c1713; --bg1:#eafff8; --bg2:#d8f3e9;
+      --p:#20c7a6; --q:#5be3c3; --r:#9ae2ff;
+      --glass:rgba(255,255,255,.62);
     }
 
-    /* Ambient */
-    #loom995 .aurora-mist{
-      position:absolute; inset:-20%;
-      filter: blur(80px) saturate(120%);
-      opacity:.55; mix-blend-mode: soft-light; pointer-events:none; z-index:0;
+    /* Ambient mists */
+    #kinetic996 .mist{ position:absolute; inset:-25%; filter: blur(90px) saturate(120%); opacity:.5; mix-blend-mode: soft-light; pointer-events:none; z-index:0; border-radius:50%; }
+    #kinetic996 .mist.one{
       background:
-        radial-gradient(40% 30% at 25% 20%, var(--halo1), transparent 70%),
-        radial-gradient(50% 30% at 80% 70%, var(--halo2), transparent 70%);
-      animation: loom-slow-spin 120s linear infinite;
+        radial-gradient(32% 28% at 25% 25%, color-mix(in oklab, var(--p) 34%, transparent), transparent 70%),
+        radial-gradient(40% 28% at 78% 68%, color-mix(in oklab, var(--r) 30%, transparent), transparent 70%);
+      animation: slowspin 160s linear infinite;
     }
-    #loom995 .aurora-mist.alt{
-      animation-direction: reverse; animation-duration: 180s; opacity:.35;
+    #kinetic996 .mist.two{
+      opacity:.35;
       background:
-        radial-gradient(40% 30% at 75% 30%, color-mix(in oklab, var(--q) 30%, transparent), transparent 70%),
-        radial-gradient(50% 30% at 18% 80%, color-mix(in oklab, var(--p) 24%, transparent), transparent 70%);
+        radial-gradient(38% 28% at 70% 24%, color-mix(in oklab, var(--q) 30%, transparent), transparent 70%),
+        radial-gradient(45% 25% at 18% 84%, color-mix(in oklab, var(--p) 22%, transparent), transparent 70%);
+      animation: slowspin 200s linear infinite reverse;
     }
-    @keyframes loom-slow-spin { to { transform: rotate(360deg); } }
-
-    #loom995 .grain{
+    @keyframes slowspin{ to { transform: rotate(360deg); } }
+    #kinetic996 .grain{
       position:absolute; inset:-2px; z-index:0; opacity:.12; pointer-events:none; mix-blend-mode: overlay;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
     }
 
-    /* Chrome */
-    #loom995 .chrome{
-      position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    /* Top chrome */
+    #kinetic996 .chrome{
+      position:relative; z-index:2;
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
       border:1px solid var(--edge); border-radius:22px; padding:10px 12px;
       background: color-mix(in oklab, var(--glass) 70%, transparent);
       backdrop-filter: blur(14px) saturate(120%);
       box-shadow: 0 12px 36px rgba(0,0,0,.12);
     }
-    #loom995[data-theme="abyss"] .chrome{
+    #kinetic996[data-theme="midnight"] .chrome{
       background: color-mix(in oklab, rgba(255,255,255,.06) 70%, transparent);
       box-shadow: 0 12px 36px rgba(0,0,0,.28);
     }
-    #loom995 .brand{
-      display:flex; align-items:center; gap:10px; text-transform:uppercase; letter-spacing:.16em; font-weight:900; font-size:12px; color:var(--muted);
+    #kinetic996 .brand{
+      display:flex; align-items:center; gap:10px; text-transform:uppercase; letter-spacing:.18em; font-weight:900; font-size:12px; color:var(--muted);
     }
-    #loom995 .gem{
+    #kinetic996 .gem{
       width:22px; height:22px; border-radius:6px; position:relative; overflow:hidden; display:grid; place-items:center;
       background: conic-gradient(from 0deg, var(--p), var(--q), var(--r), var(--p));
       box-shadow: inset 0 0 0 1px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.18);
-      animation: gem-sheen 10s linear infinite;
+      animation: gemspin 10s linear infinite;
     }
-    @keyframes gem-sheen{ to{ transform: rotate(360deg); } }
+    @keyframes gemspin{ to{ transform: rotate(360deg); } }
 
-    #loom995 .actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-    #loom995 button, #loom995 .toggle, #loom995 .slider{
+    #kinetic996 .actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    #kinetic996 button, #kinetic996 .toggle, #kinetic996 .slider{
       appearance:none; border:1px solid var(--edge); color:var(--ink);
       background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.72));
       border-radius:12px; padding:8px 12px; font-weight:800; cursor:pointer;
       transition: transform 120ms ease, box-shadow 220ms ease, background 240ms ease, color .2s ease;
       box-shadow: 0 2px 0 rgba(0,0,0,.06); user-select:none; font-size:12px;
     }
-    #loom995[data-theme="abyss"] :is(button,.toggle,.slider){
+    #kinetic996[data-theme="midnight"] :is(button,.toggle,.slider){
       background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
       box-shadow:0 2px 0 rgba(0,0,0,.28);
     }
-    #loom995 button:hover{ transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0,0,0,.16); }
-    #loom995 .toggle{ display:inline-flex; align-items:center; gap:10px; color:var(--muted); }
-    #loom995 .toggle input{
+    #kinetic996 button:hover{ transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0,0,0,.16); }
+    #kinetic996 .toggle{ display:inline-flex; align-items:center; gap:10px; color:var(--muted); }
+    #kinetic996 .toggle input{
       appearance:none; width:44px; height:24px; border-radius:999px; background: rgba(0,0,0,.08); position:relative; border:1px solid var(--edge);
     }
-    #loom995[data-theme="abyss"] .toggle input{ background: rgba(255,255,255,.12); }
-    #loom995 .toggle input::after{
+    #kinetic996[data-theme="midnight"] .toggle input{ background: rgba(255,255,255,.12); }
+    #kinetic996 .toggle input::after{
       content:""; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid var(--edge);
       box-shadow:0 2px 6px rgba(0,0,0,.18); transition: transform 160ms ease;
     }
-    #loom995 .toggle input:checked{ background: linear-gradient(90deg, var(--p), var(--q)); }
-    #loom995 .toggle input:checked::after{ transform: translateX(18px); }
+    #kinetic996 .toggle input:checked{ background: linear-gradient(90deg, var(--p), var(--q)); }
+    #kinetic996 .toggle input:checked::after{ transform: translateX(18px); }
 
-    #loom995 .slider{ display:inline-flex; align-items:center; gap:10px; color:var(--muted); }
-    #loom995 .slider input[type="range"]{ width:160px; height:18px; background:transparent; -webkit-appearance:none; }
-    #loom995 .slider input[type="range"]::-webkit-slider-runnable-track{ height:6px; border-radius:999px; background: linear-gradient(90deg, var(--q), var(--r)); opacity:.9; }
-    #loom995 .slider input[type="range"]::-webkit-slider-thumb{
+    #kinetic996 .slider{ display:inline-flex; align-items:center; gap:10px; color:var(--muted); }
+    #kinetic996 .slider input[type="range"]{ width:160px; height:18px; background:transparent; -webkit-appearance:none; }
+    #kinetic996 .slider input[type="range"]::-webkit-slider-runnable-track{ height:6px; border-radius:999px; background: linear-gradient(90deg, var(--q), var(--r)); opacity:.9; }
+    #kinetic996 .slider input[type="range"]::-webkit-slider-thumb{
       -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid var(--edge); margin-top:-6px;
       box-shadow:0 2px 6px rgba(0,0,0,.18);
     }
-    #loom995 .slider input[type="range"]::-moz-range-track{ height:6px; border-radius:999px; background: linear-gradient(90deg, var(--q), var(--r)); opacity:.9; }
-    #loom995 .slider input[type="range"]::-moz-range-thumb{
+    #kinetic996 .slider input[type="range"]::-moz-range-track{ height:6px; border-radius:999px; background: linear-gradient(90deg, var(--q), var(--r)); opacity:.9; }
+    #kinetic996 .slider input[type="range"]::-moz-range-thumb{
       width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid var(--edge); box-shadow:0 2px 6px rgba(0,0,0,.18);
     }
 
-    /* Stage */
-    #loom995 .stage{
+    /* Dial */
+    #kinetic996 .dial{
       position:relative; z-index:1; margin-top:16px;
-      border:1px solid var(--edge); border-radius:30px; overflow:hidden;
-      background: linear-gradient(180deg, color-mix(in oklab, var(--glass) 64%, transparent), color-mix(in oklab, var(--glass) 28%, transparent));
+      border:1px solid var(--edge); border-radius:28px; overflow:hidden;
+      background: linear-gradient(180deg, color-mix(in oklab, var(--glass) 64%, transparent), color-mix(in oklab, var(--glass) 30%, transparent));
       backdrop-filter: blur(12px) saturate(130%);
       box-shadow: 0 22px 70px rgba(0,0,0,.14);
       min-height: 520px;
       transform-style: preserve-3d;
       transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry));
       transition: transform .2s ease;
+      display:grid; place-items:center;
     }
-    #loom995 canvas{ display:block; width:100%; height:min(64vh,600px); }
+    #kinetic996 canvas{ position:absolute; inset:0; width:100%; height:min(64vh,600px); display:block; }
+    #kinetic996 .grid{
+      position:absolute; inset:0; pointer-events:none; z-index:1;
+      opacity: var(--gridAlpha);
+      background:
+        radial-gradient(1000px 1000px at calc(var(--mx)*100%) calc(var(--my)*100%), color-mix(in oklab, var(--p) 18%, transparent), transparent 60%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,.08) 0 1px, transparent 1px 44px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0 1px, transparent 1px 44px);
+      mask: radial-gradient(80% 80% at 50% 50%, black, transparent);
+    }
+    #kinetic996[data-theme="midnight"] .grid{
+      background:
+        radial-gradient(1000px 1000px at calc(var(--mx)*100%) calc(var(--my)*100%), color-mix(in oklab, var(--p) 18%, transparent), transparent 60%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.10) 0 1px, transparent 1px 44px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.10) 0 1px, transparent 1px 44px);
+    }
+    #kinetic996[data-grid="off"] .grid{ display:none; }
 
-    #loom995 .panel{
-      position:relative; z-index:2; margin-top:18px; display:grid; gap:14px;
-      padding: clamp(14px, 2.4vw, 22px); border-radius:24px; border:1px solid var(--edge);
-      background: color-mix(in oklab, var(--glass) 70%, transparent);
-      backdrop-filter: blur(10px) saturate(120%);
-      box-shadow: 0 12px 40px rgba(0,0,0,.12);
+    /* Typographic time */
+    #kinetic996 .time{
+      position:relative; z-index:2; text-align:center; padding: clamp(14px, 2.2vw, 22px);
+      display:grid; gap:8px; place-items:center;
     }
-    #loom995 h1{
-      margin:0; line-height:.92; letter-spacing:-0.02em; font-weight:900;
-      font-size: clamp(48px, 9vw, 120px);
+    #kinetic996 h1{
+      margin:0; line-height:.88; letter-spacing:-0.02em; font-weight:900;
+      font-size: clamp(54px, 12vw, 148px);
       color: transparent;
       background: linear-gradient(90deg, var(--p), var(--q), var(--r), var(--p));
       background-size: 220% 100%;
       -webkit-background-clip: text; background-clip: text;
-      animation: title-sheen 16s linear infinite;
+      animation: sheen 16s linear infinite;
+      filter: drop-shadow(0 6px 18px color-mix(in oklab, var(--p) 24%, transparent));
       transform: translate(calc((var(--mx)-.5)*16px), calc((var(--my)-.5)*-9px));
       transition: transform 140ms ease;
     }
-    @keyframes title-sheen{ 0%{ background-position: 0% 0; } 100%{ background-position: 200% 0; } }
+    @keyframes sheen{ 0%{ background-position: 0% 0; } 100%{ background-position: 200% 0; } }
 
-    #loom995 .lede{
-      color:var(--muted); font-size: clamp(14px, 1.6vw, 18px); line-height:1.7; text-wrap: balance; max-width: 74ch; margin: 4px 0 0;
+    #kinetic996 .lede{
+      color:var(--muted); font-size: clamp(14px, 1.6vw, 18px); line-height:1.7; text-wrap: balance; max-width: 80ch; margin: 4px 0 0; text-align:center;
     }
-    #loom995 .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
-    #loom995 .chip{
-      border:1px solid var(--edge); background:linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,.5));
+    #kinetic996 .chips{ position:relative; z-index:2; display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; justify-content:center; }
+    #kinetic996 .chip{
+      border:1px solid var(--edge); background:linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.54));
       padding:6px 10px; border-radius:999px; font-weight:700; font-size:12px; color:var(--ink);
     }
-    #loom995[data-theme="abyss"] .chip{ background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06)); }
+    #kinetic996[data-theme="midnight"] .chip{ background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06)); color:#eaf1ff; }
 
-    #loom995 .meta{
+    #kinetic996 .meta{
       margin-top:14px; color:var(--muted); font-size:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
     }
 
     /* Focus */
-    #loom995 :is(button, input, [tabindex]):focus-visible{
+    #kinetic996 :is(button, input, [tabindex]):focus-visible{
       outline: 2px solid color-mix(in oklab, var(--p) 55%, #fff);
       outline-offset: 2px;
     }
 
     @media (max-width: 880px){
-      #loom995 .slider input[type="range"]{ width:130px; }
-      #loom995 h1{ font-size: clamp(38px, 10vw, 96px); }
-      #loom995 canvas{ height: min(58vh, 520px); }
+      #kinetic996 .slider input[type="range"]{ width:130px; }
+      #kinetic996 h1{ font-size: clamp(42px, 12vw, 112px); }
+      #kinetic996 canvas{ height: min(58vh, 520px); }
     }
     @media (prefers-reduced-motion: reduce){
-      #loom995 .aurora-mist, #loom995 .aurora-mist.alt{ animation:none !important; }
-      #loom995 h1{ animation:none !important; }
+      #kinetic996 .mist{ animation:none !important; }
+      #kinetic996 h1{ animation:none !important; }
     }
   </style>
 
-  <div class="aurora-mist" aria-hidden="true"></div>
-  <div class="aurora-mist alt" aria-hidden="true"></div>
+  <div class="mist one" aria-hidden="true"></div>
+  <div class="mist two" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
   <div class="chrome">
     <div class="brand">
       <span class="gem" aria-hidden="true"></span>
-      <span>Aurora Loom • 995</span>
+      <span>Solstice • 996</span>
     </div>
     <div class="actions">
-      <button id="theme995" title="Cycle theme">Theme</button>
-      <button id="reseed995" title="Reseed the field">Recast</button>
-      <label class="toggle" title="Bloom">
-        Bloom
-        <input type="checkbox" id="bloom995" checked>
+      <button id="theme996" title="Cycle theme">Theme</button>
+      <label class="slider" title="Tempo">
+        Speed
+        <input type="range" id="speed996" min="0.20" max="3.00" step="0.01" value="1.10">
+      </label>
+      <label class="slider" title="Orbiters">
+        Orbiters
+        <input type="range" id="orbits996" min="4" max="64" step="1" value="24">
       </label>
       <label class="toggle" title="Trails">
         Trails
-        <input type="checkbox" id="trails995" checked>
+        <input type="checkbox" id="trails996" checked>
       </label>
-      <label class="slider" title="Wind">
-        Wind
-        <input type="range" id="wind995" min="0.20" max="3.00" step="0.01" value="1.10">
+      <label class="toggle" title="Refraction glow">
+        Refract
+        <input type="checkbox" id="refract996" checked>
       </label>
-      <label class="slider" title="Ribbons">
-        Ribbons
-        <input type="range" id="ribbons995" min="3" max="12" step="1" value="7">
+      <label class="toggle" title="Grid overlay">
+        Grid
+        <input type="checkbox" id="grid996" checked>
       </label>
     </div>
   </div>
 
-  <div class="stage" role="img" aria-label="Silken ribbons of light drift and fold with your pointer; wind and count are adjustable">
-    <canvas id="field995"></canvas>
-  </div>
-
-  <section class="panel">
-    <h1>Paint the sky.</h1>
-    <p class="lede">Conduct living light. Drag to tilt the horizon and push the wind; tune Bloom, Trails, Wind, and Ribbons. Every recast spins a new weave.</p>
-    <div class="chips" aria-hidden="true">
-      <span class="chip">Generative Aurora</span>
-      <span class="chip">Additive Glow</span>
-      <span class="chip">Pointer Wind</span>
-      <span class="chip">4 Themes</span>
+  <div class="dial" role="img" aria-label="Kinetic dial with orbiting lights and optional grid; pointer tilts the scene">
+    <canvas id="orbitCanvas996"></canvas>
+    <div class="grid" aria-hidden="true"></div>
+    <div class="time" aria-live="polite">
+      <h1><span id="hh996">12</span><span>:</span><span id="mm996">00</span><span>:</span><span id="ss996">00</span></h1>
+      <p class="lede">A quiet clock for loud ideas. Tilt with your pointer; tune tempo, trails, glow, and orbits. Every moment gets a new orbit.</p>
+      <div class="chips" aria-hidden="true">
+        <span class="chip">Kinetic Grid</span>
+        <span class="chip">Lissajous Orbits</span>
+        <span class="chip">Refracted Glow</span>
+        <span class="chip">4 Themes</span>
+      </div>
     </div>
-  </section>
+  </div>
 
   <div class="meta">
-    <span id="last-updated">Last updated: 2025-12-01 04:26:35 EST</span>
-    <span class="keys">Tip: T to theme • R to recast • Drag to steer • Trails smears motion</span>
+    <span id="last-updated">Last updated: 2025-12-01 05:21:43 EST</span>
+    <span class="keys">Keys: T theme • Space pause • Drag to tilt</span>
   </div>
 
   <script>
     (function(){
-      const root = document.getElementById('loom995');
-      const canvas = root.querySelector('#field995');
+      const root = document.getElementById('kinetic996');
+      const canvas = root.querySelector('#orbitCanvas996');
       const ctx = canvas.getContext('2d');
-      const stage = root.querySelector('.stage');
+      const dial = root.querySelector('.dial');
 
       // Timestamp
       try{
@@ -342,30 +363,53 @@
         root.querySelector('#last-updated').textContent = 'Last updated: ' + fmt.format(d);
       }catch{}
 
-      // Controls
-      const themeBtn = root.querySelector('#theme995');
-      const reseedBtn = root.querySelector('#reseed995');
-      const bloomToggle = root.querySelector('#bloom995');
-      const trailsToggle = root.querySelector('#trails995');
-      const windSlider = root.querySelector('#wind995');
-      const ribbonsSlider = root.querySelector('#ribbons995');
+      // Time updater
+      const hh = root.querySelector('#hh996');
+      const mm = root.querySelector('#mm996');
+      const ss = root.querySelector('#ss996');
+      function pad(n){ return String(n).padStart(2,'0'); }
+      function tickTime(){
+        const d = new Date();
+        hh.textContent = pad(d.getHours());
+        mm.textContent = pad(d.getMinutes());
+        ss.textContent = pad(d.getSeconds());
+      }
+      tickTime();
+      let timeTimer = setInterval(tickTime, 500);
 
-      const themes = ['polar','dusk','abyss','mint'];
+      // Controls
+      const themeBtn = root.querySelector('#theme996');
+      const speed = root.querySelector('#speed996');
+      const orbits = root.querySelector('#orbits996');
+      const trails = root.querySelector('#trails996');
+      const refract = root.querySelector('#refract996');
+      const grid = root.querySelector('#grid996');
+
+      const themes = ['noon','midnight','dawn','forest'];
       function cycleTheme(){
         const cur = root.getAttribute('data-theme') || themes[0];
         const idx = themes.indexOf(cur);
         const next = themes[(idx+1)%themes.length];
         root.setAttribute('data-theme', next);
+        themeBtn.textContent = 'Theme • ' + next;
       }
       themeBtn.addEventListener('click', cycleTheme);
+      themeBtn.textContent = 'Theme • ' + (root.getAttribute('data-theme') || themes[0]);
 
-      function syncToggles(){
-        root.style.setProperty('--bloom', bloomToggle.checked ? '1':'0');
-        root.style.setProperty('--trail', trailsToggle.checked ? '.08':'1'); // 1 = hard wipe
+      function syncUI(){
+        root.style.setProperty('--tempo', Math.max(0.2, Math.min(3.0, Number(speed.value)||1)).toFixed(2));
+        root.style.setProperty('--veil', trails.checked ? '.06' : '1');
+        root.style.setProperty('--refract', refract.checked ? '1' : '0');
+        root.setAttribute('data-grid', grid.checked ? 'on' : 'off');
+        root.style.setProperty('--gridAlpha', grid.checked ? '.35' : '0');
+        COUNT = parseInt(orbits.value,10);
       }
-      bloomToggle.addEventListener('change', syncToggles);
-      trailsToggle.addEventListener('change', syncToggles);
-      syncToggles();
+      speed.addEventListener('input', syncUI);
+      trails.addEventListener('change', syncUI);
+      refract.addEventListener('change', syncUI);
+      grid.addEventListener('change', syncUI);
+      orbits.addEventListener('input', syncUI);
+      syncUI();
 
       // Pointer parallax
       let mx=.5, my=.5, tx=.5, ty=.5;
@@ -379,17 +423,17 @@
       }
       setVars();
 
-      stage.addEventListener('pointermove', (e)=>{
-        const r = stage.getBoundingClientRect();
+      dial.addEventListener('pointermove', (e)=>{
+        const r = dial.getBoundingClientRect();
         tx = Math.max(0, Math.min(1, (e.clientX - r.left)/r.width));
         ty = Math.max(0, Math.min(1, (e.clientY - r.top)/r.height));
       }, {passive:true});
-      stage.addEventListener('pointerleave', ()=>{ tx=.5; ty=.5; }, {passive:true});
+      dial.addEventListener('pointerleave', ()=>{ tx=.5; ty=.5; }, {passive:true});
 
       // Canvas sizing
       function fit(){
         const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-        const rect = stage.getBoundingClientRect();
+        const rect = dial.getBoundingClientRect();
         const w = Math.max(400, Math.floor(rect.width));
         const h = Math.max(300, Math.floor(rect.height));
         canvas.width = Math.floor(w * dpr);
@@ -399,27 +443,18 @@
         ctx.setTransform(dpr,0,0,dpr,0,0);
       }
       const ro = new ResizeObserver(fit);
-      ro.observe(stage);
+      ro.observe(dial);
 
-      // Random seed + noise
-      let SEED = Math.floor(Math.random()*1e7) ^ Date.now();
-      function reseed(){ SEED = Math.floor(Math.random()*1e7) ^ Date.now(); }
-      reseedBtn.addEventListener('click', reseed);
-
-      function rand(){
-        // xorshift32
-        let x = SEED |= 0;
-        x ^= x << 13; x ^= x >>> 17; x ^= x << 5;
-        SEED = x;
-        return ((x>>>0) % 1000) / 1000;
-      }
-
-      // Simple 2D noise via layered sines (fast and smooth)
-      function n2(x, y){
-        const a = Math.sin(x*1.21 + y*0.97 + SEED*0.0001);
-        const b = Math.sin(x*0.71 - y*1.31 + SEED*0.0003);
-        const c = Math.sin(x*1.91 + y*1.77 + SEED*0.0007);
-        return (a*0.5 + b*0.3 + c*0.2);
+      // Reduced motion
+      let REDUCE=false;
+      try{ REDUCE = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch{}
+      if(REDUCE){
+        speed.value = '0.4';
+        trails.checked = false;
+        refract.checked = false;
+        syncUI();
+        clearInterval(timeTimer);
+        timeTimer = setInterval(tickTime, 1000);
       }
 
       // Palette helper
@@ -428,30 +463,42 @@
         return [cs.getPropertyValue('--p').trim(), cs.getPropertyValue('--q').trim(), cs.getPropertyValue('--r').trim()];
       }
 
-      // Ribbons
-      let RIBBONS = parseInt(ribbonsSlider.value,10);
-      ribbonsSlider.addEventListener('input', ()=>{ RIBBONS = parseInt(ribbonsSlider.value,10); });
-
-      // Wind / tempo
-      function syncWind(){
-        const t = Math.max(0.2, Math.min(3.0, Number(windSlider.value)||1));
-        root.style.setProperty('--tempo', t.toFixed(2));
+      // Orbiters
+      let COUNT = parseInt(orbits.value,10);
+      let SEED = Math.floor(Math.random()*1e7) ^ Date.now();
+      function rng(){
+        // xorshift32
+        let x = SEED |= 0;
+        x ^= x << 13; x ^= x >>> 17; x ^= x << 5;
+        SEED = x;
+        return ((x>>>0) % 1000) / 1000;
       }
-      windSlider.addEventListener('input', syncWind);
-      syncWind();
-
-      // Reduced motion
-      let REDUCE=false;
-      try{ REDUCE = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch{}
-      if(REDUCE){
-        windSlider.value = '0.4'; syncWind();
-        trailsToggle.checked = false; syncToggles();
-        RIBBONS = Math.min(RIBBONS, 5);
+      function makeOrbs(n){
+        const arr=[];
+        const [c1,c2,c3] = palette();
+        for(let i=0;i<n;i++){
+          const f = i/(n-1 || 1);
+          const hue = f<.33 ? c1 : (f<.66 ? c2 : c3);
+          arr.push({
+            ax: .6 + rng()*1.2, ay: .6 + rng()*1.2,    // lissajous multipliers
+            r:  26 + rng()*130,                        // radius factor
+            s:  .25 + rng()*1.2,                       // speed base
+            p:  rng()*Math.PI*2,                       // phase
+            hue,
+            w:  2 + rng()*3                            // stroke weight
+          });
+        }
+        return arr;
       }
+      let orbs = makeOrbs(COUNT);
+      orbits.addEventListener('change', ()=>{ orbs = makeOrbs(COUNT); });
 
       // Drawing
       let t0 = performance.now();
+      let paused = false;
+
       function frame(now){
+        if(paused){ requestAnimationFrame(frame); return; }
         const dt = Math.min(0.04, (now-(t0||now))/1000); t0=now;
 
         // ease pointer
@@ -460,95 +507,74 @@
 
         const w = canvas.width / (window.devicePixelRatio? Math.max(1, Math.min(2, window.devicePixelRatio)) : 1);
         const h = canvas.height / (window.devicePixelRatio? Math.max(1, Math.min(2, window.devicePixelRatio)) : 1);
+        const cx = w/2, cy = h/2;
+        const tempo = (parseFloat(getComputedStyle(root).getPropertyValue('--tempo'))||1) * (REDUCE ? 0.6 : 1.0);
+        const time = now*0.001 * tempo;
 
         // veil
-        const trail = parseFloat(getComputedStyle(root).getPropertyValue('--trail')) || .08;
-        if(trail >= 1){
+        const veil = parseFloat(getComputedStyle(root).getPropertyValue('--veil')) || .06;
+        if(veil >= 1){
           ctx.clearRect(0,0,w,h);
         }else{
-          ctx.fillStyle = `rgba(0,0,0,${trail})`;
           ctx.globalCompositeOperation = 'source-over';
-          // dark or light veil based on theme
-          if(root.getAttribute('data-theme')==='abyss'){
-            ctx.fillStyle = `rgba(0,0,0,${trail})`;
+          if(root.getAttribute('data-theme')==='midnight'){
+            ctx.fillStyle = `rgba(0,0,0,${veil})`;
           }else{
-            ctx.fillStyle = `rgba(255,255,255,${trail*.70})`;
+            ctx.fillStyle = `rgba(255,255,255,${veil*.70})`;
           }
           ctx.fillRect(0,0,w,h);
         }
 
-        const tempo = (parseFloat(getComputedStyle(root).getPropertyValue('--tempo'))||1) * (REDUCE ? 0.6 : 1.0);
-        const time = now*0.001 * tempo;
-
-        const midY = h*0.52 + (my-.5)*h*0.08;
-        const driftX = (mx - .5)*0.8;
+        // draw orbits
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.globalCompositeOperation = 'lighter';
         const [c1,c2,c3] = palette();
 
-        ctx.save();
-        ctx.translate(0,0);
-        ctx.globalCompositeOperation = 'lighter';
+        for(let i=0;i<orbs.length;i++){
+          const o = orbs[i];
+          const baseR = Math.min(cx,cy)*0.72;
+          const R = baseR * (0.3 + (i/(orbs.length-1||1))*0.7);
+          const A = R * 0.6;
+          const B = R * 0.4;
 
-        for(let i=0;i<RIBBONS;i++){
-          const f = i/(RIBBONS-1 || 1);
-          const hue = f<.33 ? c1 : (f<.66 ? c2 : c3);
-          const amp = (h*0.08 + f*h*0.12) * (0.9 + Math.sin(time*0.7 + i)*0.1);
-          const freq = 0.003 + f*0.0035;
-          const speed = (0.4 + f*0.8) * (driftX>0?1:-1);
-          const thickness = 22 + f*34;
-          const yOff = (f-0.5)*h*0.18;
+          const x = Math.sin(time*o.s*o.ax + o.p) * (A + o.r*0.08) + (mx-.5)*R*0.6;
+          const y = Math.cos(time*o.s*o.ay + o.p*1.1) * (B + o.r*0.08) + (my-.5)*R*0.6;
 
-           // Path points
-          const pts = [];
-          const steps = 120;
-          for(let s=0; s<=steps; s++){
-            const x = (s/steps)*w;
-            const nois = n2(x*freq*1.3 + time*speed*0.9, time*0.6 + i*0.23);
-            const y = midY + yOff + Math.sin(x*freq*2.0 + time*0.8 + i)*amp*0.55 + nois*amp;
-            pts.push([x,y]);
-          }
-
-          // Draw filled ribbon (two offset curves)
-          ctx.beginPath();
-          for(let s=0; s<pts.length; s++){
-            const [x,y]=pts[s];
-            const n = n2(x*0.01 + i*4, time*0.4 + s*0.01);
-            const off = (thickness*0.5 + n*6);
-            const ny = y - off;
-            (s===0) ? ctx.moveTo(x,ny) : ctx.lineTo(x,ny);
-          }
-          for(let s=pts.length-1; s>=0; s--){
-            const [x,y]=pts[s];
-            const n = n2(x*0.01 + i*4, time*0.4 + s*0.01);
-            const off = (thickness*0.5 + n*6);
-            const ny = y + off;
-            ctx.lineTo(x,ny);
-          }
-          ctx.closePath();
-
-          const grad = ctx.createLinearGradient(0,0,w,h);
-          grad.addColorStop(0, hue);
-          grad.addColorStop(1, c2);
-          ctx.fillStyle = grad;
-          ctx.globalAlpha = 0.12 + f*0.16;
-          ctx.fill();
-
-          // Bloom pass (stroke)
-          if(parseFloat(getComputedStyle(root).getPropertyValue('--bloom'))>0.5){
+          // path glow
+          if(parseFloat(getComputedStyle(root).getPropertyValue('--refract'))>0.5){
             ctx.beginPath();
-            for(let s=0; s<pts.length; s++){
-              const [x,y]=pts[s];
-              s===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-            }
-            ctx.strokeStyle = hue;
-            ctx.lineWidth = 1 + thickness*0.22;
-            ctx.globalAlpha = 0.065 + f*0.08;
+            ctx.moveTo(0,0); ctx.lineTo(x,y);
+            ctx.strokeStyle = o.hue;
+            ctx.globalAlpha = 0.05;
+            ctx.lineWidth = o.w*2.6;
             ctx.stroke();
 
-            ctx.lineWidth = 1 + thickness*0.08;
-            ctx.globalAlpha = 0.085 + f*0.10;
+            ctx.globalAlpha = 0.08;
+            ctx.lineWidth = o.w*1.2;
             ctx.stroke();
           }
+
+          // orb
+          const grad = ctx.createRadialGradient(x,y,0, x,y, 26);
+          grad.addColorStop(0, o.hue);
+          grad.addColorStop(1, 'transparent');
+          ctx.fillStyle = grad;
+          ctx.globalAlpha = 0.22;
+          ctx.beginPath(); ctx.arc(x,y, 22, 0, Math.PI*2); ctx.fill();
+
+          ctx.globalAlpha = 0.8;
+          ctx.fillStyle = o.hue;
+          ctx.beginPath(); ctx.arc(x,y, 3.2, 0, Math.PI*2); ctx.fill();
         }
+
+        // subtle center pulse
+        const cg = ctx.createRadialGradient(0,0,0, 0,0, Math.min(cx,cy)*0.4);
+        cg.addColorStop(0, c2);
+        cg.addColorStop(1, 'transparent');
+        ctx.globalAlpha = 0.10 + Math.sin(time*0.8)*0.02;
+        ctx.fillStyle = cg;
+        ctx.beginPath(); ctx.arc(0,0, Math.min(cx,cy)*0.4, 0, Math.PI*2); ctx.fill();
 
         ctx.restore();
 
@@ -559,10 +585,14 @@
       fit();
       requestAnimationFrame(frame);
 
-      // Keyboard: T theme, R recast
+      // Keyboard: T theme, Space pause
       root.addEventListener('keydown', (e)=>{
         if(e.key==='t' || e.key==='T'){ e.preventDefault(); cycleTheme(); }
-        if(e.key==='r' || e.key==='R'){ e.preventDefault(); reseedBtn.click(); }
+        if(e.key===' '){
+          e.preventDefault();
+          paused = !paused;
+          if(!paused){ t0 = performance.now(); }
+        }
       }, {passive:false});
     })();
   </script>
