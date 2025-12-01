@@ -73,132 +73,151 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="orrery1001" data-theme="night" data-trails="on" tabindex="0" role="region" aria-label="HelioScope — an interactive kinetic orrery that responds to your touch">
+<div id="aurora1002" data-theme="nocturne" data-trails="on" tabindex="0" role="region" aria-label="Aurora Fabric — a living gradient you can weave with your pointer">
   <style>
-    /* Design tokens */
-    #orrery1001{
-      --night-bg1:#070b1a; --night-bg2:#0e1330;
-      --day-bg1:#fbfcff; --day-bg2:#eaf2ff;
-      --ink-night:#eef3ff; --muted-night:#9aa6cf;
-      --ink-day:#0c1330; --muted-day:#596a92;
+    /* Aurora 1002 — bold shift from an orrery to a living light fabric */
+    #aurora1002{
+      --nocturne-1:#050914; --nocturne-2:#0b1635;
+      --paper-1:#f7fbff; --paper-2:#e9f2ff;
 
-      --a1:#7ed0ff; --a2:#9b8cff; --a3:#ff9bd6; --a4:#62ffc7;
-      --glass: rgba(255,255,255,.08);
-      --edge: color-mix(in oklab, #fff 20%, transparent);
+      /* active palette (updated by JS) */
+      --p1:#6de1ff; --p2:#9b8cff; --p3:#ff8ec2; --p4:#6affcd;
+
+      --ink-dark:#eaf2ff; --muted-dark:#9aa6cf;
+      --ink-light:#0c1330; --muted-light:#52608a;
+
+      --bg1:var(--nocturne-1); --bg2:var(--nocturne-2);
+      --ink:var(--ink-dark); --muted:var(--muted-dark);
 
       position:relative; isolation:isolate;
-      min-height:78vh; padding:clamp(14px,4vw,36px);
-      border-radius:34px; overflow:hidden;
-      color:var(--ink); background: radial-gradient(1200px 800px at 75% -10%, color-mix(in oklab, var(--a2) 12%, transparent), transparent 60%), linear-gradient(180deg,var(--bg1),var(--bg2));
+      min-height:78vh; border-radius:34px; overflow:hidden;
+      padding:clamp(14px,4vw,36px);
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 800px at 85% -10%, color-mix(in oklab, var(--p2) 16%, transparent), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
       font-family: ui-sans-serif, -apple-system, Inter, "SF Pro", Segoe UI, Roboto, "Noto Sans", Arial, sans-serif;
       box-shadow:
-        0 1px 0 rgba(255,255,255,.04) inset,
+        0 1px 0 rgba(255,255,255,.05) inset,
         0 0 0 1px rgba(255,255,255,.08) inset,
         0 70px 220px rgba(0,0,0,.55);
     }
-    #orrery1001[data-theme="night"]{ --bg1:var(--night-bg1); --bg2:var(--night-bg2); --ink:var(--ink-night); --muted:var(--muted-night); }
-    #orrery1001[data-theme="day"]{ --bg1:var(--day-bg1); --bg2:var(--day-bg2); --ink:var(--ink-day); --muted:var(--muted-day); }
+    #aurora1002[data-theme="paper"]{
+      --bg1:var(--paper-1); --bg2:var(--paper-2);
+      --ink:var(--ink-light); --muted:var(--muted-light);
+    }
 
-    /* Soft grain + vignette */
-    #orrery1001::before{
-      content:""; position:absolute; inset:-10%;
+    /* Grain + vignette for atmosphere */
+    #aurora1002::before{
+      content:""; position:absolute; inset:-8%;
       background:
-        radial-gradient(120% 120% at 50% 50%, transparent 60%, rgba(0,0,0,.24) 100%),
-        repeating-radial-gradient( circle at 30% 70%, rgba(255,255,255,.02) 0 2px, transparent 2px 4px);
+        radial-gradient(140% 120% at 50% 40%, transparent 60%, rgba(0,0,0,.24) 100%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 1px, transparent 1px 2px);
       mix-blend-mode:soft-light; pointer-events:none; z-index:0;
     }
 
     /* Chrome */
-    #orrery1001 .chrome{
+    #aurora1002 .chrome{
       position:relative; z-index:3; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
-      background: color-mix(in oklab, var(--glass) 85%, transparent);
-      border:1px solid var(--edge); border-radius:20px; padding:10px 12px;
+      background: color-mix(in oklab, rgba(255,255,255,.08) 85%, transparent);
+      border:1px solid color-mix(in oklab, #fff 20%, transparent);
+      border-radius:20px; padding:10px 12px;
       backdrop-filter: blur(14px) saturate(120%);
       box-shadow: 0 16px 40px rgba(0,0,0,.28);
     }
-    #orrery1001 .brand{ display:flex; align-items:center; gap:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:900; font-size:12px; color:var(--muted); }
-    #orrery1001 .mark{ width:30px; height:30px; display:block; }
-    #orrery1001 .mark .ring{ transform-origin: 50% 50%; animation: orbitspin 9s linear infinite; }
-    #orrery1001 .mark .ring:nth-child(2){ animation-duration: 13s; opacity:.85; }
-    #orrery1001 .mark .ring:nth-child(3){ animation-duration: 19s; opacity:.7; }
-    @keyframes orbitspin{ 0%{ transform: rotate(0)} 100%{ transform: rotate(360deg)} }
+    #aurora1002 .brand{ display:flex; align-items:center; gap:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:900; font-size:12px; color:var(--muted); }
+    #aurora1002 .mark{ width:30px; height:30px; display:block; }
+    #aurora1002 .mark path{ transform-origin: 50% 50%; animation: breathe1002 5s ease-in-out infinite; }
+    @keyframes breathe1002{ 0%,100%{ transform: scale(1)} 50%{ transform: scale(1.06)} }
 
-    #orrery1001 .actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-    #orrery1001 button, #orrery1001 .toggle, #orrery1001 .slider{
-      appearance:none; border:1px solid var(--edge); color:var(--ink);
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+    #aurora1002 .actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    #aurora1002 button, #aurora1002 .toggle, #aurora1002 .slider, #aurora1002 .swatches{
+      appearance:none; border:1px solid color-mix(in oklab, #fff 20%, transparent);
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
       border-radius:12px; padding:8px 12px; font-weight:800; cursor:pointer;
       transition: transform 120ms ease, box-shadow 220ms ease, background 240ms ease, color .2s ease;
-      box-shadow: 0 2px 0 rgba(0,0,0,.28); user-select:none; font-size:12px;
+      box-shadow: 0 2px 0 rgba(0,0,0,.28); user-select:none; font-size:12px; color:var(--ink);
     }
-    #orrery1001 button:hover{ transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0,0,0,.24); }
-    #orrery1001 .toggle, #orrery1001 .slider{ display:inline-flex; align-items:center; gap:10px; color:var(--muted); }
-
-    #orrery1001 .toggle input{
-      appearance:none; width:44px; height:24px; border-radius:999px; background: rgba(255,255,255,.12); position:relative; border:1px solid var(--edge);
+    #aurora1002 button:hover{ transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0,0,0,.24); }
+    #aurora1002 .slider, #aurora1002 .toggle{ display:inline-flex; align-items:center; gap:10px; color:var(--muted); }
+    #aurora1002 .slider input[type="range"]{ width:150px; height:18px; background:transparent; -webkit-appearance:none; }
+    #aurora1002 .slider input[type="range"]::-webkit-slider-runnable-track{ height:6px; border-radius:999px; background: linear-gradient(90deg, var(--p2), var(--p3)); opacity:.95; }
+    #aurora1002 .slider input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid color-mix(in oklab, #000 14%, #fff);
+      margin-top:-6px; box-shadow:0 2px 6px rgba(0,0,0,.18);
     }
-    #orrery1001 .toggle input::after{
-      content:""; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid var(--edge);
-      box-shadow:0 2px 6px rgba(0,0,0,.18); transition: transform 160ms ease;
-    }
-    #orrery1001 .toggle input:checked{ background: linear-gradient(90deg, var(--a1), var(--a4)); }
-    #orrery1001 .toggle input:checked::after{ transform: translateX(18px); }
-
-    #orrery1001 .slider input[type="range"]{ width:170px; height:18px; background:transparent; -webkit-appearance:none; }
-    #orrery1001 .slider input[type="range"]::-webkit-slider-runnable-track{ height:6px; border-radius:999px; background: linear-gradient(90deg, var(--a2), var(--a3)); opacity:.95; }
-    #orrery1001 .slider input[type="range"]::-webkit-slider-thumb{
-      -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid var(--edge); margin-top:-6px;
+    #aurora1002 .slider input[type="range"]::-moz-range-track{ height:6px; border-radius:999px; background: linear-gradient(90deg, var(--p2), var(--p3)); opacity:.95; }
+    #aurora1002 .slider input[type="range"]::-moz-range-thumb{
+      width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid color-mix(in oklab, #000 14%, #fff);
       box-shadow:0 2px 6px rgba(0,0,0,.18);
     }
-    #orrery1001 .slider input[type="range"]::-moz-range-track{ height:6px; border-radius:999px; background: linear-gradient(90deg, var(--a2), var(--a3)); opacity:.95; }
-    #orrery1001 .slider input[type="range"]::-moz-range-thumb{
-      width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid var(--edge); box-shadow:0 2px 6px rgba(0,0,0,.18);
+
+    #aurora1002 .toggle input{
+      appearance:none; width:44px; height:24px; border-radius:999px; background: rgba(255,255,255,.12); position:relative; border:1px solid color-mix(in oklab, #fff 20%, transparent);
     }
+    #aurora1002 .toggle input::after{
+      content:""; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#fff; border:1px solid color-mix(in oklab, #000 14%, #fff);
+      box-shadow:0 2px 6px rgba(0,0,0,.18); transition: transform 160ms ease;
+    }
+    #aurora1002 .toggle input:checked{ background: linear-gradient(90deg, var(--p1), var(--p4)); }
+    #aurora1002 .toggle input:checked::after{ transform: translateX(18px); }
+
+    #aurora1002 .swatches{
+      display:inline-flex; align-items:center; gap:8px; padding:6px 10px;
+    }
+    #aurora1002 .swatches button{
+      width:22px; height:22px; padding:0; border-radius:8px; border:1px solid color-mix(in oklab, #fff 20%, transparent);
+      background: linear-gradient(135deg, var(--g1), var(--g2), var(--g3), var(--g4));
+      background-size: 200% 200%; animation: hueflow1002 8s linear infinite;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), 0 2px 8px rgba(0,0,0,.2);
+    }
+    @keyframes hueflow1002{ 0%{ background-position: 0% 50% } 100%{ background-position: 200% 50% } }
 
     /* Stage */
-    #orrery1001 .stage{
+    #aurora1002 .stage{
       position:relative; z-index:1; margin-top:16px;
-      border:1px solid var(--edge); border-radius:26px; overflow:hidden;
-      background: linear-gradient(180deg, color-mix(in oklab, var(--glass) 64%, transparent), color-mix(in oklab, var(--glass) 30%, transparent));
+      border:1px solid color-mix(in oklab, #fff 20%, transparent); border-radius:26px; overflow:hidden;
+      background: linear-gradient(180deg, color-mix(in oklab, rgba(255,255,255,.16) 64%, transparent), color-mix(in oklab, rgba(255,255,255,.10) 30%, transparent));
       backdrop-filter: blur(10px) saturate(130%);
       box-shadow: 0 22px 70px rgba(0,0,0,.34);
       min-height: clamp(520px, 66vh, 840px);
     }
-    #orrery1001 canvas{ position:absolute; inset:0; width:100%; height:100%; }
-    #orrery1001 .title{
+    #aurora1002 canvas{ position:absolute; inset:0; width:100%; height:100%; }
+    #aurora1002 .title{
       position:relative; z-index:2; display:grid; place-items:center; text-align:center; min-height:100%;
       text-shadow: 0 6px 18px rgba(0,0,0,.25); pointer-events:none; padding: 10vh 3vw 12vh;
     }
-    #orrery1001 .hero{
+    #aurora1002 .hero{
       margin:0; font-weight:1000; letter-spacing:-.02em; line-height:.9;
       font-size: clamp(42px, 9.6vw, 120px);
       color: transparent;
-      background: linear-gradient(100deg, var(--a1), var(--a4), var(--a3), var(--a2), var(--a1));
-      background-size: 260% 100%;
+      background: linear-gradient(90deg, var(--p1), var(--p4), var(--p3), var(--p2));
+      background-size: 300% 100%;
       -webkit-background-clip: text; background-clip: text;
-      animation: huepan1001 18s linear infinite;
+      animation: bannerpan1002 22s linear infinite;
+      filter: drop-shadow(0 30px 80px color-mix(in oklab, var(--p2) 18%, transparent));
     }
-    @keyframes huepan1001{ 0%{ background-position: 0% 0; } 100%{ background-position: 200% 0; } }
-    #orrery1001 .lede{ margin:12px auto 0; color:var(--muted); font-size: clamp(13px, 1.6vw, 18px); line-height:1.7; max-width:72ch; text-wrap:balance; }
+    @keyframes bannerpan1002{ 0%{ background-position: 0% 0; } 100%{ background-position: 200% 0; } }
+    #aurora1002 .lede{ margin:12px auto 0; color:var(--muted); font-size: clamp(13px, 1.6vw, 18px); line-height:1.7; max-width:72ch; text-wrap:balance; }
 
     /* Meta */
-    #orrery1001 .meta{
+    #aurora1002 .meta{
       margin-top:14px; color:var(--muted); font-size:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
     }
 
     /* Focus */
-    #orrery1001 :is(button, input, [tabindex]):focus-visible{
-      outline: 2px solid color-mix(in oklab, var(--a1) 55%, #fff);
+    #aurora1002 :is(button, input, [tabindex]):focus-visible{
+      outline: 2px solid color-mix(in oklab, var(--p1) 55%, #fff);
       outline-offset: 2px;
     }
 
     @media (max-width: 880px){
-      #orrery1001 .slider input[type="range"]{ width:130px; }
-      #orrery1001 .hero{ font-size: clamp(40px, 12vw, 110px); }
+      #aurora1002 .slider input[type="range"]{ width:120px; }
+      #aurora1002 .hero{ font-size: clamp(40px, 12vw, 110px); }
     }
     @media (prefers-reduced-motion: reduce){
-      #orrery1001 .hero, #orrery1001 .mark .ring{ animation: none !important; }
-      #orrery1001 canvas{ filter:none; }
+      #aurora1002 .hero, #aurora1002 .mark path{ animation: none !important; }
+      #aurora1002 canvas{ filter:none; }
     }
   </style>
 
@@ -206,56 +225,59 @@
     <div class="brand">
       <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
         <defs>
-          <linearGradient id="g1001" x1="0" y1="0" x2="64" y2="64">
-            <stop offset="0%" stop-color="var(--a1)"/><stop offset="50%" stop-color="var(--a4)"/><stop offset="100%" stop-color="var(--a3)"/>
+          <linearGradient id="g1002" x1="0" y1="0" x2="64" y2="64">
+            <stop offset="0%" stop-color="var(--p1)"/><stop offset="50%" stop-color="var(--p4)"/><stop offset="100%" stop-color="var(--p3)"/>
           </linearGradient>
         </defs>
-        <circle cx="32" cy="32" r="4" fill="url(#g1001)"/>
-        <circle class="ring" cx="32" cy="32" r="12" fill="none" stroke="url(#g1001)" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 10"/>
-        <circle class="ring" cx="32" cy="32" r="20" fill="none" stroke="url(#g1001)" stroke-width="2" stroke-linecap="round" stroke-dasharray="8 14"/>
-        <circle class="ring" cx="32" cy="32" r="28" fill="none" stroke="url(#g1001)" stroke-width="2" stroke-linecap="round" stroke-dasharray="10 18"/>
+        <path d="M6,32 C18,8 46,8 58,32 C46,56 18,56 6,32 Z" fill="none" stroke="url(#g1002)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <span>HelioScope • 1001</span>
+      <span>Aurora Fabric • 1002</span>
     </div>
     <div class="actions">
-      <button id="random1001" title="Randomize palette">Randomize</button>
-      <label class="slider" title="Speed">
-        Speed
-        <input type="range" id="speed1001" min="0.25" max="2.00" step="0.01" value="1.00">
+      <div class="swatches" aria-label="Palettes">
+        <button class="sw" data-i="0" style="--g1:#6de1ff;--g2:#9b8cff;--g3:#ff8ec2;--g4:#6affcd" title="Palette 1"></button>
+        <button class="sw" data-i="1" style="--g1:#ffbe7a;--g2:#ffd86c;--g3:#9ea6ff;--g4:#97f7ff" title="Palette 2"></button>
+        <button class="sw" data-i="2" style="--g1:#b786ff;--g2:#75d6ff;--g3:#ff83d3;--g4:#a7b4ff" title="Palette 3"></button>
+        <button class="sw" data-i="3" style="--g1:#78f7d0;--g2:#74c8ff;--g3:#f4a0ff;--g4:#ffe58a" title="Palette 4"></button>
+      </div>
+      <label class="slider" title="Motion">
+        Motion
+        <input type="range" id="motion1002" min="0.2" max="2.2" step="0.01" value="1.00">
+      </label>
+      <label class="slider" title="Weave">
+        Weave
+        <input type="range" id="weave1002" min="0.4" max="2.0" step="0.01" value="1.00">
       </label>
       <label class="toggle" title="Trails">
         Trails
-        <input type="checkbox" id="trails1001" checked>
+        <input type="checkbox" id="trails1002" checked>
       </label>
-      <label class="toggle" title="Day/Night">
-        Day
-        <input type="checkbox" id="theme1001">
+      <label class="toggle" title="Theme">
+        Paper
+        <input type="checkbox" id="theme1002">
       </label>
-      <label class="toggle" title="Orbits">
-        Orbits
-        <input type="checkbox" id="orbits1001" checked>
-      </label>
-      <button id="pause1001" title="Pause/Play">Pause</button>
+      <button id="capture1002" title="Save PNG">Capture</button>
+      <button id="pause1002" title="Pause/Play">Pause</button>
     </div>
   </div>
 
-  <div class="stage" role="img" aria-label="A luminous solar system of orbits, stars, and comets drifting through a velvet sky">
-    <canvas id="orrery-canvas"></canvas>
+  <div class="stage" role="img" aria-label="Silken aurora ribbons drifting and weaving with your touch">
+    <canvas id="aurora-canvas"></canvas>
     <div class="title">
-      <h1 class="hero">Spin the cosmos.</h1>
-      <p class="lede">Drag to tilt the sky, click to launch a comet. L theme • T trails • O orbits • R randomize • Space pause</p>
+      <h1 class="hero">Weave the light.</h1>
+      <p class="lede">Move to bend the silk. 1–4 palettes • T trails • C capture • Space pause</p>
     </div>
   </div>
 
   <div class="meta">
-    <span id="last-updated">Last updated: 2025-12-01 10:20:01 EST</span>
-    <span class="keys">Keys: L theme • T trails • O orbits • R randomize • Space pause</span>
+    <span id="last-updated">Last updated: 2025-12-01 11:26:33 EST</span>
+    <span class="keys">Keys: 1–4 palettes • T trails • C capture • Space pause</span>
   </div>
 
   <script>
     (function(){
-      const root = document.getElementById('orrery1001');
-      const canvas = root.querySelector('#orrery-canvas');
+      const root = document.getElementById('aurora1002');
+      const canvas = root.querySelector('#aurora-canvas');
       const ctx = canvas.getContext('2d', { alpha: true });
 
       // Timestamp
@@ -266,41 +288,45 @@
       }catch{}
 
       // Controls
-      const randomBtn = root.querySelector('#random1001');
-      const speed = root.querySelector('#speed1001');
-      const trailsToggle = root.querySelector('#trails1001');
-      const themeToggle = root.querySelector('#theme1001');
-      const orbitsToggle = root.querySelector('#orbits1001');
-      const pauseBtn = root.querySelector('#pause1001');
+      const motion = root.querySelector('#motion1002');
+      const weave = root.querySelector('#weave1002');
+      const trails = root.querySelector('#trails1002');
+      const theme = root.querySelector('#theme1002');
+      const pauseBtn = root.querySelector('#pause1002');
+      const captureBtn = root.querySelector('#capture1002');
+      const swatches = root.querySelectorAll('.swatches .sw');
 
       let paused = false;
       function sync(){
-        root.setAttribute('data-trails', trailsToggle.checked ? 'on' : 'off');
-        root.setAttribute('data-theme', themeToggle.checked ? 'day' : 'night');
+        root.setAttribute('data-trails', trails.checked ? 'on' : 'off');
+        root.setAttribute('data-theme', theme.checked ? 'paper' : 'nocturne');
         pauseBtn.textContent = paused ? 'Play' : 'Pause';
       }
-      trailsToggle.addEventListener('change', sync);
-      themeToggle.addEventListener('change', sync);
-      orbitsToggle.addEventListener('change', ()=>{ showOrbits = orbitsToggle.checked; });
+      trails.addEventListener('change', sync);
+      theme.addEventListener('change', sync);
       pauseBtn.addEventListener('click', ()=>{ paused = !paused; if(!paused){ t0 = performance.now(); } sync(); });
 
       // Palettes
       const PALETTES = [
-        ['#7ed0ff','#9b8cff','#ff9bd6','#62ffc7'],
-        ['#ffc27a','#ffd86c','#9ea6ff','#97f7ff'],
-        ['#a786ff','#75d6ff','#ff83d3','#a7b4ff'],
-        ['#20c7a6','#5be3c3','#9ae2ff','#46ffd9'],
-        ['#78f7d0','#74c8ff','#f4a0ff','#ffe58a'],
-        ['#ffb3a3','#ffd0f1','#a4c2ff','#b2ffd7']
+        ['#6de1ff','#9b8cff','#ff8ec2','#6affcd'],
+        ['#ffbe7a','#ffd86c','#9ea6ff','#97f7ff'],
+        ['#b786ff','#75d6ff','#ff83d3','#a7b4ff'],
+        ['#78f7d0','#74c8ff','#f4a0ff','#ffe58a']
       ];
       let paletteIndex = 0;
       function applyPalette(){
         const c = PALETTES[paletteIndex % PALETTES.length];
-        root.style.setProperty('--a1', c[0]);
-        root.style.setProperty('--a2', c[1]);
-        root.style.setProperty('--a3', c[2]);
-        root.style.setProperty('--a4', c[3]);
+        root.style.setProperty('--p1', c[0]);
+        root.style.setProperty('--p2', c[1]);
+        root.style.setProperty('--p3', c[2]);
+        root.style.setProperty('--p4', c[3]);
       }
+      swatches.forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          paletteIndex = parseInt(btn.getAttribute('data-i')||'0',10);
+          applyPalette();
+        });
+      });
       applyPalette();
 
       // DPR + sizing
@@ -311,237 +337,157 @@
         canvas.width = Math.max(300, Math.floor(r.width * dpr));
         canvas.height = Math.max(300, Math.floor(r.height * dpr));
         ctx.setTransform(dpr,0,0,dpr,0,0);
-        seedStars();
-        seedPlanets();
       }
       resize();
       let rsTO; window.addEventListener('resize', ()=>{ clearTimeout(rsTO); rsTO = setTimeout(resize, 120); }, {passive:true});
 
-      // Scene entities
-      const stars = [];
-      const planets = [];
-      const comets = [];
-      let showOrbits = true;
-
-      function rand(min,max){ return Math.random()*(max-min)+min; }
-
-      function seedStars(){
-        stars.length = 0;
-        const r = canvas.getBoundingClientRect();
-        const count = Math.floor((r.width*r.height)/1200);
-        for(let i=0;i<count;i++){
-          stars.push({
-            x: Math.random()*r.width,
-            y: Math.random()*r.height,
-            s: Math.random()*1.8 + 0.2,
-            a: Math.random()*0.5 + 0.35
-          });
-        }
-      }
-
-      function seedPlanets(){
-        planets.length = 0;
-        const r = canvas.getBoundingClientRect();
-        const cx = r.width/2, cy = r.height/2;
-        const rings = 8;
-        for(let i=0;i<rings;i++){
-          const rad = (Math.min(cx,cy)*0.15) + i*(Math.min(cx,cy)*0.08);
-          planets.push({
-            baseR: rad,
-            size: (i===0?6:rand(3, 6)) + (i%3===0?2:0),
-            hue: PALETTES[paletteIndex % PALETTES.length][i % 4],
-            speed: rand(0.06, 0.24) * (i%2 ? 1 : -1),
-            angle: Math.random()*Math.PI*2,
-            wobble: rand(0.92, 1.08),
-            glow: rand(0.6, 1.2)
-          });
-        }
-      }
-
-      // Pointer / camera tilt
-      const pointer = { x: 0.5, y: 0.5, down:false, tiltX:0, tiltY:0 };
-      canvas.addEventListener('pointermove', (e)=>{
+      // Pointer
+      const pointer = { x: 0.5, y: 0.5, tiltX:0, tiltY:0 };
+      function updatePointer(e){
         const rect = canvas.getBoundingClientRect();
         pointer.x = (e.clientX - rect.left) / rect.width;
         pointer.y = (e.clientY - rect.top) / rect.height;
         pointer.tiltX = (pointer.x - 0.5);
         pointer.tiltY = (pointer.y - 0.5);
-      }, {passive:true});
-      canvas.addEventListener('pointerdown', (e)=>{
-        pointer.down = true;
-        spawnComet(e);
-      }, {passive:true});
-      window.addEventListener('pointerup', ()=>{ pointer.down = false; }, {passive:true});
-
-      function spawnComet(e){
-        const rect = canvas.getBoundingClientRect();
-        const x = (e.clientX - rect.left);
-        const y = (e.clientY - rect.top);
-        const ang = Math.atan2(y - rect.height/2, x - rect.width/2) + (Math.random()*0.8 - 0.4);
-        const spd = rand(160, 300);
-        comets.push({
-          x, y,
-          vx: Math.cos(ang) * spd,
-          vy: Math.sin(ang) * spd,
-          life: 1.0,
-          hue: PALETTES[paletteIndex % PALETTES.length][Math.floor(Math.random()*4)]
-        });
       }
+      canvas.addEventListener('pointermove', updatePointer, {passive:true});
+      canvas.addEventListener('pointerdown', updatePointer, {passive:true});
 
       // Reduced motion
       let REDUCE=false;
       try{ REDUCE = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch{}
-      if(REDUCE){ speed.value = '0.6'; }
+      if(REDUCE){ motion.value = '0.6'; }
 
-      // Render
+      // Helpers
+      function lerp(a,b,t){ return a+(b-a)*t; }
+
+      function buildGradientHorizontal(){
+        const r = canvas.getBoundingClientRect();
+        const g = ctx.createLinearGradient(0, 0, r.width, 0);
+        const s = getComputedStyle(root);
+        const c1 = s.getPropertyValue('--p1').trim();
+        const c2 = s.getPropertyValue('--p2').trim();
+        const c3 = s.getPropertyValue('--p3').trim();
+        const c4 = s.getPropertyValue('--p4').trim();
+        g.addColorStop(0.00, c1);
+        g.addColorStop(0.35, c2);
+        g.addColorStop(0.70, c3);
+        g.addColorStop(1.00, c4);
+        return g;
+      }
+      function buildGradientVertical(){
+        const r = canvas.getBoundingClientRect();
+        const g = ctx.createLinearGradient(0, 0, 0, r.height);
+        const s = getComputedStyle(root);
+        const c1 = s.getPropertyValue('--p1').trim();
+        const c2 = s.getPropertyValue('--p2').trim();
+        const c3 = s.getPropertyValue('--p3').trim();
+        const c4 = s.getPropertyValue('--p4').trim();
+        g.addColorStop(0.00, c4+'bb');
+        g.addColorStop(0.40, c1+'88');
+        g.addColorStop(0.80, c2+'55');
+        g.addColorStop(1.00, 'transparent');
+        return g;
+      }
+
+      // Animation
       let t0 = performance.now();
       function render(now){
         if(paused){ requestAnimationFrame(render); return; }
         const dt = Math.min(0.04, (now-(t0||now))/1000); t0=now;
-        const tempo = Math.max(0.25, Math.min(2, parseFloat(speed.value)||1));
+        const tempo = Math.max(0.2, Math.min(2.2, parseFloat(motion.value)||1));
+        const warp = Math.max(0.4, Math.min(2.0, parseFloat(weave.value)||1));
 
         const rect = canvas.getBoundingClientRect();
         const w = rect.width, h = rect.height;
-        const cx = w/2, cy = h/2;
 
         // Clear / trails
         if(root.getAttribute('data-trails')==='on'){
           ctx.globalCompositeOperation = 'source-over';
-          const fade = root.getAttribute('data-theme')==='night' ? 0.12 : 0.06;
+          const fade = root.getAttribute('data-theme')==='nocturne' ? 0.10 : 0.06;
           ctx.fillStyle = `rgba(0,0,0,${fade})`;
           ctx.fillRect(0,0,w,h);
         }else{
-          // gradient background
-          const g = ctx.createLinearGradient(0,0,0,h);
+          const gbg = ctx.createLinearGradient(0,0,0,h);
           const styles = getComputedStyle(root);
-          g.addColorStop(0, styles.getPropertyValue('--bg1').trim());
-          g.addColorStop(1, styles.getPropertyValue('--bg2').trim());
+          gbg.addColorStop(0, styles.getPropertyValue('--bg1').trim());
+          gbg.addColorStop(1, styles.getPropertyValue('--bg2').trim());
           ctx.globalCompositeOperation = 'source-over';
-          ctx.fillStyle = g; ctx.fillRect(0,0,w,h);
+          ctx.fillStyle = gbg; ctx.fillRect(0,0,w,h);
         }
 
-        // Parallax stars
-        for(const s of stars){
-          const px = s.x + pointer.tiltX * 20 * (s.a);
-          const py = s.y + pointer.tiltY * 20 * (s.a);
-          ctx.globalCompositeOperation = 'screen';
-          ctx.fillStyle = `rgba(255,255,255,${s.a})`;
-          ctx.fillRect(px, py, s.s, s.s);
-        }
-
-        // Sun
-        const sunGrad = ctx.createRadialGradient(cx, cy, 4, cx, cy, Math.min(cx,cy)*0.6);
-        const s1 = getComputedStyle(root).getPropertyValue('--a4').trim();
-        const s2 = getComputedStyle(root).getPropertyValue('--a2').trim();
-        sunGrad.addColorStop(0, s1+'dd');
-        sunGrad.addColorStop(0.25, s2+'44');
-        sunGrad.addColorStop(1, 'transparent');
+        // Ambient glow
         ctx.globalCompositeOperation = 'screen';
-        ctx.fillStyle = sunGrad;
-        ctx.beginPath(); ctx.arc(cx, cy, Math.min(cx,cy)*0.6, 0, Math.PI*2); ctx.fill();
+        const vgrad = buildGradientVertical();
+        ctx.fillStyle = vgrad;
+        ctx.fillRect(0,0,w,h);
 
-        // Orbits + Planets
-        const ex = pointer.tiltX * 0.35;
-        const ey = pointer.tiltY * 0.2;
-        ctx.lineWidth = 1.2;
-        for(const p of planets){
-          p.angle += p.speed * tempo * (REDUCE?0.6:1);
-          const R = p.baseR * (1 + ex*0.4);
-          const r2 = p.baseR * (1 - ey*0.2);
+        // Ribbons
+        const bands = 6;
+        const step = Math.max(3, Math.round(w/220));
+        const baseAmp = (h*0.12) * warp;
+        const gx = buildGradientHorizontal();
 
-          if(showOrbits){
-            ctx.globalCompositeOperation = 'overlay';
-            ctx.strokeStyle = 'rgba(255,255,255,0.12)';
-            ellipsePath(cx, cy, R, r2, 0);
-            ctx.stroke();
-          }
+        for(let i=0;i<bands;i++){
+          const phase = (i/bands);
+          const amp = baseAmp * lerp(0.5, 1.4, phase);
+          const thickness = lerp(28, 70, phase);
+          const speed = (0.35 + phase*0.25) * tempo * (REDUCE?0.6:1);
 
-          // position on ellipse
-          const x = cx + Math.cos(p.angle) * R * p.wobble;
-          const y = cy + Math.sin(p.angle) * r2 * p.wobble;
-
-          // glow
+          const yOffset = h*(0.2 + phase*0.6) + pointer.tiltY * (40 + i*12);
+          ctx.lineWidth = thickness;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
           ctx.globalCompositeOperation = 'lighter';
-          ctx.fillStyle = p.hue + (root.getAttribute('data-theme')==='night' ? 'aa' : '77');
-          ctx.beginPath(); ctx.arc(x, y, p.size*2.8, 0, Math.PI*2); ctx.fill();
+          ctx.strokeStyle = gx;
 
-          // core
-          ctx.globalCompositeOperation = 'screen';
-          ctx.fillStyle = '#ffffffd0';
-          ctx.beginPath(); ctx.arc(x, y, p.size, 0, Math.PI*2); ctx.fill();
-        }
-
-        // Comets
-        for(let i=comets.length-1; i>=0; i--){
-          const c = comets[i];
-          c.life -= dt*0.25;
-          if(c.life <= 0){ comets.splice(i,1); continue; }
-
-          c.x += c.vx * dt;
-          c.y += c.vy * dt;
-
-          // slight gravity pull to center
-          const dx = cx - c.x, dy = cy - c.y;
-          const d = Math.hypot(dx,dy)+0.0001;
-          const pull = 50 / d;
-          c.vx += (dx/d) * pull * dt;
-          c.vy += (dy/d) * pull * dt;
-
-          // tail
-          const tailLen = 80;
-          const grad = ctx.createLinearGradient(c.x, c.y, c.x - c.vx*0.15, c.y - c.vy*0.15);
-          grad.addColorStop(0, c.hue + 'cc');
-          grad.addColorStop(1, 'transparent');
-          ctx.globalCompositeOperation = 'lighter';
-          ctx.strokeStyle = grad;
-          ctx.lineWidth = 2;
           ctx.beginPath();
-          ctx.moveTo(c.x, c.y);
-          ctx.lineTo(c.x - c.vx*dt*tailLen, c.y - c.vy*dt*tailLen);
+          for(let x=0;x<=w;x+=step){
+            const t = (now*0.001*speed);
+            const k1 = Math.sin(x*0.008 + t*2 + phase*6);
+            const k2 = Math.sin(x*0.003 + t*1.2 - phase*3);
+            const k3 = Math.cos(x*0.005 - t*1.6 + phase*9);
+            const sway = pointer.tiltX * (30 + i*8);
+            const y = yOffset + k1*amp + k2*(amp*0.5) + k3*(amp*0.25) + sway;
+            if(x===0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
           ctx.stroke();
 
-          // head
+          // Soft inner highlight
           ctx.globalCompositeOperation = 'screen';
-          ctx.fillStyle = '#ffffff';
-          ctx.beginPath(); ctx.arc(c.x, c.y, 2.2, 0, Math.PI*2); ctx.fill();
-
-          // cull offscreen
-          if(c.x<-50 || c.y<-50 || c.x>w+50 || c.y>h+50){ comets.splice(i,1); }
+          ctx.lineWidth = Math.max(10, thickness*0.35);
+          ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+          ctx.stroke();
         }
 
         requestAnimationFrame(render);
       }
 
-      function ellipsePath(cx, cy, rx, ry, rot){
-        ctx.beginPath();
-        const steps = 120;
-        for(let i=0;i<=steps;i++){
-          const a = (i/steps)*Math.PI*2 + rot;
-          const x = cx + Math.cos(a)*rx;
-          const y = cy + Math.sin(a)*ry;
-          if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-        }
-      }
-
-      requestAnimationFrame(render);
-
-      // Randomize palette
-      randomBtn.addEventListener('click', ()=>{
-        paletteIndex = (paletteIndex + 1) % PALETTES.length;
-        applyPalette();
-        seedPlanets();
+      // Capture PNG
+      captureBtn.addEventListener('click', ()=>{
+        try{
+          canvas.toBlob(function(blob){
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'aurora-1002.png';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 100);
+          }, 'image/png', 1.0);
+        }catch(e){}
       });
 
       // Keyboard
       root.addEventListener('keydown', (e)=>{
-        if(e.key==='l' || e.key==='L'){ e.preventDefault(); themeToggle.checked = !themeToggle.checked; sync(); }
-        if(e.key==='t' || e.key==='T'){ e.preventDefault(); trailsToggle.checked = !trailsToggle.checked; sync(); }
-        if(e.key==='o' || e.key==='O'){ e.preventDefault(); orbitsToggle.checked = !orbitsToggle.checked; showOrbits = orbitsToggle.checked; }
-        if(e.key==='r' || e.key==='R'){ e.preventDefault(); randomBtn.click(); }
         if(e.key===' '){ e.preventDefault(); pauseBtn.click(); }
+        if(e.key==='t' || e.key==='T'){ e.preventDefault(); trails.checked = !trails.checked; sync(); }
+        if(e.key==='c' || e.key==='C'){ e.preventDefault(); captureBtn.click(); }
+        if(['1','2','3','4'].includes(e.key)){ paletteIndex = parseInt(e.key,10)-1; applyPalette(); }
       }, {passive:false});
 
       sync();
+      requestAnimationFrame(render);
     })();
   </script>
 </div>
