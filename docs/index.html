@@ -73,7 +73,442 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-12-02 13:29:48 EST</span></div>
+<div id="atelier">
+  <style>
+    /* Scope everything to #atelier */
+    #atelier {
+      --bg-0: #070a11;
+      --bg-1: #0d1223;
+      --ink: #e7ebf6;
+      --muted: rgba(231, 235, 246, 0.68);
+      --card: rgba(255, 255, 255, 0.06);
+      --stroke: rgba(255, 255, 255, 0.14);
+      --accent: 210 100% 66%;
+      --accent-2: 280 90% 65%;
+      --glow: 210 100% 60%;
+      position: relative;
+      isolation: isolate;
+      color: var(--ink);
+      border-radius: 18px;
+      padding: clamp(18px, 4vw, 28px);
+      background:
+        radial-gradient(120% 140% at 80% -10%, #16233f 0%, transparent 60%),
+        radial-gradient(130% 150% at -10% 120%, #211842 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-0));
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.35),
+        inset 0 0 0 1px rgba(255,255,255,0.04);
+      overflow: hidden;
+    }
+
+    /* Ambient aurora */
+    #atelier .aurora {
+      position: absolute;
+      inset: -20%;
+      filter: blur(40px) saturate(130%) hue-rotate(0deg);
+      pointer-events: none;
+      opacity: 0.7;
+      z-index: -1;
+      background:
+        conic-gradient(from 180deg at 30% 40%, hsla(var(--accent),0.22), transparent 40%),
+        conic-gradient(from 0deg at 70% 60%, hsla(var(--accent-2),0.18), transparent 55%);
+      animation: drift 22s linear infinite, hue 60s linear infinite;
+    }
+
+    /* Subtle star field */
+    #atelier .grain {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.08) 0.5px, transparent 1px),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.06) 0.6px, transparent 1px);
+      background-size: 120px 120px, 160px 160px;
+      mix-blend-mode: screen;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    #atelier .hero {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+    #atelier .title {
+      font-size: clamp(28px, 6vw, 46px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      margin: 0;
+      background: linear-gradient(90deg, hsl(var(--accent)) 0%, hsl(var(--accent-2)) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 6px 20px rgba(100, 140, 255, 0.15));
+    }
+    #atelier .subtitle {
+      margin: 6px 0 0 0;
+      color: var(--muted);
+      font-size: clamp(14px, 2.2vw, 16px);
+    }
+
+    #atelier .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    #atelier .chip {
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      color: var(--ink);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+      cursor: default;
+      user-select: none;
+    }
+    #atelier .chip svg { opacity: 0.9 }
+    #atelier .chip:hover { transform: translateY(-1px) }
+
+    #atelier .mode {
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      color: var(--ink);
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+    #atelier .mode:hover { transform: translateY(-1px) }
+    #atelier .mode .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, hsl(var(--accent)) 0%, hsl(var(--accent-2)) 100%);
+      box-shadow: 0 0 10px hsla(var(--accent),0.6);
+    }
+
+    #atelier .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: clamp(10px, 2vw, 14px);
+      margin-top: 10px;
+    }
+
+    #atelier .tile {
+      grid-column: span 4;
+      min-height: 150px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid var(--stroke);
+      border-radius: 16px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      perspective: 800px;
+      transition: transform .25s ease, background .3s ease, border-color .25s ease;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.18);
+    }
+    #atelier .tile:hover {
+      border-color: rgba(255,255,255,0.22);
+      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03));
+    }
+    #atelier .tile:before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(60% 60% at var(--mx, 50%) var(--my, 50%), hsla(var(--accent), 0.15), transparent 60%);
+      transform: translateZ(-10px);
+      pointer-events: none;
+    }
+    #atelier .tile .sheen {
+      position: absolute;
+      inset: -100%;
+      background: linear-gradient(100deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%);
+      transform: translateX(-60%) rotate(8deg);
+      animation: sheen 6.5s ease-in-out infinite;
+      opacity: 0.3;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+    #atelier .tile h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #atelier .tile p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    #atelier .icon {
+      width: 22px; height: 22px;
+      border-radius: 8px;
+      display: inline-grid;
+      place-items: center;
+      background: radial-gradient(circle at 30% 30%, hsla(var(--accent),0.9), hsla(var(--accent-2),0.9));
+      box-shadow: 0 6px 14px hsla(var(--accent),0.4);
+      color: white;
+      flex: 0 0 auto;
+    }
+
+    /* Feature tile spans */
+    #atelier .tile.wide { grid-column: span 8; min-height: 180px }
+    #atelier .tile.tall { grid-column: span 4; min-height: 240px }
+
+    /* Mini meter */
+    #atelier .meter {
+      --pct: 62;
+      height: 8px;
+      width: 100%;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--stroke);
+      margin-top: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+    #atelier .meter .fill {
+      width: calc(var(--pct) * 1% + 0.5%);
+      height: 100%;
+      background: linear-gradient(90deg, hsl(var(--accent)), hsl(var(--accent-2)));
+      box-shadow: 0 0 12px hsla(var(--accent),0.5);
+      transition: width .8s ease;
+    }
+
+    /* Footer */
+    #atelier .meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 14px;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(255,255,255,0.16);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    #atelier .meta .pulse {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: hsl(var(--accent));
+      box-shadow: 0 0 0 0 hsla(var(--accent),0.6);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    #atelier .meta a {
+      color: hsl(var(--accent));
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(255,255,255,0.2);
+    }
+    #atelier .meta a:hover { border-bottom-color: hsl(var(--accent)) }
+
+    /* Theme: Awake */
+    #atelier[data-mood="awake"] {
+      --accent: 18 96% 62%;
+      --accent-2: 340 86% 62%;
+      --ink: #f6f7fb;
+      --muted: rgba(246,247,251,0.78);
+      background:
+        radial-gradient(120% 140% at 85% -10%, #2a1430 0%, transparent 60%),
+        radial-gradient(130% 150% at -10% 120%, #2c1d14 0%, transparent 60%),
+        linear-gradient(180deg, #0f0b13, #0a0a0a);
+    }
+
+    /* Responsive */
+    @media (max-width: 880px) {
+      #atelier .grid { grid-template-columns: repeat(6, 1fr) }
+      #atelier .tile, #atelier .tile.tall { grid-column: span 6 }
+      #atelier .tile.wide { grid-column: span 6 }
+      #atelier .hero { grid-template-columns: 1fr }
+      #atelier .controls { justify-content: flex-start }
+    }
+
+    /* Motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      #atelier .aurora, #atelier .tile .sheen, #atelier .meta .pulse { animation: none }
+      #atelier .tile { transition: none }
+    }
+
+    /* Keyframes */
+    @keyframes sheen {
+      0% { transform: translateX(-70%) rotate(8deg) }
+      100% { transform: translateX(60%) rotate(8deg) }
+    }
+    @keyframes drift {
+      0% { transform: translateY(0) scale(1) }
+      50% { transform: translateY(-2%) scale(1.05) }
+      100% { transform: translateY(0) scale(1) }
+    }
+    @keyframes hue {
+      0% { filter: blur(40px) saturate(130%) hue-rotate(0deg) }
+      100% { filter: blur(40px) saturate(130%) hue-rotate(360deg) }
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 hsla(var(--accent),0.5) }
+      70% { box-shadow: 0 0 0 12px hsla(var(--accent),0) }
+      100% { box-shadow: 0 0 0 0 hsla(var(--accent),0) }
+    }
+  </style>
+
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="hero">
+    <div>
+      <h1 class="title">Soft Systems</h1>
+      <p class="subtitle">Quiet motion, generous space, and a colorway that breathes.</p>
+    </div>
+    <div class="controls">
+      <div class="chip" title="Live palette">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-opacity="0.8" stroke-width="1.5"/>
+          <path d="M12 3v18M3 12h18" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.2"/>
+        </svg>
+        Dynamic palette
+      </div>
+      <button class="mode" type="button" aria-pressed="false" id="mood-toggle">
+        <span class="dot" aria-hidden="true"></span>
+        Toggle mood
+      </button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <article class="tile wide" tabindex="0">
+      <div class="sheen" aria-hidden="true"></div>
+      <h3><span class="icon">✷</span> Breathe</h3>
+      <p>Interfaces deserve silence. We remove friction, amplify intent, and let content glow.</p>
+      <div class="meter" style="--pct:72">
+        <div class="fill"></div>
+      </div>
+    </article>
+
+    <article class="tile tall" tabindex="0">
+      <div class="sheen" aria-hidden="true"></div>
+      <h3>
+        <span class="icon">∞</span>
+        Flow
+      </h3>
+      <p>Soft depth, subtle light, and a rhythm that guides the eye without shouting.</p>
+    </article>
+
+    <article class="tile" tabindex="0">
+      <div class="sheen" aria-hidden="true"></div>
+      <h3>
+        <span class="icon">›</span>
+        Focus
+      </h3>
+      <p>High contrast where it matters, muted elsewhere. Everything in its right place.</p>
+    </article>
+
+    <article class="tile" tabindex="0">
+      <div class="sheen" aria-hidden="true"></div>
+      <h3>
+        <span class="icon">◎</span>
+        Balance
+      </h3>
+      <p>Geometry meets gesture. Micro-interactions keep it human.</p>
+    </article>
+  </div>
+
+  <div class="meta">
+    <span class="pulse" aria-hidden="true"></span>
+    <span>Now in motion. Crafted with care.</span>
+    <span id="last-updated">Last updated: 2025-12-02 14:18:05 EST</span>
+    <span aria-hidden="true">•</span>
+    <a href="#" title="This is a demo link">Design notes</a>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('atelier');
+      const tiles = root.querySelectorAll('.tile');
+      const toggle = root.querySelector('#mood-toggle');
+      const updated = root.querySelector('#last-updated');
+
+      // Last updated in local time
+      const now = new Date();
+      try {
+        const fmt = new Intl.DateTimeFormat(undefined, {
+          year: 'numeric', month: 'short', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+        updated.textContent = 'Last updated: ' + fmt.format(now);
+      } catch (e) {
+        updated.textContent = 'Last updated: ' + now.toLocaleString();
+      }
+
+      // Mood toggle
+      let awake = false;
+      toggle.addEventListener('click', () => {
+        awake = !awake;
+        root.setAttribute('data-mood', awake ? 'awake' : 'calm');
+        toggle.setAttribute('aria-pressed', String(awake));
+      });
+
+      // Card tilt/parallax
+      function bindTilt(tile) {
+        const rect = () => tile.getBoundingClientRect();
+        const maxTilt = 10;
+        tile.addEventListener('pointermove', (e) => {
+          const r = rect();
+          const x = e.clientX - r.left;
+          const y = e.clientY - r.top;
+          const px = x / r.width - 0.5;
+          const py = y / r.height - 0.5;
+          const rx = (-py * maxTilt).toFixed(2);
+          const ry = (px * maxTilt).toFixed(2);
+          tile.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+          tile.style.setProperty('--mx', `${(x / r.width) * 100}%`);
+          tile.style.setProperty('--my', `${(y / r.height) * 100}%`);
+        });
+        tile.addEventListener('pointerleave', () => {
+          tile.style.transform = '';
+          tile.style.removeProperty('--mx');
+          tile.style.removeProperty('--my');
+        });
+      }
+      tiles.forEach(bindTilt);
+
+      // Gentle live meter drift
+      const meters = root.querySelectorAll('.meter');
+      let dir = 1;
+      setInterval(() => {
+        meters.forEach((m, i) => {
+          const cur = Number((m.style.getPropertyValue('--pct') || '50').replace('%',''));
+          let next = cur + dir * (i % 2 === 0 ? 0.6 : 0.4);
+          if (next > 92 || next < 28) dir *= -1;
+          m.style.setProperty('--pct', next);
+          const fill = m.querySelector('.fill');
+          if (fill) fill.style.width = `calc(${next}% + 0.5%)`;
+        });
+      }, 120);
+
+      // Respect reduced motion
+      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (mq.matches) {
+        // Disable interval animation
+        // (leave one static state for accessibility)
+        meters.forEach((m) => {
+          m.style.setProperty('--pct', 64);
+          const fill = m.querySelector('.fill');
+          if (fill) fill.style.width = '64%';
+        });
+      }
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
