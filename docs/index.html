@@ -73,7 +73,493 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-12-03 12:21:15 EST</span></div>
+<section id="atelier" class="dusk" aria-label="Quiet, kinetic interface">
+  <style>
+    #atelier {
+      --radius: 22px;
+      --pad: 28px;
+      --fg: hsl(0 0% 98%);
+      --muted: hsl(0 0% 82%);
+      --line: hsl(0 0% 100% / 0.12);
+      --glass: hsl(0 0% 100% / 0.06);
+      --shadow: 0 10px 30px hsl(0 0% 0% / 0.35);
+      --accent-a: hsl(210 90% 66%);
+      --accent-b: hsl(290 80% 72%);
+      --accent-c: hsl(165 75% 62%);
+      --halo: 0 0 0 1px hsl(0 0% 100% / 0.18) inset, 0 1px 30px hsl(0 0% 100% / 0.06) inset, 0 10px 30px hsl(0 0% 0% / 0.30);
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      color: var(--fg);
+      padding: var(--pad);
+      isolation: isolate;
+      backdrop-filter: saturate(130%) blur(10px);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      min-height: 420px;
+    }
+    /* Animated aurora background layers */
+    #atelier::before,
+    #atelier::after {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      z-index: -2;
+      filter: blur(40px) saturate(120%);
+      transform: translateZ(0);
+    }
+    #atelier::before {
+      background:
+        radial-gradient(60% 50% at 15% 20%, color-mix(in oklab, var(--accent-a), white 8%) 0%, transparent 70%),
+        radial-gradient(45% 60% at 85% 25%, color-mix(in oklab, var(--accent-b), white 6%) 0%, transparent 70%),
+        radial-gradient(65% 55% at 50% 90%, color-mix(in oklab, var(--accent-c), white 10%) 0%, transparent 70%);
+      animation: drift 26s ease-in-out infinite alternate;
+      opacity: 0.6;
+    }
+    #atelier::after {
+      --mx: 50%;
+      --my: 30%;
+      background:
+        radial-gradient(300px 300px at var(--mx) var(--my), hsl(0 0% 100% / 0.12), transparent 60%),
+        conic-gradient(from 0deg, hsl(0 0% 100% / 0.03), transparent 20%, hsl(0 0% 0% / 0.05), transparent 80%, hsl(0 0% 100% / 0.03));
+      mix-blend-mode: soft-light;
+      z-index: -1;
+      opacity: 0.8;
+      transition: --mx 0.1s linear, --my 0.1s linear, opacity .3s ease;
+      animation: slowRotate 40s linear infinite;
+    }
+    @keyframes drift {
+      0% { transform: translate(-2%, -1%) scale(1.05) rotate(0.3deg); }
+      100% { transform: translate(2%, 1%) scale(1.1) rotate(-0.3deg); }
+    }
+    @keyframes slowRotate {
+      from { transform: rotate(0deg) scale(1.02); }
+      to { transform: rotate(360deg) scale(1.02); }
+    }
+    /* Theme variables */
+    #atelier.dawn {
+      --fg: hsl(223 20% 12%);
+      --muted: hsl(223 10% 35%);
+      --line: hsl(223 20% 15% / 0.15);
+      --glass: hsl(223 40% 94% / 0.6);
+      --shadow: 0 12px 40px hsl(223 30% 20% / 0.2);
+      --accent-a: hsl(205 92% 64%);
+      --accent-b: hsl(330 84% 66%);
+      --accent-c: hsl(145 70% 50%);
+      backdrop-filter: saturate(120%) blur(8px);
+    }
+
+    /* Top bar */
+    #atelier .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    #atelier .brand {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--glass);
+      border: 1px solid var(--line);
+      box-shadow: var(--halo);
+      backdrop-filter: blur(6px);
+    }
+    #atelier .brand .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-a), var(--accent-b));
+      box-shadow: 0 0 16px color-mix(in oklab, var(--accent-b), white 30%);
+      animation: throb 2.5s ease-in-out infinite;
+    }
+    @keyframes throb { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+    #atelier .brand b {
+      letter-spacing: 0.4px;
+      font-weight: 650;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    #atelier .theme-toggle {
+      position: relative;
+      display: grid;
+      align-items: center;
+      grid-auto-flow: column;
+      gap: 8px;
+      border: 1px solid var(--line);
+      background: var(--glass);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--fg);
+      cursor: pointer;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+      user-select: none;
+      box-shadow: var(--halo);
+      backdrop-filter: blur(6px);
+      transition: transform .2s ease, background .2s ease;
+    }
+    #atelier .theme-toggle:hover { transform: translateY(-1px); }
+    #atelier .theme-toggle .icon {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, hsl(50 90% 60%), hsl(30 80% 50%));
+      box-shadow: 0 0 10px hsl(45 90% 60% / 0.6);
+      transition: transform .4s ease;
+    }
+    #atelier.dusk .theme-toggle .icon {
+      background: radial-gradient(circle at 70% 70%, hsl(215 80% 74%), hsl(260 70% 66%));
+      box-shadow: 0 0 10px hsl(250 70% 70% / .5);
+      transform: rotate(25deg);
+    }
+
+    /* Heading + tagline */
+    #atelier .stage {
+      display: grid;
+      gap: 16px;
+    }
+    #atelier h1 {
+      margin: 2px 0 0;
+      font-size: clamp(28px, 6vw, 54px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--fg), color-mix(in oklab, var(--accent-a), white 25%), color-mix(in oklab, var(--accent-b), white 25%), var(--fg));
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 10s ease-in-out infinite;
+      filter: drop-shadow(0 6px 30px hsl(0 0% 0% / 0.25));
+    }
+    @keyframes shimmer {
+      0%,100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    #atelier .tag {
+      margin-top: -2px;
+      color: var(--muted);
+      font-size: clamp(14px, 2.4vw, 18px);
+      letter-spacing: 0.2px;
+      max-width: 62ch;
+    }
+
+    /* Pills */
+    #atelier .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    #atelier .pill {
+      --bg: linear-gradient(180deg, hsl(0 0% 100% / 0.12), hsl(0 0% 100% / 0.06));
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      border-radius: 999px;
+      background: var(--glass);
+      border: 1px solid var(--line);
+      color: var(--fg);
+      backdrop-filter: blur(6px);
+      box-shadow: var(--halo);
+      transition: transform .15s ease, background .3s ease, color .3s ease;
+      cursor: pointer;
+    }
+    #atelier .pill:hover { transform: translateY(-2px); }
+    #atelier .pill .swatch {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--grad, linear-gradient(135deg, var(--accent-a), var(--accent-b)));
+      box-shadow: 0 0 14px color-mix(in oklab, var(--accent-b), white 30%);
+    }
+
+    /* Cards */
+    #atelier .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+    #atelier .card {
+      grid-column: span 12;
+      border-radius: 18px;
+      background: linear-gradient(180deg, hsl(0 0% 100% / 0.12), hsl(0 0% 100% / 0.04));
+      border: 1px solid var(--line);
+      box-shadow: var(--halo);
+      padding: 16px;
+      min-height: 120px;
+      display: grid;
+      align-content: space-between;
+      gap: 10px;
+      transform-style: preserve-3d;
+      transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+      transition: transform .12s ease, background .3s ease, border-color .3s ease;
+      overflow: hidden;
+      position: relative;
+    }
+    #atelier .card:after {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 20px;
+      background:
+        radial-gradient(300px 180px at var(--mx, 50%) var(--my, 50%), hsl(0 0% 100% / 0.12), transparent 60%),
+        linear-gradient(90deg, color-mix(in oklab, var(--accent-a), transparent 70%), color-mix(in oklab, var(--accent-b), transparent 70%));
+      mix-blend-mode: overlay;
+      opacity: 0.0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+    #atelier .card:hover:after { opacity: 0.45; }
+    #atelier .card h3 {
+      font-size: 16px;
+      letter-spacing: 0.2px;
+      margin: 0;
+    }
+    #atelier .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 46ch;
+    }
+    #atelier .knot {
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(90deg, var(--accent-a), var(--accent-b), var(--accent-c));
+      background-size: 200% 100%;
+      animation: flow 6s ease-in-out infinite;
+      filter: saturate(120%) contrast(105%);
+    }
+    @keyframes flow {
+      0%,100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    #atelier .swatches {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+    #atelier .chip {
+      aspect-ratio: 1;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      box-shadow: var(--halo);
+      background: var(--bgc, linear-gradient(135deg, var(--accent-a), var(--accent-b)));
+    }
+    #atelier .meter {
+      height: 8px;
+      border-radius: 999px;
+      background: hsl(0 0% 100% / 0.12);
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    #atelier .meter > i {
+      display: block; height: 100%; width: var(--w, 40%);
+      background: linear-gradient(90deg, var(--accent-a), var(--accent-c));
+      box-shadow: 0 0 14px color-mix(in oklab, var(--accent-c), white 40%);
+      transition: width 1.2s cubic-bezier(.2,.7,.2,1);
+    }
+
+    /* Grid responsive spans */
+    @media (min-width: 680px) {
+      #atelier .card.span-4 { grid-column: span 4; }
+      #atelier .card.span-8 { grid-column: span 8; }
+    }
+
+    /* Footer */
+    #atelier .meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    #atelier .meta .left {
+      display: inline-flex; gap: 10px; align-items: center;
+      padding: 8px 12px;
+      background: var(--glass);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      box-shadow: var(--halo);
+      backdrop-filter: blur(6px);
+    }
+    #atelier .spark {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, hsl(150 90% 60%), hsl(210 90% 60%));
+      box-shadow: 0 0 14px hsl(180 80% 60% / 0.8);
+      animation: blink 3s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100% { opacity: .6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.25); } }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      #atelier, #atelier * { animation: none !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+
+  <div class="topbar">
+    <div class="brand" aria-label="Brand">
+      <span class="dot" aria-hidden="true"></span>
+      <b>Vibe Engine</b>
+    </div>
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme">
+      <span class="icon" aria-hidden="true"></span>
+      <span class="label">Toggle</span>
+    </button>
+  </div>
+
+  <div class="stage">
+    <h1>Quiet thunder. Gentle speed.</h1>
+    <p class="tag">A studio of soft gradients, humane motion, and crisp type. Touch anything—watch it breathe.</p>
+
+    <div class="pills" role="group" aria-label="Modes">
+      <button class="pill" type="button"><span class="swatch" style="--grad: linear-gradient(135deg, var(--accent-a), var(--accent-b));"></span>Design</button>
+      <button class="pill" type="button"><span class="swatch" style="--grad: linear-gradient(135deg, var(--accent-b), var(--accent-c));"></span>Motion</button>
+      <button class="pill" type="button"><span class="swatch" style="--grad: linear-gradient(135deg, var(--accent-c), var(--accent-a));"></span>Clarity</button>
+    </div>
+
+    <div class="grid">
+      <div class="card span-8" data-tilt>
+        <h3>Living gradient</h3>
+        <div class="knot" aria-hidden="true"></div>
+        <p>Color that moves—subtle, steady, never loud.</p>
+      </div>
+
+      <div class="card span-4" data-tilt>
+        <h3>Balance meter</h3>
+        <div class="meter" aria-hidden="true"><i style="--w: 68%;"></i></div>
+        <p>Harmony between contrast, motion, and whitespace.</p>
+      </div>
+
+      <div class="card span-4" data-tilt>
+        <h3>Palette</h3>
+        <div class="swatches">
+          <span class="chip" style="--bgc: linear-gradient(135deg, hsl(210 90% 66%), hsl(240 80% 70%));"></span>
+          <span class="chip" style="--bgc: linear-gradient(135deg, hsl(290 80% 72%), hsl(320 80% 66%));"></span>
+          <span class="chip" style="--bgc: linear-gradient(135deg, hsl(165 75% 62%), hsl(195 85% 60%));"></span>
+          <span class="chip" style="--bgc: linear-gradient(135deg, hsl(35 95% 60%), hsl(20 85% 55%));"></span>
+          <span class="chip" style="--bgc: linear-gradient(135deg, hsl(0 0% 98%), hsl(0 0% 86%));"></span>
+          <span class="chip" style="--bgc: linear-gradient(135deg, hsl(0 0% 10%), hsl(0 0% 22%));"></span>
+        </div>
+        <p>Swatches built for legibility and calm.</p>
+      </div>
+
+      <div class="card span-8" data-tilt>
+        <h3>Motion you can feel</h3>
+        <p>Every interaction whisper-light; every hover a promise.</p>
+        <div class="knot" aria-hidden="true" style="animation-duration: 9s; border-radius: 10px;"></div>
+      </div>
+    </div>
+
+    <div class="meta">
+      <div class="left">
+        <span class="spark" aria-hidden="true"></span>
+        <span>Low-noise interface</span>
+      </div>
+      <span id="last-updated">Last updated: 2025-12-03 13:30:03 EST</span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('atelier');
+
+      // Theme toggle
+      const toggle = root.querySelector('.theme-toggle');
+      const stored = localStorage.getItem('vibe-theme');
+      if (stored === 'dawn' || stored === 'dusk') root.className = stored;
+      const syncPressed = () => toggle.setAttribute('aria-pressed', root.classList.contains('dawn') ? 'true' : 'false');
+      syncPressed();
+      toggle.addEventListener('click', () => {
+        root.classList.toggle('dawn');
+        root.classList.toggle('dusk');
+        const mode = root.classList.contains('dawn') ? 'dawn' : 'dusk';
+        localStorage.setItem('vibe-theme', mode);
+        syncPressed();
+      });
+
+      // Pointer halo
+      const halo = () => {
+        let raf = null;
+        root.addEventListener('pointermove', (e) => {
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            const rect = root.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            root.style.setProperty('--mx', x.toFixed(2) + '%');
+            root.style.setProperty('--my', y.toFixed(2) + '%');
+          });
+        });
+        root.addEventListener('pointerleave', () => {
+          root.style.removeProperty('--mx');
+          root.style.removeProperty('--my');
+        });
+      };
+      halo();
+
+      // Tilt cards
+      const cards = Array.from(root.querySelectorAll('[data-tilt]'));
+      cards.forEach((card) => {
+        card.addEventListener('pointermove', (e) => {
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width;
+          const py = (e.clientY - r.top) / r.height;
+          const rx = (py - 0.5) * -6;
+          const ry = (px - 0.5) * 8;
+          card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+          card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+          card.style.setProperty('--mx', (px * 100).toFixed(2) + '%');
+          card.style.setProperty('--my', (py * 100).toFixed(2) + '%');
+        }, { passive: true });
+        card.addEventListener('pointerleave', () => {
+          card.style.removeProperty('--rx');
+          card.style.removeProperty('--ry');
+        });
+      });
+
+      // Stagger-in animation via Intersection Observer
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            entry.target.animate(
+              [
+                { opacity: 0, transform: 'translateY(8px) scale(.98)' },
+                { opacity: 1, transform: 'translateY(0) scale(1)' }
+              ],
+              { duration: 500, delay: i * 70, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'both' }
+            );
+            io.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+      cards.forEach(el => io.observe(el));
+
+      // Last updated stamp
+      const stamp = root.querySelector('#last-updated');
+      const fmt = new Intl.DateTimeFormat([], {
+        year: 'numeric', month: 'short', day: '2-digit',
+        hour: '2-digit', minute: '2-digit',
+      });
+      const now = new Date();
+      stamp.textContent = 'Last updated: ' + fmt.format(now);
+
+      // Pills interactive meter update
+      const meter = root.querySelector('.meter > i');
+      root.querySelectorAll('.pill').forEach((pill, idx) => {
+        pill.addEventListener('mouseenter', () => {
+          const w = [68, 52, 84][idx % 3];
+          meter.style.setProperty('--w', w + '%');
+        });
+      });
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
