@@ -73,7 +73,486 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-12-03 01:29:34 EST</span></div>
+<div class="vibe-1036" data-accent="aurora" data-motion="on" aria-label="Interactive showcase panel">
+  <style>
+    .vibe-1036 {
+      --bg1: #0a0f1f;
+      --bg2: #0c1429;
+      --fg: #f3f7ff;
+      --muted: #b8c7da;
+      --glass: rgba(255,255,255,0.06);
+      --stroke: rgba(255,255,255,0.16);
+      --shadow: 0 20px 60px rgba(0,0,0,0.45);
+      --radius: 18px;
+      --acc-1: #67d2ff;
+      --acc-2: #a78bfa;
+      --tiltX: 0deg;
+      --tiltY: 0deg;
+      --mx: 0px;
+      --my: 0px;
+      position: relative;
+      isolation: isolate;
+      color: var(--fg);
+      padding: 28px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      background:
+        radial-gradient(1000px 800px at calc(70% + var(--mx)) calc(10% + var(--my)), rgba(167,139,250,0.12), transparent 60%),
+        radial-gradient(900px 700px at calc(20% + var(--mx)) calc(75% + var(--my)), rgba(103,210,255,0.10), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 60px 120px rgba(0,0,0,0.35);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+    .vibe-1036[data-accent="aurora"] { --acc-1: #67d2ff; --acc-2: #a78bfa; }
+    .vibe-1036[data-accent="peach"]  { --acc-1: #ff9a8b; --acc-2: #fecf6a; }
+    .vibe-1036[data-accent="mint"]   { --acc-1: #34d399; --acc-2: #22d3ee; }
+    .vibe-1036[data-accent="rose"]   { --acc-1: #ff6fb1; --acc-2: #ffc2e2; }
+
+    /* Background ambiance */
+    .vibe-1036 .orb {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(38px);
+      mix-blend-mode: screen;
+      opacity: 0.55;
+      transform: translate3d(0,0,0);
+      pointer-events: none;
+    }
+    .vibe-1036 .orb.a {
+      width: 360px; height: 360px; right: -120px; top: -80px;
+      background: radial-gradient(circle at 30% 30%, var(--acc-1), transparent 60%);
+      animation: vibe-drift-a 16s ease-in-out infinite;
+    }
+    .vibe-1036 .orb.b {
+      width: 420px; height: 420px; left: -140px; bottom: -120px;
+      background: radial-gradient(circle at 70% 70%, var(--acc-2), transparent 60%);
+      animation: vibe-drift-b 20s ease-in-out infinite;
+    }
+    .vibe-1036 .texture {
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 56px),
+        repeating-linear-gradient(0deg,  rgba(255,255,255,0.03) 0 1px, transparent 1px 56px);
+      mask: radial-gradient(1200px 800px at 50% 40%, black 40%, transparent 90%);
+      pointer-events: none;
+    }
+
+    /* Glass panel */
+    .vibe-1036 .panel {
+      position: relative;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px) saturate(135%);
+      transform: perspective(900px) rotateX(var(--tiltY)) rotateY(var(--tiltX));
+      transition: transform 200ms ease, box-shadow 300ms ease, background 400ms ease;
+    }
+    .vibe-1036 .panel::before {
+      content: "";
+      position: absolute; inset: -1px;
+      border-radius: calc(var(--radius) + 1px);
+      background: linear-gradient(135deg, rgba(255,255,255,0.35), rgba(255,255,255,0.06));
+      -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      padding: 1px;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .vibe-1036 .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .vibe-1036 .ring {
+      width: 16px; height: 16px; border-radius: 999px;
+      background:
+        conic-gradient(from 0deg, var(--acc-1), var(--acc-2), var(--acc-1)),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.85) 0 40%, transparent 41%);
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 42%, black 43%);
+              mask: radial-gradient(circle at 50% 50%, transparent 42%, black 43%);
+      animation: vibe-spin 6s linear infinite;
+      box-shadow: 0 0 12px rgba(255,255,255,0.18);
+    }
+
+    .vibe-1036 h1 {
+      margin: 8px 0 6px 0;
+      font-weight: 800;
+      line-height: 1.08;
+      font-size: clamp(28px, 5vw, 48px);
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--acc-1), var(--acc-2));
+      -webkit-background-clip: text;
+              background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 22px rgba(0,0,0,0.35);
+    }
+    .vibe-1036 .sub {
+      margin: 0 0 16px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Spectrum bar */
+    .vibe-1036 .spectrum {
+      --glow: color-mix(in oklab, var(--acc-1) 60%, white 20%);
+      position: relative;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04));
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: inset 0 1px 6px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.04);
+    }
+    .vibe-1036 .spectrum::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, var(--acc-1), var(--acc-2));
+      width: 60%;
+      animation: vibe-pulse 5s ease-in-out infinite;
+      border-right: 1px solid rgba(255,255,255,0.5);
+      filter: drop-shadow(0 0 12px var(--glow));
+    }
+
+    /* Controls */
+    .vibe-1036 .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px 16px;
+      margin: 18px 0 8px 0;
+      justify-content: space-between;
+    }
+    .vibe-1036 .accent-palette {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .vibe-1036 .chip {
+      --size: 28px;
+      width: var(--size);
+      height: var(--size);
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.24);
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+      position: relative;
+    }
+    .vibe-1036 .chip:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+    .vibe-1036 .chip:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.45); }
+    .vibe-1036 .chip.active { box-shadow: 0 0 0 2px rgba(255,255,255,0.5), 0 6px 20px rgba(0,0,0,0.4); }
+
+    .vibe-1036 .switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      user-select: none;
+    }
+    .vibe-1036 .switch .track {
+      --w: 44px; --h: 24px;
+      position: relative;
+      width: var(--w); height: var(--h);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.35);
+      cursor: pointer;
+    }
+    .vibe-1036 .switch .thumb {
+      position: absolute; top: 2px; left: 2px;
+      width: 20px; height: 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #fff, #dfe7ff);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.35);
+      transition: left 220ms cubic-bezier(.2,.8,.2,1);
+    }
+    .vibe-1036 [data-motion="on"] .switch .thumb { left: 22px; }
+
+    /* CTA */
+    .vibe-1036 .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px 16px;
+      margin-top: 18px;
+      justify-content: space-between;
+    }
+    .vibe-1036 .cta {
+      --shine: rgba(255,255,255,0.7);
+      position: relative;
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      background: linear-gradient(90deg, var(--acc-1), var(--acc-2));
+      color: #0b1020;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.18) inset;
+      transition: transform 160ms ease, box-shadow 180ms ease, filter 200ms ease;
+      overflow: hidden;
+    }
+    .vibe-1036 .cta::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(115deg, transparent 0 55%, rgba(255,255,255,0.35) 60%, transparent 65%);
+      transform: translateX(-120%);
+      transition: transform 800ms ease;
+      pointer-events: none;
+    }
+    .vibe-1036 .cta:hover { transform: translateY(-1px); box-shadow: 0 16px 30px rgba(0,0,0,0.45); }
+    .vibe-1036 .cta:hover::after { transform: translateX(0%); }
+
+    .vibe-1036 .meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      opacity: 0.9;
+      white-space: nowrap;
+    }
+    .vibe-1036 #last-updated {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+
+    /* Motion controls */
+    .vibe-1036[data-motion="off"] .orb { animation: none; opacity: 0.25; }
+    .vibe-1036[data-motion="off"] .panel { transform: none !important; }
+    .vibe-1036[data-motion="off"] .spectrum::before { animation: none; width: 55%; }
+    @media (prefers-reduced-motion: reduce) {
+      .vibe-1036 .orb,
+      .vibe-1036 .spectrum::before { animation: none !important; }
+      .vibe-1036 .panel { transform: none !important; }
+    }
+
+    /* Keyframes */
+    @keyframes vibe-spin { to { transform: rotate(360deg); } }
+    @keyframes vibe-drift-a {
+      0%,100% { transform: translate(0px,0px) scale(1); }
+      50% { transform: translate(-30px, 10px) scale(1.05); }
+    }
+    @keyframes vibe-drift-b {
+      0%,100% { transform: translate(0px,0px) scale(1); }
+      50% { transform: translate(25px, -20px) scale(0.97); }
+    }
+    @keyframes vibe-pulse {
+      0%,100% { width: 60%; filter: drop-shadow(0 0 8px rgba(255,255,255,0.3)); }
+      50% { width: 92%; filter: drop-shadow(0 0 14px rgba(255,255,255,0.45)); }
+    }
+
+    /* Layout niceties */
+    .vibe-1036 .row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 720px) {
+      .vibe-1036 .row { grid-template-columns: 1fr; }
+      .vibe-1036 .controls, .vibe-1036 .cta-row { gap: 10px; }
+    }
+
+    /* Mini card stack */
+    .vibe-1036 .stack {
+      display: grid;
+      gap: 10px;
+    }
+    .vibe-1036 .card {
+      position: relative;
+      border-radius: 14px;
+      padding: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+    }
+    .vibe-1036 .card h3 {
+      margin: 0 0 6px 0;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      color: #eaf2ff;
+    }
+    .vibe-1036 .card p {
+      margin: 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .vibe-1036 .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--acc-1), var(--acc-2));
+      color: #0a0f1f;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+  </style>
+
+  <div class="orb a" aria-hidden="true"></div>
+  <div class="orb b" aria-hidden="true"></div>
+  <div class="texture" aria-hidden="true"></div>
+
+  <div class="panel" role="group" aria-label="Glass panel">
+    <div class="kicker">
+      <span class="ring" aria-hidden="true"></span>
+      <span>Edition 1036 · A brisk, luminous leap</span>
+    </div>
+    <h1>Quiet Brilliance</h1>
+    <p class="sub">Softer glass. Braver color. Motion that listens to you.</p>
+    <div class="spectrum" aria-hidden="true"></div>
+
+    <div class="controls" aria-label="Controls">
+      <div class="accent-palette" role="group" aria-label="Accent palette">
+        <button class="chip active" style="--c1:#67d2ff;--c2:#a78bfa" aria-label="Aurora" data-set-accent="aurora" title="Aurora"></button>
+        <button class="chip" style="--c1:#ff9a8b;--c2:#fecf6a" aria-label="Peach" data-set-accent="peach" title="Peach"></button>
+        <button class="chip" style="--c1:#34d399;--c2:#22d3ee" aria-label="Mint" data-set-accent="mint" title="Mint"></button>
+        <button class="chip" style="--c1:#ff6fb1;--c2:#ffc2e2" aria-label="Rose" data-set-accent="rose" title="Rose"></button>
+      </div>
+
+      <label class="switch" for="motion-toggle">
+        Motion
+        <span class="track">
+          <span class="thumb"></span>
+          <input id="motion-toggle" type="checkbox" aria-label="Toggle motion" style="position:absolute; inset:0; opacity:0; cursor:pointer;">
+        </span>
+      </label>
+    </div>
+
+    <div class="row">
+      <div class="stack">
+        <div class="card">
+          <h3>Live Gradient</h3>
+          <p>Tap a palette to repaint the atmosphere instantly.</p>
+        </div>
+        <div class="card">
+          <h3>Responsive Motion</h3>
+          <p>Pointer tilt adds a whisper of depth—respectful of reduced-motion.</p>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <h3>Today’s Spark</h3>
+          <p><span class="badge">New</span> Embrace contrast that comforts, not shouts.</p>
+        </div>
+        <div class="card">
+          <h3>Presence</h3>
+          <p>Design that breathes between calm and delight.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <button class="cta" type="button" title="Explore now">Explore</button>
+      <div class="meta">
+        <span id="last-updated">Last updated: 2025-12-03 02:20:09 EST</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.currentScript.closest('.vibe-1036');
+      if (!root) return;
+
+      // Last updated
+      const span = root.querySelector('#last-updated');
+      try {
+        const now = new Date();
+        const fmt = new Intl.DateTimeFormat([], {
+          year: 'numeric', month: '2-digit', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+        span.textContent = 'Last updated: ' + fmt.format(now);
+      } catch (e) {
+        span.textContent = 'Last updated: ' + new Date().toLocaleString();
+      }
+
+      // Accent switching
+      const chips = root.querySelectorAll('[data-set-accent]');
+      function setActive(name) {
+        root.setAttribute('data-accent', name);
+        chips.forEach(c => c.classList.toggle('active', c.getAttribute('data-set-accent') === name));
+      }
+      chips.forEach(chip => chip.addEventListener('click', () => setActive(chip.getAttribute('data-set-accent'))));
+
+      // Motion toggle: default ON unless prefers-reduced-motion
+      const motionInput = root.querySelector('#motion-toggle');
+      const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) {
+        root.setAttribute('data-motion', 'off');
+        motionInput.checked = false;
+      } else {
+        root.setAttribute('data-motion', 'on');
+        motionInput.checked = true;
+      }
+      motionInput.addEventListener('change', () => {
+        root.setAttribute('data-motion', motionInput.checked ? 'on' : 'off');
+      });
+
+      // Subtle tilt + parallax
+      const panel = root.querySelector('.panel');
+      let raf = null;
+      function onMove(e) {
+        if (root.getAttribute('data-motion') !== 'on') return;
+        const rect = panel.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5..0.5
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const target = {
+          tx: (x * 6).toFixed(3) + 'deg',
+          ty: (-y * 6).toFixed(3) + 'deg',
+          mx: (x * 40).toFixed(1) + 'px',
+          my: (y * 40).toFixed(1) + 'px'
+        };
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          root.style.setProperty('--tiltX', target.tx);
+          root.style.setProperty('--tiltY', target.ty);
+          root.style.setProperty('--mx', target.mx);
+          root.style.setProperty('--my', target.my);
+        });
+      }
+      function resetTilt() {
+        root.style.setProperty('--tiltX', '0deg');
+        root.style.setProperty('--tiltY', '0deg');
+        root.style.setProperty('--mx', '0px');
+        root.style.setProperty('--my', '0px');
+      }
+      panel.addEventListener('pointermove', onMove);
+      panel.addEventListener('pointerleave', resetTilt);
+
+      // CTA sparkle
+      const cta = root.querySelector('.cta');
+      cta.addEventListener('pointermove', (e) => {
+        const r = cta.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width) * 100;
+        cta.style.filter = `brightness(1.0) saturate(1.05) drop-shadow(0 6px 18px rgba(0,0,0,0.35))`;
+        cta.style.background = `linear-gradient(90deg, var(--acc-1) ${Math.max(0, x-20)}%, var(--acc-2))`;
+      });
+      cta.addEventListener('pointerleave', () => {
+        cta.style.filter = '';
+        cta.style.background = '';
+      });
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
