@@ -73,96 +73,99 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="luminarium" class="night" aria-label="Luminarium — Kinetic Mesh">
+<section id="observatory" class="night" aria-label="Observatory — Radiant Rings">
   <style>
-    /* Scope */
-    #luminarium {
-      --r: 26px;
+    /* Scope + Theme */
+    #observatory {
+      --r: 28px;
       --pad: 28px;
-      --fg: hsl(220 18% 95%);
-      --muted: hsl(220 10% 76%);
+      --fg: hsl(220 18% 96%);
+      --muted: hsl(220 10% 78%);
       --bg1: hsl(250 65% 6%);
       --bg2: hsl(280 45% 12%);
-      --glass: hsl(0 0% 100% / .06);
+      --glass: hsl(0 0% 100% / .08);
       --ring: hsl(0 0% 100% / .14);
-      --c1: #77d7ff;
-      --c2: #b79cff;
+      --c1: #86f2ff;
+      --c2: #b49cff;
       --c3: #5ff2c8;
       --c4: #ffd978;
-      --speed: 1;
+      --speed: 1.0;
       --tiltX: 0deg;
       --tiltY: 0deg;
       position: relative;
       isolation: isolate;
-      min-height: 720px;
+      min-height: 760px;
       padding: var(--pad);
       border-radius: var(--r);
       color: var(--fg);
       overflow: hidden;
-      font-family: ui-sans-serif, system-ui, -apple-system, Inter, "Helvetica Neue", Segoe UI, Arial;
+      -webkit-font-smoothing: antialiased;
+      font-synthesis-weight: none;
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
       background:
-        radial-gradient(140% 120% at 110% -10%, hsl(0 0% 100% / .08), transparent 42%),
+        radial-gradient(140% 130% at 110% -10%, hsl(0 0% 100% / .06), transparent 42%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
-      box-shadow: 0 40px 120px hsl(0 0% 0% / .65);
+      box-shadow: 0 42px 120px hsl(0 0% 0% / .65);
       transform: perspective(1200px) rotateX(var(--tiltX)) rotateY(var(--tiltY));
-      transition: transform .12s ease-out;
+      transition: transform .12s ease-out, box-shadow .3s ease;
     }
-    #luminarium.day {
-      --fg: hsl(230 16% 13%);
+    #observatory.day {
+      --fg: hsl(230 16% 12%);
       --muted: hsl(230 9% 40%);
       --bg1: hsl(210 65% 98%);
       --bg2: hsl(220 60% 92%);
       --glass: hsl(0 0% 100% / .7);
       --ring: hsl(230 24% 30% / .18);
-      box-shadow: 0 28px 90px hsl(220 50% 45% / .18);
+      box-shadow: 0 32px 90px hsl(220 50% 45% / .18);
     }
 
-    /* Mesh canvas */
-    #luminarium #mesh {
+    /* Canvas layer */
+    #observatory #field {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       display: block;
       z-index: -1;
-      filter: saturate(115%) contrast(105%) brightness(102%);
+      filter: saturate(112%) contrast(104%) brightness(102%);
     }
 
-    /* Grain + soft grid */
-    #luminarium::before,
-    #luminarium::after {
+    /* Grain + stars */
+    #observatory::before,
+    #observatory::after {
       content: "";
       position: absolute; inset: 0;
       pointer-events: none;
     }
-    #luminarium::before {
+    #observatory::before {
       background:
-        linear-gradient(180deg, hsl(0 0% 100% / .07), transparent 25% 75%, hsl(0 0% 0% / .07)),
-        repeating-linear-gradient(0deg, transparent 0 38px, hsl(0 0% 100% / .04) 38px 39px);
+        radial-gradient(1200px 800px at 15% 10%, hsl(0 0% 100% / .06), transparent 45%),
+        radial-gradient(900px 700px at 85% 90%, hsl(0 0% 0% / .18), transparent 50%);
       mix-blend-mode: overlay;
-      opacity: .4;
-    }
-    #luminarium::after {
-      background-image: radial-gradient(circle at 20% 20%, hsl(0 0% 100% / .05) 0 1px, transparent 1px),
-                        radial-gradient(circle at 80% 60%, hsl(0 0% 0% / .06) 0 1px, transparent 1px);
-      background-size: 2px 2px, 3px 3px;
       opacity: .55;
+    }
+    #observatory::after {
+      background-image:
+        radial-gradient(circle at 20% 20%, hsl(0 0% 100% / .08) 0 1px, transparent 1px),
+        radial-gradient(circle at 80% 60%, hsl(0 0% 0% / .06) 0 1px, transparent 1px);
+      background-size: 2px 2px, 3px 3px;
+      opacity: .35;
       mix-blend-mode: soft-light;
     }
 
-    /* Topbar */
-    #luminarium .topbar {
+    /* Header */
+    #observatory .topbar {
       display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
-    #luminarium .brand {
+    #observatory .brand {
       display: inline-flex; align-items: center; gap: 10px;
       padding: 10px 14px; border-radius: 999px;
       border: 1px solid var(--ring);
-      background: linear-gradient(180deg, hsl(0 0% 100% / .12), hsl(0 0% 100% / .05));
-      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, hsl(0 0% 100% / .14), hsl(0 0% 100% / .06));
+      backdrop-filter: blur(10px);
       color: var(--muted); font-weight: 900; letter-spacing: .28px; font-size: 12px; text-transform: uppercase;
       box-shadow: 0 1px 0 hsl(0 0% 100% / .16) inset, 0 10px 24px hsl(0 0% 0% / .25);
     }
-    #luminarium .brand::before {
+    #observatory .brand::before {
       content: "";
       width: 14px; height: 14px; border-radius: 50%;
       background: conic-gradient(from 0deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c1));
@@ -170,14 +173,14 @@
     }
 
     /* Controls */
-    #luminarium .controls {
+    #observatory .controls {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 8px; border-radius: 999px; border: 1px solid var(--ring);
       background: linear-gradient(180deg, var(--glass), hsl(0 0% 100% / .05));
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       box-shadow: 0 1px 0 hsl(0 0% 100% / .13) inset, 0 10px 30px hsl(0 0% 0% / .25);
     }
-    #luminarium .btn {
+    #observatory .btn {
       appearance: none; border: none; cursor: pointer;
       display: inline-flex; align-items: center; gap: 8px;
       padding: 10px 14px; border-radius: 999px;
@@ -185,70 +188,66 @@
       transition: background .2s ease, transform .12s ease, color .2s ease;
       user-select: none;
     }
-    #luminarium .btn:hover { background: hsl(0 0% 100% / .08); }
-    #luminarium .btn:active { transform: translateY(1px); }
-    #luminarium .ico {
+    #observatory .btn:hover { background: hsl(0 0% 100% / .09); }
+    #observatory .btn:active { transform: translateY(1px); }
+    #observatory .ico {
       width: 16px; height: 16px; border-radius: 50%;
       background: conic-gradient(var(--c1), var(--c2), var(--c3), var(--c4), var(--c1));
       box-shadow: 0 0 10px hsl(0 0% 0% / .25), 0 0 12px color-mix(in srgb, var(--c2), white 35%);
     }
-    #luminarium .ico.theme {
-      background: radial-gradient(circle at 30% 30%, #ffd06e, #ff7a42 60%, #ff4d4d 85%);
+    #observatory .ico.theme {
+      background: radial-gradient(circle at 35% 35%, #ffd06e, #ff7a42 60%, #ff4d4d 85%);
     }
-    #luminarium.day .ico.theme {
-      background: radial-gradient(circle at 70% 70%, #5aa2ff, #7f7cff 70%);
+    #observatory.day .ico.theme {
+      background: radial-gradient(circle at 65% 65%, #5aa2ff, #7f7cff 70%);
     }
 
     /* Layout */
-    #luminarium .row {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 24px;
-      align-items: stretch;
+    #observatory .content {
+      display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: stretch;
     }
-    @media (max-width: 940px) {
-      #luminarium .row { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 940px) { #observatory .content { grid-template-columns: 1fr; } }
 
-    /* Hero card */
-    #luminarium .hero {
-      display: grid; gap: 14px;
-      padding: 18px; border-radius: 20px;
+    /* Hero */
+    #observatory .hero {
+      display: grid; gap: 16px;
+      padding: 20px; border-radius: 22px;
       border: 1px solid var(--ring);
-      background: linear-gradient(180deg, hsl(0 0% 100% / .12), hsl(0 0% 100% / .06));
-      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, hsl(0 0% 100% / .14), hsl(0 0% 100% / .06));
+      backdrop-filter: blur(14px) saturate(120%);
     }
-    #luminarium h1 {
+    #observatory h1 {
       margin: 0;
-      font-size: clamp(34px, 7.8vw, 96px);
-      line-height: .94; letter-spacing: -.02em;
+      font-size: clamp(36px, 7.8vw, 96px);
+      line-height: .92; letter-spacing: -.02em;
+      color: transparent;
       background: linear-gradient(90deg, var(--fg), var(--c1), var(--c2), var(--c3), var(--c4), var(--fg)) 0 0 / 220% 100%;
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-      filter: drop-shadow(0 8px 30px hsl(0 0% 0% / .25));
+      -webkit-background-clip: text; background-clip: text;
       animation: hueflow 16s linear infinite;
+      filter: drop-shadow(0 8px 30px hsl(0 0% 0% / .25));
     }
     @keyframes hueflow { to { background-position: 220% 0; } }
-    #luminarium .tag {
+    #observatory .tag {
       color: var(--muted);
       font-size: clamp(14px, 2.4vw, 18px);
     }
 
     /* Panel */
-    #luminarium .panel {
+    #observatory .panel {
       display: grid; gap: 12px;
-      padding: 14px; border-radius: 16px;
+      padding: 14px; border-radius: 18px;
       border: 1px solid var(--ring);
-      background: linear-gradient(180deg, hsl(0 0% 100% / .12), hsl(0 0% 100% / .06));
-      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, hsl(0 0% 100% / .14), hsl(0 0% 100% / .06));
+      backdrop-filter: blur(10px);
     }
-    #luminarium .panel .row2 { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    #luminarium label { font-size: 12px; color: var(--muted); letter-spacing: .3px; }
-    #luminarium input[type="range"] {
-      -webkit-appearance: none; appearance: none; width: 240px; max-width: 52vw; height: 6px;
-      border-radius: 999px; background: hsl(0 0% 100% / .08);
+    #observatory .row2 { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    #observatory label { font-size: 12px; color: var(--muted); letter-spacing: .3px; }
+    #observatory input[type="range"] {
+      -webkit-appearance: none; appearance: none; width: 240px; max-width: 55vw; height: 6px;
+      border-radius: 999px; background: hsl(0 0% 100% / .1);
       outline: none; border: 1px solid var(--ring);
     }
-    #luminarium input[type="range"]::-webkit-slider-thumb {
+    #observatory input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 18px; height: 18px; border-radius: 50%;
       background: linear-gradient(135deg, var(--c1), var(--c2));
@@ -257,51 +256,33 @@
       cursor: pointer;
     }
 
-    /* Halo ring */
-    #luminarium .halo {
-      position: absolute; inset: 12% 22%;
-      pointer-events: none;
-      border-radius: 50%;
-      background:
-        conic-gradient(from 0deg, color-mix(in srgb, var(--c1), transparent 65%),
-                               color-mix(in srgb, var(--c2), transparent 65%),
-                               color-mix(in srgb, var(--c3), transparent 65%),
-                               color-mix(in srgb, var(--c4), transparent 65%),
-                               color-mix(in srgb, var(--c1), transparent 65%));
-      filter: blur(8px) saturate(120%);
-      mask: radial-gradient(closest-side, transparent 58%, black 62% 100%);
-      opacity: .85;
-      animation: spin 30s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
     /* Lens */
-    #luminarium .lens {
+    #observatory .lens {
       position: absolute;
-      width: 180px; height: 180px; border-radius: 50%;
+      width: 190px; height: 190px; border-radius: 50%;
       border: 1px solid var(--ring);
-      background: linear-gradient(180deg, hsl(0 0% 100% / .1), hsl(0 0% 100% / .04));
+      background: linear-gradient(180deg, hsl(0 0% 100% / .10), hsl(0 0% 100% / .04));
       box-shadow: 0 10px 40px hsl(0 0% 0% / .3);
-      backdrop-filter: blur(14px) saturate(140%);
+      backdrop-filter: blur(16px) saturate(140%);
       pointer-events: none;
       transform: translate(-50%, -50%);
       opacity: 0; transition: opacity .25s ease;
     }
-    #luminarium:hover .lens { opacity: 1; }
+    #observatory:hover .lens { opacity: 1; }
 
     /* Meta */
-    #luminarium .meta {
+    #observatory .meta {
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
       color: var(--muted); font-size: 12px; margin-top: 16px;
     }
-    #luminarium .pulse {
+    #observatory .pulse {
       display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px;
       border: 1px solid var(--ring); border-radius: 999px;
-      background: linear-gradient(180deg, hsl(0 0% 100% / .08), hsl(0 0% 100% / .04));
+      background: linear-gradient(180deg, hsl(0 0% 100% / .1), hsl(0 0% 100% / .05));
       box-shadow: 0 1px 0 hsl(0 0% 100% / .12) inset;
       backdrop-filter: blur(8px);
     }
-    #luminarium .dot {
+    #observatory .dot {
       width: 8px; height: 8px; border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, var(--c3), var(--c1));
       box-shadow: 0 0 12px color-mix(in srgb, var(--c3), white 30%);
@@ -311,15 +292,14 @@
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      #luminarium, #luminarium * { animation: none !important; transition-duration: .01ms !important; }
+      #observatory, #observatory * { animation: none !important; transition-duration: .01ms !important; }
     }
   </style>
 
-  <canvas id="mesh" aria-hidden="true"></canvas>
-  <div class="halo" aria-hidden="true"></div>
+  <canvas id="field" aria-hidden="true"></canvas>
 
   <div class="topbar">
-    <div class="brand">Luminarium</div>
+    <div class="brand">Observatory</div>
     <div class="controls" role="group" aria-label="Controls">
       <button class="btn" data-palette aria-label="Shuffle palette"><span class="ico" aria-hidden="true"></span><span>Palette</span></button>
       <button class="btn" data-pause aria-label="Pause or play"><span>Pause</span></button>
@@ -328,80 +308,70 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="content">
     <div class="hero">
-      <h1>Gentle motion, generous space.</h1>
-      <p class="tag">A kinetic gradient mesh that breathes with your pointer. Glide to nudge the colors. Alt-drag to gather them closer.</p>
+      <h1>Quiet rings, bright ideas.</h1>
+      <p class="tag">Radiant waves fold and breathe around your pointer. Click to send a ripple. The page tilts as you wander.</p>
     </div>
 
-    <div class="panel" aria-label="Mesh controls">
+    <div class="panel" aria-label="Rings controls">
       <div class="row2">
-        <label for="density">Density</label>
-        <input id="density" type="range" min="6" max="48" step="1" value="18" aria-valuemin="6" aria-valuemax="48" aria-valuenow="18">
+        <label for="rings">Rings</label>
+        <input id="rings" type="range" min="6" max="40" step="1" value="18" aria-valuemin="6" aria-valuemax="40" aria-valuenow="18">
       </div>
       <div class="row2">
-        <label for="speed">Tempo</label>
-        <input id="speed" type="range" min="0.2" max="2.5" step="0.01" value="1" aria-valuemin="0.2" aria-valuemax="2.5" aria-valuenow="1">
+        <label for="tempo">Tempo</label>
+        <input id="tempo" type="range" min="0.2" max="2.5" step="0.01" value="1.0" aria-valuemin="0.2" aria-valuemax="2.5" aria-valuenow="1.0">
+      </div>
+      <div class="row2">
+        <label for="thick">Thickness</label>
+        <input id="thick" type="range" min="0.6" max="4" step="0.1" value="1.6" aria-valuemin="0.6" aria-valuemax="4" aria-valuenow="1.6">
       </div>
       <div class="row2">
         <label class="tag">Tip</label>
-        <span class="tag">Hold Alt to attract · Click to scatter</span>
+        <span class="tag">Click to ripple · Shift-click to focus ripple · Move to tilt</span>
       </div>
     </div>
   </div>
 
   <div class="meta">
-    <span class="pulse"><span class="dot" aria-hidden="true"></span><span>Study Nº 9 — Mesh</span></span>
-    <span id="last-updated">Last updated: 2025-12-03 20:24:30 EST</span>
+    <span class="pulse"><span class="dot" aria-hidden="true"></span><span>Study Nº 10 — Radiant Rings</span></span>
+    <span id="last-updated">Last updated: 2025-12-03 22:17:39 EST</span>
   </div>
 
   <div class="lens" aria-hidden="true"></div>
 
   <script>
     (function() {
-      const root = document.getElementById('luminarium');
-      const canvas = root.querySelector('#mesh');
+      const root = document.getElementById('observatory');
+      const canvas = root.querySelector('#field');
       const ctx = canvas.getContext('2d', { alpha: true });
 
-      const densityEl = root.querySelector('#density');
-      const speedEl = root.querySelector('#speed');
+      const ringsEl = root.querySelector('#rings');
+      const tempoEl = root.querySelector('#tempo');
+      const thickEl = root.querySelector('#thick');
       const paletteBtn = root.querySelector('[data-palette]');
       const pauseBtn = root.querySelector('[data-pause]');
       const themeSwitch = root.querySelector('[data-theme]');
       const saveBtn = root.querySelector('[data-save]');
       const lens = root.querySelector('.lens');
 
-      // Theme
-      const savedTheme = localStorage.getItem('luminarium-theme') || 'night';
-      root.classList.toggle('day', savedTheme === 'day');
-      root.classList.toggle('night', savedTheme !== 'day');
-      themeSwitch.setAttribute('aria-checked', savedTheme === 'day' ? 'true' : 'false');
-
-      themeSwitch.addEventListener('click', () => {
-        const toDay = !root.classList.contains('day');
-        root.classList.toggle('day', toDay);
-        root.classList.toggle('night', !toDay);
-        localStorage.setItem('luminarium-theme', toDay ? 'day' : 'night');
-        themeSwitch.setAttribute('aria-checked', toDay ? 'true' : 'false');
-        draw(true);
-      });
-
       // Palettes
       const palettes = [
-        { c1:'#77d7ff', c2:'#b79cff', c3:'#5ff2c8', c4:'#ffd978' }, // Holo
-        { c1:'#ffb224', c2:'#ff6b6b', c3:'#ffd5a4', c4:'#ffd06e' }, // Citrus
-        { c1:'#a6bcff', c2:'#6bf3d5', c3:'#ffffff', c4:'#b7c8ff' }, // Ice milk
-        { c1:'#ff7ad9', c2:'#7aa2ff', c3:'#ffe06e', c4:'#b6ffb1' }, // Bougainvillea
-        { c1:'#94ffa9', c2:'#5cd6ff', c3:'#e4b3ff', c4:'#fff4a8' }  // Pastel bloom
+        { c1:'#86f2ff', c2:'#b49cff', c3:'#5ff2c8', c4:'#ffd978' }, // Holo
+        { c1:'#ff8e4f', c2:'#ff5ca7', c3:'#ffd06e', c4:'#ffd9a6' }, // Sunset Sorbet
+        { c1:'#7aa2ff', c2:'#6bf3d5', c3:'#ffffff', c4:'#b7c8ff' }, // Ice Milk
+        { c1:'#94ffa9', c2:'#5cd6ff', c3:'#e4b3ff', c4:'#fff4a8' }, // Pastel Bloom
+        { c1:'#b0ff72', c2:'#7de3ff', c3:'#a9b2ff', c4:'#fff1a1' }  // Meadow
       ];
-      let pIndex = parseInt(localStorage.getItem('luminarium-palette') || '0', 10) % palettes.length;
+      let pIndex = parseInt(localStorage.getItem('observatory-palette') || '0', 10) % palettes.length;
       function applyPalette(i) {
         const p = palettes[i];
         root.style.setProperty('--c1', p.c1);
         root.style.setProperty('--c2', p.c2);
         root.style.setProperty('--c3', p.c3);
         root.style.setProperty('--c4', p.c4);
-        localStorage.setItem('luminarium-palette', String(i));
+        localStorage.setItem('observatory-palette', String(i));
       }
       applyPalette(pIndex);
       paletteBtn.addEventListener('click', () => {
@@ -409,22 +379,39 @@
         applyPalette(pIndex);
       });
 
+      // Theme
+      const savedTheme = localStorage.getItem('observatory-theme') || 'night';
+      root.classList.toggle('day', savedTheme === 'day');
+      root.classList.toggle('night', savedTheme !== 'day');
+      themeSwitch.setAttribute('aria-checked', savedTheme === 'day' ? 'true' : 'false');
+      themeSwitch.addEventListener('click', () => {
+        const toDay = !root.classList.contains('day');
+        root.classList.toggle('day', toDay);
+        root.classList.toggle('night', !toDay);
+        localStorage.setItem('observatory-theme', toDay ? 'day' : 'night');
+        themeSwitch.setAttribute('aria-checked', toDay ? 'true' : 'false');
+        draw(true);
+      });
+
       // State
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let running = !prefersReduced;
       pauseBtn.textContent = running ? 'Pause' : 'Play';
 
-      let speed = parseFloat(localStorage.getItem('luminarium-speed') || '1');
-      speedEl.value = String(speed);
-      speedEl.setAttribute('aria-valuenow', String(speed));
+      let speed = parseFloat(localStorage.getItem('observatory-speed') || '1.0');
+      tempoEl.value = String(speed);
+      tempoEl.setAttribute('aria-valuenow', String(speed));
       root.style.setProperty('--speed', speed);
 
-      let density = parseInt(localStorage.getItem('luminarium-density') || '18', 10);
-      densityEl.value = String(density);
-      densityEl.setAttribute('aria-valuenow', String(density));
+      let ringCount = parseInt(localStorage.getItem('observatory-rings') || '18', 10);
+      ringsEl.value = String(ringCount);
+      ringsEl.setAttribute('aria-valuenow', String(ringCount));
 
-      // Mesh blobs
-      let blobs = [];
+      let thickness = parseFloat(localStorage.getItem('observatory-thickness') || '1.6');
+      thickEl.value = String(thickness);
+      thickEl.setAttribute('aria-valuenow', String(thickness));
+
+      // Canvas sizing
       let DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
       function size() {
         const r = root.getBoundingClientRect();
@@ -433,43 +420,30 @@
         canvas.style.width = r.width + 'px';
         canvas.style.height = r.height + 'px';
         ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-        initBlobs(density, true);
       }
+      size();
+      window.addEventListener('resize', () => { size(); }, { passive: true });
 
-      function rand(min, max) { return min + Math.random() * (max - min); }
-
-      function pickColor(i) {
-        const cs = [
-          getComputedStyle(root).getPropertyValue('--c1').trim(),
-          getComputedStyle(root).getPropertyValue('--c2').trim(),
-          getComputedStyle(root).getPropertyValue('--c3').trim(),
-          getComputedStyle(root).getPropertyValue('--c4').trim()
+      // Colors
+      function getPalette() {
+        const styles = getComputedStyle(root);
+        return [
+          styles.getPropertyValue('--c1').trim(),
+          styles.getPropertyValue('--c2').trim(),
+          styles.getPropertyValue('--c3').trim(),
+          styles.getPropertyValue('--c4').trim()
         ];
-        return cs[i % cs.length];
       }
 
-      function initBlobs(n, clear = false) {
-        const w = canvas.width / (window.devicePixelRatio || 1);
-        const h = canvas.height / (window.devicePixelRatio || 1);
-        blobs = Array.from({ length: n }, (_, i) => {
-          const s = Math.sin(i) * 0.5 + 0.5;
-          return {
-            x: rand(0, w), y: rand(0, h),
-            r: rand(Math.min(w, h) * 0.10, Math.min(w, h) * 0.28),
-            vx: rand(-0.5, 0.5), vy: rand(-0.5, 0.5),
-            hue: pickColor(i),
-            z: s
-          };
-        });
-        if (clear) ctx.clearRect(0, 0, w, h);
-      }
-
-      // Pointer interaction
-      let mx = 0.5, my = 0.5, attract = false, scatter = 0;
+      // Interaction
+      let mx = 0.5, my = 0.5;
+      let pulses = [];
+      let time = 0;
       root.addEventListener('pointermove', (e) => {
         const r = root.getBoundingClientRect();
         mx = (e.clientX - r.left) / r.width;
         my = (e.clientY - r.top) / r.height;
+
         const tiltX = (my - 0.5) * -8;
         const tiltY = (mx - 0.5) * 8;
         root.style.setProperty('--tiltX', tiltX.toFixed(2) + 'deg');
@@ -480,119 +454,166 @@
         lens.style.top = (e.clientY - r.top) + 'px';
       }, { passive: true });
 
-      root.addEventListener('pointerdown', (e) => { attract = e.altKey; });
-      root.addEventListener('pointerup', () => { attract = false; });
-      root.addEventListener('click', () => { scatter = 1; });
-
-      // Controls events
-      speedEl.addEventListener('input', (e) => {
-        speed = parseFloat(e.target.value);
-        speedEl.setAttribute('aria-valuenow', String(speed));
-        root.style.setProperty('--speed', speed);
-        localStorage.setItem('luminarium-speed', String(speed));
+      root.addEventListener('click', (e) => {
+        const r = root.getBoundingClientRect();
+        const cx = r.width / 2, cy = r.height / 2;
+        const x = (e.clientX - r.left), y = (e.clientY - r.top);
+        const d0 = Math.hypot(x - cx, y - cy);
+        const now = performance.now() / 1000;
+        pulses.push({
+          d0,
+          t0: now,
+          focus: e.shiftKey ? 0.45 : 1.0, // tighter pulse if shift
+          amp: 1.0
+        });
+        // Avoid unbounded growth
+        if (pulses.length > 12) pulses.shift();
       });
-      densityEl.addEventListener('input', (e) => {
-        density = parseInt(e.target.value, 10);
-        densityEl.setAttribute('aria-valuenow', String(density));
-        localStorage.setItem('luminarium-density', String(density));
-        initBlobs(density, true);
+
+      // Controls
+      tempoEl.addEventListener('input', (e) => {
+        speed = parseFloat(e.target.value);
+        tempoEl.setAttribute('aria-valuenow', String(speed));
+        root.style.setProperty('--speed', speed);
+        localStorage.setItem('observatory-speed', String(speed));
+      });
+      ringsEl.addEventListener('input', (e) => {
+        ringCount = parseInt(e.target.value, 10);
+        ringsEl.setAttribute('aria-valuenow', String(ringCount));
+        localStorage.setItem('observatory-rings', String(ringCount));
+      });
+      thickEl.addEventListener('input', (e) => {
+        thickness = parseFloat(e.target.value);
+        thickEl.setAttribute('aria-valuenow', String(thickness));
+        localStorage.setItem('observatory-thickness', String(thickness));
       });
       pauseBtn.addEventListener('click', () => {
         running = !running;
         pauseBtn.textContent = running ? 'Pause' : 'Play';
-        if (running) tick();
+        if (running) requestAnimationFrame(tick);
       });
-
-      // Draw
-      function draw(clear = true) {
-        const w = canvas.width / (window.devicePixelRatio || 1);
-        const h = canvas.height / (window.devicePixelRatio || 1);
-        if (clear) ctx.clearRect(0, 0, w, h);
-
-        ctx.globalCompositeOperation = 'source-over';
-        // subtle base fade for day mode to soften edges
-        if (root.classList.contains('day')) {
-          ctx.globalAlpha = 0.08;
-          ctx.fillStyle = '#fff';
-          ctx.fillRect(0, 0, w, h);
-          ctx.globalAlpha = 1;
-        }
-
-        ctx.globalCompositeOperation = 'lighter';
-        const px = mx * w, py = my * h;
-        for (let i = 0; i < blobs.length; i++) {
-          const b = blobs[i];
-
-          // Physics
-          const s = 0.25 + b.z * 0.75;
-          b.x += b.vx * speed * s;
-          b.y += b.vy * speed * s;
-
-          // Pointer flow: perpendicular swirl + optional attract
-          const dx = b.x - px, dy = b.y - py;
-          const dist = Math.hypot(dx, dy) + 0.001;
-          const swirl = 12 / dist;
-          b.vx += (dy / dist) * swirl * 0.02 * (attract ? -1 : 1);
-          b.vy += (-dx / dist) * swirl * 0.02 * (attract ? -1 : 1);
-
-          if (scatter > 0) {
-            b.vx += (Math.random() - 0.5) * 2.2 * scatter;
-            b.vy += (Math.random() - 0.5) * 2.2 * scatter;
-          }
-
-          // Bounds
-          if (b.x < -b.r) { b.x = -b.r; b.vx *= -1; }
-          if (b.x > w + b.r) { b.x = w + b.r; b.vx *= -1; }
-          if (b.y < -b.r) { b.y = -b.r; b.vy *= -1; }
-          if (b.y > h + b.r) { b.y = h + b.r; b.vy *= -1; }
-
-          // Draw radial
-          const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
-          g.addColorStop(0, b.hue);
-          g.addColorStop(1, 'transparent');
-          ctx.fillStyle = g;
-          ctx.globalAlpha = 0.85;
-          ctx.beginPath();
-          ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        ctx.globalAlpha = 1;
-        ctx.globalCompositeOperation = 'source-over';
-        scatter *= 0.9;
-      }
-
-      function tick() {
-        if (!running) return;
-        draw(true);
-        requestAnimationFrame(tick);
-      }
 
       // Save
       saveBtn.addEventListener('click', () => {
         try {
           const link = document.createElement('a');
-          link.download = 'luminarium-mesh.png';
+          link.download = 'observatory-rings.png';
           link.href = canvas.toDataURL('image/png');
           link.click();
         } catch(_) {}
       });
 
-      // Resize
-      function onResize() { size(); }
-      size();
-      window.addEventListener('resize', onResize, { passive: true });
+      // Drawing the rings
+      function draw(clear = true) {
+        const w = canvas.width / (window.devicePixelRatio || 1);
+        const h = canvas.height / (window.devicePixelRatio || 1);
+        if (clear) ctx.clearRect(0, 0, w, h);
+
+        const cx = w / 2, cy = h / 2;
+        const minDim = Math.min(w, h);
+        const base = minDim * 0.47;
+
+        // Subtle day tint
+        if (root.classList.contains('day')) {
+          ctx.globalAlpha = 0.06;
+          ctx.fillStyle = '#000';
+          ctx.fillRect(0, 0, w, h);
+          ctx.globalAlpha = 1;
+        }
+
+        const cs = getPalette();
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.globalCompositeOperation = 'lighter';
+
+        const px = mx * w, py = my * h;
+        const centerOffsetX = (px - cx) * 0.05;
+        const centerOffsetY = (py - cy) * 0.05;
+
+        const t = time * speed;
+        const segs = Math.max(120, Math.floor(240 * (minDim / 1200)));
+        const waveBase = 8 * thickness;
+
+        // Update pulses
+        const now = performance.now() / 1000;
+        pulses = pulses.filter(p => (now - p.t0) < 6);
+        const pulseSpeed = 120 * (0.6 + speed * 0.7);
+        const sigma = 38;
+
+        for (let i = 0; i < ringCount; i++) {
+          const f = (i + 1) / (ringCount + 1);
+          const r0 = f * base;
+          const color = cs[i % cs.length];
+
+          // gradient stroke to add depth
+          const g = ctx.createLinearGradient(cx - r0, cy - r0, cx + r0, cy + r0);
+          g.addColorStop(0.0, color);
+          g.addColorStop(0.5, color);
+          g.addColorStop(1.0, color);
+
+          ctx.strokeStyle = g;
+          ctx.lineWidth = Math.max(0.8, thickness) * (1.15 - f * 0.6);
+
+          ctx.beginPath();
+          for (let s = 0; s <= segs; s++) {
+            const a = (s / segs) * Math.PI * 2;
+            // base ripple
+            const k = 4 + Math.floor(i * 0.35);
+            const ripple = Math.sin(a * k + t * (1.4 + i * 0.03)) * waveBase * (1.0 - f * 0.65);
+
+            // pulse influence (radial)
+            let pulseOff = 0;
+            for (let p of pulses) {
+              const pr = p.d0 + (now - p.t0) * pulseSpeed;
+              const d = r0 - pr;
+              const gauss = Math.exp(-(d * d) / (2 * (sigma * p.focus) * (sigma * p.focus)));
+              pulseOff += gauss * (22 * p.amp) * Math.sin(a * (1.5 + i * 0.1) + (now - p.t0) * 3.5);
+            }
+
+            // pointer influence
+            const dirX = Math.cos(a), dirY = Math.sin(a);
+            const towardPointer = ((px - (cx + centerOffsetX)) * dirX + (py - (cy + centerOffsetY)) * dirY) / minDim;
+            const pull = towardPointer * 18 * (1.0 - f);
+
+            const r = r0 + ripple + pulseOff + pull;
+
+            const x = cx + centerOffsetX + Math.cos(a) * r;
+            const y = cy + centerOffsetY + Math.sin(a) * r;
+
+            if (s === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          }
+          ctx.closePath();
+
+          ctx.globalAlpha = 0.8;
+          ctx.shadowColor = color;
+          ctx.shadowBlur = 18 + (1 - f) * 18;
+          ctx.stroke();
+        }
+
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = 'source-over';
+      }
+
+      let last = performance.now();
+      function tick(now) {
+        const dt = Math.max(0, Math.min(0.05, (now - last) / 1000));
+        last = now;
+        time += dt;
+        draw(true);
+        if (running) requestAnimationFrame(tick);
+      }
 
       // Reduced motion listener
       try {
         window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e) => {
           running = !e.matches;
           pauseBtn.textContent = running ? 'Pause' : 'Play';
-          if (running) tick();
+          if (running) requestAnimationFrame(tick);
         });
       } catch(_) {}
 
-      // Start
-      if (running) tick();
+      if (running) requestAnimationFrame(tick);
 
       // Time stamp
       const stamp = root.querySelector('#last-updated');
