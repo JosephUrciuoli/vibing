@@ -73,23 +73,25 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="observatory" class="day" aria-label="Aurora Loom — A Quiet Interference">
+<section id="murmur" class="day" aria-label="Murmur Field — Kinetic Moiré Garden">
   <style>
-    /* Aurora Loom — scoped styles */
-    #observatory{
+    /* Murmur Field — scoped */
+    #murmur{
       --r: 28px;
-      --fg: hsl(230 21% 14%);
+      --fg: hsl(230 18% 14%);
       --muted: hsl(230 10% 38%);
       --ring: hsl(230 20% 30% / .18);
       --glass: blur(14px) saturate(120%);
-      --bg0: hsl(220 75% 99%);
-      --bg1: hsl(210 75% 96%);
-      --c1: #5aa8ff;
-      --c2: #8a7dff;
-      --c3: #52e5c0;
-      --c4: #ffd87a;
-      --spin: 0.9;
-      --glow: 0.4;
+      --bg0: hsl(210 75% 99%);
+      --bg1: hsl(200 70% 96%);
+      --c1: #47b2ff;
+      --c2: #a38bff;
+      --c3: #6ef1c9;
+      --c4: #ffd383;
+      --grain1: hsl(0 0% 100% / .25);
+      --grain2: hsl(0 0% 0% / .12);
+      --shadow: 0 40px 120px hsl(0 0% 0% / .10);
+      --bloom: 0.35;
       position: relative;
       isolation: isolate;
       min-height: 760px;
@@ -98,158 +100,146 @@
       color: var(--fg);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
       -webkit-font-smoothing: antialiased;
-      font-synthesis-weight: none;
       background:
-        radial-gradient(1200px 600px at 20% -10%, hsl(0 0% 100% / .55), transparent 50%),
-        radial-gradient(1600px 900px at 120% 110%, hsl(0 0% 100% / .35), transparent 55%),
+        radial-gradient(1200px 800px at 18% -10%, hsl(0 0% 100% / .55), transparent 55%),
+        radial-gradient(1600px 1100px at 115% 120%, hsl(0 0% 100% / .30), transparent 60%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
-      box-shadow: 0 40px 120px hsl(0 0% 0% / .10);
+      box-shadow: var(--shadow);
     }
-    #observatory.night{
-      --fg: hsl(220 18% 96%);
-      --muted: hsl(220 12% 78%);
+    #murmur.night{
+      --fg: hsl(220 20% 95%);
+      --muted: hsl(220 10% 75%);
       --ring: hsl(0 0% 100% / .14);
-      --bg0: hsl(250 60% 8%);
-      --bg1: hsl(260 55% 14%);
-      box-shadow: 0 46px 140px hsl(0 0% 0% / .65);
+      --bg0: hsl(250 55% 8%);
+      --bg1: hsl(260 52% 13%);
+      --grain1: hsl(0 0% 100% / .10);
+      --grain2: hsl(0 0% 0% / .45);
+      --shadow: 0 60px 160px hsl(0 0% 0% / .6);
+      box-shadow: var(--shadow);
     }
-    #observatory::before,
-    #observatory::after{
+    #murmur::before,
+    #murmur::after{
       content:"";
-      position:absolute; inset:0; pointer-events:none;
+      position:absolute; inset:0; pointer-events:none; z-index:0;
     }
-    #observatory::before{
+    #murmur::before{
       background:
-        radial-gradient(900px 800px at 70% 30%, hsl(0 0% 100% / .24), transparent 55%),
-        radial-gradient(1200px 900px at 30% 85%, hsl(0 0% 0% / .18), transparent 60%);
+        radial-gradient(900px 900px at 75% 30%, hsl(0 0% 100% / .22), transparent 65%),
+        radial-gradient(1200px 1000px at 30% 90%, hsl(0 0% 0% / .14), transparent 60%);
       mix-blend-mode: overlay; opacity:.35;
     }
-    #observatory::after{
+    #murmur::after{
       background-image:
-        radial-gradient(circle at 20% 20%, hsl(0 0% 100% / .07) 0 1px, transparent 1px),
-        radial-gradient(circle at 80% 60%, hsl(0 0% 0% / .05) 0 1px, transparent 1px);
+        radial-gradient(circle at 20% 20%, var(--grain1) 0 1px, transparent 1px),
+        radial-gradient(circle at 80% 60%, var(--grain2) 0 1px, transparent 1px);
       background-size: 2px 2px, 3px 3px;
       mix-blend-mode: soft-light; opacity:.28;
     }
 
-    /* Full-bleed canvas stage */
-    #observatory .stage{
-      position:absolute; inset:0; z-index:0;
-      overflow:hidden;
-    }
-    #observatory canvas{
-      position:absolute; inset:0; width:100%; height:100%; display:block;
-      filter: saturate(112%) contrast(104%) brightness(102%);
-    }
+    /* Stage */
+    #murmur .stage{ position:absolute; inset:0; z-index:1; overflow:hidden; }
+    #murmur canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; filter: saturate(112%) contrast(104%) brightness(102%); }
 
-    /* Chrome overlay */
-    #observatory .chrome{
-      position: absolute; top: 16px; left: 16px; right: 16px;
+    /* Chrome */
+    #murmur .top{
+      position:absolute; top:16px; left:16px; right:16px; z-index:3;
       display:flex; align-items:center; justify-content:space-between; gap:12px;
-      z-index:2;
     }
-    #observatory .badge{
+    #murmur .brand{
       display:inline-flex; align-items:center; gap:10px;
-      padding:10px 14px; border-radius:999px;
-      border:1px solid var(--ring);
+      padding:10px 14px; border-radius:999px; border:1px solid var(--ring);
       background: linear-gradient(180deg, hsl(0 0% 100% / .65), hsl(0 0% 100% / .35));
-      color: var(--muted);
       backdrop-filter: var(--glass);
-      font-size:12px; letter-spacing:.35px; font-weight:800; text-transform:uppercase;
+      color: var(--muted); font-weight:800; letter-spacing:.35px; text-transform:uppercase; font-size:12px;
       box-shadow: 0 1px 0 hsl(0 0% 100% / .28) inset, 0 10px 24px hsl(0 0% 0% / .10);
     }
-    #observatory.night .badge{
+    #murmur.night .brand{
       background: linear-gradient(180deg, hsl(0 0% 6% / .45), hsl(0 0% 6% / .3));
       box-shadow: 0 1px 0 hsl(0 0% 100% / .10) inset, 0 10px 24px hsl(0 0% 0% / .35);
     }
-    #observatory .glyph{
-      width:14px; height:14px; border-radius:4px;
+    #murmur .orb{
+      width:14px; height:14px; border-radius:50%;
       background: conic-gradient(from 0deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c1));
-      box-shadow: 0 0 10px hsl(0 0% 100% / .25), 0 0 20px var(--c2);
+      box-shadow: 0 0 8px hsl(0 0% 100% / .25), 0 0 16px var(--c2);
     }
-
-    #observatory .controls{
+    #murmur .actions{
       display:flex; align-items:center; gap:8px;
       padding:8px; border-radius:999px; border:1px solid var(--ring);
       background: linear-gradient(180deg, hsl(0 0% 100% / .65), hsl(0 0% 100% / .35));
       backdrop-filter: var(--glass);
       box-shadow: 0 1px 0 hsl(0 0% 100% / .24) inset, 0 10px 30px hsl(0 0% 0% / .15);
     }
-    #observatory.night .controls{
+    #murmur.night .actions{
       background: linear-gradient(180deg, hsl(0 0% 6% / .55), hsl(0 0% 6% / .35));
       box-shadow: 0 1px 0 hsl(0 0% 100% / .10) inset, 0 10px 30px hsl(0 0% 0% / .35);
     }
-    #observatory .btn{
+    #murmur .btn{
       appearance:none; border:0; cursor:pointer;
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 14px; border-radius:999px; font-size:12px; letter-spacing:.3px;
-      color:var(--fg); background: transparent;
+      color:var(--fg); background: transparent; user-select:none;
       transition: background .2s ease, transform .12s ease, color .2s ease;
-      user-select:none;
     }
-    #observatory .btn:hover{ background: hsl(0 0% 100% / .35); }
-    #observatory.night .btn:hover{ background: hsl(0 0% 100% / .10); }
-    #observatory .btn:active{ transform: translateY(1px); }
-    #observatory .swatch{
+    #murmur .btn:hover{ background: hsl(0 0% 100% / .35); }
+    #murmur.night .btn:hover{ background: hsl(0 0% 100% / .10); }
+    #murmur .btn:active{ transform: translateY(1px); }
+    #murmur .swatch{
       width:14px; height:14px; border-radius:50%;
       background: conic-gradient(var(--c1), var(--c2), var(--c3), var(--c4), var(--c1));
       box-shadow: 0 0 8px rgba(0,0,0,.15), 0 0 12px rgba(255,255,255,.25);
     }
 
     /* Hero */
-    #observatory .hero{
+    #murmur .hero{
       position: relative; z-index: 2;
       display: grid; place-items: center;
-      padding: clamp(40px, 6vw, 80px) 24px 24px;
+      padding: clamp(40px, 8vw, 120px) 24px 28px;
       text-align: center;
     }
-    #observatory h1{
-      margin: 18px 0 12px;
-      font-size: clamp(36px, 7.2vw, 96px);
-      line-height: .92; letter-spacing: -.02em;
+    #murmur h1{
+      margin: 18px 0 10px; line-height: .92; letter-spacing:-.02em;
+      font-size: clamp(40px, 8.2vw, 110px);
       color: transparent;
-      background: linear-gradient(120deg, var(--fg), var(--c1), var(--c2), var(--c3), var(--c4), var(--fg)) 0 0 / 220% 100%;
+      background: linear-gradient(120deg, var(--fg), var(--c1), var(--c2), var(--c3), var(--c4), var(--fg)) 0 0 / 240% 100%;
       -webkit-background-clip: text; background-clip: text;
-      animation: hueglide 16s linear infinite;
+      animation: hueflow 18s linear infinite;
       filter: drop-shadow(0 10px 40px hsl(0 0% 0% / .25));
     }
-    @keyframes hueglide { to { background-position: 220% 0; } }
-    #observatory .lede{
+    @keyframes hueflow { to { background-position: 240% 0; } }
+    #murmur .lede{
       color: var(--muted);
       font-size: clamp(14px, 2.4vw, 18px);
-      max-width: 56ch;
+      max-width: 60ch;
     }
 
-    /* Dock controls */
-    #observatory .dock{
-      position: absolute; left: 50%; transform: translateX(-50%);
-      bottom: 18px; z-index: 2;
-      display:flex; align-items:center; gap:12px; flex-wrap:wrap;
-      padding:10px; border-radius: 18px;
-      border: 1px solid var(--ring);
+    /* Dock */
+    #murmur .dock{
+      position:absolute; left:50%; transform: translateX(-50%);
+      bottom: 18px; z-index:3; display:flex; flex-wrap:wrap; align-items:center; gap:12px;
+      padding:10px; border-radius:18px; border:1px solid var(--ring);
       background: linear-gradient(180deg, hsl(0 0% 100% / .65), hsl(0 0% 100% / .35));
       backdrop-filter: var(--glass);
       box-shadow: 0 1px 0 hsl(0 0% 100% / .24) inset, 0 12px 36px hsl(0 0% 0% / .18);
     }
-    #observatory.night .dock{
+    #murmur.night .dock{
       background: linear-gradient(180deg, hsl(0 0% 6% / .55), hsl(0 0% 6% / .35));
       box-shadow: 0 1px 0 hsl(0 0% 100% / .10) inset, 0 12px 36px hsl(0 0% 0% / .35);
     }
-    #observatory .control{
+    #murmur .control{
       display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:12px;
-      border: 1px solid var(--ring);
+      border:1px solid var(--ring);
       background: linear-gradient(180deg, hsl(0 0% 100% / .45), hsl(0 0% 100% / .25));
     }
-    #observatory.night .control{
+    #murmur.night .control{
       background: linear-gradient(180deg, hsl(0 0% 6% / .45), hsl(0 0% 6% / .25));
     }
-    #observatory label{ font-size:12px; color: var(--muted); letter-spacing:.3px; white-space:nowrap; }
-    #observatory input[type="range"]{
+    #murmur label{ font-size:12px; color: var(--muted); letter-spacing:.3px; white-space:nowrap; }
+    #murmur input[type="range"]{
       -webkit-appearance:none; appearance:none;
       width: 240px; max-width: 60vw; height: 6px; border-radius:999px;
       outline:none; background: hsl(0 0% 100% / .35); border:1px solid var(--ring);
     }
-    #observatory input[type="range"]::-webkit-slider-thumb{
+    #murmur input[type="range"]::-webkit-slider-thumb{
       -webkit-appearance:none; appearance:none;
       width:18px; height:18px; border-radius:50%;
       background: linear-gradient(135deg, var(--c1), var(--c2));
@@ -258,9 +248,34 @@
       cursor:pointer;
     }
 
+    /* Meta */
+    #murmur .meta{
+      position:absolute; left:16px; right:16px; bottom: 82px; z-index:3;
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      color:var(--muted); font-size:12px;
+    }
+    #murmur .chip{
+      display:inline-flex; align-items:center; gap:10px; padding:8px 12px;
+      border:1px solid var(--ring); border-radius:999px;
+      background: linear-gradient(180deg, hsl(0 0% 100% / .55), hsl(0 0% 100% / .30));
+      backdrop-filter: blur(10px);
+      box-shadow: 0 1px 0 hsl(0 0% 100% / .22) inset;
+    }
+    #murmur.night .chip{
+      background: linear-gradient(180deg, hsl(0 0% 6% / .45), hsl(0 0% 6% / .25));
+      box-shadow: 0 1px 0 hsl(0 0% 100% / .10) inset;
+    }
+    #murmur .dot{
+      width:8px; height:8px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, var(--c3), var(--c1));
+      box-shadow: 0 0 12px rgba(255,255,255,.35);
+      animation: breathe 3s ease-in-out infinite;
+    }
+    @keyframes breathe{ 0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.25);opacity:1} }
+
     /* Pointer halo */
-    #observatory .halo{
-      position:absolute; pointer-events:none; z-index:1;
+    #murmur .halo{
+      position:absolute; pointer-events:none; z-index:2;
       width: 220px; height: 220px; border-radius:50%;
       transform: translate(-50%, -50%);
       opacity: 0; transition: opacity .25s ease;
@@ -269,46 +284,21 @@
       backdrop-filter: blur(18px) saturate(140%);
       box-shadow: 0 10px 40px hsl(0 0% 0% / .25);
     }
-    #observatory:hover .halo{ opacity: 1; }
-
-    /* Footer meta */
-    #observatory .meta{
-      position:absolute; left:16px; right:16px; bottom: 80px;
-      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
-      z-index:2; color:var(--muted); font-size:12px;
-    }
-    #observatory .pulse{
-      display:inline-flex; align-items:center; gap:10px; padding:8px 12px;
-      border:1px solid var(--ring); border-radius:999px;
-      background: linear-gradient(180deg, hsl(0 0% 100% / .55), hsl(0 0% 100% / .30));
-      backdrop-filter: blur(10px);
-      box-shadow: 0 1px 0 hsl(0 0% 100% / .22) inset;
-    }
-    #observatory.night .pulse{
-      background: linear-gradient(180deg, hsl(0 0% 6% / .45), hsl(0 0% 6% / .25));
-      box-shadow: 0 1px 0 hsl(0 0% 100% / .10) inset;
-    }
-    #observatory .dot{
-      width:8px; height:8px; border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, var(--c3), var(--c1));
-      box-shadow: 0 0 12px rgba(255,255,255,.35);
-      animation: pulse 3s ease-in-out infinite;
-    }
-    @keyframes pulse{ 0%,100%{ transform:scale(1); opacity:.7 } 50%{ transform:scale(1.25); opacity:1 } }
+    #murmur:hover .halo{ opacity: 1; }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
-      #observatory, #observatory *{ animation: none !important; transition-duration:.01ms !important; }
+      #murmur, #murmur *{ animation: none !important; transition-duration:.01ms !important; }
     }
   </style>
 
   <div class="stage" aria-hidden="true">
-    <canvas id="loom"></canvas>
+    <canvas id="field"></canvas>
   </div>
 
-  <div class="chrome" role="group" aria-label="Aurora Loom controls">
-    <div class="badge"><span class="glyph" aria-hidden="true"></span><span>Aurora Loom</span></div>
-    <div class="controls">
+  <div class="top" role="group" aria-label="Murmur Field controls">
+    <div class="brand"><span class="orb" aria-hidden="true"></span><span>Murmur Field</span></div>
+    <div class="actions">
       <button class="btn" data-theme role="switch" aria-checked="false" aria-label="Toggle theme"><span>Night</span></button>
       <button class="btn" data-palette aria-label="Shuffle palette"><span class="swatch" aria-hidden="true"></span><span>Palette</span></button>
       <button class="btn" data-pause aria-label="Pause or play"><span>Pause</span></button>
@@ -317,30 +307,30 @@
   </div>
 
   <div class="hero">
-    <h1>Silence, woven in light.</h1>
-    <p class="lede">Three families of lines drift, cross, and bloom into color. Move to bend the loom. Click to leave a hush that slowly breathes away.</p>
+    <h1>Murmur Field</h1>
+    <p class="lede">A spiral of quiet seeds drifts and braids into light. Move to bend the flow. Click to release a ring that hums outward.</p>
   </div>
 
   <div class="meta">
-    <span class="pulse"><span class="dot" aria-hidden="true"></span><span>Study Nº 12 — Quiet Interference</span></span>
-    <span id="last-updated">Last updated: 2025-12-04 00:18:38 EST</span>
+    <span class="chip"><span class="dot" aria-hidden="true"></span><span>Study Nº 19 — Moiré Garden</span></span>
+    <span id="last-updated">Last updated: 2025-12-04 01:29:10 EST</span>
   </div>
 
-  <div class="dock" aria-label="Weave controls">
+  <div class="dock" aria-label="Flow controls">
     <div class="control">
-      <label for="weave">Weave</label>
-      <input id="weave" type="range" min="40" max="160" step="1" value="96" aria-valuemin="40" aria-valuemax="160" aria-valuenow="96">
+      <label for="seeds">Seeds</label>
+      <input id="seeds" type="range" min="180" max="1400" step="10" value="760" aria-valuemin="180" aria-valuemax="1400" aria-valuenow="760">
     </div>
     <div class="control">
-      <label for="spin">Spin</label>
-      <input id="spin" type="range" min="0.2" max="2.0" step="0.01" value="0.9" aria-valuemin="0.2" aria-valuemax="2.0" aria-valuenow="0.9">
+      <label for="speed">Speed</label>
+      <input id="speed" type="range" min="0.20" max="2.00" step="0.01" value="0.9" aria-valuemin="0.20" aria-valuemax="2.00" aria-valuenow="0.9">
     </div>
     <div class="control">
-      <label for="glow">Glow</label>
-      <input id="glow" type="range" min="0.0" max="1.0" step="0.01" value="0.4" aria-valuemin="0.0" aria-valuemax="1.0" aria-valuenow="0.4">
+      <label for="bloom">Bloom</label>
+      <input id="bloom" type="range" min="0.00" max="1.00" step="0.01" value="0.35" aria-valuemin="0.00" aria-valuemax="1.00" aria-valuenow="0.35">
     </div>
     <div class="control" style="padding:8px 12px">
-      <span class="lede" style="font-size:12px">Tip: Shift-click to pin a long echo</span>
+      <span class="lede" style="font-size:12px">Tip: Shift-click for a slow, long ripple</span>
     </div>
   </div>
 
@@ -348,8 +338,8 @@
 
   <script>
     (function(){
-      const root = document.getElementById('observatory');
-      const canvas = root.querySelector('#loom');
+      const root = document.getElementById('murmur');
+      const canvas = root.querySelector('#field');
       const ctx = canvas.getContext('2d', { alpha: true });
 
       const halo = root.querySelector('.halo');
@@ -358,35 +348,32 @@
       const pauseBtn = root.querySelector('[data-pause]');
       const saveBtn = root.querySelector('[data-save]');
 
-      const weaveEl = root.querySelector('#weave');
-      const spinEl = root.querySelector('#spin');
-      const glowEl = root.querySelector('#glow');
+      const seedsEl = root.querySelector('#seeds');
+      const speedEl = root.querySelector('#speed');
+      const bloomEl = root.querySelector('#bloom');
 
-      // Palettes — airy but vivid
+      // Palettes — luminous but calm
       const palettes = [
-        { c1:'#5aa8ff', c2:'#8a7dff', c3:'#52e5c0', c4:'#ffd87a' }, // Aurora
-        { c1:'#ff9db0', c2:'#ff7ad1', c3:'#ffe38b', c4:'#b1ffd1' }, // Sorbet
-        { c1:'#7cc8ff', c2:'#a5b4ff', c3:'#ffffff', c4:'#b0ffe9' }, // Milkglass
-        { c1:'#c0ff72', c2:'#7de3ff', c3:'#a9b2ff', c4:'#fff1a1' }, // Meadow
-        { c1:'#b6a2ff', c2:'#ffd6a7', c3:'#8fffe0', c4:'#9ad6ff' }  // Pastel Haze
+        { c1:'#47b2ff', c2:'#a38bff', c3:'#6ef1c9', c4:'#ffd383' }, // Azure Garden
+        { c1:'#ff8aa3', c2:'#ff6bd2', c3:'#ffe58f', c4:'#b7ffd8' }, // Sorbet Sky
+        { c1:'#7fd0ff', c2:'#b3b8ff', c3:'#ffffff', c4:'#adffe9' }, // Milkglass
+        { c1:'#c3ff7a', c2:'#7ee9ff', c3:'#a9b7ff', c4:'#fff5a8' }, // Meadowlight
+        { c1:'#bba7ff', c2:'#ffcfa1', c3:'#7fffe3', c4:'#9bd6ff' }  // Pastel Haze
       ];
-      let pIndex = parseInt(localStorage.getItem('loom-palette') || '0', 10) % palettes.length;
+      let pIndex = parseInt(localStorage.getItem('murmur-palette') || '0', 10) % palettes.length;
       function applyPalette(i){
         const p = palettes[i];
         root.style.setProperty('--c1', p.c1);
         root.style.setProperty('--c2', p.c2);
         root.style.setProperty('--c3', p.c3);
         root.style.setProperty('--c4', p.c4);
-        localStorage.setItem('loom-palette', String(i));
+        localStorage.setItem('murmur-palette', String(i));
       }
       applyPalette(pIndex);
-      paletteBtn.addEventListener('click', () => {
-        pIndex = (pIndex + 1) % palettes.length;
-        applyPalette(pIndex);
-      });
+      paletteBtn.addEventListener('click', () => { pIndex = (pIndex + 1) % palettes.length; applyPalette(pIndex); });
 
       // Theme
-      const savedTheme = localStorage.getItem('loom-theme') || 'day';
+      const savedTheme = localStorage.getItem('murmur-theme') || 'day';
       root.classList.toggle('night', savedTheme === 'night');
       root.classList.toggle('day', savedTheme !== 'night');
       themeBtn.setAttribute('aria-checked', savedTheme === 'night' ? 'true' : 'false');
@@ -395,56 +382,31 @@
         const toNight = !root.classList.contains('night');
         root.classList.toggle('night', toNight);
         root.classList.toggle('day', !toNight);
-        localStorage.setItem('loom-theme', toNight ? 'night' : 'day');
+        localStorage.setItem('murmur-theme', toNight ? 'night' : 'day');
         themeBtn.setAttribute('aria-checked', toNight ? 'true' : 'false');
         themeBtn.firstElementChild.textContent = toNight ? 'Day' : 'Night';
         draw(true);
       });
 
-      // State
+      // Params
       let running = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       pauseBtn.textContent = running ? 'Pause' : 'Play';
 
-      let weave = parseInt(localStorage.getItem('loom-weave') || '96', 10);
-      let spin = parseFloat(localStorage.getItem('loom-spin') || '0.9');
-      let glow = parseFloat(localStorage.getItem('loom-glow') || '0.4');
+      let seeds = parseInt(localStorage.getItem('murmur-seeds') || '760', 10);
+      let speed = parseFloat(localStorage.getItem('murmur-speed') || '0.9');
+      let bloom = parseFloat(localStorage.getItem('murmur-bloom') || '0.35');
 
-      weaveEl.value = String(weave);
-      spinEl.value = String(spin);
-      glowEl.value = String(glow);
+      seedsEl.value = String(seeds);
+      speedEl.value = String(speed);
+      bloomEl.value = String(bloom);
+      seedsEl.addEventListener('input', (e)=>{ seeds = parseInt(e.target.value, 10); seedsEl.setAttribute('aria-valuenow', String(seeds)); localStorage.setItem('murmur-seeds', String(seeds)); });
+      speedEl.addEventListener('input', (e)=>{ speed = parseFloat(e.target.value); speedEl.setAttribute('aria-valuenow', String(speed)); localStorage.setItem('murmur-speed', String(speed)); });
+      bloomEl.addEventListener('input', (e)=>{ bloom = parseFloat(e.target.value); bloomEl.setAttribute('aria-valuenow', String(bloom)); root.style.setProperty('--bloom', bloom.toFixed(2)); localStorage.setItem('murmur-bloom', String(bloom)); });
 
-      weaveEl.addEventListener('input', (e)=>{
-        weave = parseInt(e.target.value, 10);
-        weaveEl.setAttribute('aria-valuenow', String(weave));
-        localStorage.setItem('loom-weave', String(weave));
-      });
-      spinEl.addEventListener('input', (e)=>{
-        spin = parseFloat(e.target.value);
-        spinEl.setAttribute('aria-valuenow', String(spin));
-        root.style.setProperty('--spin', spin);
-        localStorage.setItem('loom-spin', String(spin));
-      });
-      glowEl.addEventListener('input', (e)=>{
-        glow = parseFloat(e.target.value);
-        glowEl.setAttribute('aria-valuenow', String(glow));
-        root.style.setProperty('--glow', glow);
-        localStorage.setItem('loom-glow', String(glow));
-      });
-      pauseBtn.addEventListener('click', ()=>{
-        running = !running;
-        pauseBtn.textContent = running ? 'Pause' : 'Play';
-        if (running) requestAnimationFrame(tick);
-      });
-      saveBtn.addEventListener('click', ()=>{
-        try{
-          const link = document.createElement('a');
-          link.download = 'aurora-loom.png';
-          link.href = canvas.toDataURL('image/png');
-          link.click();
-        }catch(_){}
-      });
+      pauseBtn.addEventListener('click', ()=>{ running = !running; pauseBtn.textContent = running ? 'Pause' : 'Play'; if (running) requestAnimationFrame(tick); });
+      saveBtn.addEventListener('click', ()=>{ try{ const a=document.createElement('a'); a.download='murmur-field.png'; a.href=canvas.toDataURL('image/png'); a.click(); }catch(_){} });
 
-      // Size canvas
+      // Sizing
       let DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
       function size(){
         const r = root.getBoundingClientRect();
@@ -455,31 +417,33 @@
         ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
       }
       size();
-      window.addEventListener('resize', size, { passive: true });
+      window.addEventListener('resize', size, { passive:true });
 
-      // Pointer interactions
+      // Pointer
       let mx = 0.5, my = 0.5;
-      let echoes = [];
+      let ripples = [];
       root.addEventListener('pointermove', (e)=>{
         const r = root.getBoundingClientRect();
         mx = (e.clientX - r.left) / r.width;
         my = (e.clientY - r.top) / r.height;
-        const dockR = root.getBoundingClientRect();
-        const hx = e.clientX - dockR.left;
-        const hy = e.clientY - dockR.top;
-        halo.style.left = hx + 'px';
-        halo.style.top = hy + 'px';
-      }, { passive: true });
+        halo.style.left = (e.clientX - r.left) + 'px';
+        halo.style.top  = (e.clientY - r.top) + 'px';
+      }, { passive:true });
 
       root.addEventListener('click', (e)=>{
         const r = root.getBoundingClientRect();
-        const x = (e.clientX - r.left);
-        const y = (e.clientY - r.top);
-        echoes.push({ x, y, t: performance.now()/1000, span: e.shiftKey ? 3.8 : 1.8 });
-        if (echoes.length > 12) echoes.shift();
+        ripples.push({
+          x: e.clientX - r.left,
+          y: e.clientY - r.top,
+          t: performance.now()/1000,
+          life: e.shiftKey ? 4.2 : 2.0,
+          amp: e.shiftKey ? 24 : 14
+        });
+        if (ripples.length > 10) ripples.shift();
       });
 
-      // Utilities
+      // Utils
+      const GOLDEN = Math.PI * (3 - Math.sqrt(5));
       function lerp(a,b,t){ return a + (b-a)*t; }
       function lerpColor(a, b, t){
         const pa = parseInt(a.slice(1),16), pb = parseInt(b.slice(1),16);
@@ -490,7 +454,6 @@
         const rb = Math.round(lerp(ab, bb, t));
         return `rgb(${rr} ${rg} ${rb} / 1)`;
       }
-
       function colors(){
         const styles = getComputedStyle(root);
         return [
@@ -500,90 +463,124 @@
           styles.getPropertyValue('--c4').trim(),
         ];
       }
+      function gradColor(cs, t){
+        // 4-stop gradient
+        const a = t < 0.333 ? cs[0] : (t < 0.666 ? cs[1] : cs[2]);
+        const b = t < 0.333 ? cs[1] : (t < 0.666 ? cs[2] : cs[3]);
+        const lt = t < 0.333 ? (t/0.333) : (t < 0.666 ? ((t-0.333)/0.333) : ((t-0.666)/0.334));
+        return lerpColor(a, b, lt);
+      }
 
-      // Draw loom: three rotated sine-stripe families with light compositing
-      function draw(clear=true){
+      // Draw
+      function draw(clear){
         const w = canvas.width / (window.devicePixelRatio || 1);
         const h = canvas.height / (window.devicePixelRatio || 1);
+        const cx = w * 0.5, cy = h * 0.5;
         if (clear){
-          // soft fade for bloom persistence
           ctx.globalCompositeOperation = 'source-over';
-          ctx.globalAlpha = 1;
           const styles = getComputedStyle(root);
+          ctx.globalAlpha = 1;
           ctx.fillStyle = styles.getPropertyValue('--bg1').trim();
           ctx.fillRect(0,0,w,h);
         }
+        // soft trail
+        ctx.globalAlpha = 0.06;
+        ctx.fillStyle = root.classList.contains('night') ? 'rgba(0,0,0,.6)' : 'rgba(255,255,255,.45)';
+        ctx.fillRect(0,0,w,h);
+        ctx.globalAlpha = 1;
 
         const cs = colors();
-        const t = time * spin;
-
-        const cx = w * 0.5, cy = h * 0.5;
-        const L = Math.hypot(w, h);
+        const t = time * speed;
+        const R = Math.min(w, h) * 0.52;
         const px = mx * w, py = my * h;
 
-        const families = [
-          { ang: 0.12 + Math.sin(t*0.07)*0.05, cA: cs[0], cB: cs[1], ph: t*1.2 },
-          { ang: 2.18 + Math.cos(t*0.06)*0.05, cA: cs[2], cB: cs[3], ph: t*0.9 + 1.3 },
-          { ang: 4.02 + Math.sin(t*0.08)*0.08, cA: cs[3], cB: cs[0], ph: t*1.05 + 2.1 },
-        ];
-
         ctx.globalCompositeOperation = 'lighter';
-        const baseAlpha = 0.08 + glow * 0.18;
-        const blur = 4 + glow * 18;
+        const baseAlpha = 0.06 + bloom * 0.14;
+        const dotAlpha  = 0.10 + bloom * 0.20;
+        const shadowBlur = 4 + bloom * 26;
 
-        for (let f = 0; f < families.length; f++){
-          const fam = families[f];
-          ctx.save();
-          ctx.translate(cx, cy);
-          ctx.rotate(fam.ang);
-          ctx.translate(-L/2, -L/2);
+        // neighbor hop oscillates for living geometry
+        const jump = 6 + Math.round(4 * Math.sin(t * 0.6));
+        const step = 2; // draw every n-th seed to keep perf
 
-          // pointer + echoes in local coordinates
-          const s = Math.sin, c = Math.cos;
-          // inverse rotate pointer for this frame
-          const rx = (px - cx) * c(fam.ang) + (py - cy) * s(fam.ang) + L/2;
-          const ry = (py - cy) * c(fam.ang) - (px - cx) * s(fam.ang) + L/2;
+        for (let i = 0; i < seeds; i += step){
+          const frac = i / Math.max(1, seeds-1);
+          const theta = i * GOLDEN + t * 0.8;
+          const r = Math.sqrt(frac) * R;
 
-          ctx.shadowBlur = blur;
-          ctx.shadowColor = fam.cB;
+          // base position
+          let x = cx + Math.cos(theta) * r;
+          let y = cy + Math.sin(theta) * r;
 
-          const periods = weave; // number of bright/dark cycles across
-          const freq = (Math.PI * 2 * periods) / L;
+          // pointer swirl field
+          const dx = x - px, dy = y - py;
+          const d2 = dx*dx + dy*dy;
+          const sigma = 220 + 140 * (1 - bloom);
+          const fall = Math.exp(-d2 / (2 * sigma * sigma));
+          // rotate 90deg for curl
+          x += (-dy) * 0.18 * fall;
+          y += ( dx) * 0.18 * fall;
 
-          for (let x = 0; x <= L; x += 1){
-            // base wave
-            let phase = Math.sin(x * freq + fam.ph);
-            // proximity to pointer along normal direction influences brightness
-            const d = Math.abs(x - rx);
-            const pointerBoost = Math.exp(-(d * d) / (2 * (120 * (1 - glow*0.5))**2));
-
-            // echoes
-            let echoBoost = 0;
-            const now = performance.now()/1000;
-            for (let e of echoes){
-              // echo in global, rotate to local
-              const ex = (e.x - cx) * c(fam.ang) + (e.y - cy) * s(fam.ang) + L/2;
-              const ed = Math.abs(x - ex);
-              const dt = now - e.t;
-              const sigma = (110 + glow*80) * e.span;
-              const gauss = Math.exp(-(ed*ed)/(2*sigma*sigma)) * Math.max(0, 1 - dt/e.span);
-              echoBoost += gauss;
-            }
-
-            const p = (phase * 0.5 + 0.5);
-            const col = lerpColor(fam.cA, fam.cB, p);
-            const a = baseAlpha + pointerBoost * (0.22 + glow*0.25) + echoBoost * (0.35 + glow*0.25);
-            if (a < 0.01) continue;
-            ctx.globalAlpha = Math.min(0.9, a);
-            ctx.fillStyle = col;
-            ctx.fillRect(x, 0, 1, L);
+          // ripples
+          const now = performance.now()/1000;
+          for (let rp of ripples){
+            const rx = x - rp.x, ry = y - rp.y;
+            const dd = Math.hypot(rx, ry);
+            const tt = now - rp.t;
+            if (tt > rp.life) continue;
+            const k = 0.035;
+            const wave = Math.sin(dd * k - tt * 4) * Math.exp(-tt / rp.life);
+            const dirx = rx / (dd || 1), diry = ry / (dd || 1);
+            x += dirx * wave * rp.amp;
+            y += diry * wave * rp.amp;
           }
-          ctx.restore();
+
+          // neighbor
+          const j = (i + jump) % Math.max(1, seeds);
+          const jfrac = j / Math.max(1, seeds-1);
+          const jtheta = j * GOLDEN + t * 0.8;
+          const jr = Math.sqrt(jfrac) * R;
+          let x2 = cx + Math.cos(jtheta) * jr;
+          let y2 = cy + Math.sin(jtheta) * jr;
+
+          // apply same field to neighbor (cheap approx)
+          const dx2 = x2 - px, dy2 = y2 - py;
+          const fall2 = Math.exp(-(dx2*dx2 + dy2*dy2) / (2 * sigma * sigma));
+          x2 += (-dy2) * 0.18 * fall2;
+          y2 += ( dx2) * 0.18 * fall2;
+
+          // control point pulled slightly toward pointer
+          const ctrlx = lerp((x + x2)/2, px, 0.12 * fall);
+          const ctrly = lerp((y + y2)/2, py, 0.12 * fall);
+
+          // color along gradient
+          const ct = (frac + 0.15 * Math.sin(t * 0.4 + frac * 6.283)) % 1;
+          const col = gradColor(cs, ct);
+
+          // stroke curve
+          ctx.lineWidth = 1.1;
+          ctx.shadowBlur = shadowBlur * (0.6 + 0.4 * frac);
+          ctx.shadowColor = col;
+          ctx.strokeStyle = col;
+          ctx.globalAlpha = baseAlpha * (1 + 0.6 * (1 - frac));
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.quadraticCurveTo(ctrlx, ctrly, x2, y2);
+          ctx.stroke();
+
+          // dots
+          if (i % (step*9) === 0){
+            ctx.globalAlpha = dotAlpha * (0.6 + 0.4 * Math.sin(t + i*0.1));
+            ctx.fillStyle = col;
+            ctx.beginPath();
+            ctx.arc(x, y, 1.2 + 1.8 * frac, 0, Math.PI*2);
+            ctx.fill();
+          }
         }
 
-        // subtle vignetting ring to focus center
+        // focus vignette
         ctx.globalCompositeOperation = 'multiply';
-        const rad = ctx.createRadialGradient(cx, cy, Math.min(w,h)*0.15, cx, cy, Math.max(w,h)*0.8);
+        const rad = ctx.createRadialGradient(cx, cy, Math.min(w,h)*0.12, cx, cy, Math.max(w,h)*0.85);
         rad.addColorStop(0, 'rgba(0,0,0,0)');
         rad.addColorStop(1, root.classList.contains('night') ? 'rgba(0,0,0,0.24)' : 'rgba(0,0,0,0.10)');
         ctx.fillStyle = rad; ctx.fillRect(0,0,w,h);
@@ -598,7 +595,7 @@
         const dt = Math.max(0, Math.min(0.05, (now - last) / 1000));
         last = now;
         time += dt;
-        draw(true);
+        draw(!running); // clear initial
         if (running) requestAnimationFrame(tick);
       }
       if (running) requestAnimationFrame(tick);
