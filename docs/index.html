@@ -73,417 +73,506 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="vibe1059" class="v-shell" data-theme="glacier" aria-label="Interactive ambient panel">
+<div id="vibe1060" class="loom" data-theme="linen" aria-label="Celestial Loom — generative weaving">
   <style>
-    /* Scoped to #vibe1059 only */
-    #vibe1059 {
-      --h0: 196; /* base hue (glacier) */
-      --fg: #f4f7ff;
-      --muted: #b8c2d8;
-      --bg-deep: #0b0f16;
-      --edge: rgba(255,255,255,0.14);
-      --accent: hsl(var(--h0) 88% 64%);
-      --accent-2: hsl(calc(var(--h0) + 40) 85% 58%);
-      --accent-3: hsl(calc(var(--h0) + 80) 80% 66%);
-      --glass: rgba(12,18,28,0.42);
-      --glass-2: rgba(255,255,255,0.06);
-      --radius: 18px;
-      --shadow: 0 10px 30px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.25);
-      --ring-size: 196px;
-      --deg: 90deg; /* dynamic */
+    /* Scoped to #vibe1060 only */
+    #vibe1060 {
+      --ink: #1a1a16;
+      --muted: #6e6a62;
+      --edge: rgba(0,0,0,0.10);
+      --bg0: #f6f3ea;
+      --bg1: #ffffff;
+      --t1: #e06c5e;
+      --t2: #5aa1a7;
+      --t3: #8c83e8;
+      --canvas-fade: rgba(246,243,234,0.07);
+      --ring: 0 10px 30px rgba(0,0,0,0.06), inset 0 0 0 1px var(--edge);
+      --radius: 22px;
       position: relative;
       overflow: hidden;
       border-radius: var(--radius);
       border: 1px solid var(--edge);
-      background: radial-gradient(1200px 800px at 10% -10%, rgba(118,147,255,0.18), transparent 60%),
-                  radial-gradient(1000px 800px at 110% 20%, rgba(53,214,255,0.14), transparent 60%),
-                  linear-gradient(180deg, #0a0f19, #0b101a 60%, #0a0e19 100%);
-      color: var(--fg);
+      background:
+        radial-gradient(1200px 600px at -10% -10%, rgba(255,179,118,0.16), transparent 60%),
+        radial-gradient(1400px 600px at 110% 10%, rgba(68,178,191,0.16), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
+      color: var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
       isolation: isolate;
     }
-    #vibe1059 .bg {
-      pointer-events: none;
-      position: absolute; inset: -2px;
-      z-index: 0;
+    /* Themes */
+    #vibe1060[data-theme="linen"] {
+      --ink: #1a1a16;
+      --muted: #6e6a62;
+      --edge: rgba(0,0,0,0.10);
+      --bg0: #f6f3ea;
+      --bg1: #ffffff;
+      --t1: #e06c5e;
+      --t2: #5aa1a7;
+      --t3: #8c83e8;
+      --canvas-fade: rgba(246,243,234,0.07);
     }
-    #vibe1059 .aurora {
-      position: absolute; inset: -20%;
-      filter: blur(50px) saturate(110%);
-      opacity: 0.9;
-      background:
-        conic-gradient(from 180deg at 60% 30%, var(--accent) 0 18%, transparent 18% 40%, var(--accent-2) 40% 62%, transparent 62% 78%, var(--accent-3) 78% 100%);
-      transform: rotate(0.0001deg);
-      animation: aurora-drift 26s ease-in-out infinite alternate;
+    #vibe1060[data-theme="mist"] {
+      --ink: #0f2233;
+      --muted: #556779;
+      --edge: rgba(8,25,44,0.12);
+      --bg0: #ebf3ff;
+      --bg1: #ffffff;
+      --t1: #2c78ff;
+      --t2: #1bbfb3;
+      --t3: #a07df3;
+      --canvas-fade: rgba(235,243,255,0.06);
     }
-    #vibe1059 .grain {
-      position: absolute; inset: 0;
-      background-image:
-        radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,0.06) 0 1px, transparent 1px),
-        radial-gradient(1px 1px at 75% 65%, rgba(255,255,255,0.05) 0 1px, transparent 1px),
-        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.04) 0 1px, transparent 1px);
-      background-size: 200px 200px, 240px 240px, 180px 180px;
-      mix-blend-mode: overlay;
-      opacity: 0.7;
-      animation: grain-shift 6s linear infinite;
+    #vibe1060[data-theme="night"] {
+      --ink: #eef5ff;
+      --muted: #a7b7cc;
+      --edge: rgba(255,255,255,0.12);
+      --bg0: #0b0f14;
+      --bg1: #0e141b;
+      --t1: #5ac8ff;
+      --t2: #a1f0d1;
+      --t3: #b29cff;
+      --canvas-fade: rgba(11,15,20,0.06);
     }
-    #vibe1059 .orb {
-      position: absolute;
-      width: 220px; height: 220px; border-radius: 50%;
-      filter: blur(22px) saturate(120%);
-      background: radial-gradient(circle at 30% 30%, var(--accent) 0%, rgba(255,255,255,0.1) 35%, transparent 60%);
-      opacity: 0.45;
-      animation: float 18s ease-in-out infinite;
-    }
-    #vibe1059 .orb.o1 { top: -40px; left: -30px; transform: translate3d(0,0,0) scale(1.1); }
-    #vibe1059 .orb.o2 { bottom: -60px; right: -10px; animation-duration: 22s; background: radial-gradient(circle at 70% 70%, var(--accent-2) 0%, rgba(255,255,255,0.08) 35%, transparent 60%); }
-    #vibe1059 .orb.o3 { top: 30%; right: 30%; width: 160px; height: 160px; animation-duration: 20s; background: radial-gradient(circle at 40% 40%, var(--accent-3) 0%, rgba(255,255,255,0.08) 35%, transparent 60%); }
 
-    #vibe1059 .frame {
+    #vibe1060 .texture {
+      pointer-events: none;
+      position: absolute; inset: -2px; z-index: 0;
+      background:
+        radial-gradient(1px 1px at 15% 20%, rgba(0,0,0,0.03) 0 1px, transparent 1px),
+        radial-gradient(1px 1px at 75% 65%, rgba(0,0,0,0.02) 0 1px, transparent 1px),
+        radial-gradient(1px 1px at 45% 85%, rgba(0,0,0,0.02) 0 1px, transparent 1px);
+      background-size: 180px 180px, 240px 240px, 220px 220px;
+      mix-blend-mode: multiply;
+      opacity: 0.6;
+      animation: grain1060 10s linear infinite;
+    }
+    @keyframes grain1060 {
+      from { transform: translate3d(0,0,0); }
+      to   { transform: translate3d(-2%, -3%, 0); }
+    }
+
+    #vibe1060 .wrap {
       position: relative; z-index: 1;
       display: grid; gap: 20px;
-      padding: 28px 26px 22px;
+      padding: 28px;
     }
-    #vibe1059 .top {
+
+    #vibe1060 .head {
       display: flex; align-items: center; justify-content: space-between;
-      gap: 16px;
+      gap: 14px;
     }
-    #vibe1059 .brand {
-      display: flex; align-items: center; gap: 10px;
-      letter-spacing: 0.2px; font-weight: 600;
+    #vibe1060 .brand {
+      display: inline-grid; grid-auto-flow: column; gap: 10px; align-items: center;
+      letter-spacing: 0.3px; font-weight: 700;
     }
-    #vibe1059 .brand .dot {
-      width: 12px; height: 12px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff 0 40%, var(--accent) 40% 100%);
-      box-shadow: 0 0 16px var(--accent);
+    #vibe1060 .logo {
+      width: 22px; height: 22px; border-radius: 6px;
+      background:
+        conic-gradient(from 90deg, var(--t1), var(--t2), var(--t3), var(--t1));
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.6);
+      transform: rotate(12deg);
     }
-    #vibe1059 .brand .logo {
-      background: linear-gradient(90deg, #eaf3ff, #ffffff 50%, #e2ecff);
+    #vibe1060 .word {
+      background: linear-gradient(90deg, var(--ink), color-mix(in srgb, var(--ink) 70%, var(--muted)));
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      filter: drop-shadow(0 1px 0 rgba(255,255,255,0.2));
       font-size: 15px;
     }
 
-    #vibe1059 .modes {
-      display: flex; gap: 8px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
+    #vibe1060 .controls {
+      display: flex; align-items: center; gap: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.45));
       border: 1px solid var(--edge);
-      border-radius: 999px;
-      padding: 4px;
-      backdrop-filter: blur(6px);
+      padding: 6px 8px; border-radius: 999px;
+      backdrop-filter: blur(8px) saturate(140%);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
     }
-    #vibe1059 .modes button {
-      appearance: none; border: 0;
-      padding: 8px 12px;
-      border-radius: 999px;
-      color: var(--fg);
-      font-size: 12px; letter-spacing: 0.2px;
-      background: transparent;
-      cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
-    }
-    #vibe1059 .modes button:hover { transform: translateY(-1px); }
-    #vibe1059 .modes button.active {
-      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.08));
-      color: #0b1322;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.3);
-      text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+    #vibe1060[data-theme="night"] .controls {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
     }
 
-    #vibe1059 .hero {
-      display: grid; gap: 6px;
+    #vibe1060 .swatches { display: inline-flex; gap: 6px; }
+    #vibe1060 .sw {
+      appearance: none; border: 0; width: 22px; height: 22px; border-radius: 999px; cursor: pointer;
+      box-shadow: inset 0 0 0 1px var(--edge), 0 1px 0 rgba(255,255,255,0.6);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    #vibe1059 .hero h1 {
-      margin: 0; font-weight: 700; letter-spacing: -0.02em;
-      font-size: clamp(20px, 3.6vw, 30px);
-      line-height: 1.1;
-      background: linear-gradient(90deg, #f8fbff, #e8f0ff 50%, #ffffff);
+    #vibe1060 .sw:hover { transform: translateY(-1px) scale(1.06); }
+    #vibe1060 .sw[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--ink), 0 2px 10px rgba(0,0,0,0.09); }
+    #vibe1060 .sw[data-theme="linen"] { background: conic-gradient(from 0deg, #e06c5e, #5aa1a7, #8c83e8, #e06c5e); }
+    #vibe1060 .sw[data-theme="mist"]  { background: conic-gradient(from 0deg, #2c78ff, #1bbfb3, #a07df3, #2c78ff); }
+    #vibe1060 .sw[data-theme="night"] { background: conic-gradient(from 0deg, #5ac8ff, #a1f0d1, #b29cff, #5ac8ff); }
+
+    #vibe1060 .pause {
+      appearance: none; border: 0; cursor: pointer;
+      padding: 8px 12px; border-radius: 999px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.02));
+      color: var(--ink); font-size: 12px; letter-spacing: 0.2px; font-weight: 600;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    #vibe1060[data-theme="night"] .pause { color: #e9f2ff; background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05)); }
+    #vibe1060 .pause:hover { transform: translateY(-1px); }
+
+    #vibe1060 .hero { display: grid; gap: 6px; }
+    #vibe1060 .hero h1 {
+      margin: 0; font-weight: 800; letter-spacing: -0.02em;
+      font-size: clamp(22px, 4.2vw, 36px);
+      line-height: 1.06;
+      background: linear-gradient(90deg, var(--ink), color-mix(in srgb, var(--ink) 65%, var(--muted)));
       -webkit-background-clip: text; background-clip: text; color: transparent;
     }
-    #vibe1059 .hero p {
+    #vibe1060 .hero p {
       margin: 0; color: var(--muted);
       font-size: 13px;
     }
 
-    #vibe1059 .dial {
-      display: grid; gap: 8px;
+    #vibe1060 .panel {
+      display: inline-grid; grid-auto-flow: column; gap: 14px; align-items: center;
+      justify-content: start;
+      padding: 8px 10px; border-radius: 12px;
+      border: 1px dashed var(--edge);
+      background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0.35));
     }
-    #vibe1059 .card {
+    #vibe1060[data-theme="night"] .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    }
+    #vibe1060 .slider {
+      display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px;
+      font-size: 12px; color: var(--muted);
+    }
+    #vibe1060 input[type="range"] {
+      appearance: none; width: 160px; height: 6px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--t1), var(--t2), var(--t3));
+      outline: none; border: 1px solid var(--edge);
+    }
+    #vibe1060 input[type="range"]::-webkit-slider-thumb {
+      appearance: none; width: 14px; height: 14px; border-radius: 50%;
+      background: #fff; border: 1px solid var(--edge);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    #vibe1060[data-theme="night"] input[type="range"]::-webkit-slider-thumb { background: #0f141b; border-color: rgba(255,255,255,0.3); }
+
+    #vibe1060 .stage {
       position: relative;
-      display: grid; grid-template-columns: auto 1fr; align-items: center;
-      gap: 18px;
-      padding: 16px 18px;
-      border-radius: 16px;
-      background: linear-gradient(180deg, var(--glass), rgba(10,14,22,0.32));
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--bg1) 88%, #fff), var(--bg0));
       border: 1px solid var(--edge);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px) saturate(140%);
+      box-shadow: var(--ring);
       transform-style: preserve-3d;
-      will-change: transform;
+      transition: transform 0.2s ease;
     }
-    #vibe1059 .ring {
-      width: var(--ring-size); height: var(--ring-size);
-      min-width: var(--ring-size);
-      border-radius: 50%;
-      position: relative;
-      display: grid; place-items: center;
-      background:
-        conic-gradient(from -90deg, var(--accent) 0deg var(--deg), rgba(255,255,255,0.08) var(--deg) 360deg);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 0 20px rgba(255,255,255,0.06);
-    }
-    #vibe1059 .ring::before {
-      content: "";
-      position: absolute; inset: 11px;
-      border-radius: 50%;
-      background: radial-gradient(120px 80px at 30% 25%, rgba(255,255,255,0.20), transparent 60%),
-                  linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(6px);
-    }
-    #vibe1059 .ring .spark {
-      position: absolute;
-      width: 10px; height: 10px; border-radius: 50%;
-      background: radial-gradient(circle, #fff 0 40%, var(--accent) 40% 100%);
-      box-shadow: 0 0 12px var(--accent), 0 0 30px var(--accent-2);
-      transform: translate(-50%, -50%);
-      top: 0; left: 50%;
-      filter: saturate(130%);
-      /* position will be updated by JS to track the ring */
-    }
-    #vibe1059 .meta {
-      display: grid; gap: 6px;
-    }
-    #vibe1059 .time {
-      font-variant-numeric: tabular-nums;
-      font-size: clamp(22px, 6vw, 36px);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.2);
-    }
-    #vibe1059 .caption {
-      color: var(--muted);
-      font-size: 12px;
-    }
-    #vibe1059 .tips {
-      display: flex; align-items: center; gap: 8px;
-      color: var(--muted);
-      font-size: 11px;
-      opacity: 0.9;
-    }
-    #vibe1059 .tips .dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 10px var(--accent);
+    #vibe1060 .stage:hover { transform: translateY(-2px); }
+    #vibe1060 canvas {
+      display: block; width: 100%; height: 340px;
     }
 
-    #vibe1059 .foot {
+    #vibe1060 .foot {
       display: flex; align-items: center; justify-content: space-between;
       gap: 10px;
-      padding-top: 6px;
-      border-top: 1px dashed rgba(255,255,255,0.12);
-      margin-top: 4px;
+      padding-top: 6px; margin-top: 2px;
+      border-top: 1px dashed var(--edge);
     }
-    #vibe1059 .foot .note {
-      color: var(--muted);
-      font-size: 12px;
-    }
-    #vibe1059 #last-updated {
-      font-size: 12px;
-      color: rgba(232,240,255,0.85);
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+    #vibe1060 .note { color: var(--muted); font-size: 12px; }
+
+    #vibe1060 #last-updated {
+      font-size: 12px; white-space: nowrap;
+      color: color-mix(in srgb, var(--ink) 85%, var(--muted));
+      background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.55));
       border: 1px solid var(--edge);
-      padding: 6px 10px;
-      border-radius: 999px;
-      backdrop-filter: blur(6px);
-      white-space: nowrap;
+      padding: 6px 10px; border-radius: 999px; backdrop-filter: blur(6px);
+    }
+    #vibe1060[data-theme="night"] #last-updated {
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+      color: #e9f2ff;
     }
 
-    /* Themes */
-    #vibe1059[data-theme="sunrise"] { --h0: 16; }
-    #vibe1059[data-theme="glacier"] { --h0: 196; }
-    #vibe1059[data-theme="violet"]  { --h0: 272; }
-
-    /* Animations */
-    @keyframes float {
-      0%   { transform: translate3d(0,0,0) scale(1.0); }
-      50%  { transform: translate3d(10px,-12px,0) scale(1.06); }
-      100% { transform: translate3d(0,0,0) scale(1.0); }
-    }
-    @keyframes aurora-drift {
-      0%   { transform: rotate(0deg) scale(1.0); opacity: 0.9; }
-      50%  { transform: rotate(9deg) scale(1.05); opacity: 1; }
-      100% { transform: rotate(-6deg) scale(1.02); opacity: 0.92; }
-    }
-    @keyframes grain-shift {
-      from { transform: translate3d(0,0,0); }
-      to   { transform: translate3d(-2%, -2%, 0); }
-    }
-
-    /* Reduced motion support */
+    /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      #vibe1059 .aurora, #vibe1059 .orb, #vibe1059 .grain { animation: none !important; }
-      #vibe1059 .card { transition: none !important; }
+      #vibe1060 .texture { animation: none !important; }
+      #vibe1060 .stage { transition: none !important; }
     }
 
-    /* Responsive tweaks */
-    @media (max-width: 520px) {
-      #vibe1059 .card { grid-template-columns: 1fr; justify-items: center; text-align: center; }
-      #vibe1059 .ring { --ring-size: 156px; }
-      #vibe1059 .modes { display: none; }
+    @media (max-width: 560px) {
+      #vibe1060 .controls { display: none; }
+      #vibe1060 .panel { grid-auto-flow: row; }
+      #vibe1060 input[type="range"] { width: 120px; }
+      #vibe1060 canvas { height: 300px; }
     }
-    #vibe1059.paused .orb, #vibe1059.paused .aurora, #vibe1059.paused .grain { animation-play-state: paused; }
   </style>
 
-  <div class="bg" aria-hidden="true">
-    <div class="aurora"></div>
-    <div class="grain"></div>
-    <div class="orb o1"></div>
-    <div class="orb o2"></div>
-    <div class="orb o3"></div>
-  </div>
+  <div class="texture" aria-hidden="true"></div>
 
-  <div class="frame">
-    <div class="top">
-      <div class="brand">
-        <span class="dot" aria-hidden="true"></span>
-        <span class="logo">DRIFT</span>
+  <div class="wrap">
+    <div class="head">
+      <div class="brand" aria-label="Weave brand">
+        <span class="logo" aria-hidden="true"></span>
+        <span class="word">WEAVE</span>
       </div>
-      <nav class="modes" aria-label="Color themes">
-        <button type="button" data-theme="sunrise" aria-pressed="false" title="Sunrise">Sunrise</button>
-        <button type="button" data-theme="glacier" class="active" aria-pressed="true" title="Glacier">Glacier</button>
-        <button type="button" data-theme="violet" aria-pressed="false" title="Violet">Violet</button>
-      </nav>
+      <div class="controls" aria-label="Display controls">
+        <div class="swatches" role="tablist" aria-label="Palette">
+          <button class="sw" data-theme="linen" aria-pressed="true" title="Linen"></button>
+          <button class="sw" data-theme="mist" aria-pressed="false" title="Mist"></button>
+          <button class="sw" data-theme="night" aria-pressed="false" title="Night"></button>
+        </div>
+        <button class="pause" type="button" aria-pressed="false" title="Pause (Space)">Pause</button>
+      </div>
     </div>
 
     <section class="hero">
-      <h1>Kinetic calm</h1>
-      <p>Quiet gradients, thoughtful motion. Tilt, pause, explore.</p>
+      <h1>Celestial Loom</h1>
+      <p>Threads of motion weave in light. Nudge them with your cursor, tune the density, find a rhythm.</p>
     </section>
 
-    <section class="dial">
-      <div class="card" id="time-card" aria-live="polite">
-        <div class="ring" id="ring">
-          <div class="spark" aria-hidden="true"></div>
-        </div>
-        <div class="meta">
-          <div class="time" id="clock" aria-label="Current time">—:—:—</div>
-          <div class="caption">A moment in motion, traced by a subtle orbit.</div>
-        </div>
-      </div>
-      <div class="tips"><span class="dot" aria-hidden="true"></span><span id="hint">Move your cursor • Press space to pause</span></div>
-    </section>
+    <div class="panel" aria-label="Weave parameters">
+      <label class="slider" for="density">
+        <span>Density</span>
+        <input id="density" type="range" min="60" max="600" value="260" />
+      </label>
+      <label class="slider" for="tempo">
+        <span>Tempo</span>
+        <input id="tempo" type="range" min="60" max="260" value="140" />
+      </label>
+    </div>
+
+    <div class="stage" id="stage" aria-live="polite">
+      <canvas id="weave" aria-label="Generative threads canvas"></canvas>
+    </div>
 
     <div class="foot">
-      <div class="note">Crafted for iteration 1059 — serene, but alive.</div>
-      <span id="last-updated">Last updated: 2025-12-04 03:26:55 EST</span>
+      <div class="note">Iteration 1060 — woven daylight, responsive to touch.</div>
+      <span id="last-updated">Last updated: 2025-12-04 04:23:00 EST</span>
     </div>
   </div>
 
   <script>
     (function () {
-      const root = document.getElementById('vibe1059');
-      const ring = root.querySelector('#ring');
-      const spark = root.querySelector('.spark');
-      const clockEl = root.querySelector('#clock');
-      const timeCard = root.querySelector('#time-card');
-      const hint = root.querySelector('#hint');
-      const themeButtons = root.querySelectorAll('.modes button');
-      const lastUpdated = root.querySelector('#last-updated');
+      const root = document.getElementById('vibe1060');
+      const canvas = root.querySelector('#weave');
+      const stage = root.querySelector('#stage');
+      const ctx = canvas.getContext('2d', { alpha: true });
+      const swatches = root.querySelectorAll('.sw');
+      const pauseBtn = root.querySelector('.pause');
+      const densityInput = root.querySelector('#density');
+      const tempoInput = root.querySelector('#tempo');
+      const lastUpdatedEl = root.querySelector('#last-updated');
 
-      // Update "last updated" timestamp in user's locale
+      // Timestamp
       try {
         const now = new Date();
         const fmt = new Intl.DateTimeFormat([], {
           year: 'numeric', month: 'short', day: '2-digit',
           hour: '2-digit', minute: '2-digit', second: '2-digit'
         });
-        lastUpdated.textContent = 'Updated ' + fmt.format(now);
-      } catch (e) {
-        lastUpdated.textContent = 'Updated ' + (new Date()).toLocaleString();
+        lastUpdatedEl.textContent = 'Updated ' + fmt.format(now);
+      } catch {
+        lastUpdatedEl.textContent = 'Updated ' + (new Date()).toLocaleString();
       }
 
-      // Theme switching
-      themeButtons.forEach(btn => {
+      // Canvas sizing
+      let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      const resize = () => {
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+        canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // scale drawings by DPR
+        primeBackground(true);
+      };
+      const getCSS = (name) => getComputedStyle(root).getPropertyValue(name).trim();
+
+      // Palette
+      function currentThreadColors() {
+        return [getCSS('--t1'), getCSS('--t2'), getCSS('--t3')];
+      }
+      function fadeColor() { return getCSS('--canvas-fade'); }
+
+      // Background prime
+      function primeBackground(hard) {
+        const w = canvas.width / dpr, h = canvas.height / dpr;
+        if (hard) { ctx.clearRect(0, 0, w, h); }
+        // soft wash to start
+        const g = ctx.createLinearGradient(0, 0, 0, h);
+        g.addColorStop(0, getCSS('--bg1'));
+        g.addColorStop(1, getCSS('--bg0'));
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      // Threads
+      let threads = [];
+      let desiredCount = +densityInput.value | 0;
+      let time = 0;
+      let speed = (+tempoInput.value) / 100; // ~0.6..2.6
+      let paused = false;
+
+      const rnd = (n=1) => Math.random() * n;
+      function resetThreads() {
+        threads.length = 0;
+        const cols = currentThreadColors();
+        for (let i = 0; i < desiredCount; i++) {
+          const hue = cols[i % cols.length];
+          threads.push({
+            x: rnd(canvas.width / dpr),
+            y: rnd(canvas.height / dpr),
+            vx: 0, vy: 0,
+            c: hue,
+            w: 0.6 + (i % 5) * 0.08 + rnd(0.15)
+          });
+        }
+      }
+
+      // Vector field
+      function field(x, y, t) {
+        // Normalize to [0,1]
+        const w = canvas.width / dpr, h = canvas.height / dpr;
+        const nx = x / w, ny = y / h;
+
+        // Flow angles driven by smooth trigs
+        const a = Math.sin((ny * 6.283 + t * 0.00045) * 1.0);
+        const b = Math.cos((nx * 6.283 - t * 0.00035) * 1.2);
+        const c = Math.sin(((nx + ny) * 3.1415 + t * 0.00025) * 2.0);
+
+        const ang = (a + b + c) * Math.PI; // -π..π-ish
+        return { x: Math.cos(ang), y: Math.sin(ang) };
+      }
+
+      // Pointer influence
+      let pointer = { x: 0, y: 0, active: false };
+      function pointerVec(px, py, x, y) {
+        const dx = px - x, dy = py - y;
+        const d2 = dx*dx + dy*dy;
+        if (d2 === 0) return { x: 0, y: 0 };
+        const d = Math.sqrt(d2);
+        const falloff = Math.max(0, 1 - d / 180); // radius of influence ~180px
+        return { x: (dx / d) * falloff, y: (dy / d) * falloff };
+      }
+
+      // Draw
+      function step(ts) {
+        if (paused) return;
+        time = ts * speed;
+
+        const w = canvas.width / dpr, h = canvas.height / dpr;
+
+        // Persistence fade
+        ctx.fillStyle = fadeColor();
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < threads.length; i++) {
+          const t = threads[i];
+
+          const f = field(t.x, t.y, time);
+          let vx = f.x, vy = f.y;
+
+          if (pointer.active) {
+            const p = pointerVec(pointer.x, pointer.y, t.x, t.y);
+            vx += p.x * 1.6;
+            vy += p.y * 1.6;
+          }
+
+          // Integrate
+          const mag = Math.hypot(vx, vy) || 1;
+          vx /= mag; vy /= mag;
+
+          const s = 0.8 + Math.sin((i * 13.37) + time * 0.001) * 0.3; // slight per-thread variance
+          const stepLen = 0.8 + s * 0.6;
+
+          const nx = t.x + vx * stepLen;
+          const ny = t.y + vy * stepLen;
+
+          // Draw segment
+          ctx.beginPath();
+          ctx.moveTo(t.x, t.y);
+          ctx.lineTo(nx, ny);
+          ctx.lineWidth = t.w;
+          ctx.strokeStyle = t.c;
+          ctx.stroke();
+
+          // Wrap around edges
+          t.x = (nx + w) % w;
+          t.y = (ny + h) % h;
+        }
+        ctx.globalCompositeOperation = 'source-over';
+
+        raf = requestAnimationFrame(step);
+      }
+
+      // Controls
+      swatches.forEach(btn => {
         btn.addEventListener('click', () => {
-          themeButtons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
-          btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true');
+          swatches.forEach(b => b.setAttribute('aria-pressed', 'false'));
+          btn.setAttribute('aria-pressed', 'true');
           root.setAttribute('data-theme', btn.getAttribute('data-theme'));
+          // Reprime and recolor
+          primeBackground(true);
+          resetThreads();
         }, { passive: true });
       });
 
-      // Time + ring animation
-      function pad(n) { return String(n).padStart(2, '0'); }
-      function tick() {
-        const d = new Date();
-        const h = d.getHours(), m = d.getMinutes(), s = d.getSeconds(), ms = d.getMilliseconds();
-        clockEl.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+      pauseBtn.addEventListener('click', () => togglePause(), { passive: true });
 
-        // Progress through minute (0..360deg)
-        const secProgress = s + ms / 1000;
-        const deg = (secProgress / 60) * 360;
-        ring.style.setProperty('--deg', deg + 'deg');
-
-        // Move spark along the ring
-        const r = (parseFloat(getComputedStyle(ring).width) || 196) / 2 - 6; // radius offset
-        const rad = (deg - 90) * Math.PI / 180;
-        const cx = 50 + (Math.cos(rad) * (r / (ring.clientWidth / 2))) * 50;
-        const cy = 50 + (Math.sin(rad) * (r / (ring.clientHeight / 2))) * 50;
-        spark.style.left = cx + '%';
-        spark.style.top = cy + '%';
-
-        rafId = requestAnimationFrame(tick);
-      }
-      let rafId = requestAnimationFrame(tick);
-
-      // Tilt interaction
-      const maxTilt = 9; // deg
-      function setTilt(x, y) {
-        const rx = (y * maxTilt).toFixed(2);
-        const ry = (-x * maxTilt).toFixed(2);
-        timeCard.style.transform = 'rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
-      }
-      function resetTilt() { timeCard.style.transform = 'rotateX(0deg) rotateY(0deg)'; }
-
-      let bounds;
-      function updateBounds() { bounds = root.getBoundingClientRect(); }
-      updateBounds();
-      window.addEventListener('resize', updateBounds);
-
-      root.addEventListener('pointermove', (e) => {
-        if (root.classList.contains('paused')) return;
-        const x = (e.clientX - bounds.left) / bounds.width;
-        const y = (e.clientY - bounds.top) / bounds.height;
-        setTilt((x - 0.5) * 2, (y - 0.5) * 2);
-      });
-      root.addEventListener('pointerleave', resetTilt);
-
-      // Pause/resume with Space
-      let paused = false;
-      function setPaused(p) {
-        paused = p;
+      function togglePause(force) {
+        if (typeof force === 'boolean') paused = force;
+        else paused = !paused;
+        pauseBtn.setAttribute('aria-pressed', String(paused));
+        pauseBtn.textContent = paused ? 'Resume' : 'Pause';
         root.classList.toggle('paused', paused);
-        hint.textContent = paused ? 'Motion paused • Press space to resume' : 'Move your cursor • Press space to pause';
-        if (paused) {
-          cancelAnimationFrame(rafId);
-          resetTilt();
+        if (!paused) {
+          primeBackground(false);
+          raf = requestAnimationFrame(step);
         } else {
-          rafId = requestAnimationFrame(tick);
+          cancelAnimationFrame(raf);
         }
       }
+
+      densityInput.addEventListener('input', () => {
+        desiredCount = +densityInput.value | 0;
+        resetThreads();
+      }, { passive: true });
+
+      tempoInput.addEventListener('input', () => {
+        speed = (+tempoInput.value) / 100;
+      }, { passive: true });
+
+      // Pointer events
+      const updatePointer = (e) => {
+        const r = canvas.getBoundingClientRect();
+        pointer.x = (e.clientX - r.left);
+        pointer.y = (e.clientY - r.top);
+        pointer.active = true;
+      };
+      stage.addEventListener('pointermove', updatePointer);
+      stage.addEventListener('pointerdown', updatePointer);
+      stage.addEventListener('pointerleave', () => { pointer.active = false; });
+
+      // Keyboard
+      root.tabIndex = 0;
       root.addEventListener('keydown', (e) => {
         if (e.code === 'Space') {
           e.preventDefault();
-          setPaused(!paused);
+          togglePause();
         }
       });
-      // Make container focusable for keyboard
-      root.tabIndex = 0;
 
-      // Respect reduced motion on load
+      // Resize handling
+      const ro = new ResizeObserver(resize);
+      ro.observe(canvas);
+      window.addEventListener('orientationchange', () => { setTimeout(resize, 50); });
+
+      // Reduced motion preference
       const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-      if (mq.matches) setPaused(true);
-      mq.addEventListener && mq.addEventListener('change', (ev) => setPaused(ev.matches));
+      const applyRM = () => {
+        if (mq.matches) togglePause(true);
+      };
+      mq.addEventListener ? mq.addEventListener('change', applyRM) : mq.addListener(applyRM);
 
+      // Init
+      resize();
+      resetThreads();
+      primeBackground(true);
+      let raf = requestAnimationFrame(step);
+      applyRM();
     })();
   </script>
 </div>
