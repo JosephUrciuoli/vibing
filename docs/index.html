@@ -73,359 +73,398 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="v1087" data-theme="dusk" data-motion="on">
+<div id="v1088" data-theme="noir" data-motion="on" role="region" aria-label="Orbit Loom">
   <style>
-    #v1087 {
-      --radius: 22px;
-      --pad: 28px;
-      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+    /* Root canvas */
+    #v1088 {
+      --radius: 28px;
+      --pad: 26px;
       --mx: 50%;
       --my: 50%;
-      --tiltX: 0deg;
-      --tiltY: 0deg;
 
-      /* Dusk theme (default) */
-      --bg: #0b1020;
-      --fg: #e8f0ff;
-      --muted: rgba(232,240,255,0.72);
-      --chip: rgba(255,255,255,0.12);
-      --accent-1: #7cf7ff;
-      --accent-2: #b19cff;
-      --accent-3: #ff7df2;
+      /* Noir (default) */
+      --bg: #070910;
+      --fg: #eaf1ff;
+      --muted: rgba(234, 241, 255, 0.75);
+      --line: rgba(255,255,255,0.1);
+      --accent-1: #7df5ff;
+      --accent-2: #b29bff;
+      --accent-3: #ff8fbd;
+
+      /* ornament hues */
+      --glow-a: color-mix(in oklab, var(--accent-1), transparent 70%);
+      --glow-b: color-mix(in oklab, var(--accent-2), transparent 70%);
+      --glow-c: color-mix(in oklab, var(--accent-3), transparent 70%);
 
       position: relative;
       overflow: hidden;
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,0.12);
-      background: radial-gradient(1200px circle at var(--mx) var(--my), rgba(255,255,255,0.09), transparent 60%) , linear-gradient(180deg, #0b1020 0%, #0a0d1a 100%);
+      background:
+        radial-gradient(1200px circle at var(--mx) var(--my), rgba(255,255,255,0.10), transparent 60%),
+        linear-gradient(180deg, #080a12 0%, var(--bg) 100%);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.08);
       color: var(--fg);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
       isolation: isolate;
-      min-height: 420px;
+      min-height: 520px;
       padding: var(--pad);
     }
 
-    /* Dawn theme overrides */
-    #v1087[data-theme="dawn"] {
-      --bg: #0e1320;
-      --fg: #0b1220;
-      --muted: rgba(11,18,32,0.75);
-      --chip: rgba(11,18,32,0.12);
-      --accent-1: #ffd272;
-      --accent-2: #ff9bd0;
-      --accent-3: #7bdcff;
-      background: radial-gradient(1200px circle at var(--mx) var(--my), rgba(255,255,255,0.24), rgba(255,255,255,0) 60%), linear-gradient(180deg, #f8fbff 0%, #f2f6ff 100%);
-      color: var(--fg);
-      border-color: rgba(11,18,32,0.12);
-    }
-
-    /* Animated atmosphere */
-    #v1087 .field {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-    #v1087 .field .halo {
-      position: absolute;
-      inset: -20%;
+    /* Silk (light) */
+    #v1088[data-theme="silk"] {
+      --bg: #f9fbff;
+      --fg: #0a1222;
+      --muted: rgba(10,18,34,0.72);
+      --line: rgba(10,18,34,0.12);
+      --accent-1: #ffbb6b;
+      --accent-2: #8ac6ff;
+      --accent-3: #ff89d1;
+      --glow-a: color-mix(in oklab, var(--accent-1), transparent 65%);
+      --glow-b: color-mix(in oklab, var(--accent-2), transparent 65%);
+      --glow-c: color-mix(in oklab, var(--accent-3), transparent 65%);
       background:
-        conic-gradient(from 0deg,
-          transparent 0deg,
-          color-mix(in oklab, var(--accent-1), transparent 75%) 60deg,
-          transparent 120deg,
-          color-mix(in oklab, var(--accent-2), transparent 75%) 180deg,
-          transparent 240deg,
-          color-mix(in oklab, var(--accent-3), transparent 75%) 300deg,
-          transparent 360deg);
-      filter: blur(48px) saturate(120%);
-      opacity: 0.85;
-      animation: v1087-rotate 42s linear infinite;
-      transform-origin: 50% 50%;
-      mix-blend-mode: screen;
-    }
-    #v1087[data-theme="dawn"] .field .halo {
-      mix-blend-mode: multiply;
-      opacity: 0.65;
-      filter: blur(46px) saturate(110%);
+        radial-gradient(1200px circle at var(--mx) var(--my), rgba(0,0,0,0.08), transparent 60%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      box-shadow: 0 18px 36px rgba(11,18,32,0.18), inset 0 0 0 1px rgba(11,18,32,0.10);
     }
 
-    #v1087 .field .blob {
-      position: absolute;
-      width: 42vmin; height: 42vmin;
-      min-width: 260px; min-height: 260px;
-      background: radial-gradient(closest-side, color-mix(in oklab, var(--accent-1), transparent 70%) 0%, transparent 100%);
-      border-radius: 50%;
-      filter: blur(22px);
-      opacity: 0.48;
-      animation: v1087-drift-1 28s ease-in-out infinite alternate;
-    }
-    #v1087 .field .blob.b2 {
-      background: radial-gradient(closest-side, color-mix(in oklab, var(--accent-2), transparent 68%) 0%, transparent 100%);
-      animation: v1087-drift-2 32s ease-in-out infinite alternate;
-    }
-    #v1087 .field .blob.b3 {
-      background: radial-gradient(closest-side, color-mix(in oklab, var(--accent-3), transparent 68%) 0%, transparent 100%);
-      animation: v1087-drift-3 36s ease-in-out infinite alternate;
-    }
-
-    #v1087 .grain {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: repeating-linear-gradient( 0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 2px ),
-                  repeating-linear-gradient( 90deg, rgba(0,0,0,0.03) 0 1px, transparent 1px 2px );
-      mix-blend-mode: overlay;
-      opacity: 0.35;
-      filter: contrast(110%) saturate(105%);
-      z-index: 0;
-    }
-
-    #v1087 .wrap {
+    /* Layout */
+    #v1088 .grid {
       position: relative;
       z-index: 2;
       display: grid;
-      gap: 18px;
-      max-width: 1024px;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 22px;
+      align-items: center;
+      max-width: 1100px;
       margin: 0 auto;
     }
+    @media (max-width: 860px) {
+      #v1088 .grid { grid-template-columns: 1fr; }
+    }
 
-    #v1087 .card {
+    /* Scene (artwork) */
+    #v1088 .scene {
+      position: relative;
       border-radius: calc(var(--radius) - 6px);
-      background: color-mix(in oklab, rgba(8,12,24,0.65), transparent 0%);
-      backdrop-filter: blur(12px) saturate(110%);
-      -webkit-backdrop-filter: blur(12px) saturate(110%);
-      padding: 28px 26px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12), 0 12px 24px rgba(0,0,0,0.25);
-      transform: perspective(1000px) rotateX(var(--tiltY)) rotateY(var(--tiltX));
-      transition: transform 300ms ease, box-shadow 300ms ease, background 300ms ease;
-    }
-    #v1087[data-theme="dawn"] .card {
-      background: color-mix(in oklab, rgba(255,255,255,0.6), transparent 0%);
-      box-shadow: inset 0 0 0 1px rgba(11,18,32,0.12), 0 12px 24px rgba(11,18,32,0.15);
+      overflow: hidden;
+      aspect-ratio: 1.3 / 1;
+      min-height: 360px;
+      background:
+        radial-gradient(180% 140% at 30% 20%, var(--glow-a), transparent 60%),
+        radial-gradient(140% 160% at 70% 70%, var(--glow-b), transparent 60%),
+        radial-gradient(140% 140% at 50% 50%, var(--glow-c), transparent 60%),
+        linear-gradient(180deg, color-mix(in oklab, var(--bg), #000 10%), var(--bg));
+      box-shadow: inset 0 0 0 1px var(--line), 0 20px 40px rgba(0,0,0,0.25);
+      transform-style: preserve-3d;
+      perspective: 1000px;
     }
 
-    #v1087 .card::before {
+    /* Subtle weave texture */
+    #v1088 .scene::before {
       content: "";
       position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 1px;
-      background: linear-gradient(135deg, color-mix(in oklab, var(--accent-1), transparent 0%), color-mix(in oklab, var(--accent-2), transparent 0%));
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-              mask-composite: exclude;
+      inset: -40%;
+      background:
+        conic-gradient(from 0deg at 50% 50%,
+          transparent 0deg 40deg,
+          rgba(255,255,255,0.06) 40deg 44deg,
+          transparent 44deg 90deg,
+          rgba(255,255,255,0.06) 90deg 94deg,
+          transparent 94deg 140deg,
+          rgba(255,255,255,0.06) 140deg 144deg,
+          transparent 144deg 360deg);
+      filter: blur(28px) saturate(120%);
+      mix-blend-mode: overlay;
+      animation: v1088-turn 60s linear infinite;
       pointer-events: none;
-      opacity: 0.85;
+    }
+    #v1088[data-theme="silk"] .scene::before { mix-blend-mode: multiply; opacity: 0.8; }
+
+    /* Starry grain */
+    #v1088 .grain {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 2px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.035) 0 1px, transparent 1px 2px);
+      mix-blend-mode: overlay;
+      opacity: 0.35;
+    }
+    #v1088[data-theme="silk"] .grain { mix-blend-mode: multiply; opacity: 0.25; }
+
+    /* SVG orbits */
+    #v1088 svg.orbits {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 6px 20px rgba(0,0,0,0.35));
+    }
+    #v1088 .ring { fill: none; stroke-linecap: round; }
+    #v1088 .ring.r1 { stroke: color-mix(in oklab, var(--accent-1), white 25%); stroke-opacity: 0.85; }
+    #v1088 .ring.r2 { stroke: color-mix(in oklab, var(--accent-2), white 25%); stroke-opacity: 0.85; }
+    #v1088 .ring.r3 { stroke: color-mix(in oklab, var(--accent-3), white 15%); stroke-opacity: 0.9; }
+
+    #v1088 .orbit-g { transform-origin: 50% 50%; }
+    #v1088 .orbit-g.r1 { animation: v1088-spin 22s linear infinite; }
+    #v1088 .orbit-g.r2 { animation: v1088-spin 36s linear infinite reverse; }
+    #v1088 .orbit-g.r3 { animation: v1088-spin 54s linear infinite; }
+
+    #v1088 .planet {
+      filter: drop-shadow(0 0 10px currentColor);
+      transform-origin: 50% 50%;
     }
 
-    #v1087 h1 {
-      font-size: clamp(28px, 5vw, 46px);
-      line-height: 1.04;
-      margin: 0;
-      letter-spacing: -0.02em;
+    /* Center capsule */
+    #v1088 .capsule {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(56%, 420px);
+      border-radius: 20px;
+      padding: 16px 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      box-shadow: inset 0 0 0 1px var(--line), 0 10px 30px rgba(0,0,0,0.25);
+      backdrop-filter: blur(10px) saturate(115%);
+      -webkit-backdrop-filter: blur(10px) saturate(115%);
+      text-align: center;
+    }
+    #v1088[data-theme="silk"] .capsule {
+      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.02));
+    }
+    #v1088 .clock {
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1, "ss01" 1;
+      letter-spacing: 0.02em;
+      font-size: clamp(28px, 6vw, 44px);
+      line-height: 1.1;
       background: linear-gradient(90deg, var(--accent-1), var(--accent-2) 50%, var(--accent-3));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
     }
-    #v1087 p.lede {
-      margin: 6px 0 14px 0;
+    #v1088 .caption {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    /* Text panel */
+    #v1088 .panel {
+      border-radius: calc(var(--radius) - 6px);
+      padding: 24px 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      box-shadow: inset 0 0 0 1px var(--line), 0 16px 34px rgba(0,0,0,0.22);
+      backdrop-filter: blur(8px) saturate(112%);
+      -webkit-backdrop-filter: blur(8px) saturate(112%);
+      transform: translateZ(0);
+    }
+    #v1088[data-theme="silk"] .panel {
+      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.015));
+      box-shadow: inset 0 0 0 1px var(--line), 0 14px 26px rgba(11,18,32,0.15);
+    }
+
+    #v1088 h1 {
+      margin: 0 0 8px 0;
+      font-size: clamp(28px, 5vw, 48px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2) 55%, var(--accent-3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.18));
+    }
+    #v1088 p.lede {
+      margin: 4px 0 14px 0;
       color: var(--muted);
       font-size: clamp(14px, 2.2vw, 18px);
       letter-spacing: 0.02em;
     }
 
-    #v1087 .chips {
+    #v1088 .chips {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin: 2px 0 8px 0;
+      margin: 0 0 8px 0;
     }
-    #v1087 .chip {
+    #v1088 .chip {
       border-radius: 999px;
       padding: 8px 12px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
-      box-shadow: inset 0 0 0 1px var(--chip);
-      color: var(--fg);
       font-size: 12px;
       letter-spacing: 0.03em;
+      color: var(--fg);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      box-shadow: inset 0 0 0 1px var(--line);
       opacity: 0.9;
     }
-    #v1087[data-theme="dawn"] .chip {
-      background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.02));
-      box-shadow: inset 0 0 0 1px rgba(11,18,32,0.15);
-      color: #0b1220;
-      opacity: 0.8;
+    #v1088[data-theme="silk"] .chip {
+      color: #0b1222;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.03));
     }
 
-    #v1087 .controls {
+    #v1088 .controls {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
       align-items: center;
-      margin-top: 4px;
+      margin-top: 2px;
     }
-    #v1087 .pill {
+    #v1088 .pill {
       appearance: none;
-      border: none;
+      border: 0;
       border-radius: 999px;
       padding: 10px 14px;
       font-size: 13px;
       font-weight: 600;
       letter-spacing: 0.02em;
-      color: #081122;
-      background: linear-gradient(180deg, color-mix(in oklab, var(--accent-1), white 40%), color-mix(in oklab, var(--accent-2), white 30%));
-      box-shadow: 0 6px 14px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.45);
+      color: #0a1222;
+      background: linear-gradient(180deg,
+        color-mix(in oklab, var(--accent-1), white 40%),
+        color-mix(in oklab, var(--accent-2), white 30%));
+      box-shadow: 0 8px 16px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.5);
       cursor: pointer;
-      transition: transform 120ms ease, filter 200ms ease;
+      transition: transform 120ms ease, filter 220ms ease;
       will-change: transform;
     }
-    #v1087 .pill.secondary {
-      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
+    #v1088 .pill.secondary {
       color: var(--fg);
-      box-shadow: inset 0 0 0 1px var(--chip);
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.08));
+      box-shadow: inset 0 0 0 1px var(--line);
     }
-    #v1087 .pill:active { transform: translateY(1px) scale(0.99); }
-    #v1087 .pill:hover { filter: brightness(1.05) saturate(1.1); }
+    #v1088 .pill:active { transform: translateY(1px) scale(0.99); }
+    #v1088 .pill:hover { filter: brightness(1.05) saturate(1.08); }
 
-    #v1087 .meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 12px;
-      border-top: 1px solid rgba(255,255,255,0.12);
+    #v1088 .meta {
+      margin-top: 14px;
       padding-top: 12px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
       color: var(--muted);
       font-size: 12.5px;
     }
-    #v1087[data-theme="dawn"] .meta {
-      border-top-color: rgba(11,18,32,0.12);
-    }
-    #v1087 .pulse {
+
+    #v1088 .pulse {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       white-space: nowrap;
     }
-    #v1087 .dot {
+    #v1088 .dot {
       width: 8px; height: 8px; border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, white 0 20%, color-mix(in oklab, var(--accent-2), transparent 25%) 20% 60%, transparent 60%);
       box-shadow: 0 0 10px color-mix(in oklab, var(--accent-2), transparent 60%);
-      animation: v1087-breathe 3s ease-in-out infinite;
+      animation: v1088-breathe 3s ease-in-out infinite;
     }
 
-    #v1087 .timeline {
-      position: relative;
-      height: 3px;
-      flex: 1;
-      background: rgba(255,255,255,0.12);
-      border-radius: 999px;
-      overflow: hidden;
+    #v1088 .progress {
+      height: 3px; border-radius: 999px; overflow: hidden;
+      background: var(--line);
     }
-    #v1087[data-theme="dawn"] .timeline { background: rgba(11,18,32,0.12); }
-    #v1087 .timeline .bar {
-      position: absolute;
-      inset: 0;
+    #v1088 .progress > span {
+      display: block; height: 100%;
       background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
       transform-origin: 0% 50%;
-      animation: v1087-progress 9s ease-in-out infinite;
+      animation: v1088-progress 9s ease-in-out infinite;
     }
 
-    /* Animations */
-    @keyframes v1087-rotate {
-      to { transform: rotate(360deg); }
-    }
-    @keyframes v1087-drift-1 {
-      0% { transform: translate(-10%, -12%) scale(1); }
-      100% { transform: translate(20%, -4%) scale(1.2); }
-    }
-    @keyframes v1087-drift-2 {
-      0% { transform: translate(50%, 12%) scale(1.05); }
-      100% { transform: translate(10%, -6%) scale(0.9); }
-    }
-    @keyframes v1087-drift-3 {
-      0% { transform: translate(-30%, 24%) scale(0.95); }
-      100% { transform: translate(30%, 18%) scale(1.25); }
-    }
-    @keyframes v1087-breathe {
+    /* Motion settings */
+    @keyframes v1088-turn { to { transform: rotate(360deg); } }
+    @keyframes v1088-spin { to { transform: rotate(360deg); } }
+    @keyframes v1088-breathe {
       0%, 100% { transform: scale(1); filter: saturate(1); }
-      50% { transform: scale(1.2); filter: saturate(1.3); }
+      50% { transform: scale(1.2); filter: saturate(1.25); }
     }
-    @keyframes v1087-progress {
+    @keyframes v1088-progress {
       0% { transform: scaleX(0); }
       50% { transform: scaleX(1); }
       100% { transform: scaleX(0); }
     }
 
-    /* Motion controls */
     @media (prefers-reduced-motion: reduce) {
-      #v1087 { --tiltX: 0deg; --tiltY: 0deg; }
-      #v1087 .halo, #v1087 .blob, #v1087 .dot, #v1087 .timeline .bar { animation: none !important; }
+      #v1088 .orbit-g, #v1088 .scene::before, #v1088 .dot, #v1088 .progress > span { animation: none !important; }
     }
-    #v1087[data-motion="off"] .halo,
-    #v1087[data-motion="off"] .blob,
-    #v1087[data-motion="off"] .dot,
-    #v1087[data-motion="off"] .timeline .bar {
+    #v1088[data-motion="off"] .orbit-g,
+    #v1088[data-motion="off"] .scene::before,
+    #v1088[data-motion="off"] .dot,
+    #v1088[data-motion="off"] .progress > span {
       animation-play-state: paused !important;
-    }
-    #v1087[data-motion="off"] .card {
-      transform: none !important;
-    }
-
-    /* Responsive tweaks */
-    @media (max-width: 520px) {
-      #v1087 { padding: 22px; }
-      #v1087 .card { padding: 22px; }
-      #v1087 .controls { gap: 8px; }
     }
   </style>
 
-  <div class="field">
-    <div class="halo" aria-hidden="true"></div>
-    <div class="blob b1" style="left:-8%; top:-10%;" aria-hidden="true"></div>
-    <div class="blob b2" style="right:-10%; top:22%;" aria-hidden="true"></div>
-    <div class="blob b3" style="left:18%; bottom:-6%;" aria-hidden="true"></div>
-    <div class="grain" aria-hidden="true"></div>
-  </div>
+  <div class="grid">
+    <section class="scene" id="v1088-scene" aria-label="Kinetic orbits">
+      <svg class="orbits" viewBox="0 0 100 100" aria-hidden="true">
+        <!-- Orbit rings -->
+        <g class="orbit-g r1">
+          <circle class="ring r1" cx="50" cy="50" r="34" stroke-width="0.9"></circle>
+          <g class="planet" transform="translate(50,50) rotate(0)">
+            <circle cx="34" cy="0" r="1.5" fill="currentColor" style="color: var(--accent-1);"></circle>
+          </g>
+        </g>
+        <g class="orbit-g r2">
+          <circle class="ring r2" cx="50" cy="50" r="25" stroke-width="0.9" stroke-dasharray="1 2"></circle>
+          <g class="planet" transform="translate(50,50) rotate(120)">
+            <circle cx="25" cy="0" r="1.8" fill="currentColor" style="color: var(--accent-2);"></circle>
+          </g>
+        </g>
+        <g class="orbit-g r3">
+          <circle class="ring r3" cx="50" cy="50" r="16" stroke-width="1.2"></circle>
+          <g class="planet" transform="translate(50,50) rotate(240)">
+            <circle cx="16" cy="0" r="2.2" fill="currentColor" style="color: var(--accent-3);"></circle>
+          </g>
+        </g>
+      </svg>
 
-  <div class="wrap" role="region" aria-label="Aurora vignette">
-    <div class="card" id="v1087-card">
-      <h1>Aurora Studio</h1>
-      <p class="lede">A kinetic vignette—quiet, luminous, and a little bit alive.</p>
+      <div class="capsule" id="v1088-capsule" aria-live="polite">
+        <div class="clock" id="v1088-clock">—:—:—</div>
+        <div class="caption">Local time • A small cosmos, softly turning</div>
+      </div>
+
+      <div class="grain" aria-hidden="true"></div>
+    </section>
+
+    <section class="panel">
+      <h1>Orbit&nbsp;Loom</h1>
+      <p class="lede">A living poster where light, time, and motion thread through quiet, luminous rings.</p>
 
       <div class="chips" aria-hidden="true">
-        <span class="chip">glass surface</span>
-        <span class="chip">aurora gradients</span>
-        <span class="chip">tactile tilt</span>
-        <span class="chip">gentle motion</span>
+        <span class="chip">kinetic poster</span>
+        <span class="chip">vector orrery</span>
+        <span class="chip">time capsule</span>
+        <span class="chip">parallax glow</span>
       </div>
 
       <div class="controls">
-        <button class="pill" id="v1087-theme" aria-pressed="false" title="Toggle theme">Switch to Dawn</button>
-        <button class="pill secondary" id="v1087-motion" aria-pressed="true" title="Toggle motion">Motion: On</button>
+        <button class="pill" id="v1088-theme" aria-pressed="false" title="Toggle theme">Switch to Silk</button>
+        <button class="pill secondary" id="v1088-motion" aria-pressed="true" title="Toggle motion">Motion: On</button>
       </div>
 
       <div class="meta">
-        <div class="pulse"><span class="dot" aria-hidden="true"></span>Interactive canvas</div>
-        <div class="timeline" aria-hidden="true"><span class="bar"></span></div>
-        <span id="last-updated">Last updated: 2025-12-05 09:19:25 EST</span>
+        <div class="pulse"><span class="dot" aria-hidden="true"></span>Live orbits</div>
+        <div class="progress" aria-hidden="true"><span></span></div>
+        <span id="last-updated">Last updated: 2025-12-05 10:20:11 EST</span>
       </div>
-    </div>
+    </section>
   </div>
 
   <script>
     (function(){
-      const root = document.getElementById('v1087');
-      const card = document.getElementById('v1087-card');
-      const themeBtn = document.getElementById('v1087-theme');
-      const motionBtn = document.getElementById('v1087-motion');
+      const root = document.getElementById('v1088');
+      const scene = document.getElementById('v1088-scene');
+      const capsule = document.getElementById('v1088-capsule');
+      const clock = document.getElementById('v1088-clock');
+      const themeBtn = document.getElementById('v1088-theme');
+      const motionBtn = document.getElementById('v1088-motion');
       const updated = document.getElementById('last-updated');
 
-      // Set "last updated" nicely in the viewer's locale
+      // Last updated: viewer's locale
       try {
         const dtf = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'medium', timeZoneName: 'short' });
         updated.textContent = 'Last updated: ' + dtf.format(new Date());
@@ -433,49 +472,60 @@
         updated.textContent = 'Last updated: ' + new Date().toLocaleString();
       }
 
+      // Live clock
+      function tick() {
+        const now = new Date();
+        try {
+          const tf = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          clock.textContent = tf.format(now);
+        } catch {
+          clock.textContent = now.toLocaleTimeString();
+        }
+      }
+      tick();
+      let timer = setInterval(tick, 1000);
+
       // Respect reduced motion
-      const prefersReduce = matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const prefersReduce = (typeof matchMedia !== 'undefined') && matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReduce) {
         root.dataset.motion = 'off';
         motionBtn.setAttribute('aria-pressed', 'false');
         motionBtn.textContent = 'Motion: Off';
       }
 
-      // Pointer parallax + light hotspot
+      // Parallax light + subtle tilt
       let bounds = root.getBoundingClientRect();
       function setBounds(){ bounds = root.getBoundingClientRect(); }
       window.addEventListener('resize', setBounds);
 
-      function onPointerMove(e){
+      function onPointerMove(e) {
         const x = (e.clientX - bounds.left) / bounds.width;
         const y = (e.clientY - bounds.top) / bounds.height;
-        const percX = Math.max(0, Math.min(1, x)) * 100;
-        const percY = Math.max(0, Math.min(1, y)) * 100;
-        root.style.setProperty('--mx', percX + '%');
-        root.style.setProperty('--my', percY + '%');
+        const px = Math.max(0, Math.min(1, x)) * 100;
+        const py = Math.max(0, Math.min(1, y)) * 100;
+        root.style.setProperty('--mx', px + '%');
+        root.style.setProperty('--my', py + '%');
 
-        // Tilt the card
-        const tiltMax = 7; // degrees
+        // Tilt the scene plate
+        const tiltMax = 6;
         const tx = ((x - 0.5) * 2) * tiltMax;
         const ty = ((0.5 - y) * 2) * tiltMax;
-        root.style.setProperty('--tiltX', tx.toFixed(2) + 'deg');
-        root.style.setProperty('--tiltY', ty.toFixed(2) + 'deg');
+        scene.style.transform = `rotateX(${ty.toFixed(2)}deg) rotateY(${tx.toFixed(2)}deg)`;
       }
-      function onLeave(){
+      function onLeave() {
         root.style.setProperty('--mx', '50%');
         root.style.setProperty('--my', '50%');
-        root.style.setProperty('--tiltX', '0deg');
-        root.style.setProperty('--tiltY', '0deg');
+        scene.style.transform = 'none';
       }
       root.addEventListener('pointermove', onPointerMove);
       root.addEventListener('pointerleave', onLeave);
 
       // Theme toggle
       themeBtn.addEventListener('click', () => {
-        const isDawn = root.dataset.theme === 'dawn';
-        root.dataset.theme = isDawn ? 'dusk' : 'dawn';
-        themeBtn.textContent = isDawn ? 'Switch to Dawn' : 'Switch to Dusk';
-        themeBtn.setAttribute('aria-pressed', String(!isDawn));
+        const isSilk = root.dataset.theme === 'silk';
+        root.dataset.theme = isSilk ? 'noir' : 'silk';
+        themeBtn.textContent = isSilk ? 'Switch to Silk' : 'Switch to Noir';
+        themeBtn.setAttribute('aria-pressed', String(!isSilk));
       });
 
       // Motion toggle
@@ -484,7 +534,9 @@
         root.dataset.motion = on ? 'off' : 'on';
         motionBtn.textContent = 'Motion: ' + (on ? 'Off' : 'On');
         motionBtn.setAttribute('aria-pressed', String(!on));
-      }, { passive: true });
+        if (on) { clearInterval(timer); } else { tick(); timer = setInterval(tick, 1000); }
+      });
+
     })();
   </script>
 </div>
