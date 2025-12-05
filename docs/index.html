@@ -73,7 +73,431 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-12-04 22:17:40 EST</span></div>
+<div class="vibe" data-theme="night" aria-live="polite">
+  <style>
+    .vibe {
+      --bg-1: #0a0f1d;
+      --bg-2: #1b2a52;
+      --bg-3: #0e1a36;
+      --text: #eaf2ff;
+      --muted: #b8c7e6;
+      --accent-1: #86f0ff;
+      --accent-2: #b7ff7a;
+      --accent-3: #ffb3f1;
+      --glass: rgba(255,255,255,0.08);
+      --stroke: rgba(255,255,255,0.18);
+      --shadow: 0 20px 60px rgba(10,15,29,0.45);
+      position: relative;
+      border-radius: 24px;
+      padding: 28px;
+      overflow: hidden;
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 700px at 110% -10%, rgba(255,255,255,0.08), transparent 60%),
+        radial-gradient(900px 540px at -10% 110%, rgba(255,255,255,0.06), transparent 55%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2) 55%, var(--bg-3));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+      min-height: 360px;
+    }
+    .vibe .bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .vibe .bg::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(600px 600px at 20% 20%, rgba(134,240,255,0.16), transparent 60%),
+        radial-gradient(700px 600px at 85% 30%, rgba(183,255,122,0.12), transparent 65%),
+        radial-gradient(800px 700px at 50% 90%, rgba(255,179,241,0.10), transparent 70%);
+      filter: blur(30px) saturate(120%);
+      transform: translateZ(0);
+      animation: vibe-drift 22s ease-in-out infinite alternate;
+    }
+    .vibe .bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          100deg,
+          rgba(255,255,255,0.035) 0 2px,
+          transparent 2px 12px
+        );
+      opacity: 0.14;
+      mix-blend-mode: overlay;
+    }
+    .vibe .orb {
+      position: absolute;
+      width: 34vmin;
+      height: 34vmin;
+      border-radius: 50%;
+      filter: blur(24px);
+      opacity: 0.35;
+      transform: translateZ(0);
+      mix-blend-mode: screen;
+      animation: float 18s ease-in-out infinite;
+    }
+    .vibe .orb1 { background: radial-gradient(circle at 30% 30%, var(--accent-1), transparent 70%); top: -8vmin; left: -6vmin; animation-delay: -2s; }
+    .vibe .orb2 { background: radial-gradient(circle at 60% 40%, var(--accent-2), transparent 65%); bottom: -10vmin; right: -8vmin; animation-delay: -6s; }
+    .vibe .orb3 { background: radial-gradient(circle at 40% 60%, var(--accent-3), transparent 60%); top: 30%; right: 40%; width: 22vmin; height: 22vmin; animation-duration: 26s; opacity: 0.28; }
+
+    .vibe .top {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      gap: 12px;
+    }
+    .vibe .mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.3px;
+      color: var(--muted);
+      opacity: 0.9;
+      user-select: none;
+    }
+    .vibe .badge {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+      background: conic-gradient(from 180deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-1));
+      box-shadow: 0 0 0 1px var(--stroke), 0 6px 16px rgba(0,0,0,0.25);
+    }
+    .vibe .toggle {
+      position: relative;
+      z-index: 3;
+      appearance: none;
+      border: 1px solid var(--stroke);
+      background: var(--glass);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      backdrop-filter: blur(12px) saturate(120%);
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+    .vibe .toggle:hover { transform: translateY(-1px); }
+    .vibe .toggle:active { transform: translateY(0); }
+    .vibe .toggle .dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent-2), transparent 70%), rgba(255,255,255,0.25);
+      box-shadow: 0 0 12px var(--accent-2);
+      vertical-align: -1px;
+    }
+
+    .vibe .canvas {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+    @media (max-width: 840px) {
+      .vibe .canvas { grid-template-columns: 1fr; gap: 16px; }
+    }
+
+    .vibe .card {
+      position: relative;
+      border-radius: 20px;
+      padding: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06)) padding-box;
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      transform-style: preserve-3d;
+      transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+      transition: transform 300ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms ease;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .vibe .card:hover {
+      box-shadow: 0 30px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.06) inset;
+    }
+    .vibe .shine {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(240px 240px at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.22), transparent 60%),
+        radial-gradient(120px 120px at calc(var(--mx,50%) + 40px) calc(var(--my,50%) + 30px), rgba(134,240,255,0.25), transparent 70%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      border-radius: inherit;
+      opacity: 0.55;
+      transition: opacity 240ms ease;
+    }
+    .vibe .card:focus-visible .shine,
+    .vibe .card:hover .shine { opacity: 0.85; }
+
+    .vibe h1 {
+      margin: 0 0 6px 0;
+      font-size: clamp(28px, 4.2vw, 46px);
+      line-height: 1.08;
+      letter-spacing: 0.2px;
+      color: var(--text);
+      text-shadow: 0 2px 14px rgba(0,0,0,0.35);
+    }
+    .vibe .sub {
+      margin: 0 0 16px 0;
+      font-size: clamp(14px, 1.6vw, 16px);
+      color: var(--muted);
+      opacity: 0.95;
+    }
+
+    .vibe .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0 18px 0;
+    }
+    .vibe .chip {
+      font-size: 12px;
+      color: var(--text);
+      opacity: 0.95;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+      border: 1px solid var(--stroke);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 6px 14px rgba(0,0,0,0.18);
+      backdrop-filter: blur(10px);
+    }
+
+    .vibe .cta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .vibe .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--stroke);
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06)) padding-box,
+        conic-gradient(from 210deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-1)) border-box;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.12);
+      transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+    }
+    .vibe .btn:hover { transform: translateY(-2px); filter: saturate(115%); }
+    .vibe .btn:active { transform: translateY(0); }
+    .vibe .btn .pulse {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent-1), transparent 70%), rgba(255,255,255,0.3);
+      box-shadow: 0 0 0 0 rgba(134,240,255,0.6);
+      animation: pulse 2.4s ease-out infinite;
+    }
+
+    .vibe .aside {
+      position: relative;
+      border-radius: 18px;
+      padding: 18px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+      box-shadow: 0 14px 38px rgba(0,0,0,0.35);
+      min-height: 140px;
+      overflow: hidden;
+    }
+    .vibe .quote {
+      margin: 0;
+      font-size: clamp(14px, 1.8vw, 18px);
+      color: var(--text);
+      line-height: 1.45;
+      opacity: 0.95;
+    }
+    .vibe .sig {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      opacity: 0.85;
+    }
+
+    .vibe .meta {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .vibe #last-updated {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--stroke);
+      backdrop-filter: blur(8px);
+      color: var(--muted);
+    }
+
+    /* Day theme */
+    .vibe[data-theme="day"] {
+      --bg-1: #ffffff;
+      --bg-2: #f2f6ff;
+      --bg-3: #e8f0ff;
+      --text: #0e1a2f;
+      --muted: #3a537e;
+      --accent-1: #0063ff;
+      --accent-2: #12c2a5;
+      --accent-3: #ff7ad6;
+      --glass: rgba(255,255,255,0.6);
+      --stroke: rgba(10,30,70,0.14);
+      --shadow: 0 16px 46px rgba(10,40,90,0.15);
+    }
+    .vibe[data-theme="day"] .bg::after { opacity: 0.10; }
+    .vibe[data-theme="day"] .toggle .dot { box-shadow: 0 0 8px var(--accent-1); }
+
+    /* Animations */
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0) scale(1); }
+      50% { transform: translateY(-10px) translateX(6px) scale(1.04); }
+      100% { transform: translateY(0) translateX(0) scale(1); }
+    }
+    @keyframes vibe-drift {
+      0% { transform: translate(0,0) rotate(0deg) scale(1); }
+      100% { transform: translate(-2%, 2%) rotate(2deg) scale(1.04); }
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(134,240,255,0.6); }
+      70% { box-shadow: 0 0 0 14px rgba(134,240,255,0); }
+      100% { box-shadow: 0 0 0 0 rgba(134,240,255,0); }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .vibe * { animation: none !important; transition: none !important; }
+    }
+  </style>
+
+  <div class="bg"></div>
+  <div class="orb orb1" aria-hidden="true"></div>
+  <div class="orb orb2" aria-hidden="true"></div>
+  <div class="orb orb3" aria-hidden="true"></div>
+
+  <div class="top">
+    <div class="mark" aria-label="Identity">
+      <span class="badge" aria-hidden="true"></span>
+      Serene Surface Kit
+    </div>
+    <button class="toggle" type="button" aria-pressed="false" title="Toggle day/night">
+      <span class="dot" aria-hidden="true"></span>
+      Toggle theme
+    </button>
+  </div>
+
+  <div class="canvas">
+    <section class="card" tabindex="0" aria-label="Interactive showcase panel">
+      <div class="shine" aria-hidden="true"></div>
+      <h1>Quiet Interfaces, Bold Feeling</h1>
+      <p class="sub">Glass layers, aurora motion, and human-friendly contrast—crafted for focus.</p>
+      <div class="chips" role="list">
+        <span class="chip" role="listitem">Glassmorphic</span>
+        <span class="chip" role="listitem">Aurora Gradient</span>
+        <span class="chip" role="listitem">Accessible</span>
+        <span class="chip" role="listitem">Micro‑motion</span>
+      </div>
+      <div class="cta">
+        <a href="#" class="btn" role="button" aria-label="Experience hover">
+          <span class="pulse" aria-hidden="true"></span>
+          Experience hover
+        </a>
+        <a href="#" class="btn" role="button" aria-label="Random shimmer">
+          <span aria-hidden="true" style="width:8px;height:8px;border-radius:50%;background: radial-gradient(circle at 30% 30%, var(--accent-3), transparent 70%), rgba(255,255,255,0.3);"></span>
+          Random shimmer
+        </a>
+      </div>
+      <div class="meta">
+        <span>Design is a gentle hum.</span>
+        <span id="last-updated">Last updated: 2025-12-04 23:27:43 EST</span>
+      </div>
+    </section>
+
+    <aside class="aside" aria-label="Quote">
+      <p class="quote">“Simplicity is about subtracting the obvious and adding the meaningful.”</p>
+      <div class="sig">— John Maeda</div>
+    </aside>
+  </div>
+
+  <script>
+    (function() {
+      const root = document.currentScript.closest('.vibe');
+      const card = root.querySelector('.card');
+      const toggle = root.querySelector('.toggle');
+      const lu = root.querySelector('#last-updated');
+
+      // Last updated in user's locale
+      const dt = new Date();
+      const opts = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+      lu.textContent = 'Last updated: ' + dt.toLocaleString([], opts);
+
+      // Theme persistence
+      const KEY = 'vibe-theme-1077';
+      const saved = localStorage.getItem(KEY);
+      if (saved === 'day' || saved === 'night') {
+        root.dataset.theme = saved;
+        toggle.setAttribute('aria-pressed', saved === 'day');
+      }
+      toggle.addEventListener('click', () => {
+        const next = root.dataset.theme === 'day' ? 'night' : 'day';
+        root.dataset.theme = next;
+        toggle.setAttribute('aria-pressed', next === 'day');
+        try { localStorage.setItem(KEY, next); } catch(e) {}
+      });
+
+      // Subtle 3D tilt with pointer position driven shine
+      const setTilt = (e) => {
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+        const rx = ((y - r.height / 2) / r.height) * -8;
+        const ry = ((x - r.width / 2) / r.width) * 8;
+        card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+        card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+        card.style.setProperty('--mx', x + 'px');
+        card.style.setProperty('--my', y + 'px');
+      };
+      card.addEventListener('pointermove', setTilt);
+      card.addEventListener('pointerleave', () => {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+
+      // Shimmer randomizer for the second button
+      const shimmerBtn = root.querySelectorAll('.btn')[1];
+      shimmerBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const hue1 = Math.floor(Math.random() * 360);
+        const hue2 = (hue1 + 120) % 360;
+        const hue3 = (hue1 + 240) % 360;
+        root.style.setProperty('--accent-1', `hsl(${hue1} 100% 65%)`);
+        root.style.setProperty('--accent-2', `hsl(${hue2} 80% 62%)`);
+        root.style.setProperty('--accent-3', `hsl(${hue3} 90% 70%)`);
+      }, { passive: false });
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
