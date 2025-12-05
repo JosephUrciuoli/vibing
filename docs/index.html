@@ -73,7 +73,421 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-12-05 08:31:01 EST</span></div>
+<div id="v1087" data-theme="dusk" data-motion="on">
+  <style>
+    #v1087 {
+      --radius: 22px;
+      --pad: 28px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --mx: 50%;
+      --my: 50%;
+      --tiltX: 0deg;
+      --tiltY: 0deg;
+
+      /* Dusk theme (default) */
+      --bg: #0b1020;
+      --fg: #e8f0ff;
+      --muted: rgba(232,240,255,0.72);
+      --chip: rgba(255,255,255,0.12);
+      --accent-1: #7cf7ff;
+      --accent-2: #b19cff;
+      --accent-3: #ff7df2;
+
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: radial-gradient(1200px circle at var(--mx) var(--my), rgba(255,255,255,0.09), transparent 60%) , linear-gradient(180deg, #0b1020 0%, #0a0d1a 100%);
+      color: var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      isolation: isolate;
+      min-height: 420px;
+      padding: var(--pad);
+    }
+
+    /* Dawn theme overrides */
+    #v1087[data-theme="dawn"] {
+      --bg: #0e1320;
+      --fg: #0b1220;
+      --muted: rgba(11,18,32,0.75);
+      --chip: rgba(11,18,32,0.12);
+      --accent-1: #ffd272;
+      --accent-2: #ff9bd0;
+      --accent-3: #7bdcff;
+      background: radial-gradient(1200px circle at var(--mx) var(--my), rgba(255,255,255,0.24), rgba(255,255,255,0) 60%), linear-gradient(180deg, #f8fbff 0%, #f2f6ff 100%);
+      color: var(--fg);
+      border-color: rgba(11,18,32,0.12);
+    }
+
+    /* Animated atmosphere */
+    #v1087 .field {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    #v1087 .field .halo {
+      position: absolute;
+      inset: -20%;
+      background:
+        conic-gradient(from 0deg,
+          transparent 0deg,
+          color-mix(in oklab, var(--accent-1), transparent 75%) 60deg,
+          transparent 120deg,
+          color-mix(in oklab, var(--accent-2), transparent 75%) 180deg,
+          transparent 240deg,
+          color-mix(in oklab, var(--accent-3), transparent 75%) 300deg,
+          transparent 360deg);
+      filter: blur(48px) saturate(120%);
+      opacity: 0.85;
+      animation: v1087-rotate 42s linear infinite;
+      transform-origin: 50% 50%;
+      mix-blend-mode: screen;
+    }
+    #v1087[data-theme="dawn"] .field .halo {
+      mix-blend-mode: multiply;
+      opacity: 0.65;
+      filter: blur(46px) saturate(110%);
+    }
+
+    #v1087 .field .blob {
+      position: absolute;
+      width: 42vmin; height: 42vmin;
+      min-width: 260px; min-height: 260px;
+      background: radial-gradient(closest-side, color-mix(in oklab, var(--accent-1), transparent 70%) 0%, transparent 100%);
+      border-radius: 50%;
+      filter: blur(22px);
+      opacity: 0.48;
+      animation: v1087-drift-1 28s ease-in-out infinite alternate;
+    }
+    #v1087 .field .blob.b2 {
+      background: radial-gradient(closest-side, color-mix(in oklab, var(--accent-2), transparent 68%) 0%, transparent 100%);
+      animation: v1087-drift-2 32s ease-in-out infinite alternate;
+    }
+    #v1087 .field .blob.b3 {
+      background: radial-gradient(closest-side, color-mix(in oklab, var(--accent-3), transparent 68%) 0%, transparent 100%);
+      animation: v1087-drift-3 36s ease-in-out infinite alternate;
+    }
+
+    #v1087 .grain {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient( 0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 2px ),
+                  repeating-linear-gradient( 90deg, rgba(0,0,0,0.03) 0 1px, transparent 1px 2px );
+      mix-blend-mode: overlay;
+      opacity: 0.35;
+      filter: contrast(110%) saturate(105%);
+      z-index: 0;
+    }
+
+    #v1087 .wrap {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 18px;
+      max-width: 1024px;
+      margin: 0 auto;
+    }
+
+    #v1087 .card {
+      border-radius: calc(var(--radius) - 6px);
+      background: color-mix(in oklab, rgba(8,12,24,0.65), transparent 0%);
+      backdrop-filter: blur(12px) saturate(110%);
+      -webkit-backdrop-filter: blur(12px) saturate(110%);
+      padding: 28px 26px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12), 0 12px 24px rgba(0,0,0,0.25);
+      transform: perspective(1000px) rotateX(var(--tiltY)) rotateY(var(--tiltX));
+      transition: transform 300ms ease, box-shadow 300ms ease, background 300ms ease;
+    }
+    #v1087[data-theme="dawn"] .card {
+      background: color-mix(in oklab, rgba(255,255,255,0.6), transparent 0%);
+      box-shadow: inset 0 0 0 1px rgba(11,18,32,0.12), 0 12px 24px rgba(11,18,32,0.15);
+    }
+
+    #v1087 .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, color-mix(in oklab, var(--accent-1), transparent 0%), color-mix(in oklab, var(--accent-2), transparent 0%));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    #v1087 h1 {
+      font-size: clamp(28px, 5vw, 46px);
+      line-height: 1.04;
+      margin: 0;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2) 50%, var(--accent-3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
+    }
+    #v1087 p.lede {
+      margin: 6px 0 14px 0;
+      color: var(--muted);
+      font-size: clamp(14px, 2.2vw, 18px);
+      letter-spacing: 0.02em;
+    }
+
+    #v1087 .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 2px 0 8px 0;
+    }
+    #v1087 .chip {
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+      box-shadow: inset 0 0 0 1px var(--chip);
+      color: var(--fg);
+      font-size: 12px;
+      letter-spacing: 0.03em;
+      opacity: 0.9;
+    }
+    #v1087[data-theme="dawn"] .chip {
+      background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.02));
+      box-shadow: inset 0 0 0 1px rgba(11,18,32,0.15);
+      color: #0b1220;
+      opacity: 0.8;
+    }
+
+    #v1087 .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 4px;
+    }
+    #v1087 .pill {
+      appearance: none;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #081122;
+      background: linear-gradient(180deg, color-mix(in oklab, var(--accent-1), white 40%), color-mix(in oklab, var(--accent-2), white 30%));
+      box-shadow: 0 6px 14px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.45);
+      cursor: pointer;
+      transition: transform 120ms ease, filter 200ms ease;
+      will-change: transform;
+    }
+    #v1087 .pill.secondary {
+      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
+      color: var(--fg);
+      box-shadow: inset 0 0 0 1px var(--chip);
+    }
+    #v1087 .pill:active { transform: translateY(1px) scale(0.99); }
+    #v1087 .pill:hover { filter: brightness(1.05) saturate(1.1); }
+
+    #v1087 .meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 12px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+    #v1087[data-theme="dawn"] .meta {
+      border-top-color: rgba(11,18,32,0.12);
+    }
+    #v1087 .pulse {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    #v1087 .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, white 0 20%, color-mix(in oklab, var(--accent-2), transparent 25%) 20% 60%, transparent 60%);
+      box-shadow: 0 0 10px color-mix(in oklab, var(--accent-2), transparent 60%);
+      animation: v1087-breathe 3s ease-in-out infinite;
+    }
+
+    #v1087 .timeline {
+      position: relative;
+      height: 3px;
+      flex: 1;
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    #v1087[data-theme="dawn"] .timeline { background: rgba(11,18,32,0.12); }
+    #v1087 .timeline .bar {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
+      transform-origin: 0% 50%;
+      animation: v1087-progress 9s ease-in-out infinite;
+    }
+
+    /* Animations */
+    @keyframes v1087-rotate {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes v1087-drift-1 {
+      0% { transform: translate(-10%, -12%) scale(1); }
+      100% { transform: translate(20%, -4%) scale(1.2); }
+    }
+    @keyframes v1087-drift-2 {
+      0% { transform: translate(50%, 12%) scale(1.05); }
+      100% { transform: translate(10%, -6%) scale(0.9); }
+    }
+    @keyframes v1087-drift-3 {
+      0% { transform: translate(-30%, 24%) scale(0.95); }
+      100% { transform: translate(30%, 18%) scale(1.25); }
+    }
+    @keyframes v1087-breathe {
+      0%, 100% { transform: scale(1); filter: saturate(1); }
+      50% { transform: scale(1.2); filter: saturate(1.3); }
+    }
+    @keyframes v1087-progress {
+      0% { transform: scaleX(0); }
+      50% { transform: scaleX(1); }
+      100% { transform: scaleX(0); }
+    }
+
+    /* Motion controls */
+    @media (prefers-reduced-motion: reduce) {
+      #v1087 { --tiltX: 0deg; --tiltY: 0deg; }
+      #v1087 .halo, #v1087 .blob, #v1087 .dot, #v1087 .timeline .bar { animation: none !important; }
+    }
+    #v1087[data-motion="off"] .halo,
+    #v1087[data-motion="off"] .blob,
+    #v1087[data-motion="off"] .dot,
+    #v1087[data-motion="off"] .timeline .bar {
+      animation-play-state: paused !important;
+    }
+    #v1087[data-motion="off"] .card {
+      transform: none !important;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 520px) {
+      #v1087 { padding: 22px; }
+      #v1087 .card { padding: 22px; }
+      #v1087 .controls { gap: 8px; }
+    }
+  </style>
+
+  <div class="field">
+    <div class="halo" aria-hidden="true"></div>
+    <div class="blob b1" style="left:-8%; top:-10%;" aria-hidden="true"></div>
+    <div class="blob b2" style="right:-10%; top:22%;" aria-hidden="true"></div>
+    <div class="blob b3" style="left:18%; bottom:-6%;" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+  </div>
+
+  <div class="wrap" role="region" aria-label="Aurora vignette">
+    <div class="card" id="v1087-card">
+      <h1>Aurora Studio</h1>
+      <p class="lede">A kinetic vignette—quiet, luminous, and a little bit alive.</p>
+
+      <div class="chips" aria-hidden="true">
+        <span class="chip">glass surface</span>
+        <span class="chip">aurora gradients</span>
+        <span class="chip">tactile tilt</span>
+        <span class="chip">gentle motion</span>
+      </div>
+
+      <div class="controls">
+        <button class="pill" id="v1087-theme" aria-pressed="false" title="Toggle theme">Switch to Dawn</button>
+        <button class="pill secondary" id="v1087-motion" aria-pressed="true" title="Toggle motion">Motion: On</button>
+      </div>
+
+      <div class="meta">
+        <div class="pulse"><span class="dot" aria-hidden="true"></span>Interactive canvas</div>
+        <div class="timeline" aria-hidden="true"><span class="bar"></span></div>
+        <span id="last-updated">Last updated: 2025-12-05 09:19:25 EST</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const root = document.getElementById('v1087');
+      const card = document.getElementById('v1087-card');
+      const themeBtn = document.getElementById('v1087-theme');
+      const motionBtn = document.getElementById('v1087-motion');
+      const updated = document.getElementById('last-updated');
+
+      // Set "last updated" nicely in the viewer's locale
+      try {
+        const dtf = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'medium', timeZoneName: 'short' });
+        updated.textContent = 'Last updated: ' + dtf.format(new Date());
+      } catch {
+        updated.textContent = 'Last updated: ' + new Date().toLocaleString();
+      }
+
+      // Respect reduced motion
+      const prefersReduce = matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduce) {
+        root.dataset.motion = 'off';
+        motionBtn.setAttribute('aria-pressed', 'false');
+        motionBtn.textContent = 'Motion: Off';
+      }
+
+      // Pointer parallax + light hotspot
+      let bounds = root.getBoundingClientRect();
+      function setBounds(){ bounds = root.getBoundingClientRect(); }
+      window.addEventListener('resize', setBounds);
+
+      function onPointerMove(e){
+        const x = (e.clientX - bounds.left) / bounds.width;
+        const y = (e.clientY - bounds.top) / bounds.height;
+        const percX = Math.max(0, Math.min(1, x)) * 100;
+        const percY = Math.max(0, Math.min(1, y)) * 100;
+        root.style.setProperty('--mx', percX + '%');
+        root.style.setProperty('--my', percY + '%');
+
+        // Tilt the card
+        const tiltMax = 7; // degrees
+        const tx = ((x - 0.5) * 2) * tiltMax;
+        const ty = ((0.5 - y) * 2) * tiltMax;
+        root.style.setProperty('--tiltX', tx.toFixed(2) + 'deg');
+        root.style.setProperty('--tiltY', ty.toFixed(2) + 'deg');
+      }
+      function onLeave(){
+        root.style.setProperty('--mx', '50%');
+        root.style.setProperty('--my', '50%');
+        root.style.setProperty('--tiltX', '0deg');
+        root.style.setProperty('--tiltY', '0deg');
+      }
+      root.addEventListener('pointermove', onPointerMove);
+      root.addEventListener('pointerleave', onLeave);
+
+      // Theme toggle
+      themeBtn.addEventListener('click', () => {
+        const isDawn = root.dataset.theme === 'dawn';
+        root.dataset.theme = isDawn ? 'dusk' : 'dawn';
+        themeBtn.textContent = isDawn ? 'Switch to Dawn' : 'Switch to Dusk';
+        themeBtn.setAttribute('aria-pressed', String(!isDawn));
+      });
+
+      // Motion toggle
+      motionBtn.addEventListener('click', () => {
+        const on = root.dataset.motion !== 'off';
+        root.dataset.motion = on ? 'off' : 'on';
+        motionBtn.textContent = 'Motion: ' + (on ? 'Off' : 'On');
+        motionBtn.setAttribute('aria-pressed', String(!on));
+      }, { passive: true });
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
