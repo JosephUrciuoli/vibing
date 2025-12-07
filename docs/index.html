@@ -75,296 +75,271 @@
       <section id="content">
 <style>
   /* Scoped to this snippet only */
-  #v1135 {
-    --hue: 268;
-    --ink: #e7ecff;
-    --ink-dim: #a6b5d8;
-    --bg-0: #070b14;
-    --bg-1: #0a1430;
-    --edge: #1c2744;
-    --speed: 1;
-    --glow: 10;
+  #v1136 {
+    --hue: 192;
+    --ink: #1c2436;
+    --ink-dim: #5a6378;
+    --paper-0: #f8fbff;
+    --paper-1: #eef3ff;
+    --edge: rgba(16, 24, 40, 0.08);
     --mx: .5;
     --my: .5;
-    --motion: 1;
+    --breeze: 1;
+    --bloom: 1.0;
     position: relative;
     isolation: isolate;
-    border-radius: 26px;
-    padding: clamp(20px, 4.8vw, 36px);
+    border-radius: 28px;
+    padding: clamp(22px, 5vw, 42px);
     color: var(--ink);
     background:
-      radial-gradient(1200px 900px at calc(var(--mx)*100%) calc(var(--my)*100%),
-        hsl(var(--hue) 95% 60% / .10), transparent 60%),
-      linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      radial-gradient(900px 600px at calc(var(--mx) * 100%) calc(var(--my) * 100%), hsl(var(--hue) 100% 80% / .25), transparent 55%),
+      linear-gradient(180deg, var(--paper-0), var(--paper-1));
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.06),
-      0 18px 60px rgba(0,0,0,.45),
-      0 2px 10px rgba(3,8,20,.45);
+      inset 0 1px 0 rgba(255,255,255,.85),
+      0 18px 60px rgba(20, 40, 90, .12),
+      0 3px 14px rgba(16, 30, 60, .10);
     overflow: hidden;
     font: 500 16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
   }
 
-  /* Subtle scanlines + vignette */
-  #v1135::before, #v1135::after {
+  /* Grain + soft edge */
+  #v1136::before,
+  #v1136::after {
     content: "";
     position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
   }
-  #v1135::before {
+  #v1136::before {
     background:
-      radial-gradient(100% 140% at 50% 100%, rgba(255,255,255,.08), transparent 55%),
-      radial-gradient(120% 90% at 10% 0%, rgba(255,255,255,.06), transparent 45%);
-    mix-blend-mode: overlay; opacity: .7;
+      radial-gradient(140% 120% at 50% 0%, rgba(255,255,255,.9), transparent 55%),
+      repeating-linear-gradient(0deg, rgba(0,0,0,.02) 0 2px, transparent 2px 4px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,.015) 0 3px, transparent 3px 6px);
+    mix-blend-mode: overlay; opacity: .55;
   }
-  #v1135::after {
+  #v1136::after {
     background:
-      radial-gradient(120% 120% at 50% 50%, transparent 60%, rgba(0,0,0,.28) 100%),
-      repeating-linear-gradient(0deg, transparent 0 10px, rgba(255,255,255,.03) 10px 11px);
-    opacity: .7;
+      radial-gradient(120% 120% at 50% 80%, transparent 65%, rgba(0,0,0,.06));
+    opacity: .6;
   }
 
-  /* Starfield canvas + auras */
-  #v1135 .starfield { position: absolute; inset: 0; z-index: 0; pointer-events: none; filter: saturate(1.1); }
-  #v1135 .auras { position: absolute; inset: -15%; z-index: 0; pointer-events: none; }
-  #v1135 .auras .a, #v1135 .auras .b {
-    position: absolute; border-radius: 50%;
-    filter: blur(40px) saturate(1.2);
-    opacity: .35; mix-blend-mode: screen;
-    background: radial-gradient(circle at 30% 30%, hsl(var(--hue) 95% 70% / .55), transparent 60%);
-    transform: translate3d(0,0,0);
-    animation: v1135-drift var(--dur, 40s) ease-in-out infinite alternate;
-    animation-play-state: var(--play, running);
-  }
-  #v1135 .auras .a { --dur: 42s; width: 60vmax; height: 60vmax; top: -10%; left: -12%; }
-  #v1135 .auras .b { --dur: 36s; width: 50vmax; height: 50vmax; bottom: -18%; right: -10%; }
-  @keyframes v1135-drift {
-    0%   { transform: translate3d(0,0,0) rotate(0deg) scale(1); }
-    100% { transform: translate3d(2%, -2%, 0) rotate(8deg) scale(1.05); }
+  /* Canvas garden */
+  #v1136 .field {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    filter: saturate(1.07) contrast(1.02);
   }
 
   /* Hero */
-  #v1135 .hero {
-    position: relative; z-index: 2;
-    max-width: 1100px; margin: 0 auto;
-    display: grid; gap: 16px; justify-items: center; text-align: center;
+  #v1136 .hero {
+    position: relative; z-index: 2; max-width: 1100px; margin: 0 auto;
+    display: grid; gap: 14px; justify-items: center; text-align: center;
   }
-  #v1135 .chip {
+  #v1136 .badge {
     display: inline-grid; place-items: center; width: fit-content;
     padding: 6px 12px; letter-spacing: .14em; text-transform: uppercase;
-    font-size: 12px; color: #d6def7;
-    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    font-size: 12px; color: #3a4661;
+    background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.45));
     border: 1px solid var(--edge); border-radius: 999px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 8px 18px rgba(0,0,0,.35);
-    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,1), 0 8px 18px rgba(0,0,0,.08);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   }
-  #v1135 h1 {
-    margin: 2px 0 0;
-    font-weight: 800; letter-spacing: -.015em; line-height: 1.02;
-    font-size: clamp(32px, 7.5vw, 72px);
-    background: conic-gradient(from 220deg, hsl(var(--hue) 90% 78%), hsl(calc(var(--hue)+40) 90% 72%), hsl(var(--hue) 90% 78%));
+  #v1136 h1 {
+    margin: 4px 0 0;
+    font-weight: 900; letter-spacing: -.02em; line-height: 1.02;
+    font-size: clamp(34px, 8vw, 82px);
+    background: linear-gradient(90deg,
+      hsl(var(--hue) 75% 35%),
+      hsl(calc(var(--hue)+30) 85% 45%),
+      hsl(calc(var(--hue)+60) 80% 42%));
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    text-shadow: 0 18px 60px rgba(100,120,255,.18);
+    text-shadow: 0 18px 60px rgba(80,120,255,.12);
   }
-  #v1135 .lede {
-    margin: 0; max-width: 72ch; color: var(--ink-dim);
-    font-weight: 400; letter-spacing: .01em;
-  }
-
-  /* Dial + orbits */
-  #v1135 .dial {
-    position: relative; width: min(76vw, 420px); aspect-ratio: 1; margin: 18px auto 6px;
-    display: grid; place-items: center;
-  }
-  #v1135 .rings { width: 100%; height: 100%; filter: drop-shadow(0 12px 28px rgba(70,90,200,.25)); }
-  #v1135 .rings .r {
-    fill: none;
-    stroke: hsl(var(--hue) 95% 75% / .28);
-    stroke-width: 1.6;
-    stroke-linecap: round;
-    stroke-dasharray: 6 10;
-    transform-origin: 50% 50%;
-    animation: v1135-spin var(--dur, 26s) linear infinite;
-    animation-play-state: var(--play, running);
-  }
-  #v1135 .rings .r1 { --dur: calc(26s / var(--speed)); stroke-dasharray: 10 14; }
-  #v1135 .rings .r2 { --dur: calc(38s / var(--speed)); stroke-dasharray: 4 8; opacity: .7; }
-  #v1135 .rings .r3 { --dur: calc(58s / var(--speed)); stroke-dasharray: 2 6; opacity: .5; }
-  @keyframes v1135-spin {
-    to { transform: rotate(360deg); }
+  #v1136 .lede {
+    margin: 0; max-width: 70ch; color: var(--ink-dim);
+    font-weight: 450; letter-spacing: .01em;
   }
 
-  #v1135 .orbit {
-    position: absolute; inset: 0; margin: auto; pointer-events: none;
-    animation: v1135-spin var(--odur, 30s) linear infinite;
-    animation-play-state: var(--play, running);
+  /* Cards row */
+  #v1136 .cards {
+    position: relative; z-index: 2; margin-top: 16px;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
+    max-width: 1040px; margin-left: auto; margin-right: auto;
   }
-  #v1135 .orbit i {
-    position: absolute; left: 50%; top: 50%;
-    width: var(--osz, 14px); height: var(--osz, 14px); border-radius: 50%;
-    transform: rotate(0deg) translateX(var(--rad)) translateY(0) translateZ(0);
-    background: radial-gradient(circle at 30% 30%, #fff, hsl(var(--hue) 90% 75%));
-    box-shadow:
-      0 0 calc(var(--glow) * 1px) hsl(var(--hue) 90% 70% / .75),
-      0 0 calc(var(--glow) * 2px) hsl(var(--hue) 95% 60% / .35);
-  }
-  #v1135 .o1 { --rad: calc(40% - 4px); --odur: calc(22s / var(--speed)); }
-  #v1135 .o1 i { --osz: 12px; }
-  #v1135 .o2 { --rad: calc(28% - 2px); --odur: calc(32s / var(--speed)); }
-  #v1135 .o2 i { --osz: 10px; }
-  #v1135 .o3 { --rad: calc(48% - 6px); --odur: calc(48s / var(--speed)); }
-  #v1135 .o3 i { --osz: 16px; }
-
-  /* Buttons */
-  #v1135 .actions {
-    margin-top: 6px; display: inline-flex; gap: 12px; align-items: center;
-  }
-  #v1135 .btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 10px 14px; border-radius: 12px; cursor: pointer;
+  #v1136 .card {
+    padding: 14px 16px; border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.65));
     border: 1px solid var(--edge);
-    background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-    color: var(--ink);
-    box-shadow: 0 10px 26px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.10);
-    transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
-    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 14px 30px rgba(40,60,100,.10), inset 0 1px 0 rgba(255,255,255,.9);
+    display: grid; gap: 8px; align-content: start;
+    transform: translateZ(0);
   }
-  #v1135 .btn:hover { transform: translateY(-2px); filter: saturate(1.08); }
-  #v1135 .btn:active { transform: translateY(0); }
-  #v1135 .btn.primary {
-    background: linear-gradient(135deg, hsl(var(--hue) 95% 62%), hsl(calc(var(--hue)+40) 85% 60%));
-    color: #081027; border-color: hsl(var(--hue) 65% 50% / .45);
-    box-shadow: 0 16px 36px hsl(var(--hue) 85% 50% / .30), inset 0 1px 0 rgba(255,255,255,.65);
+  #v1136 .card h3 {
+    margin: 0; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: #2d3b57;
   }
-  #v1135 .btn.primary svg { filter: drop-shadow(0 2px 8px rgba(0,0,0,.25)); }
+  #v1136 .pill {
+    display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px;
+    border-radius: 999px; font-size: 13px; color: var(--ink);
+    background: linear-gradient(90deg, rgba(255,255,255,.9), rgba(255,255,255,.7));
+    border: 1px solid var(--edge);
+  }
+  #v1136 .swatch {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: conic-gradient(from 180deg, hsl(var(--hue) 80% 50%), hsl(calc(var(--hue)+60) 80% 50%), hsl(var(--hue) 80% 50%));
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.06), 0 1px 4px rgba(0,0,0,.12);
+  }
 
-  /* Controls */
-  #v1135 .controls {
+  /* Controls + Buttons */
+  #v1136 .actions {
+    margin-top: 10px; display: inline-flex; gap: 12px; align-items: center; z-index: 2;
+  }
+  #v1136 .btn {
+    position: relative;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 11px 16px; border-radius: 14px; cursor: pointer;
+    border: 1px solid var(--edge);
+    background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.65));
+    color: var(--ink);
+    box-shadow: 0 12px 26px rgba(30,50,90,.14), inset 0 1px 0 rgba(255,255,255,.9);
+    transition: transform .18s ease, filter .2s ease, box-shadow .2s ease;
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  }
+  #v1136 .btn:hover { transform: translateY(-2px); filter: saturate(1.06); }
+  #v1136 .btn:active { transform: translateY(0); }
+  #v1136 .btn.primary {
+    background: linear-gradient(135deg, hsl(var(--hue) 85% 60%), hsl(calc(var(--hue)+40) 85% 55%));
+    color: #071428; border-color: hsl(var(--hue) 65% 50% / .35);
+    box-shadow: 0 18px 36px hsl(var(--hue) 85% 45% / .28), inset 0 1px 0 rgba(255,255,255,.85);
+  }
+  #v1136 .btn svg { filter: drop-shadow(0 1px 4px rgba(0,0,0,.12)); }
+
+  /* Control bar */
+  #v1136 .controls {
     position: relative; z-index: 2;
     margin: 18px auto 0; display: flex; flex-wrap: wrap; gap: 12px 14px; justify-content: center;
   }
-  #v1135 .ctrl, #v1135 .switch {
+  #v1136 .ctrl, #v1136 .switch {
     display: inline-flex; align-items: center; gap: 10px;
     padding: 8px 12px; border-radius: 12px;
-    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.6));
     border: 1px solid var(--edge);
-    box-shadow: 0 8px 20px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08);
-    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 10px 22px rgba(30,50,90,.12), inset 0 1px 0 rgba(255,255,255,.9);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   }
-  #v1135 .ctrl span, #v1135 .switch span { font-size: 13px; color: var(--ink-dim); }
-  #v1135 input[type="range"] { appearance: none; width: 180px; height: 24px; background: transparent; cursor: pointer; }
-  #v1135 input[type="range"]::-webkit-slider-runnable-track {
+  #v1136 .ctrl span, #v1136 .switch span { font-size: 13px; color: var(--ink-dim); }
+  #v1136 input[type="range"] { appearance: none; width: 190px; height: 24px; background: transparent; cursor: pointer; }
+  #v1136 input[type="range"]::-webkit-slider-runnable-track {
     height: 8px; border-radius: 999px;
     background: linear-gradient(90deg,
-      hsl(var(--hue) 85% 62% / .9), hsl(calc(var(--hue)+40) 85% 62% / .9));
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,.25), 0 6px 16px rgba(0,0,0,.35);
+      hsl(var(--hue) 80% 60% / .95), hsl(calc(var(--hue)+50) 80% 60% / .95));
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.06), 0 6px 16px rgba(30,50,90,.12);
   }
-  #v1135 input[type="range"]::-webkit-slider-thumb {
+  #v1136 input[type="range"]::-webkit-slider-thumb {
     appearance: none; width: 18px; height: 18px; margin-top: -5px; border-radius: 50%;
-    background: #0c1326; border: 2px solid hsl(var(--hue) 90% 70%);
-    box-shadow: 0 2px 8px rgba(0,0,0,.65), 0 0 0 3px hsl(var(--hue) 95% 70% / .25);
+    background: #ffffff; border: 2px solid hsl(var(--hue) 80% 60%);
+    box-shadow: 0 2px 8px rgba(0,0,0,.18), 0 0 0 4px hsl(var(--hue) 85% 60% / .20);
   }
 
-  #v1135 input[type="checkbox"] {
-    appearance: none; width: 44px; height: 26px; border-radius: 999px;
-    background: #131c36; border: 1px solid var(--edge); position: relative; cursor: pointer;
-    transition: background .25s ease, border-color .25s ease;
+  #v1136 input[type="checkbox"] {
+    appearance: none; width: 46px; height: 28px; border-radius: 999px;
+    background: #e9eefc; border: 1px solid var(--edge); position: relative; cursor: pointer;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
   }
-  #v1135 input[type="checkbox"]::after {
-    content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #fff, #cfe1ff);
-    box-shadow: 0 2px 8px rgba(0,0,0,.6);
+  #v1136 input[type="checkbox"]::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, #eaf2ff);
+    box-shadow: 0 2px 8px rgba(0,0,0,.18);
     transition: transform .25s ease;
   }
-  #v1135 input[type="checkbox"]:checked {
-    background: linear-gradient(90deg, hsl(var(--hue) 95% 60%), hsl(calc(var(--hue)+40) 85% 56%));
+  #v1136 input[type="checkbox"]:checked {
+    background: linear-gradient(90deg, hsl(var(--hue) 85% 60%), hsl(calc(var(--hue)+40) 80% 56%));
     border-color: transparent;
   }
-  #v1135 input[type="checkbox"]:checked::after { transform: translateX(18px); }
+  #v1136 input[type="checkbox"]:checked::after { transform: translateX(18px); }
 
   /* Meta */
-  #v1135 .meta {
-    position: relative; z-index: 2; margin-top: 18px; padding-top: 14px;
+  #v1136 .meta {
+    position: relative; z-index: 2; margin-top: 20px; padding-top: 14px;
     border-top: 1px solid var(--edge); display: flex; justify-content: space-between; align-items: center;
     gap: 12px; color: var(--ink-dim); font-size: 13px;
   }
-  #v1135 .hints { display: flex; gap: 10px; flex-wrap: wrap; }
-  #v1135 .hint {
+  #v1136 .hints { display: flex; gap: 10px; flex-wrap: wrap; }
+  #v1136 .hint {
     padding: 6px 10px; border-radius: 999px;
-    background: rgba(255,255,255,.05);
+    background: rgba(255,255,255,.8);
     border: 1px solid var(--edge);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.95);
   }
 
-  /* States */
-  #v1135.calm { --motion: 0; }
-  #v1135.calm .rings .r, #v1135.calm .orbit, #v1135.calm .auras .a, #v1135.calm .auras .b { animation-play-state: paused; }
-  @media (prefers-reduced-motion: reduce) {
-    #v1135 { --motion: 0; }
-    #v1135 .rings .r, #v1135 .orbit, #v1135 .auras .a, #v1135 .auras .b { animation: none; }
-  }
+  /* Motion-reduction state */
+  #v1136.calm .field { filter: saturate(.95) contrast(1); }
 
   /* Responsiveness */
+  @media (max-width: 860px) {
+    #v1136 .cards { grid-template-columns: 1fr; }
+  }
   @media (max-width: 560px) {
-    #v1135 .controls input[type="range"] { width: 140px; }
-    #v1135 .meta { flex-direction: column; align-items: flex-start; }
+    #v1136 .controls input[type="range"] { width: 150px; }
+    #v1136 .meta { flex-direction: column; align-items: flex-start; }
   }
 </style>
 
-<div id="v1135" aria-label="Midnight Observatory">
-  <canvas class="starfield" aria-hidden="true"></canvas>
-  <div class="auras" aria-hidden="true">
-    <span class="a"></span>
-    <span class="b"></span>
-  </div>
+<div id="v1136" aria-label="Daybreak Garden">
+  <canvas class="field" aria-hidden="true"></canvas>
 
   <section class="hero">
-    <span class="chip">Iteration 1135 · Midnight</span>
-    <h1>Midnight Observatory</h1>
-    <p class="lede">Quiet neon in a velvet sky. Glide your cursor—constellations wake.</p>
+    <span class="badge">Iteration 1136 · Daybreak</span>
+    <h1>Daybreak Garden</h1>
+    <p class="lede">A calm bloom in the morning air. Move your cursor—petals follow the breeze.</p>
 
-    <div class="dial" aria-hidden="true">
-      <svg class="rings" viewBox="0 0 240 240">
-        <circle class="r r1" cx="120" cy="120" r="96"/>
-        <circle class="r r2" cx="120" cy="120" r="72"/>
-        <circle class="r r3" cx="120" cy="120" r="52"/>
-      </svg>
-      <div class="orbit o1"><i></i></div>
-      <div class="orbit o2"><i></i></div>
-      <div class="orbit o3"><i></i></div>
-    </div>
-
-    <div class="actions" role="group" aria-label="Actions">
-      <button class="btn primary" id="launchBtn" type="button" aria-label="Launch">
+    <div class="actions" role="group" aria-label="Garden actions">
+      <button class="btn primary" id="plantBtn" type="button" aria-label="Plant seed">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M5 19l6-6" stroke="#06122e" stroke-width="1.7" stroke-linecap="round"/>
-          <path d="M10 14l7-9 2 2-9 7z" fill="#06122e" />
-          <path d="M5 19l4-1-3-3-1 4z" fill="#06122e" />
+          <path d="M5 15c3 2 6 2 9-1 2-2 4-6 5-9" stroke="#071428" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M7 17c-1 3-1 5-1 5h12s0-3-2-6" stroke="#071428" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="18" cy="5" r="2" fill="#071428"/>
         </svg>
-        Launch
+        Plant seed
       </button>
-      <button class="btn" id="randomizeBtn" type="button" aria-label="Randomize sky">
+      <button class="btn" id="paletteBtn" type="button" aria-label="Randomize palette">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M4 7h6l-1.5-2M20 17h-6l1.5 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
           <path d="M6 16c4-5 8-3 12-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
         </svg>
-        Randomize
+        Palette
       </button>
     </div>
   </section>
 
+  <div class="cards" aria-hidden="true">
+    <div class="card">
+      <h3>Palette</h3>
+      <span class="pill"><span class="swatch" aria-hidden="true"></span> Serene Spectrum</span>
+      <span class="pill">Soft contrast</span>
+    </div>
+    <div class="card">
+      <h3>Breeze</h3>
+      <span class="pill">Natural drift</span>
+      <span class="pill">Pointer currents</span>
+    </div>
+    <div class="card">
+      <h3>Bloom</h3>
+      <span class="pill">Petal density</span>
+      <span class="pill">Gentle glow</span>
+    </div>
+  </div>
+
   <div class="controls" role="group" aria-label="Appearance controls">
     <label class="ctrl" for="tint">
       <span>Tint</span>
-      <input id="tint" type="range" min="0" max="360" value="268" aria-label="Accent hue">
+      <input id="tint" type="range" min="0" max="360" value="192" aria-label="Accent hue">
     </label>
-    <label class="ctrl" for="speed">
-      <span>Orbit</span>
-      <input id="speed" type="range" min="0" max="2.5" step="0.1" value="1.0" aria-label="Orbit speed">
+    <label class="ctrl" for="breeze">
+      <span>Breeze</span>
+      <input id="breeze" type="range" min="0" max="2.5" step="0.05" value="1" aria-label="Breeze strength">
     </label>
-    <label class="ctrl" for="glow">
-      <span>Glow</span>
-      <input id="glow" type="range" min="0" max="20" step="1" value="10" aria-label="Glow strength">
+    <label class="ctrl" for="bloom">
+      <span>Bloom</span>
+      <input id="bloom" type="range" min="0.6" max="1.8" step="0.05" value="1.0" aria-label="Petal size">
     </label>
-    <label class="switch" for="zen" title="Reduce motion & bloom">
+    <label class="switch" for="zen" title="Reduce motion">
       <input id="zen" type="checkbox">
       <span>Zen</span>
     </label>
@@ -372,221 +347,284 @@
 
   <div class="meta">
     <div class="hints" aria-hidden="true">
-      <span class="hint">Drag to steer the sky</span>
-      <span class="hint">Tint shifts the nebula</span>
+      <span class="hint">Click to plant a bloom</span>
+      <span class="hint">Drag to steer the breeze</span>
       <span class="hint">Zen pauses motion</span>
     </div>
-    <span id="last-updated">Last updated: 2025-12-07 13:23:55 EST</span>
+    <span id="last-updated">Last updated: 2025-12-07 14:13:49 EST</span>
   </div>
 </div>
 
 <script>
-  (() => {
-    const root = document.getElementById('v1135');
-    if (!root) return;
+(() => {
+  const root = document.getElementById('v1136');
+  if (!root) return;
 
-    // Last updated
-    const lu = root.querySelector('#last-updated');
-    const now = new Date();
-    try {
-      const opts = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-      lu.textContent = 'Last updated: ' + now.toLocaleString(undefined, opts);
-    } catch {
-      lu.textContent = 'Last updated: ' + now.toISOString();
-    }
+  // Last updated
+  const lu = root.querySelector('#last-updated');
+  const now = new Date();
+  try {
+    const opts = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+    lu.textContent = 'Last updated: ' + now.toLocaleString(undefined, opts);
+  } catch {
+    lu.textContent = 'Last updated: ' + now.toISOString();
+  }
 
-    // Controls
-    const tint = root.querySelector('#tint');
-    const speed = root.querySelector('#speed');
-    const glow = root.querySelector('#glow');
-    const zen = root.querySelector('#zen');
+  // Elements
+  const canvas = root.querySelector('canvas.field');
+  const ctx = canvas.getContext('2d');
 
-    const applyHue = (h) => {
-      root.style.setProperty('--hue', h);
-      // Repaint starfield with new hue next frame
-      hue = Number(h);
+  const tint = root.querySelector('#tint');
+  const breeze = root.querySelector('#breeze');
+  const bloom = root.querySelector('#bloom');
+  const zen = root.querySelector('#zen');
+  const plantBtn = root.querySelector('#plantBtn');
+  const paletteBtn = root.querySelector('#paletteBtn');
+
+  // State
+  let dpr = Math.max(1, devicePixelRatio || 1);
+  let petals = [];
+  let raf = null;
+  let t = 0;
+  let mx = 0.5, my = 0.5;
+  let pointer = { x: null, y: null, down: false };
+  let H = Number(getComputedStyle(root).getPropertyValue('--hue')) || 192;
+  let BREEZE = parseFloat(breeze.value || '1');
+  let BLOOM = parseFloat(bloom.value || '1');
+  const reduced = matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const setHue = (h) => {
+    H = Number(h);
+    root.style.setProperty('--hue', String(H));
+  };
+  setHue(tint.value);
+
+  // Resize
+  function resize() {
+    const r = root.getBoundingClientRect();
+    dpr = Math.max(1, devicePixelRatio || 1);
+    canvas.width = Math.max(1, Math.floor(r.width * dpr));
+    canvas.height = Math.max(1, Math.floor(r.height * dpr));
+    canvas.style.width = r.width + 'px';
+    canvas.style.height = r.height + 'px';
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.scale(dpr, dpr);
+    seedPetals();
+    draw(true);
+  }
+
+  // Utility
+  const rand = (a=0, b=1) => a + Math.random() * (b - a);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  // Petals
+  function seedPetals() {
+    const area = canvas.width * canvas.height / (dpr * dpr);
+    const base = Math.round(clamp(area / 14000, 60, 180));
+    petals = Array.from({ length: base }, () => makePetal(rand(0, canvas.clientWidth), rand(0, canvas.clientHeight)));
+  }
+  function makePetal(x, y) {
+    const hueJitter = rand(-18, 18);
+    const s = rand(6, 14) * BLOOM;
+    return {
+      x, y,
+      vx: rand(-0.15, 0.15),
+      vy: rand(-0.25, -0.05),
+      r: s,
+      rot: rand(0, Math.PI * 2),
+      spin: rand(-0.02, 0.02),
+      hue: (H + hueJitter + 360) % 360,
+      life: rand(0.4, 1),
+      seed: rand(0, 1000)
     };
-    applyHue(tint.value);
+  }
 
-    tint.addEventListener('input', (e) => applyHue(e.target.value));
-    speed.addEventListener('input', (e) => {
-      const val = Math.max(0.01, parseFloat(e.target.value || '1'));
-      root.style.setProperty('--speed', String(val));
-      orbitSpeed = val;
-    });
-    glow.addEventListener('input', (e) => {
-      const val = parseFloat(e.target.value || '10');
-      root.style.setProperty('--glow', String(val));
-      starGlow = val;
-    });
+  function addBurst(x, y, n=12) {
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2 + rand(-0.15, 0.15);
+      const m = rand(0.6, 1.2);
+      const p = makePetal(x, y);
+      p.vx = Math.cos(a) * 0.6 * m;
+      p.vy = Math.sin(a) * 0.6 * m;
+      p.r *= rand(1, 1.6);
+      p.life = 1;
+      p.hue = (H + rand(-30, 30) + 360) % 360;
+      petals.push(p);
+    }
+    if (petals.length > 240) petals.splice(0, petals.length - 240);
+  }
 
-    const syncZen = () => {
-      const on = !!zen.checked;
-      root.classList.toggle('calm', on);
-      if (on || reduced) {
-        root.style.setProperty('--speed', '0.0001'); // freeze CSS animations
-        stopLoop();
-        drawStars(true);
-      } else {
-        root.style.setProperty('--speed', String(orbitSpeed));
-        startLoop();
+  // Drawing
+  function draw(staticOnly=false) {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    ctx.clearRect(0,0,w,h);
+
+    for (let i = 0; i < petals.length; i++) {
+      const p = petals[i];
+
+      // Shadow/glow
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      const g = ctx.createRadialGradient(0, 0, 0, 0, 0, p.r * 2.5);
+      g.addColorStop(0, `hsla(${p.hue}, 85%, 60%, 0.95)`);
+      g.addColorStop(1, `hsla(${p.hue}, 95%, 65%, 0.10)`);
+      ctx.shadowColor = `hsla(${p.hue}, 90%, 55%, 0.35)`;
+      ctx.shadowBlur = 14 * BLOOM;
+
+      // Petal shape
+      ctx.beginPath();
+      const w2 = p.r * 0.7, h2 = p.r * 1.6;
+      ctx.moveTo(0, -h2);
+      ctx.quadraticCurveTo(w2, -h2 * 0.2, 0, h2);
+      ctx.quadraticCurveTo(-w2, -h2 * 0.2, 0, -h2);
+      ctx.closePath();
+      ctx.fillStyle = g;
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.shadowBlur = 0;
+  }
+
+  // Physics
+  function step(dt) {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    const time = t / 1000;
+    const flowA = 0.9, flowB = 1.1;
+
+    for (let i = 0; i < petals.length; i++) {
+      const p = petals[i];
+
+      // Gentle flow field
+      const fx = Math.sin((p.y * 0.012) + time * flowA) * 0.25;
+      const fy = Math.cos((p.x * 0.009) - time * flowB) * 0.18;
+      p.vx += fx * 0.03 * BREEZE;
+      p.vy += (fy - 0.04) * 0.03 * BREEZE;
+
+      // Pointer breeze
+      if (pointer.x != null) {
+        const dx = p.x - pointer.x;
+        const dy = p.y - pointer.y;
+        const d2 = dx*dx + dy*dy + 1;
+        const f = pointer.down ? 60 : 18;
+        p.vx += (dx / d2) * f;
+        p.vy += (dy / d2) * f;
       }
-    };
-    zen.addEventListener('change', syncZen);
 
-    // A11y: reduced motion
-    const reduced = matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // Integrate
+      p.x += p.vx * dt * 0.06;
+      p.y += p.vy * dt * 0.06;
+      p.rot += p.spin * dt * 0.06;
 
-    // Pointer parallax
-    let mx = 0.5, my = 0.45;
-    const setMM = (x, y) => {
-      const r = root.getBoundingClientRect();
-      const nx = Math.max(0, Math.min(1, (x - r.left) / r.width));
-      const ny = Math.max(0, Math.min(1, (y - r.top) / r.height));
-      mx = nx; my = ny;
-      root.style.setProperty('--mx', nx.toFixed(3));
-      root.style.setProperty('--my', ny.toFixed(3));
-    };
-    const seed = () => {
-      const r = root.getBoundingClientRect();
-      setMM(r.left + r.width * .55, r.top + r.height * .42);
-    };
-    seed();
-    root.addEventListener('pointermove', (e) => {
-      if (reduced) return;
-      setMM(e.clientX, e.clientY);
-      px = ((mx - 0.5) * 2);
-      py = ((my - 0.5) * 2);
-    });
-    addEventListener('resize', () => {
-      resizeCanvas();
-      seed();
-    });
+      // Damping
+      p.vx *= 0.985;
+      p.vy *= 0.985;
 
-    // Starfield
-    const canvas = root.querySelector('canvas.starfield');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-    let dpr = Math.max(1, devicePixelRatio || 1);
-    let hue = Number(getComputedStyle(root).getPropertyValue('--hue')) || 268;
-    let orbitSpeed = parseFloat(speed.value || '1');
-    let starGlow = parseFloat(glow.value || '10');
-    let raf = null;
-    let px = 0, py = 0;
-
-    function makeStars() {
-      const w = canvas.width, h = canvas.height;
-      const density = Math.max(80, Math.min(260, Math.floor(w * h / (12000 * dpr))));
-      stars = Array.from({ length: density }, () => {
-        const z = Math.random(); // depth 0..1
-        return {
-          x: Math.random() * w,
-          y: Math.random() * h,
-          z,
-          r: 0.6 + (1.8 - 0.6) * (1 - z*z),
-          vx: 0.02 + 0.10 * (1 - z),
-          seed: Math.random() * Math.PI * 2
-        };
-      });
+      // Wrap & fade
+      if (p.y < -20) { p.y = h + 20; p.x = rand(-20, w + 20); }
+      if (p.x < -20) p.x = w + 20;
+      if (p.x > w + 20) p.x = -20;
     }
-    function resizeCanvas() {
-      const r = root.getBoundingClientRect();
-      dpr = Math.max(1, devicePixelRatio || 1);
-      canvas.width = Math.max(1, Math.floor(r.width * dpr));
-      canvas.height = Math.max(1, Math.floor(r.height * dpr));
-      canvas.style.width = r.width + 'px';
-      canvas.style.height = r.height + 'px';
-      ctx.setTransform(1,0,0,1,0,0);
-      ctx.scale(dpr, dpr);
-      makeStars();
-      drawStars(true);
-    }
-    function drawStars(staticOnly=false) {
-      const w = canvas.clientWidth, h = canvas.clientHeight;
-      ctx.clearRect(0,0,w,h);
-      const accent = `hsla(${hue}, 90%, 75%, `;
-      const baseAlpha = 0.75;
-      for (let i=0; i<stars.length; i++) {
-        const s = stars[i];
-        const twinkle = staticOnly ? 1 : 0.85 + Math.sin(s.seed + performance.now()/1000 * (0.6 + s.z)) * 0.15;
-        ctx.beginPath();
-        const gx = s.x / dpr, gy = s.y / dpr;
-        const r = s.r * twinkle;
-        const grad = ctx.createRadialGradient(gx, gy, 0, gx, gy, r * 3);
-        grad.addColorStop(0, 'rgba(255,255,255,0.95)');
-        grad.addColorStop(1, accent + '0.2)');
-        ctx.fillStyle = grad;
-        ctx.shadowColor = `hsla(${hue}, 95%, 65%, 0.7)`;
-        ctx.shadowBlur = starGlow;
-        ctx.arc(gx, gy, r, 0, Math.PI*2);
-        ctx.fill();
-      }
-      ctx.shadowBlur = 0;
-    }
-    function step(dt) {
-      const w = canvas.width, h = canvas.height;
-      const driftX = (px || 0) * 0.08;
-      const driftY = (py || 0) * 0.06;
-      for (let i=0; i<stars.length; i++) {
-        const s = stars[i];
-        s.x += (s.vx * dt * orbitSpeed) + driftX;
-        s.y += Math.sin(s.seed + s.x * 0.001) * 0.05 + driftY * 0.2;
-        if (s.x > w + 10) s.x = -10;
-        if (s.y > h + 10) s.y = -10;
-        if (s.y < -10) s.y = h + 10;
-      }
-    }
-    const loop = (t) => {
-      if (!loop._last) loop._last = t;
-      const dt = Math.min(60, t - loop._last);
-      loop._last = t;
-      step(dt);
-      drawStars(false);
-      raf = requestAnimationFrame(loop);
-    };
-    function startLoop() {
-      if (raf) return;
-      loop._last = 0;
-      raf = requestAnimationFrame(loop);
-    }
-    function stopLoop() {
-      if (raf) cancelAnimationFrame(raf);
-      raf = null;
-    }
+  }
 
-    // Initial canvas setup
-    resizeCanvas();
-    if (!reduced) startLoop();
-    if (reduced) root.classList.add('calm');
-    syncZen();
+  const loop = (ts) => {
+    if (!loop._last) loop._last = ts;
+    const dt = Math.min(60, ts - loop._last);
+    loop._last = ts;
+    t += dt;
+    step(dt);
+    draw(false);
+    raf = requestAnimationFrame(loop);
+  };
 
-    // Buttons
-    const launchBtn = root.querySelector('#launchBtn');
-    launchBtn?.addEventListener('click', () => {
-      launchBtn.animate(
-        [{ transform: 'translateY(0) scale(1)' }, { transform: 'translateY(-2px) scale(1.02)' }, { transform: 'translateY(0) scale(1)' }],
-        { duration: 320, easing: 'cubic-bezier(.2,.9,.2,1)' }
-      );
-      // A small celebratory pulse on the orbs
-      root.querySelectorAll('.orbit i').forEach(i => {
-        i.animate(
-          [{ transform: i.style.transform || '', boxShadow: getComputedStyle(i).boxShadow },
-           { transform: (i.style.transform || '') + ' scale(1.15)', boxShadow: '0 0 24px hsl(var(--hue) 95% 65% / .9)' },
-           { transform: i.style.transform || '', boxShadow: getComputedStyle(i).boxShadow }],
-          { duration: 420, easing: 'cubic-bezier(.2,.8,.2,1)' }
-        );
-      });
-    });
+  function start() { if (raf) return; loop._last = 0; raf = requestAnimationFrame(loop); }
+  function stop() { if (raf) cancelAnimationFrame(raf); raf = null; }
 
-    const rnd = root.querySelector('#randomizeBtn');
-    rnd?.addEventListener('click', () => {
-      const nh = Math.floor(Math.random() * 360);
-      tint.value = nh;
-      applyHue(nh);
-      rnd.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-360deg)' }], { duration: 420, easing: 'ease-out' });
-      drawStars(true);
-    });
-  })();
+  // Pointer interactions
+  function setMM(x, y) {
+    const r = root.getBoundingClientRect();
+    const nx = clamp((x - r.left) / r.width, 0, 1);
+    const ny = clamp((y - r.top) / r.height, 0, 1);
+    mx = nx; my = ny;
+    root.style.setProperty('--mx', nx.toFixed(3));
+    root.style.setProperty('--my', ny.toFixed(3));
+  }
+  root.addEventListener('pointermove', (e) => {
+    if (reduced) return;
+    setMM(e.clientX, e.clientY);
+    const rect = root.getBoundingClientRect();
+    pointer.x = e.clientX - rect.left;
+    pointer.y = e.clientY - rect.top;
+  });
+  root.addEventListener('pointerleave', () => {
+    pointer.x = pointer.y = null;
+  });
+  root.addEventListener('pointerdown', (e) => {
+    pointer.down = true;
+    const rect = root.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    addBurst(x, y, 18);
+  });
+  addEventListener('pointerup', () => { pointer.down = false; });
+
+  // Controls
+  tint.addEventListener('input', (e) => setHue(e.target.value));
+  breeze.addEventListener('input', (e) => {
+    BREEZE = parseFloat(e.target.value || '1');
+    root.style.setProperty('--breeze', String(BREEZE));
+  });
+  bloom.addEventListener('input', (e) => {
+    BLOOM = parseFloat(e.target.value || '1');
+    root.style.setProperty('--bloom', String(BLOOM));
+    // scale all petals softly
+    petals.forEach(p => p.r = clamp(p.r * BLOOM, 4, 28));
+    draw(true);
+  });
+
+  function syncZen() {
+    const on = !!zen.checked || reduced;
+    root.classList.toggle('calm', on);
+    if (on) { stop(); draw(true); } else { start(); }
+  }
+  zen.addEventListener('change', syncZen);
+
+  // Buttons
+  plantBtn?.addEventListener('click', () => {
+    plantBtn.animate(
+      [{ transform: 'translateY(0) scale(1)' }, { transform: 'translateY(-2px) scale(1.03)' }, { transform: 'translateY(0) scale(1)' }],
+      { duration: 320, easing: 'cubic-bezier(.2,.9,.2,1)' }
+    );
+    const r = root.getBoundingClientRect();
+    const x = pointer.x ?? r.width * 0.5;
+    const y = pointer.y ?? r.height * 0.6;
+    addBurst(x, y, 24);
+    draw(false);
+  });
+
+  paletteBtn?.addEventListener('click', () => {
+    const nh = Math.floor(Math.random() * 360);
+    tint.value = nh;
+    setHue(nh);
+    paletteBtn.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-360deg)' }], { duration: 420, easing: 'ease-out' });
+    // gently recolor existing petals
+    petals.forEach(p => p.hue = (nh + rand(-24, 24) + 360) % 360);
+    draw(true);
+  });
+
+  // Init
+  const initMM = () => {
+    const r = root.getBoundingClientRect();
+    setMM(r.left + r.width * .55, r.top + r.height * .38);
+  };
+  addEventListener('resize', () => { resize(); initMM(); });
+  resize();
+  initMM();
+
+  if (!reduced) start();
+  if (reduced) root.classList.add('calm');
+  syncZen();
+})();
 </script>
       </section>
       <!-- END_EDITABLE -->
