@@ -73,7 +73,389 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-12-08 09:20:26 EST</span></div>
+<section class="vibe1153" data-theme="dusk" aria-label="Ambient Interface">
+  <style>
+    .vibe1153 {
+      --base-1: #0b1020;
+      --base-2: #0e1430;
+      --ink: #e8f0ff;
+      --muted: #b6c7ff;
+      --ring: rgba(255,255,255,0.18);
+      --glass: rgba(255,255,255,0.06);
+      --shadow: 0 20px 40px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.07);
+      --mx: 50%;
+      --my: 50%;
+      --accent: #9ac0ff;
+      --t1: #6e8cff; --t2: #a076ff; --t3: #ff8ac2;
+      position: relative;
+      isolation: isolate;
+      color: var(--ink);
+      padding: clamp(18px, 3.5vw, 36px);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: radial-gradient(1200px 900px at var(--mx) var(--my), rgba(255,255,255,0.05), transparent 42%), radial-gradient(800px 600px at 20% -10%, rgba(255,255,255,0.04), transparent 60%), linear-gradient(180deg, var(--base-2), var(--base-1) 60%, #0a0f1c);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.04);
+      overflow: hidden;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    /* Themes */
+    .vibe1153[data-theme="dawn"] { --accent:#ffb074; --t1:#ffb074; --t2:#ff7ab6; --t3:#8acaff; }
+    .vibe1153[data-theme="noon"] { --accent:#78f0d0; --t1:#6ae8ff; --t2:#aefb6e; --t3:#f7f57a; }
+    .vibe1153[data-theme="dusk"] { --accent:#b09bff; --t1:#6e8cff; --t2:#a076ff; --t3:#ff8ac2; }
+    .vibe1153[data-theme="night"] { --accent:#86d3ff; --t1:#5dd4ff; --t2:#7ee0ff; --t3:#bdb4ff; }
+
+    /* Ambient orbs and grain */
+    .vibe1153 .bg {
+      position: absolute; inset: -20%;
+      z-index: -1;
+      filter: saturate(120%);
+      pointer-events: none;
+    }
+    .vibe1153 .orb {
+      position: absolute;
+      width: 45vmax; height: 45vmax;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.26;
+      transform: translate3d(0,0,0);
+      mix-blend-mode: screen;
+      animation: drift 18s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+    .vibe1153 .o1 { background: radial-gradient(circle at 30% 30%, var(--t1), transparent 60%); top: -10%; left: -10%; animation-duration: 22s;}
+    .vibe1153 .o2 { background: radial-gradient(circle at 70% 70%, var(--t2), transparent 60%); bottom: -10%; right: -8%; animation-duration: 26s;}
+    .vibe1153 .o3 { background: radial-gradient(circle at 50% 50%, var(--t3), transparent 60%); top: 20%; right: 30%; opacity: 0.18; animation-duration: 28s;}
+    @keyframes drift { 
+      0% { transform: translate(-4%, 0) scale(1); }
+      100% { transform: translate(4%, 2%) scale(1.08); }
+    }
+    .vibe1153 .grain {
+      position: absolute; inset: -50%;
+      background-image:
+        radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+      background-size: 3px 3px, 7px 7px;
+      mix-blend-mode: overlay;
+      opacity: 0.5;
+      animation: grainMove 8s steps(60) infinite;
+    }
+    @keyframes grainMove {
+      0% { transform: translate(0,0) }
+      100% { transform: translate(12px, -8px) }
+    }
+
+    /* Hero card with tilt */
+    .vibe1153 .hero {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--ring);
+      box-shadow: var(--shadow);
+      border-radius: 20px;
+      padding: clamp(18px, 3.5vw, 32px);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 300ms cubic-bezier(.2,.7,.2,1), box-shadow 300ms;
+    }
+    .vibe1153 .hero::after {
+      content: "";
+      position: absolute; inset: -1px;
+      background: radial-gradient(240px 180px at var(--mx) var(--my), rgba(255,255,255,0.12), transparent 60%);
+      pointer-events: none;
+    }
+    .vibe1153 h1 {
+      margin: 0 0 6px 0;
+      letter-spacing: -0.02em;
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 700;
+      line-height: 1.05;
+    }
+    .vibe1153 .subtitle {
+      margin: 0 0 18px 0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.8vw, 18px);
+    }
+
+    /* Theme controls */
+    .vibe1153 .controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      padding: 4px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--ring);
+      border-radius: 999px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15);
+    }
+    .vibe1153 .controls input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .vibe1153 .controls label {
+      position: relative;
+      cursor: pointer;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: var(--ink);
+      opacity: 0.85;
+      border-radius: 999px;
+      transition: color 200ms, opacity 200ms;
+      outline: none;
+      user-select: none;
+    }
+    .vibe1153 .controls label:focus-visible {
+      box-shadow: 0 0 0 2px #000, 0 0 0 4px var(--accent);
+    }
+    .vibe1153 .controls input:checked + label {
+      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
+      opacity: 1;
+    }
+
+    /* Cards grid */
+    .vibe1153 .board {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: clamp(10px, 2vw, 18px);
+      margin-top: clamp(16px, 3vw, 28px);
+    }
+    .vibe1153 .card {
+      grid-column: span 4;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid var(--ring);
+      border-radius: 16px;
+      padding: clamp(14px, 2.2vw, 20px);
+      box-shadow: var(--shadow);
+      transition: transform 240ms cubic-bezier(.2,.7,.2,1), background 240ms;
+      position: relative;
+      overflow: hidden;
+    }
+    .vibe1153 .card.big { grid-column: span 6; }
+    .vibe1153 .card:hover { transform: translateY(-4px); }
+    .vibe1153 .card h2, .vibe1153 .card h3 {
+      margin: 0 0 6px 0; font-weight: 700; letter-spacing: -0.01em;
+    }
+    .vibe1153 .card p { margin: 0; color: var(--muted); }
+    .vibe1153 .shine::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(200px 140px at var(--mx) var(--my), rgba(255,255,255,0.12), transparent 55%);
+      pointer-events: none;
+    }
+
+    /* Equalizer */
+    .vibe1153 .eq {
+      display: inline-flex;
+      gap: 6px;
+      align-items: flex-end;
+      height: 32px;
+      margin-top: 14px;
+    }
+    .vibe1153 .eq span {
+      width: 6px;
+      height: 6px;
+      background: linear-gradient(180deg, var(--accent), rgba(255,255,255,0.2));
+      border-radius: 3px;
+      animation: beat 1100ms ease-in-out infinite;
+      box-shadow: 0 0 10px rgba(255,255,255,0.06);
+      transform-origin: bottom;
+    }
+    .vibe1153 .eq span:nth-child(odd) { animation-duration: 900ms; }
+    .vibe1153 .eq span:nth-child(3n) { animation-duration: 1300ms; }
+    .vibe1153 .eq span:nth-child(5n) { animation-duration: 1500ms; }
+    @keyframes beat {
+      0%, 100% { height: 6px; opacity: .7; }
+      50% { height: 28px; opacity: 1; }
+    }
+
+    /* Action button */
+    .vibe1153 .pulse {
+      margin-top: 12px;
+      padding: 10px 14px;
+      font-size: 14px;
+      color: #081225;
+      background: radial-gradient(120% 120% at 50% 0%, #fff, #f3f7ff);
+      border: 0;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.6);
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+    .vibe1153 .pulse:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.7); }
+    .vibe1153 .pulse:active { transform: translateY(0); }
+
+    /* Meta */
+    .vibe1153 .meta {
+      margin-top: clamp(16px, 3vw, 24px);
+      padding-top: 12px;
+      border-top: 1px dashed rgba(255,255,255,0.16);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .vibe1153 .hint { opacity: 0.8; }
+
+    /* Breathing mode */
+    .vibe1153.breathing .orb { animation-duration: 14s; opacity: 0.35; }
+    .vibe1153.breathing .hero, .vibe1153.breathing .card { background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05)); }
+
+    /* Responsive */
+    @media (max-width: 920px) {
+      .vibe1153 .card.big { grid-column: span 12; }
+      .vibe1153 .card { grid-column: span 6; }
+    }
+    @media (max-width: 560px) {
+      .vibe1153 .board { grid-template-columns: repeat(6, 1fr); }
+      .vibe1153 .card { grid-column: span 6; }
+      .vibe1153 .controls label { padding: 8px 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vibe1153 *, .vibe1153 *::before, .vibe1153 *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+
+  <div class="bg" aria-hidden="true">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+    <div class="grain"></div>
+  </div>
+
+  <div class="hero" aria-live="polite">
+    <h1>Hypercalm Interface</h1>
+    <p class="subtitle">Quiet energy. Generous space. Delight that hums—not shouts.</p>
+    <div class="controls" role="group" aria-label="Theme">
+      <input type="radio" id="th-dawn" name="theme" value="dawn">
+      <label for="th-dawn">Dawn</label>
+      <input type="radio" id="th-noon" name="theme" value="noon">
+      <label for="th-noon">Noon</label>
+      <input type="radio" id="th-dusk" name="theme" value="dusk" checked>
+      <label for="th-dusk">Dusk</label>
+      <input type="radio" id="th-night" name="theme" value="night">
+      <label for="th-night">Night</label>
+    </div>
+  </div>
+
+  <div class="board">
+    <article class="card big shine" tabindex="0" aria-label="Philosophy card">
+      <h2>Design, whispered</h2>
+      <p>Less chrome, more clarity. Texture that feels like air and light.</p>
+      <div class="eq" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <button class="pulse" type="button" aria-pressed="false">Breathe</button>
+    </article>
+
+    <article class="card shine" tabindex="0">
+      <h3>Motion</h3>
+      <p>Parallax and drift, tuned for calm. It moves only when you do.</p>
+    </article>
+
+    <article class="card shine" tabindex="0">
+      <h3>Type</h3>
+      <p>System fonts—fast by default, elegant by restraint.</p>
+    </article>
+
+    <article class="card shine" tabindex="0">
+      <h3>Contrast</h3>
+      <p>Comfort at night, clarity at noon. Dial it with a tap.</p>
+    </article>
+  </div>
+
+  <footer class="meta">
+    <span id="last-updated">Last updated: 2025-12-08 10:21:05 EST</span>
+    <span class="hint">Try moving your cursor. Toggle themes above.</span>
+  </footer>
+
+  <script>
+    (function () {
+      const root = document.currentScript.closest('.vibe1153');
+      const hero = root.querySelector('.hero');
+      const bigCard = root.querySelector('.card.big');
+      const shineEls = root.querySelectorAll('.shine');
+      const controls = root.querySelectorAll('.controls input[name="theme"]');
+      const last = root.querySelector('#last-updated');
+      const pulse = root.querySelector('.pulse');
+
+      // Last updated
+      try {
+        const dt = new Date();
+        const opts = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        last.textContent = 'Last updated: ' + dt.toLocaleString(undefined, opts);
+      } catch (e) { last.textContent = 'Last updated: ' + new Date().toString(); }
+
+      // Theme handling
+      controls.forEach(radio => {
+        radio.addEventListener('change', () => {
+          if (!radio.checked) return;
+          root.setAttribute('data-theme', radio.value);
+          // subtle haptic glow via quick class toggle
+          root.style.transition = 'filter 260ms ease';
+          root.style.filter = 'saturate(120%)';
+          setTimeout(() => { root.style.filter = ''; root.style.transition = ''; }, 260);
+        });
+      });
+
+      // Pointer-driven glow & tilt
+      function setPointerVars(e) {
+        const rect = root.getBoundingClientRect();
+        const x = e.clientX - rect.left, y = e.clientY - rect.top;
+        root.style.setProperty('--mx', x + 'px');
+        root.style.setProperty('--my', y + 'px');
+      }
+      root.addEventListener('pointermove', setPointerVars);
+
+      function tilt(el, e){
+        const r = el.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        const rx = (py - 0.5) * -8;
+        const ry = (px - 0.5) * 10;
+        el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+      }
+      ['pointermove','touchmove'].forEach(evt => {
+        hero.addEventListener(evt, (e) => tilt(hero, e.touches ? e.touches[0] : e));
+        bigCard.addEventListener(evt, (e) => tilt(bigCard, e.touches ? e.touches[0] : e));
+      });
+      [hero, bigCard].forEach(el => {
+        el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+        el.addEventListener('touchend', () => { el.style.transform = ''; }, {passive:true});
+      });
+
+      // Shine surfaces follow pointer
+      function shineFollow(e) {
+        const rect = root.getBoundingClientRect();
+        const x = (e.clientX - rect.left) + 'px';
+        const y = (e.clientY - rect.top) + 'px';
+        root.style.setProperty('--mx', x);
+        root.style.setProperty('--my', y);
+      }
+      root.addEventListener('pointermove', shineFollow);
+
+      // Breathing mode toggle
+      pulse.addEventListener('click', () => {
+        const on = root.classList.toggle('breathing');
+        pulse.setAttribute('aria-pressed', on ? 'true' : 'false');
+        pulse.textContent = on ? 'Pause' : 'Breathe';
+      });
+
+      // Accessibility: keyboard glow on focus within shine cards
+      shineEls.forEach(el => {
+        el.addEventListener('focus', (e) => {
+          const rect = el.getBoundingClientRect();
+          root.style.setProperty('--mx', (rect.left + rect.width/2 - root.getBoundingClientRect().left) + 'px');
+          root.style.setProperty('--my', (rect.top + 10 - root.getBoundingClientRect().top) + 'px');
+        });
+      });
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
