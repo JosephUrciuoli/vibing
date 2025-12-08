@@ -73,495 +73,480 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="canvas-1157" aria-label="Aurora Studio">
+<section id="canvas-1158" aria-label="Kinetic Quiet">
   <style>
-    /* Scoped to this section only */
-    #canvas-1157 {
-      --h: 312;
-      --ink: hsl(230 22% 12%);
-      --muted: hsl(230 10% 42%);
-      --bg-0: hsl(210 50% 98%);
-      --bg-1: hsl(210 80% 99%);
-      --accent: hsl(var(--h) 85% 54%);
+    /* Scoped only to this section */
+    #canvas-1158 {
+      --h: 196;
+      --bg: hsl(210 30% 98%);
+      --ink: hsl(225 18% 12%);
+      --muted: hsl(225 10% 46%);
+      --accent: hsl(var(--h) 85% 52%);
       --accent-2: hsl(calc(var(--h) + 40) 85% 52%);
-      --glow: hsl(var(--h) 100% 60% / .35);
-      --radius: 26px;
-
+      --track: hsl(225 10% 80% / .45);
+      --radius: 22px;
+      --speed: 1; /* motion multiplier */
       position: relative;
-      min-height: 72vh;
+      isolation: isolate;
+      min-height: 78vh;
       display: grid;
       place-items: center;
-      padding: 48px 22px;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      padding: clamp(24px, 5vw, 48px);
       color: var(--ink);
       background:
-        radial-gradient(1200px 700px at 0% 0%, hsl(calc(var(--h)+210) 90% 88% / .55), transparent 60%),
-        radial-gradient(1000px 700px at 100% 100%, hsl(calc(var(--h)+60) 90% 88% / .45), transparent 55%),
-        linear-gradient(180deg, var(--bg-1), var(--bg-0));
+        radial-gradient(1400px 800px at 10% -10%, hsl(calc(var(--h) + 140) 80% 90% / .55), transparent 55%),
+        radial-gradient(1000px 700px at 110% 110%, hsl(calc(var(--h) + 40) 80% 92% / .45), transparent 55%),
+        var(--bg);
       overflow: hidden;
-      isolation: isolate;
-      --rx: 0deg;
-      --ry: 0deg;
+      --rx: 0deg; --ry: 0deg;
     }
 
-    /* Ambient aurora ribbons */
-    #canvas-1157 .aurora {
-      position: absolute; inset: -20%;
-      pointer-events: none;
-      filter: blur(50px) saturate(120%);
-      opacity: .7;
-      z-index: 0;
+    /* Ambient blobs + grid */
+    #canvas-1158 .ambience { position: absolute; inset: -20%; pointer-events: none; z-index: 0; }
+    #canvas-1158 .blob {
+      position: absolute; width: 60vmax; aspect-ratio: 1; border-radius: 50%;
+      filter: blur(60px) saturate(120%);
+      mix-blend-mode: multiply; opacity: .45;
+      background: radial-gradient(circle at 30% 30%, hsl(var(--h) 90% 75%), hsl(calc(var(--h)+60) 90% 70%) 40%, transparent 62%);
+      animation: float-1158 calc(38s * var(--speed)) linear infinite;
+      transform: translate3d(0,0,0);
     }
-    #canvas-1157 .aurora::before,
-    #canvas-1157 .aurora::after {
-      content: "";
-      position: absolute; inset: 0;
-      background:
-        conic-gradient(from 0deg,
-          hsl(var(--h) 95% 65% / .4),
-          hsl(calc(var(--h)+60) 95% 65% / .35),
-          hsl(calc(var(--h)+200) 95% 65% / .35),
-          hsl(var(--h) 95% 65% / .4));
-      transform-origin: 50% 50%;
-      animation: swirl-1157 46s linear infinite;
-      mix-blend-mode: multiply;
+    #canvas-1158 .blob.b {
+      width: 50vmax; opacity: .38; filter: blur(70px) saturate(140%);
+      background: radial-gradient(circle at 70% 60%, hsl(calc(var(--h)+180) 90% 68%), hsl(calc(var(--h)+220) 90% 62%) 40%, transparent 62%);
+      animation-duration: calc(56s * var(--speed));
+      animation-direction: reverse;
     }
-    #canvas-1157 .aurora::after { animation-duration: 72s; filter: hue-rotate(40deg) brightness(1.05); }
-
-    @keyframes swirl-1157 { to { transform: rotate(360deg) scale(1.05); } }
-
-    /* Fine grain for tactility */
-    #canvas-1157 .grain {
+    @keyframes float-1158 {
+      0%   { transform: translate3d(-10%, -8%, 0) scale(1); }
+      25%  { transform: translate3d(6%, -4%, 0) scale(1.04) rotate(10deg); }
+      50%  { transform: translate3d(10%, 8%, 0) scale(1.02) rotate(0deg); }
+      75%  { transform: translate3d(-4%, 6%, 0) scale(1.06) rotate(-8deg); }
+      100% { transform: translate3d(-10%, -8%, 0) scale(1); }
+    }
+    #canvas-1158 .grid {
       position: absolute; inset: -10%;
-      pointer-events: none;
-      opacity: .1;
-      mix-blend-mode: multiply;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 100 100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23n)" opacity="0.5"/></svg>');
-      animation: grainShift1157 8s steps(6) infinite;
-      z-index: 0;
-    }
-    @keyframes grainShift1157 {
-      0%,100% { transform: translate3d(0,0,0); }
-      25% { transform: translate3d(-1%, .6%, 0); }
-      50% { transform: translate3d(.8%, -1%, 0); }
-      75% { transform: translate3d(-.4%, -.4%, 0); }
-    }
-
-    /* Moving soft rays for depth */
-    #canvas-1157 .rays {
-      position: absolute; inset: -30%;
-      pointer-events: none; z-index: 0; opacity: .08;
       background:
-        repeating-linear-gradient(115deg,
-          hsl(230 20% 10% / .85) 0 3px,
-          transparent 3px 16px);
-      transform: translateZ(0);
-      animation: drift-1157 60s linear infinite;
-      mask-image: radial-gradient(80% 60% at 50% 45%, #000 40%, transparent 85%);
+        linear-gradient(90deg, hsl(225 8% 16% / .06) 1px, transparent 1px 28px),
+        linear-gradient(0deg, hsl(225 8% 16% / .06) 1px, transparent 1px 28px);
+      mask: radial-gradient(70% 55% at 50% 45%, #000 40%, transparent 100%);
+      animation: driftgrid-1158 calc(80s * var(--speed)) linear infinite;
+      opacity: .7; pointer-events: none;
     }
-    @keyframes drift-1157 { to { transform: translate3d(4%, 4%, 0) rotate(0.001turn); } }
+    @keyframes driftgrid-1158 { to { transform: translate3d(3%, 2%, 0) rotate(.5deg); } }
 
     /* Halo that follows pointer */
-    #canvas-1157 .halo {
-      position: absolute; width: 480px; aspect-ratio: 1; border-radius: 50%;
-      background: radial-gradient(closest-side, var(--glow), transparent 70%);
-      filter: blur(28px);
-      pointer-events: none; z-index: 1;
+    #canvas-1158 .halo {
+      position: absolute; width: 560px; aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(closest-side, hsl(var(--h) 100% 65% / .35), transparent 70%);
+      filter: blur(30px);
+      mix-blend-mode: screen; opacity: .7; pointer-events: none; z-index: 1;
       transform: translate3d(var(--px, -50%), var(--py, -50%), 0);
-      mix-blend-mode: screen;
-      opacity: .65;
     }
 
-    /* Glass shell */
-    #canvas-1157 .shell {
-      position: relative;
-      z-index: 2;
-      width: min(1080px, 94vw);
-      border-radius: var(--radius);
-      padding: clamp(22px, 3.6vw, 32px);
-      background: linear-gradient(180deg, hsl(0 0% 100% / .8), hsl(0 0% 100% / .62));
-      border: 1px solid hsl(230 20% 10% / .08);
-      box-shadow:
-        0 20px 60px -24px hsl(230 40% 20% / .28),
-        0 0 0 1px hsl(0 0% 100% / .8) inset;
-      transition: transform 140ms ease, box-shadow 300ms ease, border-color 300ms ease;
-      transform-style: preserve-3d;
+    /* Frame */
+    #canvas-1158 .frame {
+      position: relative; z-index: 2;
+      width: min(1100px, 96vw);
+      display: grid; gap: clamp(14px, 2.6vw, 24px);
     }
-    #canvas-1157 .shell::before {
-      content: "";
-      position: absolute; inset: -1px;
-      border-radius: inherit;
-      background: conic-gradient(from 30deg, var(--glow), transparent 30% 70%, var(--glow));
-      filter: blur(18px);
-      opacity: .45;
-      z-index: -1;
-    }
-    #canvas-1157 .shell:hover { transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry)) translateZ(8px); }
 
-    /* Header row */
-    #canvas-1157 .top {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      color: var(--muted); font-size: 13px; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 6px;
+    /* Top bar */
+    #canvas-1158 .bar {
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
     }
-    #canvas-1157 .brand { display: inline-flex; align-items: center; gap: 10px; }
-    #canvas-1157 .mark {
-      width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; color: white;
+    #canvas-1158 .brand { display: inline-flex; align-items: center; gap: 10px; }
+    #canvas-1158 .mark {
+      width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; color: white;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 8px 20px var(--glow);
+      box-shadow: 0 8px 20px hsl(var(--h) 90% 50% / .4);
     }
-    #canvas-1157 .mark svg { width: 16px; height: 16px; }
+    #canvas-1158 .mark svg { width: 16px; height: 16px; }
 
-    /* Hero */
-    #canvas-1157 h1 {
-      margin: 8px 0 12px 0;
-      font-size: clamp(34px, 7.2vw, 72px);
-      line-height: 1.02;
-      letter-spacing: -0.02em;
-      background: linear-gradient(180deg, hsl(230 25% 12%), hsl(230 25% 12% / .8));
+    /* Poster headline */
+    #canvas-1158 h1 {
+      margin: 2px 0 4px;
+      font-size: clamp(44px, 9vw, 104px);
+      line-height: .95; letter-spacing: -0.02em; font-weight: 800;
+      background: linear-gradient(90deg, hsl(225 22% 12%), hsl(225 22% 12% / .9) 30%, var(--accent) 60%, hsl(225 22% 12%) 90%);
+      background-size: 200% 100%;
       -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: shine-1158 calc(16s * var(--speed)) ease-in-out infinite;
     }
-    #canvas-1157 .sub {
-      margin: 0 0 18px 0;
+    #canvas-1158 h1 span:last-child { opacity: .9; }
+    @keyframes shine-1158 {
+      0%,100% { background-position: 0% 0; }
+      50%     { background-position: 100% 0; }
+    }
+    #canvas-1158 .lede {
+      margin: 0 0 8px 0;
+      font-size: clamp(16px, 2.2vw, 20px);
       color: var(--muted);
-      font-size: clamp(15px, 2vw, 18px);
+      max-width: 62ch;
     }
 
-    /* Layout */
-    #canvas-1157 .wrap {
-      display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(16px, 3vw, 24px); align-items: center;
-    }
-    @media (max-width: 860px) { #canvas-1157 .wrap { grid-template-columns: 1fr; } }
-
-    /* The stage: revolving orbs + live time */
-    #canvas-1157 .stage {
-      position: relative;
-      width: min(62vmin, 560px); aspect-ratio: 1; margin: 4px auto;
-      border-radius: 50%;
-      background:
-        radial-gradient(120% 120% at 50% 32%, hsl(0 0% 100% / .9) 0 40%, transparent 60%),
-        radial-gradient(80% 80% at 50% 70%, hsl(0 0% 100% / .7), transparent 60%);
-      box-shadow:
-        inset 0 2px 0 hsl(0 0% 100% / .9),
-        0 24px 46px -24px hsl(230 40% 20% / .3);
-      overflow: hidden;
+    /* Dial: live clock rings */
+    #canvas-1158 .dial {
+      position: relative; margin: 12px 0;
+      width: min(70vmin, 560px); aspect-ratio: 1; border-radius: 50%;
       display: grid; place-items: center;
+      transform-style: preserve-3d;
+      will-change: transform;
     }
-    #canvas-1157 .orbit {
-      position: absolute; inset: 24px; border-radius: 50%;
-      animation: revolve-1157 var(--d, 22s) linear infinite;
-      transform-origin: center;
-      filter: drop-shadow(0 8px 18px hsl(230 30% 15% / .18));
+    #canvas-1158 .ring {
+      position: absolute; inset: 0; border-radius: 50%;
+      background:
+        radial-gradient(closest-side, transparent calc(100% - 16px), #000 calc(100% - 16px) 100%);
+      -webkit-mask:
+        radial-gradient(closest-side, transparent calc(100% - 16px), #000 calc(100% - 16px) 100%);
+      mask:
+        radial-gradient(closest-side, transparent calc(100% - 16px), #000 calc(100% - 16px) 100%);
+      overflow: hidden;
     }
-    @keyframes revolve-1157 { to { transform: rotate(360deg); } }
-    #canvas-1157 .orb {
+    #canvas-1158 .ring::before,
+    #canvas-1158 .ring::after {
+      content: "";
+      position: absolute; inset: 0; border-radius: 50%;
+    }
+    /* Seconds sweep (outer) */
+    #canvas-1158 .ring.sec::before {
+      background:
+        conic-gradient(from -90deg,
+          var(--accent) var(--sec, 0deg),
+          var(--track) var(--sec, 0deg) 360deg);
+      filter: drop-shadow(0 16px 32px hsl(var(--h) 90% 50% / .25));
+    }
+    /* Minutes sweep (inner, offset) */
+    #canvas-1158 .ring.min {
+      inset: 8%;
+      -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 14px), #000 calc(100% - 14px) 100%);
+      mask: radial-gradient(closest-side, transparent calc(100% - 14px), #000 calc(100% - 14px) 100%);
+    }
+    #canvas-1158 .ring.min::before {
+      background:
+        conic-gradient(from -90deg,
+          var(--accent-2) var(--min, 0deg),
+          var(--track) var(--min, 0deg) 360deg);
+      filter: drop-shadow(0 10px 24px hsl(calc(var(--h) + 40) 90% 45% / .25));
+    }
+    /* Ticks */
+    #canvas-1158 .ticks {
+      position: absolute; inset: 0; border-radius: 50%;
+      background:
+        repeating-conic-gradient(from -90deg,
+          hsl(225 20% 12% / .18) 0 2deg, transparent 2deg 6deg);
+      -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 2px), #000 calc(100% - 2px) 100%);
+      mask: radial-gradient(closest-side, transparent calc(100% - 2px), #000 calc(100% - 2px) 100%);
+      filter: blur(.2px);
+      pointer-events: none;
+    }
+    #canvas-1158 .dot {
       position: absolute; top: 50%; left: 50%;
-      width: var(--s, 46px); height: var(--s, 46px); border-radius: 50%;
-      transform: rotate(var(--a, 0deg)) translateX(calc(50% - 6px));
-      background: radial-gradient(circle at 30% 30%, white 0 35%, var(--accent) 60%, var(--accent-2) 100%);
+      width: 14px; height: 14px; border-radius: 50%;
+      background: linear-gradient(135deg, #fff, var(--accent));
       box-shadow:
-        inset 0 0 0 1px hsl(0 0% 100% / .6),
-        0 12px 26px -10px hsl(var(--h) 90% 55% / .5);
+        0 0 0 2px hsl(0 0% 100% / .85),
+        0 10px 24px -8px hsl(var(--h) 90% 50% / .45);
+      transform: rotate(calc(var(--sec) - 90deg)) translateX(calc(50% - 18px));
+      transform-origin: center;
+      transition: transform 120ms linear;
     }
-    #canvas-1157 .ring {
-      position: absolute; inset: 22px; border-radius: 50%;
-      background: repeating-conic-gradient(from -90deg, hsl(230 15% 12% / .14) 0 2deg, transparent 2deg 6deg);
-      mask: radial-gradient(closest-side, transparent calc(50% - 12px), #000 calc(50% - 11px) 99%, transparent);
-      filter: blur(.4px);
+    #canvas-1158 .center {
+      position: relative;
+      z-index: 1;
+      display: grid; place-items: center; gap: 4px;
+      padding: 10px 16px; border-radius: 16px;
+      background: linear-gradient(180deg, hsl(0 0% 100% / .95), hsl(0 0% 100% / .86));
+      border: 1px solid hsl(225 15% 10% / .08);
+      box-shadow: 0 18px 46px -26px hsl(225 40% 20% / .35);
+      text-align: center;
     }
-
-    /* Live time */
-    #canvas-1157 .clock {
-      position: relative; z-index: 2; text-align: center;
-      padding: 10px 16px; border-radius: 14px;
-      background: linear-gradient(180deg, hsl(0 0% 100% / .9), hsl(0 0% 100% / .7));
-      border: 1px solid hsl(230 20% 10% / .08);
-      box-shadow: 0 14px 30px -18px hsl(230 40% 20% / .28);
-    }
-    #canvas-1157 .clock .time {
+    #canvas-1158 .time {
       font-variant-numeric: tabular-nums;
-      font-weight: 700; letter-spacing: .02em;
-      font-size: clamp(26px, 6.5vw, 48px);
-      color: hsl(230 30% 12%);
+      font-weight: 800; letter-spacing: .02em;
+      font-size: clamp(28px, 7vw, 56px);
+      color: hsl(225 25% 10%);
     }
-    #canvas-1157 .clock .tz { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
-
-    /* Right column */
-    #canvas-1157 .panel {
-      background: linear-gradient(180deg, hsl(0 0% 100% / .8), hsl(0 0% 100% / .6));
-      border: 1px solid hsl(230 20% 10% / .08);
-      border-radius: 18px; padding: 16px;
-    }
-    #canvas-1157 .feature {
-      display: grid; grid-template-columns: 32px 1fr auto; gap: 12px; align-items: center;
-      padding: 12px; border-radius: 12px; transition: background 220ms ease, transform 220ms ease;
-    }
-    #canvas-1157 .feature:hover { background: hsl(230 20% 10% / .05); transform: translateY(-1px); }
-    #canvas-1157 .badge {
-      width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center;
-      background: linear-gradient(135deg, hsl(0 0% 100% / .9), hsl(0 0% 100% / .65));
-      border: 1px solid hsl(230 20% 10% / .08); font-weight: 700; color: var(--ink);
-    }
-    #canvas-1157 .meter { --p: 60%; height: 8px; min-width: 120px; width: clamp(120px, 36vw, 240px); background: hsl(230 20% 10% / .08); border-radius: 999px; overflow: hidden; }
-    #canvas-1157 .meter i { display: block; height: 100%; width: var(--p); background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    #canvas-1158 .tz { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
 
     /* Controls */
-    #canvas-1157 .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-    #canvas-1157 .btn {
-      appearance: none; cursor: pointer;
-      border: 1px solid hsl(230 20% 10% / .12);
-      background: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 100% / .85));
-      color: var(--ink); padding: 10px 14px; border-radius: 12px; font-size: 14px;
-      box-shadow: 0 12px 24px -18px hsl(230 40% 20% / .32);
-      transition: transform 140ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    #canvas-1158 .controls {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      margin-top: 8px;
     }
-    #canvas-1157 .btn:hover { transform: translateY(-1px); border-color: hsl(230 20% 10% / .2); box-shadow: 0 16px 36px -18px hsl(230 40% 20% / .36); }
-    #canvas-1157 .btn.primary { color: white; border-color: hsl(var(--h) 90% 55% / .4); background: linear-gradient(180deg, var(--accent), color-mix(in oklab, var(--accent) 35%, white)); }
+    #canvas-1158 .btn, #canvas-1158 .seg {
+      appearance: none; cursor: pointer; user-select: none;
+      border: 1px solid hsl(225 20% 12% / .12);
+      background: linear-gradient(180deg, #fff, hsl(0 0% 100% / .88));
+      color: var(--ink);
+      padding: 10px 14px; border-radius: 12px; font-size: 14px;
+      box-shadow: 0 14px 28px -18px hsl(225 40% 20% / .3);
+      transition: transform 140ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    }
+    #canvas-1158 .btn:hover, #canvas-1158 .seg:hover {
+      transform: translateY(-1px);
+      border-color: hsl(225 20% 12% / .2);
+      box-shadow: 0 18px 32px -18px hsl(225 40% 20% / .36);
+    }
+    #canvas-1158 .btn.primary {
+      color: white;
+      border-color: hsl(var(--h) 90% 55% / .35);
+      background: linear-gradient(180deg, var(--accent), color-mix(in oklab, var(--accent) 30%, white));
+    }
 
-    /* Meta */
-    #canvas-1157 .meta {
-      display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
-      margin-top: 16px; color: var(--muted); font-size: 13px;
+    /* Range */
+    #canvas-1158 .range {
+      display: inline-flex; align-items: center; gap: 10px; padding: 8px 12px;
+      border-radius: 12px; border: 1px solid hsl(225 20% 12% / .12);
+      background: linear-gradient(180deg, #fff, hsl(0 0% 100% / .9));
     }
-    #canvas-1157 .pill {
-      display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px;
-      border: 1px solid hsl(230 20% 10% / .1);
-      background: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 100% / .8));
+    #canvas-1158 input[type="range"] {
+      width: 160px; accent-color: var(--accent);
+      background: transparent;
+    }
+    #canvas-1158 .kbd {
+      padding: 2px 6px; border-radius: 6px;
+      background: hsl(225 20% 90%);
+      color: hsl(225 20% 20%);
+      font-size: 12px;
+    }
+
+    /* Marquee */
+    #canvas-1158 .marquee {
+      position: relative; overflow: hidden; border-radius: 12px;
+      background: linear-gradient(180deg, hsl(225 20% 96%), hsl(0 0% 100%));
+      border: 1px solid hsl(225 20% 12% / .08);
+    }
+    #canvas-1158 .marquee .row {
+      display: flex; gap: 28px; white-space: nowrap; padding: 10px 14px;
+      font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+      animation: scroll-1158 calc(24s * var(--speed)) linear infinite;
+    }
+    @keyframes scroll-1158 {
+      to { transform: translateX(-50%); }
+    }
+    #canvas-1158 .marquee .pill {
+      display: inline-flex; align-items: center; gap: 8px; padding: 4px 10px; border-radius: 999px;
+      background: linear-gradient(180deg, #fff, hsl(0 0% 100% / .85));
+      border: 1px solid hsl(225 20% 12% / .1);
       color: var(--ink);
     }
-    #canvas-1157 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px hsl(var(--h) 90% 55% / .25); }
+    #canvas-1158 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px hsl(var(--h) 90% 55% / .25); }
 
-    /* Dark (Lunar) mode */
-    #canvas-1157.night {
+    /* Footer meta */
+    #canvas-1158 .meta {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+      color: var(--muted); font-size: 13px; margin-top: 6px;
+    }
+
+    /* Night mode */
+    #canvas-1158.night {
+      --bg: hsl(232 45% 8%);
       --ink: hsl(220 20% 96%);
       --muted: hsl(220 12% 74%);
-      --bg-0: hsl(232 45% 8%);
-      --bg-1: hsl(232 45% 12%);
+      --track: hsl(220 12% 42% / .45);
       background:
-        radial-gradient(1000px 700px at 8% 0%, hsl(calc(var(--h)+200) 60% 18% / .45), transparent 60%),
-        radial-gradient(900px 600px at 100% 100%, hsl(calc(var(--h)+60) 60% 16% / .45), transparent 60%),
-        linear-gradient(180deg, var(--bg-1), var(--bg-0));
+        radial-gradient(1200px 800px at -10% -10%, hsl(calc(var(--h) + 200) 70% 16% / .45), transparent 60%),
+        radial-gradient(1000px 700px at 110% 110%, hsl(calc(var(--h) + 60) 70% 14% / .45), transparent 60%),
+        var(--bg);
     }
-    #canvas-1157.night .shell {
-      background: linear-gradient(180deg, hsl(230 20% 10% / .55), hsl(230 20% 10% / .4));
-      border-color: hsl(0 0% 100% / .1);
-      backdrop-filter: blur(8px) saturate(120%);
-      -webkit-backdrop-filter: blur(8px) saturate(120%);
-      box-shadow: 0 24px 70px -28px hsl(230 70% 5% / .85), inset 0 0 0 1px hsl(0 0% 100% / .05);
+    #canvas-1158.night .center { background: linear-gradient(180deg, hsl(230 20% 10% / .55), hsl(230 20% 10% / .42)); border-color: hsl(0 0% 100% / .1); color: var(--ink); }
+    #canvas-1158.night .btn, #canvas-1158.night .seg, #canvas-1158.night .range, #canvas-1158.night .marquee {
+      background: linear-gradient(180deg, hsl(230 20% 10% / .55), hsl(230 20% 10% / .42));
+      color: var(--ink); border-color: hsl(0 0% 100% / .12);
     }
-    #canvas-1157.night h1 { background: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 100% / .86)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    #canvas-1157.night .panel, #canvas-1157.night .btn { background: linear-gradient(180deg, hsl(230 20% 10% / .55), hsl(230 20% 10% / .4)); color: var(--ink); border-color: hsl(0 0% 100% / .12); }
-    #canvas-1157.night .btn.primary { color: white; }
-    #canvas-1157.night .ring { background: repeating-conic-gradient(from -90deg, hsl(0 0% 100% / .12) 0 2deg, transparent 2deg 6deg); }
+    #canvas-1158.night h1 { background: linear-gradient(90deg, #fff, hsl(0 0% 100% / .9) 30%, var(--accent) 60%, #fff 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-    /* Calm: pause ornaments */
-    #canvas-1157.calm .aurora::before,
-    #canvas-1157.calm .aurora::after,
-    #canvas-1157.calm .grain,
-    #canvas-1157.calm .rays,
-    #canvas-1157.calm .orbit { animation-play-state: paused !important; }
+    /* Calm mode pauses ornaments (time still updates) */
+    #canvas-1158.calm .blob,
+    #canvas-1158.calm .grid,
+    #canvas-1158.calm .marquee .row,
+    #canvas-1158.calm h1 { animation-play-state: paused !important; }
 
-    /* Reduce motion respect */
+    /* Respect reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      #canvas-1157 .aurora::before,
-      #canvas-1157 .aurora::after,
-      #canvas-1157 .grain,
-      #canvas-1157 .rays,
-      #canvas-1157 .orbit { animation: none !important; }
-      #canvas-1157 .shell { transition: none !important; }
+      #canvas-1158 .blob, #canvas-1158 .grid, #canvas-1158 .marquee .row, #canvas-1158 h1 { animation: none !important; }
+      #canvas-1158 .halo { display: none !important; }
     }
   </style>
 
-  <div class="aurora" aria-hidden="true"></div>
-  <div class="rays" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
+  <div class="ambience" aria-hidden="true">
+    <div class="blob a" style="top:-8%; left:-6%;"></div>
+    <div class="blob b" style="bottom:-10%; right:-12%;"></div>
+    <div class="grid"></div>
+  </div>
   <div class="halo" aria-hidden="true"></div>
 
-  <div class="shell" role="region" aria-label="Aurora control surface">
-    <div class="top">
+  <div class="frame" role="region" aria-label="Kinetic Quiet interface">
+    <div class="bar">
       <div class="brand">
         <span class="mark" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M12 3v6l4 2" />
-            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3v4M12 21v-4M3 12h4M21 12h-4M6.5 6.5l2.8 2.8M17.5 17.5l-2.8-2.8M6.5 17.5l2.8-2.8M17.5 6.5l-2.8 2.8"/>
+            <circle cx="12" cy="12" r="3"></circle>
           </svg>
         </span>
-        Aurora Studio • v1157
+        Studio 1158 — Kinetic
       </div>
-      <span class="pill"><span class="dot" aria-hidden="true"></span><span class="now">00:00:00</span></span>
+      <div class="brand" aria-live="polite">
+        <span class="pill"><span class="dot" aria-hidden="true"></span> Live</span>
+      </div>
     </div>
 
-    <h1>Silence, engineered.</h1>
-    <p class="sub">Live light, revolving matter, and a time display that breathes with you.</p>
+    <h1><span>KINETIC</span> <span>QUIET</span></h1>
+    <p class="lede">Poster–calm aesthetics with a living clock: soft energy, precise time, and playful control.</p>
 
-    <div class="wrap">
-      <div class="stage" aria-label="Revolving orbs scene">
-        <div class="ring" aria-hidden="true"></div>
-
-        <div class="orbit" style="--d: 28s;">
-          <div class="orb" style="--s: 48px; --a: 0deg;"></div>
-        </div>
-        <div class="orbit" style="--d: 18s;">
-          <div class="orb" style="--s: 34px; --a: 120deg;"></div>
-        </div>
-        <div class="orbit" style="--d: 36s;">
-          <div class="orb" style="--s: 62px; --a: 240deg;"></div>
-        </div>
-
-        <div class="clock" aria-live="polite">
-          <div class="time" id="clock-1157">--:--:--</div>
-          <div class="tz" id="tz-1157">Local</div>
-        </div>
+    <div class="dial" id="dial-1158" aria-label="Live clock">
+      <div class="ring sec" aria-hidden="true"></div>
+      <div class="ring min" aria-hidden="true"></div>
+      <div class="ticks" aria-hidden="true"></div>
+      <div class="dot" aria-hidden="true"></div>
+      <div class="center" aria-live="polite">
+        <div class="time" id="time-1158">--:--:--</div>
+        <div class="tz" id="tz-1158">Local</div>
       </div>
+    </div>
 
-      <div class="panel">
-        <div class="feature">
-          <span class="badge" aria-hidden="true">A</span>
-          <div>
-            <strong style="display:block; font-weight:600;">Aurora Logic</strong>
-            <span style="color:var(--muted)">Hue stream drift aligns with your input.</span>
-          </div>
-          <div class="meter"><i style="--p:76%"></i></div>
-        </div>
+    <div class="controls" role="group" aria-label="Controls">
+      <button class="btn primary" id="shuffle-1158" type="button">Shuffle Hue</button>
+      <button class="btn" id="mode-1158" type="button">Mode: Day</button>
+      <button class="btn" id="motion-1158" type="button">Motion: On</button>
+      <span class="range" title="Motion speed">
+        <span style="color:var(--muted);">Speed</span>
+        <input id="speed-1158" type="range" min="0.5" max="1.8" step="0.1" value="1">
+        <span class="kbd" id="speed-label-1158">1.0×</span>
+      </span>
+    </div>
 
-        <div class="feature">
-          <span class="badge" aria-hidden="true">G</span>
-          <div>
-            <strong style="display:block; font-weight:600;">Glass Fidelity</strong>
-            <span style="color:var(--muted)">Crisp borders and a soft internal glow.</span>
-          </div>
-          <div class="meter"><i style="--p:68%"></i></div>
-        </div>
-
-        <div class="feature">
-          <span class="badge" aria-hidden="true">R</span>
-          <div>
-            <strong style="display:block; font-weight:600;">Respectful Motion</strong>
-            <span style="color:var(--muted)">Honors calm and reduced-motion preferences.</span>
-          </div>
-          <div class="meter"><i style="--p:58%"></i></div>
-        </div>
-
-        <div class="controls" role="group" aria-label="Controls">
-          <button class="btn primary" id="shuffle" type="button">Shuffle Hue</button>
-          <button class="btn" id="theme" type="button">Theme: Solar</button>
-          <button class="btn" id="calm" type="button">Calm Motion</button>
-          <button class="btn" id="tilt" type="button">Tilt: On</button>
-        </div>
+    <div class="marquee" aria-hidden="true">
+      <div class="row">
+        <span class="pill"><span class="dot" aria-hidden="true"></span> Calm by design</span>
+        <span>Responsive</span><span>Accessible</span><span>Delightful</span>
+        <span class="pill"><span class="dot" aria-hidden="true"></span> Time as texture</span>
+        <span>Responsive</span><span>Accessible</span><span>Delightful</span>
       </div>
     </div>
 
     <div class="meta">
-      <span class="pill">Status <span class="dot" aria-hidden="true"></span> Awake</span>
-      <span id="last-updated">Last updated: 2025-12-08 14:15:59 EST</span>
+      <span class="pill"><span class="dot" aria-hidden="true"></span> Awake</span>
+      <span id="last-updated">Last updated: 2025-12-08 15:21:44 EST</span>
     </div>
   </div>
 
   <script>
     (function () {
-      const root = document.getElementById('canvas-1157');
-      const shell = root.querySelector('.shell');
+      const root = document.getElementById('canvas-1158');
       const halo = root.querySelector('.halo');
-      const clock = root.querySelector('#clock-1157');
-      const tz = root.querySelector('#tz-1157');
-      const nowLabel = root.querySelector('.now');
+      const dial = root.querySelector('#dial-1158');
+      const timeEl = root.querySelector('#time-1158');
+      const tzEl = root.querySelector('#tz-1158');
       const updated = root.querySelector('#last-updated');
 
-      const shuffleBtn = root.querySelector('#shuffle');
-      const themeBtn = root.querySelector('#theme');
-      const calmBtn = root.querySelector('#calm');
-      const tiltBtn = root.querySelector('#tilt');
+      const shuffleBtn = root.querySelector('#shuffle-1158');
+      const modeBtn = root.querySelector('#mode-1158');
+      const motionBtn = root.querySelector('#motion-1158');
+      const speedInput = root.querySelector('#speed-1158');
+      const speedLabel = root.querySelector('#speed-label-1158');
 
       const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let night = false;
       let calm = false;
-      let tiltOn = true;
 
-      // Time + labels
-      function setUpdated() {
+      function formatNow() {
+        const now = new Date();
         try {
-          const now = new Date();
-          const fmtClock = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-          const fmtFull = new Intl.DateTimeFormat(undefined, {
+          const clockFmt = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          const fullFmt = new Intl.DateTimeFormat(undefined, {
             year: 'numeric', month: 'short', day: '2-digit',
             hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short'
           });
-          clock.textContent = fmtClock.format(now);
-          nowLabel.textContent = fmtClock.format(now);
-          tz.textContent = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Local';
-          updated.textContent = 'Last updated: ' + fmtFull.format(now);
+          return { time: clockFmt.format(now), full: 'Last updated: ' + fullFmt.format(now), tz: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Local', now };
         } catch (e) {
-          const now = new Date();
-          clock.textContent = now.toLocaleTimeString();
-          nowLabel.textContent = now.toLocaleTimeString();
-          tz.textContent = 'Local';
-          updated.textContent = 'Last updated: ' + now.toLocaleString();
+          return { time: now.toLocaleTimeString(), full: 'Last updated: ' + now.toLocaleString(), tz: 'Local', now };
         }
       }
-      setUpdated();
 
-      let raf = null;
-      function tick(t) {
-        if (calm || reduce) return;
-        // gentle hue drift
-        const base = parseFloat(getComputedStyle(root).getPropertyValue('--h')) || 312;
-        const drift = (Math.sin(performance.now() / 4200) + 1) * 10;
-        root.style.setProperty('--h', (base + drift) % 360);
+      function updateTime() {
+        const { time, full, tz, now } = formatNow();
+        timeEl.textContent = time;
+        tzEl.textContent = tz;
+        updated.textContent = full;
 
-        // live time
-        setUpdated();
-        raf = requestAnimationFrame(tick);
+        // set ring angles
+        const s = now.getSeconds() + now.getMilliseconds() / 1000;
+        const m = now.getMinutes() + s / 60;
+        const secDeg = (s / 60) * 360;
+        const minDeg = (m / 60) * 360;
+
+        root.style.setProperty('--sec', secDeg + 'deg');
+        root.style.setProperty('--min', minDeg + 'deg');
+
+        // move the dot (CSS reads --sec)
+        // no explicit DOM change needed; CSS transform uses var(--sec)
       }
-      if (!reduce) raf = requestAnimationFrame(tick);
 
-      // Halo follows pointer
+      // Start clock
+      updateTime();
+      let tick = setInterval(updateTime, 250);
+
+      // Pointer halo + slight tilt
       function moveHalo(e) {
         const r = root.getBoundingClientRect();
-        const x = e.clientX - r.left, y = e.clientY - r.top;
-        root.style.setProperty('--px', (x - 240) + 'px'); // for future parallax if needed
-        root.style.setProperty('--py', (y - 240) + 'px');
-        halo.style.setProperty('--px', (x - 240) + 'px');
-        halo.style.setProperty('--py', (y - 240) + 'px');
-        if (tiltOn) {
-          const xr = (x / r.width - .5), yr = (y / r.height - .5);
-          const rx = ( -yr * 8).toFixed(2) + 'deg';
-          const ry = ( xr * 10).toFixed(2) + 'deg';
-          shell.style.setProperty('--rx', rx);
-          shell.style.setProperty('--ry', ry);
-        }
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+        const cx = x - r.width / 2;
+        const cy = y - r.height / 2;
+        halo.style.setProperty('--px', (x - 280) + 'px');
+        halo.style.setProperty('--py', (y - 280) + 'px');
+
+        // tilt dial
+        const xr = (x / r.width - .5);
+        const yr = (y / r.height - .5);
+        const rx = (-yr * 10).toFixed(2) + 'deg';
+        const ry = ( xr * 12).toFixed(2) + 'deg';
+        dial.style.transform = 'perspective(1200px) rotateX(' + rx + ') rotateY(' + ry + ')';
       }
       root.addEventListener('pointermove', moveHalo);
-      root.addEventListener('pointerleave', () => { shell.style.setProperty('--rx', '0deg'); shell.style.setProperty('--ry', '0deg'); });
+      root.addEventListener('pointerleave', () => { dial.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)'; });
 
       // Shuffle hue
       function randomHue() { return Math.floor(Math.random() * 360); }
       shuffleBtn.addEventListener('click', () => {
         root.style.setProperty('--h', randomHue());
         shuffleBtn.blur();
-        shell.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.02)' }, { transform: 'scale(1)' }], { duration: 220, easing: 'ease-out' });
+        dial.animate(
+          [ { transform: 'scale(1)' }, { transform: 'scale(1.02)' }, { transform: 'scale(1)' } ],
+          { duration: 220, easing: 'ease-out' }
+        );
       });
 
-      // Theme toggle
-      let night = false;
-      themeBtn.addEventListener('click', () => {
+      // Mode toggle
+      modeBtn.addEventListener('click', () => {
         night = !night;
         root.classList.toggle('night', night);
-        themeBtn.textContent = 'Theme: ' + (night ? 'Lunar' : 'Solar');
+        modeBtn.textContent = 'Mode: ' + (night ? 'Night' : 'Day');
       });
 
-      // Calm toggle
-      calmBtn.addEventListener('click', () => {
+      // Motion toggle (pauses ornaments; time continues)
+      motionBtn.addEventListener('click', () => {
         calm = !calm;
         root.classList.toggle('calm', calm);
-        calmBtn.textContent = calm ? 'Calm: On' : 'Calm Motion';
-        if (calm && raf) { cancelAnimationFrame(raf); raf = null; }
-        if (!calm && !reduce && !raf) { raf = requestAnimationFrame(tick); }
+        motionBtn.textContent = 'Motion: ' + (calm ? 'Off' : 'On');
       });
 
-      // Tilt toggle
-      tiltBtn.addEventListener('click', () => {
-        tiltOn = !tiltOn;
-        tiltBtn.textContent = 'Tilt: ' + (tiltOn ? 'On' : 'Off');
-        if (!tiltOn) { shell.style.setProperty('--rx', '0deg'); shell.style.setProperty('--ry', '0deg'); }
-      });
+      // Speed control
+      function applySpeed(v) {
+        root.style.setProperty('--speed', v);
+        speedLabel.textContent = parseFloat(v).toFixed(1) + '×';
+      }
+      speedInput.addEventListener('input', (e) => applySpeed(e.target.value));
+      applySpeed(speedInput.value);
+
+      // Reduced motion respect
+      if (reduce) {
+        root.classList.add('calm');
+      }
     })();
   </script>
 </section>
