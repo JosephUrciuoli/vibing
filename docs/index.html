@@ -73,286 +73,232 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="atelier-1178" id="a1178" aria-label="Vellum — A Living Poster">
+<section class="loom-1179" id="loom1179" aria-label="Lumen Loom — Interactive Tapestry">
   <style>
-    .atelier-1178 {
+    .loom-1179 {
       --mx: .5;
       --my: .5;
-      --tempo: 1;
-      --ink: #0f1222;
-      --muted: #5b6279;
-      --bg: #fbfcff;
-      --panel: rgba(255,255,255,.75);
-      --line: rgba(15,18,34,.08);
-      --a1: #2a6cff; /* electric */
-      --a2: #ff6a88; /* bloom */
-      --a3: #19cca3; /* mint */
+      --tilt: 8;
+      --ink: #0e1220;
+      --muted: #5a6478;
+      --bg0: #f8fbff;
+      --bg1: #e9f2ff;
+      --glow1: #5aa3ff;
+      --glow2: #ff7ab6;
+      --glow3: #2be0a1;
       position: relative;
       color: var(--ink);
-      background:
-        radial-gradient(1400px 800px at calc(var(--mx)*100%) 10%, color-mix(in oklab, var(--a1) 10%, transparent), transparent 60%),
-        radial-gradient(1200px 700px at 90% calc(var(--my)*100%), color-mix(in oklab, var(--a2) 10%, transparent), transparent 60%),
-        linear-gradient(180deg, var(--bg), #f3f6ff 60%);
       border-radius: 28px;
       overflow: hidden;
       min-height: 720px;
-      font-family: ui-serif, "Georgia", "Times New Roman", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      box-shadow: inset 0 0 0 1px rgba(15,18,34,.06);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      background:
+        radial-gradient(1600px 900px at calc(var(--mx)*100%) -10%, color-mix(in oklab, var(--glow1) 15%, transparent), transparent 60%),
+        radial-gradient(1200px 800px at 120% calc(var(--my)*100%), color-mix(in oklab, var(--glow2) 12%, transparent), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 70%);
+      box-shadow: inset 0 0 0 1px rgba(10,12,20,.07);
       isolation: isolate;
     }
-    .atelier-1178[data-theme="ink"] {
-      --ink: #f2f5ff;
-      --muted: #a9b1ca;
-      --bg: #0c0f1a;
-      --panel: rgba(15,18,34,.55);
-      --line: rgba(255,255,255,.06);
-      --a1: #6ea2ff; --a2: #ff86b1; --a3: #68f0c7;
+    .loom-1179[data-theme="dusk"] {
+      --ink: #eef1ff;
+      --muted: #a4acc6;
+      --bg0: #0b1020;
+      --bg1: #131a30;
+      --glow1: #7aa0ff;
+      --glow2: #ff8ab6;
+      --glow3: #66ffd1;
     }
-    .atelier-1178[data-theme="bloom"] {
-      --ink: #261313;
-      --muted: #6e5454;
-      --bg: #fff6f6;
-      --panel: rgba(255,255,255,.82);
-      --line: rgba(38,19,19,.08);
-      --a1: #ff7eb3; --a2: #ffc46a; --a3: #8bf0bf;
+    .loom-1179[data-theme="noir"] {
+      --ink: #f5faff;
+      --muted: #b2bbcf;
+      --bg0: #0a0d14;
+      --bg1: #0a0d14;
+      --glow1: #6bd1ff;
+      --glow2: #ffc773;
+      --glow3: #a889ff;
     }
 
-    /* Ambient layers */
-    .atelier-1178 .backdrop {
+    .loom-1179 .backdrop {
       position: absolute; inset: 0; z-index: 0; pointer-events: none;
     }
-    .atelier-1178 .wash { position: absolute; filter: blur(60px); opacity: .35; mix-blend-mode: multiply; }
-    .atelier-1178 .wash.w1 { width: 50vmax; height: 50vmax; left: -10vmax; top: -18vmax; background: radial-gradient(circle at 40% 40%, var(--a1), transparent 60%); }
-    .atelier-1178 .wash.w2 { width: 54vmax; height: 54vmax; right: -16vmax; bottom: -22vmax; background: radial-gradient(circle at 60% 60%, var(--a2), transparent 65%); }
-    .atelier-1178 .texture {
-      position: absolute; inset: 0; opacity: .07; mix-blend-mode: soft-light;
+    .loom-1179 .blob {
+      position: absolute; filter: blur(70px); opacity: .35; mix-blend-mode: screen;
+      transform: translateZ(0);
+      animation: l1179-float 24s ease-in-out infinite alternate;
+    }
+    .loom-1179 .blob.b1 { width: 42vmax; height: 42vmax; left: -12vmax; top: -18vmax; background: radial-gradient(circle at 35% 35%, var(--glow1), transparent 55%); }
+    .loom-1179 .blob.b2 { width: 46vmax; height: 46vmax; right: -16vmax; bottom: -22vmax; background: radial-gradient(circle at 60% 60%, var(--glow2), transparent 55%); animation-duration: 28s; }
+    .loom-1179 .grain {
+      position: absolute; inset: 0; opacity: .07; mix-blend-mode: soft-light; pointer-events: none;
       background-image:
-        radial-gradient(1px 1px at 12% 22%, #000 30%, transparent 31%),
-        radial-gradient(1px 1px at 44% 72%, #000 30%, transparent 31%),
-        radial-gradient(1px 1px at 78% 36%, #000 30%, transparent 31%);
-      background-size: 170px 170px, 210px 210px, 260px 260px;
-      animation: a1178-grain calc(28s/var(--tempo)) linear infinite;
-    }
-    .atelier-1178 .lines {
-      position: absolute; inset: -40% -10%; opacity: .75; mask: radial-gradient(100% 70% at 50% 30%, #000 55%, transparent 76%);
-      background: repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 22px);
-      transform: rotate(8deg);
-      animation: a1178-drift calc(50s/var(--tempo)) ease-in-out infinite alternate;
+        radial-gradient(1px 1px at 14% 22%, #000 35%, transparent 36%),
+        radial-gradient(1px 1px at 54% 72%, #000 35%, transparent 36%),
+        radial-gradient(1px 1px at 78% 36%, #000 35%, transparent 36%);
+      background-size: 180px 180px, 220px 220px, 260px 260px;
+      animation: l1179-grain 30s linear infinite;
     }
 
-    /* Top nav */
-    .atelier-1178 .nav {
+    .loom-1179 .bar {
       position: relative; z-index: 2;
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px;
       margin: 18px; padding: 14px 16px; border-radius: 16px;
-      border: 1px solid rgba(15,18,34,.12);
-      background: var(--panel);
-      backdrop-filter: blur(12px) saturate(120%);
-      box-shadow: 0 20px 50px rgba(15,18,34,.12);
+      border: 1px solid rgba(10,12,20,.12);
+      background: color-mix(in oklab, rgba(255,255,255,.8) 70%, transparent);
+      backdrop-filter: blur(14px) saturate(120%);
+      box-shadow: 0 18px 50px rgba(10,12,20,.14);
     }
-    .atelier-1178 .brand { display: grid; grid-auto-flow: column; align-items: center; gap: 12px; }
-    .atelier-1178 .brand .monogram {
-      width: 22px; height: 22px; border-radius: 6px;
-      background: conic-gradient(from 0deg, var(--a1), var(--a2), var(--a3), var(--a1));
-      box-shadow: 0 0 18px color-mix(in oklab, var(--a1) 50%, transparent);
-      animation: a1178-spin calc(9s/var(--tempo)) linear infinite;
+    .loom-1179[data-theme="dusk"] .bar,
+    .loom-1179[data-theme="noir"] .bar {
+      background: color-mix(in oklab, rgba(20,24,38,.65) 70%, transparent);
+      border-color: rgba(255,255,255,.12);
     }
-    .atelier-1178 .brand strong { font-weight: 900; letter-spacing: .4px; font-size: 14px; }
-    .atelier-1178 .brand span { font-size: 11px; color: var(--muted); letter-spacing: .3px; }
+    .loom-1179 .brand { display: grid; grid-auto-flow: column; align-items: center; gap: 12px; }
+    .loom-1179 .mono {
+      width: 22px; height: 22px; border-radius: 7px;
+      background: conic-gradient(from 0deg, var(--glow1), var(--glow2), var(--glow3), var(--glow1));
+      box-shadow: 0 0 18px color-mix(in oklab, var(--glow1) 45%, transparent);
+      animation: l1179-spin 10s linear infinite;
+    }
+    .loom-1179 .brand strong { font-weight: 900; letter-spacing: .4px; font-size: 14px; }
+    .loom-1179 .brand span { font-size: 11px; color: var(--muted); letter-spacing: .3px; }
 
-    .atelier-1178 .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .atelier-1178 .chip, .atelier-1178 .btn {
-      appearance: none; border: 1px solid rgba(15,18,34,.14); color: inherit; cursor: pointer;
-      background: color-mix(in oklab, var(--panel) 80%, transparent);
+    .loom-1179 .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .loom-1179 .chip, .loom-1179 .btn {
+      appearance: none; border: 1px solid rgba(10,12,20,.14); color: inherit; cursor: pointer;
+      background: color-mix(in oklab, rgba(255,255,255,.82) 80%, transparent);
       padding: 8px 12px; border-radius: 12px; font-weight: 800; letter-spacing: .3px;
-      transition: transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
     }
-    .atelier-1178 .chip[aria-pressed="true"] {
-      background: linear-gradient(180deg, color-mix(in oklab, var(--a1) 28%, transparent), color-mix(in oklab, var(--a2) 18%, transparent));
+    .loom-1179[data-theme="dusk"] .chip, .loom-1179[data-theme="dusk"] .btn,
+    .loom-1179[data-theme="noir"] .chip, .loom-1179[data-theme="noir"] .btn {
+      background: color-mix(in oklab, rgba(24,28,44,.7) 80%, transparent);
+      border-color: rgba(255,255,255,.14);
+    }
+    .loom-1179 .chip[aria-pressed="true"] {
+      background: linear-gradient(180deg, color-mix(in oklab, var(--glow1) 18%, transparent), color-mix(in oklab, var(--glow2) 12%, transparent));
       color: color-mix(in oklab, var(--ink) 85%, #fff);
-      border-color: color-mix(in oklab, var(--a1) 50%, rgba(15,18,34,.14));
+      border-color: color-mix(in oklab, var(--glow1) 45%, rgba(10,12,20,.14));
       text-shadow: 0 1px 0 rgba(255,255,255,.35);
     }
-    .atelier-1178 .btn:hover, .atelier-1178 .chip:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(15,18,34,.18); }
+    .loom-1179 .btn:hover, .loom-1179 .chip:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(10,12,20,.18); }
 
-    /* Hero */
-    .atelier-1178 .hero {
-      position: relative; z-index: 2;
-      margin: 14px 18px 18px; padding: 22px 18px; border-radius: 18px;
-      background: linear-gradient(180deg, color-mix(in oklab, var(--panel) 80%, transparent), color-mix(in oklab, var(--panel) 55%, transparent));
-      border: 1px solid rgba(15,18,34,.12);
-      backdrop-filter: blur(10px) saturate(115%);
-      display: grid; grid-template-columns: 1.2fr auto; gap: 16px; align-items: end;
-      box-shadow: 0 18px 50px rgba(15,18,34,.1);
+    .loom-1179 .stage-wrap {
+      position: relative; z-index: 1;
+      margin: 0 18px 18px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(10,12,20,.12);
+      background:
+        radial-gradient(1000px 600px at calc((1 - var(--mx))*100%) calc(var(--my)*100%), color-mix(in oklab, var(--glow3) 10%, transparent), transparent 65%),
+        linear-gradient(180deg, color-mix(in oklab, rgba(255,255,255,.7) 80%, transparent), color-mix(in oklab, rgba(255,255,255,.3) 60%, transparent));
+      box-shadow: 0 22px 60px rgba(10,12,20,.16), inset 0 0 0 1px rgba(255,255,255,.18);
+      transform: perspective(900px) rotateX(calc((.5 - var(--my)) * var(--tilt) * 1deg)) rotateY(calc((var(--mx) - .5) * var(--tilt) * 1deg));
+      transition: transform .25s ease;
+      min-height: clamp(420px, 58vmin, 640px);
     }
-    .atelier-1178 .hero h1 {
-      margin: 0;
-      font-size: clamp(30px, 9vw, 84px);
-      line-height: .95; letter-spacing: -0.8px;
-      background: linear-gradient(90deg, currentColor, color-mix(in oklab, var(--a1) 55%, currentColor) 40%, color-mix(in oklab, var(--a2) 55%, currentColor));
+    .loom-1179 .stage {
+      display: block; width: 100%; height: 100%;
+    }
+    .loom-1179 .overlay {
+      position: absolute; inset: 0; pointer-events: none; display: grid; place-items: start start;
+      padding: 22px; background: linear-gradient(180deg, rgba(255,255,255,.08), transparent 20%);
+    }
+    .loom-1179[data-theme="dusk"] .overlay,
+    .loom-1179[data-theme="noir"] .overlay { background: linear-gradient(180deg, rgba(0,0,0,.12), transparent 22%); }
+
+    .loom-1179 h1 {
+      margin: 0; padding: 0;
+      font-size: clamp(30px, 8.2vw, 80px); line-height: .92; letter-spacing: -0.5px;
+      background: linear-gradient(90deg, currentColor, color-mix(in oklab, var(--glow1) 55%, currentColor) 45%, color-mix(in oklab, var(--glow2) 55%, currentColor));
       -webkit-background-clip: text; background-clip: text; color: transparent;
       filter: drop-shadow(0 1px 0 rgba(255,255,255,.35));
     }
-    .atelier-1178 .hero p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
-    .atelier-1178 .hero .sliders { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-self: end; }
-    .atelier-1178 .hero label { font-size: 12px; color: var(--muted); }
-    .atelier-1178 .hero input[type="range"] { width: 180px; accent-color: var(--a1); background: transparent; }
-
-    /* Poster */
-    .atelier-1178 .poster-wrap { position: relative; z-index: 2; margin: 0 18px 18px; }
-    .atelier-1178 .poster {
-      position: relative; height: clamp(380px, 60vmin, 560px); border-radius: 18px; overflow: hidden;
-      border: 1px solid rgba(15,18,34,.12);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.4)),
-        radial-gradient(1000px 600px at calc((1 - var(--mx))*100%) calc((1 - var(--my))*100%), color-mix(in oklab, var(--a3) 12%, transparent), transparent 60%);
-      box-shadow: 0 20px 60px rgba(15,18,34,.14);
-      transform-style: preserve-3d;
-      perspective: 900px;
-    }
-    .atelier-1178 .poster:hover { border-color: rgba(15,18,34,.18); }
-    .atelier-1178 .matrix {
-      position: absolute; inset: 0; transform-style: preserve-3d;
-      transition: transform .25s ease;
-    }
-    .atelier-1178 .dot {
-      position: absolute; width: 10px; height: 10px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff, color-mix(in oklab, var(--a1) 35%, var(--a2)));
-      box-shadow:
-        inset -2px -2px 6px rgba(0,0,0,.08),
-        0 0 18px color-mix(in oklab, var(--a1) 45%, transparent),
-        0 10px 26px rgba(0,0,0,.15);
-      transform: translate3d(0,0,0);
-      transition: transform calc(700ms/var(--tempo)) cubic-bezier(.22,.61,.36,1),
-                  background .3s ease, box-shadow .3s ease;
-    }
-    .atelier-1178 .poster:hover .dot { box-shadow:
-        inset -2px -2px 6px rgba(0,0,0,.1),
-        0 0 24px color-mix(in oklab, var(--a2) 45%, transparent),
-        0 12px 30px rgba(0,0,0,.2);
+    .loom-1179 p.sub {
+      margin: 6px 0 0; color: var(--muted); font-size: 14px; max-width: 42ch;
+      text-shadow: 0 1px 0 rgba(255,255,255,.3);
     }
 
-    /* Ticker */
-    .atelier-1178 .ticker {
-      position: relative; z-index: 2; margin: 0 18px 18px; border-radius: 12px;
-      border: 1px solid rgba(15,18,34,.12); overflow: hidden;
-      background: color-mix(in oklab, var(--panel) 70%, transparent);
-      backdrop-filter: blur(8px);
-    }
-    .atelier-1178 .ticker .row {
-      display: flex; gap: 32px; white-space: nowrap; align-items: center; padding: 10px 14px; font-weight: 800;
-      animation: a1178-ticker calc(30s/var(--tempo)) linear infinite;
-      will-change: transform;
-    }
-    .atelier-1178 .ticker .token { color: color-mix(in oklab, var(--ink) 65%, var(--a1)); letter-spacing: .4px; }
-
-    /* Meta */
-    .atelier-1178 .meta {
+    .loom-1179 .meta {
       position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 12px;
       margin: 0 18px 18px; padding: 10px 14px; font-size: 12px; color: var(--muted);
-      border: 1px solid rgba(15,18,34,.12); border-radius: 12px; background: color-mix(in oklab, var(--panel) 75%, transparent); backdrop-filter: blur(8px);
+      border: 1px solid rgba(10,12,20,.12); border-radius: 12px; background: color-mix(in oklab, rgba(255,255,255,.8) 75%, transparent); backdrop-filter: blur(8px);
     }
+    .loom-1179[data-theme="dusk"] .meta,
+    .loom-1179[data-theme="noir"] .meta { background: color-mix(in oklab, rgba(24,28,44,.7) 75%, transparent); border-color: rgba(255,255,255,.12); }
 
-    /* Motion control */
-    .atelier-1178.paused * { animation-play-state: paused !important; }
+    .loom-1179 .slider {
+      display: inline-flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 12px;
+      background: color-mix(in oklab, rgba(255,255,255,.7) 70%, transparent); border: 1px solid rgba(10,12,20,.12);
+    }
+    .loom-1179[data-theme="dusk"] .slider,
+    .loom-1179[data-theme="noir"] .slider { background: color-mix(in oklab, rgba(24,28,44,.6) 70%, transparent); border-color: rgba(255,255,255,.12); }
+    .loom-1179 label { font-size: 12px; color: var(--muted); }
+    .loom-1179 input[type="range"] { width: 160px; accent-color: var(--glow1); background: transparent; cursor: pointer; }
 
-    /* Keyframes */
-    @keyframes a1178-spin { to { transform: rotate(360deg); } }
-    @keyframes a1178-drift {
-      0% { transform: translate(-2vw, 0) rotate(6deg) }
-      50% { transform: translate(2vw, -1vh) rotate(0deg) }
-      100% { transform: translate(0, 1vh) rotate(-6deg) }
+    .loom-1179.paused * { animation-play-state: paused !important; }
+
+    @keyframes l1179-spin { to { transform: rotate(360deg); } }
+    @keyframes l1179-float {
+      0% { transform: translate3d(-2vw, -1vh, 0) scale(1); }
+      50% { transform: translate3d(2vw, 0, 0) scale(1.03); }
+      100% { transform: translate3d(0, 1vh, 0) scale(1.06); }
     }
-    @keyframes a1178-ticker {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    @keyframes a1178-grain {
+    @keyframes l1179-grain {
       0% { background-position: 0 0, 0 0, 0 0; }
       100% { background-position: 260px 210px, -180px 160px, 200px -260px; }
+    }
+
+    @media (max-width: 720px) {
+      .loom-1179 .bar { grid-template-columns: 1fr; }
+      .loom-1179 .actions { justify-content: space-between; }
+      .loom-1179 .slider { width: 100%; justify-content: space-between; }
+      .loom-1179 input[type="range"] { width: 50vw; }
     }
   </style>
 
   <div class="backdrop" aria-hidden="true">
-    <div class="wash w1"></div>
-    <div class="wash w2"></div>
-    <div class="texture"></div>
-    <div class="lines"></div>
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="grain"></div>
   </div>
 
-  <div class="nav" role="toolbar" aria-label="Theme and Motion">
+  <div class="bar" role="toolbar" aria-label="Mood and Motion">
     <div class="brand">
-      <i class="monogram" aria-hidden="true"></i>
-      <strong>Vellum</strong>
-      <span>A living poster</span>
+      <i class="mono" aria-hidden="true"></i>
+      <strong>Lumen Loom</strong>
+      <span>Tactile light study</span>
     </div>
-    <div class="controls">
-      <button class="chip" data-theme="porcelain" aria-pressed="true">Porcelain</button>
-      <button class="chip" data-theme="ink" aria-pressed="false">Ink</button>
-      <button class="chip" data-theme="bloom" aria-pressed="false">Bloom</button>
-      <button class="btn" id="a1178-remix" type="button">Remix</button>
-      <button class="btn" id="a1178-pause" type="button">Pause</button>
-    </div>
-  </div>
-
-  <div class="hero" role="region" aria-label="Headline and Controls">
-    <div>
-      <h1>Paper meets light.</h1>
-      <p>Drag your cursor to tilt the page. Slide the tempo to conduct motion. Press Remix to rewrite the geometry.</p>
-    </div>
-    <div class="sliders">
-      <label for="a1178-tempo">Tempo</label>
-      <input id="a1178-tempo" type="range" min="0.6" max="1.8" step="0.01" value="1" aria-valuemin="0.6" aria-valuemax="1.8" aria-valuenow="1">
+    <div class="actions">
+      <button class="chip" data-theme="dawn" aria-pressed="true">Dawn</button>
+      <button class="chip" data-theme="dusk" aria-pressed="false">Dusk</button>
+      <button class="chip" data-theme="noir" aria-pressed="false">Noir</button>
+      <span class="slider">
+        <label for="l1179-vel">Velocity</label>
+        <input id="l1179-vel" type="range" min="0.4" max="2" step="0.01" value="1" aria-valuemin="0.4" aria-valuemax="2" aria-valuenow="1">
+      </span>
+      <button class="btn" id="l1179-remix" type="button">Remix</button>
+      <button class="btn" id="l1179-pause" type="button">Pause</button>
     </div>
   </div>
 
-  <div class="poster-wrap">
-    <div class="poster" id="a1178-poster" aria-live="polite" aria-label="Kinetic dot-matrix canvas">
-      <div class="matrix" id="a1178-matrix"></div>
-    </div>
-  </div>
-
-  <div class="ticker" aria-hidden="true">
-    <div class="row" id="a1178-ticker">
-      <span class="token">Vellum</span>
-      <span>•</span>
-      <span class="token">Kinetic</span>
-      <span>•</span>
-      <span class="token">Serene</span>
-      <span>•</span>
-      <span class="token">Hand + Light</span>
-      <span>•</span>
-      <span class="token">Remix</span>
-      <span>•</span>
-      <span class="token">Iterate</span>
-      <span>•</span>
-      <span class="token">Vellum</span>
-      <span>•</span>
-      <span class="token">Kinetic</span>
-      <span>•</span>
-      <span class="token">Serene</span>
-      <span>•</span>
-      <span class="token">Hand + Light</span>
-      <span>•</span>
-      <span class="token">Remix</span>
-      <span>•</span>
-      <span class="token">Iterate</span>
+  <div class="stage-wrap" role="region" aria-label="Animated ribbon canvas">
+    <canvas class="stage" id="l1179-canvas" aria-hidden="false"></canvas>
+    <div class="overlay" aria-hidden="true">
+      <h1>Weave the light.</h1>
+      <p class="sub">Drag to bend the threads. Adjust velocity to conduct motion. Remix for a new loom.</p>
     </div>
   </div>
 
   <div class="meta">
-    <span id="last-updated">Last updated: 2025-12-09 13:24:27 EST</span>
-    <span>Tip: Space pauses • Remix redraws the field</span>
+    <span id="last-updated">Last updated: 2025-12-09 14:14:06 EST</span>
+    <span>Tips: Space pauses • R remixes • Move pointer to sculpt</span>
   </div>
 
   <script>
     (() => {
-      const root = document.getElementById('a1178');
-      const matrix = root.querySelector('#a1178-matrix');
-      const poster = root.querySelector('#a1178-poster');
-      const tempo = root.querySelector('#a1178-tempo');
-      const btnRemix = root.querySelector('#a1178-remix');
-      const btnPause = root.querySelector('#a1178-pause');
+      const root = document.getElementById('loom1179');
+      const canvas = root.querySelector('#l1179-canvas');
+      const ctx = canvas.getContext('2d');
+      const vel = root.querySelector('#l1179-vel');
+      const btnRemix = root.querySelector('#l1179-remix');
+      const btnPause = root.querySelector('#l1179-pause');
       const chips = root.querySelectorAll('.chip[data-theme]');
       const lu = root.querySelector('#last-updated');
 
@@ -365,135 +311,175 @@
         lu.textContent = 'Last updated: ' + new Date().toLocaleString();
       }
 
-      // Theme init
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(prefersDark ? 'ink' : 'porcelain');
-      chips.forEach(btn => btn.addEventListener('click', () => setTheme(btn.dataset.theme)));
-      function setTheme(name) {
-        chips.forEach(c => c.setAttribute('aria-pressed', c.dataset.theme === name ? 'true' : 'false'));
-        if (name === 'porcelain') root.removeAttribute('data-theme');
-        else root.setAttribute('data-theme', name);
-        remix(true);
+      // Device pixel ratio scaling
+      let DPR = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+      function fit() {
+        const r = canvas.getBoundingClientRect();
+        canvas.width = Math.round(r.width * DPR);
+        canvas.height = Math.round(r.height * DPR);
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
       }
 
-      // Pointer parallax
-      const onMove = (e) => {
+      // Pointer tracking
+      const pointer = { x: 0.5, y: 0.5, px: 0.5, py: 0.5, active: false };
+      root.addEventListener('pointermove', (e) => {
         const r = root.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width;
         const y = (e.clientY - r.top) / r.height;
-        root.style.setProperty('--mx', Math.max(0, Math.min(1, x)).toFixed(3));
-        root.style.setProperty('--my', Math.max(0, Math.min(1, y)).toFixed(3));
-        const tiltX = (0.5 - y) * 10;
-        const tiltY = (x - 0.5) * 10;
-        matrix.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(0)`;
-      };
-      root.addEventListener('pointermove', onMove);
-
-      // Tempo
-      tempo.addEventListener('input', () => {
-        root.style.setProperty('--tempo', tempo.value);
-        tempo.setAttribute('aria-valuenow', tempo.value);
+        pointer.px = pointer.x; pointer.py = pointer.y;
+        pointer.x = Math.max(0, Math.min(1, x));
+        pointer.y = Math.max(0, Math.min(1, y));
+        root.style.setProperty('--mx', pointer.x.toFixed(3));
+        root.style.setProperty('--my', pointer.y.toFixed(3));
       });
+      root.addEventListener('pointerenter', () => pointer.active = true);
+      root.addEventListener('pointerleave', () => pointer.active = false);
 
-      // Pause control
+      // Theme handling
+      function setTheme(name) {
+        chips.forEach(c => c.setAttribute('aria-pressed', c.dataset.theme === name ? 'true' : 'false'));
+        if (name === 'dawn') root.removeAttribute('data-theme');
+        else root.setAttribute('data-theme', name);
+        remix(true);
+      }
+      chips.forEach(btn => btn.addEventListener('click', () => setTheme(btn.dataset.theme)));
+
+      // Animation state
       let paused = false;
-      const setPaused = (p) => {
+      function setPaused(p) {
         paused = p;
         root.classList.toggle('paused', paused);
         btnPause.textContent = paused ? 'Resume' : 'Pause';
-      };
+      }
       btnPause.addEventListener('click', () => setPaused(!paused));
       window.addEventListener('keydown', (e) => {
         if (e.code === 'Space') { e.preventDefault(); setPaused(!paused); }
+        if (e.key && e.key.toLowerCase() === 'r') remix(true);
       }, { passive: false });
 
-      // Build matrix
-      const DOTS = 128;
-      function buildDots() {
-        matrix.innerHTML = '';
-        for (let i = 0; i < DOTS; i++) {
-          const d = document.createElement('b');
-          d.className = 'dot';
-          d.setAttribute('aria-hidden', 'true');
-          matrix.appendChild(d);
-        }
-      }
+      // Velocity
+      let velocity = parseFloat(vel.value);
+      vel.addEventListener('input', () => {
+        velocity = parseFloat(vel.value);
+        vel.setAttribute('aria-valuenow', vel.value);
+      });
 
-      // Shapes
-      function layout(kind) {
-        const rect = matrix.getBoundingClientRect();
-        const w = rect.width, h = rect.height;
-        const dots = Array.from(matrix.children);
-        const cx = w / 2, cy = h / 2;
+      // Threads configuration
+      let threads = [];
+      let seed = Math.random() * 1000;
+      const palettes = {
+        dawn: [
+          ['#2be0a1','#5aa3ff','#ff7ab6','#ffc66b'],
+          ['#66ffd1','#7aa0ff','#ff9ad1','#a8f07a']
+        ],
+        dusk: [
+          ['#66ffd1','#7aa0ff','#ff8ab6','#a889ff'],
+          ['#8cf7d7','#9fb4ff','#ffc773','#ff92c0']
+        ],
+        noir: [
+          ['#6bd1ff','#a889ff','#ffc773','#ff7a7a'],
+          ['#66ffd1','#7aa0ff','#ff8ab6','#e0ff6b']
+        ]
+      };
+      let palette = palettes.dawn[0];
 
-        const setPos = (el, x, y) => {
-          el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-        };
+      function remix(animate) {
+        // Pick theme palette
+        const mode = root.getAttribute('data-theme') || 'dawn';
+        const pset = palettes[mode];
+        palette = pset[(Math.random() * pset.length) | 0];
 
-        if (kind === 'ring') {
-          const R = Math.min(w, h) * 0.32;
-          dots.forEach((el, i) => {
-            const t = (i / dots.length) * Math.PI * 2;
-            const x = cx + Math.cos(t) * (R + Math.sin(i) * 10) - 5;
-            const y = cy + Math.sin(t) * (R + Math.cos(i*1.7) * 10) - 5;
-            setPos(el, x, y);
-          });
-        } else if (kind === 'spiral') {
-          const turns = 3.2;
-          dots.forEach((el, i) => {
-            const t = (i / dots.length) * Math.PI * 2 * turns;
-            const r = (i / dots.length) * Math.min(w, h) * 0.45;
-            const x = cx + Math.cos(t) * r - 5;
-            const y = cy + Math.sin(t) * r - 5;
-            setPos(el, x, y);
-          });
-        } else if (kind === 'wave') {
-          const rows = 8, cols = Math.ceil(DOTS / rows);
-          const gw = w / (cols + 1), gh = h / (rows + 1);
-          dots.forEach((el, i) => {
-            const rI = Math.floor(i / cols), cI = i % cols;
-            const x = gw + cI * gw + Math.sin((rI + cI / 2) * 0.6) * 12 - 5;
-            const y = gh + rI * gh + Math.sin(cI * 0.4) * 20 - 5;
-            setPos(el, x, y);
-          });
-        } else if (kind === 'grid') {
-          const rows = 10, cols = Math.ceil(DOTS / rows);
-          const gw = w / (cols + 1), gh = h / (rows + 1);
-          dots.forEach((el, i) => {
-            const rI = Math.floor(i / cols), cI = i % cols;
-            const jitter = ((i * 13.37) % 1) * 6;
-            const x = gw + cI * gw + ((rI % 2) ? 8 : -8) + jitter - 5;
-            const y = gh + rI * gh + ((cI % 2) ? -6 : 6) - 5;
-            setPos(el, x, y);
-          });
-        } else {
-          // scatter
-          dots.forEach((el, i) => {
-            const x = Math.random() * (w - 10);
-            const y = Math.random() * (h - 10);
-            setPos(el, x, y);
+        threads = [];
+        const count = Math.floor(18 + Math.random() * 18);
+        const W = canvas.clientWidth || canvas.width / DPR;
+        const H = canvas.clientHeight || canvas.height / DPR;
+
+        for (let i = 0; i < count; i++) {
+          threads.push({
+            base: (i + 0.5) / count,      // 0..1 vertical placement
+            amp: 12 + Math.random() * 28, // amplitude
+            wav: 100 + Math.random() * 260, // wavelength
+            thick: 0.8 + Math.random() * 2.6,
+            hue: palette[i % palette.length],
+            phase: Math.random() * Math.PI * 2,
+            jitter: (Math.random() - 0.5) * 0.003,
+            blend: i % 3 === 0 ? 'lighter' : 'source-over',
+            offset: (Math.random() - 0.5) * 0.3 * H, // subtle offset
           });
         }
-      }
 
-      // Remix
-      function remix(animated=false) {
-        const kinds = ['ring', 'spiral', 'wave', 'grid', 'scatter'];
-        const kind = kinds[Math.floor(Math.random() * kinds.length)];
-        poster.setAttribute('aria-label', `Kinetic dot-matrix canvas — ${kind} layout`);
-        if (animated) {
-          poster.animate([{ opacity: 1, filter: 'blur(0px)' }, { opacity: .05, filter: 'blur(10px)' }], { duration: 160, easing: 'ease', fill: 'forwards' }).onfinish = () => {
-            layout(kind);
-            poster.animate([{ opacity: .05, filter: 'blur(10px)' }, { opacity: 1, filter: 'blur(0px)' }], { duration: 220, easing: 'ease-out', fill: 'forwards' });
+        if (animate) {
+          canvas.animate([{ opacity: 1, filter: 'blur(0px)' }, { opacity: .05, filter: 'blur(12px)' }], { duration: 160, easing: 'ease', fill: 'forwards' }).onfinish = () => {
+            canvas.animate([{ opacity: .05, filter: 'blur(12px)' }, { opacity: 1, filter: 'blur(0px)' }], { duration: 220, easing: 'ease-out', fill: 'forwards' });
           };
-        } else {
-          layout(kind);
         }
       }
-      btnRemix.addEventListener('click', () => remix(true));
-      window.addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'r') remix(true); });
 
-      // Ripple feedback for buttons
+      btnRemix.addEventListener('click', () => remix(true));
+
+      // Drawing
+      let t0 = performance.now();
+      function draw(now) {
+        if (!canvas.width || !canvas.height) return requestAnimationFrame(draw);
+        if (paused) return requestAnimationFrame(draw);
+
+        const t = (now - t0) / 1000;
+        const W = canvas.width / DPR;
+        const H = canvas.height / DPR;
+
+        ctx.clearRect(0, 0, W, H);
+
+        // soft base vignette
+        const gBg = ctx.createRadialGradient(W * pointer.x, H * pointer.y, Math.min(W, H) * 0.1, W * pointer.x, H * pointer.y, Math.max(W, H) * 0.8);
+        gBg.addColorStop(0, 'rgba(255,255,255,0.06)');
+        gBg.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = gBg;
+        ctx.fillRect(0, 0, W, H);
+
+        // draw threads
+        for (let i = 0; i < threads.length; i++) {
+          const th = threads[i];
+          const yBase = th.base * H + th.offset * 0.0; // offset disabled for stability
+          const speed = (0.6 + (i / threads.length)) * 0.6 * velocity;
+          const phase = th.phase + t * speed * 2;
+
+          const g = ctx.createLinearGradient(0, 0, W, 0);
+          g.addColorStop(0, th.hue);
+          g.addColorStop(0.5, palette[(i + 1) % palette.length]);
+          g.addColorStop(1, palette[(i + 2) % palette.length]);
+
+          ctx.save();
+          ctx.globalCompositeOperation = th.blend;
+          ctx.lineWidth = th.thick;
+          ctx.strokeStyle = g;
+          ctx.lineCap = 'round';
+          ctx.shadowColor = palette[(i + 1) % palette.length];
+          ctx.shadowBlur = 8;
+
+          ctx.beginPath();
+          const step = 8;
+          let first = true;
+          for (let x = -20; x <= W + 20; x += step) {
+            const n = Math.sin((x / th.wav) + phase) + Math.sin((x / (th.wav * 0.7)) - phase * 0.9) * 0.5;
+            // pointer attractor
+            const dx = x - pointer.x * W;
+            const attract = Math.exp(- (dx * dx) / (2 * Math.pow(140, 2))) * (pointer.active ? 1 : 0.35);
+            const y = yBase + n * th.amp + (pointer.y - 0.5) * 40 * attract;
+            if (first) { ctx.moveTo(x, y); first = false; }
+            else {
+              const cx = x - step / 2;
+              const cy = yBase + Math.sin(((x - step/2) / th.wav) + phase) * th.amp;
+              ctx.quadraticCurveTo(cx, cy, x, y);
+            }
+          }
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      // Ripple feedback
       root.querySelectorAll('.btn, .chip').forEach(b => {
         b.addEventListener('pointerdown', () => {
           b.animate([{ transform: 'translateY(-1px) scale(0.98)' }, { transform: 'translateY(0) scale(1)' }], { duration: 180, easing: 'ease-out' });
@@ -501,18 +487,27 @@
       });
 
       // Init
-      const init = () => {
-        buildDots();
+      function init() {
+        fit();
+        setTheme(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dusk' : 'dawn');
         remix(false);
-      };
-      if (document.readyState !== 'loading') init(); else document.addEventListener('DOMContentLoaded', init);
+        t0 = performance.now();
+        requestAnimationFrame(draw);
+      }
 
-      // Re-layout on resize
+      // Resize
       let rTO;
       window.addEventListener('resize', () => {
+        DPR = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
         clearTimeout(rTO);
-        rTO = setTimeout(() => remix(false), 120);
+        rTO = setTimeout(() => {
+          fit();
+          remix(false);
+        }, 120);
       });
+
+      if (document.readyState !== 'loading') init();
+      else document.addEventListener('DOMContentLoaded', init);
     })();
   </script>
 </section>
