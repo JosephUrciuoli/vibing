@@ -73,506 +73,433 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="atelier" data-theme="ink" aria-label="Breathing poster">
+<div id="loom" data-theme="dusk" aria-label="Luminous Loom — interactive poster">
   <style>
-    /* Core canvas */
-    #atelier {
-      --bg1: #0b0f1a;
-      --bg2: #111827;
-      --ink: #f6f7ff;
-      --muted: rgba(246,247,255,0.76);
-      --accent: #7cf0d2;
-      --accent2: #a78bfa;
-      --stroke: rgba(255,255,255,0.14);
-      --shadow: 0 18px 60px rgba(0,0,0,0.45);
-      position: relative;
-      isolation: isolate;
-      color: var(--ink);
+    /* Core */
+    #loom{
+      --bg1:#101326;
+      --bg2:#1b2140;
+      --ink:#f6f7ff;
+      --muted:rgba(246,247,255,.72);
+      --accent:#7cf0d2;
+      --accent2:#a78bfa;
+      --stroke:rgba(255,255,255,.14);
+      --shadow:0 22px 70px rgba(0,0,0,.45);
+      --rows:14;
+      --mx:50%;
+      --my:50%;
+      position:relative;
+      color:var(--ink);
       font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      border-radius: 22px;
-      overflow: hidden;
-      min-height: 560px;
-      background: radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
-                  radial-gradient(120% 140% at 0% 100%, color-mix(in srgb, var(--accent2) 10%, transparent), transparent 60%),
-                  linear-gradient(120deg, var(--bg1), var(--bg2));
+      border-radius:24px;
+      overflow:hidden;
+      min-height:560px;
+      background:
+        radial-gradient(120% 120% at 100% -10%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 60%),
+        radial-gradient(120% 120% at -10% 110%, color-mix(in srgb, var(--accent2) 22%, transparent), transparent 60%),
+        linear-gradient(120deg, var(--bg1), var(--bg2));
+      isolation:isolate;
     }
     /* Themes */
-    #atelier[data-theme="pearl"] {
-      --bg1: #f6f7fb;
-      --bg2: #ffffff;
-      --ink: #101218;
-      --muted: rgba(16,18,24,0.68);
-      --accent: #ff8fab;
-      --accent2: #7c59ff;
-      --stroke: rgba(16,18,24,0.12);
-      --shadow: 0 18px 60px rgba(14, 18, 26, 0.12);
+    #loom[data-theme="dawn"]{
+      --bg1:#faf8ff;
+      --bg2:#f2fbff;
+      --ink:#0c1220;
+      --muted:rgba(12,18,32,.72);
+      --accent:#ff9fb8;
+      --accent2:#7b5cff;
+      --stroke:rgba(12,18,32,.12);
+      --shadow:0 22px 70px rgba(12,18,32,.12);
     }
-    #atelier[data-theme="tide"] {
-      --bg1: #dff7ff;
-      --bg2: #ecfff6;
-      --ink: #0b1220;
-      --muted: rgba(11,18,32,0.72);
-      --accent: #00c2ff;
-      --accent2: #00e18e;
-      --stroke: rgba(10,12,20,0.12);
-      --shadow: 0 18px 60px rgba(0, 70, 120, 0.15);
+    #loom[data-theme="deep"]{
+      --bg1:#04181a;
+      --bg2:#09242b;
+      --ink:#eaffff;
+      --muted:rgba(234,255,255,.7);
+      --accent:#00e3c2;
+      --accent2:#00a0ff;
+      --stroke:rgba(255,255,255,.12);
     }
-    #atelier[data-theme="ember"] {
-      --bg1: #1a0f0b;
-      --bg2: #24130c;
-      --ink: #fff8ef;
-      --muted: rgba(255,248,239,0.76);
-      --accent: #ff8a3d;
-      --accent2: #ff5b6e;
-      --stroke: rgba(255,255,255,0.14);
-      --shadow: 0 18px 60px rgba(60, 10, 0, 0.45);
+    #loom[data-theme="mono"]{
+      --bg1:#111315;
+      --bg2:#161a1d;
+      --ink:#f5f7fa;
+      --muted:rgba(245,247,250,.68);
+      --accent:#b9c2cb;
+      --accent2:#7c8a96;
+      --stroke:rgba(255,255,255,.12);
     }
-
-    /* Ambient swirl + grain */
-    #atelier::before,
-    #atelier::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
+    /* Ambient layers */
+    #loom::before,
+    #loom::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      z-index:0;
     }
-    #atelier::before {
+    /* Cursor light */
+    #loom::before{
       background:
-        conic-gradient(from 0deg at 50% 50%,
-          color-mix(in srgb, var(--accent) 16%, transparent) 0 25%,
-          transparent 25% 50%,
-          color-mix(in srgb, var(--accent2) 18%, transparent) 50% 75%,
-          transparent 75% 100%);
-      filter: blur(40px) saturate(115%);
-      transform: translateZ(0);
-      animation: swirl 28s linear infinite;
-      opacity: 0.6;
-      mix-blend-mode: soft-light;
+        radial-gradient(240px 240px at var(--mx) var(--my), rgba(255,255,255,.12), transparent 60%);
+      mix-blend-mode:soft-light;
+      transition:opacity .3s ease;
+      opacity:.8;
     }
-    @keyframes swirl { to { transform: rotate(360deg); } }
-    #atelier::after {
+    /* Subtle grid + vignette */
+    #loom::after{
       background:
-        radial-gradient(160% 100% at 50% 120%, rgba(0,0,0,0.5), transparent 60%),
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 42px),
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 42px);
-      mix-blend-mode: overlay;
-      opacity: 0.55;
+        radial-gradient(140% 100% at 50% 120%, rgba(0,0,0,.45), transparent 60%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 1px, transparent 1px 40px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 1px, transparent 1px 40px);
+      mix-blend-mode:overlay;
+      opacity:.55;
+    }
+    /* Top bar */
+    #loom .topbar{
+      position:relative;
+      z-index:2;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:16px clamp(16px,3vmin,28px);
+    }
+    #loom .brand{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background:color-mix(in srgb, var(--accent) 12%, transparent);
+      font-weight:600;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    #loom .brand .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:radial-gradient(circle at 35% 30%, #fff, var(--accent));
+      box-shadow:0 0 12px color-mix(in srgb, var(--accent) 60%, transparent);
+      animation:pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.22)}}
+    #loom .spacer{flex:1}
+    #loom .controls{display:flex;flex-wrap:wrap;gap:10px}
+    #loom .chip{
+      position:relative;
+      appearance:none;
+      border:1px solid var(--stroke);
+      background:color-mix(in srgb, var(--accent2) 10%, transparent);
+      color:var(--ink);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      cursor:pointer;
+      transition:transform .14s ease, background .22s ease, border-color .22s ease;
+      overflow:hidden;
+    }
+    #loom .chip:hover{transform:translateY(-1px)}
+    #loom .chip:active{transform:translateY(0)}
+    #loom .chip.pause{background:color-mix(in srgb, var(--accent) 12%, transparent)}
+    #loom .ripple{
+      position:absolute;
+      width:12px;height:12px;border-radius:50%;
+      background:color-mix(in srgb,#fff 30%, var(--accent));
+      opacity:.35;
+      transform:translate(-50%,-50%) scale(1);
+      animation:ripple .65s ease-out forwards;
+      pointer-events:none;
+    }
+    @keyframes ripple{to{opacity:0;transform:translate(-50%,-50%) scale(16)}}
+
+    /* Stage */
+    #loom .stage{
+      position:relative;
+      z-index:1;
+      padding: clamp(8px,1.8vmin,16px) clamp(14px,2.5vmin,28px) clamp(18px,3vmin,28px);
+      min-height:520px;
+      display:grid;
+      align-items:center;
     }
 
-    /* Layout */
-    #atelier .poster {
-      position: relative;
-      z-index: 1;
-      padding: clamp(18px, 3vw, 28px);
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      gap: 16px;
-      min-height: 560px;
+    /* Generative weave */
+    #loom .weave{
+      --pad: clamp(14px, 2vmin, 24px);
+      position:absolute;
+      inset:var(--pad);
+      display:grid;
+      grid-template-rows:repeat(var(--rows), 1fr);
+      gap:clamp(6px, 1vmin, 12px);
+      z-index:0;
+      filter:saturate(120%);
     }
-    #atelier .chrome {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    #atelier .logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border: 1px solid var(--stroke);
-      border-radius: 999px;
-      background: color-mix(in srgb, var(--accent) 10%, transparent);
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      font-size: 12px;
-      text-transform: uppercase;
-    }
-    #atelier .logo::before {
-      content: "";
-      width: 10px; height: 10px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #fff, var(--accent));
-      box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 60%, transparent);
-      animation: breathe-dot 2.6s ease-in-out infinite;
-    }
-    @keyframes breathe-dot { 0%,100% { transform: scale(1); } 50% { transform: scale(1.25); } }
-
-    #atelier .spacer { flex: 1; }
-    #atelier .chips {
-      display: flex; flex-wrap: wrap; gap: 10px;
-    }
-    #atelier .chip {
-      position: relative;
-      appearance: none;
-      border: 1px solid var(--stroke);
-      background: color-mix(in srgb, var(--accent) 14%, transparent);
-      color: var(--ink);
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: transform 140ms ease, background 220ms ease, border-color 220ms ease;
-      overflow: hidden;
-    }
-    #atelier .chip:hover { transform: translateY(-1px); }
-    #atelier .chip:active { transform: translateY(0); }
-    #atelier .chip.pause { background: color-mix(in srgb, var(--accent2) 14%, transparent); }
-    #atelier .ripple {
-      position: absolute;
-      width: 12px; height: 12px;
-      background: color-mix(in srgb, #fff 30%, var(--accent));
-      opacity: 0.3;
-      border-radius: 50%;
-      transform: translate(-50%, -50%) scale(1);
-      animation: ripple 650ms ease-out forwards;
-      pointer-events: none;
-    }
-    @keyframes ripple { to { opacity: 0; transform: translate(-50%, -50%) scale(18); } }
-
-    /* Scene */
-    #atelier .scene {
-      position: relative;
-      display: grid;
-      place-items: center;
-      padding: clamp(12px, 2vw, 20px);
-      perspective: 1200px;
-      transform-style: preserve-3d;
-    }
-
-    /* Blooming blob */
-    #atelier .blob {
-      position: absolute;
-      width: 70vmin; height: 70vmin; max-width: 900px; max-height: 900px;
-      border-radius: 50%;
+    #loom .thread{
+      position:relative;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      overflow:hidden;
+      backdrop-filter:saturate(120%) blur(6px);
+      -webkit-backdrop-filter:saturate(120%) blur(6px);
       background:
-        radial-gradient(40% 60% at 30% 35%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 60%),
-        radial-gradient(50% 60% at 70% 65%, color-mix(in srgb, var(--accent2) 24%, transparent), transparent 60%);
-      filter: blur(40px) saturate(120%);
-      opacity: 0.7;
-      animation: morph 22s ease-in-out infinite alternate;
-      transform: translateZ(-80px);
+        linear-gradient(90deg,
+          color-mix(in srgb, var(--accent) 46%, transparent) 0%,
+          color-mix(in srgb, var(--accent2) 64%, transparent) 50%,
+          color-mix(in srgb, var(--accent) 46%, transparent) 100%);
+      background-size:200% 100%;
+      animation:
+        flow calc(9s + var(--tshift,0s)) linear infinite,
+        sway calc(7s + var(--tshift,0s)) ease-in-out infinite alternate;
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 6%, transparent),
+                  0 10px 24px rgba(0,0,0,.18);
+      opacity: var(--o, .95);
     }
-    @keyframes morph {
-      0% { border-radius: 46% 54% 58% 42% / 58% 48% 52% 42%; transform: translateZ(-80px) rotate(-8deg) scale(1); }
-      100% { border-radius: 60% 40% 44% 56% / 42% 60% 40% 58%; transform: translateZ(-80px) rotate(12deg) scale(1.08); }
+    /* Thread texture */
+    #loom .thread::after{
+      content:"";
+      position:absolute;inset:0;border-radius:inherit;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 14px);
+      mix-blend-mode:overlay;
+      opacity:.6;
+      pointer-events:none;
+    }
+    @keyframes flow{to{background-position: -200% 0}}
+    @keyframes sway{
+      0%{transform:translateX(-1.2%)}
+      100%{transform:translateX(1.2%)}
     }
 
-    /* Dial */
-    #atelier .dial {
-      --size: clamp(220px, 35vw, 360px);
-      position: relative;
-      width: var(--size);
-      height: var(--size);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
+    /* Floating orbs */
+    #loom .orbs{position:absolute;inset:0;pointer-events:none;z-index:0}
+    #loom .orb{
+      position:absolute;border-radius:24px;
       background:
-        radial-gradient(50% 65% at 50% 45%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%),
-        linear-gradient(180deg, color-mix(in srgb, #fff 6%, transparent), transparent);
-      border: 1px solid var(--stroke);
-      box-shadow: var(--shadow);
-      backdrop-filter: saturate(120%) blur(14px);
-      -webkit-backdrop-filter: saturate(120%) blur(14px);
-      animation: breathe 8.5s ease-in-out infinite;
-      transform: translateZ(40px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translate3d(var(--tx,0px), var(--ty,0px), 0);
-      transition: transform 200ms ease;
-    }
-    @keyframes breathe {
-      0%,100% { transform: translateZ(40px) scale(0.985); }
-      50% { transform: translateZ(40px) scale(1.015); }
-    }
-    #atelier .dial::before {
-      content: "";
-      position: absolute;
-      inset: 10px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 50% 50%, transparent 64%, color-mix(in srgb, var(--ink) 12%, transparent) 65% 66%, transparent 67%);
-      opacity: 0.8;
-    }
-    #atelier .dial::after {
-      content: "";
-      position: absolute;
-      inset: -10px;
-      border-radius: 50%;
-      background:
-        conic-gradient(var(--accent) 0 var(--p, 0deg), rgba(255,255,255,0.08) 0);
-      -webkit-mask: radial-gradient(farthest-side, transparent calc(50% - 16px), #000 calc(50% - 14px), #000 100%);
-              mask: radial-gradient(farthest-side, transparent calc(50% - 16px), #000 calc(50% - 14px), #000 100%);
-      box-shadow: 0 0 28px color-mix(in srgb, var(--accent) 30%, transparent);
-      filter: saturate(120%);
-    }
-    #atelier .dial .dot {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      transform: rotate(var(--p, 0deg));
-      transition: transform 80ms linear;
-    }
-    #atelier .dial .dot::after {
-      content: "";
-      position: absolute;
-      top: 50%; right: -6px;
-      width: 10px; height: 10px; border-radius: 50%;
-      transform: translateY(-50%);
-      background: radial-gradient(circle at 35% 30%, #fff, var(--accent2));
+        radial-gradient(120% 120% at 30% 30%, #ffffff, color-mix(in srgb, var(--accent2) 60%, #000));
+      filter: blur(0.2px) saturate(120%);
       box-shadow:
-        0 0 16px color-mix(in srgb, var(--accent2) 60%, transparent),
-        inset 0 -4px 8px rgba(0,0,0,0.25);
+        0 0 28px color-mix(in srgb, var(--accent2) 35%, transparent),
+        inset 0 -10px 30px rgba(0,0,0,.28);
+      opacity:.75;
+      animation: floaty var(--dur,14s) ease-in-out infinite;
     }
-    #atelier .time {
-      font-size: clamp(28px, 6vw, 44px);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      color: var(--ink);
-      text-shadow: 0 1px 0 rgba(0,0,0,0.1);
-    }
-    #atelier .phase {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 4px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    @keyframes floaty{
+      0%,100%{ transform: translate3d(0,0,0) rotate(0.001deg) }
+      50%{ transform: translate3d(var(--dx,14px), var(--dy,-18px),0) }
     }
 
-    /* Title */
-    #atelier .title {
-      margin-top: clamp(10px, 3vh, 22px);
-      text-align: center;
-      font-size: clamp(28px, 6vw, 60px);
-      line-height: 1.05;
-      letter-spacing: 0.02em;
+    /* Center card */
+    #loom .center{
+      position:relative;
+      place-self:center;
+      z-index:2;
+      backdrop-filter: blur(14px) saturate(120%);
+      -webkit-backdrop-filter: blur(14px) saturate(120%);
+      border:1px solid var(--stroke);
+      border-radius:22px;
+      padding: clamp(18px, 4vmin, 34px) clamp(18px, 4.5vmin, 40px);
+      text-align:center;
+      box-shadow: var(--shadow);
+      background:
+        linear-gradient(180deg, color-mix(in srgb, #fff 6%, transparent), transparent);
+    }
+    #loom .title{
+      margin:0;
+      font-size: clamp(28px, 6.4vw, 64px);
+      line-height:1.04;
+      letter-spacing:.01em;
       background: linear-gradient(90deg, var(--ink), color-mix(in srgb, var(--accent) 60%, var(--ink)));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 4px 18px rgba(0,0,0,0.2));
-      animation: ease-kerning 9s ease-in-out infinite;
-      padding: 0 10px;
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      filter: drop-shadow(0 6px 24px rgba(0,0,0,.22));
+      animation: breatheTitle 9s ease-in-out infinite;
     }
-    @keyframes ease-kerning {
-      0%,100% { letter-spacing: 0.02em; }
-      50% { letter-spacing: 0.06em; }
+    @keyframes breatheTitle{0%,100%{letter-spacing:.01em}50%{letter-spacing:.06em}}
+    #loom .tag{
+      margin:.5rem 0 0;
+      font-size: clamp(12px, 2vw, 16px);
+      color:var(--muted);
+      letter-spacing:.04em;
     }
-    #atelier .subtitle {
-      display: block;
-      margin-top: 6px;
-      font-size: clamp(13px, 2.2vw, 16px);
-      color: var(--muted);
-      letter-spacing: 0.02em;
+    #loom .clockline{
+      margin-top:14px;
+      display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;
+      color:var(--muted);
+      font-size:12px;
+    }
+    #loom .iter{
+      padding:4px 10px;border-radius:999px;border:1px solid var(--stroke);
+      background:color-mix(in srgb, var(--accent) 12%, transparent);
+      color:var(--ink);
     }
 
-    /* Drift seeds */
-    #atelier .seeds { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-    #atelier .seed {
-      position: absolute;
-      width: 6px; height: 6px; border-radius: 50%;
-      background: color-mix(in srgb, var(--accent2) 60%, #fff);
-      box-shadow: 0 0 10px color-mix(in srgb, var(--accent2) 50%, transparent);
-      opacity: 0.75;
-      animation: float 10s ease-in-out infinite;
+    /* Footer */
+    #loom .meta{
+      position:relative;
+      z-index:2;
+      display:flex;align-items:center;gap:12px;
+      padding:14px clamp(16px,3vmin,28px) 18px;
+      border-top:1px dashed var(--stroke);
+      color:var(--muted);
+      font-size:12px;
     }
-    @keyframes float { 50% { transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(1.1); } }
-
-    /* Footer meta */
-    #atelier .meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding-top: 14px;
-      margin-top: 8px;
-      border-top: 1px dashed var(--stroke);
-      color: var(--muted);
-      font-size: 12px;
-    }
-    #atelier .meta .tick {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: color-mix(in srgb, var(--accent) 60%, transparent);
-      box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent);
-    }
-    #atelier .meta .divider {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--stroke), transparent);
-      margin: 0 4px;
-    }
-    #atelier .iter {
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: color-mix(in srgb, var(--accent) 12%, transparent);
-      color: var(--ink);
-    }
+    #loom .divider{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--stroke),transparent)}
 
     /* Motion control */
-    #atelier[data-paused] .blob,
-    #atelier[data-paused] .dial,
-    #atelier[data-paused] .seed,
-    #atelier[data-paused]::before {
-      animation-play-state: paused !important;
+    #loom[data-paused] .thread,
+    #loom[data-paused] .orb,
+    #loom[data-paused] .brand .dot,
+    #loom[data-paused]::before{
+      animation-play-state:paused!important;
     }
-    @media (prefers-reduced-motion: reduce) {
-      #atelier::before, #atelier .blob, #atelier .dial { animation: none !important; }
-      #atelier .seed { animation: none !important; }
-      #atelier .title { animation: none !important; }
+    @media (prefers-reduced-motion: reduce){
+      #loom .thread, #loom .orb, #loom .brand .dot, #loom .title { animation:none !important; }
     }
   </style>
 
-  <div class="poster" role="region" aria-live="polite">
-    <div class="chrome">
-      <div class="logo">Studio Quiet</div>
-      <span class="iter" aria-label="Iteration number">Iteration 1270</span>
-      <div class="spacer"></div>
-      <div class="chips" aria-label="Palette controls">
-        <button class="chip" data-theme="pearl" aria-label="Switch to Pearl">Pearl</button>
-        <button class="chip" data-theme="tide" aria-label="Switch to Tide">Tide</button>
-        <button class="chip" data-theme="ember" aria-label="Switch to Ember">Ember</button>
-        <button class="chip" data-theme="ink" aria-label="Switch to Ink">Ink</button>
-        <button class="chip pause" type="button" aria-pressed="false">Pause</button>
-      </div>
-    </div>
-
-    <div class="scene">
-      <div class="blob animate" aria-hidden="true"></div>
-      <div class="seeds" aria-hidden="true"></div>
-
-      <div class="dial animate" aria-label="Breathing dial">
-        <div class="time" title="Local time">--:--</div>
-        <div class="phase">inhale</div>
-        <div class="dot" aria-hidden="true"></div>
-      </div>
-
-      <h1 class="title">Breathe.
-        <span class="subtitle">Make space for quiet ideas.</span>
-      </h1>
-    </div>
-
-    <div class="meta">
-      <span class="tick" aria-hidden="true"></span>
-      <span class="hint">Move your cursor • Tap to change palette</span>
-      <span class="divider" aria-hidden="true"></span>
-      <span class="clock" title="Live clock">--:--:--</span>
-      <span id="last-updated">Last updated: 2025-12-13 20:41:00 EST</span>
+  <div class="topbar">
+    <div class="brand"><span class="dot" aria-hidden="true"></span> Studio Quiet</div>
+    <div class="spacer"></div>
+    <div class="controls" aria-label="Palette controls">
+      <button class="chip" data-theme="dawn" aria-label="Switch to Dawn">Dawn</button>
+      <button class="chip" data-theme="dusk" aria-label="Switch to Dusk">Dusk</button>
+      <button class="chip" data-theme="deep" aria-label="Switch to Deep">Deep</button>
+      <button class="chip" data-theme="mono" aria-label="Switch to Mono">Mono</button>
+      <button class="chip pause" type="button" aria-pressed="false">Pause</button>
     </div>
   </div>
 
+  <div class="stage" role="region" aria-live="polite">
+    <div class="weave" aria-hidden="true"></div>
+    <div class="orbs" aria-hidden="true"></div>
+
+    <div class="center">
+      <h1 class="title">Soft Futures</h1>
+      <p class="tag">Weave today into tomorrow.</p>
+      <div class="clockline">
+        <span class="clock" title="Live clock">--:--:--</span>
+        <span class="iter" aria-label="Iteration number">Iteration 1271</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="meta">
+    <span class="hint">Move to cast light • Tap to change palette</span>
+    <span class="divider" aria-hidden="true"></span>
+    <span id="last-updated">Last updated: 2025-12-13 22:27:29 EST</span>
+  </div>
+
   <script>
-    (function () {
-      const root = document.getElementById('atelier');
+    (function(){
+      const root = document.getElementById('loom');
 
       // Last updated
       const lu = root.querySelector('#last-updated');
       const now = new Date();
-      try {
+      try{
         lu.textContent = 'Last updated: ' + now.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
-      } catch {
+      }catch{
         lu.textContent = 'Last updated: ' + now.toString();
       }
 
-      // Seeds (drifting sparks)
-      const seedsWrap = root.querySelector('.seeds');
-      const SEED_COUNT = 28;
-      for (let i = 0; i < SEED_COUNT; i++) {
-        const s = document.createElement('span');
-        s.className = 'seed animate';
-        const left = Math.random() * 100;
-        const top = Math.random() * 100;
-        const dx = (Math.random() * 24 - 12).toFixed(1) + 'px';
-        const dy = (Math.random() * 24 - 12).toFixed(1) + 'px';
-        const dur = (8 + Math.random() * 8).toFixed(2) + 's';
-        const delay = (-Math.random() * 8).toFixed(2) + 's';
-        s.style.left = left + '%';
-        s.style.top = top + '%';
-        s.style.setProperty('--dx', dx);
-        s.style.setProperty('--dy', dy);
-        s.style.animationDuration = dur;
-        s.style.animationDelay = delay;
-        seedsWrap.appendChild(s);
+      // Build weave
+      const weave = root.querySelector('.weave');
+      const ROWS = 14;
+      weave.style.setProperty('--rows', ROWS);
+      for(let i=0;i<ROWS;i++){
+        const t=document.createElement('div');
+        t.className='thread';
+        const tshift=(Math.random()*4).toFixed(2)+'s';
+        const op=(0.88 + Math.random()*0.12).toFixed(2);
+        t.style.setProperty('--tshift', tshift);
+        t.style.setProperty('--o', op);
+        weave.appendChild(t);
       }
 
-      // Time + dial progress
-      const timeEl = root.querySelector('.time');
-      const clockEl = root.querySelector('.clock');
-      const dial = root.querySelector('.dial');
-      const phase = root.querySelector('.phase');
-      const dot = root.querySelector('.dial .dot');
-      let rafId;
+      // Floating orbs
+      const orbs = root.querySelector('.orbs');
+      const ORB_COUNT = 6;
+      const rectInit = root.getBoundingClientRect();
+      for(let i=0;i<ORB_COUNT;i++){
+        const o=document.createElement('span');
+        o.className='orb';
+        const size = (Math.random()*80 + 60); // 60–140px
+        const left = Math.random()*80 + 5; // percent
+        const top = Math.random()*70 + 10; // percent
+        const dx = (Math.random()*40 - 20).toFixed(0)+'px';
+        const dy = (Math.random()*40 - 20).toFixed(0)+'px';
+        const dur = (12 + Math.random()*8).toFixed(2)+'s';
+        o.style.width=size+'px';
+        o.style.height=size+'px';
+        o.style.left=left+'%';
+        o.style.top=top+'%';
+        o.style.setProperty('--dx', dx);
+        o.style.setProperty('--dy', dy);
+        o.style.setProperty('--dur', dur);
+        orbs.appendChild(o);
+      }
 
-      function tick() {
-        const d = new Date();
-        // main time
-        try {
-          timeEl.textContent = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-          clockEl.textContent = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        } catch {
-          timeEl.textContent = d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0');
-          clockEl.textContent = d.toTimeString().split(' ')[0];
+      // Clock
+      const clock = root.querySelector('.clock');
+      function tick(){
+        const d=new Date();
+        try{
+          clock.textContent = d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+        }catch{
+          clock.textContent = d.toTimeString().split(' ')[0];
         }
-        // ring progress and breathing cue
-        const secs = d.getSeconds() + d.getMilliseconds() / 1000;
-        const deg = (secs / 60) * 360;
-        dial.style.setProperty('--p', deg + 'deg');
-        dot.style.transform = `rotate(${deg}deg)`;
-        phase.textContent = secs % 8 < 4 ? 'inhale' : 'exhale';
-
-        rafId = requestAnimationFrame(tick);
       }
       tick();
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) cancelAnimationFrame(rafId);
-        else tick();
-      }, { passive: true });
+      const clockTimer = setInterval(tick, 500);
 
-      // Theme switching + ripple
-      root.querySelectorAll('.chip[data-theme]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const theme = btn.getAttribute('data-theme');
+      // Pointer light
+      const stage = root.querySelector('.stage');
+      function moveLight(e){
+        const r = stage.getBoundingClientRect();
+        const x = ((e.clientX - r.left)/r.width)*100;
+        const y = ((e.clientY - r.top)/r.height)*100;
+        root.style.setProperty('--mx', x.toFixed(2)+'%');
+        root.style.setProperty('--my', y.toFixed(2)+'%');
+      }
+      function leaveLight(){
+        root.style.setProperty('--mx', '50%');
+        root.style.setProperty('--my', '50%');
+      }
+      stage.addEventListener('pointermove', moveLight, {passive:true});
+      stage.addEventListener('pointerleave', leaveLight, {passive:true});
+
+      // Theme switching with ripple
+      root.querySelectorAll('.chip[data-theme]').forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+          const theme=btn.getAttribute('data-theme');
           root.setAttribute('data-theme', theme);
-          const ripple = document.createElement('span');
-          ripple.className = 'ripple';
-          const r = btn.getBoundingClientRect();
-          ripple.style.left = (e.clientX - r.left) + 'px';
-          ripple.style.top = (e.clientY - r.top) + 'px';
+          const ripple=document.createElement('span');
+          ripple.className='ripple';
+          const b = btn.getBoundingClientRect();
+          ripple.style.left=(e.clientX - b.left)+'px';
+          ripple.style.top=(e.clientY - b.top)+'px';
           btn.appendChild(ripple);
-          setTimeout(() => ripple.remove(), 700);
+          setTimeout(()=>ripple.remove(), 700);
         });
       });
 
-      // Pause animations (background + blob + seeds + dial breathing)
+      // Pause animations
       const pauseBtn = root.querySelector('.chip.pause');
-      pauseBtn.addEventListener('click', () => {
+      pauseBtn.addEventListener('click', ()=>{
         const paused = !root.hasAttribute('data-paused');
         root.toggleAttribute('data-paused', paused);
         pauseBtn.setAttribute('aria-pressed', String(paused));
         pauseBtn.textContent = paused ? 'Resume' : 'Pause';
       });
 
-      // Subtle tilt (parallax)
-      const scene = root.querySelector('.dial');
-      const sceneArea = root.querySelector('.scene');
-      function onMove(e) {
-        const rect = sceneArea.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        scene.style.setProperty('--rx', (y * -8).toFixed(2) + 'deg');
-        scene.style.setProperty('--ry', (x * 8).toFixed(2) + 'deg');
-        scene.style.setProperty('--tx', (x * 12).toFixed(1) + 'px');
-        scene.style.setProperty('--ty', (y * 12).toFixed(1) + 'px');
-      }
-      function resetTilt() {
-        scene.style.setProperty('--rx', '0deg');
-        scene.style.setProperty('--ry', '0deg');
-        scene.style.setProperty('--tx', '0px');
-        scene.style.setProperty('--ty', '0px');
-      }
-      sceneArea.addEventListener('pointermove', onMove);
-      sceneArea.addEventListener('pointerleave', resetTilt);
-
-      // Respect reduced motion for tilt
+      // Respect reduced motion
       const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-      if (mq.matches) {
-        sceneArea.removeEventListener('pointermove', onMove);
-        sceneArea.removeEventListener('pointerleave', resetTilt);
+      if(mq.matches){
+        stage.removeEventListener('pointermove', moveLight);
+        stage.removeEventListener('pointerleave', leaveLight);
       }
+
+      // Cleanup on unload
+      window.addEventListener('beforeunload', ()=>clearInterval(clockTimer), {once:true});
     })();
   </script>
 </div>
