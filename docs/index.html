@@ -73,253 +73,189 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="lumen" data-theme="dawn" aria-label="Lumen Sonata — generative time tapestry" data-paused="false">
+<div id="field" data-palette="aurora" data-paused="false" data-bloom="false" aria-label="Kite Field — a living canvas of light">
   <style>
-    /* Design tokens */
-    #lumen{
-      --bg0:#fff8f3; --bg1:#f2f7ff; --bg2:#f8fffb;
-      --ink:#0e1220; --muted:rgba(14,18,32,.64);
-      --a:#ff7e79; --b:#7acbff; --c:#98e9b8; --halo:#fff7;
-      --stroke:rgba(14,18,32,.14);
-      --mx:50%; --my:50%;
-      position:relative; min-height:720px; border-radius:32px; overflow:hidden;
-      color:var(--ink);
+    /* Tokens */
+    #field{
+      --ink:#0e1324; --muted:color-mix(in srgb, var(--ink) 60%, transparent);
+      --bg0:#0f1324; --bg1:#141a33; --bg2:#10182c;
+      --a:#78ffe3; --b:#93a3ff; --c:#ffb7a2; --halo:#ffffff44;
+      position:relative; min-height:720px; border-radius:28px; overflow:hidden; color:#eef3ff;
       font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
       background:
-        radial-gradient(120% 120% at 20% 10%, color-mix(in srgb, var(--a) 18%, transparent), transparent 55%),
-        radial-gradient(120% 110% at 90% 80%, color-mix(in srgb, var(--b) 18%, transparent), transparent 60%),
-        radial-gradient(100% 120% at 30% 90%, color-mix(in srgb, var(--c) 16%, transparent), transparent 60%),
+        radial-gradient(120% 100% at 10% 0%, color-mix(in srgb, var(--a) 20%, transparent), transparent 60%),
+        radial-gradient(120% 120% at 90% 100%, color-mix(in srgb, var(--b) 18%, transparent), transparent 62%),
+        radial-gradient(100% 100% at 50% 50%, color-mix(in srgb, var(--c) 10%, transparent), transparent 70%),
         linear-gradient(180deg, var(--bg0), var(--bg1) 50%, var(--bg2));
-      box-shadow: 0 28px 90px rgba(10,20,40,.12);
+      box-shadow: 0 28px 90px rgba(10,20,40,.22) inset;
       isolation:isolate;
     }
-    /* Themes */
-    #lumen[data-theme="dusk"]{
-      --bg0:#0c0f1a; --bg1:#101629; --bg2:#121b2f;
-      --ink:#eef3ff; --muted:rgba(238,243,255,.74);
-      --a:#8ea6ff; --b:#ff9da3; --c:#7affd2; --halo:#fff4;
-      --stroke:rgba(255,255,255,.14);
-    }
-    #lumen[data-theme="midnight"]{
-      --bg0:#05070d; --bg1:#0a0f1d; --bg2:#0e1424;
-      --ink:#f6fbff; --muted:rgba(246,251,255,.72);
-      --a:#66a3ff; --b:#b388ff; --c:#6ef2c8; --halo:#fff3;
-      --stroke:rgba(255,255,255,.16);
-    }
-    #lumen[data-theme="mist"]{
-      --bg0:#f7fbff; --bg1:#f2fbf6; --bg2:#f7f7ff;
-      --ink:#0f141c; --muted:rgba(15,20,28,.62);
-      --a:#66d1b8; --b:#9ab6ff; --c:#ffd36e; --halo:#fff7;
-      --stroke:rgba(15,20,28,.12);
-    }
+    /* Palettes */
+    #field[data-palette="aurora"]{ --a:#78ffe3; --b:#7fa2ff; --c:#ffb0d3; --bg0:#0a1220; --bg1:#0d1728; --bg2:#0c1524 }
+    #field[data-palette="sunset"]{ --a:#ffb36b; --b:#ff6e9b; --c:#ffd46e; --bg0:#1b0f10; --bg1:#241316; --bg2:#201015 }
+    #field[data-palette="garden"]{ --a:#9af6a0; --b:#73d6ff; --c:#e0ff93; --bg0:#0f1712; --bg1:#121c15; --bg2:#101a14 }
+    #field[data-palette="mono"]{ --a:#9aa8ff; --b:#aec0ff; --c:#dfe6ff; --bg0:#0b0d13; --bg1:#0f121a; --bg2:#0e1118 }
 
-    /* Grain + pointer glow */
-    #lumen::before,
-    #lumen::after{content:"";position:absolute;inset:0;pointer-events:none}
-    #lumen::before{
-      opacity:.05; mix-blend-mode:soft-light; filter:blur(.4px);
+    /* Grain + glow veil */
+    #field::before, #field::after{content:""; position:absolute; inset:0; pointer-events:none}
+    #field::before{
+      opacity:.05; mix-blend-mode:soft-light; filter:blur(.3px);
       background:
         repeating-linear-gradient(0deg, #000 0 1px, transparent 1px 3px),
-        repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 3px);
+        repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 4px);
     }
-    #lumen::after{
-      background: radial-gradient(300px 300px at var(--mx) var(--my),
-        color-mix(in srgb, var(--a) 26%, transparent),
-        transparent 60%);
-      opacity:.9; mix-blend-mode:soft-light; transition:opacity .3s ease;
+    #field::after{
+      background: radial-gradient(360px 360px at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--a) 25%, transparent), transparent 60%);
+      opacity:.9; mix-blend-mode:soft-light; transition: opacity .25s ease;
     }
 
-    /* Top bar */
-    #lumen .bar{
-      position:relative; z-index:3; display:flex; align-items:center; gap:14px;
-      padding:16px clamp(16px,3vmin,28px);
-    }
-    #lumen .logo{
+    /* Top chrome */
+    #field .chrome{ position:relative; z-index:4; display:flex; align-items:center; gap:14px; padding:16px clamp(16px,3vmin,28px) }
+    #field .brand{
       display:inline-flex; align-items:center; gap:10px; white-space:nowrap;
-      padding:10px 14px; border-radius:999px; border:1px solid var(--stroke);
-      background: color-mix(in srgb, var(--bg1) 80%, transparent);
-      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 6%, transparent);
-      font-weight:700; letter-spacing:.06em; text-transform:uppercase; font-size:11px;
+      padding:10px 14px; border-radius:14px; border:1px solid #ffffff1f;
+      background: color-mix(in srgb, var(--bg1) 70%, transparent);
+      box-shadow: inset 0 0 0 1px #ffffff0d, 0 6px 20px #00000033;
+      font-weight:800; letter-spacing:.04em; font-size:12px; text-transform:uppercase;
     }
-    #lumen .logo .glyph{
+    #field .brand .mark{
       width:14px; height:14px; border-radius:4px;
       background: conic-gradient(from 0deg, var(--a), var(--b), var(--c), var(--a));
-      animation: roll 14s linear infinite;
-      box-shadow: 0 0 10px color-mix(in srgb, var(--a) 50%, transparent);
+      animation: spin 10s linear infinite;
+      box-shadow: 0 0 12px color-mix(in srgb, var(--a) 40%, transparent);
     }
-    @keyframes roll { to{ transform: rotate(360deg) } }
-    #lumen .spacer{ flex:1 }
+    @keyframes spin{ to{ transform: rotate(1turn) } }
 
-    /* Controls */
-    #lumen .controls{ display:flex; flex-wrap:wrap; align-items:center; gap:10px }
-    #lumen .chip{
+    #field .controls{ margin-left:auto; display:flex; flex-wrap:wrap; align-items:center; gap:10px }
+    #field .chip{
       position:relative; appearance:none; cursor:pointer;
-      border:1px solid var(--stroke); border-radius:999px; overflow:hidden;
-      padding:8px 12px; font-size:12px; color:var(--ink);
-      background: color-mix(in srgb, var(--bg0) 70%, var(--a) 6%);
-      transition: transform .14s ease, box-shadow .22s ease, background .22s ease;
-      box-shadow: 0 2px 0 rgba(0,0,0,.02);
+      border:1px solid #ffffff24; border-radius:12px; overflow:hidden;
+      padding:8px 12px; font-size:12px; color:#eef3ff;
+      background: color-mix(in srgb, var(--bg0) 60%, var(--a) 6%);
+      transition: transform .14s ease, box-shadow .22s ease, background .22s ease, color .22s ease;
+      box-shadow: 0 2px 0 rgba(0,0,0,.08), 0 8px 16px rgba(0,0,0,.12);
     }
-    #lumen .chip:hover{ transform:translateY(-1px); box-shadow:0 8px 18px rgba(0,0,0,.08) }
-    #lumen .chip:active{ transform:translateY(0) }
-    #lumen .chip.alt{ background: color-mix(in srgb, var(--bg0) 70%, var(--b) 8%) }
-    #lumen .chip.mute{ background: color-mix(in srgb, var(--bg0) 74%, var(--c) 6%) }
-    #lumen .chip.out{ background: color-mix(in srgb, var(--bg0) 86%, transparent) }
-    #lumen .ripple{ position:absolute; width:10px; height:10px; border-radius:50%;
+    #field .chip:hover{ transform: translateY(-1px); box-shadow: 0 10px 28px rgba(0,0,0,.18) }
+    #field .chip.alt{ background: color-mix(in srgb, var(--bg0) 60%, var(--b) 8%) }
+    #field .chip.alt2{ background: color-mix(in srgb, var(--bg0) 60%, var(--c) 8%) }
+    #field .chip.out{ background: color-mix(in srgb, var(--bg0) 86%, transparent) }
+    #field .chip[aria-pressed="true"]{ outline:2px solid color-mix(in srgb, var(--a) 40%, transparent) }
+
+    #field .ripple{ position:absolute; width:10px; height:10px; border-radius:50%;
       background: color-mix(in srgb, #fff 40%, var(--a)); opacity:.35;
       transform: translate(-50%,-50%) scale(1); animation: rr .65s ease-out forwards; pointer-events:none }
     @keyframes rr{ to{ opacity:0; transform:translate(-50%,-50%) scale(16)} }
 
-    /* Stage */
-    #lumen .stage{
-      position:relative; z-index:1; display:grid; place-items:center;
-      padding: clamp(12px, 4vmin, 40px); min-height:600px;
+    /* Stage + canvas */
+    #field .stage{ position:relative; z-index:1; min-height:600px; display:grid; place-items:center; padding: clamp(10px, 4vmin, 36px) }
+    #field .canvas{
+      position:absolute; inset:12px; border-radius:24px; width:calc(100% - 24px); height:calc(100% - 24px);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--bg1) 85%, transparent), transparent 70%);
+      border:1px solid #ffffff1a;
+      box-shadow: inset 0 0 80px #00000066, 0 14px 48px rgba(0,0,0,.36);
     }
-    #lumen .frame{
-      position:absolute; inset:12px; border-radius:26px;
-      border:1px solid var(--stroke);
-      background:
-        linear-gradient(180deg, color-mix(in srgb, var(--bg1) 92%, transparent), transparent 70%),
-        color-mix(in srgb, var(--bg0) 78%, transparent);
-      box-shadow: 0 14px 48px rgba(0,0,0,.10);
-    }
+    #field[data-bloom="true"] .canvas{ filter: blur(1.2px) saturate(130%) brightness(1.04) }
 
-    /* SVG scene */
-    #lumen .scene{ width:100%; max-width:1200px; aspect-ratio: 16/9; display:block; }
-    #lumen .scene .orbit{ fill:none; stroke: color-mix(in srgb, var(--ink) 14%, transparent); stroke-width:1; opacity:.8 }
-    #lumen .scene .spin-slow{ transform-origin:500px 350px; animation: spinSlow 24s linear infinite }
-    #lumen .scene .spin-mid{ transform-origin:500px 350px; animation: spinMid 14s linear infinite }
-    #lumen .scene .spin-fast{ transform-origin:500px 350px; animation: spinFast 8s linear infinite }
-    @keyframes spinSlow{ to{ transform: rotate(360deg) } }
-    @keyframes spinMid{ to{ transform: rotate(-360deg) } }
-    @keyframes spinFast{ to{ transform: rotate(360deg) } }
-
-    #lumen .shape{
-      fill:none; stroke-width:2.2; vector-effect:non-scaling-stroke; mix-blend-mode:screen;
-      filter: drop-shadow(0 10px 18px color-mix(in srgb, var(--a) 24%, transparent));
+    /* Centerpiece copy */
+    #field .hero{
+      position:relative; z-index:3; text-align:center; max-width:min(760px, 90%); margin:auto;
+      padding:18px 20px; backdrop-filter: blur(8px) saturate(120%); -webkit-backdrop-filter: blur(8px) saturate(120%);
+      border-radius:18px; border:1px solid #ffffff24;
+      background: color-mix(in srgb, var(--bg0) 18%, transparent);
+      box-shadow: 0 10px 28px rgba(0,0,0,.25);
     }
-    #lumen .shape.a{ stroke:url(#strokeA) }
-    #lumen .shape.b{ stroke:url(#strokeB); opacity:.9; filter: drop-shadow(0 12px 22px color-mix(in srgb, var(--b) 24%, transparent)) }
-
-    /* Clock card */
-    #lumen .clock{
-      position:absolute; z-index:2; bottom:24px; right:24px;
-      display:flex; align-items:baseline; gap:.28em; line-height:1;
-      padding:14px 16px; border-radius:16px; border:1px solid var(--stroke);
-      background: color-mix(in srgb, var(--bg0) 22%, transparent);
-      backdrop-filter: blur(8px) saturate(130%); -webkit-backdrop-filter: blur(8px) saturate(130%);
-      box-shadow: 0 8px 28px rgba(0,0,0,.12);
-      font-variant-numeric: tabular-nums lining-nums;
-      transform: translateZ(0);
-    }
-    #lumen .clock .t{ font-size: clamp(42px, 10vw, 96px); font-weight:800;
-      background: linear-gradient(90deg, var(--ink), color-mix(in srgb, var(--ink) 60%, var(--a)));
+    #field .hero h1{
+      margin:0 0 10px; line-height:1.08; font-size: clamp(28px, 6vw, 56px); font-weight:900;
+      background: linear-gradient(90deg, #fff, color-mix(in srgb, #fff 84%, var(--a)));
       -webkit-background-clip:text; background-clip:text; color:transparent;
+      letter-spacing:.01em;
     }
-    #lumen .clock .sep{ font-size: clamp(42px, 10vw, 96px); opacity:.8 }
-    #lumen .clock .ampm{ font-size:12px; color:var(--muted); margin-left:.3em }
-    #lumen .clock .sub{ position:absolute; left:14px; bottom:-28px; font-size:12px; color:var(--muted) }
+    #field .hero p{ margin:0; font-size: clamp(14px, 2.4vw, 16px); color: color-mix(in srgb, #ffffff 82%, var(--muted)) }
+
+    /* Time dial */
+    #field .dial{
+      position:absolute; right:20px; bottom:20px; z-index:4; width:84px; height:84px;
+      display:grid; place-items:center;
+      border-radius:16px; border:1px solid #ffffff1f; background: color-mix(in srgb, var(--bg0) 18%, transparent);
+      box-shadow: 0 10px 28px rgba(0,0,0,.28); backdrop-filter: blur(8px) saturate(120%);
+    }
+    #field .dial svg{ width:64px; height:64px; transform: rotate(-90deg) }
+    #field .dial .t{ position:absolute; font-weight:800; font-size:12px; color:#d8e2ff }
 
     /* Footer */
-    #lumen .meta{
-      position:relative; z-index:2; margin: 18px auto 18px;
+    #field .meta{
+      position:relative; z-index:4; margin: 18px auto 18px;
       display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap;
-      color:var(--muted); font-size:12px;
+      color:#dbe4ff; font-size:12px;
     }
-    #lumen .pill{ padding:7px 12px; border-radius:999px; border:1px solid var(--stroke);
-      background: color-mix(in srgb, var(--bg0) 86%, transparent); color:var(--ink) }
-    #lumen .bead{ width:10px; height:10px; border-radius:50%; background: color-mix(in srgb, var(--b) 60%, transparent);
-      box-shadow: 0 0 14px color-mix(in srgb, var(--b) 40%, transparent) }
+    #field .pill{ padding:7px 12px; border-radius:999px; border:1px solid #ffffff24;
+      background: color-mix(in srgb, var(--bg0) 70%, transparent) }
 
-    /* Motion prefs */
-    #lumen[data-paused="true"] .spin-slow,
-    #lumen[data-paused="true"] .spin-mid,
-    #lumen[data-paused="true"] .spin-fast{ animation-play-state: paused !important }
+    /* Motion preferences */
     @media (prefers-reduced-motion: reduce){
-      #lumen .scene .spin-slow,
-      #lumen .scene .spin-mid,
-      #lumen .scene .spin-fast{ animation: none !important }
-      #lumen::after{ opacity:.5 }
+      #field::after{ opacity:.5 }
+      #field .brand .mark{ animation:none }
+      #field .canvas{ filter:none !important }
     }
   </style>
 
-  <div class="bar">
-    <div class="logo"><span class="glyph" aria-hidden="true"></span> Lumen Sonata</div>
-    <div class="spacer"></div>
-    <div class="controls" aria-label="Theme and motion">
-      <button class="chip out" data-theme="dawn" aria-label="Dawn theme">Dawn</button>
-      <button class="chip alt" data-theme="dusk" aria-label="Dusk theme">Dusk</button>
-      <button class="chip" data-theme="midnight" aria-label="Midnight theme">Midnight</button>
-      <button class="chip mute" data-theme="mist" aria-label="Mist theme">Mist</button>
-      <button class="chip auto" type="button" aria-pressed="false" title="Auto-cycle themes">Auto</button>
+  <div class="chrome">
+    <div class="brand" aria-label="Kite Field">
+      <span class="mark" aria-hidden="true"></span>
+      Kite Field
+    </div>
+    <div class="controls" aria-label="Palette and motion">
+      <button class="chip out" data-palette="aurora">Aurora</button>
+      <button class="chip alt" data-palette="sunset">Sunset</button>
+      <button class="chip alt2" data-palette="garden">Garden</button>
+      <button class="chip" data-palette="mono">Mono</button>
+      <button class="chip auto" type="button" aria-pressed="false" title="Auto-cycle palettes">Auto</button>
+      <button class="chip bloom" type="button" aria-pressed="false" title="Toggle glow">Bloom</button>
       <button class="chip pause" type="button" aria-pressed="false">Pause</button>
     </div>
   </div>
 
   <div class="stage" role="region" aria-live="polite">
-    <div class="frame" aria-hidden="true"></div>
+    <canvas class="canvas" width="1280" height="800" role="img" aria-label="Light particles flowing in a field"></canvas>
 
-    <svg class="scene" viewBox="0 0 1000 700" role="img" aria-label="Generative aurora shapes and orbits">
-      <defs>
-        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="var(--halo)" stop-opacity="0.9"/>
-          <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
-        </radialGradient>
-        <linearGradient id="strokeA" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop class="s1" offset="0%" stop-color="var(--a)" stop-opacity=".95"/>
-          <stop class="s2" offset="100%" stop-color="var(--b)" stop-opacity=".95"/>
-        </linearGradient>
-        <linearGradient id="strokeB" x1="100%" y1="0%" x2="0%" y2="100%">
-          <stop class="s3" offset="0%" stop-color="var(--c)" stop-opacity=".95"/>
-          <stop class="s4" offset="100%" stop-color="var(--b)" stop-opacity=".9"/>
-        </linearGradient>
-        <filter id="soft">
-          <feGaussianBlur stdDeviation="16" result="b"/>
-          <feBlend in="SourceGraphic" in2="b" mode="screen"/>
-        </filter>
-      </defs>
+    <div class="hero">
+      <h1>Light that remembers where it’s been.</h1>
+      <p>Move your pointer to bend the stream. Switch palettes. Let it drift. A quiet instrument for the eyes.</p>
+    </div>
 
-      <!-- Orbits -->
-      <g opacity=".9" filter="url(#soft)">
-        <circle class="orbit spin-slow" cx="500" cy="350" r="260" stroke-dasharray="2 10"/>
-        <circle class="orbit spin-mid"  cx="500" cy="350" r="190" stroke-dasharray="1 8"/>
-        <circle class="orbit spin-fast" cx="500" cy="350" r="120" stroke-dasharray="2 6"/>
-      </g>
-
-      <!-- Shapes (animated via JS) -->
-      <path class="shape a" d="" />
-      <path class="shape b" d="" />
-
-      <!-- Subtle center glow -->
-      <circle cx="500" cy="350" r="180" fill="url(#glow)" opacity=".28"/>
-    </svg>
-
-    <div class="clock" aria-label="Current time">
-      <span class="t hh">12</span><span class="sep">:</span><span class="t mm">00</span><span class="ampm">AM</span>
-      <div class="sub" aria-live="polite"></div>
+    <div class="dial" aria-label="Time dial">
+      <svg viewBox="0 0 100 100" role="img" aria-label="Minute progress ring">
+        <defs>
+          <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="var(--a)" stop-opacity=".95"/>
+            <stop offset="100%" stop-color="var(--b)" stop-opacity=".95"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="42" fill="none" stroke="#ffffff18" stroke-width="6"/>
+        <circle class="prog" cx="50" cy="50" r="42" fill="none" stroke="url(#ring)" stroke-width="6" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264"/>
+      </svg>
+      <span class="t" aria-hidden="true">00</span>
     </div>
   </div>
 
   <div class="meta">
-    <span class="pill" aria-label="Iteration number">Iteration 1275</span>
-    <span class="bead" aria-hidden="true"></span>
-    <span id="last-updated">Last updated: 2025-12-14 02:17:39 EST</span>
+    <span class="pill" aria-label="Iteration number">Iteration 1276</span>
+    <span id="last-updated">Last updated: 2025-12-14 03:23:24 EST</span>
   </div>
 
   <script>
     (function(){
-      const root = document.getElementById('lumen');
-      const svg = root.querySelector('.scene');
-      const shapeA = root.querySelector('.shape.a');
-      const shapeB = root.querySelector('.shape.b');
-      const pauseBtn = root.querySelector('.chip.pause');
+      const root = document.getElementById('field');
+      const cvs = root.querySelector('.canvas');
+      const ctx = cvs.getContext('2d', { alpha: true });
       const autoBtn = root.querySelector('.chip.auto');
-      const themeBtns = root.querySelectorAll('.chip[data-theme]');
+      const pauseBtn = root.querySelector('.chip.pause');
+      const bloomBtn = root.querySelector('.chip.bloom');
+      const paletteBtns = root.querySelectorAll('.chip[data-palette]');
+      const dial = root.querySelector('.dial');
+      const ring = root.querySelector('.dial .prog');
+      const dialText = root.querySelector('.dial .t');
       const lu = root.querySelector('#last-updated');
-      const clockHH = root.querySelector('.clock .hh');
-      const clockMM = root.querySelector('.clock .mm');
-      const clockAM = root.querySelector('.clock .ampm');
-      const clockSub = root.querySelector('.clock .sub');
 
       // Last updated
       try{
@@ -328,76 +264,137 @@
         lu.textContent = 'Last updated: ' + new Date().toString();
       }
 
-      // Time + date
-      function updateTime(){
-        const d = new Date();
-        let h = d.getHours();
-        const am = h < 12;
-        const hr = ((h + 11) % 12) + 1;
-        const min = d.getMinutes();
-        clockHH.textContent = String(hr).padStart(2,'0');
-        clockMM.textContent = String(min).padStart(2,'0');
-        clockAM.textContent = am ? 'AM' : 'PM';
-        clockSub.textContent = d.toLocaleString(undefined, { weekday:'long', month:'long', day:'numeric' });
+      // Palettes for particles
+      const palettes = {
+        aurora: ['#7fffe8','#94a6ff','#ffb0d9','#7fd5ff'],
+        sunset: ['#ffb36b','#ff6e9b','#ffd46e','#ff8ea1'],
+        garden: ['#9af6a0','#73d6ff','#e0ff93','#7fe9c7'],
+        mono:   ['#dfe6ff','#b7c4ff','#a6b4ff','#ffffff']
+      };
+      function currentPalette(){
+        const p = root.getAttribute('data-palette') || 'aurora';
+        return palettes[p] || palettes.aurora;
       }
-      updateTime();
-      let clockTimer = setInterval(updateTime, 1000);
 
-      // Superformula path generator
-      const TAU = Math.PI*2;
-      function superPath(m, n1, n2, n3, scale, cx=500, cy=350, pts=540){
-        let d = '';
-        for(let i=0; i<=pts; i++){
-          const phi = (i/pts) * TAU;
-          const t1 = Math.cos(m*phi/4);
-          const t2 = Math.sin(m*phi/4);
-          const r = Math.pow(Math.pow(Math.abs(t1), n2) + Math.pow(Math.abs(t2), n3), -1/Math.max(n1, 0.0001));
-          const rr = isFinite(r) ? r : 0;
-          const x = cx + scale * rr * Math.cos(phi);
-          const y = cy + scale * rr * Math.sin(phi);
-          d += (i===0 ? 'M':'L') + x.toFixed(2) + ' ' + y.toFixed(2) + ' ';
+      // Resize canvas
+      const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1.25));
+      function size(){
+        const r = cvs.getBoundingClientRect();
+        cvs.width = Math.floor(r.width * DPR);
+        cvs.height = Math.floor(r.height * DPR);
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        // Reset trail base
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = '#00000000';
+        ctx.fillRect(0,0,r.width,r.height);
+      }
+      size();
+      new ResizeObserver(size).observe(cvs);
+
+      // Particles
+      let particles = [];
+      let N = 280;
+      function spawn(n=N){
+        const r = cvs.getBoundingClientRect();
+        particles.length = 0;
+        const cols = currentPalette();
+        for(let i=0;i<n;i++){
+          particles.push({
+            x: Math.random()*r.width,
+            y: Math.random()*r.height,
+            vx: 0, vy: 0,
+            s: 0.6 + Math.random()*1.4,
+            hue: cols[i % cols.length]
+          });
         }
-        return d + 'Z';
+      }
+      spawn();
+
+      // Field + pointer
+      const stage = root.querySelector('.stage');
+      let mx = null, my = null;
+      function move(e){
+        const r = stage.getBoundingClientRect();
+        mx = (e.clientX - r.left);
+        my = (e.clientY - r.top);
+        const cx = Math.max(0, Math.min(1, mx / r.width));
+        const cy = Math.max(0, Math.min(1, my / r.height));
+        root.style.setProperty('--mx', (cx*100).toFixed(2)+'%');
+        root.style.setProperty('--my', (cy*100).toFixed(2)+'%');
+      }
+      function leave(){ mx = my = null; root.style.setProperty('--mx','50%'); root.style.setProperty('--my','50%') }
+      stage.addEventListener('pointermove', move, {passive:true});
+      stage.addEventListener('pointerleave', leave, {passive:true});
+
+      // Animation
+      let t = 0, raf = null, paused = false;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      function flowAx(x, y, time){
+        return Math.sin((y*0.007) + time*0.8) + Math.cos((x*0.006) - time*0.5);
+      }
+      function flowAy(x, y, time){
+        return Math.cos((x*0.007) + time*0.6) - Math.sin((y*0.005) - time*0.4);
       }
 
-      // Animation loop
-      let t = 0;
-      let raf = null;
-      let paused = false;
-      let reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      function draw(){
-        // Evolving parameters
-        const k = t*0.5;
-        const m1 = 3 + Math.sin(k*0.7)*5 + Math.cos(k*0.23)*2;
-        const n11 = 0.5 + (Math.sin(k*0.53)+1)*0.6;
-        const n12 = 0.6 + (Math.cos(k*0.29)+1)*0.8;
-        const n13 = 0.6 + (Math.sin(k*0.41)+1)*0.8;
-
-        const m2 = 5 + Math.cos(k*0.63)*6;
-        const n21 = 0.3 + (Math.sin(k*0.31)+1)*0.9;
-        const n22 = 0.6 + (Math.cos(k*0.47)+1)*0.9;
-        const n23 = 0.6 + (Math.sin(k*0.27)+1)*0.9;
-
-        const p1 = superPath(m1, n11, n12, n13, 180 + Math.sin(k*0.3)*40);
-        const p2 = superPath(m2, n21, n22, n23, 120 + Math.cos(k*0.37)*30);
-
-        shapeA.setAttribute('d', p1);
-        shapeB.setAttribute('d', p2);
-
-        // Subtle breathing via transforms
-        const rotA = (Math.sin(k*0.25)*18).toFixed(3);
-        const rotB = (Math.cos(k*0.33)*-26).toFixed(3);
-        shapeA.style.transform = `rotate(${rotA}deg)`;
-        shapeB.style.transform = `rotate(${rotB}deg)`;
-      }
-
-      function loop(){
+      function tick(){
+        const r = cvs.getBoundingClientRect();
         if(!paused){
           t += 0.016;
-          draw();
+          // Fade with low alpha for trails
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.fillStyle = 'rgba(0,0,0,0.06)';
+          ctx.fillRect(0,0,r.width, r.height);
+
+          ctx.globalCompositeOperation = 'lighter';
+          for(const p of particles){
+            // Flow
+            const ax = flowAx(p.x, p.y, t);
+            const ay = flowAy(p.x, p.y, t);
+
+            // Pointer attractor
+            if(mx!==null && my!==null){
+              const dx = mx - p.x;
+              const dy = my - p.y;
+              const dist = Math.hypot(dx,dy) + 0.0001;
+              const pull = Math.min(0.08, 18/(dist*dist));
+              p.vx += dx/dist * pull;
+              p.vy += dy/dist * pull;
+            }
+
+            p.vx += ax * 0.02;
+            p.vy += ay * 0.02;
+
+            // Damping
+            p.vx *= 0.985;
+            p.vy *= 0.985;
+
+            // Integrate
+            p.x += p.vx;
+            p.y += p.vy;
+
+            // Wrap
+            if(p.x < -10) p.x = r.width+10;
+            if(p.x > r.width+10) p.x = -10;
+            if(p.y < -10) p.y = r.height+10;
+            if(p.y > r.height+10) p.y = -10;
+
+            // Draw
+            const rad = p.s;
+            const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 18);
+            grd.addColorStop(0, p.hue + 'dd');
+            grd.addColorStop(1, '#00000000');
+            ctx.fillStyle = grd;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 18, 0, Math.PI*2);
+            ctx.fill();
+
+            ctx.fillStyle = p.hue + 'e6';
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, rad, 0, Math.PI*2);
+            ctx.fill();
+          }
         }
-        raf = requestAnimationFrame(loop);
+        raf = requestAnimationFrame(tick);
       }
 
       function setPaused(state){
@@ -407,36 +404,20 @@
         pauseBtn.textContent = paused ? 'Resume' : 'Pause';
       }
 
-      // Pointer glow + parallax
-      const stage = root.querySelector('.stage');
-      const clock = root.querySelector('.clock');
-      function move(e){
-        const r = stage.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width;
-        const y = (e.clientY - r.top) / r.height;
-        const cx = Math.max(0, Math.min(1, x));
-        const cy = Math.max(0, Math.min(1, y));
-        root.style.setProperty('--mx', (cx*100).toFixed(2)+'%');
-        root.style.setProperty('--my', (cy*100).toFixed(2)+'%');
-        const rotX = (0.5 - cy) * 6;
-        const rotY = (cx - 0.5) * 8;
-        shapeA.style.transition = 'transform .08s ease';
-        shapeB.style.transition = 'transform .08s ease';
-        clock.style.transform = `translateZ(0) translate(${(cx-.5)*6}px, ${(cy-.5)*6}px)`;
-        // Nudge animation time for responsiveness
-        t += (cx-.5)*0.02 + (cy-.5)*0.02;
+      // Dial update
+      function updateDial(){
+        const d = new Date();
+        const sec = d.getSeconds() + d.getMilliseconds()/1000;
+        const frac = sec / 60;
+        const len = 2*Math.PI*42; // ~263.89
+        ring.style.strokeDasharray = String(len);
+        ring.style.strokeDashoffset = String(len * (1-frac));
+        dialText.textContent = d.getMinutes().toString().padStart(2,'0');
       }
-      function leave(){
-        root.style.setProperty('--mx','50%');
-        root.style.setProperty('--my','50%');
-        shapeA.style.transition = 'transform .6s cubic-bezier(.2,.8,.2,1)';
-        shapeB.style.transition = 'transform .6s cubic-bezier(.2,.8,.2,1)';
-        clock.style.transform = 'translateZ(0)';
-      }
-      stage.addEventListener('pointermove', move, {passive:true});
-      stage.addEventListener('pointerleave', leave, {passive:true});
+      setInterval(updateDial, 1000);
+      updateDial();
 
-      // Theme switching + ripple
+      // Palette switching + ripple
       function ripple(btn, e){
         const span = document.createElement('span');
         span.className = 'ripple';
@@ -446,65 +427,70 @@
         btn.appendChild(span);
         setTimeout(()=> span.remove(), 700);
       }
-      themeBtns.forEach(btn=>{
+      paletteBtns.forEach(btn=>{
         btn.addEventListener('click', (e)=>{
-          root.setAttribute('data-theme', btn.getAttribute('data-theme'));
           ripple(btn, e);
+          const p = btn.getAttribute('data-palette');
+          root.setAttribute('data-palette', p);
+          paletteBtns.forEach(b=> b.removeAttribute('aria-pressed'));
+          btn.setAttribute('aria-pressed','true');
+          spawn(particles.length);
         });
       });
 
-      // Auto theme cycle
-      const themes = ['dawn','dusk','midnight','mist'];
-      let autoTimer = null, idx = 0;
+      // Auto cycle
+      const themeOrder = ['aurora','sunset','garden','mono'];
+      let autoTimer = null;
       function setAuto(on){
         autoBtn.setAttribute('aria-pressed', String(on));
         if(on){
-          autoTimer = setInterval(()=>{
-            const current = root.getAttribute('data-theme');
-            const i = themes.indexOf(current);
-            idx = i>=0 ? (i+1)%themes.length : 0;
-            root.setAttribute('data-theme', themes[idx]);
-          }, 5000);
           autoBtn.textContent = 'Auto • On';
+          autoTimer = setInterval(()=>{
+            const cur = root.getAttribute('data-palette');
+            const i = themeOrder.indexOf(cur);
+            const next = themeOrder[(i+1) % themeOrder.length];
+            root.setAttribute('data-palette', next);
+            spawn(particles.length);
+          }, 6000);
         }else{
-          if(autoTimer) clearInterval(autoTimer), autoTimer=null;
           autoBtn.textContent = 'Auto';
+          if(autoTimer){ clearInterval(autoTimer); autoTimer=null; }
         }
       }
-      autoBtn.addEventListener('click', (e)=>{
-        ripple(autoBtn, e);
-        setAuto(!autoTimer);
+      autoBtn.addEventListener('click', (e)=>{ ripple(autoBtn, e); setAuto(!autoTimer) });
+
+      // Pause + Bloom
+      pauseBtn.addEventListener('click', (e)=>{ ripple(pauseBtn, e); setPaused(!paused) });
+      bloomBtn.addEventListener('click', (e)=>{
+        ripple(bloomBtn, e);
+        const on = root.getAttribute('data-bloom') !== 'true';
+        root.setAttribute('data-bloom', on ? 'true' : 'false');
+        bloomBtn.setAttribute('aria-pressed', String(on));
       });
 
-      // Pause
-      pauseBtn.addEventListener('click', (e)=>{
-        ripple(pauseBtn, e);
-        setPaused(!paused);
-      });
+      // Keyboard
       window.addEventListener('keydown', (e)=>{
         if(e.code==='Space'){ e.preventDefault(); setPaused(!paused); }
+        if(e.key==='b' || e.key==='B'){ const on = root.getAttribute('data-bloom')!=='true'; root.setAttribute('data-bloom', on?'true':'false'); bloomBtn.setAttribute('aria-pressed', String(on)); }
       });
 
-      // Reduced motion
+      // Respect reduced motion
       function applyReduce(){
-        reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if(reduce){ setPaused(true); draw(); }
-        else { setPaused(false); }
+        if(reduce.matches){
+          setPaused(true);
+        }else{
+          setPaused(false);
+        }
       }
-      window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener?.('change', applyReduce);
+      reduce.addEventListener?.('change', applyReduce);
+      applyReduce();
 
-      // Init
-      function init(){
-        applyReduce();
-        draw();
-        raf = requestAnimationFrame(loop);
-      }
-      init();
+      // Start
+      tick();
 
       // Cleanup
       window.addEventListener('beforeunload', ()=>{
         if(raf) cancelAnimationFrame(raf);
-        if(clockTimer) clearInterval(clockTimer);
         if(autoTimer) clearInterval(autoTimer);
       }, {once:true});
     })();
