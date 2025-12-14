@@ -73,433 +73,453 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="loom" data-theme="dusk" aria-label="Luminous Loom — interactive poster">
+<div id="halo" data-theme="aurora" aria-label="Halo Observatory — kinetic time poster">
   <style>
-    /* Core */
-    #loom{
-      --bg1:#101326;
-      --bg2:#1b2140;
-      --ink:#f6f7ff;
-      --muted:rgba(246,247,255,.72);
-      --accent:#7cf0d2;
-      --accent2:#a78bfa;
-      --stroke:rgba(255,255,255,.14);
-      --shadow:0 22px 70px rgba(0,0,0,.45);
-      --rows:14;
-      --mx:50%;
-      --my:50%;
+    /* Theme tokens */
+    #halo{
+      --bg0:#0a0f1e;
+      --bg1:#0e1630;
+      --ink:#f6f8ff;
+      --muted:rgba(246,248,255,.72);
+      --a1:#7cf0d2;
+      --a2:#7ba2ff;
+      --ring1:#85ffe2;
+      --ring2:#9fb2ff;
+      --ring3:#ffffff;
+      --stroke:rgba(255,255,255,.12);
+      --shadow:0 24px 80px rgba(0,0,0,.48);
+      --mx:50%; --my:50%;
       position:relative;
       color:var(--ink);
       font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      border-radius:24px;
+      min-height:620px;
+      border-radius:28px;
       overflow:hidden;
-      min-height:560px;
-      background:
-        radial-gradient(120% 120% at 100% -10%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 60%),
-        radial-gradient(120% 120% at -10% 110%, color-mix(in srgb, var(--accent2) 22%, transparent), transparent 60%),
-        linear-gradient(120deg, var(--bg1), var(--bg2));
       isolation:isolate;
+      background: radial-gradient(160% 120% at 80% 10%, color-mix(in srgb, var(--a2) 14%, transparent), transparent 60%),
+                  radial-gradient(160% 120% at 0% 120%, color-mix(in srgb, var(--a1) 16%, transparent), transparent 60%),
+                  linear-gradient(140deg, var(--bg0), var(--bg1));
     }
-    /* Themes */
-    #loom[data-theme="dawn"]{
-      --bg1:#faf8ff;
-      --bg2:#f2fbff;
-      --ink:#0c1220;
-      --muted:rgba(12,18,32,.72);
-      --accent:#ff9fb8;
-      --accent2:#7b5cff;
-      --stroke:rgba(12,18,32,.12);
-      --shadow:0 22px 70px rgba(12,18,32,.12);
+    #halo[data-theme="noir"]{
+      --bg0:#0b0c0d; --bg1:#141618;
+      --ink:#f4f6f8; --muted:rgba(244,246,248,.66);
+      --a1:#c6cdd6; --a2:#8ea0b1;
+      --ring1:#e7edf5; --ring2:#b9c5cf; --ring3:#ffffff;
+      --stroke:rgba(255,255,255,.12); --shadow:0 24px 80px rgba(0,0,0,.55);
     }
-    #loom[data-theme="deep"]{
-      --bg1:#04181a;
-      --bg2:#09242b;
-      --ink:#eaffff;
-      --muted:rgba(234,255,255,.7);
-      --accent:#00e3c2;
-      --accent2:#00a0ff;
-      --stroke:rgba(255,255,255,.12);
+    #halo[data-theme="dawn"]{
+      --bg0:#fcf9ff; --bg1:#f2f7ff;
+      --ink:#0d1422; --muted:rgba(13,20,34,.66);
+      --a1:#ff9fb8; --a2:#8b9bff;
+      --ring1:#ffb8ca; --ring2:#a6b4ff; --ring3:#22263b;
+      --stroke:rgba(13,20,34,.14); --shadow:0 24px 80px rgba(13,20,34,.14);
     }
-    #loom[data-theme="mono"]{
-      --bg1:#111315;
-      --bg2:#161a1d;
-      --ink:#f5f7fa;
-      --muted:rgba(245,247,250,.68);
-      --accent:#b9c2cb;
-      --accent2:#7c8a96;
-      --stroke:rgba(255,255,255,.12);
-    }
-    /* Ambient layers */
-    #loom::before,
-    #loom::after{
+
+    /* Ambient aurora + cursor glow */
+    #halo::before,
+    #halo::after{
       content:"";
-      position:absolute;
+      position:absolute; inset:-20% -10%;
+      pointer-events:none; z-index:0;
+    }
+    /* Aurora sweep */
+    #halo::before{
+      background:
+        conic-gradient(from 0deg at 60% 40%,
+          color-mix(in srgb, var(--a1) 28%, transparent),
+          color-mix(in srgb, var(--a2) 22%, transparent),
+          transparent 55%);
+      filter: blur(60px) saturate(120%);
+      animation: spin 36s linear infinite;
+      opacity:.7;
+      transform-origin:60% 40%;
+    }
+    @keyframes spin { to { transform: rotate(360deg)} }
+    /* Cursor halo */
+    #halo::after{
       inset:0;
-      pointer-events:none;
-      z-index:0;
-    }
-    /* Cursor light */
-    #loom::before{
-      background:
-        radial-gradient(240px 240px at var(--mx) var(--my), rgba(255,255,255,.12), transparent 60%);
+      background: radial-gradient(280px 280px at var(--mx) var(--my),
+                  color-mix(in srgb, #fff 12%, transparent),
+                  transparent 60%);
       mix-blend-mode:soft-light;
-      transition:opacity .3s ease;
-      opacity:.8;
+      transition: opacity .3s ease;
+      opacity:.9;
     }
-    /* Subtle grid + vignette */
-    #loom::after{
-      background:
-        radial-gradient(140% 100% at 50% 120%, rgba(0,0,0,.45), transparent 60%),
-        repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 1px, transparent 1px 40px),
-        repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 1px, transparent 1px 40px);
-      mix-blend-mode:overlay;
-      opacity:.55;
-    }
+
     /* Top bar */
-    #loom .topbar{
-      position:relative;
-      z-index:2;
-      display:flex;
-      align-items:center;
-      gap:12px;
+    #halo .top{
+      position:relative; z-index:3;
+      display:flex; align-items:center; gap:12px;
       padding:16px clamp(16px,3vmin,28px);
     }
-    #loom .brand{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:8px 12px;
-      border:1px solid var(--stroke);
-      border-radius:999px;
-      background:color-mix(in srgb, var(--accent) 12%, transparent);
-      font-weight:600;
-      letter-spacing:.04em;
-      text-transform:uppercase;
-      font-size:12px;
+    #halo .brand{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px; border:1px solid var(--stroke); border-radius:999px;
+      background:color-mix(in srgb, var(--a1) 10%, transparent);
+      font-weight:650; letter-spacing:.06em; text-transform:uppercase; font-size:11px;
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 6%, transparent);
     }
-    #loom .brand .dot{
-      width:10px;height:10px;border-radius:50%;
-      background:radial-gradient(circle at 35% 30%, #fff, var(--accent));
-      box-shadow:0 0 12px color-mix(in srgb, var(--accent) 60%, transparent);
-      animation:pulse 2.8s ease-in-out infinite;
+    #halo .brand .swirl{
+      width:12px;height:12px;border-radius:50%;
+      background: conic-gradient(from 0deg, var(--a1), var(--a2), var(--a1));
+      filter: blur(.2px);
+      animation: swirl 7s ease-in-out infinite alternate;
+      box-shadow: 0 0 12px color-mix(in srgb, var(--a1) 60%, transparent);
     }
-    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.22)}}
-    #loom .spacer{flex:1}
-    #loom .controls{display:flex;flex-wrap:wrap;gap:10px}
-    #loom .chip{
-      position:relative;
-      appearance:none;
-      border:1px solid var(--stroke);
-      background:color-mix(in srgb, var(--accent2) 10%, transparent);
-      color:var(--ink);
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:12px;
-      cursor:pointer;
-      transition:transform .14s ease, background .22s ease, border-color .22s ease;
+    @keyframes swirl{ 0%{transform:rotate(0deg)} 100%{transform:rotate(180deg)}}
+    #halo .spacer{flex:1}
+    #halo .controls{display:flex;flex-wrap:wrap;gap:10px}
+    #halo .chip{
+      position:relative; appearance:none; cursor:pointer;
+      border:1px solid var(--stroke); border-radius:999px;
+      padding:8px 12px; font-size:12px; color:var(--ink);
+      background:color-mix(in srgb, var(--a2) 8%, transparent);
+      transition: transform .14s ease, background .22s ease;
       overflow:hidden;
     }
-    #loom .chip:hover{transform:translateY(-1px)}
-    #loom .chip:active{transform:translateY(0)}
-    #loom .chip.pause{background:color-mix(in srgb, var(--accent) 12%, transparent)}
-    #loom .ripple{
-      position:absolute;
-      width:12px;height:12px;border-radius:50%;
-      background:color-mix(in srgb,#fff 30%, var(--accent));
-      opacity:.35;
-      transform:translate(-50%,-50%) scale(1);
-      animation:ripple .65s ease-out forwards;
-      pointer-events:none;
+    #halo .chip:hover{ transform: translateY(-1px) }
+    #halo .chip:active{ transform: translateY(0) }
+    #halo .chip.pause{ background: color-mix(in srgb, var(--a1) 10%, transparent) }
+    #halo .ripple{
+      position:absolute; width:10px;height:10px;border-radius:50%;
+      background:color-mix(in srgb, #fff 30%, var(--a1));
+      opacity:.35; transform:translate(-50%,-50%) scale(1);
+      animation:rip .65s ease-out forwards; pointer-events:none;
     }
-    @keyframes ripple{to{opacity:0;transform:translate(-50%,-50%) scale(16)}}
+    @keyframes rip{ to{ opacity:0; transform:translate(-50%,-50%) scale(16)} }
 
     /* Stage */
-    #loom .stage{
-      position:relative;
-      z-index:1;
-      padding: clamp(8px,1.8vmin,16px) clamp(14px,2.5vmin,28px) clamp(18px,3vmin,28px);
+    #halo .stage{
+      position:relative; z-index:1;
+      display:grid; place-items:center;
+      padding: clamp(10px, 3vmin, 24px) clamp(14px, 4vmin, 40px) clamp(22px, 4vmin, 40px);
       min-height:520px;
-      display:grid;
-      align-items:center;
     }
 
-    /* Generative weave */
-    #loom .weave{
-      --pad: clamp(14px, 2vmin, 24px);
-      position:absolute;
-      inset:var(--pad);
-      display:grid;
-      grid-template-rows:repeat(var(--rows), 1fr);
-      gap:clamp(6px, 1vmin, 12px);
-      z-index:0;
-      filter:saturate(120%);
-    }
-    #loom .thread{
-      position:relative;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      overflow:hidden;
-      backdrop-filter:saturate(120%) blur(6px);
-      -webkit-backdrop-filter:saturate(120%) blur(6px);
+    /* Starfield canvas + subtle grain */
+    #halo .stars{ position:absolute; inset:0; z-index:0; }
+    #halo .grain{
+      position:absolute; inset:0; z-index:0; pointer-events:none; opacity:.06;
       background:
-        linear-gradient(90deg,
-          color-mix(in srgb, var(--accent) 46%, transparent) 0%,
-          color-mix(in srgb, var(--accent2) 64%, transparent) 50%,
-          color-mix(in srgb, var(--accent) 46%, transparent) 100%);
-      background-size:200% 100%;
-      animation:
-        flow calc(9s + var(--tshift,0s)) linear infinite,
-        sway calc(7s + var(--tshift,0s)) ease-in-out infinite alternate;
-      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 6%, transparent),
-                  0 10px 24px rgba(0,0,0,.18);
-      opacity: var(--o, .95);
-    }
-    /* Thread texture */
-    #loom .thread::after{
-      content:"";
-      position:absolute;inset:0;border-radius:inherit;
-      background:
-        repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 14px);
+        linear-gradient(0deg, rgba(255,255,255,.5), transparent 60%),
+        repeating-conic-gradient(from 0deg, rgba(255,255,255,.15) 0 0.5deg, transparent 0.5deg 1deg);
       mix-blend-mode:overlay;
-      opacity:.6;
-      pointer-events:none;
+      animation: noise 1.6s steps(2,end) infinite;
     }
-    @keyframes flow{to{background-position: -200% 0}}
-    @keyframes sway{
-      0%{transform:translateX(-1.2%)}
-      100%{transform:translateX(1.2%)}
-    }
+    @keyframes noise{ to{ transform: translate3d(1px, -1px, 0)} }
 
-    /* Floating orbs */
-    #loom .orbs{position:absolute;inset:0;pointer-events:none;z-index:0}
-    #loom .orb{
-      position:absolute;border-radius:24px;
-      background:
-        radial-gradient(120% 120% at 30% 30%, #ffffff, color-mix(in srgb, var(--accent2) 60%, #000));
-      filter: blur(0.2px) saturate(120%);
-      box-shadow:
-        0 0 28px color-mix(in srgb, var(--accent2) 35%, transparent),
-        inset 0 -10px 30px rgba(0,0,0,.28);
-      opacity:.75;
-      animation: floaty var(--dur,14s) ease-in-out infinite;
-    }
-    @keyframes floaty{
-      0%,100%{ transform: translate3d(0,0,0) rotate(0.001deg) }
-      50%{ transform: translate3d(var(--dx,14px), var(--dy,-18px),0) }
-    }
-
-    /* Center card */
-    #loom .center{
+    /* Orbital dial */
+    #halo .orb-wrap{ perspective:900px; }
+    #halo .orb{
       position:relative;
-      place-self:center;
-      z-index:2;
+      width:min(68vmin, 420px); aspect-ratio:1/1; border-radius:50%;
+      background:
+        radial-gradient(120% 120% at 30% 30%, color-mix(in srgb, #fff 8%, transparent), transparent 60%),
+        linear-gradient(180deg, color-mix(in srgb, #fff 6%, transparent), transparent);
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow);
       backdrop-filter: blur(14px) saturate(120%);
       -webkit-backdrop-filter: blur(14px) saturate(120%);
-      border:1px solid var(--stroke);
-      border-radius:22px;
-      padding: clamp(18px, 4vmin, 34px) clamp(18px, 4.5vmin, 40px);
-      text-align:center;
-      box-shadow: var(--shadow);
-      background:
-        linear-gradient(180deg, color-mix(in srgb, #fff 6%, transparent), transparent);
+      transform-style:preserve-3d;
+      will-change: transform;
+      transition: transform .25s ease;
     }
-    #loom .title{
-      margin:0;
-      font-size: clamp(28px, 6.4vw, 64px);
-      line-height:1.04;
-      letter-spacing:.01em;
-      background: linear-gradient(90deg, var(--ink), color-mix(in srgb, var(--accent) 60%, var(--ink)));
+    #halo .orb::after{
+      content:""; position:absolute; inset:-2px; border-radius:inherit; pointer-events:none;
+      background: radial-gradient(60% 60% at var(--mx) var(--my),
+                  color-mix(in srgb, var(--a1) 18%, transparent),
+                  transparent 60%);
+      mix-blend-mode:screen; opacity:.8;
+    }
+    #halo svg.dial{
+      position:absolute; inset:8% 8%; width:84%; height:84%;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,.25));
+    }
+    #halo .track{ fill:none; stroke:color-mix(in srgb, var(--ink) 8%, transparent); stroke-width:8; opacity:.5 }
+    #halo .ring{ fill:none; stroke-linecap:round; stroke-width:8; filter: blur(.2px); }
+    #halo .r1{ stroke: var(--ring1) }
+    #halo .r2{ stroke: var(--ring2) }
+    #halo .r3{ stroke: var(--ring3) }
+    #halo .center-info{
+      position:absolute; inset:0; display:grid; place-items:center; text-align:center; padding:20px;
+      pointer-events:none;
+    }
+    #halo .time{
+      font-variant-numeric:tabular-nums;
+      font-size: clamp(20px, 5.6vmin, 42px); font-weight:700; letter-spacing:.02em;
+      background: linear-gradient(90deg, var(--ink), color-mix(in srgb, var(--a1) 50%, var(--ink)));
       -webkit-background-clip:text; background-clip:text; color:transparent;
-      filter: drop-shadow(0 6px 24px rgba(0,0,0,.22));
-      animation: breatheTitle 9s ease-in-out infinite;
+      animation: breathe 8s ease-in-out infinite;
     }
-    @keyframes breatheTitle{0%,100%{letter-spacing:.01em}50%{letter-spacing:.06em}}
-    #loom .tag{
-      margin:.5rem 0 0;
-      font-size: clamp(12px, 2vw, 16px);
-      color:var(--muted);
-      letter-spacing:.04em;
-    }
-    #loom .clockline{
-      margin-top:14px;
-      display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;
-      color:var(--muted);
-      font-size:12px;
-    }
-    #loom .iter{
-      padding:4px 10px;border-radius:999px;border:1px solid var(--stroke);
-      background:color-mix(in srgb, var(--accent) 12%, transparent);
-      color:var(--ink);
+    @keyframes breathe { 0%,100%{ filter: drop-shadow(0 0 0 rgba(0,0,0,0)) } 50%{ filter: drop-shadow(0 8px 20px rgba(0,0,0,.25)) } }
+    #halo .mini{
+      margin-top:.35rem; font-size:12px; color:var(--muted); letter-spacing:.06em;
     }
 
-    /* Footer */
-    #loom .meta{
-      position:relative;
-      z-index:2;
-      display:flex;align-items:center;gap:12px;
-      padding:14px clamp(16px,3vmin,28px) 18px;
-      border-top:1px dashed var(--stroke);
-      color:var(--muted);
-      font-size:12px;
+    /* Titles */
+    #halo .title{
+      margin: clamp(16px, 3vmin, 26px) 0 0;
+      font-size: clamp(28px, 6.2vw, 64px); line-height:1.02; letter-spacing:.01em; text-align:center;
+      background: linear-gradient(90deg, var(--ink), color-mix(in srgb, var(--a2) 60%, var(--ink)));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
     }
-    #loom .divider{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--stroke),transparent)}
+    #halo .subtitle{
+      margin:.4rem 0 0; text-align:center; color:var(--muted);
+      font-size: clamp(12px, 2.2vw, 16px);
+    }
 
-    /* Motion control */
-    #loom[data-paused] .thread,
-    #loom[data-paused] .orb,
-    #loom[data-paused] .brand .dot,
-    #loom[data-paused]::before{
-      animation-play-state:paused!important;
+    /* Footer meta row */
+    #halo .meta-row{
+      margin-top:16px; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap;
+      color:var(--muted); font-size:12px;
     }
+    #halo .iter{ padding:4px 10px; border-radius:999px; border:1px solid var(--stroke);
+      background:color-mix(in srgb, var(--a1) 10%, transparent); color:var(--ink); }
+    #halo .sep{ width:10px; height:10px; border-radius:50%; background: color-mix(in srgb, var(--a2) 60%, transparent);
+      box-shadow: 0 0 14px color-mix(in srgb, var(--a2) 40%, transparent); }
+
+    /* Pause control: stop CSS animations */
+    #halo[data-paused]::before,
+    #halo[data-paused] .grain,
+    #halo[data-paused] .brand .swirl,
+    #halo[data-paused] .time{
+      animation-play-state: paused !important;
+    }
+
     @media (prefers-reduced-motion: reduce){
-      #loom .thread, #loom .orb, #loom .brand .dot, #loom .title { animation:none !important; }
+      #halo::before, #halo .grain, #halo .brand .swirl, #halo .time { animation: none !important; }
+      #halo .orb{ transition:none; }
     }
   </style>
 
-  <div class="topbar">
-    <div class="brand"><span class="dot" aria-hidden="true"></span> Studio Quiet</div>
+  <canvas class="stars" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="top">
+    <div class="brand"><span class="swirl" aria-hidden="true"></span> Halo Observatory</div>
     <div class="spacer"></div>
-    <div class="controls" aria-label="Palette controls">
+    <div class="controls" aria-label="Palette and motion controls">
+      <button class="chip" data-theme="aurora" aria-label="Switch to Aurora">Aurora</button>
+      <button class="chip" data-theme="noir" aria-label="Switch to Noir">Noir</button>
       <button class="chip" data-theme="dawn" aria-label="Switch to Dawn">Dawn</button>
-      <button class="chip" data-theme="dusk" aria-label="Switch to Dusk">Dusk</button>
-      <button class="chip" data-theme="deep" aria-label="Switch to Deep">Deep</button>
-      <button class="chip" data-theme="mono" aria-label="Switch to Mono">Mono</button>
       <button class="chip pause" type="button" aria-pressed="false">Pause</button>
     </div>
   </div>
 
   <div class="stage" role="region" aria-live="polite">
-    <div class="weave" aria-hidden="true"></div>
-    <div class="orbs" aria-hidden="true"></div>
-
-    <div class="center">
-      <h1 class="title">Soft Futures</h1>
-      <p class="tag">Weave today into tomorrow.</p>
-      <div class="clockline">
-        <span class="clock" title="Live clock">--:--:--</span>
-        <span class="iter" aria-label="Iteration number">Iteration 1271</span>
+    <div class="orb-wrap">
+      <div class="orb" role="img" aria-label="Kinetic time dial">
+        <svg class="dial" viewBox="0 0 260 260" width="260" height="260" aria-hidden="true">
+          <g transform="rotate(-90 130 130)">
+            <circle class="track t1" cx="130" cy="130" r="104"></circle>
+            <circle class="ring r1"  cx="130" cy="130" r="104" stroke-dasharray="1" stroke-dashoffset="1"></circle>
+            <circle class="track t2" cx="130" cy="130" r="82"></circle>
+            <circle class="ring r2"  cx="130" cy="130" r="82" stroke-dasharray="1" stroke-dashoffset="1"></circle>
+            <circle class="track t3" cx="130" cy="130" r="60"></circle>
+            <circle class="ring r3"  cx="130" cy="130" r="60" stroke-dasharray="1" stroke-dashoffset="1"></circle>
+          </g>
+        </svg>
+        <div class="center-info">
+          <div class="time" title="Live clock">--:--:--</div>
+          <div class="mini">Time is a shape.</div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="meta">
-    <span class="hint">Move to cast light • Tap to change palette</span>
-    <span class="divider" aria-hidden="true"></span>
-    <span id="last-updated">Last updated: 2025-12-13 22:27:29 EST</span>
+    <h1 class="title">Soft Horizons</h1>
+    <p class="subtitle">A kinetic study of light, motion, and the minute between breaths.</p>
+
+    <div class="meta-row">
+      <span class="iter" aria-label="Iteration number">Iteration 1272</span>
+      <span class="sep" aria-hidden="true"></span>
+      <span id="last-updated">Last updated: 2025-12-13 23:35:01 EST</span>
+    </div>
   </div>
 
   <script>
     (function(){
-      const root = document.getElementById('loom');
+      const root = document.getElementById('halo');
 
       // Last updated
       const lu = root.querySelector('#last-updated');
-      const now = new Date();
       try{
-        lu.textContent = 'Last updated: ' + now.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+        lu.textContent = 'Last updated: ' + new Date().toLocaleString(undefined, { dateStyle:'medium', timeStyle:'short' });
       }catch{
-        lu.textContent = 'Last updated: ' + now.toString();
+        lu.textContent = 'Last updated: ' + new Date().toString();
       }
 
-      // Build weave
-      const weave = root.querySelector('.weave');
-      const ROWS = 14;
-      weave.style.setProperty('--rows', ROWS);
-      for(let i=0;i<ROWS;i++){
-        const t=document.createElement('div');
-        t.className='thread';
-        const tshift=(Math.random()*4).toFixed(2)+'s';
-        const op=(0.88 + Math.random()*0.12).toFixed(2);
-        t.style.setProperty('--tshift', tshift);
-        t.style.setProperty('--o', op);
-        weave.appendChild(t);
+      // Canvas starfield
+      const canvas = root.querySelector('.stars');
+      const ctx = canvas.getContext('2d');
+      let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      let stars = [];
+      let raf = null;
+      let paused = false;
+      const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const stage = root.querySelector('.stage');
+      const orb = root.querySelector('.orb');
+
+      function resize(){
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = Math.floor(rect.width * dpr);
+        canvas.height = Math.floor(rect.height * dpr);
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+        buildStars();
       }
 
-      // Floating orbs
-      const orbs = root.querySelector('.orbs');
-      const ORB_COUNT = 6;
-      const rectInit = root.getBoundingClientRect();
-      for(let i=0;i<ORB_COUNT;i++){
-        const o=document.createElement('span');
-        o.className='orb';
-        const size = (Math.random()*80 + 60); // 60–140px
-        const left = Math.random()*80 + 5; // percent
-        const top = Math.random()*70 + 10; // percent
-        const dx = (Math.random()*40 - 20).toFixed(0)+'px';
-        const dy = (Math.random()*40 - 20).toFixed(0)+'px';
-        const dur = (12 + Math.random()*8).toFixed(2)+'s';
-        o.style.width=size+'px';
-        o.style.height=size+'px';
-        o.style.left=left+'%';
-        o.style.top=top+'%';
-        o.style.setProperty('--dx', dx);
-        o.style.setProperty('--dy', dy);
-        o.style.setProperty('--dur', dur);
-        orbs.appendChild(o);
+      function buildStars(){
+        const rect = canvas.getBoundingClientRect();
+        const area = rect.width * rect.height;
+        const count = Math.min(220, Math.max(90, Math.floor(area / 9000)));
+        stars = Array.from({length: count}, () => {
+          return {
+            x: Math.random()*rect.width,
+            y: Math.random()*rect.height,
+            r: Math.random()*1.2 + 0.4,
+            a0: Math.random()*0.6 + 0.4,
+            tw: Math.random()*0.8 + 0.3,
+            ph: Math.random()*Math.PI*2,
+            z: Math.random()*1 // parallax layer
+          };
+        });
+        drawStars(0,0,0);
       }
 
-      // Clock
-      const clock = root.querySelector('.clock');
-      function tick(){
-        const d=new Date();
-        try{
-          clock.textContent = d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' });
-        }catch{
-          clock.textContent = d.toTimeString().split(' ')[0];
+      let target = {x:0.5, y:0.45};
+      let current = {x:0.5, y:0.45};
+
+      function drawStars(t, offx, offy){
+        const rect = canvas.getBoundingClientRect();
+        ctx.clearRect(0,0,rect.width,rect.height);
+        for(const s of stars){
+          const tw = s.a0*(0.65 + 0.35*Math.sin(t*s.tw + s.ph));
+          // parallax
+          const px = s.x + (offx-0.5)*30*(1-s.z);
+          const py = s.y + (offy-0.5)*26*(1-s.z);
+          ctx.beginPath();
+          ctx.arc(px, py, s.r, 0, Math.PI*2);
+          ctx.fillStyle = `rgba(255,255,255,${tw})`;
+          ctx.fill();
         }
       }
-      tick();
-      const clockTimer = setInterval(tick, 500);
 
-      // Pointer light
-      const stage = root.querySelector('.stage');
-      function moveLight(e){
+      function loop(t){
+        if(!paused && !mqReduce.matches){
+          current.x += (target.x - current.x)*0.08;
+          current.y += (target.y - current.y)*0.08;
+          drawStars(t*0.001, current.x, current.y);
+        }
+        // Update dial every frame for smooth seconds
+        updateDial();
+        raf = requestAnimationFrame(loop);
+      }
+
+      // Dial logic
+      const timeEl = root.querySelector('.time');
+      const r1 = root.querySelector('.r1');
+      const r2 = root.querySelector('.r2');
+      const r3 = root.querySelector('.r3');
+
+      const c1 = 2*Math.PI*104;
+      const c2 = 2*Math.PI*82;
+      const c3 = 2*Math.PI*60;
+      r1.setAttribute('stroke-dasharray', c1.toFixed(2));
+      r2.setAttribute('stroke-dasharray', c2.toFixed(2));
+      r3.setAttribute('stroke-dasharray', c3.toFixed(2));
+
+      function pad(n){ return String(n).padStart(2,'0'); }
+      function updateDial(){
+        const d = new Date();
+        const ms = d.getMilliseconds()/1000;
+        const s = d.getSeconds()+ms;
+        const m = d.getMinutes()+s/60;
+        const h = (d.getHours()%12)+m/60;
+
+        const p1 = h/12;  // hours
+        const p2 = m/60;  // minutes
+        const p3 = s/60;  // seconds
+
+        r1.setAttribute('stroke-dashoffset', (c1*(1-p1)).toFixed(2));
+        r2.setAttribute('stroke-dashoffset', (c2*(1-p2)).toFixed(2));
+        r3.setAttribute('stroke-dashoffset', (c3*(1-p3)).toFixed(2));
+
+        try{
+          timeEl.textContent = d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+        }catch{
+          timeEl.textContent = pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+        }
+      }
+
+      // Pointer light + tilt
+      function move(e){
         const r = stage.getBoundingClientRect();
-        const x = ((e.clientX - r.left)/r.width)*100;
-        const y = ((e.clientY - r.top)/r.height)*100;
-        root.style.setProperty('--mx', x.toFixed(2)+'%');
-        root.style.setProperty('--my', y.toFixed(2)+'%');
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+        target.x = x; target.y = y;
+        root.style.setProperty('--mx', (x*100).toFixed(2)+'%');
+        root.style.setProperty('--my', (y*100).toFixed(2)+'%');
+        const rotX = (0.5 - y) * 12;
+        const rotY = (x - 0.5) * 14;
+        orb.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
       }
-      function leaveLight(){
-        root.style.setProperty('--mx', '50%');
-        root.style.setProperty('--my', '50%');
+      function leave(){
+        target.x = 0.5; target.y = 0.45;
+        root.style.setProperty('--mx','50%');
+        root.style.setProperty('--my','50%');
+        orb.style.transform = `rotateX(0deg) rotateY(0deg)`;
       }
-      stage.addEventListener('pointermove', moveLight, {passive:true});
-      stage.addEventListener('pointerleave', leaveLight, {passive:true});
 
-      // Theme switching with ripple
+      // Theme switching + ripple
       root.querySelectorAll('.chip[data-theme]').forEach(btn=>{
         btn.addEventListener('click', (e)=>{
-          const theme=btn.getAttribute('data-theme');
+          const theme = btn.getAttribute('data-theme');
           root.setAttribute('data-theme', theme);
-          const ripple=document.createElement('span');
+          const ripple = document.createElement('span');
           ripple.className='ripple';
           const b = btn.getBoundingClientRect();
-          ripple.style.left=(e.clientX - b.left)+'px';
-          ripple.style.top=(e.clientY - b.top)+'px';
+          ripple.style.left = (e.clientX - b.left) + 'px';
+          ripple.style.top = (e.clientY - b.top) + 'px';
           btn.appendChild(ripple);
           setTimeout(()=>ripple.remove(), 700);
         });
       });
 
-      // Pause animations
+      // Pause
       const pauseBtn = root.querySelector('.chip.pause');
-      pauseBtn.addEventListener('click', ()=>{
-        const paused = !root.hasAttribute('data-paused');
-        root.toggleAttribute('data-paused', paused);
-        pauseBtn.setAttribute('aria-pressed', String(paused));
-        pauseBtn.textContent = paused ? 'Resume' : 'Pause';
-      });
+      function setPaused(state){
+        paused = state;
+        root.toggleAttribute('data-paused', state);
+        pauseBtn.setAttribute('aria-pressed', String(state));
+        pauseBtn.textContent = state ? 'Resume' : 'Pause';
+      }
+      pauseBtn.addEventListener('click', ()=> setPaused(!paused));
 
       // Respect reduced motion
-      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-      if(mq.matches){
-        stage.removeEventListener('pointermove', moveLight);
-        stage.removeEventListener('pointerleave', leaveLight);
+      function applyReduce(){
+        if(mqReduce.matches){
+          setPaused(true);
+          drawStars(0,0.5,0.45); // static
+        }else{
+          setPaused(false);
+        }
       }
+      mqReduce.addEventListener?.('change', applyReduce);
 
-      // Cleanup on unload
-      window.addEventListener('beforeunload', ()=>clearInterval(clockTimer), {once:true});
+      // Events
+      stage.addEventListener('pointermove', move, {passive:true});
+      stage.addEventListener('pointerleave', leave, {passive:true});
+      window.addEventListener('resize', resize, {passive:true});
+
+      // Init
+      resize();
+      applyReduce();
+      updateDial();
+      raf = requestAnimationFrame(loop);
+
+      // Cleanup
+      window.addEventListener('beforeunload', ()=>{
+        if(raf) cancelAnimationFrame(raf);
+      }, {once:true});
     })();
   </script>
 </div>
