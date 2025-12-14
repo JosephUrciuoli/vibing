@@ -73,184 +73,207 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="atlas" data-theme="aurora" data-trails="on" data-paused="false" aria-label="Aurora Atlas — living gradient landscape">
+<div id="almanac" data-theme="dawn" data-motion="on" data-noise="on" aria-label="Kinetic Almanac — a calm, living canvas">
   <style>
-    /* Design tokens and base */
-    #atlas{
-      --ink:#e7f2ff;
-      --muted: color-mix(in srgb, var(--ink) 70%, transparent);
-      --bg0:#07111a; --bg1:#0c1f30;
-      --a:#64f3ff; --b:#7f8cff; --c:#6bffc7; --d:#b17bff;
-      position:relative; min-height:74vh; border-radius:28px; overflow:hidden;
+    /* Design tokens */
+    #almanac{
+      --ink:#1e2530;
+      --muted: color-mix(in srgb, var(--ink) 56%, #0000);
+      --bg0:#f7f9fd; --bg1:#ffffff;
+      --a:#ff8aa2; --b:#ffc56b; --c:#7ad3ff; --d:#98ffc9;
+      --glass: color-mix(in srgb, var(--bg1) 70%, #ffffff);
+      --ring:#dfe6f3;
+      position:relative; border-radius:28px; overflow:hidden;
       color:var(--ink); font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
       background:
-        radial-gradient(120% 100% at 10% -10%, color-mix(in srgb, var(--a) 14%, transparent), transparent 60%),
-        radial-gradient(140% 120% at 100% 100%, color-mix(in srgb, var(--d) 12%, transparent), transparent 68%),
+        radial-gradient(140% 100% at 10% 0%, color-mix(in srgb, var(--a) 12%, #0000), #0000 55%),
+        radial-gradient(120% 100% at 100% 100%, color-mix(in srgb, var(--c) 12%, #0000), #0000 64%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
-      box-shadow: inset 0 28px 90px rgba(0,0,0,.35);
-      isolation:isolate; color-scheme: dark;
+      min-height:74vh; box-shadow: inset 0 20px 80px #00000012;
       --mx:50%; --my:50%;
+      color-scheme: light;
+      isolation:isolate;
     }
     /* Themes */
-    #atlas[data-theme="aurora"]{ --bg0:#07111a; --bg1:#0c1f30; --ink:#e7f2ff; --a:#64f3ff; --b:#7f8cff; --c:#6bffc7; --d:#b17bff }
-    #atlas[data-theme="twilight"]{ --bg0:#170b14; --bg1:#2a1723; --ink:#ffeef4; --a:#ff9f7a; --b:#ffc46b; --c:#ff7fd5; --d:#ffec8b }
-    #atlas[data-theme="bloom"]{ --bg0:#0f1813; --bg1:#123024; --ink:#e9fff5; --a:#82ffb6; --b:#7ad0ff; --c:#ffe887; --d:#b8ffa3 }
-    #atlas[data-theme="void"]{ --bg0:#06070b; --bg1:#0a0b12; --ink:#eef1ff; --a:#9aa8ff; --b:#c7d1ff; --c:#ffffff; --d:#9ad0ff }
+    #almanac[data-theme="dawn"]{ --bg0:#f7f9fd; --bg1:#ffffff; --ink:#1e2530; --a:#ff8aa2; --b:#ffc56b; --c:#7ad3ff; --d:#98ffc9; --ring:#dfe6f3 }
+    #almanac[data-theme="noon"]{ --bg0:#f3fbff; --bg1:#ffffff; --ink:#0f1b2a; --a:#6bdcff; --b:#6bffcf; --c:#5da8ff; --d:#a6ff9d; --ring:#d6edf7 }
+    #almanac[data-theme="dusk"]{ --bg0:#fbf5ff; --bg1:#fff; --ink:#24172e; --a:#b08cff; --b:#ff9c7a; --c:#ffc86b; --d:#8be0ff; --ring:#ecdff9 }
+    #almanac[data-theme="midnight"]{ --bg0:#0b0e15; --bg1:#0f1420; --ink:#e9f0ff; --a:#8aa0ff; --b:#7de6ff; --c:#6bffc7; --d:#caa3ff; --ring:#1f2a3a; color-scheme: dark }
 
-    /* Film grain and cursor aura */
-    #atlas::before, #atlas::after{ content:""; position:absolute; inset:0; pointer-events:none }
-    #atlas::before{
-      opacity:.08; mix-blend-mode:overlay; filter:contrast(120%) saturate(110%) blur(.3px);
+    /* Ambient film + cursor light */
+    #almanac::before, #almanac::after{ content:""; position:absolute; inset:0; pointer-events:none }
+    #almanac::before{
+      opacity:.08; mix-blend-mode:multiply;
       background:
-        repeating-linear-gradient(0deg, #0000 0 2px, #0000000d 2px 3px),
-        repeating-linear-gradient(90deg, #0000 0 2px, #0000000d 2px 3px);
+        radial-gradient(540px 420px at var(--mx) var(--my),
+          color-mix(in srgb, var(--a) 18%, #0000) 0%,
+          color-mix(in srgb, var(--b) 10%, #0000) 36%,
+          #0000 72%);
+      transition: opacity .25s ease;
     }
-    #atlas::after{
-      background: radial-gradient(420px 420px at var(--mx) var(--my),
-                  color-mix(in srgb, var(--a) 16%, transparent) 0%,
-                  color-mix(in srgb, var(--b) 10%, transparent) 35%,
-                  transparent 70%);
-      mix-blend-mode: screen; opacity:.9; transition: opacity .25s ease;
+    #almanac[data-motion="off"]::before{ opacity:.04 }
+    #almanac[data-noise="on"]::after{
+      background:
+        repeating-linear-gradient(0deg, #00000008 0 1px, #0000 1px 3px),
+        repeating-linear-gradient(90deg, #00000006 0 1px, #0000 1px 3px);
+      mix-blend-mode: overlay; opacity:.12; filter: contrast(120%) saturate(110%);
     }
 
-    /* Top chrome */
-    #atlas .chrome{ position:relative; z-index:3; display:flex; align-items:center; gap:14px; padding:16px clamp(14px,3vmin,28px) }
-    #atlas .logo{
-      display:inline-flex; align-items:center; gap:10px; white-space:nowrap;
-      padding:10px 14px; border-radius:14px; border:1px solid color-mix(in srgb, var(--ink) 20%, transparent);
-      background: color-mix(in srgb, var(--bg1) 68%, transparent);
-      box-shadow: inset 0 0 0 1px #ffffff16, 0 6px 20px #0000004d;
+    /* Chrome */
+    #almanac .top{ position:relative; z-index:3; display:flex; align-items:center; gap:14px;
+      padding:16px clamp(14px,3vmin,28px) }
+    #almanac .brand{
+      display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:14px;
+      border:1px solid color-mix(in srgb, var(--ink) 16%, #0000);
+      background: color-mix(in srgb, var(--glass) 78%, #0000);
+      box-shadow: 0 8px 20px #0000001a, inset 0 0 0 1px #ffffffcc;
       font-weight:800; letter-spacing:.04em; font-size:12px; text-transform:uppercase;
-      color: var(--ink);
     }
-    #atlas .logo .glyph{
-      width:14px; height:14px; border-radius:50%;
-      background:
-        conic-gradient(from 0deg, var(--a), var(--b), var(--c), var(--d), var(--a));
-      box-shadow: 0 0 10px color-mix(in srgb, var(--a) 50%, transparent);
-      animation: spin 16s linear infinite;
+    #almanac .brand .mark{
+      width:14px; height:14px; display:inline-block; border-radius:4px;
+      background: conic-gradient(from 0deg, var(--a), var(--b), var(--c), var(--d), var(--a));
+      box-shadow: 0 0 0 1px #00000012, 0 0 18px color-mix(in srgb, var(--a) 40%, #0000);
+      animation: spin 18s linear infinite;
     }
     @keyframes spin { to{ transform: rotate(1turn) } }
 
-    #atlas .toggles{ margin-left:auto; display:flex; flex-wrap:wrap; align-items:center; gap:10px }
-    #atlas .btn{
-      position:relative; appearance:none; cursor:pointer; border:1px solid color-mix(in srgb, var(--ink) 20%, transparent);
-      border-radius:12px; overflow:hidden; padding:8px 12px; font-size:12px;
-      color: var(--ink);
-      background: color-mix(in srgb, var(--bg0) 78%, var(--a) 8%);
-      transition: transform .14s ease, box-shadow .22s ease, background .22s ease, color .22s ease;
-      box-shadow: 0 2px 0 rgba(0,0,0,.25), 0 8px 16px rgba(0,0,0,.35);
+    #almanac .controls{ margin-left:auto; display:flex; flex-wrap:wrap; align-items:center; gap:10px }
+    #almanac .chip{
+      appearance:none; cursor:pointer; position:relative; border-radius:999px;
+      border:1px solid color-mix(in srgb, var(--ink) 16%, #0000); padding:8px 12px; font-size:12px;
+      background: color-mix(in srgb, var(--glass) 84%, #0000);
+      color:var(--ink); box-shadow: 0 2px 0 #00000020, 0 8px 16px #0000001f; transition: transform .14s ease, box-shadow .18s ease, background .2s ease;
     }
-    #atlas .btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 28px rgba(0,0,0,.45) }
-    #atlas .btn.alt{ background: color-mix(in srgb, var(--bg0) 78%, var(--b) 10%) }
-    #atlas .btn.alt2{ background: color-mix(in srgb, var(--bg0) 78%, var(--c) 10%) }
-    #atlas .btn.alt3{ background: color-mix(in srgb, var(--bg0) 78%, var(--d) 10%) }
-    #atlas .btn[aria-pressed="true"]{ outline:2px solid color-mix(in srgb, var(--a) 45%, transparent) }
-    #atlas .ripple{ position:absolute; width:10px; height:10px; border-radius:50%;
-      background: color-mix(in srgb, #fff 50%, var(--a)); opacity:.35;
-      transform: translate(-50%,-50%) scale(1); animation: rr .65s ease-out forwards; pointer-events:none }
-    @keyframes rr{ to{ opacity:0; transform:translate(-50%,-50%) scale(16)} }
+    #almanac .chip:hover{ transform: translateY(-1px); box-shadow: 0 10px 28px #0000002e }
+    #almanac .chip[aria-pressed="true"]{ outline:2px solid color-mix(in srgb, var(--a) 36%, #0000) }
+    #almanac .chip .pulse{ position:absolute; inset:auto 0 0 0; height:2px; border-radius:1px; background: linear-gradient(90deg, var(--a), var(--b), var(--c), var(--d)); transform-origin:left; transform:scaleX(0); animation: pulse .6s ease-out }
+    @keyframes pulse{ to{ transform:scaleX(1) } }
 
     /* Stage */
-    #atlas .stage{ position:relative; z-index:1; min-height:62vh; display:grid; place-items:center; padding: clamp(10px, 4vmin, 36px) }
-    #atlas .sky{
-      position:absolute; inset:12px; border-radius:24px; width:calc(100% - 24px); height:calc(100% - 24px);
-      border:1px solid color-mix(in srgb, var(--ink) 16%, transparent);
-      background: linear-gradient(180deg, color-mix(in srgb, var(--bg1) 70%, transparent), transparent 70%);
-      box-shadow: inset 0 0 90px #00000066, 0 18px 60px rgba(0,0,0,.5);
+    #almanac .scene{
+      position:relative; z-index:1; min-height:62vh; display:grid; place-items:center;
+      padding: clamp(10px, 4vmin, 36px)
+    }
+    #almanac .panel{
+      position:absolute; inset:14px; border-radius:22px; border:1px solid color-mix(in srgb, var(--ink) 12%, #0000);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--bg1) 75%, #0000), #0000 68%);
+      box-shadow: inset 0 0 90px #0000001f, 0 18px 60px #0000002e;
     }
 
-    /* Title card */
-    #atlas .card{
-      position:relative; z-index:2; text-align:center; max-width:min(880px, 92%); margin:auto;
-      padding:22px 24px; border-radius:18px;
-      border:1px solid color-mix(in srgb, var(--ink) 18%, transparent);
-      background: color-mix(in srgb, var(--bg0) 36%, transparent);
-      backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%);
-      box-shadow: 0 16px 40px rgba(0,0,0,.45);
+    /* Canvas field */
+    #almanac .field{ position:absolute; inset:14px; width:calc(100% - 28px); height:calc(100% - 28px); border-radius:22px; display:block }
+
+    /* Hero */
+    #almanac .hero{
+      position:relative; z-index:2; text-align:center; max-width:min(920px, 92%); margin:auto;
+      padding:24px 24px; border-radius:18px;
+      border:1px solid color-mix(in srgb, var(--ink) 10%, #0000);
+      background: color-mix(in srgb, var(--bg1) 66%, #0000);
+      backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%);
+      box-shadow: 0 16px 40px #00000029;
+      transform-style: preserve-3d; transition: transform .2s ease;
     }
-    #atlas .card h1{
-      margin:0 0 10px; line-height:1.04; font-size: clamp(34px, 7vw, 68px); font-weight:900;
+    #almanac .hero h1{
+      margin:0 0 10px; line-height:1.02; font-size: clamp(36px, 7.4vw, 74px); font-weight:900;
       background: linear-gradient(90deg, var(--ink), color-mix(in srgb, var(--ink) 70%, var(--a)));
-      -webkit-background-clip: text; background-clip:text; color:transparent; letter-spacing:.01em;
+      -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:.01em;
     }
-    #atlas .card p{ margin:0; font-size: clamp(14px, 2.2vw, 17px); color: color-mix(in srgb, var(--ink) 78%, var(--muted)) }
+    #almanac .hero h1 em{
+      font-style:normal; background: linear-gradient(90deg, var(--a), var(--b), var(--c), var(--d));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      text-shadow: 0 10px 30px color-mix(in srgb, var(--a) 25%, #0000);
+    }
+    #almanac .hero p{ margin:0; font-size: clamp(14px, 2.1vw, 18px); color: color-mix(in srgb, var(--ink) 72%, var(--muted)) }
 
-    /* Clock widget */
-    #atlas .clock{
-      position:absolute; right:20px; bottom:20px; z-index:3;
-      display:flex; align-items:center; gap:10px; padding:10px 12px;
-      border-radius:14px; border:1px solid color-mix(in srgb, var(--ink) 18%, transparent);
-      background: color-mix(in srgb, var(--bg0) 40%, transparent);
-      box-shadow: 0 10px 28px rgba(0,0,0,.5); backdrop-filter: blur(10px) saturate(120%);
-      color: color-mix(in srgb, var(--ink) 88%, #000);
-      font-variant-numeric: tabular-nums;
+    /* Dial clock */
+    #almanac .dial{
+      position:absolute; right:22px; bottom:22px; z-index:3; display:grid; place-items:center;
+      width:128px; height:128px; border-radius:20px;
+      border:1px solid color-mix(in srgb, var(--ink) 12%, #0000);
+      background: color-mix(in srgb, var(--bg1) 60%, #0000);
+      box-shadow: 0 16px 40px #00000033; backdrop-filter: blur(10px) saturate(120%);
+      color: var(--ink)
     }
-    #atlas .clock .digits{ font-weight:800; font-size:16px }
-    #atlas .clock .bar{ position:relative; width:80px; height:6px; border-radius:999px; overflow:hidden;
-      background: color-mix(in srgb, var(--ink) 18%, transparent) }
-    #atlas .clock .bar i{ position:absolute; inset:0; display:block; border-radius:inherit; background:
-      linear-gradient(90deg, var(--a), var(--b), var(--c), var(--d)); width:0% }
+    #almanac .dial svg{ width:90px; height:90px; overflow:visible }
+    #almanac .dial .time{ margin-top:2px; font-weight:800; font-variant-numeric: tabular-nums; font-size:14px }
+    #almanac .dial .dot{ filter: drop-shadow(0 2px 8px color-mix(in srgb, var(--c) 50%, #0000)) }
 
     /* Footer */
-    #atlas .footer{
-      position:relative; z-index:3; margin: 18px auto 16px;
+    #almanac .foot{
+      position:relative; z-index:4; margin: 18px auto 16px;
       display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap;
-      color: color-mix(in srgb, var(--ink) 84%, var(--muted)); font-size:12px;
+      color: color-mix(in srgb, var(--ink) 78%, var(--muted)); font-size:12px;
     }
-    #atlas .pill{ padding:7px 12px; border-radius:999px;
-      border:1px solid color-mix(in srgb, var(--ink) 18%, transparent);
-      background: color-mix(in srgb, var(--bg0) 70%, transparent); color:var(--ink) }
+    #almanac .pill{ padding:7px 12px; border-radius:999px;
+      border:1px solid color-mix(in srgb, var(--ink) 14%, #0000);
+      background: color-mix(in srgb, var(--bg1) 65%, #0000); color:var(--ink) }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
-      #atlas::after{ opacity:.35 }
-      #atlas .logo .glyph{ animation:none }
+      #almanac .brand .mark{ animation:none }
+      #almanac{ --mx:50%; --my:50% }
     }
   </style>
 
-  <div class="chrome">
-    <div class="logo" aria-label="Aurora Atlas"><span class="glyph" aria-hidden="true"></span>Aurora Atlas</div>
-    <div class="toggles" aria-label="Theme and motion controls">
-      <button class="btn" data-theme="aurora" aria-pressed="true" title="Aurora">Aurora</button>
-      <button class="btn alt" data-theme="twilight" title="Twilight">Twilight</button>
-      <button class="btn alt2" data-theme="bloom" title="Bloom">Bloom</button>
-      <button class="btn alt3" data-theme="void" title="Void">Void</button>
-      <button class="btn trail" type="button" aria-pressed="true" title="Toggle trails">Trails</button>
-      <button class="btn pause" type="button" aria-pressed="false" title="Pause / Resume">Pause</button>
+  <div class="top">
+    <div class="brand" aria-label="Kinetic Almanac"><span class="mark" aria-hidden="true"></span>Kinetic Almanac</div>
+    <div class="controls" aria-label="Theme and motion">
+      <button class="chip t" data-theme="dawn" aria-pressed="true">Dawn</button>
+      <button class="chip t" data-theme="noon">Noon</button>
+      <button class="chip t" data-theme="dusk">Dusk</button>
+      <button class="chip t" data-theme="midnight">Midnight</button>
+      <button class="chip motion" aria-pressed="true" title="Toggle Motion">Motion</button>
+      <button class="chip noise" aria-pressed="true" title="Toggle Texture">Texture</button>
     </div>
   </div>
 
-  <div class="stage" role="region" aria-live="polite">
-    <canvas class="sky" width="1280" height="780" role="img" aria-label="Flowing aurora ribbons and stardust"></canvas>
+  <div class="scene" role="region" aria-live="polite">
+    <div class="panel" aria-hidden="true"></div>
+    <canvas class="field" width="1280" height="780" role="img" aria-label="Ink ripples and light rings"></canvas>
 
-    <div class="card">
-      <h1>Painted air.</h1>
-      <p>Drag to bend the light. Switch moods. Let the sky write itself.</p>
+    <div class="hero" aria-label="Headline">
+      <h1>Make quiet <em>waves</em>.</h1>
+      <p>Move to stir the ink. Switch moods. Let time orbit softly.</p>
     </div>
 
-    <div class="clock" aria-label="Local time and seconds">
-      <div class="digits" aria-live="polite"><span class="hh">00</span>:<span class="mm">00</span></div>
-      <div class="bar" aria-hidden="true"><i></i></div>
+    <div class="dial" aria-label="Local time">
+      <svg viewBox="-50 -50 100 100" aria-hidden="true">
+        <defs>
+          <linearGradient id="ring" x1="-1" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="var(--a)"/><stop offset="50%" stop-color="var(--b)"/><stop offset="100%" stop-color="var(--c)"/>
+          </linearGradient>
+        </defs>
+        <circle cx="0" cy="0" r="38" fill="none" stroke="var(--ring)" stroke-width="3"/>
+        <g class="ticks"></g>
+        <g class="orbit">
+          <circle class="trail" cx="0" cy="0" r="30" fill="none" stroke="url(#ring)" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="40 188"/>
+          <circle class="dot" r="3.6" fill="var(--c)" transform="translate(30 0)"/>
+        </g>
+      </svg>
+      <div class="time"><span class="hh">00</span>:<span class="mm">00</span></div>
     </div>
   </div>
 
-  <div class="footer">
-    <span class="pill" aria-label="Iteration number">Iteration 1278</span>
-    <span id="last-updated">Last updated: 2025-12-14 05:18:26 EST</span>
+  <div class="foot">
+    <span class="pill" aria-label="Iteration">Iteration 1279</span>
+    <span id="last-updated">Last updated: 2025-12-14 06:15:04 EST</span>
   </div>
 
   <script>
     (function(){
-      const root = document.getElementById('atlas');
-      const cvs = root.querySelector('.sky');
-      const ctx = cvs.getContext('2d', { alpha: true });
-      const themeBtns = root.querySelectorAll('.btn[data-theme]');
-      const trailBtn = root.querySelector('.btn.trail');
-      const pauseBtn = root.querySelector('.btn.pause');
-      const bar = root.querySelector('.clock .bar i');
-      const hh = root.querySelector('.clock .hh');
-      const mm = root.querySelector('.clock .mm');
+      const root = document.getElementById('almanac');
+      const field = root.querySelector('.field');
+      const ctx = field.getContext('2d', { alpha: true });
+      const hero = root.querySelector('.hero');
+      const themeBtns = root.querySelectorAll('.chip.t');
+      const motionBtn = root.querySelector('.chip.motion');
+      const noiseBtn = root.querySelector('.chip.noise');
+      const hh = root.querySelector('.hh');
+      const mm = root.querySelector('.mm');
+      const ticksGroup = root.querySelector('.ticks');
+      const orbit = root.querySelector('.orbit');
+      const trail = root.querySelector('.trail');
+      const dot = root.querySelector('.dot');
       const lu = root.querySelector('#last-updated');
 
       // Last updated
@@ -260,192 +283,126 @@
         lu.textContent = 'Last updated: ' + new Date().toString();
       }
 
-      // Ripple helper
-      function ripple(btn, e){
-        const span = document.createElement('span');
-        span.className = 'ripple';
-        const b = btn.getBoundingClientRect();
-        span.style.left = (e.clientX - b.left) + 'px';
-        span.style.top = (e.clientY - b.top) + 'px';
-        btn.appendChild(span);
-        setTimeout(()=> span.remove(), 700);
+      // Build clock ticks
+      for(let i=0;i<60;i++){
+        const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+        const a = (i/60)*Math.PI*2;
+        const r1 = i%5===0 ? 34 : 36;
+        const r2 = 38;
+        const x1 = Math.cos(a)*r1, y1 = Math.sin(a)*r1;
+        const x2 = Math.cos(a)*r2, y2 = Math.sin(a)*r2;
+        l.setAttribute('x1', x1.toFixed(2));
+        l.setAttribute('y1', y1.toFixed(2));
+        l.setAttribute('x2', x2.toFixed(2));
+        l.setAttribute('y2', y2.toFixed(2));
+        l.setAttribute('stroke', i%5===0 ? 'var(--ink)' : 'var(--ring)');
+        l.setAttribute('stroke-width', i%5===0 ? '1.6' : '1');
+        l.setAttribute('stroke-linecap','round');
+        ticksGroup.appendChild(l);
       }
 
-      // Themes
-      const palettes = {
-        aurora: ['#64f3ff','#7f8cff','#6bffc7','#b17bff'],
-        twilight: ['#ff9f7a','#ffc46b','#ff7fd5','#ffec8b'],
-        bloom: ['#82ffb6','#7ad0ff','#ffe887','#b8ffa3'],
-        void: ['#9aa8ff','#c7d1ff','#ffffff','#9ad0ff']
-      };
-      function currentPalette(){
-        return palettes[root.getAttribute('data-theme') || 'aurora'] || palettes.aurora;
-      }
-
-      // Size
+      // Canvas sizing
       const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
       function size(){
-        const r = cvs.getBoundingClientRect();
-        cvs.width = Math.floor(r.width * DPR);
-        cvs.height = Math.floor(r.height * DPR);
+        const r = field.getBoundingClientRect();
+        field.width = Math.floor(r.width * DPR);
+        field.height = Math.floor(r.height * DPR);
         ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
         ctx.clearRect(0,0,r.width,r.height);
       }
       size();
-      new ResizeObserver(size).observe(cvs);
+      new ResizeObserver(size).observe(field);
 
-      // Sky model: stars + ribbons
-      const STARS = [];
-      function initStars(){
-        STARS.length = 0;
-        const r = cvs.getBoundingClientRect();
-        const count = Math.floor((r.width * r.height) / 16000);
-        for(let i=0;i<count;i++){
-          STARS.push({
-            x: Math.random() * r.width,
-            y: Math.random() * r.height,
-            z: Math.random() * 0.8 + 0.2,        // size/brightness factor
-            tw: Math.random() * Math.PI * 2,     // twinkle phase
-            sp: (Math.random()*0.8 + 0.2) * 0.004 // twinkle speed
-          });
-        }
+      // Ripples
+      const ripples = [];
+      const palettes = {
+        dawn: ['#ff8aa2','#ffc56b','#7ad3ff','#98ffc9'],
+        noon: ['#6bdcff','#6bffcf','#5da8ff','#a6ff9d'],
+        dusk: ['#b08cff','#ff9c7a','#ffc86b','#8be0ff'],
+        midnight: ['#8aa0ff','#7de6ff','#6bffc7','#caa3ff']
+      };
+      function pal(){ return palettes[root.getAttribute('data-theme')] || palettes.dawn; }
+
+      function pushRipple(x,y,force=1){
+        const p = pal();
+        ripples.push({
+          x, y,
+          r: 0,
+          life: 1,
+          grow: 0.9 + Math.random()*1.6,
+          fade: 0.008 + Math.random()*0.01,
+          hue: p[Math.floor(Math.random()*p.length)]
+        });
       }
-      initStars();
-      window.addEventListener('resize', initStars);
 
-      const RIBBONS = [];
-      function initRibbons(){
-        RIBBONS.length = 0;
-        const r = cvs.getBoundingClientRect();
-        const layers = 5;
-        for(let i=0;i<layers;i++){
-          RIBBONS.push({
-            amp: r.height * (0.08 + i*0.025),
-            freq: 0.002 + i*0.0006,
-            freq2: 0.0035 + i*0.0008,
-            speed: 0.3 + i*0.1,
-            phase: Math.random()*Math.PI*2,
-            thick: 1.2 + i*0.7,
-            glow: 14 + i*8,
-            hueIndex: i
-          });
-        }
-      }
-      initRibbons();
-      window.addEventListener('resize', initRibbons);
-
-      // Pointer influence
-      let pointer = { x:null, y:null };
+      // Pointer
+      let pointer = {x: null, y: null};
       function move(e){
-        const rect = cvs.getBoundingClientRect();
-        pointer.x = e.clientX - rect.left;
-        pointer.y = e.clientY - rect.top;
-        const cx = Math.max(0, Math.min(1, pointer.x / rect.width));
-        const cy = Math.max(0, Math.min(1, pointer.y / rect.height));
-        root.style.setProperty('--mx', (cx*100).toFixed(2)+'%');
-        root.style.setProperty('--my', (cy*100).toFixed(2)+'%');
+        const rect = field.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        pointer.x = x; pointer.y = y;
+        root.style.setProperty('--mx', (x/rect.width*100).toFixed(2)+'%');
+        root.style.setProperty('--my', (y/rect.height*100).toFixed(2)+'%');
+        pushRipple(x,y, 1);
+        tiltHero(x,y, rect);
       }
       function leave(){
         pointer.x = pointer.y = null;
         root.style.setProperty('--mx','50%');
         root.style.setProperty('--my','50%');
+        hero.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
       }
-      cvs.addEventListener('pointermove', move, {passive:true});
-      cvs.addEventListener('pointerleave', leave, {passive:true});
+      field.addEventListener('pointermove', move, {passive:true});
+      field.addEventListener('pointerleave', leave, {passive:true});
+      field.addEventListener('pointerdown', (e)=>{ move(e); pushRipple(pointer.x, pointer.y, 2) }, {passive:true});
 
-      // Anim
-      let t = 0, raf = null, paused = false;
-      function setPaused(state){
-        paused = !!state;
-        root.setAttribute('data-paused', paused ? 'true':'false');
-        pauseBtn.setAttribute('aria-pressed', String(paused));
-        pauseBtn.textContent = paused ? 'Resume' : 'Pause';
+      function tiltHero(x,y, rect){
+        const cx = (x - rect.width/2) / (rect.width/2);
+        const cy = (y - rect.height/2) / (rect.height/2);
+        const max = 6;
+        hero.style.transform = `perspective(800px) rotateX(${(-cy*max).toFixed(2)}deg) rotateY(${(cx*max).toFixed(2)}deg)`;
       }
 
-      function drawBackground(){
-        const r = cvs.getBoundingClientRect();
-        // subtle wash to keep trails or clear
+      // Animate
+      let raf = null, paused = false;
+      function setMotion(on){
+        paused = !on;
+        root.setAttribute('data-motion', on ? 'on' : 'off');
+        motionBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+
+      function draw(dt){
+        const r = field.getBoundingClientRect();
+        // gentle decay
         ctx.globalCompositeOperation = 'source-over';
-        const trails = root.getAttribute('data-trails') === 'on';
-        if(trails){
-          ctx.fillStyle = 'rgba(0,0,0,0.06)';
-          ctx.fillRect(0,0,r.width,r.height);
+        if(root.getAttribute('data-theme') === 'midnight'){
+          ctx.fillStyle = 'rgba(0,0,0,0.12)';
         }else{
-          ctx.clearRect(0,0,r.width,r.height);
-          // deep vignette
-          const g = ctx.createRadialGradient(r.width*0.5, r.height*0.55, r.height*0.2, r.width*0.5, r.height*0.55, Math.max(r.width,r.height)*0.9);
-          g.addColorStop(0, 'rgba(0,0,0,0)');
-          g.addColorStop(1, 'rgba(0,0,0,0.35)');
-          ctx.fillStyle = g;
-          ctx.fillRect(0,0,r.width,r.height);
+          ctx.fillStyle = 'rgba(255,255,255,0.12)';
         }
-      }
+        ctx.fillRect(0,0,r.width,r.height);
 
-      function drawStars(dt){
-        const r = cvs.getBoundingClientRect();
-        ctx.globalCompositeOperation = 'screen';
-        for(const s of STARS){
-          s.tw += s.sp * dt;
-          const a = 0.35 + Math.sin(s.tw)*0.35; // twinkle
-          const rad = 0.6 + s.z*1.6;
-          const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, rad*3);
-          const col = currentPalette()[Math.floor(s.z * (currentPalette().length-1))];
-          g.addColorStop(0, col + 'ee');
-          g.addColorStop(1, '#00000000');
-          ctx.fillStyle = g;
-          ctx.globalAlpha = 0.35 + a*0.65;
+        // ripples
+        ctx.globalCompositeOperation = (root.getAttribute('data-theme') === 'midnight') ? 'screen' : 'multiply';
+        for(let i=ripples.length-1;i>=0;i--){
+          const rp = ripples[i];
+          rp.r += rp.grow * dt*0.06 * (1 + (i%3)*0.1);
+          rp.life -= rp.fade * dt*0.06;
+
+          const grd = ctx.createRadialGradient(rp.x, rp.y, Math.max(0, rp.r-14), rp.x, rp.y, rp.r+28);
+          const col = rp.hue;
+          grd.addColorStop(0, col + 'cc');
+          grd.addColorStop(0.5, col + '66');
+          grd.addColorStop(1, '#0000');
+          ctx.fillStyle = grd;
           ctx.beginPath();
-          ctx.arc(s.x, s.y, rad*2.2, 0, Math.PI*2);
+          ctx.arc(rp.x, rp.y, rp.r+30, 0, Math.PI*2);
           ctx.fill();
+
+          if(rp.life<=0 || rp.r > Math.max(r.width, r.height)*1.2){ ripples.splice(i,1); }
         }
-        ctx.globalAlpha = 1;
-      }
-
-      function drawRibbons(dt){
-        const r = cvs.getBoundingClientRect();
-        const cols = currentPalette();
-        ctx.globalCompositeOperation = 'lighter';
-        for(let i=0;i<RIBBONS.length;i++){
-          const rb = RIBBONS[i];
-          const baseY = r.height*0.42 + (i-2)*r.height*0.05;
-          ctx.lineWidth = rb.thick;
-          ctx.shadowBlur = rb.glow;
-          const col = cols[(rb.hueIndex) % cols.length];
-          ctx.shadowColor = col + 'dd';
-          ctx.strokeStyle = col + 'cc';
-
-          ctx.beginPath();
-          const step = 8;
-          for(let x=0;x<=r.width+step;x+=step){
-            const y1 = baseY
-              + Math.sin(x*rb.freq + t*rb.speed + rb.phase) * rb.amp
-              + Math.sin(x*rb.freq2 - t*rb.speed*0.6 + rb.phase*0.7) * (rb.amp*0.5);
-
-            // pointer swell
-            let y = y1;
-            if(pointer.x!=null && pointer.y!=null){
-              const dx = (x - pointer.x);
-              const dist = Math.sqrt(dx*dx + (baseY-pointer.y)*(baseY-pointer.y)) + 1;
-              const swell = Math.max(-28, Math.min(28, 650 / dist));
-              y -= swell * (i*0.25+0.6);
-            }
-
-            if(x===0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-          }
-          ctx.stroke();
-
-          // soft top haze
-          const hg = ctx.createLinearGradient(0, baseY - rb.amp - 60, 0, baseY + rb.amp + 60);
-          hg.addColorStop(0, '#00000000');
-          hg.addColorStop(0.5, col + '22');
-          hg.addColorStop(1, '#00000000');
-          ctx.fillStyle = hg;
-          ctx.globalAlpha = 0.35;
-          ctx.fillRect(0, baseY - rb.amp - 60, r.width, rb.amp*2 + 120);
-          ctx.globalAlpha = 1;
-        }
-        ctx.shadowBlur = 0;
+        ctx.globalCompositeOperation = 'source-over';
       }
 
       function tick(now){
@@ -453,12 +410,7 @@
         const dt = Math.min(34, now - tick.last);
         tick.last = now;
 
-        if(!paused) t += dt * 0.0015;
-
-        drawBackground();
-        drawStars(dt);
-        drawRibbons(dt);
-
+        if(!paused) draw(dt);
         raf = requestAnimationFrame(tick);
       }
       raf = requestAnimationFrame(tick);
@@ -466,54 +418,69 @@
       // Clock
       function updateClock(){
         const d = new Date();
-        hh.textContent = d.getHours().toString().padStart(2,'0');
-        mm.textContent = d.getMinutes().toString().padStart(2,'0');
+        const hrs = d.getHours().toString().padStart(2,'0');
+        const mins = d.getMinutes().toString().padStart(2,'0');
+        hh.textContent = hrs; mm.textContent = mins;
+
         const sec = d.getSeconds() + d.getMilliseconds()/1000;
-        bar.style.width = ((sec/60)*100).toFixed(2) + '%';
+        const ang = (sec/60) * 360;
+        orbit.setAttribute('transform', `rotate(${ang.toFixed(2)})`);
+        trail.setAttribute('stroke-dasharray', `${(sec/60*200).toFixed(1)} 188`);
       }
       updateClock();
       const clockTimer = setInterval(updateClock, 120);
 
-      // Actions
-      themeBtns.forEach(btn=>{
-        btn.addEventListener('click', (e)=>{
-          ripple(btn, e);
-          const tname = btn.getAttribute('data-theme');
-          root.setAttribute('data-theme', tname);
-          themeBtns.forEach(b=> b.setAttribute('aria-pressed', String(b===btn)));
-          // slight reset for fresh palette
-          initRibbons();
-        });
-      });
-
-      trailBtn.addEventListener('click', (e)=>{
-        ripple(trailBtn, e);
-        const on = root.getAttribute('data-trails') !== 'on';
-        root.setAttribute('data-trails', on ? 'on' : 'off');
-        trailBtn.setAttribute('aria-pressed', String(on));
-        trailBtn.textContent = on ? 'Trails' : 'No Trails';
-      });
-
-      function togglePause(){
-        setPaused(!paused);
+      // Themes
+      function selectTheme(name){
+        root.setAttribute('data-theme', name);
+        themeBtns.forEach(b=> b.setAttribute('aria-pressed', String(b.getAttribute('data-theme')===name)));
+        // celebratory pulse
+        const active = Array.from(themeBtns).find(b=> b.getAttribute('data-theme')===name);
+        if(active){
+          const span = document.createElement('span');
+          span.className = 'pulse';
+          active.appendChild(span);
+          setTimeout(()=> span.remove(), 650);
+        }
+        // seed a few ripples in new palette
+        const rect = field.getBoundingClientRect();
+        for(let i=0;i<3;i++){
+          pushRipple(Math.random()*rect.width, Math.random()*rect.height);
+        }
       }
-      pauseBtn.addEventListener('click', (e)=>{ ripple(pauseBtn, e); togglePause(); });
+      themeBtns.forEach(b=>{
+        b.addEventListener('click', ()=> selectTheme(b.getAttribute('data-theme')));
+      });
+
+      // Toggles
+      motionBtn.addEventListener('click', ()=>{
+        const on = root.getAttribute('data-motion') !== 'on';
+        setMotion(on);
+      });
+      noiseBtn.addEventListener('click', ()=>{
+        const on = root.getAttribute('data-noise') !== 'on';
+        root.setAttribute('data-noise', on ? 'on' : 'off');
+        noiseBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
 
       // Keyboard shortcuts
       window.addEventListener('keydown', (e)=>{
-        if(e.code==='Space'){ e.preventDefault(); togglePause(); }
+        if(e.code==='Space'){ e.preventDefault(); setMotion(paused); }
+        if(e.key==='1') selectTheme('dawn');
+        if(e.key==='2') selectTheme('noon');
+        if(e.key==='3') selectTheme('dusk');
+        if(e.key==='4') selectTheme('midnight');
         if(e.key==='t' || e.key==='T'){
-          const on = root.getAttribute('data-trails') !== 'on';
-          root.setAttribute('data-trails', on ? 'on' : 'off');
-          trailBtn.setAttribute('aria-pressed', String(on));
-          trailBtn.textContent = on ? 'Trails' : 'No Trails';
+          const on = root.getAttribute('data-noise') !== 'on';
+          root.setAttribute('data-noise', on ? 'on' : 'off');
+          noiseBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
         }
       });
 
-      // Respect reduced motion
+      // Respect user prefers-reduced-motion
       const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)');
       function applyReduce(){
-        if(reduce && reduce.matches){ setPaused(true); }
+        if(reduce && reduce.matches){ setMotion(false); }
       }
       reduce?.addEventListener('change', applyReduce);
       applyReduce();
