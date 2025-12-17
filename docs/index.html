@@ -73,354 +73,440 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="atelier-1340">
+<section id="atelier-1341">
   <style>
-    /* Scope everything to #atelier-1340 to avoid leaking styles */
-    #atelier-1340 {
-      --h: 194; /* base hue (will change) */
-      --fg: 255, 255, 255;
-      --glass: rgba(255,255,255,0.08);
-      --glass-2: rgba(255,255,255,0.04);
-      --stroke: rgba(255,255,255,0.18);
-      --ring: hsla(var(--h), 90%, 60%, 0.55);
+    /* Scoped to #atelier-1341 only */
+    #atelier-1341 {
+      --h: 210;            /* palette hue (live-updated) */
       --mx: 50%;
-      --my: 45%;
+      --my: 35%;
+      --spd: 18s;          /* ambient rotation duration */
+      --ink: 12, 18, 28;   /* text color (RGB) */
+      color: rgba(var(--ink), 0.9);
       display: grid;
       place-items: center;
       position: relative;
       isolation: isolate;
-      padding: clamp(20px, 4vw, 48px);
-      min-height: 380px;
-      color: rgba(var(--fg), 0.95);
-      font: 500 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      min-height: 460px;
+      padding: clamp(18px, 4vw, 48px);
+      font: 500 15px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
       letter-spacing: 0.2px;
     }
 
-    /* Ambient canvas */
-    #atelier-1340 .backdrop {
+    /* Ambient light field */
+    #atelier-1341 .canvas {
       position: absolute;
       inset: -6vmax;
       z-index: -1;
       overflow: hidden;
-      border-radius: 28px;
     }
-    #atelier-1340 .backdrop::before {
+    #atelier-1341 .canvas::before {
       content: "";
       position: absolute; inset: 0;
       background:
-        radial-gradient(1000px 600px at var(--mx) var(--my),
-          hsla(var(--h), 85%, 18%, 0.85) 0%,
-          hsla(var(--h), 90%, 10%, 0.6) 35%,
-          rgba(5, 8, 15, 0.85) 80%);
+        radial-gradient(1000px 700px at var(--mx) var(--my),
+          hsl(calc(var(--h) + 20) 100% 96% / 0.9) 0%,
+          hsl(var(--h) 100% 99% / 0.9) 38%,
+          hsl(var(--h) 40% 100% / 1) 100%);
     }
-    #atelier-1340 .blob {
+    #atelier-1341 .halo {
       position: absolute;
-      filter: blur(60px);
-      opacity: 0.55;
-      mix-blend-mode: screen;
-      will-change: transform, opacity;
-    }
-    #atelier-1340 .b1 {
-      width: 70vmax; height: 70vmax;
-      left: -20vmax; top: -25vmax;
-      background: radial-gradient(40% 40% at 30% 35%, hsla(calc(var(--h) + 40), 95%, 60%, 0.85), transparent 60%),
-                  radial-gradient(40% 40% at 70% 70%, hsla(calc(var(--h) - 20), 85%, 55%, 0.75), transparent 60%);
-      animation: drift1 22s ease-in-out infinite alternate;
-    }
-    #atelier-1340 .b2 {
-      width: 60vmax; height: 60vmax;
-      right: -25vmax; bottom: -30vmax;
-      background: radial-gradient(45% 45% at 60% 40%, hsla(calc(var(--h) + 90), 85%, 58%, 0.6), transparent 60%),
-                  radial-gradient(45% 45% at 40% 60%, hsla(calc(var(--h) + 160), 80%, 62%, 0.5), transparent 60%);
-      animation: drift2 26s ease-in-out infinite alternate;
-    }
-
-    #atelier-1340 .grid {
-      position: absolute; inset: -1px;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
-      background-size: 32px 32px, 32px 32px;
-      mask-image: radial-gradient(55% 55% at var(--mx) var(--my), #000 20%, transparent 80%);
+      inset: -10% -10% -10% -10%;
+      filter: blur(50px) saturate(120%);
+      mix-blend-mode: multiply;
+      opacity: 0.35;
+      transform-origin: 50% 50%;
       pointer-events: none;
     }
-    #atelier-1340 .grain {
-      position: absolute; inset: 0;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="160" height="160" filter="url(%23n)" opacity="0.12"/></svg>');
-      background-size: 280px 280px;
-      mix-blend-mode: soft-light;
-      opacity: 0.06;
-      pointer-events: none;
-    }
-
-    @keyframes drift1 { to { transform: translate3d(10%, 8%, 0) scale(1.05); opacity: 0.6; } }
-    @keyframes drift2 { to { transform: translate3d(-8%, -6%, 0) scale(1.07); opacity: 0.65; } }
-
-    /* The glass card */
-    #atelier-1340 .card {
-      position: relative;
-      width: min(920px, 94vw);
-      border-radius: 26px;
-      padding: clamp(24px, 6vw, 48px);
+    #atelier-1341 .h1 {
       background:
-        linear-gradient(180deg, var(--glass), var(--glass-2));
-      border: 1px solid var(--stroke);
-      backdrop-filter: saturate(120%) blur(16px);
-      -webkit-backdrop-filter: saturate(120%) blur(16px);
+        radial-gradient(35% 40% at 20% 30%, hsl(calc(var(--h) + 40) 95% 70% / 0.55), transparent 60%),
+        radial-gradient(45% 60% at 85% 70%, hsl(calc(var(--h) - 30) 85% 72% / 0.45), transparent 60%);
+      animation: spin1 var(--spd) linear infinite;
+    }
+    #atelier-1341 .h2 {
+      background:
+        radial-gradient(30% 30% at 75% 30%, hsl(calc(var(--h) + 120) 90% 70% / 0.45), transparent 60%),
+        radial-gradient(35% 45% at 30% 80%, hsl(calc(var(--h) + 200) 85% 72% / 0.35), transparent 60%);
+      animation: spin2 calc(var(--spd) * 1.35) linear infinite reverse;
+    }
+    #atelier-1341 .h3 {
+      background:
+        radial-gradient(30% 30% at 50% 50%, hsl(calc(var(--h) + 300) 85% 70% / 0.35), transparent 60%);
+      animation: spin3 calc(var(--spd) * 1.9) linear infinite;
+    }
+    #atelier-1341 .grain {
+      position: absolute; inset: 0;
+      opacity: 0.06;
+      mix-blend-mode: overlay;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="160" height="160" filter="url(%23n)" opacity="0.16"/></svg>');
+      background-size: 280px 280px;
+      pointer-events: none;
+    }
+    @keyframes spin1 { to { transform: rotate(360deg) } }
+    @keyframes spin2 { to { transform: rotate(360deg) } }
+    @keyframes spin3 { to { transform: rotate(-360deg) } }
+
+    /* The lucid surface */
+    #atelier-1341 .shell {
+      width: min(980px, 94vw);
+      border-radius: 28px;
+      padding: clamp(20px, 5vw, 44px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,255,255,0.62));
+      border: 1px solid rgba(10, 20, 40, 0.12);
       box-shadow:
-        0 20px 60px -30px rgba(0, 0, 0, 0.65),
-        0 2px 12px rgba(0, 0, 0, 0.35),
-        inset 0 1px 0 rgba(255,255,255,0.12);
-      transform-style: preserve-3d;
+        0 30px 60px -35px rgba(12, 20, 36, 0.25),
+        0 4px 18px rgba(12, 20, 36, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.65);
+      backdrop-filter: blur(16px) saturate(130%);
+      -webkit-backdrop-filter: blur(16px) saturate(130%);
+      position: relative;
       transition: transform 300ms ease, box-shadow 300ms ease;
     }
-    #atelier-1340 .card::before {
+    #atelier-1341 .shell::after {
       content: "";
       position: absolute; inset: 0; border-radius: inherit;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-              mask-composite: exclude;
+      background: radial-gradient(600px 280px at var(--mx) var(--my), hsl(var(--h) 100% 80% / 0.2), transparent 60%);
       pointer-events: none;
     }
-    #atelier-1340 .card::after {
-      /* moving highlight that follows the pointer */
-      content: "";
-      position: absolute; inset: -1px; border-radius: inherit;
-      background: radial-gradient(400px 200px at var(--mx) var(--my), hsla(var(--h), 95%, 85%, 0.18), transparent 60%);
-      pointer-events: none;
-      transition: background-position 120ms linear;
+    #atelier-1341 .shell:focus-within { outline: none; box-shadow: 0 0 0 2px hsl(var(--h) 80% 50% / 0.35), 0 30px 60px -35px rgba(12,20,36,0.25); }
+
+    /* Topline */
+    #atelier-1341 .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
     }
-    #atelier-1340 .badge {
+    #atelier-1341 .stamp {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 6px 10px;
-      border-radius: 999px;
       font-size: 12px;
-      letter-spacing: 0.4px;
-      color: rgba(var(--fg), 0.92);
-      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
-      border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: inset 0 0 1px rgba(255,255,255,0.2);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.02));
+      border: 1px solid rgba(10, 20, 40, 0.12);
+      color: rgba(var(--ink), 0.75);
     }
-    #atelier-1340 .badge::before {
+    #atelier-1341 .stamp::before {
       content: "";
       width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff, hsla(var(--h), 95%, 60%, 0.9) 60%);
-      box-shadow: 0 0 10px hsla(var(--h), 100%, 70%, 0.7);
+      background: radial-gradient(circle at 30% 30%, #fff, hsl(var(--h) 90% 55%) 60%);
+      box-shadow: 0 0 10px hsl(var(--h) 95% 70% / 0.65);
     }
 
-    #atelier-1340 h1 {
-      margin: 14px 0 6px;
+    /* Palette swatches */
+    #atelier-1341 .swatches {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+    }
+    #atelier-1341 .swatch {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(10, 20, 40, 0.14);
+      background:
+        conic-gradient(from 0deg,
+          hsl(var(--ch) 85% 62%),
+          hsl(calc(var(--ch) + 40) 85% 58%),
+          hsl(calc(var(--ch) + 80) 85% 60%),
+          hsl(var(--ch) 85% 62%));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 6px 18px -10px rgba(12, 20, 36, 0.25);
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 200ms ease;
+    }
+    #atelier-1341 .swatch:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 10px 24px -12px rgba(12, 20, 36, 0.35); }
+    #atelier-1341 .swatch[aria-pressed="true"] { outline: none; box-shadow: 0 0 0 3px hsl(var(--h) 85% 60% / 0.35), inset 0 1px 0 rgba(255,255,255,0.7); }
+
+    /* Heading */
+    #atelier-1341 h1 {
+      margin: 10px 0 4px;
       font-weight: 800;
-      line-height: 1.08;
-      font-size: clamp(28px, 6vw, 56px);
-      letter-spacing: -0.6px;
+      line-height: 1.02;
+      font-size: clamp(28px, 6.4vw, 64px);
+      letter-spacing: -0.4px;
       color: transparent;
-      background: linear-gradient(100deg,
-        hsla(var(--h), 90%, 86%, 0.98),
-        hsla(calc(var(--h) + 60), 95%, 75%, 0.95));
-      -webkit-background-clip: text;
-              background-clip: text;
+      background: linear-gradient(100deg, hsl(var(--h) 80% 40%), hsl(calc(var(--h) + 40) 90% 45%));
+      -webkit-background-clip: text; background-clip: text;
       text-wrap: balance;
     }
-    #atelier-1340 h1 .soft {
-      opacity: 0.8;
-      filter: saturate(80%);
-    }
-    #atelier-1340 .lede {
-      margin: 6px 0 18px;
-      font-size: clamp(14px, 2.6vw, 18px);
-      color: rgba(var(--fg), 0.8);
+    #atelier-1341 .lede {
+      margin: 4px 0 20px;
+      font-size: clamp(14px, 2.4vw, 18px);
+      color: rgba(var(--ink), 0.7);
       text-wrap: pretty;
     }
 
-    /* Theme pills */
-    #atelier-1340 .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 18px 0 16px;
+    /* Dial */
+    #atelier-1341 .dial-wrap {
+      display: grid;
+      place-items: center;
+      margin: 10px 0 2px;
     }
-    #atelier-1340 .pill {
-      appearance: none;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: linear-gradient(180deg,
-        hsla(var(--h), 70%, 18%, 0.55),
-        hsla(var(--h), 70%, 12%, 0.45));
-      color: rgba(var(--fg), 0.92);
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 12px;
-      letter-spacing: 0.3px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 10px 20px -12px rgba(0,0,0,0.6);
-      cursor: pointer;
-      transition: transform 160ms ease, background 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
-    }
-    #atelier-1340 .pill:hover {
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,0.35);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 14px 28px -16px rgba(0,0,0,0.7), 0 0 0 3px var(--ring);
-    }
-    #atelier-1340 .pill:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 3px var(--ring);
-    }
-
-    /* Progress meter */
-    #atelier-1340 .meter {
+    #atelier-1341 .dial {
       position: relative;
-      height: 10px;
+      width: min(62vw, 260px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+    }
+    #atelier-1341 .dial-bg {
+      position: absolute; inset: 6%;
+      border-radius: 50%;
+      background: radial-gradient(60% 60% at 50% 40%, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -10px 40px rgba(12, 20, 36, 0.06);
+    }
+    #atelier-1341 .dial-svg {
+      position: absolute; inset: 0;
+      transform: translateZ(0);
+      overflow: visible;
+    }
+    #atelier-1341 .dial-svg .track {
+      fill: none;
+      stroke: rgba(12, 20, 36, 0.08);
+      stroke-width: 16;
+    }
+    #atelier-1341 .dial-svg .progress {
+      fill: none;
+      stroke: url(#grad-1341);
+      stroke-width: 16;
+      stroke-linecap: round;
+      transform: rotate(-90deg);
+      transform-origin: 100px 100px;
+      stroke-dasharray: var(--circumf, 540);
+      stroke-dashoffset: var(--off, 540);
+      filter: drop-shadow(0 0 12px hsl(var(--h) 100% 70% / 0.35));
+      transition: stroke-dashoffset 200ms ease-out;
+    }
+    #atelier-1341 stop.s1 { stop-color: hsl(var(--h) 85% 50%); }
+    #atelier-1341 stop.s2 { stop-color: hsl(calc(var(--h) + 40) 90% 55%); }
+
+    #atelier-1341 .knob {
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 16px; height: 16px; border-radius: 50%;
+      margin: -8px 0 0 -8px;
+      transform: rotate(var(--ang, 220deg)) translateY(calc(-1 * (50% - 22px)));
+      background: radial-gradient(circle at 30% 30%, #fff, hsl(calc(var(--h) + 20) 90% 55%) 60%);
+      border: 2px solid #fff;
+      box-shadow: 0 6px 18px -6px rgba(12, 20, 36, 0.25), 0 0 0 6px hsl(var(--h) 85% 60% / 0.15);
+      cursor: grab;
+      touch-action: none;
+      transition: box-shadow 180ms ease;
+    }
+    #atelier-1341 .knob:active { cursor: grabbing; box-shadow: 0 8px 22px -6px rgba(12, 20, 36, 0.35), 0 0 0 8px hsl(var(--h) 85% 60% / 0.2); }
+
+    #atelier-1341 .tempo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      padding: 6px 10px;
+      font-size: 12px;
       border-radius: 999px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));
-      border: 1px solid rgba(255,255,255,0.2);
-      overflow: hidden;
+      background: linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.02));
+      border: 1px solid rgba(10, 20, 40, 0.12);
+      color: rgba(var(--ink), 0.8);
     }
-    #atelier-1340 .meter-fill {
-      --level: 0%;
-      position: absolute; inset: 0;
-      width: var(--level);
-      background:
-        linear-gradient(90deg,
-          hsla(var(--h), 95%, 72%, 0.95),
-          hsla(calc(var(--h) + 40), 90%, 64%, 0.9));
-      box-shadow: 0 0 24px hsla(var(--h), 100%, 70%, 0.35);
-      transition: width 1100ms cubic-bezier(.22,.8,.1,1), box-shadow 300ms ease;
-    }
-    #atelier-1340 .meter-shine {
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0) 60%);
-      mix-blend-mode: overlay;
-      pointer-events: none;
+    #atelier-1341 .tempo .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, hsl(var(--h) 90% 55%) 60%);
+      box-shadow: 0 0 10px hsl(var(--h) 95% 70% / 0.55);
     }
 
-    /* Footer line */
-    #atelier-1340 .foot {
-      margin-top: 14px;
+    /* Footer */
+    #atelier-1341 .foot {
       display: flex;
-      gap: 12px;
       align-items: center;
       justify-content: space-between;
+      gap: 14px;
       flex-wrap: wrap;
-      color: rgba(var(--fg), 0.72);
+      margin-top: 16px;
       font-size: 12.5px;
+      color: rgba(var(--ink), 0.7);
     }
-    #atelier-1340 .hint {
-      opacity: 0.8;
-    }
-    #atelier-1340 #last-updated {
+    #atelier-1341 #last-updated {
       padding: 6px 10px;
       border-radius: 8px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.06));
-      border: 1px solid rgba(255,255,255,0.18);
-      color: rgba(var(--fg), 0.85);
+      background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.02));
+      border: 1px solid rgba(10, 20, 40, 0.12);
+      color: rgba(var(--ink), 0.85);
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
     }
 
     /* Motion respect */
     @media (prefers-reduced-motion: reduce) {
-      #atelier-1340 .b1, #atelier-1340 .b2 { animation: none; }
-      #atelier-1340 .card { transition: none; }
-      #atelier-1340 .pill { transition: none; }
-      #atelier-1340 .meter-fill { transition: width 0.01ms linear; }
+      #atelier-1341 .halo { animation: none !important; }
+      #atelier-1341 .dial-svg .progress { transition: none; }
+      #atelier-1341 .shell { transition: none; }
     }
   </style>
 
-  <div class="backdrop" aria-hidden="true">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="grid"></div>
+  <div class="canvas" aria-hidden="true">
+    <div class="halo h1"></div>
+    <div class="halo h2"></div>
+    <div class="halo h3"></div>
     <div class="grain"></div>
   </div>
 
-  <article class="card" tabindex="0" aria-label="Quiet Momentum interface">
-    <span class="badge" aria-hidden="true">Iteration 1340 • Live</span>
-
-    <h1><span class="soft">Quiet</span> Momentum</h1>
-    <p class="lede">Design that whispers; motion that breathes. Glide through themes, feel the light move.</p>
-
-    <div class="actions" role="group" aria-label="Theme presets">
-      <button class="pill" data-tone="dawn" aria-label="Switch to Dawn theme">Dawn</button>
-      <button class="pill" data-tone="sea" aria-label="Switch to Sea theme">Sea</button>
-      <button class="pill" data-tone="ember" aria-label="Switch to Ember theme">Ember</button>
-      <button class="pill" data-tone="moss" aria-label="Switch to Moss theme">Moss</button>
-      <button class="pill" data-tone="iris" aria-label="Switch to Iris theme">Iris</button>
+  <article class="shell" tabindex="0" aria-label="Lucid Surface interface">
+    <div class="topline">
+      <span class="stamp">Iteration 1341 • Lucid</span>
+      <nav class="swatches" aria-label="Palettes">
+        <button class="swatch" data-theme="cloud"  style="--ch: 210" aria-label="Switch to Cloud" aria-pressed="true" title="Cloud"></button>
+        <button class="swatch" data-theme="blossom" style="--ch: 338" aria-label="Switch to Blossom" aria-pressed="false" title="Blossom"></button>
+        <button class="swatch" data-theme="sun"     style="--ch: 36"  aria-label="Switch to Sun" aria-pressed="false" title="Sun"></button>
+        <button class="swatch" data-theme="meadow"  style="--ch: 132" aria-label="Switch to Meadow" aria-pressed="false" title="Meadow"></button>
+        <button class="swatch" data-theme="iris"    style="--ch: 264" aria-label="Switch to Iris" aria-pressed="false" title="Iris"></button>
+        <button class="swatch" data-theme="slate"   style="--ch: 200" aria-label="Switch to Slate" aria-pressed="false" title="Slate"></button>
+      </nav>
     </div>
 
-    <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="72" aria-label="Calm level">
-      <div class="meter-fill"></div>
-      <div class="meter-shine" aria-hidden="true"></div>
+    <h1>Lucid Rings</h1>
+    <p class="lede">Daylight-first motion. Drag the dial to set the tempo; move your cursor to steer the light.</p>
+
+    <div class="dial-wrap">
+      <div class="dial" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="61" aria-label="Tempo">
+        <div class="dial-bg" aria-hidden="true"></div>
+        <svg class="dial-svg" viewBox="0 0 200 200" aria-hidden="true">
+          <defs>
+            <linearGradient id="grad-1341" x1="0" y1="0" x2="1" y2="1">
+              <stop class="s1" offset="0%"/>
+              <stop class="s2" offset="100%"/>
+            </linearGradient>
+          </defs>
+          <circle class="track"    cx="100" cy="100" r="86"></circle>
+          <circle class="progress" cx="100" cy="100" r="86"></circle>
+        </svg>
+        <div class="knob"></div>
+      </div>
+      <div class="tempo" aria-live="polite" aria-atomic="true">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Tempo: <strong><span class="tempo-val">18.0s</span></strong></span>
+      </div>
     </div>
 
     <div class="foot">
-      <span class="hint">Tip: move your pointer or finger to tilt and paint the light.</span>
-      <span id="last-updated">Last updated: 2025-12-17 02:20:56 EST</span>
+      <span class="hint">Tip: Themes auto-cycle. Touch the ring to override.</span>
+      <span id="last-updated">Last updated: 2025-12-17 03:27:59 EST</span>
     </div>
   </article>
 
   <script>
     (function () {
-      const root = document.getElementById('atelier-1340');
+      const root = document.getElementById('atelier-1341');
       if (!root) return;
+
       // Timestamp
-      const dateFmt = new Intl.DateTimeFormat(navigator.language || 'en-US', { dateStyle: 'medium', timeStyle: 'short' });
       const ts = root.querySelector('#last-updated');
-      if (ts) ts.textContent = 'Last updated: ' + dateFmt.format(new Date());
+      try {
+        const fmt = new Intl.DateTimeFormat(navigator.language || 'en-US', { dateStyle: 'medium', timeStyle: 'short' });
+        ts.textContent = 'Last updated: ' + fmt.format(new Date());
+      } catch {
+        ts.textContent = 'Last updated: ' + new Date().toLocaleString();
+      }
 
-      // Theme handling
-      const tones = { dawn: 22, sea: 194, ember: 344, moss: 132, iris: 268 };
-      const setTone = (name) => {
-        const hue = tones[name] ?? 194;
-        root.style.setProperty('--h', hue);
-        root.dataset.tone = name;
+      // Track pointer to steer light
+      const steer = (x, y) => {
+        const r = root.getBoundingClientRect();
+        const px = ((x - r.left) / r.width) * 100;
+        const py = ((y - r.top) / r.height) * 100;
+        root.style.setProperty('--mx', Math.max(8, Math.min(92, px)) + '%');
+        root.style.setProperty('--my', Math.max(8, Math.min(92, py)) + '%');
       };
-      setTone('sea');
-      root.querySelectorAll('.pill').forEach(btn => {
-        btn.addEventListener('click', () => setTone(btn.dataset.tone));
-      });
+      root.addEventListener('pointermove', (e) => steer(e.clientX, e.clientY), { passive: true });
 
-      // Meter animation
-      const fill = root.querySelector('.meter-fill');
-      requestAnimationFrame(() => {
-        fill.style.setProperty('--level', '72%');
-      });
-
-      // Parallax tilt and light focus
-      const card = root.querySelector('.card');
-      const move = (clientX, clientY) => {
-        const r = card.getBoundingClientRect();
-        const x = (clientX - r.left) / r.width;
-        const y = (clientY - r.top) / r.height;
-        const rx = (0.5 - y) * 7;
-        const ry = (x - 0.5) * 10;
-        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-        root.style.setProperty('--mx', `${Math.round(x * 100)}%`);
-        root.style.setProperty('--my', `${Math.round(y * 100)}%`);
+      // Theme palettes
+      const hues = { cloud: 210, blossom: 338, sun: 36, meadow: 132, iris: 264, slate: 200 };
+      const setTheme = (name) => {
+        const h = hues[name] ?? 210;
+        root.style.setProperty('--h', h);
+        root.querySelectorAll('.swatch').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.theme === name)));
+        root.dataset.theme = name;
       };
-      card.addEventListener('pointermove', (e) => move(e.clientX, e.clientY));
-      card.addEventListener('pointerleave', () => { card.style.transform = ''; });
-      card.addEventListener('pointerdown', (e) => { card.setPointerCapture(e.pointerId); });
-      card.addEventListener('pointerup', () => { card.releasePointerCapture?.(); });
+      root.querySelectorAll('.swatch').forEach(b => b.addEventListener('click', () => setTheme(b.dataset.theme)));
+      setTheme('cloud');
 
-      // Ambient auto-cycle (respect reduced motion)
-      const m = window.matchMedia('(prefers-reduced-motion: reduce)');
+      // Dial mechanics
+      const dial = root.querySelector('.dial');
+      const progress = root.querySelector('.progress');
+      const knob = root.querySelector('.knob');
+      const tempoOut = root.querySelector('.tempo-val');
+
+      const R = 86;
+      const C = 2 * Math.PI * R;
+      progress.style.setProperty('--circumf', C.toFixed(2));
+
+      const setAngle = (deg) => {
+        // clamp 0..360
+        deg = ((deg % 360) + 360) % 360;
+        const offset = C * (1 - deg / 360);
+        progress.style.setProperty('--off', offset.toFixed(2));
+        root.style.setProperty('--ang', deg.toFixed(1) + 'deg');
+
+        // Map angle to duration: 36s (calm) at 0°, 8s (brisk) at 360°
+        const secs = 36 - (deg / 360) * 28;
+        root.style.setProperty('--spd', secs.toFixed(2) + 's');
+        tempoOut.textContent = secs.toFixed(1) + 's';
+
+        const pct = Math.round((deg / 360) * 100);
+        dial.setAttribute('aria-valuenow', String(pct));
+      };
+
+      const posToAngle = (clientX, clientY) => {
+        const r = dial.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = clientX - cx;
+        const dy = clientY - cy;
+        let deg = (Math.atan2(dy, dx) * 180 / Math.PI) + 90; // 0° at top
+        if (deg < 0) deg += 360;
+        return deg;
+      };
+
+      let dragging = false;
+      const onMove = (e) => {
+        if (!dragging) return;
+        const d = posToAngle(e.clientX, e.clientY);
+        setAngle(d);
+      };
+      dial.addEventListener('pointerdown', (e) => {
+        dragging = true;
+        dial.setPointerCapture(e.pointerId);
+        setAngle(posToAngle(e.clientX, e.clientY));
+      });
+      dial.addEventListener('pointermove', onMove);
+      dial.addEventListener('pointerup', () => { dragging = false; });
+      dial.addEventListener('pointercancel', () => { dragging = false; });
+
+      // Initial angle
+      setAngle(220);
+
+      // Auto-cycle themes (respect reduced motion)
+      const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let cycle;
       const startCycle = () => {
-        if (m.matches) return;
-        const keys = Object.keys(tones);
-        let i = keys.indexOf(root.dataset.tone || 'sea');
+        if (!motionOK) return;
+        const keys = Object.keys(hues);
+        let i = keys.indexOf(root.dataset.theme || 'cloud');
         clearInterval(cycle);
         cycle = setInterval(() => {
           i = (i + 1) % keys.length;
-          setTone(keys[i]);
-        }, 10000);
+          setTheme(keys[i]);
+        }, 12000);
       };
       startCycle();
-      m.addEventListener?.('change', () => { clearInterval(cycle); startCycle(); });
+
+      // Clean up on visibility change
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) { clearInterval(cycle); }
+        else { startCycle(); }
+      });
     })();
   </script>
 </section>
