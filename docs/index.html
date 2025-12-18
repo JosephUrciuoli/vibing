@@ -73,353 +73,492 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="atelier" aria-label="A calm interactive canvas">
+<section id="oasis" aria-label="A luminous daydream studio">
   <style>
-    /* Scoped to #atelier only */
-    #atelier {
-      --bg-1: #0b1220;
-      --bg-2: #151a2f;
-      --ink: #e9eefc;
-      --ink-dim: #b9c3e7;
-      --accent-1: #6ee7f8;
-      --accent-2: #a78bfa;
-      --ring: 30, 220, 250;
+    /* Scope everything to #oasis */
+    #oasis {
+      --bg: #fbfcff;
+      --ink: #0b1320;
+      --muted: #4a5a78;
+      --line: rgba(10, 20, 40, 0.08);
+      --soft: rgba(255, 255, 255, 0.65);
+      --a1: #ff9a8b;
+      --a2: #8ec5fc;
+      --a3: #a1ffce;
+      --ring: #0b1320;
+      --glow: 255, 154, 139;
+      --spin: 16s;
+      --breeze: 1;
       position: relative;
       overflow: hidden;
-      border-radius: 22px;
-      padding: clamp(20px, 4vw, 44px);
+      border-radius: 26px;
+      padding: clamp(18px, 3.2vw, 42px);
       color: var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: radial-gradient(120% 140% at 10% 0%, var(--bg-2) 0%, var(--bg-1) 50%, #070c17 100%);
-      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        radial-gradient(140% 120% at 10% -10%, #ffffff 0%, var(--bg) 45%, #f1f5ff 100%);
+      border: 1px solid var(--line);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.03),
-        0 30px 60px -20px rgba(17, 23, 38, 0.65),
-        0 8px 24px -10px rgba(17, 23, 38, 0.5);
+        inset 0 1px 0 rgba(255,255,255,0.9),
+        0 18px 60px -25px rgba(15, 30, 60, 0.25),
+        0 8px 28px -16px rgba(15, 30, 60, 0.18);
       isolation: isolate;
     }
 
-    /* Ambient aurora */
-    #atelier .aurora {
-      position: absolute;
-      inset: -25%;
+    /* Subtle paper grain */
+    #oasis::after {
+      content: "";
       pointer-events: none;
-      z-index: 0;
-      filter: blur(38px) saturate(115%);
-      opacity: 0.55;
-      background:
-        radial-gradient(42% 38% at 20% 30%, rgba(110, 231, 248, 0.22), transparent 60%),
-        radial-gradient(38% 42% at 75% 25%, rgba(167, 139, 250, 0.22), transparent 60%),
-        radial-gradient(36% 32% at 60% 70%, rgba(34, 197, 94, 0.12), transparent 60%),
-        radial-gradient(32% 36% at 25% 75%, rgba(244, 63, 94, 0.12), transparent 60%);
-      transform: translate3d(0,0,0);
-      animation: float-aurora 22s ease-in-out infinite alternate;
-    }
-    @keyframes float-aurora {
-      0% { transform: translate3d(-2%, 0%, 0) scale(1); }
-      50% { transform: translate3d(2%, -1%, 0) scale(1.03); }
-      100% { transform: translate3d(-1%, 1%, 0) scale(1.01); }
-    }
-
-    /* Gentle grid for texture */
-    #atelier .grid {
       position: absolute;
       inset: 0;
-      z-index: 0;
-      background-image:
-        linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
-      background-size: 28px 28px, 28px 28px;
-      mask: radial-gradient(90% 120% at 50% 50%, #000 55%, transparent 100%);
-      mix-blend-mode: soft-light;
-      opacity: 0.6;
+      opacity: 0.06;
+      background:
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.08) 0 1px, transparent 1px 2px),
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.05) 0 1px, transparent 1px 2px);
+      mix-blend-mode: overlay;
     }
 
-    /* Card */
-    #atelier .panel {
+    /* Floating color wash */
+    #oasis .wash {
+      position: absolute;
+      inset: -30% -15%;
+      z-index: 0;
+      filter: blur(60px) saturate(110%);
+      opacity: 0.55;
+      pointer-events: none;
+      background:
+        radial-gradient(40% 35% at 15% 25%, color-mix(in oklab, var(--a2), white 30%) 0%, transparent 60%),
+        radial-gradient(35% 40% at 85% 20%, color-mix(in oklab, var(--a1), white 25%) 0%, transparent 60%),
+        radial-gradient(45% 35% at 50% 85%, color-mix(in oklab, var(--a3), white 30%) 0%, transparent 70%);
+      transform: translate3d(0,0,0);
+      animation: wash-drift calc(var(--spin)) ease-in-out infinite alternate;
+    }
+    @keyframes wash-drift {
+      0%   { transform: translate3d(-2%, -1%, 0) scale(1); }
+      50%  { transform: translate3d( 2%,  1%, 0) scale(1.02); }
+      100% { transform: translate3d(-1%,  0%, 0) scale(1.01); }
+    }
+
+    /* Shell card */
+    #oasis .shell {
       position: relative;
       z-index: 2;
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 20px;
-      padding: clamp(18px, 3.2vw, 32px);
-      backdrop-filter: blur(14px) saturate(115%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.65));
+      border: 1px solid rgba(10, 20, 40, 0.08);
+      border-radius: 22px;
+      padding: clamp(16px, 3vw, 28px);
+      backdrop-filter: blur(14px) saturate(125%);
+      box-shadow:
+        0 10px 40px -20px rgba(15, 30, 60, 0.25),
+        inset 0 1px 0 rgba(255,255,255,0.9);
       transform-style: preserve-3d;
-      transition: transform 170ms ease, box-shadow 170ms ease, border-color 200ms ease;
-      box-shadow:
-        0 10px 30px -15px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.08);
+      transition: transform 180ms ease, box-shadow 220ms ease;
     }
-    #atelier .panel:hover {
-      border-color: rgba(255,255,255,0.22);
+    #oasis .shell:hover {
       box-shadow:
-        0 20px 50px -20px rgba(0,0,0,0.55),
-        inset 0 1px 0 rgba(255,255,255,0.12);
+        0 18px 54px -24px rgba(15, 30, 60, 0.3),
+        inset 0 1px 0 rgba(255,255,255,0.95);
     }
 
-    /* Header badge row */
-    #atelier .row {
+    /* Header */
+    #oasis .top {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    #oasis .brand {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 10px;
-    }
-    #atelier .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
       color: var(--ink);
     }
-    #atelier .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgb(var(--ring)) 0%, rgba(var(--ring),0.6) 60%, rgba(var(--ring),0.1) 100%);
-      box-shadow: 0 0 10px rgba(var(--ring),0.8), 0 0 20px rgba(var(--ring),0.35);
+    #oasis .brand svg {
+      width: 26px; height: 26px;
+      filter: drop-shadow(0 6px 12px rgba(var(--glow), 0.25));
     }
+    #oasis .mood {
+      display: inline-flex;
+      gap: 6px;
+      background: rgba(10,20,40,0.04);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px;
+    }
+    #oasis .mood button {
+      appearance: none;
+      border: 0;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 150ms ease, background 150ms ease, transform 120ms ease;
+    }
+    #oasis .mood button[aria-pressed="true"] {
+      background: linear-gradient(180deg, white, rgba(255,255,255,0.6));
+      color: var(--ink);
+      box-shadow: 0 6px 14px -8px rgba(15, 30, 60, 0.25), inset 0 1px 0 #fff;
+    }
+    #oasis .mood button:active { transform: translateY(1px); }
 
     /* Typography */
-    #atelier h1 {
-      margin: 6px 0 6px 0;
-      font-size: clamp(28px, 4.6vw, 56px);
-      line-height: 1.05;
+    #oasis h1 {
+      margin: 8px 0 6px;
+      font-size: clamp(28px, 5.6vw, 64px);
+      line-height: 1.02;
       letter-spacing: -0.02em;
-      background: linear-gradient(180deg, var(--ink) 30%, var(--ink-dim));
+      background: linear-gradient(90deg, var(--ink), color-mix(in oklab, var(--a2), var(--ink) 60%));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.02);
+      text-wrap: balance;
     }
-    #atelier p.lead {
-      margin: 0 0 16px 0;
-      color: var(--ink-dim);
-      font-size: clamp(14px, 2vw, 18px);
-      line-height: 1.55;
+    #oasis p.lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(14px, 2.2vw, 18px);
+      line-height: 1.6;
     }
 
-    /* CTA buttons */
-    #atelier .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
+    /* Orbit laboratory */
+    #oasis .lab {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: clamp(14px, 4vw, 24px);
+      margin-top: 16px;
     }
-    #atelier .btn {
+    #oasis .pane {
+      position: relative;
+      border: 1px dashed var(--line);
+      border-radius: 18px;
+      padding: clamp(12px, 2.6vw, 18px);
+      background: rgba(255,255,255,0.6);
+    }
+
+    /* Actions */
+    #oasis .actions {
+      display: flex; flex-wrap: wrap;
+      gap: 10px; margin-top: 10px;
+    }
+    #oasis .btn {
       appearance: none;
       border: 0;
       border-radius: 14px;
       padding: 12px 16px;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 14px;
       cursor: pointer;
-      transition: transform 120ms ease, box-shadow 200ms ease, background 200ms ease;
       will-change: transform;
+      transition: transform 120ms ease, box-shadow 220ms ease, background 220ms ease, color 220ms ease;
     }
-    #atelier .btn.primary {
-      color: #0b1020;
-      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-      box-shadow: 0 10px 24px -12px rgba(122, 193, 255, 0.55), inset 0 1px 0 rgba(255,255,255,0.4);
+    #oasis .btn.primary {
+      color: #0a1022;
+      background: linear-gradient(90deg, var(--a3), var(--a2));
+      box-shadow: 0 12px 28px -14px rgba(142,197,252,0.55), inset 0 1px 0 rgba(255,255,255,0.8);
     }
-    #atelier .btn.ghost {
+    #oasis .btn.ghost {
       color: var(--ink);
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.14);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+      background: rgba(10,20,40,0.05);
+      border: 1px solid var(--line);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
     }
-    #atelier .btn:hover {
-      transform: translateY(-2px);
+    #oasis .btn:hover { transform: translateY(-2px); }
+    #oasis .btn:active { transform: translateY(0); }
+
+    /* Orbit engine */
+    #oasis .orbit {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      max-width: 460px;
+      margin: 6px auto 0;
+      filter: drop-shadow(0 12px 24px rgba(15,30,60,0.12));
     }
-    #atelier .btn:active {
-      transform: translateY(0);
+    #oasis .core {
+      --g: conic-gradient(from 0deg, var(--a1), var(--a2), var(--a3), var(--a1));
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      width: min(42%, 190px);
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      background: radial-gradient(60% 60% at 40% 30%, #fff 0%, rgba(255,255,255,0.6) 55%, transparent 56%), var(--g);
+      box-shadow: inset 0 8px 24px rgba(255,255,255,0.6), 0 18px 40px -18px rgba(15,30,60,0.35);
+      animation: core-spin calc(var(--spin)) linear infinite;
+    }
+    @keyframes core-spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    #oasis .ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(10,20,40,0.08);
+      transform: translateZ(0);
+      animation: turn var(--ring-speed, calc(var(--spin))) linear infinite;
+    }
+    #oasis .r2 { inset: 8% }
+    #oasis .r3 { inset: 18% }
+    @keyframes turn { to { transform: rotate(360deg); } }
+    #oasis .ring.reverse { animation-direction: reverse; }
+
+    #oasis .chip {
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translate(-50%, 0);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--ink);
+      background: linear-gradient(180deg, #fff, rgba(255,255,255,0.7));
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 24px -14px rgba(15,30,60,0.25), inset 0 1px 0 rgba(255,255,255,0.9);
+      white-space: nowrap;
+    }
+    #oasis .chip::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 -10px 0;
+      height: 10px;
+      background: radial-gradient(50% 80% at 50% 0%, rgba(15,30,60,0.08), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
     }
 
-    /* Marquee */
-    #atelier .marquee {
-      position: relative;
-      z-index: 2;
-      margin-top: 18px;
-      border-radius: 14px;
-      border: 1px dashed rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.04);
-      overflow: hidden;
-      mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    /* Controls and meters */
+    #oasis .controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 10px;
     }
-    #atelier .ticker {
-      display: flex;
-      gap: 24px;
-      padding: 10px 14px;
-      white-space: nowrap;
-      color: var(--ink-dim);
+    #oasis .field {
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      align-items: center;
+      gap: 10px;
       font-size: 13px;
-      animation: scroll-x 24s linear infinite;
+      color: var(--muted);
     }
-    #atelier .tag {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.05);
-      color: var(--ink);
-      font-weight: 500;
+    #oasis input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      height: 8px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--a1), var(--a2));
+      outline: none; border: 1px solid var(--line);
     }
-    @keyframes scroll-x {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+    #oasis input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #fff; border: 1px solid var(--line);
+      box-shadow: 0 4px 12px rgba(15,30,60,0.2);
+      cursor: grab;
+    }
+
+    /* Progress ring */
+    #oasis .ringbox {
+      display: grid; place-items: center;
+      padding: 8px;
+    }
+    #oasis .dial {
+      width: 138px; height: 138px;
+      display: block;
+    }
+    #oasis .dial .track {
+      stroke: rgba(10,20,40,0.12);
+      stroke-width: 10;
+    }
+    #oasis .dial .prog {
+      stroke: url(#grad);
+      stroke-linecap: round;
+      stroke-width: 10;
+      filter: drop-shadow(0 6px 12px rgba(142,197,252,0.45));
+      transition: stroke-dashoffset 600ms cubic-bezier(.2,.7,.2,1);
+    }
+    #oasis .dial text {
+      font-weight: 800;
+      fill: var(--ink);
+    }
+    #oasis .legend {
+      margin-top: 6px;
+      font-size: 12px; color: var(--muted);
+      text-align: center;
     }
 
     /* Footer */
-    #atelier .foot {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 18px;
-      color: var(--ink-dim);
+    #oasis .foot {
+      display: flex; flex-wrap: wrap;
+      gap: 10px;
+      align-items: center; justify-content: space-between;
+      margin-top: 16px; color: var(--muted);
       font-size: 12px;
     }
-    #atelier .meter {
-      --p: 62;
-      position: relative;
-      height: 8px;
-      width: 140px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.12);
+    #oasis .warmth {
+      --p: 58;
+      width: 160px; height: 8px; border-radius: 999px;
+      background: rgba(10,20,40,0.08);
+      border: 1px solid var(--line);
+      position: relative; overflow: hidden;
     }
-    #atelier .meter::after {
+    #oasis .warmth::after {
       content: "";
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       width: calc(var(--p) * 1%);
-      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
       border-radius: inherit;
-      box-shadow: 0 0 12px rgba(167,139,250,0.35);
+      box-shadow: 0 0 12px rgba(255,154,139,0.35);
       transition: width 600ms cubic-bezier(.2,.7,.2,1);
     }
 
-    /* Mouse tilt (based on CSS vars) */
-    #atelier .panel {
-      transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    /* Motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      #oasis .wash,
+      #oasis .core,
+      #oasis .ring { animation: none !important; }
+      #oasis .btn:hover { transform: none; }
     }
 
-    /* Respect reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      #atelier .aurora { animation: none; }
-      #atelier .ticker { animation: none; }
-      #atelier .btn:hover { transform: none; }
+    /* Responsive */
+    @media (max-width: 860px) {
+      #oasis .lab { grid-template-columns: 1fr; }
     }
   </style>
 
-  <div class="aurora" aria-hidden="true"></div>
-  <div class="grid" aria-hidden="true"></div>
+  <div class="wash" aria-hidden="true"></div>
 
-  <div class="panel" id="card">
-    <div class="row">
-      <div class="badge" aria-label="Live">
-        <span class="dot" aria-hidden="true"></span>
-        Live Canvas
+  <div class="shell" id="shell">
+    <div class="top">
+      <div class="brand" aria-label="Brand">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <defs>
+            <linearGradient id="bloom" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#8ec5fc"/>
+              <stop offset="1" stop-color="#a1ffce"/>
+            </linearGradient>
+          </defs>
+          <circle cx="24" cy="24" r="15" fill="url(#bloom)"/>
+          <circle cx="18" cy="20" r="6" fill="#ffffff" opacity="0.9"/>
+        </svg>
+        Daydream Laboratory
       </div>
-      <div class="badge" id="phase-badge">Dawn Mode</div>
+
+      <div></div>
+
+      <div class="mood" role="group" aria-label="Palette">
+        <button type="button" class="sw" data-theme="sunrise" aria-pressed="true">Sunrise</button>
+        <button type="button" class="sw" data-theme="zenith" aria-pressed="false">Zenith</button>
+        <button type="button" class="sw" data-theme="sunset" aria-pressed="false">Sunset</button>
+      </div>
     </div>
 
-    <h1>Quiet luxury in motion.</h1>
-    <p class="lead">An elegant micro‑space for focus. Soft light, kind type, and little moments of delight.</p>
+    <h1>Design as a breath.</h1>
+    <p class="lead">Bright, soft, and clear—delight without distraction. A tiny studio for feeling how ideas move.</p>
 
     <div class="actions">
-      <button class="btn primary" id="play-pulse" aria-pressed="false">Add a subtle pulse</button>
-      <button class="btn ghost" id="toggle-grid">Hide guide</button>
+      <button class="btn primary" id="breeze">Start the breeze</button>
+      <button class="btn ghost" id="chime">Play chime</button>
     </div>
 
-    <div class="marquee" aria-label="Design values">
-      <div class="ticker" id="ticker">
-        <span class="tag">Calm tech</span>
-        <span class="tag">Human scale</span>
-        <span class="tag">Tactile UI</span>
-        <span class="tag">Thoughtful motion</span>
-        <span class="tag">Accessible contrast</span>
-        <span class="tag">Well‑tempered colors</span>
-        <span class="tag">Layered depth</span>
-        <span class="tag">Play</span>
+    <div class="lab" aria-live="polite">
+      <div class="pane">
+        <div class="orbit" id="orbit">
+          <div class="ring r1" style="--ring-speed: calc(var(--spin) * 1.0);">
+            <span class="chip">Clarity</span>
+          </div>
+          <div class="ring r2 reverse" style="--ring-speed: calc(var(--spin) * 0.75);">
+            <span class="chip">Kindness</span>
+          </div>
+          <div class="ring r3" style="--ring-speed: calc(var(--spin) * 0.55);">
+            <span class="chip">Play</span>
+          </div>
+          <div class="core" aria-hidden="true"></div>
+        </div>
 
-        <!-- mirror for seamless loop -->
-        <span class="tag">Calm tech</span>
-        <span class="tag">Human scale</span>
-        <span class="tag">Tactile UI</span>
-        <span class="tag">Thoughtful motion</span>
-        <span class="tag">Accessible contrast</span>
-        <span class="tag">Well‑tempered colors</span>
-        <span class="tag">Layered depth</span>
-        <span class="tag">Play</span>
+        <div class="controls">
+          <div class="field">
+            <span>Orbit speed</span>
+            <input id="speed" type="range" min="6" max="32" value="16" aria-label="Orbit speed">
+            <strong id="speed-read">16s</strong>
+          </div>
+          <div class="field">
+            <span>Warmth</span>
+            <input id="warmth" type="range" min="30" max="100" value="58" aria-label="Warmth level">
+            <strong id="warmth-read">58%</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="pane ringbox">
+        <svg class="dial" viewBox="0 0 120 120" role="img" aria-label="Clarity index">
+          <defs>
+            <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#8ec5fc"/>
+              <stop offset="1" stop-color="#a1ffce"/>
+            </linearGradient>
+          </defs>
+          <circle class="track" cx="60" cy="60" r="48" fill="none"/>
+          <circle class="prog" id="prog" cx="60" cy="60" r="48" fill="none"
+                  stroke-dasharray="301.59" stroke-dashoffset="180"/>
+          <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="22" id="clarity">40%</text>
+        </svg>
+        <div class="legend">Clarity index</div>
       </div>
     </div>
 
     <div class="foot">
       <div style="display:flex;align-items:center;gap:10px;">
-        <div class="meter" id="calm-meter" aria-label="Calm meter"></div>
-        <span>Calm level</span>
+        <div class="warmth" id="warmth-meter" aria-label="Warmth meter"></div>
+        <span>Warmth</span>
       </div>
-      <span id="last-updated">Last updated: 2025-12-18 06:17:38 EST</span>
+      <span id="last-updated">Last updated: 2025-12-18 07:39:35 EST</span>
     </div>
   </div>
 
   <script>
     (function () {
-      const root = document.getElementById('atelier');
-      const phase = document.getElementById('phase-badge');
-      const grid = root.querySelector('.grid');
-      const meter = document.getElementById('calm-meter');
-      const card = document.getElementById('card');
+      const root = document.getElementById('oasis');
+      const shell = document.getElementById('shell');
       const last = document.getElementById('last-updated');
-      const ticker = document.getElementById('ticker');
-      const playBtn = document.getElementById('play-pulse');
-      const toggleGridBtn = document.getElementById('toggle-grid');
+      const speed = document.getElementById('speed');
+      const speedRead = document.getElementById('speed-read');
+      const warmth = document.getElementById('warmth');
+      const warmthRead = document.getElementById('warmth-read');
+      const warmthMeter = document.getElementById('warmth-meter');
+      const prog = document.getElementById('prog');
+      const clarityText = document.getElementById('clarity');
+      const breezeBtn = document.getElementById('breeze');
+      const chimeBtn = document.getElementById('chime');
+      const moodButtons = root.querySelectorAll('.sw');
 
-      // Time-of-day theming
-      function applyPhase(h) {
-        let p = 'Noon Mode';
-        let vars = {
-          bg1: '#0b1220', bg2: '#151a2f',
-          ink: '#e9eefc', dim: '#b9c3e7',
-          a1: '#6ee7f8', a2: '#a78bfa', ring: '30, 220, 250'
-        };
-
-        if (h < 6) {
-          p = 'Night Mode';
-          vars = { bg1:'#070a12', bg2:'#0b1020', ink:'#dfe8ff', dim:'#9fb0df', a1:'#60a5fa', a2:'#a78bfa', ring:'40, 160, 255' };
-        } else if (h < 11) {
-          p = 'Dawn Mode';
-          vars = { bg1:'#0b1020', bg2:'#1a1830', ink:'#f3f6ff', dim:'#c6d0fb', a1:'#fdf2a1', a2:'#a7f3d0', ring:'253, 242, 161' };
-        } else if (h < 17) {
-          p = 'Day Mode';
-          vars = { bg1:'#0b1220', bg2:'#121a2a', ink:'#eef3ff', dim:'#c0c8e6', a1:'#6ee7f8', a2:'#86efac', ring:'110, 231, 248' };
-        } else if (h < 21) {
-          p = 'Dusk Mode';
-          vars = { bg1:'#0a0f1b', bg2:'#17162a', ink:'#eef0ff', dim:'#c4c8ea', a1:'#f0abfc', a2:'#60a5fa', ring:'240, 171, 252' };
-        } else {
-          p = 'Midnight Mode';
-          vars = { bg1:'#05080f', bg2:'#0d1020', ink:'#e7ecff', dim:'#b3bfe6', a1:'#7dd3fc', a2:'#a78bfa', ring:'125, 211, 252' };
-        }
-
-        root.style.setProperty('--bg-1', vars.bg1);
-        root.style.setProperty('--bg-2', vars.bg2);
-        root.style.setProperty('--ink', vars.ink);
-        root.style.setProperty('--ink-dim', vars.dim);
-        root.style.setProperty('--accent-1', vars.a1);
-        root.style.setProperty('--accent-2', vars.a2);
-        root.style.setProperty('--ring', vars.ring);
-        phase.textContent = p;
+      // Palettes
+      const palettes = {
+        sunrise: { bg:'#fbfcff', ink:'#0b1320', muted:'#4a5a78', a1:'#ff9a8b', a2:'#8ec5fc', a3:'#a1ffce', glow:'255,154,139' },
+        zenith:  { bg:'#f7fbff', ink:'#0a1120', muted:'#3f4d68', a1:'#6ee7f8', a2:'#86efac', a3:'#fde68a', glow:'110,231,248' },
+        sunset:  { bg:'#fff9fb', ink:'#0a1020', muted:'#405067', a1:'#f0abfc', a2:'#60a5fa', a3:'#fca5a5', glow:'240,171,252' }
+      };
+      function applyPalette(name) {
+        const p = palettes[name] || palettes.sunrise;
+        root.style.setProperty('--bg', p.bg);
+        root.style.setProperty('--ink', p.ink);
+        root.style.setProperty('--muted', p.muted);
+        root.style.setProperty('--a1', p.a1);
+        root.style.setProperty('--a2', p.a2);
+        root.style.setProperty('--a3', p.a3);
+        root.style.setProperty('--glow', p.glow);
+        moodButtons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.theme === name)));
       }
-      applyPhase(new Date().getHours());
+      // Time-of-day default
+      const h = new Date().getHours();
+      applyPalette(h < 11 ? 'sunrise' : h < 17 ? 'zenith' : 'sunset');
 
-      // Last updated stamp
+      moodButtons.forEach(b => b.addEventListener('click', () => applyPalette(b.dataset.theme)));
+
+      // Last updated
       try {
         const now = new Date();
         const fmt = new Intl.DateTimeFormat(undefined, {
@@ -428,77 +567,114 @@
         });
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'local';
         last.textContent = `Last updated: ${fmt.format(now)} • ${tz}`;
-      } catch (e) {
+      } catch {
         last.textContent = 'Last updated: just now';
       }
 
-      // Meter gentle randomization
-      function setMeter(p) {
-        meter.style.setProperty('--p', p);
+      // Orbit speed control
+      function setSpin(val) {
+        root.style.setProperty('--spin', `${val}s`);
+        speedRead.textContent = `${val}s`;
       }
-      let target = 62;
-      setMeter(target);
-      function wobble() {
-        target = 50 + Math.round(Math.random() * 40);
-        setMeter(target);
-      }
-      const wobbleTimer = setInterval(wobble, 3800);
+      setSpin(speed.value);
+      speed.addEventListener('input', e => setSpin(e.target.value));
 
-      // Tilt effect on card
+      // Warmth control
+      function setWarmth(val) {
+        warmthRead.textContent = `${val}%`;
+        warmthMeter.style.setProperty('--p', val);
+      }
+      setWarmth(warmth.value);
+      warmth.addEventListener('input', e => setWarmth(e.target.value));
+
+      // Progress ring animation
+      const CIRC = 2 * Math.PI * 48; // 301.59
+      function setClarity(pct) {
+        const offset = CIRC * (1 - pct / 100);
+        prog.setAttribute('stroke-dashoffset', offset.toFixed(2));
+        clarityText.textContent = `${Math.round(pct)}%`;
+      }
+      let c = 40, dir = 1;
+      setClarity(c);
+      const clarityTimer = setInterval(() => {
+        c += dir * (Math.random() * 4 + 1);
+        if (c > 92) { c = 92; dir = -1; }
+        if (c < 28) { c = 28; dir = 1; }
+        setClarity(c);
+      }, 1600);
+
+      // Subtle tilt
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      function handleTilt(e) {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width;  // 0..1
-        const y = (e.clientY - r.top) / r.height;  // 0..1
-        const ry = (x - 0.5) * 6; // deg
-        const rx = (0.5 - y) * 6;
-        card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
-        card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+      function tilt(e) {
+        const r = shell.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        shell.style.transform = `perspective(900px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`;
       }
-      function resetTilt() {
-        card.style.setProperty('--ry', '0deg');
-        card.style.setProperty('--rx', '0deg');
-      }
+      function untilt() { shell.style.transform = 'perspective(900px) rotateX(0) rotateY(0)'; }
       if (!reduceMotion) {
-        card.addEventListener('mousemove', handleTilt);
-        card.addEventListener('mouseleave', resetTilt);
+        shell.addEventListener('mousemove', tilt);
+        shell.addEventListener('mouseleave', untilt);
       }
 
-      // Toggle grid visibility
-      let gridVisible = true;
-      toggleGridBtn.addEventListener('click', () => {
-        gridVisible = !gridVisible;
-        grid.style.opacity = gridVisible ? '0.6' : '0';
-        toggleGridBtn.textContent = gridVisible ? 'Hide guide' : 'Show guide';
+      // Breeze: modulate wash and orbit tempo
+      let breezing = false, breezeInterval = null;
+      breezeBtn.addEventListener('click', () => {
+        breezing = !breezing;
+        breezeBtn.textContent = breezing ? 'Stop the breeze' : 'Start the breeze';
+        if (breezing) {
+          let t = parseFloat(getComputedStyle(root).getPropertyValue('--spin'));
+          breezeInterval = setInterval(() => {
+            t += Math.random() > 0.5 ? -0.5 : 0.5;
+            if (t < 8) t = 8;
+            if (t > 28) t = 28;
+            speed.value = t;
+            setSpin(t);
+          }, 1200);
+        } else {
+          clearInterval(breezeInterval);
+          breezeInterval = null;
+        }
       });
 
-      // Subtle pulse effect on aurora and ticker
-      let pulsing = false;
-      let pulseTimer = null;
-      playBtn.addEventListener('click', () => {
-        pulsing = !pulsing;
-        playBtn.setAttribute('aria-pressed', String(pulsing));
-        playBtn.textContent = pulsing ? 'Stop pulse' : 'Add a subtle pulse';
-        if (pulsing) {
-          root.querySelector('.aurora').style.transition = 'transform 1200ms ease, opacity 1200ms ease';
-          ticker.style.transition = 'filter 700ms ease';
-          pulseTimer = setInterval(() => {
-            root.querySelector('.aurora').style.opacity = (Math.random() * 0.25 + 0.45).toFixed(2);
-            ticker.style.filter = Math.random() > 0.5 ? 'brightness(1.08)' : 'brightness(1)';
-          }, 1400);
+      // Soft chime using WebAudio
+      let audioCtx = null, chimeTimer = null, chiming = false;
+      function ping(f = 660, t = 0.6) {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.type = 'sine';
+        o.frequency.value = f;
+        g.gain.value = 0.0001;
+        o.connect(g); g.connect(audioCtx.destination);
+        const now = audioCtx.currentTime;
+        g.gain.exponentialRampToValueAtTime(0.2, now + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + t);
+        o.start(now);
+        o.stop(now + t + 0.02);
+      }
+      chimeBtn.addEventListener('click', async () => {
+        chiming = !chiming;
+        chimeBtn.textContent = chiming ? 'Mute chime' : 'Play chime';
+        if (audioCtx && audioCtx.state === 'suspended') await audioCtx.resume();
+        if (chiming) {
+          ping(660, 0.5);
+          chimeTimer = setInterval(() => {
+            const base = 520 + Math.random() * 260;
+            ping(base, 0.45);
+          }, 4800);
         } else {
-          clearInterval(pulseTimer);
-          pulseTimer = null;
-          root.querySelector('.aurora').style.opacity = '0.55';
-          ticker.style.filter = 'none';
+          clearInterval(chimeTimer);
+          chimeTimer = null;
         }
       });
 
       // Clean up if removed
       const observer = new MutationObserver(() => {
         if (!document.body.contains(root)) {
-          clearInterval(wobbleTimer);
-          if (pulseTimer) clearInterval(pulseTimer);
+          clearInterval(clarityTimer);
+          if (breezeInterval) clearInterval(breezeInterval);
+          if (chimeTimer) clearInterval(chimeTimer);
           observer.disconnect();
         }
       });
