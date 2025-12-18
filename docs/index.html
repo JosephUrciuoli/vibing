@@ -73,283 +73,322 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="lumen" class="mode-dusk" aria-label="Lumen Atlas">
+<section id="aurora" aria-label="Aurora Loom">
   <style>
-    /* Scope all styles to #lumen */
-    #lumen {
-      --bg0: #0a0c14;
-      --bg1: #151a2a;
-      --fg:  #f3f7ff;
-      --muted: #9aa7c6;
-      --a1: #b69cff; /* accent 1 */
-      --a2: #74eaff; /* accent 2 */
-      --a3: #8bffd0; /* accent 3 */
-      --glass: rgba(255,255,255,.06);
-      --rad: 28px;
+    /* Scope everything to #aurora */
+    #aurora {
+      --bg0: #07090f;
+      --bg1: #0f1320;
+      --fg: #eef3ff;
+      --muted: #98a6c7;
+      --a1: #8ad8ff;
+      --a2: #a1ffdd;
+      --a3: #c7b5ff;
+      --grain: .25;
+      --rad: 22px;
       color: var(--fg);
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
       border-radius: var(--rad);
       border: 1px solid rgba(255,255,255,.12);
       background:
-        radial-gradient(140% 120% at 15% -10%, rgba(182,156,255,.10) 0%, transparent 60%),
-        radial-gradient(160% 160% at 80% 120%, rgba(116,234,255,.10) 0%, transparent 60%),
+        radial-gradient(140% 120% at 15% -10%, color-mix(in oklab, var(--a3), transparent 88%) 0%, transparent 60%),
+        radial-gradient(120% 120% at 100% 120%, color-mix(in oklab, var(--a1), transparent 88%) 0%, transparent 68%),
         linear-gradient(180deg, var(--bg1), var(--bg0));
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.08),
         0 30px 80px -30px rgba(0,0,0,.65),
         0 14px 38px -22px rgba(0,0,0,.6);
-      padding: clamp(18px, 2.4vw, 28px);
       position: relative;
       overflow: clip;
       isolation: isolate;
     }
-    #lumen::before{
-      content:""; position:absolute; inset:-40% -18% -40% -18%; z-index:0; pointer-events:none;
+    #aurora::before {
+      content: "";
+      position: absolute; inset: -40% -20%;
       background:
-        conic-gradient(from var(--spin,0deg) at 68% 36%,
-          color-mix(in oklab, var(--a1), transparent 70%) 0 18%,
-          transparent 22% 36%,
-          color-mix(in oklab, var(--a2), transparent 70%) 40% 58%,
-          transparent 62% 76%,
+        conic-gradient(from var(--spin,0deg) at 60% 30%,
+          color-mix(in oklab, var(--a1), transparent 70%) 0 12%,
+          transparent 16% 32%,
+          color-mix(in oklab, var(--a2), transparent 70%) 36% 56%,
+          transparent 60% 76%,
           color-mix(in oklab, var(--a3), transparent 70%) 80% 100%);
-      filter: blur(90px) saturate(120%);
-      opacity:.6;
-      animation: swirl 60s linear infinite;
+      filter: blur(110px) saturate(120%);
+      opacity: .65;
+      animation: roll 48s linear infinite;
+      pointer-events: none;
+      z-index: 0;
     }
-    @keyframes swirl { to { --spin: 360deg; } }
-    #lumen::after{
-      content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+    @keyframes roll { to { --spin: 360deg; } }
+    #aurora::after {
+      content: "";
+      position: absolute; inset: 0;
       background:
         repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 1px 2px),
         repeating-linear-gradient(90deg, rgba(255,255,255,.012) 0 1px, transparent 1px 2px);
-      mix-blend-mode: soft-light; opacity: var(--grain, .25);
+      mix-blend-mode: soft-light;
+      opacity: var(--grain);
       transition: opacity .3s ease;
-    }
-
-    /* Layout chrome */
-    #lumen .chrome{ position:relative; z-index:1; display:grid; gap: clamp(14px, 2vw, 18px); }
-    #lumen .top{
-      display:flex; align-items:center; justify-content:space-between; gap:14px;
-    }
-    #lumen .brand{
-      display:flex; align-items:center; gap:12px;
-      font-weight: 900; letter-spacing:.02em;
-    }
-    #lumen .logo{ width:32px; height:32px; filter: drop-shadow(0 10px 24px rgba(0,0,0,.5)); }
-    #lumen .titles{ display:flex; flex-direction:column; }
-    #lumen .titles strong{ font-size: clamp(14px, 1.6vw, 16px); letter-spacing:.09em; text-transform: uppercase; }
-    #lumen .titles .sub{ font-size: 12px; color: var(--muted); letter-spacing:.06em; }
-
-    /* Palette pills */
-    #lumen .palette{
-      display:flex; gap:8px; align-items:center; padding:6px;
-      border-radius:999px; background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12); box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
-    }
-    #lumen .pill{
-      --p1: var(--a1); --p2: var(--a2); --p3: var(--a3);
-      display:inline-grid; place-items:center;
-      min-width:70px; padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.22);
-      background:
-        radial-gradient(80% 80% at 30% 30%, var(--p1), transparent 70%),
-        radial-gradient(80% 80% at 70% 70%, var(--p2), transparent 70%),
-        linear-gradient(180deg, color-mix(in oklab, var(--p3), #000 14%), color-mix(in oklab, var(--p1), #000 18%));
-      color:#0b1220; font-weight:900; font-size:12px; letter-spacing:.04em; cursor:pointer; user-select:none;
-      transition: transform .12s ease, box-shadow .22s ease, opacity .2s ease;
-      box-shadow: 0 14px 28px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.8);
-    }
-    #lumen .pill[aria-pressed="true"]{ transform: translateY(-2px) scale(1.04); box-shadow: 0 16px 38px -18px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.9); }
-
-    /* Dial */
-    #lumen .dial{
-      position:relative;
-      border-radius: clamp(18px, 2.4vw, 22px);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(16px) saturate(140%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 20px 46px -28px rgba(0,0,0,.8);
-      overflow:hidden;
-      display:grid; grid-template-columns: 1.1fr 1fr; gap: clamp(8px, 2vw, 18px);
-      min-height: clamp(380px, 48vw, 560px);
-      transform: perspective(900px);
-      transition: transform .4s ease;
-    }
-    #lumen .glass{
-      padding: clamp(18px, 2vw, 24px) clamp(18px, 2.4vw, 28px);
-      display:flex; flex-direction:column; justify-content:space-between; gap: clamp(8px, 1.6vw, 14px);
-    }
-    #lumen .headline{
-      margin:0; line-height:.95;
-      font-size: clamp(28px, 6.6vw, 68px);
-      letter-spacing: -0.02em;
-      background: linear-gradient(90deg, var(--fg) 0%, color-mix(in oklab, var(--a1), var(--fg) 40%) 55%, var(--a2) 100%);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-    }
-    #lumen .lede{ margin:0; color: var(--muted); font-size: clamp(12px, 2vw, 16px); line-height:1.6; text-wrap: balance; }
-
-    #lumen .viewport{
-      position:relative; border-radius: clamp(16px, 2vw, 18px);
-      background: radial-gradient(120% 120% at 50% 50%, rgba(255,255,255,.04), rgba(0,0,0,0));
-      border: 1px solid rgba(255,255,255,.12);
-      overflow:hidden; min-height: clamp(260px, 36vw, 420px);
-    }
-    #lumen canvas{ width:100%; height:100%; display:block; }
-
-    #lumen .time{
-      position:absolute; inset:auto 0 10% 0; display:flex; justify-content:center; align-items:baseline; gap:.2em;
-      font-variant-numeric: tabular-nums; font-weight: 900;
-      text-shadow: 0 6px 20px rgba(0,0,0,.6);
+      z-index: 0;
       pointer-events:none;
     }
-    #lumen .time span{ 
-      background: linear-gradient(90deg, var(--fg), color-mix(in oklab, var(--a1), var(--fg) 30%));
-      -webkit-background-clip:text; background-clip:text; color: transparent; 
-    }
-    #lumen #hh, #lumen #mm{ font-size: clamp(38px, 11vw, 104px); line-height: .8; }
-    #lumen .colon{ font-size: clamp(28px, 8vw, 64px); opacity:.9; }
-    #lumen .ampm{ font-size: clamp(10px, 2.3vw, 14px); letter-spacing:.22em; text-transform: uppercase; align-self:center; color: var(--muted); }
 
-    /* Footer control bar */
-    #lumen .bar{
-      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-      padding: clamp(10px,1.6vw,14px) clamp(14px,2vw,20px);
+    /* Layout */
+    #aurora .shell {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: clamp(14px, 2.6vw, 24px);
+      padding: clamp(16px, 2.2vw, 24px);
+      z-index: 1;
     }
-    #lumen .controls{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; }
-    #lumen .btn{
-      appearance:none; border:0; cursor:pointer; font-weight:900; font-size:13px; border-radius:14px;
+    #aurora .panel,
+    #aurora .stage {
+      border-radius: clamp(16px, 2vw, 20px);
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 18px 46px -28px rgba(0,0,0,.8);
+      backdrop-filter: blur(14px) saturate(140%);
+    }
+
+    /* Header block */
+    #aurora .panel {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: clip;
+    }
+    #aurora .head {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: clamp(16px, 2vw, 18px) clamp(18px, 2.4vw, 22px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    #aurora .brand {
+      display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center;
+      user-select: none;
+    }
+    #aurora .glyph {
+      width: 34px; height: 34px; border-radius: 12px;
+      background:
+        radial-gradient(80% 80% at 25% 30%, var(--a1), transparent 60%),
+        radial-gradient(80% 80% at 75% 70%, var(--a2), transparent 60%),
+        linear-gradient(180deg, color-mix(in oklab, var(--a3), #000 24%), color-mix(in oklab, var(--a1), #000 18%));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 18px 42px -22px rgba(0,0,0,.7);
+    }
+    #aurora .title {
+      display: flex; flex-direction: column; line-height: 1.1;
+    }
+    #aurora .title strong {
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: clamp(12px, 1.6vw, 14px);
+      opacity: .95;
+    }
+    #aurora .title span { color: var(--muted); font-size: 12px; }
+
+    /* Themes */
+    #aurora .themes {
+      display: flex; gap: 8px; align-items: center; padding: 6px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 999px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    #aurora .pill {
+      appearance: none; border: 1px solid rgba(255,255,255,.18);
+      padding: 8px 12px; border-radius: 999px; cursor: pointer;
+      background:
+        radial-gradient(80% 80% at 30% 30%, var(--a1), transparent 70%),
+        radial-gradient(80% 80% at 70% 70%, var(--a2), transparent 70%),
+        linear-gradient(180deg, color-mix(in oklab, var(--a3), #000 18%), color-mix(in oklab, var(--a1), #000 22%));
+      color: #0b1220; font-weight: 900; font-size: 12px; letter-spacing: .04em;
+      box-shadow: 0 14px 28px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.8);
+      transition: transform .12s ease, box-shadow .22s ease, opacity .2s ease, filter .2s ease;
+    }
+    #aurora .pill[aria-pressed="true"] { transform: translateY(-2px) scale(1.04); box-shadow: 0 16px 38px -18px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.9); }
+
+    /* Body of panel */
+    #aurora .body {
+      display: grid; gap: clamp(10px, 2vw, 14px);
+      padding: clamp(16px, 2vw, 22px);
+    }
+    #aurora .h1 {
+      margin: 0;
+      font-size: clamp(28px, 6.4vw, 64px);
+      line-height: .95;
+      letter-spacing: -.02em;
+      background: linear-gradient(92deg, var(--fg), color-mix(in oklab, var(--a1), var(--fg) 50%) 55%, var(--a2) 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 12px 30px rgba(0,0,0,.5));
+    }
+    #aurora .lede { color: var(--muted); margin: 0; font-size: clamp(12px, 2vw, 16px); line-height: 1.6; text-wrap: balance; }
+
+    /* Controls */
+    #aurora .controls {
+      display: grid; gap: 10px; grid-auto-rows: min-content;
+      padding: 0 clamp(16px, 2vw, 22px) clamp(16px, 2vw, 22px);
+    }
+    #aurora .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #aurora .btn {
+      appearance: none; border: 0; cursor: pointer; font-weight: 900; font-size: 13px; border-radius: 14px;
       padding: 10px 14px; color: #0b1220;
       background: linear-gradient(90deg, var(--a2), var(--a1));
       box-shadow: 0 14px 28px -14px color-mix(in oklab, var(--a1), black 26%), inset 0 1px 0 rgba(255,255,255,.75);
       transition: transform .12s ease, box-shadow .22s ease, opacity .2s ease;
     }
-    #lumen .btn:hover{ transform: translateY(-2px); }
-    #lumen .unit{
-      display:grid; grid-template-columns: auto 1fr auto; align-items:center; gap:8px; color: var(--muted); font-weight:700; font-size:12px;
-      padding: 8px 10px; border-radius: 12px; background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+    #aurora .btn:hover { transform: translateY(-2px); }
+    #aurora .unit {
+      display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; color: var(--muted); font-weight: 700; font-size: 12px;
+      padding: 8px 10px; border-radius: 12px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
     }
-    #lumen label[for="tempo"]{ color: var(--muted); }
-    #lumen input[type="range"]{
-      -webkit-appearance:none; appearance:none; width:180px; height:10px; border-radius:999px; outline:none;
+    #aurora input[type="range"] {
+      -webkit-appearance: none; appearance: none; width: 200px; height: 10px; border-radius: 999px; outline: none;
       background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.14);
     }
-    #lumen input[type="range"]::-webkit-slider-thumb{
-      -webkit-appearance:none; appearance:none; width:18px; height:18px; border-radius:50%;
+    #aurora input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
       background: linear-gradient(180deg,#fff,rgba(255,255,255,.7));
-      border:1px solid rgba(255,255,255,.25);
+      border: 1px solid rgba(255,255,255,.25);
       box-shadow: 0 12px 24px -12px rgba(0,0,0,.6), inset 0 1px 0 #fff;
     }
-    #lumen .toggle{
-      display:grid; grid-auto-flow:column; align-items:center; gap:8px; color: var(--muted); font-weight:700; font-size:12px; user-select:none;
+    #aurora .toggle {
+      display: grid; grid-auto-flow: column; align-items: center; gap: 8px; color: var(--muted); font-weight: 700; font-size: 12px; user-select: none;
     }
-    #lumen .toggle input{ accent-color: var(--a2); width:18px; height:18px; }
-    #lumen .meta{ color: var(--muted); font-size:12px; display:flex; align-items:center; gap:10px; }
+    #aurora .toggle input { accent-color: var(--a2); width: 18px; height: 18px; }
+
+    /* Stage */
+    #aurora .stage {
+      position: relative; overflow: hidden; min-height: clamp(360px, 48vw, 560px);
+      display: grid; place-items: center;
+      transform: perspective(1000px);
+      transition: transform .4s ease;
+    }
+    #aurora .stage:hover { }
+    #aurora canvas { width: 100%; height: 100%; display: block; }
+    #aurora .overlay-time {
+      position: absolute; inset: auto 0 6% 0; display: flex; justify-content: center; align-items: baseline; gap: .2em;
+      font-variant-numeric: tabular-nums; font-weight: 900;
+      text-shadow: 0 6px 20px rgba(0,0,0,.6);
+      pointer-events: none;
+    }
+    #aurora .overlay-time span {
+      background: linear-gradient(90deg, var(--fg), color-mix(in oklab, var(--a1), var(--fg) 30%));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    #aurora .overlay-time .hh, #aurora .overlay-time .mm { font-size: clamp(38px, 11vw, 104px); line-height: .8; }
+    #aurora .overlay-time .colon { font-size: clamp(28px, 8vw, 64px); opacity: .9; }
+    #aurora .overlay-time .ampm { font-size: clamp(10px, 2.3vw, 14px); letter-spacing: .22em; text-transform: uppercase; align-self: center; color: var(--muted); }
+
+    /* Footer/meta */
+    #aurora .meta {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      padding: clamp(10px,1.6vw,14px) clamp(14px,2vw,20px);
+      color: var(--muted); font-size: 12px;
+    }
+    #aurora .progress {
+      position: relative; height: 6px; background: rgba(255,255,255,.08);
+      border-radius: 999px; overflow: hidden; border: 1px solid rgba(255,255,255,.12);
+      flex: 1 1 auto; min-width: 160px;
+    }
+    #aurora .progress > i {
+      display: block; height: 100%; width: var(--p, 0%); border-radius: inherit;
+      background: linear-gradient(90deg, var(--a2), var(--a1));
+      box-shadow: 0 10px 20px -14px color-mix(in oklab, var(--a1), black 28%);
+      transition: width .2s ease;
+    }
 
     /* Responsive */
-    @media (max-width: 980px){
-      #lumen .dial{ grid-template-columns: 1fr; }
-      #lumen .time{ inset:auto 0 6% 0; }
+    @media (max-width: 980px) {
+      #aurora .shell { grid-template-columns: 1fr; }
+      #aurora .overlay-time { inset: auto 0 4% 0; }
     }
-    @media (prefers-reduced-motion: reduce){
-      #lumen::before{ animation:none !important; }
-      #lumen .btn:hover{ transform:none !important; }
+    @media (prefers-reduced-motion: reduce) {
+      #aurora::before { animation: none !important; }
+      #aurora .stage { transition: none !important; }
+      #aurora .btn:hover { transform: none !important; }
     }
   </style>
 
-  <div class="chrome">
-    <div class="top">
-      <div class="brand" aria-label="Lumen Atlas">
-        <svg class="logo" viewBox="0 0 48 48" aria-hidden="true">
-          <defs>
-            <radialGradient id="lglow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#74eaff"/>
-              <stop offset="60%" stop-color="#8bffd0"/>
-              <stop offset="100%" stop-color="#b69cff"/>
-            </radialGradient>
-          </defs>
-          <circle cx="24" cy="24" r="10" fill="url(#lglow)"/>
-          <path d="M24 6a18 18 0 1 0 0 .01" fill="none" stroke="url(#lglow)" stroke-width="2" opacity=".5"/>
-        </svg>
-        <div class="titles">
-          <strong>LUMEN ATLAS</strong>
-          <span class="sub">Kinetic time & mood dial</span>
+  <div class="shell">
+    <div class="panel">
+      <div class="head">
+        <div class="brand" aria-label="Aurora Loom">
+          <div class="glyph" aria-hidden="true"></div>
+          <div class="title">
+            <strong>AURORA LOOM</strong>
+            <span>Weave light. Tame time.</span>
+          </div>
+        </div>
+        <div class="themes" role="group" aria-label="Themes">
+          <button class="pill" data-key="nocturne" aria-pressed="true">Nocturne</button>
+          <button class="pill" data-key="meadow" aria-pressed="false">Meadow</button>
+          <button class="pill" data-key="solaris" aria-pressed="false">Solaris</button>
+          <button class="pill" data-key="glacier" aria-pressed="false">Glacier</button>
         </div>
       </div>
 
-      <div class="palette" role="group" aria-label="Themes">
-        <button class="pill" data-key="dusk" aria-pressed="true">Dusk</button>
-        <button class="pill" data-key="dawn" aria-pressed="false">Dawn</button>
-        <button class="pill" data-key="oasis" aria-pressed="false">Oasis</button>
-        <button class="pill" data-key="mono" aria-pressed="false">Mono</button>
+      <div class="body">
+        <h1 class="h1">Threads of calm in a noisy minute.</h1>
+        <p class="lede">Ribbons of color breathe across the canvas. Nudge the weave, change the air, or pause to feel the hush.</p>
       </div>
-    </div>
 
-    <div class="dial" id="dial">
-      <div class="glass">
-        <div class="copy">
-          <h1 class="headline">Make time feel soft.</h1>
-          <p class="lede">A quiet dial that breathes with you—orbiting color, gentle motion, and a hush of grain.</p>
+      <div class="controls">
+        <div class="row">
+          <button class="btn" id="toggle">Pause</button>
+          <label class="toggle"><input type="checkbox" id="grain" checked> Grain</label>
+          <label class="toggle"><input type="checkbox" id="bloom" checked> Bloom</label>
         </div>
-
-        <div class="viewport" aria-label="Interactive kinetic dial">
-          <canvas id="orbits" role="img" aria-label="Orbiting satellites around time"></canvas>
-          <div class="time" aria-live="polite" aria-atomic="true">
-            <span id="hh">12</span><span class="colon">:</span><span id="mm">00</span>
-            <span class="ampm" id="ampm">AM</span>
+        <div class="row">
+          <div class="unit">
+            <label for="tempo">Tempo</label>
+            <input type="range" id="tempo" min="10" max="220" value="120" step="1" aria-label="Tempo">
+            <span id="tempoVal">1.20x</span>
+          </div>
+          <div class="unit">
+            <label for="weave">Weave</label>
+            <input type="range" id="weave" min="3" max="14" value="7" step="1" aria-label="Weave density">
+            <span id="weaveVal">7</span>
           </div>
         </div>
       </div>
 
-      <div class="glass">
-        <div class="copy">
-          <h1 class="headline">Hold a calmer minute.</h1>
-          <p class="lede">Drag tempo, toggle grain, or press space to pause. Themes change the air, not the quiet.</p>
-        </div>
-        <div class="viewport" aria-hidden="true">
-          <canvas id="rings" aria-hidden="true"></canvas>
-        </div>
+      <div class="meta">
+        <span id="themeName">Theme: Nocturne</span>
+        <div class="progress" aria-label="Seconds in minute"><i id="secbar" style="--p:0%"></i></div>
+        <span id="last-updated">Last updated: 2025-12-18 14:16:29 EST</span>
       </div>
     </div>
 
-    <div class="bar">
-      <div class="controls">
-        <button class="btn" id="play">Pause</button>
-        <div class="unit">
-          <label for="tempo">Tempo</label>
-          <input type="range" id="tempo" min="20" max="200" value="110" step="1" aria-label="Tempo">
-          <span class="value" id="tempoVal">1.10x</span>
-        </div>
-        <label class="toggle"><input type="checkbox" id="grain" checked> Grain</label>
-      </div>
-      <div class="meta">
-        <span id="themeName">Theme: Dusk</span>
-        <span id="last-updated">Last updated: 2025-12-18 13:29:08 EST</span>
+    <div class="stage" id="stage" aria-label="Generative aurora canvas">
+      <canvas id="loom" role="img" aria-label="Flowing ribbons of light"></canvas>
+      <div class="overlay-time" aria-live="polite" aria-atomic="true">
+        <span class="hh" id="hh">12</span><span class="colon">:</span><span class="mm" id="mm">00</span>
+        <span class="ampm" id="ampm">AM</span>
       </div>
     </div>
   </div>
 
   <script>
-    (function(){
-      const root = document.getElementById('lumen');
-      const dial = document.getElementById('dial');
+    (function () {
+      const root = document.getElementById('aurora');
+      const stage = document.getElementById('stage');
+      const canvas = document.getElementById('loom');
+      const ctx = canvas.getContext('2d');
 
-      const canvasA = document.getElementById('orbits');
-      const ctxA = canvasA.getContext('2d');
-      const canvasB = document.getElementById('rings');
-      const ctxB = canvasB.getContext('2d');
+      const pills = root.querySelectorAll('.pill');
+      const themeName = document.getElementById('themeName');
+
+      const tempo = document.getElementById('tempo');
+      const weave = document.getElementById('weave');
+      const tempoVal = document.getElementById('tempoVal');
+      const weaveVal = document.getElementById('weaveVal');
+      const toggle = document.getElementById('toggle');
+      const grain = document.getElementById('grain');
+      const bloom = document.getElementById('bloom');
 
       const hh = document.getElementById('hh');
       const mm = document.getElementById('mm');
       const ampm = document.getElementById('ampm');
-
-      const tempo = document.getElementById('tempo');
-      const tempoVal = document.getElementById('tempoVal');
-      const play = document.getElementById('play');
-      const grain = document.getElementById('grain');
-
-      const pills = root.querySelectorAll('.pill');
-      const themeName = document.getElementById('themeName');
+      const secbar = document.getElementById('secbar');
       const updated = document.getElementById('last-updated');
 
       // Timestamp
@@ -364,14 +403,14 @@
 
       // Themes
       const THEMES = {
-        dusk:  { bg0:'#0a0c14', bg1:'#151a2a', fg:'#f3f7ff', muted:'#9aa7c6', a1:'#b69cff', a2:'#74eaff', a3:'#8bffd0', name:'Dusk' },
-        dawn:  { bg0:'#0e0f0c', bg1:'#171a15', fg:'#fffdf3', muted:'#b2b7a7', a1:'#ffc88a', a2:'#ffe89a', a3:'#9affc7', name:'Dawn' },
-        oasis: { bg0:'#081112', bg1:'#0f191a', fg:'#eafcfe', muted:'#95c6cc', a1:'#34e1ce', a2:'#78f7ff', a3:'#7be9a4', name:'Oasis' },
-        mono:  { bg0:'#0b0d12', bg1:'#121723', fg:'#eef3ff', muted:'#9fb0d5', a1:'#dfe6ff', a2:'#bcc8ea', a3:'#a6b5dc', name:'Mono' }
+        nocturne: { name:'Nocturne', bg0:'#07090f', bg1:'#0f1320', fg:'#eef3ff', muted:'#98a6c7', a1:'#8ad8ff', a2:'#a1ffdd', a3:'#c7b5ff' },
+        meadow:   { name:'Meadow',   bg0:'#08100b', bg1:'#0f1a13', fg:'#f2fff5', muted:'#a7c4b2', a1:'#7dffa6', a2:'#d5ff92', a3:'#7de6ff' },
+        solaris:  { name:'Solaris',  bg0:'#0f0b07', bg1:'#20160e', fg:'#fff7ea', muted:'#d2c3a9', a1:'#ffbf6f', a2:'#ffd39a', a3:'#ffa7c9' },
+        glacier:  { name:'Glacier',  bg0:'#071016', bg1:'#0e1a24', fg:'#eaf6ff', muted:'#a0bfd7', a1:'#8bc7ff', a2:'#7df1ff', a3:'#b6e4ff' }
       };
-      let active = 'dusk';
-      function applyTheme(key){
-        const t = THEMES[key] || THEMES.dusk;
+      let active = 'nocturne';
+      function applyTheme(key) {
+        const t = THEMES[key] || THEMES.nocturne;
         root.style.setProperty('--bg0', t.bg0);
         root.style.setProperty('--bg1', t.bg1);
         root.style.setProperty('--fg',  t.fg);
@@ -386,16 +425,22 @@
       }
       pills.forEach(p => p.addEventListener('click', () => applyTheme(p.dataset.key)));
 
-      // Auto-theme by hour
+      // Auto theme by hour
       const hr = new Date().getHours();
-      applyTheme(hr >= 6 && hr < 12 ? 'dawn' : hr >= 12 && hr < 18 ? 'oasis' : 'dusk');
+      if (hr >= 6 && hr < 12) applyTheme('meadow');
+      else if (hr >= 12 && hr < 18) applyTheme('glacier');
+      else applyTheme('nocturne');
 
-      // Grain toggle
+      // Grain & Bloom
       function setGrain(on){ root.style.setProperty('--grain', on ? '.25' : '0'); }
-      setGrain(true);
+      setGrain(grain.checked);
       grain.addEventListener('change', () => setGrain(grain.checked));
 
-      // Tempo
+      let bloomOn = true;
+      bloomOn = bloom.checked;
+      bloom.addEventListener('change', () => bloomOn = bloom.checked);
+
+      // Tempo & Weave
       let speed = +tempo.value / 100;
       tempoVal.textContent = `${speed.toFixed(2)}x`;
       tempo.addEventListener('input', () => {
@@ -403,90 +448,108 @@
         tempoVal.textContent = `${speed.toFixed(2)}x`;
       });
 
-      // Play/Pause + keyboard
-      let running = true;
-      play.addEventListener('click', () => {
+      let bands = +weave.value | 0;
+      weaveVal.textContent = `${bands}`;
+      weave.addEventListener('input', () => {
+        bands = +weave.value | 0;
+        weaveVal.textContent = `${bands}`;
+        reseed();
+      });
+
+      // Time + seconds bar
+      function tickClock() {
+        const now = new Date();
+        let h = now.getHours(); const m = now.getMinutes(); const s = now.getSeconds();
+        const am = h < 12 ? 'AM' : 'PM';
+        h = h % 12; if (h === 0) h = 12;
+        hh.textContent = String(h).padStart(2, '0');
+        mm.textContent = String(m).padStart(2, '0');
+        ampm.textContent = am;
+        const p = ((s % 60) / 60) * 100;
+        secbar.style.setProperty('--p', `${p}%`);
+      }
+      tickClock();
+      setInterval(tickClock, 1000);
+
+      // Motion preferences
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Toggle play/pause
+      let running = !reduce;
+      toggle.textContent = running ? 'Pause' : 'Play';
+      toggle.addEventListener('click', () => {
         running = !running;
-        play.textContent = running ? 'Pause' : 'Play';
+        toggle.textContent = running ? 'Pause' : 'Play';
         if (running) requestAnimationFrame(loop);
       });
+
+      // Keys
       window.addEventListener('keydown', (e) => {
-        if (e.code === 'Space') { e.preventDefault(); play.click(); }
-        if (e.key === '1') applyTheme('dusk');
-        if (e.key === '2') applyTheme('dawn');
-        if (e.key === '3') applyTheme('oasis');
-        if (e.key === '4') applyTheme('mono');
+        if (e.code === 'Space') { e.preventDefault(); toggle.click(); }
+        if (e.key === '1') applyTheme('nocturne');
+        if (e.key === '2') applyTheme('meadow');
+        if (e.key === '3') applyTheme('solaris');
+        if (e.key === '4') applyTheme('glacier');
       });
 
-      // Resize
-      let DPR = Math.min(2, window.devicePixelRatio || 1);
-      let W1=0,H1=0,W2=0,H2=0;
-      function sizeCanvas(cv, ctx, dims){
-        const r = cv.getBoundingClientRect();
-        dims.w = Math.max(320, Math.floor(r.width));
-        dims.h = Math.max(220, Math.floor(r.height));
-        cv.width = Math.floor(dims.w * DPR);
-        cv.height = Math.floor(dims.h * DPR);
+      // Tilt
+      function tilt(e){
+        const r = stage.getBoundingClientRect();
+        const x = (e.clientX - r.left)/r.width - 0.5;
+        const y = (e.clientY - r.top)/r.height - 0.5;
+        stage.style.transform = `perspective(1000px) rotateX(${(-y*4).toFixed(2)}deg) rotateY(${(x*5).toFixed(2)}deg)`;
+      }
+      function untilt(){ stage.style.transform = 'perspective(1000px)'; }
+      if(!reduce){
+        stage.addEventListener('mousemove', tilt);
+        stage.addEventListener('mouseleave', untilt);
+      }
+
+      // Canvas sizing
+      let DPR = Math.min(2, window.devicePixelRatio || 1), W=0, H=0;
+      function resize() {
+        const r = canvas.getBoundingClientRect();
+        W = Math.max(320, Math.floor(r.width));
+        H = Math.max(260, Math.floor(r.height));
+        canvas.width = Math.floor(W * DPR);
+        canvas.height = Math.floor(H * DPR);
         ctx.setTransform(DPR,0,0,DPR,0,0);
       }
-      function resize(){
-        sizeCanvas(canvasA, ctxA, { get w(){return W1}, set w(v){W1=v}, get h(){return H1}, set h(v){H1=v} });
-        sizeCanvas(canvasB, ctxB, { get w(){return W2}, set w(v){W2=v}, get h(){return H2}, set h(v){H2=v} });
-      }
-      const ro = new ResizeObserver(resize); ro.observe(canvasA); ro.observe(canvasB);
+      const ro = new ResizeObserver(resize); ro.observe(canvas);
 
       // Colors
-      const C = { a1:'#b69cff', a2:'#74eaff', a3:'#8bffd0', fg:'#ffffff' };
+      const C = { a1:'#8ad8ff', a2:'#a1ffdd', a3:'#c7b5ff', fg:'#ffffff' };
       function refreshColors(){
         const cs = getComputedStyle(root);
         C.a1 = cs.getPropertyValue('--a1').trim() || C.a1;
         C.a2 = cs.getPropertyValue('--a2').trim() || C.a2;
         C.a3 = cs.getPropertyValue('--a3').trim() || C.a3;
-        C.fg = cs.getPropertyValue('--fg').trim() || C.fg;
+        C.fg = cs.getPropertyValue('--fg').trim()  || C.fg;
       }
       refreshColors();
 
-      // Time update
-      function updateClock(){
-        const now = new Date();
-        let hours = now.getHours();
-        const m = now.getMinutes();
-        const am = hours < 12 ? 'AM' : 'PM';
-        hours = hours % 12; if (hours === 0) hours = 12;
-        hh.textContent = String(hours).padStart(2,'0');
-        mm.textContent = String(m).padStart(2,'0');
-        ampm.textContent = am;
-      }
-      updateClock();
-      setInterval(updateClock, 1000);
-
-      // Motion preference
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduce){ running = false; play.textContent = 'Play'; }
-
-      // Pointer tilt
-      function tilt(e){
-        const r = dial.getBoundingClientRect();
-        const x = (e.clientX - r.left)/r.width - 0.5;
-        const y = (e.clientY - r.top)/r.height - 0.5;
-        dial.style.transform = `perspective(900px) rotateX(${(-y*3.5).toFixed(2)}deg) rotateY(${(x*4.5).toFixed(2)}deg)`;
-      }
-      function untilt(){ dial.style.transform = 'perspective(900px)'; }
-      if(!reduce){
-        dial.addEventListener('mousemove', tilt);
-        dial.addEventListener('mouseleave', untilt);
-      }
-
-      // Drawing
+      // Aurora ribbons
       let t = 0;
       const pointer = { x: 0, y: 0, active: false };
-      canvasA.addEventListener('pointermove', e => {
-        const r = canvasA.getBoundingClientRect();
+      canvas.addEventListener('pointermove', e => {
+        const r = canvas.getBoundingClientRect();
         pointer.x = e.clientX - r.left; pointer.y = e.clientY - r.top; pointer.active = true;
-      });
-      canvasA.addEventListener('pointerleave', () => pointer.active = false);
+      }, { passive: true });
+      canvas.addEventListener('pointerleave', () => pointer.active = false);
 
-      function grad(ctx, x0,y0,x1,y1){
+      let seeds = [];
+      function reseed() {
+        seeds = Array.from({ length: bands }).map((_, i) => ({
+          amp: (H || 500) * (0.08 + 0.06 * Math.random()),
+          base: (H || 500) * (0.25 + 0.5 * (i/(bands-1 || 1))),
+          freq: 0.002 + Math.random() * 0.004,
+          drift: Math.random() * Math.PI * 2,
+          thick: 10 + i*0.6 + Math.random()*4,
+          hueShift: i / Math.max(1, bands-1)
+        }));
+      }
+
+      function grad(x0,y0,x1,y1) {
         const g = ctx.createLinearGradient(x0,y0,x1,y1);
         g.addColorStop(0, C.a1);
         g.addColorStop(0.5, C.a2);
@@ -494,104 +557,90 @@
         return g;
       }
 
-      function drawOrbits(){
-        ctxA.clearRect(0,0,W1,H1);
-        const cx = W1/2, cy = H1/2;
-        const base = Math.min(W1,H1)*0.32;
+      function drawAurora() {
+        ctx.clearRect(0,0,W,H);
 
-        // Soft vignette
-        const vg = ctxA.createRadialGradient(cx, cy, base*0.1, cx, cy, Math.max(W1,H1)*0.7);
+        // Subtle vignette
+        const vg = ctx.createRadialGradient(W/2, H/2, Math.min(W,H)*0.1, W/2, H/2, Math.max(W,H)*0.8);
         vg.addColorStop(0, 'rgba(255,255,255,0.06)');
         vg.addColorStop(1, 'rgba(0,0,0,0.00)');
-        ctxA.fillStyle = vg; ctxA.fillRect(0,0,W1,H1);
+        ctx.fillStyle = vg; ctx.fillRect(0,0,W,H);
 
-        ctxA.save();
-        ctxA.globalCompositeOperation = 'lighter';
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i=0;i<seeds.length;i++) {
+          const s = seeds[i];
+          const phase = t * (0.9 + i*0.08) * speed + s.drift;
+          const sway = Math.sin(phase * 0.7) * 0.6 + Math.cos(phase * 0.3) * 0.4;
 
-        // Rings
-        const rings = [1.0, 1.24, 1.46, 1.7];
-        rings.forEach((m, i) => {
-          const r = base*m * (1 + 0.006*Math.sin(t*0.7 + i));
-          ctxA.strokeStyle = grad(ctxA, cx-r, cy, cx+r, cy);
-          ctxA.lineWidth = i === 0 ? 1.8 : 1.2;
-          ctxA.globalAlpha = 0.6 - i*0.1;
-          ctxA.beginPath();
-          for(let a=0; a<=Math.PI*2; a+=0.03){
-            const jitter = Math.sin(a*8 + t + i)*0.8;
-            const x = cx + Math.cos(a) * (r + jitter);
-            const y = cy + Math.sin(a) * (r + jitter);
-            if(a===0) ctxA.moveTo(x,y); else ctxA.lineTo(x,y);
+          // Point attractor
+          const attract = pointer.active ? (1 - Math.min(1, Math.hypot(pointer.x - W/2, pointer.y - s.base)/Math.max(160, W*0.3))) : 0;
+          const amp = s.amp * (1 + attract*0.9);
+          const baseY = s.base + sway * 14;
+
+          ctx.lineWidth = s.thick + attract * 10;
+          ctx.strokeStyle = grad(0, baseY-40, W, baseY+40);
+          ctx.globalAlpha = 0.65 - i * (0.4/Math.max(1,seeds.length));
+
+          ctx.beginPath();
+          for (let x=0; x<=W; x+=2) {
+            const y = baseY
+              + Math.sin(x * s.freq + phase) * amp * (0.55 + 0.45*Math.cos(phase + x*0.0015))
+              + Math.cos(x * s.freq * 0.6 - phase*0.7) * amp * 0.28;
+            if (x===0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
           }
-          ctxA.stroke();
+          ctx.stroke();
 
-          // Satellites
-          const satCount = 2 + i;
-          for(let s=0; s<satCount; s++){
-            const ang = t* (0.5 + i*0.2) * speed + s*(Math.PI*2/satCount);
-            const px = cx + Math.cos(ang) * r;
-            const py = cy + Math.sin(ang) * r;
-            const d = pointer.active ? Math.max(0, 1 - Math.hypot(px-pointer.x, py-pointer.y)/220) : 0;
-            const size = 2.6 + i*0.6 + d*2.4;
-            const lg = ctxA.createRadialGradient(px, py, 0, px, py, size*6);
-            lg.addColorStop(0, C.a2);
-            lg.addColorStop(0.6, 'rgba(255,255,255,.0)');
-            ctxA.fillStyle = lg;
-            ctxA.beginPath(); ctxA.arc(px, py, size, 0, Math.PI*2); ctxA.fill();
+          if (bloomOn) {
+            // Soft glow
+            ctx.globalAlpha *= 0.6;
+            ctx.lineWidth *= 2.2;
+            ctx.stroke();
           }
-        });
-
-        ctxA.restore();
-      }
-
-      function drawBloomRings(){
-        ctxB.clearRect(0,0,W2,H2);
-        const cx = W2/2, cy = H2/2;
-        const R = Math.min(W2,H2) * 0.28;
-
-        // Bloom lines
-        ctxB.save();
-        ctxB.globalCompositeOperation = 'lighter';
-        ctxB.globalAlpha = 0.85;
-        ctxB.strokeStyle = grad(ctxB, cx-R, cy, cx+R, cy);
-        ctxB.lineWidth = 1.4;
-
-        const petals = 8;
-        const steps = 800;
-        for (let layer=0; layer<3; layer++){
-          const phase = t*(0.8 + layer*0.2) * speed * (layer%2? -1 : 1);
-          const scale = [1.0, 0.84, 1.18][layer];
-          ctxB.beginPath();
-          for(let i=0;i<=steps;i++){
-            const th = (i/steps) * Math.PI*2;
-            const wobble = Math.sin(th*2 + phase*0.7) * 0.04;
-            const swirl = Math.cos(th*1.5 - phase*0.5) * 0.03;
-            const r = R*scale * (0.62 + 0.38*Math.abs(Math.cos(petals*th + phase))) * (0.78 + wobble + swirl);
-            const x = cx + Math.cos(th + phase*0.12) * r;
-            const y = cy + Math.sin(th + phase*0.12) * r;
-            if(i===0) ctxB.moveTo(x,y); else ctxB.lineTo(x,y);
-          }
-          ctxB.stroke();
-          ctxB.globalAlpha -= 0.2;
         }
-        ctxB.restore();
+
+        // Floating motes
+        const moteN = 28;
+        for (let i=0; i<moteN; i++) {
+          const a = t*0.4*speed + i;
+          const x = (i*i*91 % W) + Math.sin(a*0.7+i)*40;
+          const y = (i*i*53 % H) + Math.cos(a*0.9+i)*30;
+          const r = 1.4 + (i%5)*0.3;
+          const lg = ctx.createRadialGradient(x,y,0,x,y, r*10);
+          lg.addColorStop(0, i%2 ? C.a2 : C.a1);
+          lg.addColorStop(1, 'rgba(255,255,255,0)');
+          ctx.globalAlpha = 0.25;
+          ctx.fillStyle = lg;
+          ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+        }
+
+        ctx.restore();
       }
 
-      function loop(){
+      function loop() {
         if (running && !reduce) t += 0.016;
-        drawOrbits();
-        drawBloomRings();
+        drawAurora();
         if (!reduce) requestAnimationFrame(loop);
       }
 
-      // Initial
+      // Init
       resize();
-      if (reduce){
-        drawOrbits(); drawBloomRings();
+      reseed();
+      if (reduce) {
+        drawAurora();
       } else {
         requestAnimationFrame(loop);
       }
 
-      // Cleanup observer
+      // Reseed on resize to keep spacing pleasant
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => { resize(); reseed(); }, 120);
+      });
+
+      // Cleanup observers if removed
       const obs = new MutationObserver(() => {
         if (!document.body.contains(root)) { obs.disconnect(); ro.disconnect(); }
       });
