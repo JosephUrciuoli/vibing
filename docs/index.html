@@ -73,7 +73,439 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-12-18 05:21:27 EST</span></div>
+<section id="atelier" aria-label="A calm interactive canvas">
+  <style>
+    /* Scoped to #atelier only */
+    #atelier {
+      --bg-1: #0b1220;
+      --bg-2: #151a2f;
+      --ink: #e9eefc;
+      --ink-dim: #b9c3e7;
+      --accent-1: #6ee7f8;
+      --accent-2: #a78bfa;
+      --ring: 30, 220, 250;
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      padding: clamp(20px, 4vw, 44px);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(120% 140% at 10% 0%, var(--bg-2) 0%, var(--bg-1) 50%, #070c17 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.03),
+        0 30px 60px -20px rgba(17, 23, 38, 0.65),
+        0 8px 24px -10px rgba(17, 23, 38, 0.5);
+      isolation: isolate;
+    }
+
+    /* Ambient aurora */
+    #atelier .aurora {
+      position: absolute;
+      inset: -25%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(38px) saturate(115%);
+      opacity: 0.55;
+      background:
+        radial-gradient(42% 38% at 20% 30%, rgba(110, 231, 248, 0.22), transparent 60%),
+        radial-gradient(38% 42% at 75% 25%, rgba(167, 139, 250, 0.22), transparent 60%),
+        radial-gradient(36% 32% at 60% 70%, rgba(34, 197, 94, 0.12), transparent 60%),
+        radial-gradient(32% 36% at 25% 75%, rgba(244, 63, 94, 0.12), transparent 60%);
+      transform: translate3d(0,0,0);
+      animation: float-aurora 22s ease-in-out infinite alternate;
+    }
+    @keyframes float-aurora {
+      0% { transform: translate3d(-2%, 0%, 0) scale(1); }
+      50% { transform: translate3d(2%, -1%, 0) scale(1.03); }
+      100% { transform: translate3d(-1%, 1%, 0) scale(1.01); }
+    }
+
+    /* Gentle grid for texture */
+    #atelier .grid {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 28px 28px, 28px 28px;
+      mask: radial-gradient(90% 120% at 50% 50%, #000 55%, transparent 100%);
+      mix-blend-mode: soft-light;
+      opacity: 0.6;
+    }
+
+    /* Card */
+    #atelier .panel {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 20px;
+      padding: clamp(18px, 3.2vw, 32px);
+      backdrop-filter: blur(14px) saturate(115%);
+      transform-style: preserve-3d;
+      transition: transform 170ms ease, box-shadow 170ms ease, border-color 200ms ease;
+      box-shadow:
+        0 10px 30px -15px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    #atelier .panel:hover {
+      border-color: rgba(255,255,255,0.22);
+      box-shadow:
+        0 20px 50px -20px rgba(0,0,0,0.55),
+        inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
+    /* Header badge row */
+    #atelier .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+    #atelier .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    #atelier .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgb(var(--ring)) 0%, rgba(var(--ring),0.6) 60%, rgba(var(--ring),0.1) 100%);
+      box-shadow: 0 0 10px rgba(var(--ring),0.8), 0 0 20px rgba(var(--ring),0.35);
+    }
+
+    /* Typography */
+    #atelier h1 {
+      margin: 6px 0 6px 0;
+      font-size: clamp(28px, 4.6vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      background: linear-gradient(180deg, var(--ink) 30%, var(--ink-dim));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.02);
+    }
+    #atelier p.lead {
+      margin: 0 0 16px 0;
+      color: var(--ink-dim);
+      font-size: clamp(14px, 2vw, 18px);
+      line-height: 1.55;
+    }
+
+    /* CTA buttons */
+    #atelier .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    #atelier .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 200ms ease, background 200ms ease;
+      will-change: transform;
+    }
+    #atelier .btn.primary {
+      color: #0b1020;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      box-shadow: 0 10px 24px -12px rgba(122, 193, 255, 0.55), inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+    #atelier .btn.ghost {
+      color: var(--ink);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    #atelier .btn:hover {
+      transform: translateY(-2px);
+    }
+    #atelier .btn:active {
+      transform: translateY(0);
+    }
+
+    /* Marquee */
+    #atelier .marquee {
+      position: relative;
+      z-index: 2;
+      margin-top: 18px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.04);
+      overflow: hidden;
+      mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    #atelier .ticker {
+      display: flex;
+      gap: 24px;
+      padding: 10px 14px;
+      white-space: nowrap;
+      color: var(--ink-dim);
+      font-size: 13px;
+      animation: scroll-x 24s linear infinite;
+    }
+    #atelier .tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      color: var(--ink);
+      font-weight: 500;
+    }
+    @keyframes scroll-x {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* Footer */
+    #atelier .foot {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 18px;
+      color: var(--ink-dim);
+      font-size: 12px;
+    }
+    #atelier .meter {
+      --p: 62;
+      position: relative;
+      height: 8px;
+      width: 140px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    #atelier .meter::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: calc(var(--p) * 1%);
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      border-radius: inherit;
+      box-shadow: 0 0 12px rgba(167,139,250,0.35);
+      transition: width 600ms cubic-bezier(.2,.7,.2,1);
+    }
+
+    /* Mouse tilt (based on CSS vars) */
+    #atelier .panel {
+      transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      #atelier .aurora { animation: none; }
+      #atelier .ticker { animation: none; }
+      #atelier .btn:hover { transform: none; }
+    }
+  </style>
+
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="grid" aria-hidden="true"></div>
+
+  <div class="panel" id="card">
+    <div class="row">
+      <div class="badge" aria-label="Live">
+        <span class="dot" aria-hidden="true"></span>
+        Live Canvas
+      </div>
+      <div class="badge" id="phase-badge">Dawn Mode</div>
+    </div>
+
+    <h1>Quiet luxury in motion.</h1>
+    <p class="lead">An elegant micro‑space for focus. Soft light, kind type, and little moments of delight.</p>
+
+    <div class="actions">
+      <button class="btn primary" id="play-pulse" aria-pressed="false">Add a subtle pulse</button>
+      <button class="btn ghost" id="toggle-grid">Hide guide</button>
+    </div>
+
+    <div class="marquee" aria-label="Design values">
+      <div class="ticker" id="ticker">
+        <span class="tag">Calm tech</span>
+        <span class="tag">Human scale</span>
+        <span class="tag">Tactile UI</span>
+        <span class="tag">Thoughtful motion</span>
+        <span class="tag">Accessible contrast</span>
+        <span class="tag">Well‑tempered colors</span>
+        <span class="tag">Layered depth</span>
+        <span class="tag">Play</span>
+
+        <!-- mirror for seamless loop -->
+        <span class="tag">Calm tech</span>
+        <span class="tag">Human scale</span>
+        <span class="tag">Tactile UI</span>
+        <span class="tag">Thoughtful motion</span>
+        <span class="tag">Accessible contrast</span>
+        <span class="tag">Well‑tempered colors</span>
+        <span class="tag">Layered depth</span>
+        <span class="tag">Play</span>
+      </div>
+    </div>
+
+    <div class="foot">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="meter" id="calm-meter" aria-label="Calm meter"></div>
+        <span>Calm level</span>
+      </div>
+      <span id="last-updated">Last updated: 2025-12-18 06:17:38 EST</span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('atelier');
+      const phase = document.getElementById('phase-badge');
+      const grid = root.querySelector('.grid');
+      const meter = document.getElementById('calm-meter');
+      const card = document.getElementById('card');
+      const last = document.getElementById('last-updated');
+      const ticker = document.getElementById('ticker');
+      const playBtn = document.getElementById('play-pulse');
+      const toggleGridBtn = document.getElementById('toggle-grid');
+
+      // Time-of-day theming
+      function applyPhase(h) {
+        let p = 'Noon Mode';
+        let vars = {
+          bg1: '#0b1220', bg2: '#151a2f',
+          ink: '#e9eefc', dim: '#b9c3e7',
+          a1: '#6ee7f8', a2: '#a78bfa', ring: '30, 220, 250'
+        };
+
+        if (h < 6) {
+          p = 'Night Mode';
+          vars = { bg1:'#070a12', bg2:'#0b1020', ink:'#dfe8ff', dim:'#9fb0df', a1:'#60a5fa', a2:'#a78bfa', ring:'40, 160, 255' };
+        } else if (h < 11) {
+          p = 'Dawn Mode';
+          vars = { bg1:'#0b1020', bg2:'#1a1830', ink:'#f3f6ff', dim:'#c6d0fb', a1:'#fdf2a1', a2:'#a7f3d0', ring:'253, 242, 161' };
+        } else if (h < 17) {
+          p = 'Day Mode';
+          vars = { bg1:'#0b1220', bg2:'#121a2a', ink:'#eef3ff', dim:'#c0c8e6', a1:'#6ee7f8', a2:'#86efac', ring:'110, 231, 248' };
+        } else if (h < 21) {
+          p = 'Dusk Mode';
+          vars = { bg1:'#0a0f1b', bg2:'#17162a', ink:'#eef0ff', dim:'#c4c8ea', a1:'#f0abfc', a2:'#60a5fa', ring:'240, 171, 252' };
+        } else {
+          p = 'Midnight Mode';
+          vars = { bg1:'#05080f', bg2:'#0d1020', ink:'#e7ecff', dim:'#b3bfe6', a1:'#7dd3fc', a2:'#a78bfa', ring:'125, 211, 252' };
+        }
+
+        root.style.setProperty('--bg-1', vars.bg1);
+        root.style.setProperty('--bg-2', vars.bg2);
+        root.style.setProperty('--ink', vars.ink);
+        root.style.setProperty('--ink-dim', vars.dim);
+        root.style.setProperty('--accent-1', vars.a1);
+        root.style.setProperty('--accent-2', vars.a2);
+        root.style.setProperty('--ring', vars.ring);
+        phase.textContent = p;
+      }
+      applyPhase(new Date().getHours());
+
+      // Last updated stamp
+      try {
+        const now = new Date();
+        const fmt = new Intl.DateTimeFormat(undefined, {
+          year: 'numeric', month: 'short', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'local';
+        last.textContent = `Last updated: ${fmt.format(now)} • ${tz}`;
+      } catch (e) {
+        last.textContent = 'Last updated: just now';
+      }
+
+      // Meter gentle randomization
+      function setMeter(p) {
+        meter.style.setProperty('--p', p);
+      }
+      let target = 62;
+      setMeter(target);
+      function wobble() {
+        target = 50 + Math.round(Math.random() * 40);
+        setMeter(target);
+      }
+      const wobbleTimer = setInterval(wobble, 3800);
+
+      // Tilt effect on card
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function handleTilt(e) {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;  // 0..1
+        const y = (e.clientY - r.top) / r.height;  // 0..1
+        const ry = (x - 0.5) * 6; // deg
+        const rx = (0.5 - y) * 6;
+        card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+        card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+      }
+      function resetTilt() {
+        card.style.setProperty('--ry', '0deg');
+        card.style.setProperty('--rx', '0deg');
+      }
+      if (!reduceMotion) {
+        card.addEventListener('mousemove', handleTilt);
+        card.addEventListener('mouseleave', resetTilt);
+      }
+
+      // Toggle grid visibility
+      let gridVisible = true;
+      toggleGridBtn.addEventListener('click', () => {
+        gridVisible = !gridVisible;
+        grid.style.opacity = gridVisible ? '0.6' : '0';
+        toggleGridBtn.textContent = gridVisible ? 'Hide guide' : 'Show guide';
+      });
+
+      // Subtle pulse effect on aurora and ticker
+      let pulsing = false;
+      let pulseTimer = null;
+      playBtn.addEventListener('click', () => {
+        pulsing = !pulsing;
+        playBtn.setAttribute('aria-pressed', String(pulsing));
+        playBtn.textContent = pulsing ? 'Stop pulse' : 'Add a subtle pulse';
+        if (pulsing) {
+          root.querySelector('.aurora').style.transition = 'transform 1200ms ease, opacity 1200ms ease';
+          ticker.style.transition = 'filter 700ms ease';
+          pulseTimer = setInterval(() => {
+            root.querySelector('.aurora').style.opacity = (Math.random() * 0.25 + 0.45).toFixed(2);
+            ticker.style.filter = Math.random() > 0.5 ? 'brightness(1.08)' : 'brightness(1)';
+          }, 1400);
+        } else {
+          clearInterval(pulseTimer);
+          pulseTimer = null;
+          root.querySelector('.aurora').style.opacity = '0.55';
+          ticker.style.filter = 'none';
+        }
+      });
+
+      // Clean up if removed
+      const observer = new MutationObserver(() => {
+        if (!document.body.contains(root)) {
+          clearInterval(wobbleTimer);
+          if (pulseTimer) clearInterval(pulseTimer);
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    }());
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
