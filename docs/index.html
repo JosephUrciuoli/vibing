@@ -73,344 +73,359 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="v1381" data-mode="day" data-motion="on" aria-label="Daybreak Atelier">
+<section class="v1382" data-theme="dawn" data-motion="on" aria-label="Aurora Loom">
   <style>
-    .v1381 {
-      --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    .v1382 {
+      --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       --font-serif: ui-serif, Georgia, "Times New Roman", Times, serif;
 
-      /* Dynamic palette (overridden by [data-mode]) */
-      --bg-1: hsl(45 60% 98%);
-      --bg-2: hsl(48 60% 94%);
-      --ink: hsl(230 25% 14%);
-      --muted: hsl(230 10% 45%);
-      --accent: hsl(26 95% 52%);
-      --accent-2: hsl(204 90% 50%);
-      --ring: hsl(26 95% 60% / 0.25);
+      /* Default (dawn) palette */
+      --bg-1: hsl(268 60% 16%);
+      --bg-2: hsl(14 90% 62%);
+      --ink: hsl(0 0% 98%);
+      --muted: hsl(270 12% 80%);
+      --accent: hsl(12 95% 64%);
+      --accent-2: hsl(196 93% 62%);
+      --glass: hsla(0 0% 100% / 0.06);
+      --stroke: hsla(0 0% 100% / 0.18);
+      --ring: color-mix(in oklab, var(--accent) 55%, transparent);
 
       position: relative;
       isolation: isolate;
       color: var(--ink);
-      font-family: var(--font-sans);
       border-radius: 28px;
-      padding: min(8vw, 72px);
-      background:
-        radial-gradient(1200px 800px at 85% -10%, var(--bg-2), transparent 55%),
-        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      padding: clamp(28px, 6vw, 72px);
       overflow: clip;
-      box-shadow:
-        0 20px 50px color-mix(in oklab, var(--ink) 25%, transparent),
-        inset 0 1px 0 rgba(255,255,255,0.6);
+      background:
+        radial-gradient(1200px 800px at 80% 0%, color-mix(in lch, var(--bg-2) 40%, transparent), transparent 60%),
+        linear-gradient(140deg, var(--bg-1), color-mix(in lch, var(--bg-2) 20%, var(--bg-1)));
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04);
+      font-family: var(--font-sans);
     }
 
-    /* Soft paper grain */
-    .v1381::after {
+    /* Moving aurora veil */
+    .v1382::before {
       content: "";
       position: absolute; inset: -20%;
-      background-image:
-        radial-gradient(1px 1px at 20% 30%, rgba(0,0,0,0.045) 0 50%, transparent 60%),
-        radial-gradient(1px 1px at 70% 60%, rgba(0,0,0,0.045) 0 50%, transparent 60%),
-        radial-gradient(1px 1px at 40% 80%, rgba(0,0,0,0.045) 0 50%, transparent 60%);
-      background-size: 260px 260px, 320px 320px, 280px 280px;
-      mix-blend-mode: multiply;
-      opacity: 0.35;
+      background:
+        conic-gradient(from 0deg,
+          color-mix(in oklab, var(--accent) 25%, transparent) 0 10%,
+          transparent 10% 40%,
+          color-mix(in oklab, var(--accent-2) 18%, transparent) 40% 55%,
+          transparent 55% 100%);
+      filter: blur(50px) saturate(120%);
+      opacity: 0.6;
+      transform: rotate(var(--veil-rot, 0deg)) scale(1.1);
+      transition: opacity 250ms ease;
       pointer-events: none;
-      animation: grain 16s linear infinite;
     }
-    .v1381[data-motion="off"]::after { animation: none; }
-    @keyframes grain { to { transform: translate3d(2%, -1%, 0); } }
+    .v1382[data-motion="off"]::before { opacity: 0.25; }
 
-    .v1381 .frame {
+    /* Soft star grain */
+    .v1382::after {
+      content: "";
+      position: absolute; inset: -10%;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.18) 0 40%, transparent 41%),
+        radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.14) 0 40%, transparent 41%),
+        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.20) 0 40%, transparent 41%);
+      background-size: 320px 320px, 420px 420px, 500px 500px;
+      mix-blend-mode: screen;
+      opacity: 0.45;
+      animation: twinkle 14s linear infinite;
+      pointer-events: none;
+    }
+    .v1382[data-motion="off"]::after { animation: none; }
+    @keyframes twinkle { to { transform: translate3d(1%, -1%, 0); } }
+
+    .v1382 .shell {
       position: relative;
       z-index: 1;
-      background: color-mix(in srgb, var(--bg-1) 85%, white 15%);
       border-radius: 22px;
-      border: 1px solid rgba(0,0,0,0.06);
+      backdrop-filter: saturate(120%) blur(8px);
+      background: linear-gradient(180deg, var(--glass), transparent 120%);
+      border: 1px solid var(--stroke);
       box-shadow:
-        0 10px 30px color-mix(in oklab, var(--ink) 20%, transparent),
-        inset 0 1px 0 rgba(255,255,255,0.9);
-      padding: clamp(20px, 5vw, 48px);
-    }
-    .v1381 .frame::before {
-      content: "";
-      position: absolute; inset: 10px;
-      border-radius: 18px;
-      pointer-events: none;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.045), inset 0 12px 20px rgba(0,0,0,0.03);
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 24px 60px rgba(0,0,0,0.35);
+      padding: clamp(20px, 4.5vw, 44px);
     }
 
-    /* Layout */
-    .v1381 .grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: clamp(18px, 4.5vw, 48px);
+    .v1382 .header {
+      display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: clamp(16px, 3vw, 24px);
     }
-    @media (max-width: 880px) {
-      .v1381 .grid { grid-template-columns: 1fr; }
-    }
-
-    /* Badge */
-    .v1381 .badge {
+    .v1382 .crest {
       display: inline-flex; align-items: center; gap: 10px;
-      font-size: 12px; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--muted);
-      background: rgba(0,0,0,0.035);
       padding: 8px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.08);
-      box-shadow: 0 1px 0 rgba(255,255,255,0.7) inset;
+      font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+      background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      border: 1px solid var(--stroke);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+      color: var(--muted);
     }
-    .v1381 .dot {
+    .v1382 .crest .pulse {
       width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, white 0 40%, transparent 41%) padding-box,
+      background: radial-gradient(circle at 30% 30%, #fff 0 40%, transparent 41%) padding-box,
                   radial-gradient(circle at 50% 50%, var(--accent) 0 50%, transparent 51%) border-box;
       border: 1px solid var(--ring);
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 20%, transparent);
-      animation: breathe 4s ease-in-out infinite;
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 28%, transparent);
+      animation: pulse 5s ease-in-out infinite;
     }
-    .v1381[data-motion="off"] .dot { animation: none; }
-    @keyframes breathe { 0%,100%{ transform: scale(1); opacity: 0.9 } 50%{ transform: scale(1.12); opacity: 1 } }
+    .v1382[data-motion="off"] .crest .pulse { animation: none; }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 0.9 } 50% { transform: scale(1.2); opacity: 1 } }
 
-    /* Typography */
-    .v1381 h1 {
-      margin: 14px 0 8px;
+    .v1382 h1 {
+      margin: 6px 0 6px;
       font-family: var(--font-serif);
-      font-weight: 750;
+      font-weight: 800;
       letter-spacing: -0.02em;
       font-size: clamp(28px, 5.2vw, 64px);
-      line-height: 1.05;
-      background: linear-gradient(90deg, var(--ink), color-mix(in srgb, var(--ink) 80%, var(--accent) 20%));
+      line-height: 1.02;
+      background: linear-gradient(90deg, #fff, color-mix(in srgb, var(--accent) 45%, #fff));
       -webkit-background-clip: text; background-clip: text; color: transparent;
     }
-    .v1381 .subtitle {
-      margin: 0 0 18px;
+    .v1382 .sub {
+      margin: 0;
       color: var(--muted);
       font-size: clamp(14px, 2.2vw, 18px);
     }
 
-    /* Features */
-    .v1381 .features {
+    .v1382 .layout {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: clamp(18px, 4vw, 48px);
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .v1382 .layout { grid-template-columns: 1fr; }
+    }
+
+    .v1382 .panel {
+      position: relative;
+      padding: clamp(14px, 3vw, 20px);
+      border-radius: 18px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.05));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 14px 40px rgba(0,0,0,0.25);
+      transform-style: preserve-3d;
+      transition: transform 200ms ease;
+    }
+    .v1382 .panel:hover { transform: perspective(800px) rotateX(2deg) rotateY(-2deg); }
+
+    .v1382 .chips {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
-      margin: 22px 0 6px; padding: 0; list-style: none;
+      margin: 18px 0 8px;
+      padding: 0; list-style: none;
     }
-    @media (max-width: 680px) {
-      .v1381 .features { grid-template-columns: 1fr 1fr; }
-    }
-    .v1381 .chip {
+    @media (max-width: 680px) { .v1382 .chips { grid-template-columns: 1fr 1fr; } }
+    .v1382 .chip {
       display: flex; align-items: center; gap: 10px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
-      border: 1px solid rgba(0,0,0,0.08);
-      border-radius: 14px;
       padding: 10px 12px;
-      font-weight: 600; font-size: 13px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9);
-      transition: transform 180ms ease, box-shadow 220ms ease;
+      border-radius: 14px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      font-weight: 700; font-size: 13px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 10px 24px rgba(0,0,0,0.25);
+      transition: transform 160ms ease, box-shadow 220ms ease;
     }
-    .v1381 .chip:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
-    .v1381 .chip svg { width: 18px; height: 18px; color: var(--accent); }
+    .v1382 .chip:hover { transform: translateY(-2px); box-shadow: 0 16px 30px rgba(0,0,0,0.3); }
+    .v1382 .chip svg { width: 18px; height: 18px; color: var(--accent); }
 
-    /* Dial */
-    .v1381 .dial-wrap {
+    /* Controls */
+    .v1382 .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .v1382 .btn {
+      appearance: none; cursor: pointer;
+      padding: 10px 14px; border-radius: 12px; border: 1px solid var(--stroke);
+      color: var(--ink); font-weight: 800; font-size: 14px; letter-spacing: 0.02em;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.18);
+      transition: transform 140ms ease, box-shadow 200ms ease, background 200ms ease;
+    }
+    .v1382 .btn:hover { transform: translateY(-2px); box-shadow: 0 18px 34px rgba(0,0,0,0.35); }
+    .v1382 .btn:active { transform: translateY(0); }
+    .v1382 .btn.accent {
+      background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 35%, transparent), rgba(255,255,255,0.04));
+      border-color: color-mix(in srgb, var(--accent) 45%, var(--stroke));
+    }
+
+    /* Orrery stage */
+    .v1382 .stage {
       position: relative;
       display: grid;
       place-items: center;
-      padding: clamp(12px, 3vw, 22px);
+      padding: clamp(8px, 2.5vw, 14px);
+      transform-style: preserve-3d;
+      transition: transform 200ms ease;
     }
-    .v1381 .dial {
+    .v1382 .orrery {
       position: relative;
-      width: min(56vw, 360px);
+      width: min(60vw, 420px);
       aspect-ratio: 1;
       border-radius: 50%;
+      border: 1px dashed color-mix(in srgb, var(--accent) 30%, var(--stroke));
       background:
-        radial-gradient(120px 120px at 50% 50%, color-mix(in srgb, var(--accent) 7%, transparent), transparent),
-        linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
-      border: 1px solid rgba(0,0,0,0.08);
-      box-shadow:
-        0 20px 40px rgba(0,0,0,0.08),
-        inset 0 1px 0 rgba(255,255,255,0.9);
+        radial-gradient(120px 120px at 50% 50%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 22px 40px rgba(0,0,0,0.35);
       overflow: hidden;
     }
-    .v1381 .dial::before {
-      /* ticks */
-      content: "";
-      position: absolute; inset: 10%;
+    .v1382 .sun {
+      position: absolute; top: 50%; left: 50%;
+      width: 18px; height: 18px; transform: translate(-50%, -50%);
       border-radius: 50%;
-      background:
-        repeating-conic-gradient(from 0deg, rgba(0,0,0,0.12) 0 2deg, transparent 2deg 30deg);
-      mask: radial-gradient(circle at 50% 50%, transparent 58%, #000 59%);
-      opacity: 0.6;
-      filter: blur(0.2px);
-    }
-    .v1381 .dial::after {
-      /* gentle sweep highlight */
-      content: "";
-      position: absolute; inset: -30%;
-      background:
-        conic-gradient(from 0deg, color-mix(in srgb, var(--accent) 16%, transparent) 0 12%,
-                               transparent 12% 100%);
-      mix-blend-mode: multiply;
-      opacity: 0.55;
-      transform: rotate(var(--sweep, 0deg));
-      transform-origin: 50% 50%;
-      transition: transform 80ms linear;
-    }
-    .v1381[data-motion="off"] .dial::after { opacity: 0.25; }
-
-    .v1381 .hand {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 2px; height: 40%;
-      transform-origin: 50% calc(100% - 4px);
-      transform: translate(-50%, -100%) rotate(var(--rot, 0deg));
-      background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 40%, var(--ink) 60%));
-      border-radius: 2px;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.7) inset, 0 10px 14px rgba(0,0,0,0.08);
-    }
-    .v1381 .hand::after {
-      content: "";
-      position: absolute;
-      bottom: -6px; left: 50%;
-      width: 14px; height: 14px;
-      transform: translate(-50%, 0);
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff 0 30%, transparent 31%) padding-box,
+      background: radial-gradient(circle at 35% 35%, #fff 0 30%, transparent 31%) padding-box,
                   radial-gradient(circle at 50% 50%, var(--accent) 0 50%, transparent 51%) border-box;
       border: 1px solid var(--ring);
-      box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent);
+      box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 25%, transparent);
     }
-
-    /* Controls */
-    .v1381 .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-    .v1381 .btn {
-      appearance: none; cursor: pointer; border: 1px solid rgba(0,0,0,0.1);
-      background: linear-gradient(180deg, #fff, rgba(255,255,255,0.85));
-      color: var(--ink);
-      font-weight: 800; font-size: 14px; letter-spacing: 0.02em;
-      padding: 10px 14px; border-radius: 12px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
-      transition: transform 140ms ease, box-shadow 180ms ease, background 200ms ease, border-color 200ms ease;
+    .v1382 .orbit {
+      --r: 38%;
+      position: absolute; inset: calc(50% - var(--r)); border-radius: 50%;
+      border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--stroke));
+      opacity: 0.75;
     }
-    .v1381 .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(0,0,0,0.1); }
-    .v1381 .btn:active { transform: translateY(0); }
-    .v1381 .btn.accent {
-      background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 14%, white), #fff);
-      border-color: color-mix(in srgb, var(--accent) 30%, rgba(0,0,0,0.12));
-      color: color-mix(in srgb, var(--ink) 75%, black);
+    .v1382 .planet {
+      position: absolute; top: 50%; left: 50%;
+      --size: 12px;
+      width: var(--size); height: var(--size);
+      border-radius: 50%;
+      transform: translate(-50%, calc(-50% - var(--r))) rotate(var(--deg, 0deg)) translateY(var(--r));
+      transform-origin: 50% calc(50% + var(--r));
+      background: radial-gradient(circle at 35% 35%, #fff 0 35%, transparent 36%) padding-box,
+                  radial-gradient(circle at 50% 50%, var(--accent-2) 0 50%, transparent 51%) border-box;
+      border: 1px solid color-mix(in srgb, var(--accent-2) 50%, var(--ring));
+      box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent-2) 18%, transparent);
     }
+    .v1382 .planet.p2 { --size: 10px; --r: 28%; filter: saturate(120%); }
+    .v1382 .planet.p3 { --size: 8px; --r: 18%; filter: saturate(140%); }
 
     /* Meta */
-    .v1381 .meta {
+    .v1382 .meta {
       display: flex; flex-wrap: wrap; gap: 8px 14px;
       align-items: center; justify-content: space-between;
-      color: var(--muted);
-      font-size: 12px;
+      color: var(--muted); font-size: 12px;
       margin-top: 18px; padding-top: 14px;
-      border-top: 1px dashed rgba(0,0,0,0.12);
+      border-top: 1px dashed var(--stroke);
+    }
+    .v1382 .swatches {
+      display: inline-flex; gap: 8px;
+    }
+    .v1382 .swatch {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 1px solid var(--stroke);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
     }
 
-    /* Mode variants */
-    .v1381[data-mode="night"] {
-      --bg-1: hsl(222 32% 10%);
-      --bg-2: hsl(222 28% 12%);
-      --ink: hsl(220 15% 92%);
-      --muted: hsl(220 10% 70%);
-      --accent: hsl(204 90% 60%);
-      --accent-2: hsl(50 90% 60%);
-      --ring: hsl(204 90% 60% / 0.25);
-      box-shadow:
-        0 20px 60px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.06);
+    /* Theme variants */
+    .v1382[data-theme="noon"] {
+      --bg-1: hsl(46 75% 96%);
+      --bg-2: hsl(196 95% 72%);
+      --ink: hsl(222 22% 16%);
+      --muted: hsl(222 12% 42%);
+      --accent: hsl(200 92% 46%);
+      --accent-2: hsl(18 92% 56%);
+      --glass: hsla(0 0% 100% / 0.65);
+      --stroke: rgba(0,0,0,0.12);
     }
-    .v1381[data-mode="night"] .frame {
-      background: color-mix(in srgb, var(--bg-1) 92%, black 8%);
-      border-color: rgba(255,255,255,0.08);
-      box-shadow: 0 18px 44px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
-    }
-    .v1381[data-mode="night"] .chip {
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
-      border-color: rgba(255,255,255,0.14);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
-    }
-    .v1381[data-mode="night"] .btn {
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
-      color: var(--ink);
-      border-color: rgba(255,255,255,0.12);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
-    }
-    .v1381[data-mode="night"] .btn.accent {
-      background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 50%, transparent), transparent);
-      border-color: color-mix(in srgb, var(--accent) 35%, rgba(255,255,255,0.12));
+    .v1382[data-theme="midnight"] {
+      --bg-1: hsl(222 50% 10%);
+      --bg-2: hsl(252 45% 18%);
+      --ink: hsl(0 0% 98%);
+      --muted: hsl(220 12% 70%);
+      --accent: hsl(196 90% 60%);
+      --accent-2: hsl(68 92% 62%);
+      --glass: hsla(0 0% 100% / 0.05);
+      --stroke: hsla(0 0% 100% / 0.16);
     }
 
-    /* Accessibility */
+    /* Motion sensitivity */
     @media (prefers-reduced-motion: reduce) {
-      .v1381 { scroll-behavior: auto; }
-      .v1381::after, .v1381 .dot { animation: none !important; }
+      .v1382::before, .v1382::after, .v1382 .crest .pulse { animation: none !important; }
     }
   </style>
 
-  <div class="frame" role="region" aria-label="Tactile time surface">
-    <div class="grid">
-      <div>
-        <span class="badge" aria-live="polite">
-          <span class="dot" aria-hidden="true"></span>
-          Studio-grade minimalism
-        </span>
-        <h1>Daybreak Atelier</h1>
-        <p class="subtitle">Paper-soft surfaces. Sunlit motion. A space for ideas to land gently, then lift.</p>
+  <div class="shell">
+    <div class="header">
+      <span class="crest">
+        <span class="pulse" aria-hidden="true"></span>
+        Aurora Loom
+      </span>
+      <span class="sub" aria-live="polite">Composed motion. Generative light.</span>
+    </div>
 
-        <ul class="features">
+    <div class="layout">
+      <div class="panel" id="infoPanel" aria-label="Concept">
+        <h1>Design the atmosphere</h1>
+        <p class="sub">Spaces that breathe back—where clarity glows and motion whispers.</p>
+
+        <ul class="chips">
           <li class="chip">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
               <path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            Crisp type
+            Kinetic layout
           </li>
           <li class="chip">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
               <circle cx="12" cy="12" r="7"></circle>
               <path d="M12 8v8M8 12h8" stroke-linecap="round"/>
             </svg>
-            Quiet density
+            Generative light
           </li>
           <li class="chip">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
               <path d="M5 12h14M12 5v14" stroke-linecap="round"/>
             </svg>
-            Intentional gaps
+            Haptic type
           </li>
         </ul>
 
         <div class="controls">
-          <button class="btn accent" id="modeBtn" aria-pressed="false" aria-label="Toggle day and night">Switch to Night</button>
+          <button class="btn accent" id="themeBtn" aria-pressed="false" aria-label="Cycle theme">Next Theme</button>
           <button class="btn" id="motionBtn" aria-pressed="false" aria-label="Pause animations">Pause Motion</button>
         </div>
       </div>
 
-      <div class="dial-wrap">
-        <div class="dial" aria-label="Sundial time visualization">
-          <div class="hand" role="presentation"></div>
+      <div class="stage" id="stage" aria-label="Interactive orrery">
+        <div class="orrery" id="orrery">
+          <div class="sun" aria-hidden="true"></div>
+          <div class="orbit" style="--r: 38%"></div>
+          <div class="orbit" style="--r: 28%"></div>
+          <div class="orbit" style="--r: 18%"></div>
+          <div class="planet p1" style="--r: 38%"></div>
+          <div class="planet p2" style="--r: 28%"></div>
+          <div class="planet p3" style="--r: 18%"></div>
         </div>
       </div>
     </div>
 
     <div class="meta">
-      <span>“Design is the pause between notes.”</span>
-      <span id="last-updated">Last updated: 2025-12-19 00:19:50 EST</span>
+      <span>“Make it feel inevitable.”</span>
+      <span class="swatches" aria-hidden="true">
+        <span class="swatch" style="background: linear-gradient(180deg, hsl(268 60% 16%), hsl(14 90% 62%));"></span>
+        <span class="swatch" style="background: linear-gradient(180deg, hsl(46 75% 96%), hsl(196 95% 72%));"></span>
+        <span class="swatch" style="background: linear-gradient(180deg, hsl(222 50% 10%), hsl(252 45% 18%));"></span>
+      </span>
+      <span id="last-updated">Last updated: 2025-12-19 01:29:49 EST</span>
     </div>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.v1381');
-      const modeBtn = root.querySelector('#modeBtn');
+      const root = document.currentScript.closest('.v1382');
+      const themeBtn = root.querySelector('#themeBtn');
       const motionBtn = root.querySelector('#motionBtn');
-      const dial = root.querySelector('.dial');
-      const hand = root.querySelector('.hand');
+      const panel = root.querySelector('#infoPanel');
+      const stage = root.querySelector('#stage');
+      const orrery = root.querySelector('#orrery');
+      const planets = [...root.querySelectorAll('.planet')];
       const updated = root.querySelector('#last-updated');
 
       // Timestamp
@@ -419,55 +434,48 @@
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'local';
         const p = n => String(n).padStart(2,'0');
         updated.textContent = `Last updated: ${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())} (${tz})`;
-      } catch(e) {
-        updated.textContent = 'Last updated: just now';
-      }
+      } catch(e) { updated.textContent = 'Last updated: just now'; }
 
-      // Respect reduced motion
+      // Themes
+      const themes = ['dawn','noon','midnight'];
+      themeBtn.addEventListener('click', () => {
+        const i = themes.indexOf(root.getAttribute('data-theme'));
+        const next = themes[(i + 1) % themes.length];
+        root.setAttribute('data-theme', next);
+        themeBtn.setAttribute('aria-pressed', String(next !== 'dawn'));
+      });
+
+      // Motion toggle and prefers-reduced-motion
       const prefersReduced = matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReduced) {
         root.setAttribute('data-motion','off');
         motionBtn.setAttribute('aria-pressed','true');
         motionBtn.textContent = 'Resume Motion';
       }
-
-      // Mode toggle
-      modeBtn.addEventListener('click', () => {
-        const night = root.getAttribute('data-mode') === 'night';
-        root.setAttribute('data-mode', night ? 'day' : 'night');
-        modeBtn.textContent = night ? 'Switch to Night' : 'Switch to Day';
-        modeBtn.setAttribute('aria-pressed', String(!night));
-      });
-
-      // Motion toggle
       motionBtn.addEventListener('click', () => {
         const off = root.getAttribute('data-motion') === 'off';
         root.setAttribute('data-motion', off ? 'on' : 'off');
         motionBtn.setAttribute('aria-pressed', String(!off));
         motionBtn.textContent = off ? 'Pause Motion' : 'Resume Motion';
+        if (!off) start(); else stop();
       });
 
-      // Sundial time sweep
-      let raf = null;
-      function tick(){
-        const now = new Date();
-        const seconds = now.getSeconds() + now.getMilliseconds()/1000;
-        const minutes = now.getMinutes() + seconds/60;
-        const hours = now.getHours() + minutes/60;
-        const hourDeg = (hours % 12) * 30 + (minutes/60) * 30; // 360/12=30
-        const sweepDeg = (seconds/60) * 360;
-
-        hand.style.setProperty('--rot', hourDeg.toFixed(2) + 'deg');
-        dial.style.setProperty('--sweep', sweepDeg.toFixed(2) + 'deg');
-
-        if (root.getAttribute('data-motion') !== 'off') {
-          raf = requestAnimationFrame(tick);
-        } else {
-          raf = null;
-        }
+      // Orrery animation
+      let raf = null, t0 = performance.now();
+      function tick(now){
+        const t = (now - t0) / 1000;
+        // Angular velocities (deg/sec)
+        const w1 = 16, w2 = -28, w3 = 46;
+        planets[0].style.setProperty('--deg', (t * w1) + 'deg');
+        planets[1].style.setProperty('--deg', (t * w2) + 'deg');
+        planets[2].style.setProperty('--deg', (t * w3) + 'deg');
+        // Veil rotation
+        root.style.setProperty('--veil-rot', (t * 6) + 'deg');
+        raf = requestAnimationFrame(tick);
       }
-      function start() { if (!raf) raf = requestAnimationFrame(tick); }
-      function stop() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+      function start(){ if (!raf && root.getAttribute('data-motion') !== 'off') raf = requestAnimationFrame(tick); }
+      function stop(){ if (raf) { cancelAnimationFrame(raf); raf = null; } }
+      start();
 
       // Observe motion attribute changes
       const obs = new MutationObserver(() => {
@@ -475,22 +483,19 @@
       });
       obs.observe(root, { attributes: true, attributeFilter: ['data-motion'] });
 
-      // Kick off
-      start();
-
-      // Make the dial respond subtly to pointer position
-      function onMove(e){
-        const r = dial.getBoundingClientRect();
-        const cx = r.left + r.width/2;
-        const cy = r.top + r.height/2;
-        const dx = e.clientX - cx;
-        const dy = e.clientY - cy;
-        const ang = Math.atan2(dy, dx) * 180 / Math.PI + 90; // rotate to feel like a watch
-        dial.style.transform = `rotate(${ang * 0.02}deg)`;
+      // Subtle tilt on pointer
+      function tilt(el, e){
+        const r = el.getBoundingClientRect();
+        const cx = r.left + r.width/2, cy = r.top + r.height/2;
+        const dx = (e.clientX - cx) / r.width, dy = (e.clientY - cy) / r.height;
+        el.style.transform = `perspective(900px) rotateX(${(-dy*6).toFixed(2)}deg) rotateY(${(dx*6).toFixed(2)}deg)`;
       }
-      function onLeave(){ dial.style.transform = 'rotate(0deg)'; }
-      dial.addEventListener('pointermove', onMove);
-      dial.addEventListener('pointerleave', onLeave);
+      function reset(el){ el.style.transform = ''; }
+      [panel, stage].forEach(el => {
+        el.addEventListener('pointermove', e => tilt(el, e));
+        el.addEventListener('pointerleave', () => reset(el));
+      });
+
     })();
   </script>
 </section>
