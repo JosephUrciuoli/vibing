@@ -73,314 +73,328 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="v1423 moving noise" data-theme="night" aria-label="Luminarium Observatory">
+<section class="v1424 aether" data-flow="on" data-grid="off" aria-label="Aether Dial">
   <style>
-    .v1423 {
+    .v1424 {
       /* Theme tokens */
-      --ink: #0d1321;
-      --muted: #5b667a;
-      --card: rgba(255,255,255,0.65);
-      --line: rgba(13,19,33,0.08);
-      --accent: #8b5cf6;
-      --accent-2: #5eead4;
-
-      --bg-1: #0b1020;
-      --bg-2: #14213d;
-
-      --radius: 26px;
-      --blur: 12px;
+      --ink: #ecf3ff;
+      --muted: #a9bfd9;
+      --bg-1: #080d1e;
+      --bg-2: #0e1d3b;
+      --accent: #7dd3fc;   /* base */
+      --accent-2: #a78bfa; /* companion */
+      --accent-3: #22d3ee; /* tertiary, computed in JS too */
+      --radius: 28px;
+      --blur: 16px;
 
       position: relative;
       display: grid;
       gap: 22px;
       padding: 28px;
       border-radius: var(--radius);
-      color: #0b1220;
+      color: var(--ink);
       overflow: hidden;
       isolation: isolate;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 18px 60px rgba(5,10,30,0.25);
       background:
         radial-gradient(900px 600px at var(--mx,50%) var(--my,50%), color-mix(in oklab, var(--accent) 15%, transparent), transparent 60%),
         linear-gradient(160deg, var(--bg-1), var(--bg-2));
-    }
-    .v1423[data-theme="day"] {
-      --ink: #0b1220;
-      --muted: #475569;
-      --card: rgba(255,255,255,0.75);
-      --line: rgba(15,23,42,0.08);
-      --bg-1: #f5f7ff;
-      --bg-2: #ffffff;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 18px 60px rgba(12,18,36,0.15);
-    }
-    .v1423[data-theme="night"] {
-      color: #e6edf6;
-      --muted: #a5b1c6;
-      --card: rgba(16,21,40,0.55);
-      --line: rgba(148,163,184,0.14);
-      --bg-1: #0a0f1f;
-      --bg-2: #111b3a;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 18px 60px rgba(8,12,30,0.45);
     }
 
-    /* Sky canvas */
-    .v1423 .sky {
+    /* Aurora canvas layer */
+    .v1424 .bg {
       position: absolute;
-      inset: -10% -10% -10% -10%;
-      width: 120%;
-      height: 120%;
-      z-index: 0;
-      filter: saturate(120%) contrast(110%);
-      opacity: 0.75;
+      inset: -12%;
+      width: 124%;
+      height: 124%;
       pointer-events: none;
+      filter: saturate(120%) contrast(105%) blur(0.2px);
+      opacity: 0.9;
+      z-index: 0;
     }
 
-    /* Film grain */
-    .v1423.noise::before {
-      content: "";
+    /* Grid overlay */
+    .v1424 .grid {
       position: absolute;
       inset: 0;
-      mix-blend-mode: overlay;
       pointer-events: none;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.04 0"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>');
-      background-size: 160px 160px;
-      opacity: 0.5;
-      animation: v1423Grain 1.2s steps(2) infinite;
       z-index: 0;
+      opacity: 0;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 40px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 40px);
+      mask: radial-gradient(120% 120% at 50% 50%, #000, transparent 70%);
     }
-    @keyframes v1423Grain {
-      0%, 100% { transform: translate(0,0); }
-      25% { transform: translate(-1%, 1%); }
-      50% { transform: translate(1%, -1%); }
-      75% { transform: translate(1%, 1%); }
-    }
+    .v1424[data-grid="on"] .grid { opacity: 0.6; }
 
-    /* Frame */
-    .v1423 .frame {
+    /* Glass frame */
+    .v1424 .glass {
       position: relative;
       z-index: 1;
       display: grid;
       gap: 22px;
       padding: 22px;
-      border: 1px solid var(--line);
       border-radius: calc(var(--radius) - 6px);
-      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.1);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
       backdrop-filter: blur(var(--blur));
       -webkit-backdrop-filter: blur(var(--blur));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 24px 60px color-mix(in oklab, var(--accent) 22%, transparent);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.15),
+        0 24px 60px color-mix(in oklab, var(--accent) 22%, transparent);
     }
 
-    .v1423 .mast {
+    /* Masthead */
+    .v1424 .mast {
       display: grid;
       grid-template-columns: 1fr auto;
       align-items: center;
       gap: 14px;
     }
-    .v1423 .brand {
+    .v1424 .brand {
       display: inline-grid;
       grid-auto-flow: column;
-      gap: 12px;
       align-items: center;
+      gap: 14px;
     }
-    .v1423 .sig {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+    .v1424 .sig {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
       position: relative;
-      background:
-        conic-gradient(from 140deg, var(--accent), var(--accent-2), var(--accent));
-      box-shadow: 0 12px 28px color-mix(in oklab, var(--accent) 32%, transparent);
       overflow: hidden;
+      background:
+        conic-gradient(from 120deg, var(--accent), var(--accent-2), var(--accent));
+      box-shadow: 0 14px 36px color-mix(in oklab, var(--accent) 30%, transparent);
     }
-    .v1423 .sig::after {
+    .v1424 .sig::after {
       content: "";
       position: absolute;
       inset: 2px;
-      border-radius: 10px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.06));
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0.06));
     }
-    .v1423 .title {
+    .v1424 .title {
       margin: 0;
       font-weight: 900;
       letter-spacing: -0.02em;
-      font-size: clamp(22px, 3.6vw, 40px);
+      font-size: clamp(22px, 3.8vw, 40px);
       line-height: 1.05;
-      background: linear-gradient(90deg, color-mix(in oklab, var(--accent) 70%, white), var(--accent-2));
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      filter: drop-shadow(0 8px 22px color-mix(in oklab, var(--accent) 26%, transparent));
+      filter: drop-shadow(0 10px 22px color-mix(in oklab, var(--accent) 24%, transparent));
     }
-    .v1423 .tag {
+    .v1424 .tag {
       margin: 0;
       color: var(--muted);
       font-size: 13px;
     }
 
     /* Controls */
-    .v1423 .controls {
+    .v1424 .controls {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
+      justify-content: flex-end;
     }
-    .v1423 .btn {
+    .v1424 .btn, .v1424 .chip {
       -webkit-tap-highlight-color: transparent;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       padding: 10px 14px;
       border-radius: 12px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0.2));
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
       color: inherit;
       font-weight: 700;
       font-size: 12px;
       letter-spacing: 0.2px;
       cursor: pointer;
-      transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease, color 220ms ease;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+      transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease, color 220ms ease, opacity 220ms ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+      user-select: none;
     }
-    .v1423[data-theme="night"] .btn {
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    .v1424 .btn:hover, .v1424 .chip:hover { transform: translateY(-2px); box-shadow: 0 12px 28px color-mix(in oklab, var(--accent) 25%, transparent); }
+    .v1424 .btn[aria-pressed="false"] { opacity: 0.72; }
+    .v1424 .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
     }
-    .v1423 .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px color-mix(in oklab, var(--accent) 25%, transparent); }
-    .v1423 .dot-led {
-      width: 9px;
-      height: 9px;
+    .v1424 .swatch {
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 20%, transparent);
-    }
-    .v1423 .btn[aria-pressed="false"] .dot-led {
-      background: color-mix(in oklab, var(--muted) 60%, transparent);
-      box-shadow: 0 0 0 0 transparent;
+      box-shadow: 0 8px 18px color-mix(in oklab, var(--sw) 35%, transparent);
+      border: 1px solid rgba(255,255,255,0.18);
     }
 
     /* Layout */
-    .v1423 .hero {
+    .v1424 .hero {
       display: grid;
-      grid-template-columns: 1.15fr 1fr;
+      grid-template-columns: 1.1fr 1fr;
       align-items: center;
-      gap: clamp(14px, 4.2vw, 28px);
+      gap: clamp(16px, 4.5vw, 32px);
     }
-    @media (max-width: 860px) {
-      .v1423 .hero { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 900px) { .v1424 .hero { grid-template-columns: 1fr; } }
 
-    .v1423 .copy h1 {
+    .v1424 .copy h1 {
       margin: 0 0 10px 0;
       font-weight: 900;
       letter-spacing: -0.02em;
-      font-size: clamp(24px, 4.2vw, 44px);
-      line-height: 1.05;
+      font-size: clamp(26px, 5vw, 50px);
+      line-height: 1.04;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
-    .v1423 .copy p {
+    .v1424 .copy p {
       margin: 0 0 16px 0;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.6;
+      line-height: 1.7;
     }
-
-    .v1423 .palette {
-      display: inline-flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0.18));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
-    }
-    .v1423[data-theme="night"] .palette {
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-    }
-    .v1423 .palette .lab {
+    .v1424 .quote {
+      margin-top: 10px;
       font-size: 12px;
-      color: var(--muted);
-      margin-right: 2px;
-    }
-    .v1423 .chip {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      border: 1px solid var(--line);
-      background: radial-gradient(circle at 30% 30%, #fff, var(--c));
-      cursor: pointer;
-      transition: transform 200ms ease, box-shadow 200ms ease;
-      box-shadow: 0 8px 18px color-mix(in oklab, var(--c) 25%, transparent);
-    }
-    .v1423 .chip:hover { transform: translateY(-2px) scale(1.05); }
-
-    /* Sculpture: Eclipse */
-    .v1423 .eclipse {
-      position: relative;
-      aspect-ratio: 1 / 1;
-      width: min(480px, 100%);
-      margin: 0 auto;
-      border-radius: 22px;
-      background:
-        radial-gradient(80% 80% at 50% 50%, rgba(255,255,255,0.65), rgba(255,255,255,0.08)),
-        linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0.08));
-      border: 1px solid var(--line);
-      overflow: hidden;
-      transform-style: preserve-3d;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 24px 60px color-mix(in oklab, var(--accent) 26%, transparent);
-      transition: transform 300ms ease;
-    }
-    .v1423 .eclipse::before {
-      /* Glow ring */
-      content: "";
-      position: absolute;
-      inset: 10%;
-      border-radius: 50%;
-      background:
-        radial-gradient(closest-side, transparent 66%, color-mix(in oklab, var(--accent) 60%, transparent) 67% 70%, transparent 71%),
-        conic-gradient(from 0deg, color-mix(in oklab, var(--accent) 80%, var(--accent-2) 20%), var(--accent-2));
-      filter: blur(0.4px) drop-shadow(0 14px 28px color-mix(in oklab, var(--accent) 38%, transparent));
-      animation: v1423Spin 26s linear infinite;
+      color: color-mix(in oklab, var(--muted) 90%, white);
       opacity: 0.9;
     }
-    .v1423.moving .eclipse::after {
-      /* Soft scanner beam */
-      content: "";
+
+    /* Dial */
+    .v1424 .dial-wrap {
+      position: relative;
+      width: min(520px, 100%);
+      margin-inline: auto;
+      aspect-ratio: 1 / 1;
+      perspective: 800px;
+    }
+    .v1424 .dial-card {
       position: absolute;
       inset: 0;
-      background: conic-gradient(from var(--a,0deg), transparent 0 45deg, color-mix(in oklab, var(--accent) 30%, transparent) 45deg 60deg, transparent 60deg 360deg);
-      animation: v1423Sweep 6s linear infinite;
-      mix-blend-mode: color-dodge;
-      opacity: 0.4;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background:
+        radial-gradient(70% 70% at 50% 50%, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 24px 60px color-mix(in oklab, var(--accent) 26%, transparent);
+      transform-style: preserve-3d;
+      transition: transform 400ms cubic-bezier(.2,.7,.2,1);
     }
-    @keyframes v1423Spin { to { transform: rotate(360deg); } }
-    @keyframes v1423Sweep { to { --a: 360deg; } }
 
-    .v1423 .petal {
-      --h: 42%;
+    .v1424 svg.dial {
+      position: absolute;
+      inset: 8%;
+      width: 84%;
+      height: 84%;
+      margin: auto;
+      display: block;
+      transform: rotate(-90deg) translateZ(20px);
+    }
+    .v1424 .dial circle.guide {
+      stroke: rgba(255,255,255,0.08);
+      stroke-width: 0.6;
+      fill: none;
+    }
+    .v1424 .dial circle.arc {
+      fill: none;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 20px color-mix(in oklab, var(--accent) 40%, transparent));
+    }
+    .v1424 .arc.s { stroke: var(--accent);   stroke-width: 1.8; }
+    .v1424 .arc.m { stroke: var(--accent-2); stroke-width: 3;   }
+    .v1424 .arc.h { stroke: var(--accent-3); stroke-width: 5;   }
+
+    .v1424 .center-dot {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%) translateZ(30px);
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
+      box-shadow: 0 10px 28px color-mix(in oklab, var(--accent) 45%, transparent);
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+
+    /* Orbits */
+    .v1424 .orbit {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+    }
+    .v1424 .orb {
       position: absolute;
       top: 50%;
       left: 50%;
       width: 8px;
-      height: var(--h);
-      transform-origin: bottom center;
-      background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 60%, transparent), transparent);
-      border-radius: 999px;
-      opacity: 0.75;
-      filter: blur(0.2px);
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
+      box-shadow: 0 8px 18px color-mix(in oklab, var(--accent) 40%, transparent);
+      transform-origin: -42% 50%;
+      animation: v1424Spin linear infinite;
+      animation-duration: var(--dur, 24s);
+      opacity: 0.9;
     }
-    .v1423 .petal:nth-child(1)  { transform: translate(-50%,-50%) rotate(0deg); }
-    .v1423 .petal:nth-child(2)  { transform: translate(-50%,-50%) rotate(45deg); }
-    .v1423 .petal:nth-child(3)  { transform: translate(-50%,-50%) rotate(90deg); }
-    .v1423 .petal:nth-child(4)  { transform: translate(-50%,-50%) rotate(135deg); }
-    .v1423 .petal:nth-child(5)  { transform: translate(-50%,-50%) rotate(180deg); }
-    .v1423 .petal:nth-child(6)  { transform: translate(-50%,-50%) rotate(225deg); }
-    .v1423 .petal:nth-child(7)  { transform: translate(-50%,-50%) rotate(270deg); }
-    .v1423 .petal:nth-child(8)  { transform: translate(-50%,-50%) rotate(315deg); }
+    .v1424 .orb.o2 { transform-origin: -34% 50%; background: radial-gradient(circle at 30% 30%, #fff, var(--accent-2)); --dur: 36s; opacity: 0.85; }
+    .v1424 .orb.o3 { transform-origin: -26% 50%; background: radial-gradient(circle at 30% 30%, #fff, var(--accent-3)); --dur: 54s; opacity: 0.8; }
+    @keyframes v1424Spin { to { transform: rotate(360deg); } }
+    .v1424[data-flow="off"] .orb { animation-play-state: paused; }
 
-    /* Footer / meter */
-    .v1423 .foot {
+    /* Sliders */
+    .v1424 .slider {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+      font-size: 12px;
+      font-weight: 700;
+      color: inherit;
+    }
+    .v1424 input[type="range"] {
+      -webkit-appearance: none;
+      width: 160px;
+      height: 24px;
+      background: transparent;
+    }
+    .v1424 input[type="range"]::-webkit-slider-runnable-track {
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .v1424 input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      position: relative;
+      margin-top: -6px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
+      box-shadow: 0 10px 22px color-mix(in oklab, var(--accent) 35%, transparent);
+      cursor: pointer;
+    }
+    .v1424 input[type="range"]::-moz-range-track { height: 8px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: 999px; border: 1px solid rgba(255,255,255,0.15); }
+    .v1424 input[type="range"]::-moz-range-thumb {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
+      box-shadow: 0 10px 22px color-mix(in oklab, var(--accent) 35%, transparent);
+    }
+
+    /* Footer */
+    .v1424 .foot {
       display: grid;
       grid-template-columns: 1fr auto;
       align-items: center;
@@ -388,155 +402,140 @@
       font-size: 12px;
       color: var(--muted);
     }
-    @media (max-width: 560px) {
-      .v1423 .foot { grid-template-columns: 1fr; }
-    }
-    .v1423 .meter {
-      position: relative;
-      height: 10px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0.2));
-      border: 1px solid var(--line);
-      overflow: hidden;
-      min-width: 160px;
-    }
-    .v1423[data-theme="night"] .meter { background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); }
-    .v1423 .meter .bar {
-      display: block;
-      height: 100%;
-      width: var(--p, 0%);
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      box-shadow: 0 10px 24px color-mix(in oklab, var(--accent) 30%, transparent);
-      transition: width 600ms cubic-bezier(.2,.7,.2,1);
-    }
-    .v1423.moving .meter .bar {
-      animation: v1423Breathe 4.2s ease-in-out infinite;
-    }
-    @keyframes v1423Breathe {
-      0%   { filter: saturate(110%); }
-      50%  { filter: saturate(140%); }
-      100% { filter: saturate(110%); }
-    }
-    .v1423 .meta {
+    @media (max-width: 560px) { .v1424 .foot { grid-template-columns: 1fr; } }
+    .v1424 .meta {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       white-space: nowrap;
     }
-    .v1423 .meta .pulse-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .v1424 .led {
+      width: 7px; height: 7px; border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 0 5px color-mix(in oklab, var(--accent) 20%, transparent);
-      animation: v1423Dot 2.2s ease-in-out infinite;
+      box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 20%, transparent);
+      animation: v1424Pulse 2.4s ease-in-out infinite;
     }
-    @keyframes v1423Dot {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.25); opacity: 0.8; }
-    }
+    @keyframes v1424Pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.25); opacity: .85; } }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      .v1423, .v1423 * { animation: none !important; transition: none !important; }
+      .v1424, .v1424 * { animation: none !important; transition: none !important; }
     }
   </style>
 
-  <canvas class="sky" aria-hidden="true"></canvas>
+  <canvas class="bg" aria-hidden="true"></canvas>
+  <div class="grid" aria-hidden="true"></div>
 
-  <div class="frame">
+  <div class="glass">
     <div class="mast">
       <div class="brand">
         <div class="sig" aria-hidden="true"></div>
         <div>
-          <h2 class="title">Luminarium</h2>
-          <p class="tag">Design the quiet between the clicks.</p>
+          <h2 class="title">Aether Dial</h2>
+          <p class="tag">Time, drawn in light. Touch to tilt. Choose a mood.</p>
         </div>
       </div>
 
       <div class="controls" role="group" aria-label="Controls">
-        <button class="btn toggle-theme" type="button" aria-pressed="true" title="Toggle day/night">
-          <span class="dot-led" aria-hidden="true"></span>
-          Night
+        <button class="btn toggle-flow" type="button" aria-pressed="true" title="Toggle motion">Flow</button>
+        <button class="btn toggle-grid" type="button" aria-pressed="false" title="Toggle grid">Grid</button>
+        <label class="slider" title="Animation speed">
+          Speed
+          <input class="speed" type="range" min="0" max="200" value="100" aria-label="Speed">
+        </label>
+        <button class="chip preset" data-preset="aurora" title="Aurora">
+          <span class="swatch" style="--sw:#7dd3fc;background:radial-gradient(circle at 30% 30%, #fff,#7dd3fc)"></span>
+          Aurora
         </button>
-        <button class="btn toggle-motion" type="button" aria-pressed="true" title="Toggle motion">
-          <span class="dot-led" aria-hidden="true"></span>
-          Motion
+        <button class="chip preset" data-preset="saffron" title="Saffron">
+          <span class="swatch" style="--sw:#f59e0b;background:radial-gradient(circle at 30% 30%, #fff,#f59e0b)"></span>
+          Saffron
         </button>
-        <button class="btn toggle-noise" type="button" aria-pressed="true" title="Toggle grain">
-          <span class="dot-led" aria-hidden="true"></span>
-          Grain
+        <button class="chip preset" data-preset="lagoon" title="Lagoon">
+          <span class="swatch" style="--sw:#34d399;background:radial-gradient(circle at 30% 30%, #fff,#34d399)"></span>
+          Lagoon
         </button>
       </div>
     </div>
 
     <div class="hero">
       <div class="copy">
-        <h1>Calm interfaces, kinetic soul.</h1>
-        <p>Light, depth, and time—woven into a responsive canvas. Tilt, breathe, and color the moment.</p>
-
-        <div class="palette" role="group" aria-label="Accent palette">
-          <span class="lab">Accent</span>
-          <button class="chip" style="--c:#8b5cf6" aria-label="Iris"></button>
-          <button class="chip" style="--c:#22d3ee" aria-label="Cyan"></button>
-          <button class="chip" style="--c:#f472b6" aria-label="Rose"></button>
-          <button class="chip" style="--c:#a3e635" aria-label="Lime"></button>
-          <button class="chip" style="--c:#f59e0b" aria-label="Amber"></button>
-        </div>
+        <h1>Shape the minutes. Savor the millisecond.</h1>
+        <p>The Dial paints hours, minutes, and seconds as living arcs. The background breathes in aurora ribbons tuned to your touch.</p>
+        <p class="quote" aria-live="polite">“Design is the choreography of attention.”</p>
       </div>
 
-      <div class="eclipse" role="img" aria-label="Eclipse sculpture">
-        <div class="petal" aria-hidden="true"></div>
-        <div class="petal" aria-hidden="true"></div>
-        <div class="petal" aria-hidden="true"></div>
-        <div class="petal" aria-hidden="true"></div>
-        <div class="petal" aria-hidden="true"></div>
-        <div class="petal" aria-hidden="true"></div>
-        <div class="petal" aria-hidden="true"></div>
-        <div class="petal" aria-hidden="true"></div>
+      <div class="dial-wrap">
+        <div class="dial-card">
+          <svg class="dial" viewBox="0 0 100 100" role="img" aria-label="Generative time dial">
+            <!-- Guides -->
+            <circle class="guide" cx="50" cy="50" r="42"></circle>
+            <circle class="guide" cx="50" cy="50" r="34"></circle>
+            <circle class="guide" cx="50" cy="50" r="26"></circle>
+            <!-- Arcs -->
+            <circle class="arc s" cx="50" cy="50" r="42" pathLength="100"></circle>
+            <circle class="arc m" cx="50" cy="50" r="34" pathLength="100"></circle>
+            <circle class="arc h" cx="50" cy="50" r="26" pathLength="100"></circle>
+          </svg>
+          <div class="center-dot" aria-hidden="true"></div>
+          <div class="orbit"><div class="orb o1" aria-hidden="true"></div></div>
+          <div class="orbit"><div class="orb o2" aria-hidden="true"></div></div>
+          <div class="orbit"><div class="orb o3" aria-hidden="true"></div></div>
+        </div>
       </div>
     </div>
 
     <div class="foot">
-      <div class="meter" aria-label="Now-through-minute">
-        <span class="bar"></span>
+      <div class="meta">
+        <span class="led" aria-hidden="true"></span>
+        Flow status: <span class="flow-state">On</span>
       </div>
       <div class="meta">
-        <span class="pulse-dot" aria-hidden="true"></span>
-        <span>Tuned <span id="last-updated">Last updated: 2025-12-20 23:35:33 EST</span></span>
+        Last tuned <span id="last-updated">Last updated: 2025-12-21 00:18:48 EST</span>
       </div>
     </div>
   </div>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.v1423');
-      const canvas = root.querySelector('.sky');
+      const root = document.currentScript.closest('.v1424');
+      const canvas = root.querySelector('.bg');
       const ctx = canvas.getContext('2d', { alpha: true });
-      const themeBtn = root.querySelector('.toggle-theme');
-      const motionBtn = root.querySelector('.toggle-motion');
-      const noiseBtn  = root.querySelector('.toggle-noise');
-      const eclipse = root.querySelector('.eclipse');
-      const bar = root.querySelector('.meter .bar');
+      const flowBtn = root.querySelector('.toggle-flow');
+      const gridBtn = root.querySelector('.toggle-grid');
+      const speed = root.querySelector('.speed');
+      const flowState = root.querySelector('.flow-state');
       const last = root.querySelector('#last-updated');
+      const dialCard = root.querySelector('.dial-card');
+      const arcs = {
+        s: root.querySelector('.arc.s'),
+        m: root.querySelector('.arc.m'),
+        h: root.querySelector('.arc.h')
+      };
+      const quote = root.querySelector('.quote');
+
+      // Quotes cycle
+      const lines = [
+        "“Design is the choreography of attention.”",
+        "“Quiet is a feature.”",
+        "“Tension, then release—craft the breath.”",
+        "“Interfaces should feel inevitable.”"
+      ];
+      let q = 0;
+      setInterval(() => {
+        q = (q + 1) % lines.length;
+        quote.textContent = lines[q];
+      }, 5200);
 
       // Timestamp
       try {
         const now = new Date();
         const opts = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' };
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        last.textContent = new Intl.DateTimeFormat([], opts).format(now) + ' ' + tz.replace('_',' ');
-      } catch (e) { last.textContent = new Date().toLocaleString(); }
+        last.textContent = "— " + new Intl.DateTimeFormat([], opts).format(now) + " " + tz.replace('_',' ');
+      } catch (e) { last.textContent = "— " + new Date().toLocaleString(); }
 
-      // Set initial theme by local time
-      const hour = new Date().getHours();
-      const initialNight = !(hour >= 7 && hour < 18);
-      root.setAttribute('data-theme', initialNight ? 'night' : 'day');
-      themeBtn.setAttribute('aria-pressed', String(initialNight));
-      themeBtn.textContent = initialNight ? 'Night' : 'Day';
-      if (!initialNight) bar.style.setProperty('--p', '0%');
-
-      // Resize canvas
+      // Fit canvas
       function fit() {
         const rect = canvas.getBoundingClientRect();
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -545,110 +544,104 @@
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
       fit();
-      window.addEventListener('resize', fit);
+      addEventListener('resize', fit);
 
-      // Starfield
-      const state = { stars: [], raf: 0, t: 0, paused: false, mouse: { x: 0.5, y: 0.5 } };
-      function seed() {
-        const rect = canvas.getBoundingClientRect();
-        const count = Math.floor((rect.width * rect.height) / 12000);
-        state.stars = Array.from({ length: count }, () => ({
-          x: Math.random() * rect.width,
-          y: Math.random() * rect.height,
-          z: Math.random() * 1 + 0.3,
-          vx: (Math.random() - 0.5) * 0.08,
-          vy: (Math.random() - 0.5) * 0.08,
-          s: Math.random() * 1.2 + 0.3
-        }));
+      // Aurora ribbons
+      const state = {
+        raf: 0,
+        paused: false,
+        t: 0,
+        speed: 1,
+        mx: 0.5,
+        my: 0.5
+      };
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+      function hexToRgb(hex) {
+        const h = hex.replace('#','');
+        return { r: parseInt(h.slice(0,2),16), g: parseInt(h.slice(2,4),16), b: parseInt(h.slice(4,6),16) };
       }
-      seed();
-      window.addEventListener('resize', seed);
-
-      function grad() {
-        const w = canvas.width / (window.devicePixelRatio || 1);
-        const h = canvas.height / (window.devicePixelRatio || 1);
-        const g = ctx.createLinearGradient(0, 0, w, h);
-        const styles = getComputedStyle(root);
-        const a = styles.getPropertyValue('--bg-1').trim();
-        const b = styles.getPropertyValue('--bg-2').trim();
-        g.addColorStop(0, a);
-        g.addColorStop(1, b);
-        return g;
+      function mix(hexA, hexB, t) {
+        const A = hexToRgb(hexA), B = hexToRgb(hexB);
+        const r = Math.round(lerp(A.r, B.r, t));
+        const g = Math.round(lerp(A.g, B.g, t));
+        const b = Math.round(lerp(A.b, B.b, t));
+        return `rgba(${r},${g},${b},`;
+      }
+      function lighten(hex, pct) {
+        const h = hex.replace('#','');
+        const r = parseInt(h.slice(0,2),16), g = parseInt(h.slice(2,4),16), b = parseInt(h.slice(4,6),16);
+        const m = (v) => Math.round(v + (255 - v) * pct);
+        const toHex = (v) => v.toString(16).padStart(2,'0');
+        return `#${toHex(m(r))}${toHex(m(g))}${toHex(m(b))}`;
       }
 
-      function step(t) {
+      // Dial arcs updater
+      function updateDial(time) {
+        const now = new Date(time);
+        const ms = now.getMilliseconds();
+        const s = (now.getSeconds() * 1000 + ms) / 60000; // 0..1
+        const m = (now.getMinutes() * 60000 + now.getSeconds() * 1000 + ms) / 3600000; // 0..1
+        const h = ((now.getHours() % 12) * 3600000 + now.getMinutes() * 60000 + now.getSeconds() * 1000 + ms) / (12 * 3600000); // 0..1
+
+        const setArc = (el, frac) => {
+          const r = el.getAttribute('r');
+          const c = 2 * Math.PI * r;
+          el.style.strokeDasharray = `${c * frac} ${c}`;
+          el.style.strokeDashoffset = 0;
+        };
+        setArc(arcs.s, s);
+        setArc(arcs.m, m);
+        setArc(arcs.h, h);
+      }
+
+      // Animation loop
+      function draw(ts) {
         if (state.paused) return;
-        state.t = t;
+        state.t = ts * 0.001 * state.speed;
+
+        // Background aurora ribbons
         const w = canvas.width / (window.devicePixelRatio || 1);
         const h = canvas.height / (window.devicePixelRatio || 1);
-
-        // Background blend
         ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = grad();
-        ctx.fillRect(0, 0, w, h);
 
-        // Stars
-        const accent = getComputedStyle(root).getPropertyValue('--accent').trim();
-        const accent2 = getComputedStyle(root).getPropertyValue('--accent-2').trim();
-        for (let s of state.stars) {
-          s.x += s.vx + (state.mouse.x - 0.5) * 0.04 * s.z;
-          s.y += s.vy + (state.mouse.y - 0.5) * 0.04 * s.z;
-          if (s.x < -2) s.x = w + 2;
-          if (s.x > w + 2) s.x = -2;
-          if (s.y < -2) s.y = h + 2;
-          if (s.y > h + 2) s.y = -2;
+        const styles = getComputedStyle(root);
+        const a = styles.getPropertyValue('--accent').trim();
+        const b = styles.getPropertyValue('--accent-2').trim();
+        const c = styles.getPropertyValue('--accent-3').trim();
 
-          const r = s.s * (1.2 + s.z * 0.8);
-          const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, r * 4);
-          g.addColorStop(0, 'rgba(255,255,255,0.9)');
-          g.addColorStop(1, 'rgba(255,255,255,0)');
-          ctx.fillStyle = g;
+        ctx.globalCompositeOperation = 'lighter';
+        const rows = 16;
+        const amp = h * (0.08 + state.my * 0.12);
+        const freq = 0.006 + state.mx * 0.004;
+
+        for (let i = 0; i < rows; i++) {
+          const t = state.t + i * 0.5;
+          const yy = h * (0.15 + (i / (rows - 1)) * 0.7);
+          const colorMix = i / (rows - 1);
+          const base = i % 2 ? mix(a, b, colorMix) : mix(b, c, colorMix);
           ctx.beginPath();
-          ctx.arc(s.x, s.y, r, 0, Math.PI * 2);
-          ctx.fill();
-
-          // Occasional twinkle lines
-          if ((t/1000 + s.x) % 11 < 0.02) {
-            ctx.strokeStyle = accent2;
-            ctx.globalAlpha = 0.25;
-            ctx.beginPath();
-            ctx.moveTo(s.x - 8, s.y);
-            ctx.lineTo(s.x + 8, s.y);
-            ctx.stroke();
-            ctx.globalAlpha = 1;
+          let first = true;
+          const step = Math.max(12, w / 48);
+          for (let x = -40; x <= w + 40; x += step) {
+            const y = yy + Math.sin(x * freq + t) * amp * (0.6 + 0.4 * Math.sin(t * 0.4 + i));
+            if (first) { ctx.moveTo(x, y); first = false; } else { ctx.lineTo(x, y); }
           }
+          ctx.strokeStyle = base + (0.06 + 0.10 * Math.sin(t * 0.6 + i)).toFixed(3) + ')';
+          ctx.lineWidth = 26;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.shadowBlur = 24;
+          ctx.shadowColor = base + '0.45)';
+          ctx.stroke();
         }
+        ctx.globalCompositeOperation = 'source-over';
 
-        state.raf = requestAnimationFrame(step);
+        // Dial arcs sync
+        updateDial(performance.now() * state.speed);
+
+        state.raf = requestAnimationFrame(draw);
       }
-      state.raf = requestAnimationFrame(step);
-
-      // Theme toggle
-      themeBtn.addEventListener('click', () => {
-        const isNight = root.getAttribute('data-theme') === 'night';
-        root.setAttribute('data-theme', isNight ? 'day' : 'night');
-        themeBtn.setAttribute('aria-pressed', String(!isNight));
-        themeBtn.textContent = isNight ? 'Day' : 'Night';
-      });
-
-      // Motion toggle
-      motionBtn.addEventListener('click', () => {
-        root.classList.toggle('moving');
-        const pressed = motionBtn.getAttribute('aria-pressed') === 'true';
-        motionBtn.setAttribute('aria-pressed', String(!pressed));
-        state.paused = !state.paused;
-        if (!state.paused) {
-          cancelAnimationFrame(state.raf);
-          state.raf = requestAnimationFrame(step);
-        }
-      });
-
-      // Grain toggle
-      noiseBtn.addEventListener('click', () => {
-        root.classList.toggle('noise');
-        const pressed = noiseBtn.getAttribute('aria-pressed') === 'true';
-        noiseBtn.setAttribute('aria-pressed', String(!pressed));
-      });
 
       // Pointer parallax and highlight
       const move = (e) => {
@@ -657,57 +650,78 @@
         const y = (e.clientY - r.top) / r.height;
         root.style.setProperty('--mx', (x * 100).toFixed(2) + '%');
         root.style.setProperty('--my', (y * 100).toFixed(2) + '%');
-        state.mouse.x = x;
-        state.mouse.y = y;
+        state.mx = x; state.my = y;
 
-        // Tilt the sculpture
-        const dr = eclipse.getBoundingClientRect();
+        const dr = dialCard.getBoundingClientRect();
         const dx = ((e.clientX - (dr.left + dr.width/2)) / (dr.width/2));
         const dy = ((e.clientY - (dr.top + dr.height/2)) / (dr.height/2));
         const clamp = (n) => Math.max(-1, Math.min(1, n));
-        eclipse.style.transform = `rotateX(${clamp(-dy)*7}deg) rotateY(${clamp(dx)*7}deg)`;
+        dialCard.style.transform = `rotateX(${clamp(-dy)*9}deg) rotateY(${clamp(dx)*9}deg)`;
       };
       root.addEventListener('pointermove', move);
-      root.addEventListener('pointerleave', () => { eclipse.style.transform = ''; });
+      root.addEventListener('pointerleave', () => { dialCard.style.transform = ''; });
 
-      // Accent palette
-      root.querySelectorAll('.chip').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const c = getComputedStyle(btn).getPropertyValue('--c').trim();
-          // lightened companion
-          const lighten = (hex, pct) => {
-            const h = hex.replace('#','');
-            const r = parseInt(h.slice(0,2),16);
-            const g = parseInt(h.slice(2,4),16);
-            const b = parseInt(h.slice(4,6),16);
-            const m = (v) => Math.round(v + (255 - v) * pct);
-            const toHex = (v) => v.toString(16).padStart(2,'0');
-            return `#${toHex(m(r))}${toHex(m(g))}${toHex(m(b))}`;
-          };
-          root.style.setProperty('--accent', c);
-          root.style.setProperty('--accent-2', lighten(c, 0.4));
-        });
+      // Presets
+      const presets = {
+        aurora: ['#7dd3fc','#a78bfa'],
+        saffron: ['#f59e0b','#ef4444'],
+        lagoon: ['#34d399','#22d3ee']
+      };
+      function applyPreset(name) {
+        const [p1, p2] = presets[name] || presets.aurora;
+        root.style.setProperty('--accent', p1);
+        root.style.setProperty('--accent-2', p2);
+        root.style.setProperty('--accent-3', lighten(p1, 0.35));
+      }
+      root.querySelectorAll('.preset').forEach(btn => {
+        btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
+      });
+      applyPreset('aurora');
+
+      // Flow toggle
+      function setFlow(on) {
+        root.setAttribute('data-flow', on ? 'on' : 'off');
+        flowBtn.setAttribute('aria-pressed', String(on));
+        flowState.textContent = on ? 'On' : 'Off';
+        state.paused = !on;
+        if (on) {
+          cancelAnimationFrame(state.raf);
+          state.raf = requestAnimationFrame(draw);
+        }
+      }
+      flowBtn.addEventListener('click', () => setFlow(flowBtn.getAttribute('aria-pressed') !== 'true'));
+
+      // Grid toggle
+      gridBtn.addEventListener('click', () => {
+        const on = root.getAttribute('data-grid') !== 'on';
+        root.setAttribute('data-grid', on ? 'on' : 'off');
+        gridBtn.setAttribute('aria-pressed', String(on));
       });
 
-      // Timeline meter (seconds within minute)
-      function tick() {
-        const now = new Date();
-        const pct = ((now.getSeconds() * 1000 + now.getMilliseconds()) / 60000) * 100;
-        bar.style.setProperty('--p', pct.toFixed(2) + '%');
-        if (!state.paused) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
+      // Speed control (50%..150%)
+      speed.addEventListener('input', () => {
+        const v = Number(speed.value); // 0..200
+        state.speed = Math.max(0, v) / 100;
+      });
 
-      // Stop animation when tab hidden for efficiency
+      // Reduced motion respect
+      const prefersReduce = matchMedia('(prefers-reduced-motion: reduce)');
+      if (prefersReduce.matches) setFlow(false);
+
+      // Initialize sizes/colors and run
+      fit();
+      updateDial(performance.now());
+      if (!prefersReduce.matches) setFlow(true);
+
+      // Resume/stop when tab visibility changes
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
-          state.paused = true;
+          setFlow(false);
         } else {
-          if (motionBtn.getAttribute('aria-pressed') === 'true') {
-            state.paused = false;
-            cancelAnimationFrame(state.raf);
-            state.raf = requestAnimationFrame(step);
-            requestAnimationFrame(tick);
+          if (root.getAttribute('data-flow') === 'off' && flowBtn.getAttribute('aria-pressed') === 'true') {
+            setFlow(true);
+          } else if (flowBtn.getAttribute('aria-pressed') === 'true') {
+            setFlow(true);
           }
         }
       });
