@@ -73,491 +73,571 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="v1600">
+<div id="v1601" data-theme="dawn" aria-label="Kinetic Almanac">
   <style>
-    /* Theme + tokens */
-    #v1600 {
-      --h: 230;
-      --s: 74%;
-      --l1: 12%;
-      --l2: 8%;
-      --glass: rgba(255, 255, 255, 0.08);
-      --stroke: rgba(255, 255, 255, 0.16);
-      --text: hsl(0 0% 98%);
-      --muted: hsl(220 10% 78% / 0.85);
-      --radius: 18px;
-      --shadow: 0 25px 80px rgba(0, 0, 0, 0.45);
+    /* Tokens */
+    #v1601 {
+      --motion: 1;
       --mx: 50%;
       --my: 50%;
-      --motion: 1;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      #v1600 { --motion: 0; }
-    }
-    #v1600 {
+
+      /* Dawn (default) */
+      --bg1: hsl(28 90% 98%);
+      --bg2: hsl(20 100% 94%);
+      --accent: hsl(14 90% 48%);
+      --accent-2: hsl(340 80% 52%);
+      --ink: hsl(25 35% 10%);
+      --muted: hsl(25 20% 35%);
+      --stroke: hsl(25 25% 70% / 0.5);
+
+      --ring1: hsl(14 90% 55%);
+      --ring2: hsl(212 90% 55%);
+      --ring3: hsl(280 85% 58%);
+
+      --shadow: 0 25px 70px rgba(0,0,0,.15);
+      --radius: 22px;
+
       position: relative;
+      border-radius: var(--radius);
       padding: 28px;
-      border-radius: 22px;
-      color: var(--text);
+      min-height: 520px;
+      color: var(--ink);
+      background:
+        radial-gradient(1000px 800px at var(--mx) var(--my), hsl(14 95% 85% / 0.5), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      box-shadow: inset 0 0 0 1px hsl(0 0% 100% / .5), var(--shadow);
       overflow: hidden;
       isolation: isolate;
-      background:
-        radial-gradient(1200px 1200px at var(--mx) var(--my),
-          hsl(calc(var(--h) + 40) var(--s) 20% / 0.35),
-          transparent 60%),
-        conic-gradient(from 180deg at 20% 10%,
-          hsl(calc(var(--h) + 20) var(--s) 12%),
-          hsl(calc(var(--h) - 10) var(--s) 10%),
-          hsl(calc(var(--h) + 60) var(--s) 9%),
-          hsl(calc(var(--h) + 10) var(--s) 10%));
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
-      min-height: 440px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #v1601 { --motion: 0; }
     }
 
-    /* Subtle grid */
-    #v1600 .grid {
-      position: absolute;
-      inset: -1px;
+    /* Themes */
+    #v1601[data-theme="dusk"] {
+      --bg1: hsl(255 65% 96%);
+      --bg2: hsl(270 70% 92%);
+      --accent: hsl(268 80% 54%);
+      --accent-2: hsl(195 85% 50%);
+      --ink: hsl(258 40% 10%);
+      --muted: hsl(258 18% 35%);
+      --stroke: hsl(260 25% 65% / .5);
+      --ring1: hsl(268 85% 58%);
+      --ring2: hsl(195 85% 52%);
+      --ring3: hsl(45 95% 50%);
       background:
-        linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px) 0 0/36px 36px,
-        linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px) 0 0/36px 36px;
-      mask: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent 65%);
-      opacity: 0.35;
+        radial-gradient(900px 700px at var(--mx) var(--my), hsl(260 80% 88% / 0.55), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+    #v1601[data-theme="midnight"] {
+      --bg1: hsl(230 35% 12%);
+      --bg2: hsl(230 35% 9%);
+      --accent: hsl(200 95% 60%);
+      --accent-2: hsl(330 85% 66%);
+      --ink: hsl(0 0% 96%);
+      --muted: hsl(220 12% 78%);
+      --stroke: hsl(220 25% 40% / .45);
+      --ring1: hsl(200 95% 62%);
+      --ring2: hsl(330 85% 66%);
+      --ring3: hsl(60 95% 62%);
+      box-shadow: inset 0 0 0 1px hsl(0 0% 100% / .08), var(--shadow);
+      background:
+        radial-gradient(900px 900px at var(--mx) var(--my), hsl(200 80% 50% / 0.18), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    /* Grain overlay */
+    #v1601::after {
+      content: "";
+      position: absolute; inset: 0;
       pointer-events: none;
+      background:
+        radial-gradient(200px 140px at 20% 10%, hsl(0 0% 100% / .18), transparent 60%),
+        radial-gradient(240px 180px at 80% 90%, hsl(0 0% 100% / .12), transparent 60%),
+        repeating-linear-gradient(90deg, transparent 0 2px, rgba(0,0,0,.02) 2px 3px);
+      mix-blend-mode: overlay;
+      opacity: .6;
+      z-index: 1;
     }
 
-    /* Glow orbs */
-    #v1600 .glow {
+    /* Background constellation canvas */
+    #v1601 .field {
       position: absolute;
-      width: 420px; height: 420px;
-      border-radius: 50%;
-      filter: blur(60px) saturate(140%);
-      opacity: calc(0.35 * var(--motion));
-      mix-blend-mode: screen;
-      animation: float 18s infinite cubic-bezier(.2,.6,.2,1);
-      will-change: transform;
+      inset: 0;
+      z-index: 0;
+      opacity: .55;
+      filter: saturate(110%) contrast(105%);
+      transition: opacity .3s ease;
     }
-    #v1600 .g1 {
-      background: radial-gradient(circle at 30% 30%,
-        hsl(calc(var(--h) + 50) var(--s) 55% / 0.9), transparent 60%);
-      top: -60px; left: -60px;
-      animation-duration: 24s;
-    }
-    #v1600 .g2 {
-      background: radial-gradient(circle at 60% 40%,
-        hsl(calc(var(--h) - 20) var(--s) 60% / 0.9), transparent 60%);
-      bottom: -80px; right: -80px;
-      animation-duration: 28s;
-      animation-direction: reverse;
-    }
-    @keyframes float {
-      0%   { transform: translate(0,0) scale(1); }
-      50%  { transform: translate(6%, -3%) scale(1.05); }
-      100% { transform: translate(0,0) scale(1); }
-    }
+    #v1601.paused .field { opacity: .2; }
 
-    /* Controls */
-    #v1600 .controls {
-      display: flex;
-      align-items: center;
-      gap: 10px 14px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      margin-bottom: 10px;
-      z-index: 3;
-      position: relative;
-    }
-    #v1600 .chip {
-      border: 1px solid var(--stroke);
-      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
-      color: var(--text);
-      padding: 9px 12px;
-      border-radius: 999px;
-      backdrop-filter: blur(10px);
-      font: 600 12px/1.1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      letter-spacing: .02em;
-      cursor: pointer;
-      transition: transform .2s ease, background .2s ease, border-color .2s ease;
-    }
-    #v1600 .chip:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.28); }
-    #v1600 .chip[aria-pressed="true"] { background: rgba(255,255,255,0.18); }
-
-    #v1600 .hue {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(8px);
-    }
-    #v1600 .hue label {
-      font: 600 11px/1 ui-sans-serif, system-ui;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .08em;
-    }
-    #v1600 input[type="range"] {
-      -webkit-appearance: none;
-      width: 140px; height: 6px;
-      border-radius: 999px;
-      background: linear-gradient(90deg,
-        hsl(180 var(--s) 50%),
-        hsl(240 var(--s) 60%),
-        hsl(300 var(--s) 58%));
-      outline: none; border: none;
-    }
-    #v1600 input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: hsl(var(--h) var(--s) 70%);
-      border: 2px solid white;
-      box-shadow: 0 2px 10px rgba(0,0,0,.35);
-      cursor: ew-resize;
-    }
-    #v1600 input[type="range"]::-moz-range-thumb {
-      width: 18px; height: 18px; border-radius: 50%;
-      background: hsl(var(--h) var(--s) 70%);
-      border: 2px solid white;
-      box-shadow: 0 2px 10px rgba(0,0,0,.35);
-      cursor: ew-resize;
-    }
-
-    /* Hero */
-    #v1600 .hero {
+    /* Top bar */
+    #v1601 .top {
       position: relative;
       z-index: 2;
       display: grid;
-      gap: 6px;
-      margin: 6px 0 18px 0;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 12px;
+      margin-bottom: 14px;
     }
-    #v1600 .eyebrow {
+    #v1601 .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font: 700 12px/1 ui-sans-serif, system-ui;
-      letter-spacing: 0.12em;
+      gap: 10px;
+      font: 700 12px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      letter-spacing: .14em;
       text-transform: uppercase;
-      opacity: 0.9;
+      color: var(--muted);
     }
-    #v1600 .eyebrow .dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: hsl(var(--h) var(--s) 65%);
-      box-shadow: 0 0 16px hsl(var(--h) var(--s) 65% / 0.9);
+    #v1601 .eyebrow .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-2));
+      box-shadow: 0 0 14px var(--accent);
     }
-    #v1600 h1 {
+
+    #v1601 .controls {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    #v1601 .chip, #v1601 .btn {
+      appearance: none; border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, hsl(0 0% 100% / .55), hsl(0 0% 100% / .25));
+      color: var(--ink); cursor: pointer;
+      padding: 9px 12px; border-radius: 999px;
+      font: 700 12px/1 ui-sans-serif, system-ui;
+      letter-spacing: .05em;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+      backdrop-filter: blur(8px);
+    }
+    #v1601[data-theme="midnight"] .chip,
+    #v1601[data-theme="midnight"] .btn {
+      background: linear-gradient(180deg, hsl(0 0% 100% / .08), hsl(0 0% 100% / .03));
+      color: var(--ink);
+      border-color: hsl(0 0% 100% / .14);
+    }
+    #v1601 .chip:hover, #v1601 .btn:hover { transform: translateY(-1px); }
+    #v1601 .chip[aria-pressed="true"] {
+      background: linear-gradient(180deg, var(--accent) 0%, var(--accent-2) 100%);
+      color: white; border-color: transparent;
+      text-shadow: 0 1px 0 rgba(0,0,0,.15);
+    }
+
+    #v1601 .slider {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 12px; border: 1px solid var(--stroke); border-radius: 999px;
+      background: linear-gradient(180deg, hsl(0 0% 100% / .55), hsl(0 0% 100% / .25));
+      backdrop-filter: blur(8px);
+      font: 700 11px/1 ui-sans-serif, system-ui; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .08em;
+    }
+    #v1601[data-theme="midnight"] .slider {
+      background: linear-gradient(180deg, hsl(0 0% 100% / .08), hsl(0 0% 100% / .03));
+      border-color: hsl(0 0% 100% / .14);
+    }
+    #v1601 input[type="range"] {
+      -webkit-appearance: none; width: 150px; height: 6px; border-radius: 999px; outline: none; border: none;
+      background: linear-gradient(90deg, var(--ring1), var(--ring2), var(--ring3));
+    }
+    #v1601 input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid white; background: var(--accent);
+      box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    }
+    #v1601 input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid white; background: var(--accent);
+      box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    }
+
+    /* Hero */
+    #v1601 .hero {
+      position: relative; z-index: 2;
+      display: grid; gap: 4px;
+      margin: 6px 0 10px;
+    }
+    #v1601 h1 {
       margin: 0;
-      font: 800 clamp(28px, 5vw, 48px)/1.06 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      font: 900 clamp(28px, 5vw, 48px)/1.04 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
       letter-spacing: -0.02em;
-      background: linear-gradient(100deg,
-        hsl(calc(var(--h) + 20) var(--s) 80%),
-        hsl(calc(var(--h) - 20) var(--s) 70%) 50%,
-        hsl(calc(var(--h) + 60) var(--s) 80%));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.35));
+      background: linear-gradient(100deg, var(--ink), var(--accent) 55%, var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.08));
       background-size: 200% 200%;
-      animation: titleShift calc(12s * var(--motion)) ease-in-out infinite alternate;
+      animation: title-pan calc(14s * var(--motion)) ease-in-out infinite alternate;
     }
-    @keyframes titleShift {
+    #v1601 .sub {
+      margin: 0; max-width: 62ch;
+      color: var(--muted);
+      font: 500 clamp(14px, 1.6vw, 16px)/1.6 ui-sans-serif, system-ui;
+    }
+    @keyframes title-pan {
       0% { background-position: 0% 50%; }
       100% { background-position: 100% 50%; }
     }
-    #v1600 .sub {
-      margin: 0;
-      max-width: 52ch;
-      color: var(--muted);
-      font: 500 clamp(14px, 1.7vw, 16px)/1.6 ui-sans-serif, system-ui;
-    }
 
-    /* Panels */
-    #v1600 .panels {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
+    /* Ring clock stage */
+    #v1601 .stage {
+      position: relative; z-index: 2;
+      display: grid; place-items: center;
+      margin: 18px 0 12px;
       perspective: 900px;
-      margin-top: 8px;
-    }
-    @media (max-width: 700px) {
-      #v1600 .panels { grid-template-columns: 1fr; }
-    }
-    #v1600 .panel {
-      position: relative;
-      border-radius: var(--radius);
-      border: 1px solid var(--stroke);
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-      backdrop-filter: blur(10px) saturate(120%);
-      overflow: hidden;
-      box-shadow: var(--shadow);
       transform-style: preserve-3d;
-      transition: transform .25s ease, background .25s ease, border-color .25s ease;
+      transition: transform .3s ease;
+    }
+    #v1601 .rings {
+      position: relative;
+      width: clamp(240px, 52vw, 360px);
+      aspect-ratio: 1 / 1;
+      display: grid; place-items: center;
+      transform: rotateX(var(--tiltX, 0deg)) rotateY(var(--tiltY, 0deg));
       will-change: transform;
     }
-    #v1600 .panel:hover {
-      border-color: rgba(255,255,255,0.28);
-      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
-    }
-    #v1600 .panel .ink {
-      position: absolute;
-      inset: 0;
+    #v1601 .ring {
+      position: absolute; inset: 10%;
+      border-radius: 50%;
+      --thick: 12px;
+      --tick: hsl(0 0% 0% / .12);
       background:
-        radial-gradient(400px 320px at var(--mx) var(--my),
-          hsl(var(--h) var(--s) 64% / 0.15), transparent 60%);
-      opacity: 0.8;
-      pointer-events: none;
-      transition: opacity .2s ease;
+        radial-gradient(calc(var(--thick)) circle, transparent calc(var(--thick) - 1px), var(--tick) calc(var(--thick) - 1px) calc(var(--thick)), transparent calc(var(--thick))),
+        conic-gradient(from 0deg, transparent 0 25%, hsl(0 0% 0% / .06) 0 26%, transparent 0 50%, hsl(0 0% 0% / .06) 0 51%, transparent 0 75%, hsl(0 0% 0% / .06) 0 76%, transparent 0);
+      mask: radial-gradient(circle closest-side, transparent calc(100% - var(--thick)), #000 calc(100% - var(--thick)));
+      opacity: .9;
     }
-    #v1600 .panel:hover .ink { opacity: 1; }
+    #v1601[data-theme="midnight"] .ring {
+      --tick: hsl(0 0% 100% / .14);
+      background:
+        radial-gradient(calc(var(--thick)) circle, transparent calc(var(--thick) - 1px), var(--tick) calc(var(--thick) - 1px) calc(var(--thick)), transparent calc(var(--thick))),
+        conic-gradient(from 0deg, transparent 0 25%, hsl(0 0% 100% / .06) 0 26%, transparent 0 50%, hsl(0 0% 100% / .06) 0 51%, transparent 0 75%, hsl(0 0% 100% / .06) 0 76%, transparent 0);
+    }
+    #v1601 .ring.r1 { inset: 6%;  --thick: 12px; box-shadow: 0 10px 40px hsl(0 0% 0% / .08) inset; }
+    #v1601 .ring.r2 { inset: 18%; --thick: 12px; }
+    #v1601 .ring.r3 { inset: 30%; --thick: 12px; }
 
-    #v1600 .panel .body {
-      position: relative;
-      z-index: 1;
-      padding: 18px 16px 16px 16px;
-      display: grid;
-      gap: 10px;
-    }
-    #v1600 .icon {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      display: grid; place-items: center;
-      background: radial-gradient(circle at 30% 30%,
-        hsl(var(--h) var(--s) 70%), hsl(var(--h) var(--s) 45%));
-      box-shadow: 0 6px 22px hsl(var(--h) var(--s) 60% / 0.45);
-    }
-    #v1600 .panel h3 {
-      margin: 2px 0 0 0;
-      font: 700 16px/1.2 ui-sans-serif, system-ui;
-      letter-spacing: .01em;
-      color: white;
-    }
-    #v1600 .panel p {
-      margin: 0;
-      color: var(--muted);
-      font: 500 13px/1.6 ui-sans-serif, system-ui;
-    }
-
-    /* Marquee */
-    #v1600 .marquee {
-      position: relative;
-      margin: 18px 0 6px;
-      height: 34px;
-      overflow: hidden;
-      border-radius: 10px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(8px);
-    }
-    #v1600 .track {
+    #v1601 .hand {
       position: absolute;
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      white-space: nowrap;
-      padding: 0 12px;
-      inset: 0;
-      animation: scrollX calc(40s / max(var(--motion), 0.001)) linear infinite;
+      width: 50%; height: 2px; left: 50%; top: 50%;
+      transform-origin: left center;
+      border-radius: 2px;
+      box-shadow: 0 2px 12px hsl(0 0% 0% / .2);
+      mix-blend-mode: multiply;
     }
-    #v1600 .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
+    #v1601[data-theme="midnight"] .hand { mix-blend-mode: screen; box-shadow: 0 2px 12px hsl(0 0% 100% / .25); }
+    #v1601 .hand.s { background: linear-gradient(90deg, var(--ring1), transparent 85%); transform: rotate(var(--sec)); }
+    #v1601 .hand.m { background: linear-gradient(90deg, var(--ring2), transparent 85%); transform: rotate(var(--min)); width: 46%; height: 3px; }
+    #v1601 .hand.h { background: linear-gradient(90deg, var(--ring3), transparent 85%); transform: rotate(var(--hour)); width: 38%; height: 4px; }
+
+    #v1601 .center {
+      position: absolute; width: 120px; height: 120px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, hsl(0 0% 100% / .9), hsl(0 0% 100% / .6));
       border: 1px solid var(--stroke);
+      display: grid; place-items: center;
+      text-align: center;
+      padding: 10px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.10);
+    }
+    #v1601[data-theme="midnight"] .center {
+      background: radial-gradient(circle at 30% 30%, hsl(0 0% 100% / .08), hsl(0 0% 100% / .02));
+      border-color: hsl(0 0% 100% / .14);
+      box-shadow: 0 10px 40px rgba(0,0,0,.35);
+    }
+    #v1601 .time {
+      font: 800 22px/1 ui-sans-serif, system-ui;
+      letter-spacing: .02em;
+      color: var(--ink);
+    }
+    #v1601 .date {
+      margin-top: 4px;
+      font: 600 11px/1.2 ui-sans-serif, system-ui;
       color: var(--muted);
-      font: 600 11px/1 ui-sans-serif, system-ui;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
-    }
-    #v1600 .pill i {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: hsl(var(--h) var(--s) 70%);
-      box-shadow: 0 0 10px hsl(var(--h) var(--s) 70% / 0.85);
-      display: inline-block;
-    }
-    @keyframes scrollX {
-      from { transform: translateX(0%); }
-      to   { transform: translateX(-50%); }
+      letter-spacing: .12em; text-transform: uppercase;
     }
 
-    /* Footer */
-    #v1600 .foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 10px;
-      color: var(--muted);
+    /* Bottom foot */
+    #v1601 .foot {
+      position: relative; z-index: 2;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      margin-top: 8px; color: var(--muted);
       font: 500 12px/1.4 ui-sans-serif, system-ui;
-      opacity: 0.9;
     }
-    #v1600 .foot .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+    #v1601 .brand {
+      display: inline-flex; align-items: center; gap: 10px;
     }
-    #v1600 .sig {
+    #v1601 .seed {
       width: 14px; height: 14px; border-radius: 4px;
-      background: linear-gradient(160deg,
-        hsl(calc(var(--h)+10) var(--s) 70%),
-        hsl(calc(var(--h)-40) var(--s) 60%));
-      box-shadow: 0 2px 10px hsl(var(--h) var(--s) 60% / 0.6);
+      background: linear-gradient(160deg, var(--accent), var(--accent-2));
+      box-shadow: 0 3px 12px hsl(0 0% 0% / .2);
     }
 
     /* Pause state */
-    #v1600.paused * { animation-play-state: paused !important; }
+    #v1601.paused * { animation-play-state: paused !important; }
+
+    /* Responsive */
+    @media (max-width: 680px) {
+      #v1601 .top { grid-template-columns: 1fr; }
+      #v1601 .controls { justify-content: flex-start; }
+    }
   </style>
 
-  <div class="grid" aria-hidden="true"></div>
-  <div class="glow g1" aria-hidden="true"></div>
-  <div class="glow g2" aria-hidden="true"></div>
+  <canvas class="field" aria-hidden="true"></canvas>
 
-  <div class="controls">
-    <button class="chip" data-action="toggle-motion" aria-pressed="false" title="Pause or resume motions">Pause motion</button>
-    <div class="hue">
-      <label for="hue">Hue</label>
-      <input id="hue" type="range" min="180" max="320" value="230" />
+  <div class="top">
+    <div class="eyebrow"><span class="dot" aria-hidden="true"></span> Kinetic Almanac</div>
+    <div class="controls" role="toolbar" aria-label="Almanac controls">
+      <div class="slider" title="Adjust star density">
+        Density
+        <input id="density" type="range" min="10" max="120" value="48" />
+      </div>
+      <button class="chip" data-theme="dawn" aria-pressed="true" title="Dawn">Dawn</button>
+      <button class="chip" data-theme="dusk" aria-pressed="false" title="Dusk">Dusk</button>
+      <button class="chip" data-theme="midnight" aria-pressed="false" title="Midnight">Midnight</button>
+      <button class="btn" data-action="still" aria-pressed="false" title="Pause or resume motion">Enter stillness</button>
     </div>
   </div>
 
   <section class="hero">
-    <div class="eyebrow"><span class="dot"></span> Aurora Interface</div>
-    <h1>Quiet Electricity</h1>
-    <p class="sub">A living vignette of light, weight, and motion. Soft glass, precise type, and calm kinetics that follow your cursor.</p>
+    <h1>Time, made soft.</h1>
+    <p class="sub">A living clock and a quiet sky. Tilt with your pointer, choose a sky, and breathe with the motion.</p>
   </section>
 
-  <section class="panels" aria-label="Interactive cards">
-    <article class="panel" tabindex="0">
-      <div class="ink" aria-hidden="true"></div>
-      <div class="body">
-        <div class="icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M2 12c3-6 7 6 10 0s7 6 10 0" stroke="white" opacity=".9" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h3>Resonate</h3>
-        <p>Gentle waves, balanced rhythm. Feel the page breathe as you move.</p>
+  <div class="stage" aria-label="Orbital clock">
+    <div class="rings">
+      <div class="ring r1" aria-hidden="true"></div>
+      <div class="ring r2" aria-hidden="true"></div>
+      <div class="ring r3" aria-hidden="true"></div>
+
+      <div class="hand s" aria-hidden="true"></div>
+      <div class="hand m" aria-hidden="true"></div>
+      <div class="hand h" aria-hidden="true"></div>
+
+      <div class="center" aria-live="polite">
+        <div class="time" id="readout">--:--:--</div>
+        <div class="date" id="date">—</div>
       </div>
-    </article>
-
-    <article class="panel" tabindex="0">
-      <div class="ink" aria-hidden="true"></div>
-      <div class="body">
-        <div class="icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="6" stroke="white" opacity=".95" stroke-width="1.5"/>
-            <circle cx="12" cy="12" r="2" fill="white" opacity=".9"/>
-          </svg>
-        </div>
-        <h3>Focus</h3>
-        <p>Glass layers settle behind content, keeping contrast crisp and eyes at rest.</p>
-      </div>
-    </article>
-
-    <article class="panel" tabindex="0">
-      <div class="ink" aria-hidden="true"></div>
-      <div class="body">
-        <div class="icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path d="M12 3v18M3 12h18" stroke="white" opacity=".9" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h3>Compose</h3>
-        <p>Spacing, tone, and temperature—tuned with a single hue control.</p>
-      </div>
-    </article>
-  </section>
-
-  <div class="marquee" aria-hidden="true">
-    <div class="track">
-      <span class="pill"><i></i> Soft gradients</span>
-      <span class="pill"><i></i> Glass layers</span>
-      <span class="pill"><i></i> Precise type</span>
-      <span class="pill"><i></i> Subtle physics</span>
-      <span class="pill"><i></i> Accessible contrast</span>
-      <span class="pill"><i></i> Micro-interactions</span>
-
-      <!-- duplicate for looping -->
-      <span class="pill"><i></i> Soft gradients</span>
-      <span class="pill"><i></i> Glass layers</span>
-      <span class="pill"><i></i> Precise type</span>
-      <span class="pill"><i></i> Subtle physics</span>
-      <span class="pill"><i></i> Accessible contrast</span>
-      <span class="pill"><i></i> Micro-interactions</span>
     </div>
   </div>
 
   <div class="foot">
-    <div class="brand"><span class="sig" aria-hidden="true"></span> Crafted with light and restraint.</div>
-    <span id="last-updated">Last updated: 2025-12-29 06:17:33 EST</span>
+    <div class="brand"><span class="seed" aria-hidden="true"></span> Designed to hush the hurry.</div>
+    <span id="last-updated">Last updated: 2025-12-29 07:40:53 EST</span>
   </div>
 
   <script>
     (function () {
-      const root = document.getElementById('v1600');
-      const hue = root.querySelector('#hue');
-      const panels = root.querySelectorAll('.panel');
-      const motionBtn = root.querySelector('[data-action="toggle-motion"]');
+      const root = document.getElementById('v1601');
+      const canvas = root.querySelector('.field');
+      const ctx = canvas.getContext('2d');
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+      const density = root.querySelector('#density');
+      const chips = root.querySelectorAll('.chip[data-theme]');
+      const stillBtn = root.querySelector('[data-action="still"]');
+      const stage = root.querySelector('.rings');
+      const readout = root.querySelector('#readout');
+      const dateOut = root.querySelector('#date');
       const updated = root.querySelector('#last-updated');
 
-      // Last updated timestamp
+      // Timestamp
       try {
         const now = new Date();
         const opts = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' };
         updated.textContent = 'Last updated: ' + now.toLocaleString(undefined, opts);
       } catch (e) {}
 
-      // Hue control
-      hue.addEventListener('input', (e) => {
-        root.style.setProperty('--h', e.target.value);
-      });
+      // Theme switching
+      function setTheme(name) {
+        root.setAttribute('data-theme', name);
+        chips.forEach(b => b.setAttribute('aria-pressed', b.dataset.theme === name ? 'true' : 'false'));
+      }
+      chips.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.theme)));
 
       // Motion toggle
-      motionBtn.addEventListener('click', () => {
-        const paused = root.classList.toggle('paused');
-        motionBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
-        motionBtn.textContent = paused ? 'Resume motion' : 'Pause motion';
+      let paused = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? true : false;
+      if (paused) {
+        root.classList.add('paused');
+        stillBtn.setAttribute('aria-pressed', 'true');
+        stillBtn.textContent = 'Resume motion';
+      }
+      stillBtn.addEventListener('click', () => {
+        paused = !paused;
+        root.classList.toggle('paused', paused);
+        stillBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+        stillBtn.textContent = paused ? 'Resume motion' : 'Enter stillness';
+        if (!paused) tick();
       });
 
-      // Cursor lighting + panel tilt
-      function setLightPosition(x, y) {
+      // Pointer parallax + highlight position
+      function setLightPosition(e) {
         const rect = root.getBoundingClientRect();
-        const px = ((x - rect.left) / rect.width) * 100;
-        const py = ((y - rect.top) / rect.height) * 100;
+        const px = ((e.clientX - rect.left) / rect.width) * 100;
+        const py = ((e.clientY - rect.top) / rect.height) * 100;
         root.style.setProperty('--mx', px + '%');
         root.style.setProperty('--my', py + '%');
+
+        // Tilt rings gently
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) / rect.width;
+        const dy = (e.clientY - cy) / rect.height;
+        const rx = (dy * -10);
+        const ry = (dx * 14);
+        stage.style.setProperty('--tiltX', (rx).toFixed(2) + 'deg');
+        stage.style.setProperty('--tiltY', (ry).toFixed(2) + 'deg');
       }
-      root.addEventListener('pointermove', (e) => {
-        setLightPosition(e.clientX, e.clientY);
-        // Tilt each panel based on pointer position
-        panels.forEach(p => {
-          const r = p.getBoundingClientRect();
-          const cx = r.left + r.width / 2;
-          const cy = r.top + r.height / 2;
-          const dx = (e.clientX - cx) / r.width;
-          const dy = (e.clientY - cy) / r.height;
-          const rx = (dy * -8);
-          const ry = (dx * 10);
-          p.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
-        });
-      });
+      root.addEventListener('pointermove', setLightPosition);
       root.addEventListener('pointerleave', () => {
-        panels.forEach(p => p.style.transform = '');
+        stage.style.removeProperty('--tiltX');
+        stage.style.removeProperty('--tiltY');
       });
 
-      // Keyboard focus pulse for panels
-      panels.forEach(p => {
-        p.addEventListener('focus', () => p.style.borderColor = 'rgba(255,255,255,0.35)');
-        p.addEventListener('blur',  () => p.style.borderColor = '');
-      });
+      // Clock logic
+      function updateClock() {
+        const t = new Date();
+        const sec = t.getSeconds() + t.getMilliseconds() / 1000;
+        const min = t.getMinutes() + sec / 60;
+        const hour = (t.getHours() % 12) + min / 60;
 
-      // Initialize light to center
+        const secDeg = (sec / 60) * 360;
+        const minDeg = (min / 60) * 360;
+        const hourDeg = (hour / 12) * 360;
+
+        root.style.setProperty('--sec', secDeg + 'deg');
+        root.style.setProperty('--min', minDeg + 'deg');
+        root.style.setProperty('--hour', hourDeg + 'deg');
+
+        // Readout
+        const h = String(t.getHours()).padStart(2, '0');
+        const m = String(t.getMinutes()).padStart(2, '0');
+        const s = String(t.getSeconds()).padStart(2, '0');
+        readout.textContent = `${h}:${m}:${s}`;
+        try {
+          dateOut.textContent = new Intl.DateTimeFormat(undefined, { weekday: 'short', month: 'short', day: '2-digit' }).format(t);
+        } catch (e) {
+          dateOut.textContent = t.toDateString();
+        }
+      }
+
+      // Constellation background
+      let W = 0, H = 0, particles = [];
+      function resize() {
+        const rect = root.getBoundingClientRect();
+        W = Math.max(300, Math.floor(rect.width));
+        H = Math.max(300, Math.floor(rect.height));
+        canvas.width = Math.floor(W * dpr);
+        canvas.height = Math.floor(H * dpr);
+        canvas.style.width = W + 'px';
+        canvas.style.height = H + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        makeParticles(+density.value);
+      }
+      function makeParticles(n) {
+        particles = [];
+        const count = Math.max(8, Math.min(240, n));
+        for (let i = 0; i < count; i++) {
+          const speed = 0.2 + Math.random() * 0.8;
+          particles.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            vx: (Math.random() - 0.5) * speed,
+            vy: (Math.random() - 0.5) * speed,
+            r: 1 + Math.random() * 1.6
+          });
+        }
+      }
+      density.addEventListener('input', (e) => makeParticles(+e.target.value));
+
+      function drawBackground() {
+        ctx.clearRect(0, 0, W, H);
+        // Colors from CSS variables (computed)
+        const getVar = (name) => getComputedStyle(root).getPropertyValue(name).trim();
+        const a = getVar('--ring1') || 'rgba(0,0,0,.3)';
+        const b = getVar('--ring2') || 'rgba(0,0,0,.3)';
+        const c = getVar('--ring3') || 'rgba(0,0,0,.3)';
+
+        // Connective lines
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < -20) p.x = W + 20; if (p.x > W + 20) p.x = -20;
+          if (p.y < -20) p.y = H + 20; if (p.y > H + 20) p.y = -20;
+        }
+
+        // Draw connections
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const p = particles[i], q = particles[j];
+            const dx = p.x - q.x, dy = p.y - q.y;
+            const d = Math.hypot(dx, dy);
+            if (d < 120) {
+              const t = d / 120;
+              const grd = ctx.createLinearGradient(p.x, p.y, q.x, q.y);
+              grd.addColorStop(0, a);
+              grd.addColorStop(.5, b);
+              grd.addColorStop(1, c);
+              ctx.strokeStyle = grd;
+              ctx.globalAlpha = 0.25 * (1 - t);
+              ctx.lineWidth = (1 - t) * 1.4;
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(q.x, q.y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Draw points
+        ctx.globalAlpha = 0.9;
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          ctx.fillStyle = a;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      // Animation loop
+      let raf = null;
+      function tick() {
+        if (paused) { raf = null; return; }
+        updateClock();
+        drawBackground();
+        raf = requestAnimationFrame(tick);
+      }
+
+      // Init
+      window.addEventListener('resize', resize, { passive: true });
+      resize();
+      updateClock();
+      if (!paused) tick();
+      // keep clock readable even when paused
+      if (paused) setInterval(updateClock, 1000);
+
+      // Initialize highlight position to center
       const rect = root.getBoundingClientRect();
-      setLightPosition(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      setLightPosition({ clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height / 2 });
+
+      function setLightPositionLikeEvent(x, y) { setLightPosition({ clientX: x, clientY: y }); }
+      // Expose for first-call above
+      function setLightPosition(e) {
+        const rect = root.getBoundingClientRect();
+        const px = ((e.clientX - rect.left) / rect.width) * 100;
+        const py = ((e.clientY - rect.top) / rect.height) * 100;
+        root.style.setProperty('--mx', px + '%');
+        root.style.setProperty('--my', py + '%');
+
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) / rect.width;
+        const dy = (e.clientY - cy) / rect.height;
+        const rx = (dy * -10);
+        const ry = (dx * 14);
+        stage.style.setProperty('--tiltX', (rx).toFixed(2) + 'deg');
+        stage.style.setProperty('--tiltY', (ry).toFixed(2) + 'deg');
+      }
+      setLightPositionLikeEvent(rect.left + rect.width / 2, rect.top + rect.height / 2);
     })();
   </script>
 </div>
