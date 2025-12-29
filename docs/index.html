@@ -73,7 +73,494 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-12-29 05:21:35 EST</span></div>
+<div id="v1600">
+  <style>
+    /* Theme + tokens */
+    #v1600 {
+      --h: 230;
+      --s: 74%;
+      --l1: 12%;
+      --l2: 8%;
+      --glass: rgba(255, 255, 255, 0.08);
+      --stroke: rgba(255, 255, 255, 0.16);
+      --text: hsl(0 0% 98%);
+      --muted: hsl(220 10% 78% / 0.85);
+      --radius: 18px;
+      --shadow: 0 25px 80px rgba(0, 0, 0, 0.45);
+      --mx: 50%;
+      --my: 50%;
+      --motion: 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #v1600 { --motion: 0; }
+    }
+    #v1600 {
+      position: relative;
+      padding: 28px;
+      border-radius: 22px;
+      color: var(--text);
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        radial-gradient(1200px 1200px at var(--mx) var(--my),
+          hsl(calc(var(--h) + 40) var(--s) 20% / 0.35),
+          transparent 60%),
+        conic-gradient(from 180deg at 20% 10%,
+          hsl(calc(var(--h) + 20) var(--s) 12%),
+          hsl(calc(var(--h) - 10) var(--s) 10%),
+          hsl(calc(var(--h) + 60) var(--s) 9%),
+          hsl(calc(var(--h) + 10) var(--s) 10%));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+      min-height: 440px;
+    }
+
+    /* Subtle grid */
+    #v1600 .grid {
+      position: absolute;
+      inset: -1px;
+      background:
+        linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px) 0 0/36px 36px,
+        linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px) 0 0/36px 36px;
+      mask: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent 65%);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    /* Glow orbs */
+    #v1600 .glow {
+      position: absolute;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      filter: blur(60px) saturate(140%);
+      opacity: calc(0.35 * var(--motion));
+      mix-blend-mode: screen;
+      animation: float 18s infinite cubic-bezier(.2,.6,.2,1);
+      will-change: transform;
+    }
+    #v1600 .g1 {
+      background: radial-gradient(circle at 30% 30%,
+        hsl(calc(var(--h) + 50) var(--s) 55% / 0.9), transparent 60%);
+      top: -60px; left: -60px;
+      animation-duration: 24s;
+    }
+    #v1600 .g2 {
+      background: radial-gradient(circle at 60% 40%,
+        hsl(calc(var(--h) - 20) var(--s) 60% / 0.9), transparent 60%);
+      bottom: -80px; right: -80px;
+      animation-duration: 28s;
+      animation-direction: reverse;
+    }
+    @keyframes float {
+      0%   { transform: translate(0,0) scale(1); }
+      50%  { transform: translate(6%, -3%) scale(1.05); }
+      100% { transform: translate(0,0) scale(1); }
+    }
+
+    /* Controls */
+    #v1600 .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+      z-index: 3;
+      position: relative;
+    }
+    #v1600 .chip {
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 999px;
+      backdrop-filter: blur(10px);
+      font: 600 12px/1.1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      letter-spacing: .02em;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    #v1600 .chip:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.28); }
+    #v1600 .chip[aria-pressed="true"] { background: rgba(255,255,255,0.18); }
+
+    #v1600 .hue {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(8px);
+    }
+    #v1600 .hue label {
+      font: 600 11px/1 ui-sans-serif, system-ui;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    #v1600 input[type="range"] {
+      -webkit-appearance: none;
+      width: 140px; height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg,
+        hsl(180 var(--s) 50%),
+        hsl(240 var(--s) 60%),
+        hsl(300 var(--s) 58%));
+      outline: none; border: none;
+    }
+    #v1600 input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: hsl(var(--h) var(--s) 70%);
+      border: 2px solid white;
+      box-shadow: 0 2px 10px rgba(0,0,0,.35);
+      cursor: ew-resize;
+    }
+    #v1600 input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: hsl(var(--h) var(--s) 70%);
+      border: 2px solid white;
+      box-shadow: 0 2px 10px rgba(0,0,0,.35);
+      cursor: ew-resize;
+    }
+
+    /* Hero */
+    #v1600 .hero {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 6px;
+      margin: 6px 0 18px 0;
+    }
+    #v1600 .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font: 700 12px/1 ui-sans-serif, system-ui;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+    #v1600 .eyebrow .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: hsl(var(--h) var(--s) 65%);
+      box-shadow: 0 0 16px hsl(var(--h) var(--s) 65% / 0.9);
+    }
+    #v1600 h1 {
+      margin: 0;
+      font: 800 clamp(28px, 5vw, 48px)/1.06 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      letter-spacing: -0.02em;
+      background: linear-gradient(100deg,
+        hsl(calc(var(--h) + 20) var(--s) 80%),
+        hsl(calc(var(--h) - 20) var(--s) 70%) 50%,
+        hsl(calc(var(--h) + 60) var(--s) 80%));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.35));
+      background-size: 200% 200%;
+      animation: titleShift calc(12s * var(--motion)) ease-in-out infinite alternate;
+    }
+    @keyframes titleShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    #v1600 .sub {
+      margin: 0;
+      max-width: 52ch;
+      color: var(--muted);
+      font: 500 clamp(14px, 1.7vw, 16px)/1.6 ui-sans-serif, system-ui;
+    }
+
+    /* Panels */
+    #v1600 .panels {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      perspective: 900px;
+      margin-top: 8px;
+    }
+    @media (max-width: 700px) {
+      #v1600 .panels { grid-template-columns: 1fr; }
+    }
+    #v1600 .panel {
+      position: relative;
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      backdrop-filter: blur(10px) saturate(120%);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transform-style: preserve-3d;
+      transition: transform .25s ease, background .25s ease, border-color .25s ease;
+      will-change: transform;
+    }
+    #v1600 .panel:hover {
+      border-color: rgba(255,255,255,0.28);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+    }
+    #v1600 .panel .ink {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(400px 320px at var(--mx) var(--my),
+          hsl(var(--h) var(--s) 64% / 0.15), transparent 60%);
+      opacity: 0.8;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+    #v1600 .panel:hover .ink { opacity: 1; }
+
+    #v1600 .panel .body {
+      position: relative;
+      z-index: 1;
+      padding: 18px 16px 16px 16px;
+      display: grid;
+      gap: 10px;
+    }
+    #v1600 .icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: grid; place-items: center;
+      background: radial-gradient(circle at 30% 30%,
+        hsl(var(--h) var(--s) 70%), hsl(var(--h) var(--s) 45%));
+      box-shadow: 0 6px 22px hsl(var(--h) var(--s) 60% / 0.45);
+    }
+    #v1600 .panel h3 {
+      margin: 2px 0 0 0;
+      font: 700 16px/1.2 ui-sans-serif, system-ui;
+      letter-spacing: .01em;
+      color: white;
+    }
+    #v1600 .panel p {
+      margin: 0;
+      color: var(--muted);
+      font: 500 13px/1.6 ui-sans-serif, system-ui;
+    }
+
+    /* Marquee */
+    #v1600 .marquee {
+      position: relative;
+      margin: 18px 0 6px;
+      height: 34px;
+      overflow: hidden;
+      border-radius: 10px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(8px);
+    }
+    #v1600 .track {
+      position: absolute;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      white-space: nowrap;
+      padding: 0 12px;
+      inset: 0;
+      animation: scrollX calc(40s / max(var(--motion), 0.001)) linear infinite;
+    }
+    #v1600 .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      color: var(--muted);
+      font: 600 11px/1 ui-sans-serif, system-ui;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+    }
+    #v1600 .pill i {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: hsl(var(--h) var(--s) 70%);
+      box-shadow: 0 0 10px hsl(var(--h) var(--s) 70% / 0.85);
+      display: inline-block;
+    }
+    @keyframes scrollX {
+      from { transform: translateX(0%); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* Footer */
+    #v1600 .foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 10px;
+      color: var(--muted);
+      font: 500 12px/1.4 ui-sans-serif, system-ui;
+      opacity: 0.9;
+    }
+    #v1600 .foot .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #v1600 .sig {
+      width: 14px; height: 14px; border-radius: 4px;
+      background: linear-gradient(160deg,
+        hsl(calc(var(--h)+10) var(--s) 70%),
+        hsl(calc(var(--h)-40) var(--s) 60%));
+      box-shadow: 0 2px 10px hsl(var(--h) var(--s) 60% / 0.6);
+    }
+
+    /* Pause state */
+    #v1600.paused * { animation-play-state: paused !important; }
+  </style>
+
+  <div class="grid" aria-hidden="true"></div>
+  <div class="glow g1" aria-hidden="true"></div>
+  <div class="glow g2" aria-hidden="true"></div>
+
+  <div class="controls">
+    <button class="chip" data-action="toggle-motion" aria-pressed="false" title="Pause or resume motions">Pause motion</button>
+    <div class="hue">
+      <label for="hue">Hue</label>
+      <input id="hue" type="range" min="180" max="320" value="230" />
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="eyebrow"><span class="dot"></span> Aurora Interface</div>
+    <h1>Quiet Electricity</h1>
+    <p class="sub">A living vignette of light, weight, and motion. Soft glass, precise type, and calm kinetics that follow your cursor.</p>
+  </section>
+
+  <section class="panels" aria-label="Interactive cards">
+    <article class="panel" tabindex="0">
+      <div class="ink" aria-hidden="true"></div>
+      <div class="body">
+        <div class="icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M2 12c3-6 7 6 10 0s7 6 10 0" stroke="white" opacity=".9" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Resonate</h3>
+        <p>Gentle waves, balanced rhythm. Feel the page breathe as you move.</p>
+      </div>
+    </article>
+
+    <article class="panel" tabindex="0">
+      <div class="ink" aria-hidden="true"></div>
+      <div class="body">
+        <div class="icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="6" stroke="white" opacity=".95" stroke-width="1.5"/>
+            <circle cx="12" cy="12" r="2" fill="white" opacity=".9"/>
+          </svg>
+        </div>
+        <h3>Focus</h3>
+        <p>Glass layers settle behind content, keeping contrast crisp and eyes at rest.</p>
+      </div>
+    </article>
+
+    <article class="panel" tabindex="0">
+      <div class="ink" aria-hidden="true"></div>
+      <div class="body">
+        <div class="icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3v18M3 12h18" stroke="white" opacity=".9" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Compose</h3>
+        <p>Spacing, tone, and temperature—tuned with a single hue control.</p>
+      </div>
+    </article>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span class="pill"><i></i> Soft gradients</span>
+      <span class="pill"><i></i> Glass layers</span>
+      <span class="pill"><i></i> Precise type</span>
+      <span class="pill"><i></i> Subtle physics</span>
+      <span class="pill"><i></i> Accessible contrast</span>
+      <span class="pill"><i></i> Micro-interactions</span>
+
+      <!-- duplicate for looping -->
+      <span class="pill"><i></i> Soft gradients</span>
+      <span class="pill"><i></i> Glass layers</span>
+      <span class="pill"><i></i> Precise type</span>
+      <span class="pill"><i></i> Subtle physics</span>
+      <span class="pill"><i></i> Accessible contrast</span>
+      <span class="pill"><i></i> Micro-interactions</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="brand"><span class="sig" aria-hidden="true"></span> Crafted with light and restraint.</div>
+    <span id="last-updated">Last updated: 2025-12-29 06:17:33 EST</span>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('v1600');
+      const hue = root.querySelector('#hue');
+      const panels = root.querySelectorAll('.panel');
+      const motionBtn = root.querySelector('[data-action="toggle-motion"]');
+      const updated = root.querySelector('#last-updated');
+
+      // Last updated timestamp
+      try {
+        const now = new Date();
+        const opts = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+        updated.textContent = 'Last updated: ' + now.toLocaleString(undefined, opts);
+      } catch (e) {}
+
+      // Hue control
+      hue.addEventListener('input', (e) => {
+        root.style.setProperty('--h', e.target.value);
+      });
+
+      // Motion toggle
+      motionBtn.addEventListener('click', () => {
+        const paused = root.classList.toggle('paused');
+        motionBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+        motionBtn.textContent = paused ? 'Resume motion' : 'Pause motion';
+      });
+
+      // Cursor lighting + panel tilt
+      function setLightPosition(x, y) {
+        const rect = root.getBoundingClientRect();
+        const px = ((x - rect.left) / rect.width) * 100;
+        const py = ((y - rect.top) / rect.height) * 100;
+        root.style.setProperty('--mx', px + '%');
+        root.style.setProperty('--my', py + '%');
+      }
+      root.addEventListener('pointermove', (e) => {
+        setLightPosition(e.clientX, e.clientY);
+        // Tilt each panel based on pointer position
+        panels.forEach(p => {
+          const r = p.getBoundingClientRect();
+          const cx = r.left + r.width / 2;
+          const cy = r.top + r.height / 2;
+          const dx = (e.clientX - cx) / r.width;
+          const dy = (e.clientY - cy) / r.height;
+          const rx = (dy * -8);
+          const ry = (dx * 10);
+          p.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+        });
+      });
+      root.addEventListener('pointerleave', () => {
+        panels.forEach(p => p.style.transform = '');
+      });
+
+      // Keyboard focus pulse for panels
+      panels.forEach(p => {
+        p.addEventListener('focus', () => p.style.borderColor = 'rgba(255,255,255,0.35)');
+        p.addEventListener('blur',  () => p.style.borderColor = '');
+      });
+
+      // Initialize light to center
+      const rect = root.getBoundingClientRect();
+      setLightPosition(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
