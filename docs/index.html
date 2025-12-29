@@ -73,7 +73,414 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-12-28 23:47:16 EST</span></div>
+<section class="v1594" data-theme="ocean" aria-label="Aurora Atelier">
+  <style>
+    .v1594 {
+      --h: 200;           /* base hue */
+      --sat: 75%;
+      --fg: hsl(0 0% 98%);
+      --muted: hsl(0 0% 82%);
+      --card: hsla(0 0% 100% / 0.06);
+      --stroke: hsla(0 0% 100% / 0.18);
+      --ring: hsla(0 0% 100% / 0.25);
+      --glow: hsla(0 0% 100% / 0.08);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      padding: clamp(20px, 4vw, 40px);
+      color: var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      isolation: isolate;
+      background:
+        radial-gradient(1200px 600px at var(--mx,50%) var(--my,40%), hsla(var(--h) var(--sat) 60% / 0.15), transparent 60%),
+        radial-gradient(60% 120% at 100% 0%, hsla(calc(var(--h) + 50) 85% 55% / 0.10), transparent 50%),
+        radial-gradient(60% 120% at 0% 100%, hsla(calc(var(--h) - 40) 90% 50% / 0.12), transparent 55%),
+        linear-gradient(180deg, hsl(var(--h) 40% 7%), hsl(var(--h) 35% 10%));
+      box-shadow: inset 0 1px 0 hsla(0 0% 100% / 0.06), inset 0 -1px 0 hsla(0 0% 0% / 0.25);
+    }
+    .v1594::before,
+    .v1594::after {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(40% 60% at 20% 30%, hsla(calc(var(--h) - 30) 90% 60% / 0.18), transparent 50%),
+        radial-gradient(45% 55% at 80% 70%, hsla(calc(var(--h) + 60) 95% 65% / 0.16), transparent 55%);
+      filter: blur(30px) saturate(120%);
+      animation: v1594-drift 24s linear infinite;
+      z-index: -2;
+    }
+    .v1594::after {
+      animation-duration: 38s;
+      mix-blend-mode: screen;
+      opacity: 0.7;
+      transform: scale(1.2);
+    }
+    @keyframes v1594-drift {
+      0%   { transform: rotate(0) translateY(0); }
+      50%  { transform: rotate(180deg) translateY(-2%); }
+      100% { transform: rotate(360deg) translateY(0); }
+    }
+
+    /* Theme presets */
+    .v1594[data-theme="ocean"] { --h: 204; }
+    .v1594[data-theme="dawn"]  { --h: 18; }
+    .v1594[data-theme="noir"]  { --h: 270; }
+
+    .v1594 .hero {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: clamp(16px, 3vw, 28px);
+      align-items: center;
+    }
+    @media (max-width: 820px) {
+      .v1594 .hero { grid-template-columns: 1fr; }
+    }
+
+    .v1594 .title {
+      font-size: clamp(28px, 6vw, 56px);
+      letter-spacing: -0.02em;
+      line-height: 1.02;
+      margin: 0;
+      background: linear-gradient(90deg,
+        hsl(0 0% 100%) 0%,
+        hsl(0 0% 95%) 30%,
+        hsl(0 0% 90%) 60%,
+        hsl(0 0% 100%) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.35));
+      position: relative;
+    }
+    .v1594 .title em {
+      font-style: normal;
+      display: inline-block;
+      padding: 0 .3ch;
+      border-radius: 10px;
+      background: linear-gradient(90deg, hsla(var(--h) 90% 60% / 0.25), hsla(calc(var(--h)+40) 90% 60% / 0.25));
+      box-shadow: inset 0 0 0 1px var(--ring);
+    }
+
+    .v1594 .lede {
+      margin: 10px 0 0 0;
+      color: var(--muted);
+      font-size: clamp(14px, 2.2vw, 18px);
+      line-height: 1.5;
+      max-width: 48ch;
+    }
+
+    .v1594 .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .v1594 .chip {
+      appearance: none;
+      border: 1px solid var(--stroke);
+      background: var(--card);
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: var(--fg);
+      cursor: pointer;
+      font-size: 13px;
+      letter-spacing: .02em;
+      transition: transform .15s ease, background .25s ease, border-color .25s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    }
+    .v1594 .chip:hover { transform: translateY(-1px); border-color: var(--ring); background: hsla(0 0% 100% / 0.09); }
+    .v1594 .chip[aria-pressed="true"] { outline: 1px solid var(--ring); background: hsla(0 0% 100% / 0.12); }
+
+    .v1594 .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(16px) saturate(120%);
+      opacity: .65;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      z-index: -1;
+      will-change: transform;
+      animation: v1594-float 14s ease-in-out infinite;
+      box-shadow: 0 0 120px 40px hsla(var(--h) 90% 60% / 0.12);
+    }
+    .v1594 .orb.o1 { width: 220px; height: 220px; background: radial-gradient(circle at 30% 30%, hsla(calc(var(--h)+30) 95% 65% / .7), transparent 65%); top: -40px; left: -20px; animation-delay: -2s; }
+    .v1594 .orb.o2 { width: 280px; height: 280px; background: radial-gradient(circle at 70% 70%, hsla(calc(var(--h)-30) 95% 65% / .6), transparent 60%); bottom: -60px; right: -40px; animation-delay: -6s; }
+    .v1594 .orb.o3 { width: 160px; height: 160px; background: radial-gradient(circle at 50% 50%, hsla(calc(var(--h)+90) 95% 70% / .5), transparent 55%); top: 50%; left: 55%; animation-delay: -10s; }
+    @keyframes v1594-float {
+      0%, 100% { transform: translate3d(0,0,0) scale(1); }
+      50%      { transform: translate3d(0,-10px,0) scale(1.05); }
+    }
+
+    .v1594 .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: clamp(12px, 2vw, 18px);
+      margin-top: clamp(16px, 3vw, 28px);
+    }
+    .v1594 .card {
+      grid-column: span 4;
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 18px;
+      padding: clamp(14px, 2.2vw, 20px);
+      backdrop-filter: blur(6px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s ease, background .3s ease, border-color .3s ease;
+    }
+    .v1594 .card:hover { transform: translateY(-2px); border-color: var(--ring); background: hsla(0 0% 100% / 0.08); }
+    .v1594 .card.tilt { perspective: 900px; transform-style: preserve-3d; }
+    @media (max-width: 980px) {
+      .v1594 .card { grid-column: span 6; }
+    }
+    @media (max-width: 640px) {
+      .v1594 .card { grid-column: span 12; }
+    }
+
+    .v1594 .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      background: hsla(0 0% 100% / 0.07);
+      border: 1px solid var(--stroke);
+      box-shadow: inset 0 1px 0 hsla(0 0% 100% / 0.08);
+    }
+    .v1594 .swatch {
+      width: 14px; height: 14px; border-radius: 50%; border: 1px solid hsla(0 0% 100% / 0.35);
+      box-shadow: 0 0 0 2px hsla(0 0% 0% / 0.15) inset;
+    }
+
+    .v1594 .quote {
+      margin: 14px 0 0 0;
+      font-size: clamp(16px, 2.6vw, 20px);
+      line-height: 1.5;
+    }
+    .v1594 .quote strong {
+      color: hsl(0 0% 100%);
+    }
+    .v1594 .meta {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .02em;
+    }
+
+    .v1594 .palette {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .v1594 .pill {
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, hsla(0 0% 100% / 0.10), hsla(0 0% 100% / 0.02));
+      box-shadow: inset 0 1px 0 hsla(0 0% 100% / 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .v1594 .pill::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg,
+        hsla(calc(var(--h)-30) 95% 60% / 0.7),
+        hsla(calc(var(--h)+0) 95% 60% / 0.7),
+        hsla(calc(var(--h)+30) 95% 60% / 0.7));
+      mix-blend-mode: screen;
+      opacity: .55;
+      transition: transform .6s ease, opacity .3s ease;
+      transform: translateX(var(--shine,0%));
+    }
+    .v1594 .card.tilt:hover .pill::before { --shine: 20%; opacity: .75; }
+
+    .v1594 .nums {
+      display: flex; align-items: baseline; gap: 10px;
+    }
+    .v1594 .num {
+      font-variant-numeric: tabular-nums;
+      font-size: clamp(32px, 6vw, 44px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .v1594 .label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .v1594 .foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: clamp(18px, 3vw, 26px);
+      padding-top: 14px;
+      border-top: 1px dashed hsla(0 0% 100% / 0.18);
+      color: var(--muted);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .v1594 .foot small { opacity: .9; }
+    .v1594 .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      background: hsla(0 0% 100% / 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--stroke);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .v1594, .v1594::before, .v1594::after, .v1594 .orb { animation: none !important; }
+      .v1594 .card, .v1594 .pill::before { transition: none !important; }
+    }
+  </style>
+
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+
+  <div class="hero">
+    <div>
+      <h1 class="title">Aurora <em>Atelier</em></h1>
+      <p class="lede">A kinetic canvas of light and quiet. Touch the palettes. Tilt the cards. Let the interface breathe.</p>
+      <div class="controls" role="group" aria-label="Color themes">
+        <button class="chip" data-theme="dawn" aria-pressed="false">Dawn</button>
+        <button class="chip" data-theme="ocean" aria-pressed="true">Ocean</button>
+        <button class="chip" data-theme="noir" aria-pressed="false">Noir</button>
+      </div>
+    </div>
+    <div class="card tilt" aria-live="polite">
+      <span class="badge" title="Iteration">
+        <span class="swatch" style="background: conic-gradient(from 180deg, hsla(calc(var(--h)-20) 90% 60% / .8), hsla(calc(var(--h)+30) 90% 60% / .8));"></span>
+        Iteration 1594
+      </span>
+      <div class="palette">
+        <div class="pill"></div>
+        <div class="pill" style="--h: calc(var(--h) + 30)"></div>
+        <div class="pill" style="--h: calc(var(--h) - 30)"></div>
+        <div class="pill" style="--h: calc(var(--h) + 60)"></div>
+        <div class="pill" style="--h: calc(var(--h) - 60)"></div>
+      </div>
+      <div class="meta">Drag your pointer to feel the card react in 3D.</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <article class="card">
+      <div class="nums">
+        <div class="num">3.8 ms</div>
+        <div class="label">to delight</div>
+      </div>
+      <p class="quote"><strong>Less, but better.</strong> Strip the noise, amplify the signal, and let nuance do the talking.</p>
+      <div class="meta">Craft principle • Subtle > Flashy • Calm > Busy</div>
+    </article>
+
+    <article class="card tilt">
+      <div class="nums">
+        <div class="num">∞</div>
+        <div class="label">gradient states</div>
+      </div>
+      <p class="quote">Light spills and settles. Motion that feels like breath rather than fireworks.</p>
+      <div class="meta">Tip: hover and move to tilt; click a theme to recolor.</div>
+    </article>
+
+    <article class="card">
+      <span class="badge">
+        <span class="swatch" style="background: radial-gradient(circle at 50% 50%, hsla(0 0% 100% / .8), transparent 60%);"></span>
+        Changelog
+      </span>
+      <ul class="meta" style="margin: 10px 0 0 0; padding-left: 16px;">
+        <li>Bold aurora background with drifting light</li>
+        <li>Interactive tilt on featured cards</li>
+        <li>Theme chips: Dawn, Ocean, Noir</li>
+      </ul>
+    </article>
+  </div>
+
+  <div class="foot">
+    <small>Designed for focus. Built for play.</small>
+    <span class="kbd">Tip: Press T to cycle themes</span>
+    <span id="last-updated">Last updated: 2025-12-29 00:26:35 EST</span>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.currentScript.closest('.v1594');
+      const last = root.querySelector('#last-updated');
+      const fmt = new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'short' });
+      last.textContent = 'Last updated: ' + fmt.format(new Date());
+
+      // Pointer parallax background
+      root.addEventListener('pointermove', (e) => {
+        const rect = root.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width * 100;
+        const y = (e.clientY - rect.top) / rect.height * 100;
+        root.style.setProperty('--mx', x + '%');
+        root.style.setProperty('--my', y + '%');
+      });
+
+      // Tilt cards
+      const tilts = root.querySelectorAll('.card.tilt');
+      tilts.forEach((card) => {
+        let raf = null;
+        const onMove = (e) => {
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width - 0.5;
+          const py = (e.clientY - r.top) / r.height - 0.5;
+          const rx = (-py * 10).toFixed(2);
+          const ry = (px * 12).toFixed(2);
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+            card.style.boxShadow = `0 ${8 + Math.abs(py) * 10}px ${30 + Math.abs(px) * 20}px rgba(0,0,0,0.45)`;
+          });
+        };
+        const reset = () => {
+          card.style.transform = '';
+          card.style.boxShadow = '';
+        };
+        card.addEventListener('pointermove', onMove);
+        card.addEventListener('pointerleave', reset);
+      });
+
+      // Theme switching
+      const chips = root.querySelectorAll('.chip');
+      const setTheme = (theme) => {
+        root.setAttribute('data-theme', theme);
+        chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.theme === theme)));
+      };
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => setTheme(chip.dataset.theme));
+      });
+
+      // Keyboard shortcut: T to cycle themes
+      const themes = ['dawn', 'ocean', 'noir'];
+      let idx = themes.indexOf(root.getAttribute('data-theme')) || 0;
+      root.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === 't') {
+          idx = (idx + 1) % themes.length;
+          setTheme(themes[idx]);
+        }
+      });
+      // Make section focusable for keyboard shortcut
+      root.tabIndex = 0;
+
+      // Respect reduced motion for tilt (soften)
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        tilts.forEach(card => {
+          card.onpointermove = null;
+        });
+      }
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
