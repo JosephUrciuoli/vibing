@@ -73,7 +73,321 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-12-29 11:23:38 EST</span></div>
+<style>
+/* Scoped to .nova-1606 only */
+.nova-1606 {
+  --bg: #0b0f14;
+  --panel: rgba(255, 255, 255, 0.07);
+  --panel-strong: rgba(255, 255, 255, 0.12);
+  --border: rgba(255, 255, 255, 0.18);
+  --text: #eef3ff;
+  --muted: #b8c4d9;
+  --accent: #7bd4ff;
+  --accent-2: #a58bff;
+  --accent-3: #6bffb7;
+
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 24px;
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: radial-gradient(1200px 500px at 20% -20%, rgba(123,212,255,0.18), transparent 60%),
+              radial-gradient(900px 700px at 110% 120%, rgba(165,139,255,0.18), transparent 60%),
+              linear-gradient(180deg, #0b0f14 0%, #0b1017 100%);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 12px 30px rgba(0,0,0,0.35);
+  min-height: 340px;
+}
+
+/* Subtle animated grid */
+.nova-1606 .grid {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(to right, rgba(255,255,255,0.03) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(to bottom, rgba(255,255,255,0.02) 0 1px, transparent 1px 80px);
+  mask: radial-gradient(circle at 50% 40%, black 50%, transparent 80%);
+  animation: driftGrid 16s linear infinite;
+}
+@keyframes driftGrid {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-80px); }
+}
+
+/* Floating color orbs */
+.nova-1606 .orb { position: absolute; filter: blur(40px); opacity: 0.65; mix-blend-mode: screen; }
+.nova-1606 .o1 { width: 220px; height: 220px; left: -40px; top: -40px; background: radial-gradient(circle, var(--accent) 0%, transparent 60%); animation: float1 18s ease-in-out infinite; }
+.nova-1606 .o2 { width: 280px; height: 280px; right: -60px; bottom: -60px; background: radial-gradient(circle, var(--accent-2) 0%, transparent 60%); animation: float2 20s ease-in-out infinite; }
+.nova-1606 .o3 { width: 180px; height: 180px; left: 55%; top: 60%; background: radial-gradient(circle, var(--accent-3) 0%, transparent 60%); animation: float3 22s ease-in-out infinite; }
+@keyframes float1 { 0%,100%{ transform: translate(0,0) } 50%{ transform: translate(20px, 30px) } }
+@keyframes float2 { 0%,100%{ transform: translate(0,0) } 50%{ transform: translate(-25px, -20px) } }
+@keyframes float3 { 0%,100%{ transform: translate(0,0) } 50%{ transform: translate(10px, -25px) } }
+
+/* Interactive glow following the pointer */
+.nova-1606 .pointer-glow {
+  position: absolute; inset: -10%;
+  background: radial-gradient(220px 220px at var(--px, 50%) var(--py, 50%), rgba(123,212,255,0.22), transparent 60%);
+  transition: opacity .4s ease;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* Glass panel */
+.nova-1606 .glass {
+  position: relative;
+  backdrop-filter: saturate(120%) blur(14px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  transform-style: preserve-3d;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+/* Header layout */
+.nova-1606 .row { display: flex; align-items: center; gap: 14px; }
+.nova-1606 .title { font-size: clamp(22px, 2.6vw, 32px); letter-spacing: 0.2px; margin: 0; line-height: 1.15; }
+.nova-1606 .sub { color: var(--muted); margin: 4px 0 0 0; font-size: 14px; }
+
+.nova-1606 .chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: var(--text); font-size: 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+}
+
+/* Animated time ring */
+.nova-1606 .ring {
+  width: 54px; height: 54px; border-radius: 50%;
+  background:
+    conic-gradient(var(--accent) var(--a, 0deg), rgba(255,255,255,0.12) var(--a, 0deg) 360deg);
+  -webkit-mask: radial-gradient(circle 22px at 50% 50%, transparent 53%, #000 54%);
+  mask: radial-gradient(circle 22px at 50% 50%, transparent 53%, #000 54%);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.16), inset 0 0 12px rgba(123,212,255,0.35);
+}
+
+/* Buttons */
+.nova-1606 .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.nova-1606 .btn {
+  appearance: none; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+  color: var(--text); padding: 10px 14px; border-radius: 12px;
+  font-size: 13px; letter-spacing: 0.2px;
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.nova-1606 .btn:hover { transform: translateY(-1px); background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08)); }
+.nova-1606 .btn:active { transform: translateY(0); }
+
+/* Details panel */
+.nova-1606 .details {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .5s cubic-bezier(.2,.8,.2,1), opacity .5s ease;
+  opacity: 0;
+  margin-top: 8px;
+}
+.nova-1606 .details[data-open="true"] { max-height: 220px; opacity: 1; }
+.nova-1606 .list { margin: 8px 0 0 0; padding: 0 0 0 16px; color: var(--muted); }
+.nova-1606 .list li { margin: 6px 0; }
+
+/* Footer info */
+.nova-1606 .foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; margin-top: 14px; color: var(--muted); font-size: 12px;
+  border-top: 1px dashed rgba(255,255,255,0.14); padding-top: 12px;
+}
+
+/* Badge */
+.nova-1606 .badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(123,212,255,0.14);
+  border: 1px solid rgba(123,212,255,0.32);
+  color: var(--text);
+  font-size: 12px;
+}
+
+/* Tilt softness */
+.nova-1606[data-tilting="true"] .glass { transition: transform .08s linear; }
+.nova-1606[data-tilting="false"] .glass { transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+
+/* Palette preview dots */
+.nova-1606 .dots { display: inline-flex; gap: 6px; vertical-align: middle; margin-left: 6px; }
+.nova-1606 .dot { width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 0 1px rgba(255,255,255,0.22) inset; }
+.nova-1606 .dot.d1 { background: var(--accent); }
+.nova-1606 .dot.d2 { background: var(--accent-2); }
+.nova-1606 .dot.d3 { background: var(--accent-3); }
+
+/* Shine border sweep */
+.nova-1606::after {
+  content: "";
+  position: absolute; inset: 0; border-radius: 20px;
+  background: conic-gradient(from 180deg at 50% 50%, rgba(255,255,255,0.0), rgba(255,255,255,0.22), rgba(255,255,255,0.0));
+  mask: radial-gradient(100% 100% at 50% 50%, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  animation: sweep 8s linear infinite;
+  pointer-events: none;
+  opacity: 0.5;
+}
+@keyframes sweep { to { transform: rotate(360deg); } }
+</style>
+
+<div class="nova-1606" id="nova1606">
+  <div class="grid"></div>
+  <span class="orb o1" aria-hidden="true"></span>
+  <span class="orb o2" aria-hidden="true"></span>
+  <span class="orb o3" aria-hidden="true"></span>
+  <div class="pointer-glow" aria-hidden="true"></div>
+
+  <div class="glass">
+    <div class="row">
+      <div class="ring" id="ring1606" aria-hidden="true"></div>
+      <div>
+        <h1 class="title">The Luminous Refresh</h1>
+        <p class="sub">Bolder motion, calmer surfaces, and a palette that breathes.</p>
+      </div>
+      <span class="badge" id="paletteName">Aurora</span>
+    </div>
+
+    <div style="margin-top:12px; display:flex; flex-wrap:wrap; gap:8px;">
+      <span class="chip">Soft glass panels</span>
+      <span class="chip">Live progress ring</span>
+      <span class="chip">Cursor glow<span class="dots"><i class="dot d1"></i><i class="dot d2"></i><i class="dot d3"></i></span></span>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="toggleDetails">Explore changes</button>
+      <button class="btn" id="shuffle">Shuffle palette</button>
+    </div>
+
+    <div class="details" id="details">
+      <ul class="list">
+        <li>Introduced a responsive tilt that subtly follows your cursor.</li>
+        <li>Added ambient orbs with gentle parallax for depth without noise.</li>
+        <li>Refined contrast and spacing for calmer, more readable surfaces.</li>
+      </ul>
+    </div>
+
+    <div class="foot">
+      <div>Rev 1606</div>
+      <div><span id="last-updated">Last updated: 2025-12-29 12:17:09 EST</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const root = document.getElementById('nova1606');
+  const glow = root.querySelector('.pointer-glow');
+  const glass = root.querySelector('.glass');
+  const ring = document.getElementById('ring1606');
+  const details = document.getElementById('details');
+  const toggleDetails = document.getElementById('toggleDetails');
+  const shuffleBtn = document.getElementById('shuffle');
+  const paletteName = document.getElementById('paletteName');
+  const lastUpdated = document.getElementById('last-updated');
+
+  // Time + last updated
+  try {
+    const now = new Date();
+    const fmt = new Intl.DateTimeFormat(undefined, {
+      year: 'numeric', month: 'short', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      timeZoneName: 'short'
+    });
+    lastUpdated.textContent = 'Last updated: ' + fmt.format(now);
+  } catch {
+    lastUpdated.textContent = 'Last updated: ' + new Date().toLocaleString();
+  }
+
+  // Progress ring animation (seconds of the minute)
+  let raf;
+  function tick() {
+    const d = new Date();
+    const seconds = d.getSeconds() + d.getMilliseconds()/1000;
+    const angle = (seconds / 60) * 360;
+    ring.style.setProperty('--a', angle.toFixed(2) + 'deg');
+    raf = requestAnimationFrame(tick);
+  }
+  raf = requestAnimationFrame(tick);
+
+  // Pointer interactions (glow + tilt)
+  let tiltingTimeout;
+  function setTilting(on) {
+    root.setAttribute('data-tilting', on ? 'true' : 'false');
+  }
+  setTilting(false);
+
+  function onMove(e) {
+    const r = root.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    const y = (e.clientY - r.top) / r.height;
+    // Position the glow
+    const px = (x * 100).toFixed(2) + '%';
+    const py = (y * 100).toFixed(2) + '%';
+    glow.style.setProperty('--px', px);
+    glow.style.setProperty('--py', py);
+    // Tilt the glass
+    const rx = ( (0.5 - y) * 8 );
+    const ry = ( (x - 0.5) * 10 );
+    glass.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+    setTilting(true);
+    clearTimeout(tiltingTimeout);
+    tiltingTimeout = setTimeout(() => setTilting(false), 100);
+  }
+  function onLeave() {
+    glow.style.setProperty('--px', '50%');
+    glow.style.setProperty('--py', '50%');
+    glass.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+  }
+  root.addEventListener('pointermove', onMove);
+  root.addEventListener('pointerleave', onLeave);
+
+  // Details toggle
+  let open = false;
+  toggleDetails.addEventListener('click', () => {
+    open = !open;
+    details.setAttribute('data-open', open ? 'true' : 'false');
+    toggleDetails.textContent = open ? 'Hide changes' : 'Explore changes';
+  });
+
+  // Palette shuffler
+  const palettes = [
+    { name: 'Aurora', a: '#7bd4ff', b: '#a58bff', c: '#6bffb7', bg1: 'rgba(123,212,255,0.18)', bg2: 'rgba(165,139,255,0.18)' },
+    { name: 'Sunset', a: '#ffb36b', b: '#ff6bb6', c: '#ffd36b', bg1: 'rgba(255,179,107,0.18)', bg2: 'rgba(255,107,182,0.18)' },
+    { name: 'Lagoon', a: '#6bdcff', b: '#66ffa6', c: '#00bcd4', bg1: 'rgba(107,220,255,0.18)', bg2: 'rgba(0,188,212,0.18)' },
+    { name: 'Rosegold', a: '#ff9f7c', b: '#ff7e98', c: '#ffd1a3', bg1: 'rgba(255,159,124,0.18)', bg2: 'rgba(255,126,152,0.18)' },
+    { name: 'Midnight', a: '#9ac1ff', b: '#9e8bff', c: '#6ba0ff', bg1: 'rgba(154,193,255,0.18)', bg2: 'rgba(158,139,255,0.18)' }
+  ];
+  let idx = 0;
+  function applyPalette(p) {
+    root.style.setProperty('--accent', p.a);
+    root.style.setProperty('--accent-2', p.b);
+    root.style.setProperty('--accent-3', p.c);
+    root.style.background = `radial-gradient(1200px 500px at 20% -20%, ${p.bg1}, transparent 60%),
+                             radial-gradient(900px 700px at 110% 120%, ${p.bg2}, transparent 60%),
+                             linear-gradient(180deg, #0b0f14 0%, #0b1017 100%)`;
+    paletteName.textContent = p.name;
+  }
+  shuffleBtn.addEventListener('click', () => {
+    idx = (idx + 1) % palettes.length;
+    applyPalette(palettes[idx]);
+  });
+
+  // Respect reduced motion
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    cancelAnimationFrame(raf);
+    root.querySelectorAll('.orb').forEach(o => o.style.animation = 'none');
+    root.querySelector('.grid').style.animation = 'none';
+    ring.style.transition = 'none';
+  }
+})();
+</script>
       </section>
       <!-- END_EDITABLE -->
     <script>
