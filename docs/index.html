@@ -73,7 +73,461 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-12-30 02:20:56 EST</span></div>
+<div class="aura" data-theme="dusk">
+  <style>
+    .aura {
+      --bg1: #0f1028;
+      --bg2: #1a1444;
+      --bg3: #2a1f5a;
+      --text: #eaeaf2;
+      --muted: #b6b6c9;
+      --card: rgba(255,255,255,0.08);
+      --stroke: rgba(255,255,255,0.14);
+      --accent-h: 266;
+      --accent-s: 100%;
+      --accent-l: 72%;
+      --tempo: 28s;
+
+      position: relative;
+      color: var(--text);
+      border-radius: 18px;
+      padding: 28px;
+      overflow: hidden;
+      border: 1px solid var(--stroke);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.04);
+      background:
+        radial-gradient(1200px 800px at var(--mx,60%) var(--my,40%), hsla(var(--accent-h), 90%, 60%, 0.22), transparent 70%),
+        linear-gradient(140deg, var(--bg1) 0%, var(--bg2) 45%, var(--bg3) 100%);
+      isolation: isolate;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    .aura::before {
+      content: "";
+      position: absolute; inset: -20%;
+      background:
+        radial-gradient(80% 60% at 10% 10%, hsla(var(--accent-h), 80%, 65%, 0.20), transparent 60%),
+        radial-gradient(60% 70% at 90% 30%, hsla(calc(var(--accent-h) + 40), 70%, 60%, 0.18), transparent 60%),
+        radial-gradient(120% 120% at 50% 120%, hsla(calc(var(--accent-h) - 40), 80%, 50%, 0.12), transparent 60%);
+      filter: blur(24px) saturate(110%);
+      animation: swirl var(--tempo) linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .aura::after {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 80px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 80px);
+      mix-blend-mode: overlay;
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes swirl {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.05); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    /* Themes */
+    .aura[data-theme="dawn"]{
+      --bg1:#fff7f0; --bg2:#ffe7f2; --bg3:#eaf6ff;
+      --text:#17181a; --muted:#4a4f55;
+      --card: rgba(255,255,255,0.68);
+      --stroke: rgba(7,9,14,0.12);
+      --accent-h: 18; --accent-s: 92%; --accent-l: 46%;
+    }
+    .aura[data-theme="midnight"]{
+      --bg1:#050608; --bg2:#0a0f14; --bg3:#0b1b24;
+      --text:#e7f2ff; --muted:#a9b6c2;
+      --card: rgba(255,255,255,0.06);
+      --stroke: rgba(255,255,255,0.12);
+      --accent-h: 190; --accent-s: 95%; --accent-l: 60%;
+    }
+
+    /* Orbs */
+    .orb {
+      position: absolute; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, hsla(var(--accent-h), 95%, 70%, 0.55), hsla(var(--accent-h), 90%, 50%, 0.0) 70%);
+      filter: blur(14px);
+      opacity: 0.8; z-index: 0; pointer-events: none;
+      mix-blend-mode: screen;
+    }
+    .orb-a { width: 200px; height: 200px; top: -40px; left: -40px; animation: float-a calc(var(--tempo) * 1.1) ease-in-out infinite; }
+    .orb-b { width: 280px; height: 280px; bottom: -60px; right: -60px; animation: float-b calc(var(--tempo) * 1.4) ease-in-out infinite; }
+    .orb-c { width: 160px; height: 160px; top: 40%; left: 70%; animation: float-c calc(var(--tempo) * 0.9) ease-in-out infinite; }
+    @keyframes float-a { 0%,100%{ transform: translate(0,0);} 50%{ transform: translate(40px,30px);} }
+    @keyframes float-b { 0%,100%{ transform: translate(0,0) rotate(0deg);} 50%{ transform: translate(-50px,10px) rotate(2deg);} }
+    @keyframes float-c { 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(-20px,-40px) scale(1.08);} }
+
+    /* Content */
+    .content { position: relative; z-index: 1; }
+    .top {
+      display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: start;
+    }
+    .title {
+      display: flex; align-items: baseline; gap: 10px; margin: 0;
+      font-size: 32px; letter-spacing: -0.02em; font-weight: 700;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 12px 40px rgba(0,0,0,0.35);
+    }
+    .badge {
+      font-size: 12px; padding: 6px 10px; border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+      color: var(--muted);
+    }
+    .subtitle {
+      margin: 6px 0 0 0; color: var(--muted); font-size: 14px;
+    }
+
+    /* Segmented control */
+    .modes {
+      display: inline-flex; gap: 0; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--stroke);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.03);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+    .mode-btn {
+      appearance: none; border: 0; background: transparent; color: var(--muted);
+      padding: 10px 14px; font-weight: 600; font-size: 13px; cursor: pointer;
+      transition: color .2s ease, background .2s ease;
+    }
+    .mode-btn + .mode-btn { border-left: 1px solid var(--stroke); }
+    .mode-btn.active {
+      color: #0b0b0c;
+      background: hsl(var(--accent-h), var(--accent-s), 72%);
+      box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
+    }
+    .aura[data-theme="dawn"] .mode-btn.active { color: #16181a; }
+    .aura:not([data-theme="dawn"]) .mode-btn.active { color: #0b0b0c; }
+
+    /* Grid of cards */
+    .grid { margin-top: 22px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
+    .card {
+      position: relative; border-radius: 16px; border: 1px solid var(--stroke);
+      background: var(--card);
+      backdrop-filter: blur(14px) saturate(120%);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.03);
+      padding: 16px; transform-style: preserve-3d;
+      transition: transform .18s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .card:hover {
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+    .card::before {
+      content:""; position:absolute; inset:-1px; border-radius:16px;
+      background: linear-gradient(120deg, hsla(var(--accent-h), 90%, 60%, 0.16), transparent 35% 65%, hsla(calc(var(--accent-h) + 60), 90%, 60%, 0.14));
+      pointer-events:none; opacity:0; transition: opacity .25s ease;
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      padding: 1px; -webkit-mask-composite: xor; mask-composite: exclude;
+    }
+    .card:hover::before { opacity: 1; }
+    .card-hdr {
+      display:flex; align-items:center; justify-content:space-between; gap: 8px; margin-bottom: 10px;
+    }
+    .card-hdr .left {
+      display:flex; align-items:center; gap:10px;
+    }
+    .icon {
+      width: 20px; height: 20px; color: hsl(var(--accent-h), var(--accent-s), var(--accent-l));
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+    }
+    .card-title { font-size: 14px; font-weight: 700; letter-spacing: 0.02em; }
+    .hint { color: var(--muted); font-size: 12px; }
+
+    /* Mood Card */
+    .palette { display:flex; gap:8px; margin: 6px 0 10px 0; }
+    .swatch {
+      width: 44px; height: 34px; border-radius: 10px; border: 1px solid var(--stroke);
+      background: hsl(var(--accent-h), var(--accent-s), var(--accent-l));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 6px 16px rgba(0,0,0,0.25);
+      cursor: pointer; transition: transform .15s ease, box-shadow .2s ease;
+    }
+    .swatch:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 22px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.05); }
+
+    /* Motion Card */
+    .slider-wrap { display:flex; align-items:center; gap:12px; }
+    .range { appearance:none; width:100%; height: 32px; background: transparent; }
+    .range:focus { outline: none; }
+    .range::-webkit-slider-runnable-track { height:8px; border-radius:999px; background: linear-gradient(90deg, hsla(var(--accent-h),80%,60%,0.8), hsla(calc(var(--accent-h) + 40),80%,60%,0.8)); border: 1px solid var(--stroke); }
+    .range::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:22px; height:22px; border-radius:50%; margin-top:-7px; background:#fff; border:1px solid rgba(0,0,0,0.18); box-shadow: 0 2px 8px rgba(0,0,0,0.25), inset 0 0 0 3px hsl(var(--accent-h), 90%, 65%); cursor:pointer; }
+    .range::-moz-range-track { height:8px; border-radius:999px; background: linear-gradient(90deg, hsla(var(--accent-h),80%,60%,0.8), hsla(calc(var(--accent-h) + 40),80%,60%,0.8)); border: 1px solid var(--stroke); }
+    .range::-moz-range-thumb { width:22px; height:22px; border-radius:50%; background:#fff; border:1px solid rgba(0,0,0,0.18); box-shadow: 0 2px 8px rgba(0,0,0,0.25), inset 0 0 0 3px hsl(var(--accent-h), 90%, 65%); cursor:pointer; }
+    .bubble {
+      min-width: 86px; text-align:center; font-size:12px; font-weight:700; letter-spacing:0.03em;
+      padding: 6px 10px; border-radius: 10px; border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+      color: var(--text);
+    }
+
+    /* Quote Card */
+    .quote {
+      font-size: 14px; line-height: 1.6; color: var(--text); margin: 4px 0 0 0;
+    }
+    .quote em { color: hsl(var(--accent-h), var(--accent-s), calc(var(--accent-l) + 8%)); font-style: normal; }
+    .fade { animation: fade .5s ease; }
+    @keyframes fade { from { opacity: 0; transform: translateY(4px);} to { opacity: 1; transform: translateY(0);} }
+
+    /* Tilt interaction */
+    .tilt { transform: perspective(800px) rotateX(calc((var(--py, 0.5) - 0.5) * 6deg)) rotateY(calc((0.5 - var(--px, 0.5)) * 6deg)); }
+
+    /* Footer */
+    .footer {
+      margin-top: 18px; display:flex; justify-content: space-between; align-items:center; gap: 12px;
+      color: var(--muted); font-size: 12px;
+    }
+    .divider {
+      height: 1px; width: 100%; background: linear-gradient(90deg, transparent, var(--stroke), transparent);
+      opacity: 0.8; margin: 16px 0;
+    }
+    .actions { display:flex; gap: 10px; align-items:center; }
+
+    /* Ripple */
+    .ripple {
+      position:absolute; width:8px; height:8px; border-radius:50%;
+      background: radial-gradient(circle, hsla(var(--accent-h), 100%, 75%, 0.6) 0%, hsla(var(--accent-h), 100%, 60%, 0.0) 70%);
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: none; z-index: 1; animation: ripple .8s ease-out forwards;
+    }
+    @keyframes ripple {
+      to { transform: translate(-50%, -50%) scale(16); opacity: 0; }
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      .top { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+  <div class="orb orb-c"></div>
+
+  <div class="content">
+    <div class="top">
+      <div>
+        <h1 class="title">Kinetic Calm <span class="badge">interactive</span></h1>
+        <p class="subtitle">A minimal playground where quiet interfaces breathe.</p>
+      </div>
+      <div class="modes" role="tablist" aria-label="Theme">
+        <button class="mode-btn" data-theme="dawn" role="tab" aria-selected="false">Dawn</button>
+        <button class="mode-btn active" data-theme="dusk" role="tab" aria-selected="true">Dusk</button>
+        <button class="mode-btn" data-theme="midnight" role="tab" aria-selected="false">Midnight</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card tilt" data-tilt>
+        <div class="card-hdr">
+          <div class="left">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3c4 5-4 7 0 11s4-2 8 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="12" cy="12" r="7.5" stroke="currentColor" stroke-width="1.1" opacity=".6"/>
+            </svg>
+            <div>
+              <div class="card-title">Mood</div>
+              <div class="hint">Nudge the accent hue</div>
+            </div>
+          </div>
+        </div>
+        <div class="palette">
+          <button class="swatch" data-shift="-24" aria-label="Shift accent -24°"></button>
+          <button class="swatch" data-shift="0" aria-label="Reset accent"></button>
+          <button class="swatch" data-shift="+24" aria-label="Shift accent +24°"></button>
+          <button class="swatch" data-shift="+60" aria-label="Shift accent +60°"></button>
+        </div>
+        <div class="hint">Tip: try pairing with a different theme.</div>
+      </div>
+
+      <div class="card tilt" data-tilt>
+        <div class="card-hdr">
+          <div class="left">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 12h16M12 4v16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <div>
+              <div class="card-title">Motion</div>
+              <div class="hint">Tune the ambient tempo</div>
+            </div>
+          </div>
+        </div>
+        <div class="slider-wrap">
+          <input class="range" type="range" min="0" max="100" value="50" aria-label="Breeze speed">
+          <div class="bubble" data-bubble>Breeze: 1.0×</div>
+        </div>
+      </div>
+
+      <div class="card tilt" data-tilt>
+        <div class="card-hdr">
+          <div class="left">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 8h12M6 12h8M6 16h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <div>
+              <div class="card-title">Note</div>
+              <div class="hint">Little reminders for better taste</div>
+            </div>
+          </div>
+        </div>
+        <p class="quote" data-quote></p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="footer">
+      <div class="actions">
+        <span class="badge" aria-hidden="true">hsl(<span data-accent-readout></span>)</span>
+        <span class="hint">Drag, tap, and linger—everything responds.</span>
+      </div>
+      <span id="last-updated">Last updated: 2025-12-30 03:27:24 EST</span>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const root = document.currentScript.closest('.aura');
+      const modes = root.querySelectorAll('.mode-btn');
+      const swatches = root.querySelectorAll('.swatch');
+      const quoteEl = root.querySelector('[data-quote]');
+      const bubble = root.querySelector('[data-bubble]');
+      const range = root.querySelector('.range');
+      const readout = root.querySelector('[data-accent-readout]');
+      const last = root.querySelector('#last-updated');
+
+      // Pointer-based glow
+      root.addEventListener('pointermove', (e) => {
+        const rect = root.getBoundingClientRect();
+        const px = ((e.clientX - rect.left) / rect.width) * 100;
+        const py = ((e.clientY - rect.top) / rect.height) * 100;
+        root.style.setProperty('--mx', px + '%');
+        root.style.setProperty('--my', py + '%');
+      });
+
+      // Ripple
+      root.addEventListener('pointerdown', (e) => {
+        if (!root.contains(e.target)) return;
+        const r = document.createElement('span');
+        r.className = 'ripple';
+        const rect = root.getBoundingClientRect();
+        r.style.left = (e.clientX - rect.left) + 'px';
+        r.style.top = (e.clientY - rect.top) + 'px';
+        root.appendChild(r);
+        r.addEventListener('animationend', () => r.remove());
+      });
+
+      // Theme switching
+      modes.forEach(btn => {
+        btn.addEventListener('click', () => {
+          modes.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+          root.setAttribute('data-theme', btn.dataset.theme);
+          syncAccentReadout();
+          paintSwatches();
+        });
+      });
+
+      // Accent utilities
+      function getAccent() {
+        const styles = getComputedStyle(root);
+        const h = parseFloat(styles.getPropertyValue('--accent-h'));
+        const s = styles.getPropertyValue('--accent-s').trim();
+        const l = styles.getPropertyValue('--accent-l').trim();
+        return { h, s, l };
+      }
+      function setAccentHue(h){
+        // Normalize hue to [0,360)
+        const hue = ((h % 360) + 360) % 360;
+        root.style.setProperty('--accent-h', hue);
+        syncAccentReadout();
+        paintSwatches();
+      }
+      function syncAccentReadout(){
+        const {h, s, l} = getAccent();
+        readout.textContent = `${Math.round(h)}, ${s.replace('%','%')}, ${l.replace('%','%')}`;
+      }
+      function paintSwatches(){
+        const {h, s, l} = getAccent();
+        swatches.forEach(sw => {
+          const shift = parseFloat(sw.dataset.shift || 0);
+          const hue = ((h + shift) % 360 + 360) % 360;
+          sw.style.background = `hsl(${hue}, ${s}, ${l})`;
+        });
+      }
+      swatches.forEach(sw => {
+        sw.addEventListener('click', () => {
+          const shift = parseFloat(sw.dataset.shift || 0);
+          const {h} = getAccent();
+          setAccentHue(h + shift);
+        });
+      });
+
+      // Tilt on cards
+      root.querySelectorAll('[data-tilt]').forEach(card => {
+        const onMove = (e) => {
+          const rect = card.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width;
+          const py = (e.clientY - rect.top) / rect.height;
+          card.style.setProperty('--px', px.toFixed(4));
+          card.style.setProperty('--py', py.toFixed(4));
+        };
+        card.addEventListener('pointermove', onMove);
+        card.addEventListener('pointerleave', () => {
+          card.style.removeProperty('--px');
+          card.style.removeProperty('--py');
+        });
+      });
+
+      // Tempo control
+      function setTempoFromSlider(val){
+        // Map 0..100 -> 60s..12s (inverse)
+        const seconds = 60 - (val * 0.48);
+        root.style.setProperty('--tempo', seconds.toFixed(2) + 's');
+        const mult = 28 / seconds; // relative to default 28s
+        bubble.textContent = `Breeze: ${mult.toFixed(1)}×`;
+      }
+      range.addEventListener('input', (e) => setTempoFromSlider(parseFloat(e.target.value)));
+      setTempoFromSlider(parseFloat(range.value));
+
+      // Quotes
+      const quotes = [
+        'Balance is a moving target; design learns to breathe with it.',
+        'Let the interface whisper—users will lean in.',
+        'Space is a feature; let elements earn their place.',
+        'Delight hides in the in-betweens: delays, easing, echoes.',
+        'Clarity first. Then color. Then charisma.'
+      ];
+      let qi = 0;
+      function showQuote(i){
+        quoteEl.classList.remove('fade');
+        void quoteEl.offsetWidth; // reflow for animation restart
+        quoteEl.textContent = '“' + quotes[i] + '”';
+        quoteEl.classList.add('fade');
+      }
+      showQuote(qi);
+      setInterval(() => {
+        qi = (qi + 1) % quotes.length;
+        showQuote(qi);
+      }, 6000);
+
+      // Last updated
+      try {
+        const now = new Date();
+        const fmt = new Intl.DateTimeFormat(undefined, { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit', timeZoneName:'short' });
+        last.textContent = 'Last updated: ' + fmt.format(now);
+      } catch(e) {
+        last.textContent = 'Last updated: ' + new Date().toLocaleString();
+      }
+
+      // Initial paint
+      syncAccentReadout();
+      paintSwatches();
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
