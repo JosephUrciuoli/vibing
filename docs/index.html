@@ -73,443 +73,497 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div class="aurora" data-theme="quartz">
+<div class="valley" data-scene="dawn" data-zen="off" data-drift="on">
   <style>
-    .aurora {
-      --h: 208;
-      --s: 88%;
-      --l: 52%;
-      --ink: #0f1220;
-      --muted: #667086;
-      --bg1: #fff8fb;
-      --bg2: #eef6ff;
-      --glass: rgba(255,255,255,.55);
-      --edge: rgba(10,12,20,.15);
-      --ring: rgba(255,255,255,.7);
-      --glow: 0 24px 80px rgba(80,140,255,.22);
-      --tilt-x: 0deg;
-      --tilt-y: 0deg;
-      --mx: 50%;
-      --my: 50%;
+    .valley{
+      --h: 18;                 /* tint hue */
+      --mx: 50%; --my: 50%;    /* pointer light */
+      --dx: 0px; --dy: 0px;    /* parallax offsets */
+      --orbit: 210deg;         /* sun/moon angle */
+      --ink: #0f1320;
+      --muted: #6b7280;
+      --edge: rgba(15,19,32,.18);
+      --glass: rgba(255,255,255,.6);
+      --ring: rgba(255,255,255,.35);
+      --sky1: #fff3ea; --sky2: #c9e7ff;
+      --m1:#e6eef8; --m2:#cdd9ec; --m3:#a9b9d8;
+      --fog: rgba(255,255,255,.55);
       position: relative;
+      padding: 24px;
       border-radius: 28px;
-      padding: 26px;
-      color: var(--ink);
       background:
-        radial-gradient(1200px 900px at var(--mx) var(--my), hsla(var(--h),90%,80%,.25), transparent 55%),
-        conic-gradient(from 210deg at 70% 20%, rgba(255,255,255,.7), transparent 20%, transparent 80%, rgba(255,255,255,.6)),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
+        radial-gradient(900px 700px at var(--mx) var(--my), rgba(255,255,255,.65), transparent 65%),
+        linear-gradient(135deg, #f8fbff, #fefcff);
       border: 1px solid var(--edge);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 10px 36px rgba(0,0,0,.09);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.45),
+        0 20px 60px rgba(0,0,0,.08);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Helvetica, Arial;
       overflow: hidden;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Helvetica, Arial;
       isolation: isolate;
     }
-    .aurora::after{
+    .valley::after{
       content:"";
       position:absolute; inset:-20%;
       background:
-        radial-gradient(35% 20% at 10% 10%, rgba(255,255,255,.4), transparent 60%),
-        radial-gradient(28% 18% at 90% 8%, rgba(255,255,255,.25), transparent 60%),
-        radial-gradient(25% 18% at 80% 92%, rgba(255,255,255,.2), transparent 60%);
+        radial-gradient(30% 20% at 15% 12%, rgba(255,255,255,.4), transparent 60%),
+        radial-gradient(22% 18% at 90% 8%, rgba(255,255,255,.25), transparent 60%),
+        radial-gradient(26% 18% at 80% 92%, rgba(255,255,255,.2), transparent 60%);
       filter: blur(28px) saturate(115%);
-      pointer-events:none;
-      animation: floaty 36s linear infinite;
-      opacity:.8;
+      pointer-events:none; opacity:.85;
+      animation: float-soft 36s linear infinite;
     }
-    @keyframes floaty { 0%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(2%,-1%) rotate(180deg)} 100%{transform:translate(0,0) rotate(360deg)} }
+    @keyframes float-soft { 0%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(1.6%,-1.2%) rotate(180deg)} 100%{transform:translate(0,0) rotate(360deg)} }
 
-    /* Themes */
-    .aurora[data-theme="quartz"]{
-      --bg1:#fef9ff; --bg2:#eef6ff; --ink:#0e1119; --muted:#626b7c; --ring: rgba(255,255,255,.75);
+    /* Scenes */
+    .valley[data-scene="dawn"]{
+      --sky1:#fff3ea; --sky2:#cbe7ff;
+      --m1:#f1f6ff; --m2:#dfe9fb; --m3:#bfcbe7;
+      --fog: rgba(255,255,255,.6);
+      --ink:#0e1220; --muted:#5f6b7f;
     }
-    .aurora[data-theme="cobalt"]{
-      --bg1:#0b1020; --bg2:#121a2f; --ink:#e9f2ff; --muted:#a5b4cf; --glass: rgba(255,255,255,.08); --edge: rgba(255,255,255,.16); --ring: rgba(255,255,255,.2); --glow: 0 30px 90px rgba(120,180,255,.28);
+    .valley[data-scene="day"]{
+      --sky1:#cfe9ff; --sky2:#e9fbff;
+      --m1:#e7f2ff; --m2:#cfe3ff; --m3:#a9c7ef;
+      --fog: rgba(255,255,255,.5);
+      --ink:#0b1120; --muted:#56627a;
     }
-    .aurora[data-theme="noir"]{
-      --bg1:#0a0a0a; --bg2:#141414; --ink:#f2f2f2; --muted:#bdbdbd; --glass: rgba(255,255,255,.06); --edge: rgba(255,255,255,.12); --ring: rgba(255,255,255,.16); --glow: 0 30px 80px rgba(255,255,255,.08);
+    .valley[data-scene="dusk"]{
+      --sky1:#ffd8c9; --sky2:#d9d0ff;
+      --m1:#f0e7ff; --m2:#d9d6ff; --m3:#b9b8ea;
+      --fog: rgba(255,255,255,.42);
+      --ink:#0c0c16; --muted:#6f6885;
     }
-    .aurora[data-theme="blossom"]{
-      --bg1:#fff6f3; --bg2:#fff; --ink:#1c1512; --muted:#7d6e69; --ring: rgba(255,255,255,.7); --h: 12;
+    .valley[data-scene="midnight"]{
+      --sky1:#091222; --sky2:#101a2f;
+      --m1:#0f1a2e; --m2:#0b1424; --m3:#08101c;
+      --fog: rgba(255,255,255,.12);
+      --ink:#e9f2ff; --muted:#a3b2cb;
+      --glass: rgba(255,255,255,.1);
+      --ring: rgba(255,255,255,.2);
+      border-color: rgba(255,255,255,.14);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12), 0 24px 70px rgba(20,30,50,.45);
     }
 
     /* Header */
-    .top {
-      position: relative; z-index: 2;
-      display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: start;
+    .head{
+      position: relative; z-index: 3;
+      display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: start;
+      margin-bottom: 12px;
     }
-    .brand {
-      margin: 0; letter-spacing: -0.02em; font-weight: 900; line-height: 1.05;
-      font-size: 34px;
-      text-shadow: 0 1px 0 rgba(255,255,255,.6);
-    }
-    .sub { margin-top: 6px; font-size: 13px; color: var(--muted); }
-    .chips { display:flex; gap: 8px; padding: 6px; border-radius: 14px; border: 1px solid var(--edge); background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.5)); backdrop-filter: blur(10px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.4); }
-    .aurora[data-theme="cobalt"] .chips, .aurora[data-theme="noir"] .chips { background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)); }
-    .chip {
-      appearance: none; border: 0; border-radius: 10px; padding: 8px 12px; font-weight: 800; font-size: 12px; letter-spacing:.02em; cursor: pointer; color: var(--muted); background: transparent; transition: all .15s ease;
-    }
-    .chip.active { color: #0c0f16; background: hsl(var(--h), 95%, 75%); }
-    .aurora[data-theme="cobalt"] .chip.active, .aurora[data-theme="noir"] .chip.active { color: #0a0b0d; }
-
-    /* Orrery */
-    .stage {
-      position: relative; z-index: 1; margin-top: 16px;
-      border-radius: 22px; border: 1px solid var(--edge);
-      background: linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.05));
-      backdrop-filter: blur(12px) saturate(120%);
-      box-shadow: var(--glow), inset 0 0 0 1px rgba(255,255,255,.35);
-      overflow: hidden;
-      padding: 24px;
-    }
-    .halo {
-      position: relative; height: 420px; max-height: 62vh; min-height: 300px;
-      border-radius: 18px;
-      background:
-        radial-gradient(140% 80% at 50% 20%, hsla(var(--h),90%,65%,.18), transparent 60%),
-        repeating-linear-gradient(0deg, rgba(0,0,0,.02) 0 1px, transparent 1px 32px),
-        repeating-linear-gradient(90deg, rgba(0,0,0,.02) 0 1px, transparent 1px 32px);
-      transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
-      transition: transform .2s ease;
-    }
-    .rings {
-      position: absolute; inset: 0; display:grid; place-items:center;
-    }
-    .ring {
-      position: absolute; border-radius: 50%;
-      border: 1px dashed var(--ring);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
-      transform: rotate(0deg);
-      transition: filter .2s ease;
-    }
-    .r3 { width: 78%; height: 78%; }
-    .r2 { width: 58%; height: 58%; }
-    .r1 { width: 38%; height: 38%; }
-    .body {
-      position: absolute; top: 50%; left: 50%;
-      width: 18px; height: 18px; border-radius: 50%;
-      transform: translate(-50%,-50%) translateX(var(--push));
-      background: radial-gradient(circle at 30% 30%, #fff, hsl(var(--h), 95%, 60%));
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,.6),
-        0 8px 24px hsla(var(--h), 95%, 60%, .35),
-        0 0 120px hsla(var(--h), 98%, 70%, .3);
-    }
-    .planet.minute { width: 14px; height: 14px; filter: saturate(1.1); }
-    .star.second { width: 10px; height: 10px; background: radial-gradient(circle at 30% 30%, #fff, hsl(calc(var(--h)+40), 95%, 65%)); box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 6px 18px hsla(calc(var(--h)+40), 95%, 65%, .4); }
-
-    .r3 .body { --push: calc(39%); }
-    .r2 .body { --push: calc(29%); }
-    .r1 .body { --push: calc(19%); }
-
-    .hub {
-      position: absolute; inset: 0; display:grid; place-items:center; pointer-events:none;
-      text-align:center;
-    }
-    .time {
-      font-feature-settings: "tnum" on, "ss01" on; font-variant-numeric: tabular-nums;
-      font-weight: 900; letter-spacing: .02em; font-size: clamp(28px, 6vw, 52px);
-      background: linear-gradient(180deg, #000, hsla(var(--h),80%,30%,1));
+    .brand{
+      margin:0;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      font-size: clamp(24px, 4.6vw, 44px);
+      line-height: 1.02;
+      background: linear-gradient(180deg, #000, hsl(var(--h), 70%, 28%));
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      text-shadow: 0 1px 0 rgba(255,255,255,.8);
+      text-shadow: 0 1px 0 rgba(255,255,255,.85);
     }
-    .meta {
-      margin-top: 6px; font-size: 12px; color: var(--muted);
+    .tag{ margin-top: 6px; font-size: 13px; color: var(--muted); }
+
+    .chips{
+      display:flex; gap: 8px; align-items:center;
+      padding: 6px;
+      background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.55));
+      border:1px solid var(--ring);
+      border-radius: 14px;
+      backdrop-filter: blur(10px);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.45);
+    }
+    .valley[data-scene="midnight"] .chips{ background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08)); }
+    .chip{
+      appearance:none; border:0; border-radius:10px; padding:8px 12px; cursor:pointer;
+      font-weight: 800; font-size: 12px; letter-spacing:.02em; color: var(--muted);
+      background: transparent; transition: all .15s ease;
+    }
+    .chip[aria-selected="true"]{ color:#0c0f16; background: hsl(var(--h), 95%, 75%); }
+    .valley[data-scene="midnight"] .chip[aria-selected="true"]{ color:#0b0c11; }
+
+    /* Canvas */
+    .canvas{
+      position: relative; z-index: 1; overflow: hidden;
+      height: clamp(300px, 50vh, 520px);
+      border-radius: 22px;
+      border: 1px solid var(--ring);
+      background:
+        radial-gradient(140% 90% at 50% 20%, hsla(var(--h), 90%, 70%, .18), transparent 60%),
+        linear-gradient(180deg, var(--sky1), var(--sky2));
+      box-shadow: 0 28px 80px rgba(0,0,0,.12), inset 0 0 0 1px rgba(255,255,255,.38);
+      transform: translateZ(0);
+    }
+    .sky-noise{
+      position:absolute; inset:0; pointer-events:none; opacity:.06; mix-blend-mode: soft-light;
+      background:
+        repeating-conic-gradient(from 0deg, rgba(255,255,255,.6) 0 0.5deg, transparent 0.5deg 1deg);
+      filter: blur(.6px);
     }
 
-    /* Controls & palette */
-    .board { display:grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 14px; margin-top: 16px; }
-    .card {
-      position: relative; border-radius: 16px; padding: 14px;
-      background: var(--glass); border: 1px solid var(--edge);
+    /* Orb (sun/moon) */
+    .orb{ position:absolute; top:50%; left:50%; width:min(72vmin,640px); height:min(72vmin,640px); transform: translate(-50%,-50%) rotate(var(--orbit)); transition: transform .6s cubic-bezier(.2,.7,.2,1); pointer-events:none; }
+    .carrier{ position:absolute; top:50%; left:50%; transform: translate(-50%,-50%); }
+    .sun, .moon{
+      width: 64px; height: 64px; border-radius:50%;
+      box-shadow: 0 24px 80px hsla(var(--h), 95%, 65%, .35), 0 0 0 1px rgba(255,255,255,.7);
+      transform: translateY(-32vmin) translate(calc(var(--dx)*-0.15), calc(var(--dy)*-0.15));
+    }
+    .sun{ background: radial-gradient(circle at 28% 28%, #fff, hsl(var(--h), 95%, 62%)); }
+    .moon{ background: radial-gradient(circle at 30% 30%, #fff, #cfd8ff 60%, #a9b3ff); filter: saturate(110%); }
+    .valley[data-scene="midnight"] .sun{ display:none; }
+    .valley:not([data-scene="midnight"]) .moon{ display:none; }
+
+    /* Stars */
+    .stars{ position:absolute; inset:0; overflow:hidden; pointer-events:none; opacity:0; transition: opacity .6s ease; }
+    .star{ position:absolute; width:2px; height:2px; border-radius:50%; background: #fff; opacity:.9;
+      animation: twinkle var(--tw, 4s) ease-in-out infinite; filter: drop-shadow(0 0 6px rgba(255,255,255,.6));
+    }
+    @keyframes twinkle{ 0%,100%{transform:scale(1); opacity:.5} 50%{transform:scale(1.8); opacity:1} }
+    .valley[data-scene="midnight"] .stars{ opacity:1; }
+
+    /* Mountains */
+    .mounts{ position:absolute; inset:0; pointer-events:none; }
+    .m{ position:absolute; left:0; right:0; height: 44%; bottom:0; border-radius: 24px 24px 0 0; filter: saturate(110%); }
+    .m.m3{
+      height: 58%;
+      background:
+        radial-gradient(120% 120% at 10% 0%, rgba(255,255,255,.06), transparent 40%),
+        linear-gradient(180deg, var(--m3), color-mix(in oklab, var(--m3), black 14%));
+      transform: translate(calc(var(--dx)*0.10), calc(var(--dy)*0.06));
+    }
+    .m.m2{
+      height: 48%;
+      background:
+        radial-gradient(110% 110% at 80% 0%, rgba(255,255,255,.08), transparent 42%),
+        linear-gradient(180deg, var(--m2), color-mix(in oklab, var(--m2), black 12%));
+      clip-path: polygon(0 60%, 18% 40%, 28% 58%, 40% 42%, 64% 62%, 78% 44%, 100% 66%, 100% 100%, 0 100%);
+      transform: translate(calc(var(--dx)*0.16), calc(var(--dy)*0.10));
+    }
+    .m.m1{
+      height: 42%;
+      background:
+        radial-gradient(120% 120% at 40% 0%, rgba(255,255,255,.12), transparent 42%),
+        linear-gradient(180deg, var(--m1), color-mix(in oklab, var(--m1), black 10%));
+      clip-path: polygon(0 72%, 8% 62%, 16% 70%, 28% 58%, 44% 70%, 58% 56%, 76% 68%, 90% 60%, 100% 72%, 100% 100%, 0 100%);
+      transform: translate(calc(var(--dx)*0.22), calc(var(--dy)*0.14));
+    }
+
+    /* Fog */
+    .fog{ position:absolute; left:-20%; right:-20%; height: 22%; bottom: 10%;
+      background: radial-gradient(50% 60% at 50% 50%, var(--fog), transparent 60%);
+      filter: blur(18px); opacity:.8; mix-blend-mode: screen;
+      animation: drift var(--spd, 40s) linear infinite;
+      transform: translate(calc(var(--dx)*0.2), calc(var(--dy)*0.05));
+    }
+    .fog.f2{ bottom: 22%; filter: blur(22px); opacity:.65; --spd: 64s; animation-direction: reverse; }
+    .fog.f3{ bottom: 4%; filter: blur(26px); opacity:.75; --spd: 54s; }
+    @keyframes drift{ from{ transform: translateX(-14%) translateY(0) } to{ transform: translateX(14%) translateY(0) } }
+    .valley[data-drift="off"] .fog, .valley[data-drift="off"] .star{ animation-play-state: paused; }
+
+    /* Center time */
+    .center{
+      position:absolute; inset:0; display:grid; place-items:center; text-align:center; z-index:2; pointer-events:none;
+    }
+    .time{
+      font-feature-settings: "tnum" on, "ss01" on; font-variant-numeric: tabular-nums;
+      font-weight: 900; letter-spacing:.02em;
+      font-size: clamp(28px, 7.6vw, 64px);
+      background: linear-gradient(180deg, #000, hsl(var(--h), 78%, 30%));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 1px 0 rgba(255,255,255,.85);
+    }
+    .line2{ margin-top: 6px; font-size: 12px; color: var(--muted); }
+
+    /* Controls */
+    .panel{
+      position: relative; z-index: 3;
+      display:grid; grid-template-columns: 1.1fr .9fr .9fr; gap: 12px; margin-top: 14px;
+    }
+    .card{
+      background: var(--glass);
+      border: 1px solid var(--ring);
+      border-radius: 16px;
+      padding: 12px;
       backdrop-filter: blur(12px) saturate(120%);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.4), 0 10px 26px rgba(0,0,0,.12);
-      transition: transform .16s ease, box-shadow .25s ease, background .25s ease;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.45), 0 12px 28px rgba(0,0,0,.12);
+      transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
     }
-    .aurora[data-theme="cobalt"] .card, .aurora[data-theme="noir"] .card { background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)); }
-    .card:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,.16), inset 0 0 0 1px rgba(255,255,255,.5); }
-    .label { display:flex; align-items:center; gap:8px; font-weight: 800; font-size: 12px; letter-spacing:.03em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-    .dot { width:10px; height:10px; border-radius:50%; background:hsl(var(--h), var(--s), var(--l)); box-shadow: 0 0 0 1px rgba(0,0,0,.2), 0 6px 16px hsla(var(--h), 95%, 60%, .35); }
-    .btn {
-      appearance: none; border: 1px solid var(--edge); border-radius: 12px;
-      background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.55));
-      padding: 10px 14px; font-weight: 900; font-size: 12px; letter-spacing:.02em; cursor: pointer;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.45), 0 6px 16px rgba(0,0,0,.08);
-      color: var(--ink); transition: transform .08s ease, box-shadow .2s ease;
+    .valley[data-scene="midnight"] .card{ background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08)); }
+    .card:hover{ transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,.16), inset 0 0 0 1px rgba(255,255,255,.55); }
+    .label{ display:flex; align-items:center; gap:8px; font-size:12px; font-weight:800; letter-spacing:.03em; text-transform: uppercase; color: var(--muted); margin-bottom:8px; }
+    .dot{ width:10px; height:10px; border-radius:50%; background:hsl(var(--h), 90%, 62%); box-shadow: 0 0 0 1px rgba(0,0,0,.18), 0 6px 16px hsla(var(--h), 90%, 60%, .35); }
+
+    .btn{
+      appearance:none; border: 1px solid var(--ring); border-radius: 12px; padding: 10px 14px; cursor:pointer;
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.6));
+      color: var(--ink); font-weight: 900; font-size: 12px; letter-spacing:.02em;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.5), 0 8px 18px rgba(0,0,0,.1);
+      transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
     }
-    .btn:hover{ box-shadow: inset 0 0 0 1px rgba(255,255,255,.6), 0 10px 26px rgba(0,0,0,.12); }
+    .btn:hover{ box-shadow: inset 0 0 0 1px rgba(255,255,255,.65), 0 12px 26px rgba(0,0,0,.14); }
     .btn:active{ transform: translateY(1px); }
-    .aurora[data-theme="cobalt"] .btn, .aurora[data-theme="noir"] .btn { background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.08)); color: var(--ink); }
+    .valley[data-scene="midnight"] .btn{ background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.1)); color: var(--ink); }
 
-    .group { display:flex; flex-wrap: wrap; gap: 8px; }
-
-    .slider { appearance:none; width: 100%; height: 36px; background: transparent; }
-    .slider:focus{ outline:none; }
-    .slider::-webkit-slider-runnable-track { height:10px; border-radius:999px; border:1px solid var(--edge); background: linear-gradient(90deg, hsla(var(--h),80%,60%,.9), hsla(calc(var(--h)+70),80%,60%,.9)); }
-    .slider::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:22px; height:22px; border-radius:50%; margin-top:-6px; background:#fff; border:1px solid rgba(0,0,0,.18); box-shadow: 0 3px 10px rgba(0,0,0,.2), inset 0 0 0 4px hsl(var(--h),95%,70%); cursor:pointer; }
-    .slider::-moz-range-track { height:10px; border-radius:999px; border:1px solid var(--edge); background: linear-gradient(90deg, hsla(var(--h),80%,60%,.9), hsla(calc(var(--h)+70),80%,60%,.9)); }
-    .slider::-moz-range-thumb { width:22px; height:22px; border-radius:50%; background:#fff; border:1px solid rgba(0,0,0,.18); box-shadow: 0 3px 10px rgba(0,0,0,.2), inset 0 0 0 4px hsl(var(--h),95%,70%); cursor:pointer; }
-    .bubble {
-      min-width: 86px; text-align:center; font-weight: 800; font-size: 12px; letter-spacing:.03em; padding: 8px 10px; border-radius: 12px;
-      border: 1px solid var(--edge);
-      background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.55));
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.5);
-      color: var(--ink);
+    .row{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+    .range{ appearance:none; width: 100%; height: 34px; background: transparent; }
+    .range:focus{ outline:none; }
+    .range::-webkit-slider-runnable-track{ height:10px; border-radius:999px; border:1px solid var(--ring); background: linear-gradient(90deg, hsla(var(--h), 90%, 62%, .95), hsla(calc(var(--h)+70), 90%, 62%, .95)); }
+    .range::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:22px; height:22px; border-radius:50%; margin-top:-6px; background:#fff; border:1px solid rgba(0,0,0,.18); box-shadow: 0 3px 10px rgba(0,0,0,.2), inset 0 0 0 4px hsl(var(--h),95%,70%); cursor:pointer; }
+    .range::-moz-range-track{ height:10px; border-radius:999px; border:1px solid var(--ring); background: linear-gradient(90deg, hsla(var(--h), 90%, 62%, .95), hsla(calc(var(--h)+70), 90%, 62%, .95)); }
+    .range::-moz-range-thumb{ width:22px; height:22px; border-radius:50%; background:#fff; border:1px solid rgba(0,0,0,.18); box-shadow: 0 3px 10px rgba(0,0,0,.2), inset 0 0 0 4px hsl(var(--h),95%,70%); cursor:pointer; }
+    .bubble{
+      min-width: 88px; text-align:center; font-weight: 800; font-size: 12px; letter-spacing:.03em; padding: 8px 10px; border-radius: 12px;
+      border:1px solid var(--ring); background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.6));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.5); color: var(--ink);
     }
-    .aurora[data-theme="cobalt"] .bubble, .aurora[data-theme="noir"] .bubble { background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)); }
+    .valley[data-scene="midnight"] .bubble{ background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.1)); }
 
-    .swatches { display:flex; flex-wrap: wrap; gap: 8px; }
-    .sw { width: 34px; height: 28px; border-radius: 10px; cursor: pointer; border:1px solid var(--edge);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 6px 16px rgba(0,0,0,.12); transition: transform .12s ease, box-shadow .2s ease;
+    .quote{ font-size: 14px; line-height:1.6; margin:2px 0 0 0; }
+    .quote em{ color: hsl(var(--h), 88%, 50%); font-style: normal; }
+    .fade{ animation: fade .5s ease; }
+    @keyframes fade{ from{ opacity:0; transform: translateY(4px)} to{ opacity:1; transform: none } }
+
+    .rule{ height:1px; width:100%; margin: 14px 0; background: linear-gradient(90deg, transparent, var(--ring), transparent); opacity:.9; }
+    .foot{ display:flex; justify-content: space-between; align-items:center; gap:10px; color: var(--muted); font-size: 12px; }
+    .pill{ padding:6px 10px; border-radius: 999px; border:1px solid var(--ring); background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.6)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.55); }
+    .valley[data-scene="midnight"] .pill{ background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.1)); }
+
+    /* Zen mode: reduce motion & saturation */
+    .valley[data-zen="on"]{
+      filter: saturate(.9);
     }
-    .sw:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 24px rgba(0,0,0,.18), inset 0 0 0 1px rgba(255,255,255,.5); }
-
-    .motto { font-size: 14px; line-height: 1.6; margin: 4px 0 0 0; }
-    .motto em { color: hsl(var(--h), var(--s), calc(var(--l) + 8%)); font-style: normal; }
-    .fade { animation: fade .5s ease; }
-    @keyframes fade { from{ opacity: 0; transform: translateY(4px);} to{ opacity: 1; transform: translateY(0);} }
-
-    .line { height:1px; width:100%; background: linear-gradient(90deg, transparent, var(--edge), transparent); opacity:.9; margin:16px 0; }
-    .foot { display:flex; justify-content: space-between; align-items:center; gap:10px; color: var(--muted); font-size: 12px; }
-    .pill { padding: 6px 10px; border-radius: 999px; border: 1px solid var(--edge); background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.55)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.5); }
-    .aurora[data-theme="cobalt"] .pill, .aurora[data-theme="noir"] .pill { background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.08)); }
-
-    /* Focus mode */
-    .aurora[data-focus="on"] .board, .aurora[data-focus="on"] .top .chips { filter: blur(2px) saturate(.8); opacity:.7; }
-    .aurora[data-focus="on"] .halo .ring { filter: brightness(1.1) saturate(1.1); }
+    .valley[data-zen="on"] .fog,
+    .valley[data-zen="on"] .star{
+      animation-duration: calc(var(--spd, 40s) * 1.6);
+    }
+    .valley[data-zen="on"] .canvas{ box-shadow: 0 22px 60px rgba(0,0,0,.10), inset 0 0 0 1px rgba(255,255,255,.34); }
 
     /* Responsive */
     @media (max-width: 980px){
-      .top { grid-template-columns: 1fr; }
-      .board { grid-template-columns: 1fr; }
-      .halo { height: 340px; }
+      .head{ grid-template-columns: 1fr; }
+      .panel{ grid-template-columns: 1fr; }
+      .canvas{ height: 320px; }
     }
   </style>
 
-  <div class="top">
+  <div class="head">
     <div>
-      <h1 class="brand">Orbit Atelier</h1>
-      <div class="sub">A living time poster. Spin the cosmos. Tune the hue.</div>
+      <h1 class="brand">Quiet Valley</h1>
+      <div class="tag">An ambient clock-scape. Slide the tint. Drift the fog. Change the sky.</div>
     </div>
-    <div class="chips" role="tablist" aria-label="Theme">
-      <button class="chip active" data-theme="quartz" role="tab" aria-selected="true">Quartz</button>
-      <button class="chip" data-theme="cobalt" role="tab" aria-selected="false">Cobalt</button>
-      <button class="chip" data-theme="blossom" role="tab" aria-selected="false">Blossom</button>
-      <button class="chip" data-theme="noir" role="tab" aria-selected="false">Noir</button>
-    </div>
-  </div>
-
-  <div class="stage" aria-label="Orrery timekeeper">
-    <div class="halo" data-tilt>
-      <div class="rings">
-        <div class="ring r3" style="transform: rotate(var(--hour))">
-          <i class="body planet hour" aria-hidden="true"></i>
-        </div>
-        <div class="ring r2" style="transform: rotate(var(--min))">
-          <i class="body planet minute" aria-hidden="true"></i>
-        </div>
-        <div class="ring r1" style="transform: rotate(var(--sec))">
-          <i class="body star second" aria-hidden="true"></i>
-        </div>
-      </div>
-      <div class="hub">
-        <div class="time" data-clock>00:00:00</div>
-        <div class="meta"><span class="dot"></span> Hue <span data-hue></span> • Tempo <span data-tempo>1x</span></div>
-      </div>
+    <div class="chips" role="tablist" aria-label="Scene">
+      <button class="chip" data-scene="dawn" role="tab" aria-selected="true">Dawn</button>
+      <button class="chip" data-scene="day" role="tab" aria-selected="false">Day</button>
+      <button class="chip" data-scene="dusk" role="tab" aria-selected="false">Dusk</button>
+      <button class="chip" data-scene="midnight" role="tab" aria-selected="false">Midnight</button>
     </div>
   </div>
 
-  <div class="board">
-    <div class="card">
-      <div class="label"><span class="dot"></span> Palette</div>
-      <div class="swatches" data-swatches></div>
-      <div class="sub" style="margin-top:8px;">Current: hsl(<span data-hsl></span>)</div>
-    </div>
+  <div class="canvas" aria-label="Ambient landscape clock" data-tilt>
+    <div class="sky-noise"></div>
 
-    <div class="card">
-      <div class="label"><span class="dot"></span> Motion</div>
-      <div class="group" style="margin-bottom:8px;">
-        <button class="btn" data-play>Pause</button>
-        <button class="btn" data-focus>Focus</button>
-        <button class="btn" data-glow>Glow+</button>
-      </div>
-      <div class="group">
-        <input class="slider" type="range" min="0" max="200" value="100" aria-label="Tempo">
-        <div class="bubble" data-bubble>1.0x</div>
+    <div class="orb">
+      <div class="carrier">
+        <i class="sun" aria-hidden="true"></i>
+        <i class="moon" aria-hidden="true"></i>
       </div>
     </div>
 
-    <div class="card">
-      <div class="label"><span class="dot"></span> Note</div>
-      <p class="motto" data-quote></p>
+    <div class="stars" aria-hidden="true" data-stars></div>
+
+    <div class="m m3"></div>
+    <div class="m m2"></div>
+    <div class="m m1"></div>
+
+    <div class="fog f2"></div>
+    <div class="fog f1"></div>
+    <div class="fog f3"></div>
+
+    <div class="center">
+      <div class="time" data-clock>00:00:00</div>
+      <div class="line2"><span class="dot"></span> Hue <span data-hue>18°</span> • Drift <span data-drift-state>On</span></div>
     </div>
   </div>
 
-  <div class="line"></div>
+  <div class="panel">
+    <div class="card">
+      <div class="label"><span class="dot"></span> Scenes</div>
+      <div class="row" role="group" aria-label="Select scene">
+        <button class="btn" data-scene-btn="dawn">Dawn</button>
+        <button class="btn" data-scene-btn="day">Day</button>
+        <button class="btn" data-scene-btn="dusk">Dusk</button>
+        <button class="btn" data-scene-btn="midnight">Midnight</button>
+      </div>
+      <p class="quote" data-quote></p>
+    </div>
+
+    <div class="card">
+      <div class="label"><span class="dot"></span> Tint</div>
+      <div class="row" style="margin-bottom:8px;">
+        <input class="range" type="range" min="0" max="359" value="18" aria-label="Hue">
+        <div class="bubble" data-bubble>18°</div>
+      </div>
+      <div class="row">
+        <button class="btn" data-zen>Zen Mode</button>
+        <button class="btn" data-drift>Pause Drift</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label"><span class="dot"></span> Light</div>
+      <div class="row">
+        <button class="btn" data-center>Center Light</button>
+        <button class="btn" data-random>Randomize</button>
+      </div>
+      <div class="tag" style="margin-top:8px;">Pointer guides a soft spotlight and parallax.</div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
   <div class="foot">
-    <span class="pill">Mode: <span data-mode>Quartz</span></span>
-    <span id="last-updated">Last updated: 2025-12-30 05:21:09 EST</span>
+    <span class="pill">Scene: <span data-scene-name>Dawn</span></span>
+    <span id="last-updated">Last updated: 2025-12-30 06:17:32 EST</span>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.aurora');
-      const halo = root.querySelector('.halo');
-      const hourRing = root.querySelector('.r3');
-      const minRing = root.querySelector('.r2');
-      const secRing = root.querySelector('.r1');
-      const clock = root.querySelector('[data-clock]');
+      const root = document.currentScript.closest('.valley');
+      const canvas = root.querySelector('.canvas');
       const chips = root.querySelectorAll('.chip');
-      const modeReadout = root.querySelector('[data-mode]');
+      const sceneBtns = root.querySelectorAll('[data-scene-btn]');
+      const sceneName = root.querySelector('[data-scene-name]');
+      const driftState = root.querySelector('[data-drift-state]');
       const hueReadout = root.querySelector('[data-hue]');
-      const hslReadout = root.querySelector('[data-hsl]');
-      const swWrap = root.querySelector('[data-swatches]');
       const bubble = root.querySelector('[data-bubble]');
-      const tempoReadout = root.querySelector('[data-tempo]');
-      const slider = root.querySelector('.slider');
-      const playBtn = root.querySelector('[data-play]');
-      const focusBtn = root.querySelector('[data-focus]');
-      const glowBtn = root.querySelector('[data-glow]');
-      const quoteEl = root.querySelector('[data-quote]');
+      const range = root.querySelector('.range');
+      const zenBtn = root.querySelector('[data-zen]');
+      const driftBtn = root.querySelector('[data-drift]');
+      const centerBtn = root.querySelector('[data-center]');
+      const randomBtn = root.querySelector('[data-random]');
+      const clock = root.querySelector('[data-clock]');
+      const starsWrap = root.querySelector('[data-stars]');
       const last = root.querySelector('#last-updated');
+      const quoteEl = root.querySelector('[data-quote]');
 
-      let playing = true;
-      let glow = false;
-      let speed = 1;
-      let scrubbing = false;
-
-      function cssVar(name){ return getComputedStyle(root).getPropertyValue(name).trim(); }
-      function setHue(h){
-        const hue = ((h%360)+360)%360;
-        root.style.setProperty('--h', hue);
-        hueReadout.textContent = Math.round(hue) + '°';
-        hslReadout.textContent = `${Math.round(hue)}, ${cssVar('--s')}, ${cssVar('--l')}`;
-        paintSwatches();
-      }
-
-      function paintSwatches(){
-        const h = parseFloat(cssVar('--h')) || 208;
-        const s = cssVar('--s'); const l = cssVar('--l');
-        const hues = [h-60, h-30, h, h+28, h+64, h+100, h+150, h+200];
-        swWrap.innerHTML = '';
-        hues.forEach(H=>{
-          const hue = ((H%360)+360)%360;
-          const b = document.createElement('button');
-          b.className='sw';
-          b.style.background = `linear-gradient(180deg, hsl(${hue}, ${s}, ${l}), hsl(${hue}, ${s}, calc(${l} - 10%)))`;
-          b.title = `Hue ${Math.round(hue)}°`;
-          b.addEventListener('click', ()=> setHue(hue));
-          swWrap.appendChild(b);
-        });
-      }
-
-      function setTheme(th){
-        root.setAttribute('data-theme', th);
-        chips.forEach(c=>{ c.classList.toggle('active', c.dataset.theme===th); c.setAttribute('aria-selected', String(c.dataset.theme===th)); });
-        modeReadout.textContent = th[0].toUpperCase() + th.slice(1);
-      }
-
-      // Time engine
-      function nowAngles(){
-        const d = new Date();
-        const ms = d.getMilliseconds();
-        const s = d.getSeconds() + ms/1000;
-        const m = d.getMinutes() + s/60;
-        const h = d.getHours() + m/60;
-        return {
-          sec: s * 6,
-          min: m * 6,
-          hour: h * 30
-        };
-      }
-
-      function fmtTime(d){
-        const hh = String(d.getHours()).padStart(2,'0');
-        const mm = String(d.getMinutes()).padStart(2,'0');
-        const ss = String(d.getSeconds()).padStart(2,'0');
-        return `${hh}:${mm}:${ss}`;
-      }
-
-      let rafId = 0;
-      function tick(){
-        if(!playing){ return; }
-        const d = new Date(Date.now() * speed - (speed-1)*Date.now()); // simple multiplier effect
-        const a = nowAngles();
-        hourRing.style.setProperty('--hour', a.hour + 'deg');
-        minRing.style.setProperty('--min', a.min + 'deg');
-        secRing.style.setProperty('--sec', a.sec + 'deg');
-        clock.textContent = fmtTime(d);
-        rafId = requestAnimationFrame(tick);
-      }
-
-      // Tempo control
-      slider.addEventListener('input', e=>{
-        const v = parseInt(e.target.value,10);
-        speed = Math.max(0, v)/100;
-        bubble.textContent = speed.toFixed(1) + 'x';
-        tempoReadout.textContent = bubble.textContent;
-        if(playing){
-          cancelAnimationFrame(rafId);
-          rafId = requestAnimationFrame(tick);
+      // Stars
+      function paintStars(){
+        starsWrap.innerHTML = '';
+        const n = 120;
+        for(let i=0;i<n;i++){
+          const s = document.createElement('i');
+          s.className = 'star';
+          const x = Math.random()*100;
+          const y = Math.pow(Math.random(), 1.2)*100; // cluster upper
+          const size = Math.random() < .82 ? 1.5 : 2.2;
+          const tw = (3 + Math.random()*4).toFixed(2) + 's';
+          s.style.left = x + '%';
+          s.style.top = y + '%';
+          s.style.width = s.style.height = size + 'px';
+          s.style.setProperty('--tw', tw);
+          starsWrap.appendChild(s);
         }
-      });
-
-      // Buttons
-      playBtn.addEventListener('click', ()=>{
-        playing = !playing;
-        playBtn.textContent = playing ? 'Pause' : 'Play';
-        if(playing){ cancelAnimationFrame(rafId); rafId = requestAnimationFrame(tick); }
-        else { cancelAnimationFrame(rafId); }
-      });
-
-      focusBtn.addEventListener('click', ()=>{
-        const on = root.getAttribute('data-focus') === 'on';
-        root.setAttribute('data-focus', on ? 'off' : 'on');
-        focusBtn.textContent = on ? 'Focus' : 'Focus ✓';
-      });
-
-      glowBtn.addEventListener('click', ()=>{
-        glow = !glow;
-        halo.style.boxShadow = glow ? '0 40px 120px hsla(var(--h), 95%, 65%, .35), inset 0 0 0 1px rgba(255,255,255,.4)' : '';
-        glowBtn.textContent = glow ? 'Glow+ ✓' : 'Glow+';
-      });
-
-      // Theme chips
-      chips.forEach(ch=>{
-        ch.addEventListener('click', ()=> setTheme(ch.dataset.theme));
-      });
-
-      // Pointer tilt & light
-      halo.addEventListener('pointermove', (e)=>{
-        const r = halo.getBoundingClientRect();
-        const x = (e.clientX - r.left)/r.width;
-        const y = (e.clientY - r.top)/r.height;
-        root.style.setProperty('--mx', (x*100)+'%');
-        root.style.setProperty('--my', (y*100)+'%');
-        root.style.setProperty('--tilt-y', ((x-0.5)*6)+'deg');
-        root.style.setProperty('--tilt-x', (-(y-0.5)*6)+'deg');
-      });
-      halo.addEventListener('pointerleave', ()=>{
-        root.style.setProperty('--tilt-x','0deg');
-        root.style.setProperty('--tilt-y','0deg');
-      });
+      }
+      paintStars();
 
       // Quotes
       const quotes = [
-        'Design for the hand that isn’t touching the screen: <em>time</em>.',
-        'Let motion whisper; let contrast speak with <em>calm</em>.',
-        'One good curve will outlive a dozen <em>features</em>.',
-        'Space is interface; rhythm is <em>respect</em>.',
-        'A gentle gradient is a promise kept <em>slowly</em>.'
+        'Let the seconds arrive like fog along a quiet <em>ridge</em>.',
+        'Design is the slope the light decides to <em>rest</em> on.',
+        'A horizon is a promise with excellent <em>spacing</em>.',
+        'Calm isn’t silence; it’s pace with <em>grace</em>.',
+        'Good UI is a landscape: depth, rhythm, and a little <em>weather</em>.'
       ];
-      let qi = Math.floor(Math.random()*quotes.length);
-      function showQ(i){
+      function say(q){
         quoteEl.classList.remove('fade'); void quoteEl.offsetWidth;
-        quoteEl.innerHTML = '“' + quotes[i] + '”';
+        quoteEl.innerHTML = '“' + q + '”';
         quoteEl.classList.add('fade');
       }
-      showQ(qi);
-      setInterval(()=>{ qi=(qi+1)%quotes.length; showQ(qi); }, 6000);
+      say(quotes[Math.floor(Math.random()*quotes.length)]);
+      setInterval(()=> say(quotes[Math.floor(Math.random()*quotes.length)]), 7000);
+
+      // Scene toggle
+      function setScene(s){
+        root.setAttribute('data-scene', s);
+        chips.forEach(c => c.setAttribute('aria-selected', String(c.dataset.scene === s)));
+        sceneName.textContent = s[0].toUpperCase() + s.slice(1);
+      }
+      chips.forEach(c => c.addEventListener('click', ()=> setScene(c.dataset.scene)));
+      sceneBtns.forEach(b => b.addEventListener('click', ()=> setScene(b.getAttribute('data-scene-btn'))));
+
+      // Hue
+      function clampHue(h){ return ((h%360)+360)%360; }
+      function setHue(h){
+        const hh = clampHue(h);
+        root.style.setProperty('--h', hh);
+        bubble.textContent = hh + '°';
+        hueReadout.textContent = hh + '°';
+      }
+      range.addEventListener('input', e => setHue(parseInt(e.target.value, 10)));
+
+      // Drift
+      function setDrift(on){
+        root.setAttribute('data-drift', on? 'on' : 'off');
+        driftState.textContent = on? 'On' : 'Off';
+        driftBtn.textContent = on? 'Pause Drift' : 'Resume Drift';
+      }
+      driftBtn.addEventListener('click', ()=>{
+        const on = root.getAttribute('data-drift') !== 'off';
+        setDrift(!on);
+      });
+
+      // Zen
+      function toggleZen(){
+        const on = root.getAttribute('data-zen') === 'on';
+        root.setAttribute('data-zen', on? 'off' : 'on');
+        zenBtn.textContent = on? 'Zen Mode' : 'Zen Mode ✓';
+      }
+      zenBtn.addEventListener('click', toggleZen);
+
+      // Light controls
+      centerBtn.addEventListener('click', ()=>{
+        root.style.setProperty('--mx', '50%');
+        root.style.setProperty('--my', '38%');
+        root.style.setProperty('--dx', '0px');
+        root.style.setProperty('--dy', '0px');
+      });
+      randomBtn.addEventListener('click', ()=>{
+        const x = (10 + Math.random()*80).toFixed(2) + '%';
+        const y = (10 + Math.random()*70).toFixed(2) + '%';
+        root.style.setProperty('--mx', x);
+        root.style.setProperty('--my', y);
+      });
+
+      // Pointer parallax
+      canvas.addEventListener('pointermove', (e)=>{
+        const r = canvas.getBoundingClientRect();
+        const x = (e.clientX - r.left)/r.width;
+        const y = (e.clientY - r.top)/r.height;
+        root.style.setProperty('--mx', (x*100) + '%');
+        root.style.setProperty('--my', (y*100) + '%');
+        const dx = ((x - .5) * 40).toFixed(2) + 'px';
+        const dy = ((y - .5) * 24).toFixed(2) + 'px';
+        root.style.setProperty('--dx', dx);
+        root.style.setProperty('--dy', dy);
+      });
+      canvas.addEventListener('pointerleave', ()=>{
+        root.style.setProperty('--dx', '0px');
+        root.style.setProperty('--dy', '0px');
+      });
+
+      // Time & orbit
+      function updateClock(){
+        const d = new Date();
+        const hh = String(d.getHours()).padStart(2,'0');
+        const mm = String(d.getMinutes()).padStart(2,'0');
+        const ss = String(d.getSeconds()).padStart(2,'0');
+        clock.textContent = `${hh}:${mm}:${ss}`;
+        const dayFrac = (d.getHours()*3600 + d.getMinutes()*60 + d.getSeconds()) / 86400;
+        const angle = (dayFrac * 360) - 90; // start near left horizon
+        root.style.setProperty('--orbit', angle + 'deg');
+        requestAnimationFrame(updateClock);
+      }
+      requestAnimationFrame(updateClock);
 
       // Last updated
       try{
@@ -519,11 +573,11 @@
       } catch(e){ last.textContent = 'Last updated: ' + new Date().toLocaleString(); }
 
       // Init
-      setHue(parseFloat(cssVar('--h')) || 208);
-      setTheme('quartz');
-      playing = true;
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(tick);
+      setHue(parseInt(range.value, 10));
+      setScene('dawn');
+      setDrift(true);
+      // Center light slightly above center for depth
+      root.style.setProperty('--mx', '50%'); root.style.setProperty('--my', '38%');
     })();
   </script>
 </div>
