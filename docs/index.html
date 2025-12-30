@@ -73,7 +73,497 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2025-12-29 18:17:58 EST</span></div>
+<div id="aurora1613" role="region" aria-label="Aurora microgallery">
+  <style>
+    /* Scope everything to #aurora1613 */
+    #aurora1613 {
+      --fg: #ecf1ff;
+      --muted: rgba(236,241,255,0.74);
+      --panel-bg: rgba(10,12,20,0.58);
+      --stroke: rgba(255,255,255,0.1);
+      --chip-bg: rgba(255,255,255,0.06);
+      --chip-active: rgba(255,255,255,0.16);
+      --glass-glow: 0 20px 60px rgba(72, 180, 255, 0.25);
+      --pace: 1;
+      --ax: 0;
+      --ay: 0;
+      --r: 18px;
+
+      /* Theme seeds (dusk default) */
+      --c1: #5a7dff;
+      --c2: #a86bff;
+      --c3: #2be4c7;
+      --bg1: #0a0d18;
+      --bg2: #0b0f1f;
+
+      position: relative;
+      border-radius: var(--r);
+      overflow: hidden;
+      color: var(--fg);
+      isolation: isolate;
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.06) inset,
+        0 40px 80px rgba(0,0,0,0.45);
+      background: radial-gradient(140% 120% at calc(50% + var(--ax)*4%) calc(10% + var(--ay)*4%),
+                  rgba(255,255,255,0.05), transparent 35%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    /* Themes */
+    #aurora1613.theme-dawn {
+      --c1: #ff9e7a;
+      --c2: #ffcc66;
+      --c3: #7ae2ff;
+      --bg1: #0f0c1b;
+      --bg2: #1a1230;
+      --glass-glow: 0 20px 60px rgba(255, 167, 117, 0.25);
+    }
+    #aurora1613.theme-noon {
+      --c1: #4be4ff;
+      --c2: #74ffb2;
+      --c3: #ffe66d;
+      --bg1: #07161d;
+      --bg2: #0a2230;
+      --glass-glow: 0 20px 60px rgba(116, 255, 178, 0.25);
+    }
+    #aurora1613.theme-dusk {
+      --c1: #5a7dff;
+      --c2: #a86bff;
+      --c3: #2be4c7;
+      --bg1: #0a0d18;
+      --bg2: #0b0f1f;
+      --glass-glow: 0 20px 60px rgba(90, 125, 255, 0.25);
+    }
+
+    /* Background lightforms */
+    #aurora1613 .bg {
+      position: absolute;
+      inset: -20% -10% -10% -10%;
+      pointer-events: none;
+      z-index: 0;
+      filter: saturate(120%);
+    }
+    #aurora1613 .orb {
+      position: absolute;
+      width: 40vmin;
+      height: 40vmin;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--c1), transparent 60%),
+                  radial-gradient(circle at 70% 70%, var(--c2), transparent 55%),
+                  radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1), transparent 70%);
+      filter: blur(22px);
+      mix-blend-mode: screen;
+      opacity: 0.8;
+      animation: aurora1613-orbit calc(28s / var(--pace)) linear infinite;
+    }
+    #aurora1613 .o1 { top: -10%; left: -6%; animation-delay: -4s; }
+    #aurora1613 .o2 { top: 30%; right: -8%; animation-delay: -12s; transform: scale(0.9); }
+    #aurora1613 .o3 {
+      bottom: -16%; left: 12%;
+      background: radial-gradient(circle at 20% 50%, var(--c3), transparent 60%),
+                  radial-gradient(circle at 70% 60%, var(--c2), transparent 55%);
+      animation-delay: -18s; transform: scale(1.15);
+    }
+
+    /* Subtle grain */
+    #aurora1613 .grain {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.06), transparent),
+        radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,0.05), transparent),
+        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.04), transparent);
+      background-size: 300px 300px, 260px 260px, 340px 340px;
+      opacity: 0.7;
+      mix-blend-mode: soft-light;
+      animation: aurora1613-grain calc(9s / var(--pace)) steps(2, end) infinite;
+    }
+
+    /* Glass panel */
+    #aurora1613 .panel {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: clamp(18px, 6vw, 48px) auto;
+      padding: clamp(18px, 4.5vw, 40px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      background-color: var(--panel-bg);
+      border: 1px solid var(--stroke);
+      border-radius: calc(var(--r) + 6px);
+      backdrop-filter: blur(14px) saturate(120%);
+      box-shadow: var(--glass-glow);
+      transform: translate3d(calc(var(--ax) * 0.6px), calc(var(--ay) * 0.6px), 0);
+      transition: transform 200ms ease, background-color 300ms ease, box-shadow 300ms ease;
+    }
+
+    #aurora1613 .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+      border: 1px solid var(--stroke);
+      color: var(--muted);
+      font: 600 12px/1.2 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      letter-spacing: 0.4px;
+      box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.2);
+      user-select: none;
+    }
+    #aurora1613 .pill .dot {
+      width: 8px; height: 8px; border-radius: 999px; background: var(--c2);
+      box-shadow: 0 0 14px var(--c2), 0 0 24px var(--c2);
+    }
+
+    #aurora1613 h1 {
+      margin: 14px 0 8px 0;
+      font: 800 clamp(28px, 6.2vw, 56px)/1.04 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      letter-spacing: -0.02em;
+      background: linear-gradient(100deg, var(--c1), var(--c3) 40%, var(--c2) 75%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    #aurora1613 p.lead {
+      margin: 0 0 18px 0;
+      color: var(--muted);
+      font: 500 clamp(14px, 2.6vw, 18px)/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+
+    /* Controls */
+    #aurora1613 .controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (min-width: 640px) {
+      #aurora1613 .controls {
+        grid-template-columns: 1.2fr 1fr;
+        align-items: center;
+      }
+    }
+
+    #aurora1613 .theme-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    #aurora1613 .chip {
+      appearance: none;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, var(--chip-bg), transparent);
+      color: var(--fg);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font: 600 12px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: transform 120ms ease, background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+      box-shadow: 0 0 0 0 rgba(255,255,255,0);
+    }
+    #aurora1613 .chip:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.2);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+    #aurora1613 .chip.active {
+      background: linear-gradient(180deg, var(--chip-active), transparent);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1), 0 8px 24px rgba(0,0,0,0.25);
+    }
+
+    #aurora1613 .slider {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 12px;
+    }
+    #aurora1613 .slider label {
+      font: 600 12px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    #aurora1613 input[type="range"] {
+      width: 100%;
+      height: 30px;
+      -webkit-appearance: none;
+      background: transparent;
+    }
+    #aurora1613 input[type="range"]::-webkit-slider-runnable-track {
+      height: 8px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+    }
+    #aurora1613 input[type="range"]::-moz-range-track {
+      height: 8px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+    }
+    #aurora1613 input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff, #cfe8ff);
+      border: 1px solid rgba(255,255,255,0.5);
+      margin-top: -5px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3), 0 0 0 4px rgba(86,155,255,0.22);
+      cursor: grab;
+    }
+    #aurora1613 input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff, #cfe8ff);
+      border: 1px solid rgba(255,255,255,0.5);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3), 0 0 0 4px rgba(86,155,255,0.22);
+      cursor: grab;
+    }
+
+    /* CTA */
+    #aurora1613 .cta {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    #aurora1613 .flow {
+      position: relative;
+      overflow: hidden;
+      appearance: none;
+      border: 1px solid var(--stroke);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.02)),
+        radial-gradient(120% 140% at 10% 10%, rgba(255,255,255,0.08), transparent);
+      color: var(--fg);
+      padding: 12px 16px;
+      border-radius: 14px;
+      font: 700 13px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 200ms ease, background 300ms ease;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.25);
+    }
+    #aurora1613 .flow:hover { transform: translateY(-1px); }
+    #aurora1613 .flow:active { transform: translateY(0); }
+    #aurora1613 .flow .rip {
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(120px 120px at var(--rx) var(--ry),
+                   rgba(255,255,255,0.22), transparent 50%);
+      transform: translateZ(0);
+      opacity: 0;
+      animation: aurora1613-ripple 600ms ease;
+    }
+
+    /* Footer */
+    #aurora1613 footer {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font: 500 12px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+    #aurora1613 footer .quote {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.9;
+    }
+    #aurora1613 footer .quote em { font-style: normal; color: #ffffff; opacity: 0.9; }
+    #aurora1613 #last-updated {
+      white-space: nowrap;
+      opacity: 0.8;
+    }
+
+    /* Pause state */
+    #aurora1613[data-paused="true"] .bg .orb,
+    #aurora1613[data-paused="true"] .grain {
+      animation-play-state: paused !important;
+    }
+
+    /* Motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      #aurora1613 .orb,
+      #aurora1613 .grain {
+        animation: none !important;
+      }
+    }
+
+    /* Animations */
+    @keyframes aurora1613-orbit {
+      0%   { transform: translate(0,0) scale(1); }
+      25%  { transform: translate(8%, -6%) scale(1.05); }
+      50%  { transform: translate(2%, 6%) scale(0.95); }
+      75%  { transform: translate(-8%, -2%) scale(1.08); }
+      100% { transform: translate(0,0) scale(1); }
+    }
+    @keyframes aurora1613-grain {
+      0% { transform: translate(0,0); }
+      25% { transform: translate(-10px, 8px); }
+      50% { transform: translate(8px, -6px); }
+      75% { transform: translate(-4px, 6px); }
+      100% { transform: translate(0,0); }
+    }
+    @keyframes aurora1613-ripple {
+      0% { opacity: 0.0; }
+      15% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+  </style>
+
+  <div class="bg" aria-hidden="true">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+    <div class="grain"></div>
+  </div>
+
+  <div class="panel">
+    <div class="pill" aria-hidden="true">
+      <span class="dot"></span> Edition 1613 • Aurora Set
+    </div>
+
+    <h1>Hush & Bloom</h1>
+    <p class="lead">A softly kinetic vignette. Touch the scene. Change its mood. Let the color breathe.</p>
+
+    <div class="controls" aria-label="Scene controls">
+      <div class="theme-chips" role="group" aria-label="Palette">
+        <button type="button" class="chip" data-theme="dawn" aria-pressed="false">Dawn</button>
+        <button type="button" class="chip" data-theme="noon" aria-pressed="false">Noon</button>
+        <button type="button" class="chip active" data-theme="dusk" aria-pressed="true">Dusk</button>
+      </div>
+
+      <div class="slider">
+        <label for="tempo1613">Tempo <span class="tempo">1.0×</span></label>
+        <input id="tempo1613" type="range" min="0.5" max="1.6" step="0.05" value="1" aria-label="Animation speed">
+      </div>
+    </div>
+
+    <div class="cta">
+      <button type="button" class="flow" aria-pressed="false" aria-label="Toggle animation">
+        Pause Scene
+      </button>
+    </div>
+
+    <footer>
+      <div class="quote" aria-hidden="true">“Less, but better.” <em>— Rams</em></div>
+      <span id="last-updated">Last updated: 2025-12-29 20:27:20 EST</span>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('aurora1613');
+      const chips = Array.from(root.querySelectorAll('.chip'));
+      const slider = root.querySelector('#tempo1613');
+      const tempoLabel = root.querySelector('.tempo');
+      const button = root.querySelector('.flow');
+      const updated = root.querySelector('#last-updated');
+
+      // Initialize theme
+      const defaultTheme = 'dusk';
+      root.classList.add('theme-' + defaultTheme);
+
+      // Format "last updated"
+      function formatTime(d) {
+        try {
+          return new Intl.DateTimeFormat(undefined, {
+            weekday: 'short',
+            month: 'short',
+            day: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+            timeZoneName: 'short'
+          }).format(d);
+        } catch (e) {
+          return d.toLocaleString();
+        }
+      }
+      updated.textContent = 'Last updated: ' + formatTime(new Date());
+
+      // Theme switching
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const theme = chip.getAttribute('data-theme');
+          ['theme-dawn', 'theme-noon', 'theme-dusk'].forEach(c => root.classList.remove(c));
+          root.classList.add('theme-' + theme);
+          chips.forEach(c => {
+            const active = c === chip;
+            c.classList.toggle('active', active);
+            c.setAttribute('aria-pressed', String(active));
+          });
+        });
+      });
+
+      // Tempo control
+      function setPace(val) {
+        const pace = parseFloat(val || '1') || 1;
+        root.style.setProperty('--pace', pace.toString());
+        tempoLabel.textContent = pace.toFixed(2).replace(/\.00$/, '') + '×';
+      }
+      slider.addEventListener('input', e => setPace(e.target.value));
+      setPace(slider.value);
+
+      // Pause/Play toggle with ripple
+      button.addEventListener('click', (e) => {
+        const paused = root.getAttribute('data-paused') === 'true';
+        const next = !paused;
+        root.setAttribute('data-paused', String(next));
+        button.setAttribute('aria-pressed', String(next));
+        button.textContent = next ? 'Play Scene' : 'Pause Scene';
+
+        // Ripple
+        const rect = button.getBoundingClientRect();
+        const rx = ((e.clientX || (rect.left + rect.width/2)) - rect.left) + 'px';
+        const ry = ((e.clientY || (rect.top + rect.height/2)) - rect.top) + 'px';
+        button.style.setProperty('--rx', rx);
+        button.style.setProperty('--ry', ry);
+        const rip = document.createElement('span');
+        rip.className = 'rip';
+        rip.addEventListener('animationend', () => rip.remove());
+        button.appendChild(rip);
+      });
+
+      // Parallax / tilt
+      let raf = null;
+      function onMove(x, y, rect) {
+        const rx = (x - rect.left) / rect.width;
+        const ry = (y - rect.top) / rect.height;
+        // Map to -10..10
+        const ax = Math.round((rx - 0.5) * 20);
+        const ay = Math.round((ry - 0.5) * 20);
+        root.style.setProperty('--ax', ax);
+        root.style.setProperty('--ay', ay);
+      }
+      function pointerHandler(evt) {
+        const rect = root.getBoundingClientRect();
+        const x = evt.touches ? evt.touches[0].clientX : evt.clientX;
+        const y = evt.touches ? evt.touches[0].clientY : evt.clientY;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => onMove(x, y, rect));
+      }
+      root.addEventListener('pointermove', pointerHandler, { passive: true });
+      root.addEventListener('touchmove', pointerHandler, { passive: true });
+      root.addEventListener('pointerleave', () => {
+        root.style.setProperty('--ax', 0);
+        root.style.setProperty('--ay', 0);
+      }, { passive: true });
+
+      // Reduce motion respect: if reduce, set pace to 0.7 and disable parallax
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) {
+        setPace(0.7);
+        root.removeEventListener('pointermove', pointerHandler);
+        root.removeEventListener('touchmove', pointerHandler);
+      }
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
