@@ -73,111 +73,159 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div class="atlas" data-zen="off" data-sound="off" data-palette="ultraviolet">
+<section class="orbit" data-theme="dawn" data-zen="off">
   <style>
-    .atlas{
-      --ink:#eaf2ff;
-      --muted:#9fb0c9;
-      --ring: rgba(255,255,255,.22);
-      --glass: rgba(255,255,255,.08);
-      --bg1:#0a0f1b; --bg2:#121b2e;
-      --accent1:#9bfffb; --accent2:#ff87f8; --accent3:#7aa0ff;
-      position: relative; padding: 22px; border-radius: 28px;
+    .orbit{
+      --bg1: #0b0f14; --bg2:#0e1620;
+      --ink:#eef5ff; --muted: color-mix(in oklab, var(--ink), black 42%);
+      --a1:#ffd6a5; --a2:#ffc4d6; --a3:#fec89a; --a4:#e8f7ff;
+      position:relative; padding:22px; border-radius:28px; overflow:hidden; color:var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Inter", "SF Pro Display", Segoe UI, Roboto, Helvetica, Arial;
       background:
-        radial-gradient(120% 140% at 70% -20%, rgba(255,255,255,.06), transparent 50%),
+        radial-gradient(180% 120% at 20% -20%, rgba(255,255,255,.06), transparent 50%),
         linear-gradient(160deg, var(--bg1), var(--bg2));
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), 0 28px 80px rgba(8,12,20,.65);
-      color: var(--ink);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Helvetica, Arial;
-      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), 0 28px 80px rgba(6,10,16,.6);
       isolation:isolate;
     }
-    .atlas:before{
+    .orbit::before{
       content:""; position:absolute; inset:-20%;
       background:
-        radial-gradient(20% 30% at 18% 10%, rgba(255,255,255,.12), transparent 70%),
-        radial-gradient(16% 22% at 90% 8%, rgba(255,255,255,.10), transparent 70%),
-        radial-gradient(30% 18% at 80% 92%, rgba(255,255,255,.08), transparent 70%);
-      filter: blur(26px) saturate(120%);
-      pointer-events:none; opacity:.8; animation: aurora-pan 46s linear infinite;
+        radial-gradient(30% 22% at 80% 12%, rgba(255,255,255,.10), transparent 70%),
+        radial-gradient(22% 18% at 20% 92%, rgba(255,255,255,.08), transparent 70%);
+      filter: blur(24px) saturate(120%); opacity:.8; pointer-events:none;
+      animation: drift 48s linear infinite;
     }
-    @keyframes aurora-pan{ 0%{transform:translate(0,0) rotate(0)} 50%{transform:translate(2%,-1%) rotate(180deg)} 100%{transform:translate(0,0) rotate(360deg)} }
+    @keyframes drift{ 0%{transform:translate(0,0) rotate(0)} 50%{transform:translate(1%,-1%) rotate(180deg)} 100%{transform:translate(0,0) rotate(360deg)} }
 
     .top{
-      display:grid; grid-template-columns: 1fr auto; gap: 12px; align-items:start; margin-bottom: 12px; position: relative; z-index: 3;
+      display:grid; grid-template-columns: 1fr auto; gap:14px; align-items:start; z-index:2; position:relative; margin-bottom:12px;
     }
-    .title{
-      margin:0; letter-spacing:-.02em; font-weight:1000; line-height:1.02;
-      font-size: clamp(26px, 5vw, 48px);
-      background: linear-gradient(180deg, #fff, color-mix(in oklab, var(--accent2), black 18%));
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-      text-shadow: 0 1px 0 rgba(255,255,255,.6);
+    .mark{
+      display:flex; align-items:baseline; gap:10px;
     }
-    .tag{ margin-top:6px; font-size: 13px; color: var(--muted); }
+    .logo{
+      margin:0; font-weight:1000; letter-spacing:-.02em;
+      font-size: clamp(26px, 6vw, 56px); line-height:1.02;
+      background: linear-gradient(180deg, #fff, color-mix(in oklab, var(--a2), black 25%));
+      -webkit-background-clip: text; background-clip:text; color:transparent;
+      text-shadow: 0 1px 0 rgba(255,255,255,.55);
+    }
+    .slogan{ font-size:13px; color: var(--muted); margin-top:4px; }
 
-    .chips{
-      display:flex; gap:8px; align-items:center; padding:6px;
-      border-radius: 14px; border:1px solid var(--ring);
-      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-      backdrop-filter: blur(10px) saturate(120%);
+    .modes{
+      display:flex; gap:8px; align-items:center; padding:6px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
+      backdrop-filter: blur(10px) saturate(120%);
     }
-    .chip{
-      appearance:none; border:0; border-radius:10px; padding:8px 12px; cursor:pointer;
-      font-weight:900; font-size:12px; letter-spacing:.02em; color: var(--muted);
-      background: transparent; transition: all .15s ease;
+    .mode{
+      appearance:none; border:0; cursor:pointer; border-radius:12px; padding:8px 12px;
+      font-weight:900; letter-spacing:.02em; font-size:12px; color: var(--muted); background:transparent;
+      transition: transform .1s ease, box-shadow .2s ease, color .2s ease, background .2s ease;
     }
-    .chip[aria-selected="true"]{
-      color:#0b0e17;
-      background: linear-gradient(180deg, var(--accent1), var(--accent2));
-      box-shadow: 0 6px 16px rgba(0,0,0,.22), inset 0 0 0 1px rgba(255,255,255,.6);
+    .mode[aria-selected="true"]{
+      color:#0c0f16; background: linear-gradient(180deg, var(--a1), var(--a2));
+      box-shadow: 0 8px 22px rgba(0,0,0,.28), inset 0 0 0 1px rgba(255,255,255,.70);
     }
 
-    .stage{
-      position:relative; z-index:1; overflow:hidden;
-      height: clamp(320px, 54vh, 560px);
-      border-radius: 22px;
-      border: 1px solid var(--ring);
+    .dial{
+      position:relative; z-index:1;
+      display:grid; place-items:center;
+      height: clamp(340px, 56vh, 640px);
+      perspective: 900px;
+    }
+    .halo{
+      position:relative; border-radius:50%;
+      width:min(80vmin, 760px); aspect-ratio:1;
+      transform: rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+      transition: filter .2s ease;
+      filter: saturate(115%) contrast(105%);
+    }
+    .ring{
+      position:absolute; inset:-2%; border-radius:50%;
       background:
-        radial-gradient(140% 90% at 10% 10%, color-mix(in oklab, var(--accent1), transparent 85%), transparent 60%),
-        radial-gradient(140% 90% at 90% 0%, color-mix(in oklab, var(--accent2), transparent 85%), transparent 60%),
-        linear-gradient(180deg, color-mix(in oklab, var(--bg1), black 8%), color-mix(in oklab, var(--bg2), black 6%));
-      box-shadow: 0 28px 80px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.08);
+        conic-gradient(from var(--spin,0deg),
+          color-mix(in oklab, var(--a1), transparent 70%) 0 25%,
+          color-mix(in oklab, var(--a2), transparent 70%) 25% 50%,
+          color-mix(in oklab, var(--a3), transparent 70%) 50% 75%,
+          color-mix(in oklab, var(--a4), transparent 70%) 75% 100%);
+      mask:
+        radial-gradient(closest-side, transparent calc(50% - 10px), black calc(50% - 9px), black calc(50% + 9px), transparent calc(50% + 10px));
+      filter: blur(8px);
+      animation: spin var(--spinSpeed, 60s) linear infinite;
+      pointer-events:none;
     }
-    canvas.field{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+    @keyframes spin{ to{ transform: rotate(360deg) } }
+
+    canvas.sky{ position:absolute; inset:4.5% 4.5%; width:91%; height:91%; border-radius:50%; display:block; }
+    .glass{
+      position:absolute; inset:0; border-radius:50%;
+      background:
+        radial-gradient(40% 18% at 20% 14%, rgba(255,255,255,.18), transparent 60%),
+        radial-gradient(30% 16% at 78% 12%, rgba(255,255,255,.12), transparent 70%),
+        radial-gradient(90% 100% at 50% 100%, rgba(255,255,255,.06), transparent 60%);
+      mix-blend-mode: screen; pointer-events:none;
+    }
     .grain{
-      pointer-events:none; position:absolute; inset:0; mix-blend-mode: soft-light; opacity:.08;
-      background: repeating-conic-gradient(from 0deg, rgba(255,255,255,.8) 0 0.5deg, transparent .5deg 1deg);
-      filter: blur(.6px);
+      position:absolute; inset:0; border-radius:50%; pointer-events:none; opacity:.06;
+      background: repeating-conic-gradient(from 0deg, rgba(255,255,255,.8) 0 .6deg, transparent .6deg 1.2deg);
+      filter: blur(.5px);
     }
+
+    .ticks{
+      position:absolute; inset:2.5%; border-radius:50%; pointer-events:none; opacity:.8;
+      --c: color-mix(in oklab, var(--a2), white 40%);
+      background:
+        conic-gradient(from -90deg, var(--c) 0deg 2deg, transparent 2deg 30deg);
+      -webkit-mask: radial-gradient(closest-side, transparent calc(50% - 17px), black calc(50% - 16px), black calc(50% + 16px), transparent calc(50% + 17px));
+      mask: radial-gradient(closest-side, transparent calc(50% - 17px), black calc(50% - 16px), black calc(50% + 16px), transparent calc(50% + 17px));
+      animation: sweep 20s linear infinite;
+    }
+    @keyframes sweep{ to{ transform: rotate(360deg) } }
 
     .hud{
-      position:absolute; left:14px; bottom:14px; display:flex; gap:8px; align-items:center; z-index:2; pointer-events:none;
+      position:absolute; left:16px; bottom:16px; display:flex; gap:8px; align-items:center;
+      z-index:3; pointer-events:none;
     }
     .pill{
       padding:6px 10px; border-radius:999px; font-size:12px; color:var(--ink);
-      border:1px solid var(--ring); background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.08));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.16);
+      font-variant-numeric: tabular-nums;
     }
-    .clock{ font-variant-numeric: tabular-nums; font-weight:900; letter-spacing:.03em; }
 
     .panel{
-      margin-top: 14px; display:grid; grid-template-columns: 1.2fr .9fr .9fr; gap:12px; position:relative; z-index:3;
+      margin-top: 16px; display:grid; grid-template-columns: 1.1fr .9fr .9fr; gap:12px; z-index:2; position:relative;
     }
     .card{
-      background: var(--glass); border:1px solid var(--ring); border-radius:16px; padding:12px;
-      backdrop-filter: blur(12px) saturate(130%);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12), 0 12px 28px rgba(0,0,0,.35);
-      transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.08));
+      border:1px solid rgba(255,255,255,.16); border-radius:16px; padding:12px;
+      backdrop-filter: blur(10px) saturate(125%);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.16), 0 12px 28px rgba(0,0,0,.38);
+      transition: transform .12s ease, box-shadow .2s ease;
     }
-    .card:hover{ transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.18); }
+    .card:hover{ transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.22); }
     .label{ display:flex; align-items:center; gap:8px; font-size:12px; font-weight:900; letter-spacing:.03em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
-    .dot{ width:10px; height:10px; border-radius:50%; background: linear-gradient(180deg, var(--accent1), var(--accent2)); box-shadow: 0 0 0 1px rgba(0,0,0,.18), 0 6px 16px color-mix(in oklab, var(--accent2), transparent 60%); }
+    .dot{ width:10px; height:10px; border-radius:50%; background: linear-gradient(180deg, var(--a1), var(--a2)); box-shadow: 0 0 0 1px rgba(0,0,0,.18), 0 6px 16px color-mix(in oklab, var(--a2), transparent 60%); }
 
     .row{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+    .range{ appearance:none; width:100%; height:36px; background:transparent; }
+    .range::-webkit-slider-runnable-track{ height:10px; border-radius:999px; border:1px solid rgba(255,255,255,.16); background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3)); }
+    .range::-webkit-slider-thumb{ -webkit-appearance:none; width:22px; height:22px; border-radius:50%; margin-top:-6px; background:#0c0f16; border:1px solid rgba(255,255,255,.4); box-shadow: 0 3px 10px rgba(0,0,0,.45), inset 0 0 0 4px color-mix(in oklab, var(--a2), white 20%); cursor:pointer; }
+    .range::-moz-range-track{ height:10px; border-radius:999px; border:1px solid rgba(255,255,255,.16); background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3)); }
+    .range::-moz-range-thumb{ width:22px; height:22px; border-radius:50%; background:#0c0f16; border:1px solid rgba(255,255,255,.4); box-shadow: 0 3px 10px rgba(0,0,0,.45), inset 0 0 0 4px color-mix(in oklab, var(--a2), white 20%); cursor:pointer; }
+
+    .bubble{
+      min-width:90px; text-align:center; font-weight:900; font-size:12px; letter-spacing:.03em; padding:8px 10px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.16); background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.10));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); color:var(--ink);
+    }
+
     .btn{
-      appearance:none; border: 1px solid var(--ring); border-radius:12px; padding:10px 14px; cursor:pointer;
+      appearance:none; border:1px solid rgba(255,255,255,.16); border-radius:12px; padding:10px 14px; cursor:pointer;
       background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.10));
       color: var(--ink); font-weight:900; font-size:12px; letter-spacing:.02em;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 8px 18px rgba(0,0,0,.28);
@@ -185,66 +233,46 @@
     }
     .btn:hover{ box-shadow: inset 0 0 0 1px rgba(255,255,255,.24), 0 12px 26px rgba(0,0,0,.35); }
     .btn:active{ transform: translateY(1px); }
-    .btn.on{ color:#0b0e17; background: linear-gradient(180deg, var(--accent1), var(--accent2)); }
+    .btn.on{ color:#0c0f16; background: linear-gradient(180deg, var(--a1), var(--a2)); }
 
-    .range{ appearance:none; width:100%; height:34px; background:transparent; }
-    .range:focus{ outline:none; }
-    .range::-webkit-slider-runnable-track{ height:10px; border-radius:999px; border:1px solid var(--ring); background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3)); }
-    .range::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:22px; height:22px; border-radius:50%; margin-top:-6px; background:#0b0e17; border:1px solid rgba(255,255,255,.35); box-shadow: 0 3px 10px rgba(0,0,0,.45), inset 0 0 0 4px color-mix(in oklab, var(--accent2), white 20%); cursor:pointer; }
-    .range::-moz-range-track{ height:10px; border-radius:999px; border:1px solid var(--ring); background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3)); }
-    .range::-moz-range-thumb{ width:22px; height:22px; border-radius:50%; background:#0b0e17; border:1px solid rgba(255,255,255,.35); box-shadow: 0 3px 10px rgba(0,0,0,.45), inset 0 0 0 4px color-mix(in oklab, var(--accent2), white 20%); cursor:pointer; }
-
-    .bubble{
-      min-width:88px; text-align:center; font-weight:900; font-size:12px; letter-spacing:.03em; padding:8px 10px; border-radius:12px;
-      border:1px solid var(--ring); background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.10));
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); color:var(--ink);
-    }
-
-    .quote{ font-size:14px; line-height:1.6; margin:2px 0 0 0; color: var(--muted); }
-    .quote em{ color: var(--accent2); font-style: normal; }
-    .fade{ animation: fade .5s ease; }
-    @keyframes fade{ from{ opacity:0; transform: translateY(4px) } to{ opacity:1; transform:none } }
-
-    .rule{ height:1px; width:100%; margin:14px 0; background: linear-gradient(90deg, transparent, var(--ring), transparent); opacity:.9; }
+    .rule{ height:1px; width:100%; margin:14px 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent); }
     .foot{ display:flex; justify-content:space-between; align-items:center; gap:10px; color: var(--muted); font-size:12px; }
 
-    /* palette themes update accents */
-    .atlas[data-palette="ice"]{ --accent1:#a9f7ff; --accent2:#55d0ff; --accent3:#8fe7ff; }
-    .atlas[data-palette="lava"]{ --accent1:#ffdc8b; --accent2:#ff6b6b; --accent3:#ff8a3d; }
-    .atlas[data-palette="eden"]{ --accent1:#b4ffb3; --accent2:#2de39c; --accent3:#65ffcf; }
-    .atlas[data-palette="ultraviolet"]{ --accent1:#9bfffb; --accent2:#ff87f8; --accent3:#7aa0ff; }
-    .atlas[data-palette="sunset"]{ --accent1:#ffd1a6; --accent2:#ff7db7; --accent3:#ffc36a; }
-
-    /* zen reduces motion & bloom slightly */
-    .atlas[data-zen="on"] .stage{ box-shadow: 0 22px 60px rgba(0,0,0,.32), inset 0 0 0 1px rgba(255,255,255,.06); filter: saturate(.92); }
+    .orbit[data-zen="on"] .halo{ filter: saturate(.95) contrast(102%) }
+    .orbit[data-zen="on"] .ring{ animation-duration: calc(var(--spinSpeed, 60s) * 1.25); }
 
     @media (max-width: 980px){
       .top{ grid-template-columns: 1fr; }
       .panel{ grid-template-columns: 1fr; }
-      .stage{ height: 360px; }
+      .dial{ height: 420px; }
     }
   </style>
 
   <div class="top">
-    <div>
-      <h1 class="title">Aurora Atlas</h1>
-      <div class="tag">A generative light field you can tune. Touch to bend the flow.</div>
+    <div class="mark">
+      <h1 class="logo">Orbit Studio</h1>
     </div>
-    <div class="chips" role="tablist" aria-label="Palettes">
-      <button class="chip" role="tab" data-palette="ice" aria-selected="false">Ice</button>
-      <button class="chip" role="tab" data-palette="eden" aria-selected="false">Eden</button>
-      <button class="chip" role="tab" data-palette="sunset" aria-selected="false">Sunset</button>
-      <button class="chip" role="tab" data-palette="lava" aria-selected="false">Lava</button>
-      <button class="chip" role="tab" data-palette="ultraviolet" aria-selected="true">Ultraviolet</button>
+    <div class="modes" role="tablist" aria-label="Theme">
+      <button class="mode" role="tab" data-theme="dawn" aria-selected="true">Dawn</button>
+      <button class="mode" role="tab" data-theme="tide" aria-selected="false">Tide</button>
+      <button class="mode" role="tab" data-theme="ember" aria-selected="false">Ember</button>
+      <button class="mode" role="tab" data-theme="nocturne" aria-selected="false">Nocturne</button>
+      <button class="mode" role="tab" data-theme="prism" aria-selected="false">Prism</button>
     </div>
+    <div class="slogan">A kinetic halo you can sculpt. Drag to tilt, tune the weave.</div>
   </div>
 
-  <div class="stage" aria-label="Aurora flow canvas" data-tilt>
-    <canvas class="field"></canvas>
-    <div class="grain"></div>
-    <div class="hud">
-      <span class="pill clock" data-clock>00:00:00</span>
-      <span class="pill" data-stats>Particles: —</span>
+  <div class="dial" aria-label="Orbital canvas">
+    <div class="halo" data-tilt>
+      <div class="ring"></div>
+      <canvas class="sky"></canvas>
+      <div class="ticks"></div>
+      <div class="glass"></div>
+      <div class="grain"></div>
+      <div class="hud">
+        <span class="pill" data-clock>00:00</span>
+        <span class="pill" data-info>Rings —</span>
+      </div>
     </div>
   </div>
 
@@ -252,25 +280,24 @@
     <div class="card">
       <div class="label"><span class="dot"></span> Motion</div>
       <div class="row" style="margin-bottom:8px;">
-        <input class="range" type="range" min="0.2" max="2.5" step="0.1" value="1.2" aria-label="Speed">
-        <div class="bubble" data-speed>Speed 1.2x</div>
+        <input class="range" type="range" min="0.2" max="2.0" step="0.1" value="1.0" aria-label="Spin">
+        <div class="bubble" data-spin>Spin 1.0x</div>
       </div>
       <div class="row">
-        <input class="range" type="range" min="0.02" max="0.18" step="0.01" value="0.07" aria-label="Trail">
-        <div class="bubble" data-trail>Trail 0.07</div>
+        <input class="range" type="range" min="0.02" max="0.18" step="0.01" value="0.08" aria-label="Trail">
+        <div class="bubble" data-trail>Trail 0.08</div>
       </div>
-      <p class="quote" data-quote></p>
     </div>
 
     <div class="card">
-      <div class="label"><span class="dot"></span> Density & Bloom</div>
+      <div class="label"><span class="dot"></span> Weave</div>
       <div class="row" style="margin-bottom:8px;">
-        <input class="range" type="range" min="200" max="2200" step="100" value="1200" aria-label="Density">
-        <div class="bubble" data-density>Density 1200</div>
+        <input class="range" type="range" min="3" max="18" step="1" value="9" aria-label="Petals">
+        <div class="bubble" data-petals>Petals 9</div>
       </div>
       <div class="row">
-        <input class="range" type="range" min="0" max="24" step="1" value="10" aria-label="Bloom">
-        <div class="bubble" data-bloom>Bloom 10</div>
+        <input class="range" type="range" min="0" max="24" step="1" value="12" aria-label="Glow">
+        <div class="bubble" data-glow>Glow 12</div>
       </div>
     </div>
 
@@ -279,310 +306,264 @@
       <div class="row" style="margin-bottom:8px;">
         <button class="btn" data-zen>Zen Mode</button>
         <button class="btn" data-random>Randomize</button>
-        <button class="btn" data-sound>Sound</button>
+        <button class="btn" data-freeze>Freeze</button>
       </div>
-      <div class="tag">Sound is optional: a soft oscillator pad that follows the palette.</div>
+      <div class="slogan">Freeze pauses motion for crisp captures.</div>
     </div>
   </div>
 
   <div class="rule"></div>
   <div class="foot">
-    <span class="pill">Palette: <span data-palette-name>Ultraviolet</span></span>
-    <span id="last-updated">Last updated: 2025-12-30 07:40:24 EST</span>
+    <span class="pill">Theme: <span data-theme-name>Dawn</span></span>
+    <span id="last-updated">Last updated: 2025-12-30 08:34:40 EST</span>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.atlas');
-      const canvas = root.querySelector('canvas.field');
+      const root = document.currentScript.closest('.orbit');
+      const canvas = root.querySelector('canvas.sky');
       const ctx = canvas.getContext('2d');
-      const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-      let W=0, H=0, t=0, running=true;
-
-      const chips = root.querySelectorAll('.chip');
-      const paletteNameEl = root.querySelector('[data-palette-name]');
-      const statsEl = root.querySelector('[data-stats]');
+      const halo = root.querySelector('.halo');
+      const info = root.querySelector('[data-info]');
+      const clock = root.querySelector('[data-clock]');
       const last = root.querySelector('#last-updated');
-      const clockEl = root.querySelector('[data-clock]');
-      const quoteEl = root.querySelector('[data-quote]');
+
+      const modes = root.querySelectorAll('.mode');
+      const themeNameEl = root.querySelector('[data-theme-name]');
 
       const ranges = root.querySelectorAll('.range');
-      const [speedRange, trailRange, densityRange, bloomRange] = ranges;
-      const speedBubble = root.querySelector('[data-speed]');
+      const [spinRange, trailRange, petalsRange, glowRange] = ranges;
+      const spinBubble = root.querySelector('[data-spin]');
       const trailBubble = root.querySelector('[data-trail]');
-      const densityBubble = root.querySelector('[data-density]');
-      const bloomBubble = root.querySelector('[data-bloom]');
-
+      const petalsBubble = root.querySelector('[data-petals]');
+      const glowBubble = root.querySelector('[data-glow]');
       const zenBtn = root.querySelector('[data-zen]');
       const randBtn = root.querySelector('[data-random]');
-      const soundBtn = root.querySelector('[data-sound]');
+      const freezeBtn = root.querySelector('[data-freeze]');
 
-      // Palettes as arrays of rgba strings (alpha later)
-      const palettes = {
-        ice: ['#a9f7ff','#55d0ff','#8fe7ff','#e8ffff'],
-        eden: ['#b4ffb3','#2de39c','#65ffcf','#e8fff2'],
-        sunset: ['#ffd1a6','#ff7db7','#ffc36a','#fff0d9'],
-        lava: ['#ffdc8b','#ff8a3d','#ff6b6b','#ffe6c2'],
-        ultraviolet: ['#9bfffb','#ff87f8','#7aa0ff','#f0e6ff']
+      // Themes
+      const THEMES = {
+        dawn: { bg1:'#0b0f14', bg2:'#121a24', a1:'#ffd6a5', a2:'#ffc4d6', a3:'#fec89a', a4:'#e8f7ff' },
+        tide: { bg1:'#07131a', bg2:'#0b202a', a1:'#a8e1ff', a2:'#5ad1e9', a3:'#0077ff', a4:'#d7f7ff' },
+        ember:{ bg1:'#130d0d', bg2:'#1c1210', a1:'#ffb39b', a2:'#ff6b6b', a3:'#ffb703', a4:'#ffd7c2' },
+        nocturne:{ bg1:'#0a0a12', bg2:'#121226', a1:'#c5b7ff', a2:'#8fa7ff', a3:'#e58bff', a4:'#d9d0ff' },
+        prism:{ bg1:'#0a0f16', bg2:'#111b28', a1:'#9bfffb', a2:'#7aa0ff', a3:'#ff87f8', a4:'#f0e6ff' }
       };
-      function hexToRgb(h){
-        const m = h.replace('#','');
-        const v = m.length===3 ? m.split('').map(x=>x+x).join('') : m;
-        const n = parseInt(v,16);
-        return [ (n>>16)&255, (n>>8)&255, n&255 ];
+
+      function applyTheme(name){
+        const t = THEMES[name] || THEMES.dawn;
+        root.style.setProperty('--bg1', t.bg1);
+        root.style.setProperty('--bg2', t.bg2);
+        root.style.setProperty('--a1', t.a1);
+        root.style.setProperty('--a2', t.a2);
+        root.style.setProperty('--a3', t.a3);
+        root.style.setProperty('--a4', t.a4);
+        root.setAttribute('data-theme', name);
+        modes.forEach(m=> m.setAttribute('aria-selected', String(m.dataset.theme===name)));
+        themeNameEl.textContent = name[0].toUpperCase()+name.slice(1);
       }
+      modes.forEach(m => m.addEventListener('click', ()=> applyTheme(m.dataset.theme)));
 
-      // Flow parameters
-      let SPEED = parseFloat(speedRange.value);         // multiplier
-      let TRAIL = parseFloat(trailRange.value);         // overlay alpha
-      let DENSITY = parseInt(densityRange.value,10);    // particle count
-      let BLOOM = parseInt(bloomRange.value,10);        // shadow blur
+      // Canvas sizing
+      const dpr = Math.max(1, Math.min(2, window.devicePixelRatio||1));
+      let W=0, H=0, R=0;
+      function resize(){
+        const b = canvas.getBoundingClientRect();
+        W = Math.max(1, b.width); H = Math.max(1, b.height);
+        canvas.width = Math.floor(W*dpr);
+        canvas.height = Math.floor(H*dpr);
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+        R = Math.min(W,H)/2;
+      }
+      new ResizeObserver(resize).observe(canvas);
 
-      // Seeded RNG for repeatable flows
+      // State
+      let t=0, running=true;
+      let SPIN = parseFloat(spinRange.value);
+      let TRAIL = parseFloat(trailRange.value);
+      let PETALS = parseInt(petalsRange.value,10);
+      let GLOW = parseInt(glowRange.value,10);
       let seed = Math.floor(Math.random()*1e9);
       function mulberry32(a){ return function(){ a|=0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a>>>15, 1 | a); t = t + Math.imul(t ^ t>>>7, 61 | t) ^ t; return ((t ^ t>>>14) >>> 0) / 4294967296; }; }
       let rnd = mulberry32(seed);
 
-      // Particles
-      let P = [];
-      function resetParticle(p, w=W, h=H){
-        p.x = rnd()*w; p.y = rnd()*h;
-        p.life = 100 + Math.floor(rnd()*600);
-        p.hue = Math.floor(rnd()*pal.length);
-        p.speed = .4 + rnd()*1.1;
-      }
-      function makeParticles(n){
-        P = new Array(n).fill(0).map(()=>({x:0,y:0,life:0,hue:0,speed:1}));
-        P.forEach(p=>resetParticle(p));
-        statsEl.textContent = 'Particles: ' + P.length;
-      }
-
-      // Pointer attractor
-      let mx = 0.5, my = 0.4, attract = 0;
-      canvas.addEventListener('pointermove', e=>{
-        const r = canvas.getBoundingClientRect();
-        mx = (e.clientX - r.left)/r.width;
-        my = (e.clientY - r.top)/r.height;
-        attract = 1.0; // peak on move
+      // Pointer tilt
+      let px=0, py=0;
+      halo.addEventListener('pointermove', (e)=>{
+        const r = halo.getBoundingClientRect();
+        px = (e.clientX - r.left)/r.width - 0.5;
+        py = (e.clientY - r.top)/r.height - 0.5;
+        halo.style.setProperty('--rx', `${-py*12}deg`);
+        halo.style.setProperty('--ry', `${px*12}deg`);
       });
-      canvas.addEventListener('pointerleave', ()=> attract = 0);
+      halo.addEventListener('pointerleave', ()=>{
+        halo.style.setProperty('--rx', `0deg`);
+        halo.style.setProperty('--ry', `0deg`);
+      });
 
-      // Palette handling
-      function setPalette(name){
-        root.setAttribute('data-palette', name);
-        paletteNameEl.textContent = name[0].toUpperCase()+name.slice(1);
-        chips.forEach(c=> c.setAttribute('aria-selected', String(c.dataset.palette===name)));
-        pal = palettes[name].map(hexToRgb);
-        // also update CSS custom accents for UI sheen
-        const c1 = palettes[name][0], c2 = palettes[name][1], c3 = palettes[name][2];
-        root.style.setProperty('--accent1', c1);
-        root.style.setProperty('--accent2', c2);
-        root.style.setProperty('--accent3', c3);
-        if (audio.active) tuneAudio();
+      function hueSteps(){
+        // sample four accents converted to rgb
+        const get = k => getRGB(getComputedStyle(root).getPropertyValue(k).trim());
+        return [get('--a1'), get('--a2'), get('--a3'), get('--a4')];
+      }
+      function getRGB(hex){
+        if (!hex) return [255,255,255];
+        const h = hex.replace('#','').trim();
+        const v = h.length===3? h.split('').map(c=>c+c).join('') : h;
+        const n = parseInt(v,16);
+        return [(n>>16)&255, (n>>8)&255, n&255];
       }
 
-      chips.forEach(b=> b.addEventListener('click', ()=> setPalette(b.dataset.palette)));
+      function lerp(a,b,t){ return a + (b-a)*t }
+      function mixRGB(a,b,t){ return [Math.floor(lerp(a[0],b[0],t)), Math.floor(lerp(a[1],b[1],t)), Math.floor(lerp(a[2],b[2],t))] }
 
-      // Quotes
-      const quotes = [
-        'Let color learn your <em>pace</em>.',
-        'Light is a medium; time is its <em>brush</em>.',
-        'A line becomes space when it <em>lingers</em>.',
-        'Trust the gradient. It knows the <em>way</em>.',
-        'Interfaces should hum, not <em>shout</em>.'
-      ];
-      function say(q){
-        quoteEl.classList.remove('fade'); void quoteEl.offsetWidth;
-        quoteEl.innerHTML = '“' + q + '”';
-        quoteEl.classList.add('fade');
-      }
-      say(quotes[Math.floor(Math.random()*quotes.length)]);
-      setInterval(()=> say(quotes[Math.floor(Math.random()*quotes.length)]), 8000);
-
-      // Resize
-      function resize(){
-        const {clientWidth: w, clientHeight: h} = canvas.parentElement;
-        W = Math.max(1, w); H = Math.max(1, h);
-        canvas.width = Math.floor(W * dpr);
-        canvas.height = Math.floor(H * dpr);
-        ctx.setTransform(dpr,0,0,dpr,0,0);
-      }
-      new ResizeObserver(resize).observe(canvas.parentElement);
-
-      // Flow angle field (fast, pseudo-noise)
-      function angleField(x,y,t){
-        const s = 0.0018 + 0.0003*Math.sin(t*0.0003);
-        const n =
-          Math.sin((x*s) + t*0.0008) +
-          Math.cos((y*s*1.2) - t*0.0006) +
-          Math.sin((x*s*0.7 + y*s*0.3) + t*0.0009)*0.8;
-        return n * Math.PI; // -π..π
+      // Superformula-based radius
+      function superR(theta, k=PETALS){
+        const m = k;
+        const a=1, b=1;
+        const n1 = 0.3 + 1.2 + 0.8*Math.sin(t*0.0004 + px*2);
+        const n2 = 1.7 + 0.6*Math.cos(t*0.0006 + py*2);
+        const n3 = 1.7 + 0.6*Math.sin(t*0.0003 - px*2);
+        const part1 = Math.pow(Math.abs(Math.cos(m*theta/4)/a), n2);
+        const part2 = Math.pow(Math.abs(Math.sin(m*theta/4)/b), n3);
+        const d = Math.pow(part1 + part2, -1/n1);
+        return d;
       }
 
-      let pal = palettes[root.getAttribute('data-palette') || 'ultraviolet'].map(hexToRgb);
-
-      // Draw loop
-      function step(){
+      function draw(){
         if (!running) return;
-        t += 16.6667;
-        // Trails overlay
+        t += 16.6667 * (root.getAttribute('data-zen')==='on' ? 0.7 : 1) * SPIN;
+
+        // Trails
         ctx.globalCompositeOperation = 'source-over';
         ctx.fillStyle = `rgba(10,14,22,${TRAIL})`;
         ctx.fillRect(0,0,W,H);
 
-        ctx.globalCompositeOperation = 'lighter';
+        ctx.save();
+        ctx.translate(W/2, H/2);
+
+        const cols = hueSteps();
         ctx.lineCap = 'round';
-        ctx.shadowBlur = BLOOM;
-        ctx.shadowColor = `rgba(${pal[1][0]},${pal[1][1]},${pal[1][2]},.7)`;
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.shadowBlur = GLOW;
+        ctx.shadowColor = `rgba(${cols[1][0]},${cols[1][1]},${cols[1][2]},.9)`;
 
-        const attx = (mx*W), atty = (my*H);
-        const pull = attract * 0.18;
-        attract = Math.max(0, attract - 0.01); // decay
+        const layers = 5;
+        const copies = 6;
+        const scale = 0.92;
+        for (let L=0; L<layers; L++){
+          const amp = 0.62 - L*0.085;
+          const rot = t*0.0002 * (L%2? 1:-1) + L*0.1 + px*0.5;
+          for (let c=0; c<copies; c++){
+            ctx.save();
+            ctx.rotate(rot + c*(Math.PI*2/copies));
+            const tt = (L/copies + c/copies) % 1;
+            const col = mixRGB(cols[(L+c)%cols.length], cols[(L+c+1)%cols.length], 0.5 + 0.5*Math.sin(t*0.0004 + L*.6 + c*.8));
+            ctx.strokeStyle = `rgba(${col[0]},${col[1]},${col[2]},0.23)`;
+            ctx.lineWidth = 1.25 + 0.15*L;
 
-        for (let i=0;i<P.length;i++){
-          const p = P[i];
-          const a = angleField(p.x, p.y, t) + pull * Math.atan2(atty - p.y, attx - p.x);
-          const sp = (SPEED * p.speed);
-          const nx = p.x + Math.cos(a) * sp;
-          const ny = p.y + Math.sin(a) * sp;
-
-          // stroke
-          const c = pal[p.hue % pal.length];
-          ctx.strokeStyle = `rgba(${c[0]},${c[1]},${c[2]},0.20)`;
-          ctx.lineWidth = 1.2;
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(nx, ny);
-          ctx.stroke();
-
-          p.x = nx; p.y = ny; p.life--;
-          if (p.x< -2 || p.y< -2 || p.x> W+2 || p.y> H+2 || p.life<=0){
-            resetParticle(p);
+            ctx.beginPath();
+            const steps = 520;
+            for (let i=0;i<=steps;i++){
+              const a = (i/steps)*Math.PI*2;
+              const r = superR(a, PETALS + (L%2 ? 0 : 1)) * amp;
+              const wobble = 0.02*Math.sin(a*PETALS*0.5 + t*0.001 + L) + 0.02*px + 0.02*py;
+              const rad = (r + wobble) * (R*scale);
+              const x = Math.cos(a)*rad;
+              const y = Math.sin(a)*rad;
+              if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+            }
+            ctx.closePath();
+            ctx.stroke();
+            ctx.restore();
           }
         }
-        requestAnimationFrame(step);
+
+        ctx.restore();
+
+        info.textContent = `Rings ${layers*copies}`;
+        requestAnimationFrame(draw);
       }
 
-      // UI bindings
+      // Controls
       function updateBubbles(){
-        speedBubble.textContent = `Speed ${SPEED.toFixed(1)}x`;
+        spinBubble.textContent = `Spin ${SPIN.toFixed(1)}x`;
         trailBubble.textContent = `Trail ${TRAIL.toFixed(2)}`;
-        densityBubble.textContent = `Density ${DENSITY}`;
-        bloomBubble.textContent = `Bloom ${BLOOM}`;
+        petalsBubble.textContent = `Petals ${PETALS}`;
+        glowBubble.textContent = `Glow ${GLOW}`;
+        // Also mod ring spin CSS speed
+        const base = 60 / SPIN;
+        halo.style.setProperty('--spinSpeed', `${Math.max(8, base)}s`);
       }
-      speedRange.addEventListener('input', e=>{ SPEED = parseFloat(e.target.value); if (root.getAttribute('data-zen')==='on') SPEED *= 0.7; updateBubbles(); });
+      spinRange.addEventListener('input', e=>{ SPIN = parseFloat(e.target.value); updateBubbles(); });
       trailRange.addEventListener('input', e=>{ TRAIL = parseFloat(e.target.value); updateBubbles(); });
-      densityRange.addEventListener('input', e=>{
-        DENSITY = parseInt(e.target.value,10);
-        makeParticles(DENSITY);
-        updateBubbles();
-      });
-      bloomRange.addEventListener('input', e=>{ BLOOM = parseInt(e.target.value,10); updateBubbles(); });
+      petalsRange.addEventListener('input', e=>{ PETALS = parseInt(e.target.value,10); updateBubbles(); });
+      glowRange.addEventListener('input', e=>{ GLOW = parseInt(e.target.value,10); updateBubbles(); });
 
-      function toggleZen(){
-        const on = root.getAttribute('data-zen') === 'on';
+      zenBtn.addEventListener('click', ()=>{
+        const on = root.getAttribute('data-zen')==='on';
         root.setAttribute('data-zen', on? 'off' : 'on');
         zenBtn.classList.toggle('on', !on);
-        SPEED = parseFloat(speedRange.value) * (on? 1 : 0.7);
-        BLOOM = parseInt(bloomRange.value,10) - (on? 0 : 2);
-        BLOOM = Math.max(0, BLOOM);
-        updateBubbles();
-      }
-      zenBtn.addEventListener('click', toggleZen);
+      });
 
       randBtn.addEventListener('click', ()=>{
         seed = Math.floor(Math.random()*1e9);
         rnd = mulberry32(seed);
-        P.forEach(p=> resetParticle(p));
-        flashButton(randBtn);
+        // Surprise: jump petals and spin a bit
+        PETALS = 4 + Math.floor(rnd()*15);
+        SPIN = 0.6 + Math.round(rnd()*12)/10;
+        GLOW = 6 + Math.floor(rnd()*18);
+        const themes = Object.keys(THEMES);
+        applyTheme(themes[Math.floor(rnd()*themes.length)]);
+        petalsRange.value = PETALS;
+        spinRange.value = SPIN.toFixed(1);
+        glowRange.value = GLOW;
+        updateBubbles();
+        flash(randBtn);
       });
 
-      function flashButton(btn){
-        btn.classList.add('on'); setTimeout(()=> btn.classList.remove('on'), 380);
-      }
+      let frozen=false;
+      freezeBtn.addEventListener('click', ()=>{
+        frozen = !frozen;
+        running = !frozen;
+        freezeBtn.classList.toggle('on', frozen);
+        if (!frozen) requestAnimationFrame(draw);
+      });
+
+      function flash(btn){ btn.classList.add('on'); setTimeout(()=> btn.classList.remove('on'), 360); }
 
       // Time
-      function tickClock(){
+      function tick(){
         const d = new Date();
         const hh = String(d.getHours()).padStart(2,'0');
         const mm = String(d.getMinutes()).padStart(2,'0');
-        const ss = String(d.getSeconds()).padStart(2,'0');
-        clockEl.textContent = `${hh}:${mm}:${ss}`;
-        requestAnimationFrame(tickClock);
+        clock.textContent = `${hh}:${mm}`;
+        requestAnimationFrame(tick);
       }
 
-      // Optional sound
-      const audio = {
-        ctx: null, osc:null, lfo:null, gain:null, filt:null, active:false
-      };
-      function tuneAudio(){
-        if (!audio.active || !audio.ctx) return;
-        const base = root.getAttribute('data-palette');
-        const note = {
-          ice: 220, eden: 246.94, sunset: 207.65, lava: 185.00, ultraviolet: 233.08
-        }[base] || 220;
-        audio.osc.frequency.setTargetAtTime(note, audio.ctx.currentTime, .25);
-        audio.filt.frequency.setTargetAtTime(400 + BLOOM*30, audio.ctx.currentTime, .35);
-      }
-      function toggleSound(){
-        if (!audio.ctx){
-          audio.ctx = new (window.AudioContext || window.webkitAudioContext)();
-          audio.osc = audio.ctx.createOscillator();
-          audio.lfo = audio.ctx.createOscillator();
-          audio.gain = audio.ctx.createGain();
-          audio.filt = audio.ctx.createBiquadFilter();
-          audio.osc.type = 'sine';
-          audio.lfo.type = 'sine';
-          audio.gain.gain.value = 0.015;
-          audio.filt.type = 'lowpass';
-          audio.osc.connect(audio.filt).connect(audio.gain).connect(audio.ctx.destination);
-          // subtle vibrato
-          const lfoGain = audio.ctx.createGain(); lfoGain.gain.value = 4;
-          audio.lfo.connect(lfoGain).connect(audio.osc.frequency);
-          audio.osc.start(); audio.lfo.start();
-        }
-        audio.active = !audio.active;
-        if (audio.active){
-          tuneAudio();
-          audio.ctx.resume();
-          soundBtn.classList.add('on');
-          root.setAttribute('data-sound','on');
-        }else{
-          audio.ctx.suspend();
-          soundBtn.classList.remove('on');
-          root.setAttribute('data-sound','off');
-        }
-      }
-      soundBtn.addEventListener('click', toggleSound);
-
-      // Init
-      setPalette(root.getAttribute('data-palette') || 'ultraviolet');
-      resize(); makeParticles(DENSITY); updateBubbles(); step(); tickClock();
-
-      // Last updated
-      try{
-        const now = new Date();
-        const fmt = new Intl.DateTimeFormat(undefined, { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit', timeZoneName:'short' });
-        last.textContent = 'Last updated: ' + fmt.format(now);
-      } catch(e){ last.textContent = 'Last updated: ' + new Date().toLocaleString(); }
-
-      // Animate quotes on palette change
-      chips.forEach(c=> c.addEventListener('click', ()=>{
-        say(quotes[Math.floor(Math.random()*quotes.length)]);
-      }));
-
-      // Accessibility keyboard support for chips
-      chips.forEach((c, idx)=>{
-        c.addEventListener('keydown', e=>{
-          if (e.key==='ArrowRight' || e.key==='ArrowDown'){ e.preventDefault(); chips[(idx+1)%chips.length].focus(); }
-          if (e.key==='ArrowLeft' || e.key==='ArrowUp'){ e.preventDefault(); chips[(idx-1+chips.length)%chips.length].focus(); }
-          if (e.key==='Enter' || e.key===' '){ e.preventDefault(); c.click(); }
+      // Keyboard support for modes
+      modes.forEach((m,idx)=>{
+        m.addEventListener('keydown', e=>{
+          if (e.key==='ArrowRight' || e.key==='ArrowDown'){ e.preventDefault(); modes[(idx+1)%modes.length].focus(); }
+          if (e.key==='ArrowLeft' || e.key==='ArrowUp'){ e.preventDefault(); modes[(idx-1+modes.length)%modes.length].focus(); }
+          if (e.key==='Enter' || e.key===' '){ e.preventDefault(); m.click(); }
         });
       });
 
+      // Init
+      applyTheme(root.getAttribute('data-theme') || 'dawn');
+      resize(); updateBubbles(); requestAnimationFrame(draw); tick();
+
+      // Last updated
+      try{
+        const fmt = new Intl.DateTimeFormat(undefined, { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit', timeZoneName:'short' });
+        last.textContent = 'Last updated: ' + fmt.format(new Date());
+      } catch(e){
+        last.textContent = 'Last updated: ' + new Date().toLocaleString();
+      }
     })();
   </script>
-</div>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
