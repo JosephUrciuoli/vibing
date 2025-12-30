@@ -73,446 +73,511 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="vibe1631" aria-label="Solar sundial studio">
+<div id="vibe1632" aria-label="Aurora light field">
   <style>
     /* Tokens */
-    #vibe1631 {
-      --bg1: hsl(45 35% 97%);
-      --bg2: hsl(42 38% 93%);
-      --ink: hsl(230 24% 14%);
-      --muted: hsl(230 10% 38%);
-      --accent: hsl(36 94% 52%);
-      --ring: hsl(230 18% 70%);
-      --stroke: hsla(230 20% 10% / .12);
-      --radius: 28px;
-      --spin: 24deg;         /* dial rotation */
-      --ray-offset: 12deg;   /* irregularity */
-      --ray-soft: .7;        /* 0..1 softness */
-      --glow: 24px;          /* core glow */
+    #vibe1632 {
+      --bg1: hsl(228 60% 9%);
+      --bg2: hsl(255 60% 14%);
+      --ink: hsl(210 20% 96%);
+      --muted: hsl(220 12% 75%);
+      --accent: hsl(192 92% 55%);
+      --accent2: hsl(278 92% 62%);
+      --glass: hsla(0 0% 100% / .08);
+      --ring: hsla(0 0% 100% / .15);
+      --radius: 32px;
+      --px: 0; /* pointer x -1..1 */
+      --py: 0; /* pointer y -1..1 */
       position: relative;
       isolation: isolate;
       color: var(--ink);
-      border-radius: var(--radius);
-      min-height: 640px;
+      min-height: 680px;
       padding: 22px;
+      border-radius: var(--radius);
       background:
-        radial-gradient(1200px 700px at 80% 10%, hsl(42 90% 80% / .28), transparent 60%),
+        radial-gradient(1400px 800px at 70% -10%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 60%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
-      box-shadow: 0 20px 60px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.65);
+      box-shadow: 0 22px 60px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.05);
       overflow: clip;
     }
 
-    /* Subtle vignette + grain */
-    #vibe1631::before {
+    /* Soft vignette + grain */
+    #vibe1632::before {
       content:"";
       position:absolute; inset:-2%;
       pointer-events:none;
       background:
-        radial-gradient(120% 100% at 50% 120%, transparent 55%, rgba(0,0,0,.14) 100%),
-        repeating-linear-gradient(0deg, rgba(0,0,0,.015) 0 2px, transparent 2px 6px),
-        repeating-linear-gradient(90deg, rgba(0,0,0,.015) 0 2px, transparent 2px 6px);
-      mix-blend-mode: multiply;
-      opacity:.9;
+        radial-gradient(120% 100% at 50% 120%, transparent 55%, rgba(0,0,0,.35) 100%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 2px, transparent 2px 6px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 2px, transparent 2px 6px);
+      mix-blend-mode: overlay;
+      opacity:.7;
       z-index:0;
     }
 
-    /* Top bar */
-    #vibe1631 .bar {
-      position: relative; z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px; align-items: center;
+    /* Dock */
+    #vibe1632 .dock {
+      position: relative; z-index: 3;
+      display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;
       padding: 12px 14px;
-      border: 1px solid var(--stroke);
+      border: 1px solid var(--ring);
       border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.6));
-      backdrop-filter: blur(8px) saturate(120%);
-      box-shadow: 0 10px 28px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.8);
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
+      backdrop-filter: blur(10px) saturate(120%);
+      box-shadow: 0 12px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.18);
     }
-    #vibe1631 .brand {
+    #vibe1632 .brand {
       display: inline-flex; gap: 10px; align-items: center;
       font: 800 12px/1 ui-sans-serif, system-ui;
       letter-spacing: .28em; text-transform: uppercase;
       color: var(--muted);
     }
-    #vibe1631 .glyph {
-      width: 16px; height: 16px; border-radius: 50%;
+    #vibe1632 .mark {
+      width: 16px; height: 16px; border-radius: 4px;
       background:
-        radial-gradient(circle at 35% 35%, #fff, var(--accent) 60%),
-        conic-gradient(from 0deg, var(--accent), hsl(15 85% 60%), hsl(55 85% 55%), var(--accent));
-      box-shadow: 0 0 0 6px rgba(255, 179, 71, .18), 0 8px 18px rgba(255,179,71,.35);
-      animation: hue1631 18s linear infinite;
+        conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent));
+      box-shadow: 0 0 0 6px rgba(93, 255, 230, .10), 0 8px 18px rgba(160,130,255,.35);
+      animation: hue1632 22s linear infinite;
     }
-    #vibe1631 .controls { display: inline-flex; gap: 10px; }
-    #vibe1631 .btn {
+    #vibe1632 .controls { display: inline-flex; gap: 10px; }
+    #vibe1632 .btn {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 8px 12px;
-      border: 1px solid var(--stroke);
+      border: 1px solid var(--ring);
       border-radius: 999px;
-      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.65));
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
       color: var(--ink);
       font: 700 12px/1 ui-sans-serif, system-ui;
       letter-spacing: .2px;
       cursor: pointer; user-select: none;
       transition: transform .16s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
-      box-shadow: 0 6px 18px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.8);
+      box-shadow: 0 8px 22px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.16);
     }
-    #vibe1631 .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(0,0,0,.18); }
-    #vibe1631 .bead {
+    #vibe1632 .btn:hover { transform: translateY(-1px); box-shadow: 0 14px 32px rgba(0,0,0,.28); }
+    #vibe1632 .bead {
       width: 8px; height: 8px; border-radius: 999px;
-      background: radial-gradient(circle at 35% 30%, #fff, var(--accent));
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
       box-shadow: 0 0 10px color-mix(in oklab, var(--accent), transparent 70%);
     }
 
-    /* Layout */
-    #vibe1631 .grid {
+    /* Stage */
+    #vibe1632 .stage {
       position: relative; z-index: 1;
-      display: grid; gap: 24px;
+      display: grid;
       grid-template-columns: 1.05fr 1fr;
-      align-items: center;
+      gap: 22px; align-items: center;
       margin-top: 16px;
+      min-height: 520px;
     }
-    @media (max-width: 960px) { #vibe1631 .grid { grid-template-columns: 1fr; } }
+    @media (max-width: 980px) { #vibe1632 .stage { grid-template-columns: 1fr; min-height: 520px; } }
 
-    /* Copy */
-    #vibe1631 .copy { padding: 8px 8px 8px 6px; }
-    #vibe1631 .eyebrow {
+    /* Aurora field (background art) */
+    #vibe1632 .aurora {
+      position: absolute; inset: 0;
+      overflow: hidden;
+      filter: saturate(120%);
+    }
+    #vibe1632 .stars { position:absolute; inset:0; }
+    #vibe1632 .stars span {
+      position:absolute; width:2px; height:2px; border-radius:50%;
+      background: radial-gradient(circle at 38% 38%, #fff, rgba(255,255,255,.3));
+      opacity:.85;
+      animation: twinkle1632 var(--d, 3s) ease-in-out infinite;
+      box-shadow: 0 0 8px rgba(255,255,255,.25);
+    }
+    #vibe1632 .ribbon {
+      position:absolute;
+      width: 160%; height: 120%;
+      left: -30%; top: -10%;
+      filter: blur(44px);
+      mix-blend-mode: screen;
+      opacity: .68;
+      transform-origin: 50% 50%;
+      animation: sway1632 var(--speed, 16s) ease-in-out infinite alternate;
+      will-change: transform;
+    }
+    /* Ribbons with angled gradients and masking */
+    #vibe1632 .r1 {
+      --speed: 14s;
+      background:
+        linear-gradient(115deg,
+          transparent 0% 15%,
+          color-mix(in oklab, var(--accent) 70%, white 30%) 38%,
+          color-mix(in oklab, var(--accent2) 60%, white 40%) 52%,
+          color-mix(in oklab, var(--accent) 60%, black 10%) 66%,
+          transparent 80%);
+      transform: translate(calc(var(--px) * 12px), calc(var(--py) * 12px)) rotate(12deg) scale(1.08);
+    }
+    #vibe1632 .r2 {
+      --speed: 18s;
+      opacity: .55;
+      background:
+        linear-gradient(165deg,
+          transparent 0% 22%,
+          color-mix(in oklab, var(--accent2) 85%, white 15%) 45%,
+          color-mix(in oklab, var(--accent) 75%, white 25%) 63%,
+          transparent 84%);
+      transform: translate(calc(var(--px) * -18px), calc(var(--py) * 18px)) rotate(-8deg) scale(1.12);
+    }
+    #vibe1632 .r3 {
+      --speed: 22s;
+      opacity: .50;
+      background:
+        linear-gradient(135deg,
+          transparent 0% 28%,
+          color-mix(in oklab, var(--accent) 75%, white 25%) 48%,
+          color-mix(in oklab, var(--accent2) 70%, black 5%) 60%,
+          transparent 78%);
+      transform: translate(calc(var(--px) * 28px), calc(var(--py) * -22px)) rotate(24deg) scale(1.06);
+    }
+
+    /* Content panel */
+    #vibe1632 .panel {
+      position: relative; z-index: 2;
+      width: min(720px, 100%);
+      padding: clamp(18px, 3vw, 26px);
+      border-radius: 22px;
+      border: 1px solid var(--ring);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      backdrop-filter: blur(14px) saturate(120%);
+      box-shadow: 0 24px 50px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.16);
+      transform: perspective(900px)
+        rotateY(calc(var(--px) * 4deg))
+        rotateX(calc(var(--py) * -3deg))
+        translate3d(calc(var(--px) * 6px), calc(var(--py) * 6px), 0);
+      transition: transform .25s ease;
+    }
+    #vibe1632 .eyebrow {
       margin: 0 0 12px;
       font: 800 12px/1 ui-sans-serif, system-ui;
       text-transform: uppercase; letter-spacing: .36em;
       color: var(--muted);
     }
-    #vibe1631 .title {
+    #vibe1632 .title {
       margin: 0;
-      font: 900 clamp(40px, 9vw, 86px)/1.02 ui-serif, ui-sans-serif, system-ui;
-      letter-spacing: .02em;
-      background: linear-gradient(90deg,
-        hsl(35 90% 45%),
-        hsl(15 85% 52%),
-        hsl(50 85% 46%));
+      font: 900 clamp(42px, 9vw, 92px)/.96 ui-serif, ui-sans-serif, system-ui;
+      letter-spacing: .01em;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      filter: drop-shadow(0 14px 30px rgba(255,190,90,.22));
+      filter: drop-shadow(0 16px 36px color-mix(in oklab, var(--accent), transparent 70%));
     }
-    #vibe1631 .lead {
+    #vibe1632 .lead {
       margin: 16px 0 22px;
-      font: 400 clamp(14px, 2.2vw, 19px)/1.8 ui-sans-serif, system-ui;
+      font: 400 clamp(14px, 2.2vw, 19px)/1.85 ui-sans-serif, system-ui;
       color: var(--muted);
-      max-width: 60ch;
+      max-width: 66ch;
     }
-    #vibe1631 .tags { display: flex; flex-wrap: wrap; gap: 10px; }
-    #vibe1631 .tag {
+    #vibe1632 .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    #vibe1632 .chip {
       padding: 8px 12px;
       border-radius: 999px;
-      border: 1px dashed var(--stroke);
-      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.65));
+      border: 1px dashed var(--ring);
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
       color: var(--ink);
       font: 700 12px/1 ui-sans-serif, system-ui;
       letter-spacing: .2px;
     }
 
-    /* Dial Scene */
-    #vibe1631 .scene {
-      position: relative;
+    /* Right column: Prism card */
+    #vibe1632 .prism-wrap {
+      position: relative; z-index: 2;
       display: grid; place-items: center;
-      min-height: 360px;
+      min-height: 380px;
+      border-radius: 22px;
+      border: 1px solid var(--ring);
+      background:
+        radial-gradient(120% 120% at 80% 10%, rgba(255,255,255,.08), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 22px 60px rgba(0,0,0,.30);
+      overflow: hidden;
+      transform: translate3d(0,0,0);
     }
-    #vibe1631 .dial {
+    #vibe1632 .prism {
       position: relative;
       width: min(86vw, 520px);
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
+      aspect-ratio: 1/1;
+      border-radius: 28px;
       background:
-        radial-gradient(180px 180px at 50% 50%, rgba(255,255,255,.9), rgba(255,255,255,.2) 60%, transparent 61%),
-        radial-gradient(70% 70% at 50% 50%, rgba(255,200,120,.25), transparent 60%),
-        conic-gradient(from calc(var(--spin) + var(--ray-offset)),
-          color-mix(in oklab, var(--accent) 85%, white 15%) 0 16%,
-          transparent 16% 19%,
-          color-mix(in oklab, var(--accent) 75%, white 25%) 19% 31%,
-          transparent 31% 34%,
-          color-mix(in oklab, var(--accent) 82%, white 18%) 34% 48%,
-          transparent 48% 52%,
-          color-mix(in oklab, var(--accent) 90%, white 10%) 52% 63%,
-          transparent 63% 66%,
-          color-mix(in oklab, var(--accent) 80%, white 20%) 66% 77%,
-          transparent 77% 80%,
-          color-mix(in oklab, var(--accent) 88%, white 12%) 80% 92%,
-          transparent 92% 100%);
-      box-shadow:
-        0 30px 80px rgba(0,0,0,.18),
-        inset 0 -20px 60px rgba(255,180,90,.25),
-        inset 0 1px 0 rgba(255,255,255,.8);
-      border: 1px solid var(--stroke);
+        conic-gradient(from 0deg,
+          color-mix(in oklab, var(--accent), transparent 60%) 0 25%,
+          color-mix(in oklab, var(--accent2), transparent 60%) 25% 50%,
+          color-mix(in oklab, var(--accent), transparent 60%) 50% 75%,
+          color-mix(in oklab, var(--accent2), transparent 60%) 75% 100%);
+      filter: saturate(140%);
       display: grid; place-items: center;
       overflow: hidden;
-      transition: filter .25s ease;
-      cursor: pointer;
-      touch-action: none;
+      border: 1px solid var(--ring);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 26px 60px rgba(0,0,0,.35);
+      animation: rotateSlow1632 26s linear infinite;
+      transform: translate3d(calc(var(--px)*10px), calc(var(--py)*10px), 0);
+      transition: transform .25s ease;
     }
-    #vibe1631 .dial:focus-visible { outline: 2px solid color-mix(in oklab, var(--accent), black 10%); outline-offset: 3px; }
-    #vibe1631 .ring {
-      position: absolute; inset: 18px;
-      border-radius: 50%;
-      background:
-        radial-gradient(100% 100% at 50% 50%, transparent 60%, rgba(0,0,0,.04) 61% 100%),
-        conic-gradient(from 0deg, transparent 0 90deg, rgba(0,0,0,.05) 90deg 90.5deg, transparent 90.5deg 180deg, rgba(0,0,0,.05) 180deg 180.5deg, transparent 180.5deg 270deg, rgba(0,0,0,.05) 270deg 270.5deg, transparent 270.5deg 360deg);
-      border: 1px dashed color-mix(in oklab, var(--ring), transparent 50%);
-      box-shadow: inset 0 10px 30px rgba(0,0,0,.06);
-    }
-    #vibe1631 .core {
-      width: 34%;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 38% 32%, #fff, color-mix(in oklab, var(--accent), white 35%) 40%, color-mix(in oklab, var(--accent), black 10%) 78%),
-        radial-gradient(120% 120% at 70% 30%, rgba(255,255,255,.75), transparent 60%);
-      box-shadow:
-        0 0 var(--glow) color-mix(in oklab, var(--accent), white 35%),
-        0 0 calc(var(--glow) * .6) color-mix(in oklab, var(--accent), white 65%),
-        inset 0 1px 0 rgba(255,255,255,.7);
-      border: 1px solid color-mix(in oklab, var(--accent), black 20%);
-      transform: translateZ(0);
-    }
-    #vibe1631 .hand {
-      position: absolute;
-      width: 48%; height: 2px;
-      background: color-mix(in oklab, var(--ink), var(--accent) 30%);
-      left: 50%; top: 50%;
-      transform-origin: 0% 50%;
-      transform: rotate(var(--spin));
-      border-radius: 2px;
-      box-shadow: 0 1px 10px rgba(0,0,0,.12);
-    }
-
-    /* Orbits */
-    #vibe1631 .orbit {
+    #vibe1632 .prism::before,
+    #vibe1632 .prism::after {
+      content:"";
       position: absolute; inset: 0;
-      display: grid; place-items: center;
-      animation: spin1631 var(--speed, 26s) linear infinite;
-      will-change: transform;
+      background:
+        radial-gradient(60% 60% at 50% 40%, rgba(255,255,255,.25), transparent 60%),
+        linear-gradient(180deg, transparent, rgba(0,0,0,.15));
+      mix-blend-mode: overlay;
+      pointer-events: none;
     }
-    #vibe1631 .dot {
-      width: var(--size, 9px); height: var(--size, 9px);
-      transform: translateX(var(--r, 38%));
+    #vibe1632 .rings {
+      position: absolute; inset: 16%;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff, color-mix(in oklab, var(--accent), black 12%));
-      box-shadow: 0 0 10px color-mix(in oklab, var(--accent), transparent 30%);
+      border: 1px dashed var(--ring);
+      box-shadow: inset 0 10px 30px rgba(0,0,0,.08);
     }
-    #vibe1631 .orbit:nth-child(1) { --speed: 18s; transform: rotate(12deg); }
-    #vibe1631 .orbit:nth-child(2) { --speed: 26s; transform: rotate(128deg); }
-    #vibe1631 .orbit:nth-child(3) { --speed: 34s; transform: rotate(200deg); }
-    #vibe1631 .orbit .dot:nth-child(1) { --r: 38%; --size: 8px; }
-    #vibe1631 .orbit .dot:nth-child(2) { --r: 52%; --size: 10px; }
-    #vibe1631 .orbit .dot:nth-child(3) { --r: 66%; --size: 7px; }
+    #vibe1632 .node {
+      position: absolute; width: 10px; height: 10px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff, color-mix(in oklab, var(--accent), black 18%));
+      box-shadow: 0 0 12px color-mix(in oklab, var(--accent), transparent 30%);
+      animation: orbit1632 var(--t, 18s) linear infinite;
+    }
+    #vibe1632 .node:nth-child(1) { --t: 18s; transform-origin: 50% 180%; }
+    #vibe1632 .node:nth-child(2) { --t: 26s; transform-origin: 50% 210%; }
+    #vibe1632 .node:nth-child(3) { --t: 34s; transform-origin: 50% 240%; }
 
     /* Footer */
-    #vibe1631 .foot {
+    #vibe1632 .foot {
       position: relative; z-index: 2;
       display: flex; align-items: center; justify-content: space-between; gap: 16px;
       margin-top: 20px; padding-top: 12px;
-      border-top: 1px dashed var(--stroke);
+      border-top: 1px dashed var(--ring);
       color: var(--muted);
       font: 400 12px/1.6 ui-sans-serif, system-ui;
     }
-    #vibe1631 .pulse {
+    #vibe1632 .pulse {
       width: 8px; height: 8px; border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
       box-shadow: 0 0 12px color-mix(in oklab, var(--accent), transparent 20%);
-      animation: ping1631 3s ease-in-out infinite;
+      animation: ping1632 3s ease-in-out infinite;
     }
 
     /* States */
-    #vibe1631.paused, #vibe1631.paused * { animation-play-state: paused !important; }
-    #vibe1631 .dial:hover { filter: brightness(1.03) saturate(1.04); }
+    #vibe1632.paused, #vibe1632.paused * { animation-play-state: paused !important; }
+    #vibe1632 .prism:hover { filter: brightness(1.06) saturate(1.05); }
 
     @media (prefers-reduced-motion: reduce) {
-      #vibe1631 .glyph { animation: none !important; }
-      #vibe1631 .orbit { animation: none !important; }
+      #vibe1632 .mark { animation: none !important; }
+      #vibe1632 .ribbon { animation: none !important; }
+      #vibe1632 .stars span { animation: none !important; }
+      #vibe1632 .prism { animation: none !important; }
+      #vibe1632 .node { animation: none !important; }
     }
 
     /* Keyframes */
-    @keyframes hue1631 { to { filter: hue-rotate(360deg); } }
-    @keyframes spin1631 { to { transform: rotate(360deg); } }
-    @keyframes ping1631 { 0%,100% { transform: scale(1); opacity:.9 } 50% { transform: scale(1.2); opacity:1 } }
+    @keyframes hue1632 { to { filter: hue-rotate(360deg); } }
+    @keyframes twinkle1632 {
+      0%, 100% { opacity:.6; transform: scale(1) translateZ(0); }
+      50% { opacity:1; transform: scale(1.4) translateZ(0); }
+    }
+    @keyframes sway1632 {
+      0% { transform: translate(0,0) rotate(-8deg) scale(1.08); }
+      100% { transform: translate(0,0) rotate(8deg) scale(1.12); }
+    }
+    @keyframes rotateSlow1632 { to { transform: translate3d(calc(var(--px)*10px), calc(var(--py)*10px), 0) rotate(360deg); } }
+    @keyframes orbit1632 { to { transform: rotate(360deg); } }
+    @keyframes ping1632 { 0%,100% { transform: scale(1); opacity:.9 } 50% { transform: scale(1.2); opacity:1 } }
   </style>
 
-  <div class="bar" role="toolbar" aria-label="Sundial controls">
-    <div class="brand"><span class="glyph" aria-hidden="true"></span> Heliograph</div>
+  <div class="dock" role="toolbar" aria-label="Aurora controls">
+    <div class="brand"><span class="mark" aria-hidden="true"></span> Aurora Atlas</div>
     <div class="controls">
-      <button class="btn" id="mode"><span class="bead" aria-hidden="true"></span>Mode</button>
-      <button class="btn" id="quiet"><span class="bead" aria-hidden="true"></span>Quiet</button>
+      <button class="btn" id="theme"><span class="bead" aria-hidden="true"></span>Theme</button>
+      <button class="btn" id="calm"><span class="bead" aria-hidden="true"></span>Calm</button>
       <button class="btn" id="shuffle"><span class="bead" aria-hidden="true"></span>Shuffle</button>
     </div>
   </div>
 
-  <div class="grid">
-    <section class="copy">
-      <p class="eyebrow">Sunroom</p>
-      <h2 class="title">HELIOGRAPH</h2>
-      <p class="lead">A kinetic study of daylight, shadow, and time. Drag the dial to steer the sun; let it drift to watch the hours glide. Swap Solar, Lunar, or Mist.</p>
-      <div class="tags" aria-label="qualities">
-        <span class="tag">Sundial core</span>
-        <span class="tag">Conic rays</span>
-        <span class="tag">Orbital dots</span>
-        <span class="tag">Motion-aware</span>
+  <div class="stage">
+    <div class="aurora" aria-hidden="true">
+      <div class="stars" id="stars"></div>
+      <div class="ribbon r1"></div>
+      <div class="ribbon r2"></div>
+      <div class="ribbon r3"></div>
+    </div>
+
+    <section class="panel" aria-label="Intro">
+      <p class="eyebrow">Light study</p>
+      <h2 class="title">AURORA ATLAS</h2>
+      <p class="lead">Paint with motion. Bend ribbons of light with your cursor. Rotate palettes, shuffle the sky, and let the field breathe on its own.</p>
+      <div class="chips" aria-label="highlights">
+        <span class="chip">Parallax field</span>
+        <span class="chip">Procedural stars</span>
+        <span class="chip">Aurora ribbons</span>
+        <span class="chip">Motion-aware</span>
       </div>
     </section>
 
-    <section class="scene" aria-label="Interactive sundial">
-      <div class="dial" id="dial" tabindex="0" aria-label="Dial; drag or use arrow keys to rotate" role="img">
-        <div class="ring" aria-hidden="true"></div>
-        <div class="hand" aria-hidden="true"></div>
-        <div class="core" aria-hidden="true"></div>
-
-        <div class="orbit" aria-hidden="true" style="--speed: 22s;">
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        </div>
-        <div class="orbit" aria-hidden="true" style="--speed: 30s;">
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        </div>
-        <div class="orbit" aria-hidden="true" style="--speed: 38s;">
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        </div>
+    <section class="prism-wrap" aria-label="Prismatic field">
+      <div class="prism" id="prism">
+        <div class="rings" aria-hidden="true"></div>
+        <div class="node" aria-hidden="true"></div>
+        <div class="node" aria-hidden="true"></div>
+        <div class="node" aria-hidden="true"></div>
       </div>
     </section>
   </div>
 
   <div class="foot">
-    <div><span class="pulse" aria-hidden="true"></span> Daylight engine active</div>
-    <span id="last-updated">Last updated: 2025-12-30 15:21:28 EST</span>
+    <div><span class="pulse" aria-hidden="true"></span> Light engine active</div>
+    <span id="last-updated">Last updated: 2025-12-30 16:18:12 EST</span>
   </div>
 
   <script>
     (function () {
-      const root = document.getElementById('vibe1631');
-      const dial = root.querySelector('#dial');
-      const btnMode = root.querySelector('#mode');
-      const btnQuiet = root.querySelector('#quiet');
+      const root = document.getElementById('vibe1632');
+      const btnTheme = root.querySelector('#theme');
+      const btnCalm = root.querySelector('#calm');
       const btnShuffle = root.querySelector('#shuffle');
+      const starsWrap = root.querySelector('#stars');
       const updated = root.querySelector('#last-updated');
+      const prism = root.querySelector('#prism');
 
       // Timestamp
       const fmt = new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'short' });
       updated.textContent = 'Last updated: ' + fmt.format(new Date());
 
-      // Palettes
+      // Themes
       const PAL = [
         {
-          name: 'Solar',
+          name: 'Boreal',
           vars: {
-            '--bg1': 'hsl(45 35% 97%)',
-            '--bg2': 'hsl(42 38% 93%)',
-            '--ink': 'hsl(230 24% 14%)',
-            '--muted': 'hsl(230 10% 38%)',
-            '--accent': 'hsl(36 94% 52%)',
-            '--ring': 'hsl(230 18% 70%)'
+            '--bg1': 'hsl(228 60% 9%)',
+            '--bg2': 'hsl(255 60% 14%)',
+            '--ink': 'hsl(210 20% 96%)',
+            '--muted': 'hsl(220 12% 75%)',
+            '--accent': 'hsl(192 92% 55%)',
+            '--accent2': 'hsl(278 92% 62%)'
           }
         },
         {
-          name: 'Lunar',
+          name: 'Dawn',
           vars: {
-            '--bg1': 'hsl(230 34% 10%)',
-            '--bg2': 'hsl(235 36% 13%)',
-            '--ink': 'hsl(210 20% 96%)',
-            '--muted': 'hsl(220 12% 74%)',
-            '--accent': 'hsl(210 92% 62%)',
-            '--ring': 'hsl(220 20% 38%)'
+            '--bg1': 'hsl(24 75% 14%)',
+            '--bg2': 'hsl(12 80% 22%)',
+            '--ink': 'hsl(20 20% 96%)',
+            '--muted': 'hsl(16 16% 78%)',
+            '--accent': 'hsl(18 95% 62%)',
+            '--accent2': 'hsl(48 95% 55%)'
           }
         },
         {
           name: 'Mist',
           vars: {
-            '--bg1': 'hsl(160 25% 94%)',
-            '--bg2': 'hsl(160 22% 90%)',
+            '--bg1': 'hsl(180 20% 90%)',
+            '--bg2': 'hsl(168 22% 86%)',
             '--ink': 'hsl(170 20% 12%)',
             '--muted': 'hsl(170 10% 36%)',
             '--accent': 'hsl(156 72% 42%)',
-            '--ring': 'hsl(170 18% 64%)'
+            '--accent2': 'hsl(198 72% 48%)'
           }
         }
       ];
       let pi = 0;
       function apply(p) {
         Object.entries(p.vars).forEach(([k, v]) => root.style.setProperty(k, v));
-        btnMode.setAttribute('aria-label', 'Mode: ' + p.name);
+        btnTheme.setAttribute('aria-label', 'Theme: ' + p.name);
       }
       apply(PAL[0]);
-      btnMode.addEventListener('click', () => { pi = (pi + 1) % PAL.length; apply(PAL[pi]); });
+      btnTheme.addEventListener('click', () => { pi = (pi + 1) % PAL.length; apply(PAL[pi]); });
 
-      // Quiet mode
+      // Calm mode
       let paused = false;
       function setPaused(v) {
         paused = v;
         root.classList.toggle('paused', paused);
-        btnQuiet.setAttribute('aria-pressed', String(paused));
-        btnQuiet.lastChild.nodeValue = paused ? 'Play' : 'Quiet';
+        btnCalm.setAttribute('aria-pressed', String(paused));
+        btnCalm.lastChild.nodeValue = paused ? 'Play' : 'Calm';
       }
-      btnQuiet.addEventListener('click', () => setPaused(!paused));
+      btnCalm.addEventListener('click', () => setPaused(!paused));
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) setPaused(true);
 
-      // Shuffle: jitter rays + orbit seeds
+      // Stars
+      function makeStars(count = 120) {
+        starsWrap.innerHTML = '';
+        const rect = root.getBoundingClientRect();
+        for (let i = 0; i < count; i++) {
+          const s = document.createElement('span');
+          const x = Math.random() * 100;
+          const y = Math.random() * 100;
+          const z = Math.random() * 1.2 + .5;
+          const d = (2 + Math.random() * 3).toFixed(2) + 's';
+          s.style.left = x + '%';
+          s.style.top = y + '%';
+          s.style.width = (z * 1.8).toFixed(2) + 'px';
+          s.style.height = s.style.width;
+          s.style.setProperty('--d', d);
+          starsWrap.appendChild(s);
+        }
+      }
+      makeStars();
+
+      // Shuffle: vary ribbon angles + node speeds + starfield
       function shuffle() {
-        const rayOffset = ((Math.random() * 30) - 15).toFixed(2) + 'deg';
-        const raySoft = Math.min(1, Math.max(.4, Math.random())).toFixed(2);
-        const glow = Math.floor(18 + Math.random() * 18) + 'px';
-        root.style.setProperty('--ray-offset', rayOffset);
-        root.style.setProperty('--ray-soft', raySoft);
-        root.style.setProperty('--glow', glow);
-        root.querySelectorAll('.orbit').forEach((o, i) => {
-          const base = [18, 26, 34][i] || 24;
-          const wobble = Math.floor(Math.random() * 10) - 5;
-          o.style.animationDuration = (base + wobble) + 's';
-          o.style.transform = 'rotate(' + Math.floor(Math.random() * 360) + 'deg)';
+        const deg = () => Math.floor(Math.random() * 50) - 25; // -25..25
+        root.querySelector('.r1').style.transform = `translate(calc(var(--px) * 12px), calc(var(--py) * 12px)) rotate(${12 + deg()}deg) scale(1.08)`;
+        root.querySelector('.r2').style.transform = `translate(calc(var(--px) * -18px), calc(var(--py) * 18px)) rotate(${-8 + deg()}deg) scale(1.12)`;
+        root.querySelector('.r3').style.transform = `translate(calc(var(--px) * 28px), calc(var(--py) * -22px)) rotate(${24 + deg()}deg) scale(1.06)`;
+        // Node orbits
+        root.querySelectorAll('.node').forEach((n, i) => {
+          const base = [18, 26, 34][i] || 22;
+          const wobble = Math.floor(Math.random() * 12) - 6;
+          n.style.animationDuration = (base + wobble) + 's';
+          n.style.transformOrigin = `50% ${170 + i*30 + Math.floor(Math.random()*30)}%`;
         });
+        // Stars
+        makeStars(100 + Math.floor(Math.random() * 80));
       }
       btnShuffle.addEventListener('click', shuffle);
       shuffle();
 
-      // Dial interaction + drift
-      let angle = 24;          // degrees
-      let manual = false;
-      let rect = dial.getBoundingClientRect();
-      function updateRect() { rect = dial.getBoundingClientRect(); }
+      // Pointer parallax
+      let rect = root.getBoundingClientRect();
+      function updateRect() { rect = root.getBoundingClientRect(); }
       addEventListener('resize', updateRect);
-
-      function setAngle(a) {
-        angle = (a % 360 + 360) % 360;
-        root.style.setProperty('--spin', angle + 'deg');
+      function setParallax(e) {
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        const px = (x - .5) * 2; // -1..1
+        const py = (y - .5) * 2;
+        root.style.setProperty('--px', px.toFixed(3));
+        root.style.setProperty('--py', py.toFixed(3));
       }
-      setAngle(angle);
-
-      function pointerAngle(e) {
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        return (Math.atan2(y, x) * 180 / Math.PI);
-      }
-
-      dial.addEventListener('pointerdown', (e) => {
-        manual = true; dial.setPointerCapture(e.pointerId);
-        updateRect(); setAngle(pointerAngle(e));
-      });
-      dial.addEventListener('pointermove', (e) => {
-        if (!manual) return;
-        setAngle(pointerAngle(e));
-      });
-      addEventListener('pointerup', () => { manual = false; });
-
-      // Keyboard rotate
-      dial.addEventListener('keydown', (e) => {
-        const step = e.shiftKey ? 10 : 2;
-        if (e.key === 'ArrowLeft') { setAngle(angle - step); e.preventDefault(); }
-        if (e.key === 'ArrowRight') { setAngle(angle + step); e.preventDefault(); }
+      root.addEventListener('pointermove', setParallax);
+      root.addEventListener('pointerleave', () => {
+        root.style.setProperty('--px', 0);
+        root.style.setProperty('--py', 0);
       });
 
-      // Drift animation
-      let last = performance.now();
-      function tick(now) {
-        const dt = now - last; last = now;
-        if (!paused && !manual) {
-          setAngle(angle + 0.0025 * dt); // gentle drift
+      // Accessibility: keyboard hints for theme toggle
+      root.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === 't') { btnTheme.click(); }
+        if (e.key.toLowerCase() === 's') { btnShuffle.click(); }
+        if (e.key.toLowerCase() === ' ') { e.preventDefault(); btnCalm.click(); }
+      });
+
+      // Ensure prism nodes offset with parallax drift when not moving
+      let lastMove = performance.now();
+      let lastRAF = performance.now();
+      function idle(now) {
+        const dt = now - lastRAF; lastRAF = now;
+        if (!paused) {
+          const t = now * 0.0003;
+          // subtle auto drift for parallax if idle
+          if (now - lastMove > 2400) {
+            const px = Math.sin(t) * 0.15;
+            const py = Math.cos(t * 1.2) * 0.12;
+            root.style.setProperty('--px', px.toFixed(3));
+            root.style.setProperty('--py', py.toFixed(3));
+          }
         }
-        requestAnimationFrame(tick);
+        requestAnimationFrame(idle);
       }
-      requestAnimationFrame(tick);
+      root.addEventListener('pointermove', () => { lastMove = performance.now(); });
+      requestAnimationFrame(idle);
     }());
   </script>
 </div>
