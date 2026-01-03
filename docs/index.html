@@ -73,7 +73,414 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-01-02 18:17:58 EST</span></div>
+<style>
+  .vibe-1701 {
+    --radius: 20px;
+    --text: #e9ecf2;
+    --muted: #b6c0d6;
+    --glass: rgba(255,255,255,0.06);
+    --stroke: rgba(255,255,255,0.14);
+    --shadow: 0 20px 60px -20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.04);
+    --glow: 0 0 0 rgba(0,0,0,0);
+    --bg0: #0b1020;
+    --bg1: #0f1a3a;
+    --a1: #8ab4ff;
+    --a2: #b27dff;
+    --a3: #4de2c0;
+    position: relative;
+    border-radius: var(--radius);
+    padding: 0;
+    overflow: hidden;
+    color: var(--text);
+    background:
+      radial-gradient(1200px 800px at 110% -10%, rgba(178,125,255,0.10), transparent 65%),
+      radial-gradient(800px 800px at -10% 110%, rgba(74,225,192,0.08), transparent 60%),
+      linear-gradient(140deg, var(--bg0), var(--bg1));
+    box-shadow: var(--shadow);
+    isolation: isolate;
+    min-height: 540px;
+    font: 400 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .vibe-1701[data-theme="dawn"]{
+    --bg0: #20121f;
+    --bg1: #132430;
+    --a1: #ffb38a;
+    --a2: #ffd36e;
+    --a3: #ff77c8;
+    --glass: rgba(255,255,255,0.07);
+    --stroke: rgba(255,255,255,0.18);
+  }
+
+  .vibe-1701::before,
+  .vibe-1701::after{
+    content:"";
+    position:absolute; inset:-20%;
+    pointer-events:none;
+    mix-blend-mode: screen;
+    transform: translateZ(0);
+  }
+
+  .vibe-1701::before{
+    background:
+      radial-gradient(closest-side at 30% 35%, rgba(138,180,255,0.22), transparent 60%),
+      radial-gradient(closest-side at 70% 65%, rgba(178,125,255,0.20), transparent 60%),
+      radial-gradient(closest-side at 50% 80%, rgba(77,226,192,0.18), transparent 55%);
+    filter: blur(36px) saturate(120%);
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+
+  .vibe-1701::after{
+    background:
+      conic-gradient(from 180deg at 50% 50%,
+        rgba(255,255,255,0.08), rgba(255,255,255,0.00) 20%,
+        rgba(255,255,255,0.10) 40%, rgba(255,255,255,0.00) 60%,
+        rgba(255,255,255,0.08) 80%, rgba(255,255,255,0.00));
+    mask: radial-gradient(120% 120% at 50% 50%, rgba(0,0,0,0.9), transparent 70%);
+    animation: rotate 40s linear infinite;
+  }
+
+  @keyframes drift { to { transform: translate(2%, -1%) scale(1.04); } }
+  @keyframes rotate { to { transform: rotate(360deg); } }
+
+  .chrome {
+    position: relative;
+    z-index: 2;
+    padding: 24px;
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    backdrop-filter: blur(10px) saturate(110%);
+    -webkit-backdrop-filter: blur(10px) saturate(110%);
+    background:
+      linear-gradient( to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.05) 30%, rgba(0,0,0,0) ),
+      var(--glass);
+    border: 1px solid var(--stroke);
+  }
+
+  .topbar {
+    display:flex; align-items:center; justify-content:space-between;
+    gap: 12px; margin-bottom: 18px;
+  }
+
+  .brand {
+    display:flex; align-items:center; gap:12px;
+    letter-spacing: 0.4px;
+  }
+
+  .brand .mark{
+    width: 28px; height: 28px; border-radius: 10px;
+    background:
+      radial-gradient(60% 60% at 30% 30%, rgba(255,255,255,0.35), transparent 70%),
+      linear-gradient(135deg, var(--a1), var(--a2));
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.25),
+      0 8px 20px -10px var(--a2),
+      0 0 0 6px rgba(138,180,255,0.06);
+  }
+  .brand .name{
+    font-weight:600; color:var(--text);
+    opacity:0.95;
+  }
+
+  .toggles { display:flex; gap:8px; align-items:center; }
+  .btn {
+    appearance: none; border: 0; cursor: pointer;
+    border-radius: 999px; padding: 8px 12px;
+    color: var(--text); background: rgba(255,255,255,0.06);
+    border: 1px solid var(--stroke);
+    transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+    display:inline-flex; align-items:center; gap:8px; font-weight:500;
+    backdrop-filter: blur(6px);
+  }
+  .btn:hover { background: rgba(255,255,255,0.10); transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  .plane {
+    position: relative;
+    perspective: 1000px;
+    border-radius: calc(var(--radius) - 4px);
+    padding: clamp(18px, 4vw, 30px);
+    transition: transform .3s ease;
+  }
+  .panel-tilt {
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transform-style: preserve-3d;
+    transition: transform .2s ease;
+  }
+
+  .hero {
+    display:grid; gap:16px; margin: 8px 0 18px;
+  }
+  .eyebrow {
+    font-size: 13px; letter-spacing: .24em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .title {
+    font-size: clamp(32px, 7vw, 60px);
+    line-height: 1.05; font-weight: 700; letter-spacing: -0.02em;
+  }
+  .title .accent {
+    background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 6px 24px rgba(138,180,255,0.18));
+  }
+  .lede {
+    max-width: 64ch; color: var(--muted); font-size: clamp(14px, 2.6vw, 18px);
+  }
+
+  .cta-row { display:flex; gap:10px; flex-wrap:wrap; margin-top: 4px; }
+  .cta {
+    text-decoration: none; padding: 10px 14px; border-radius: 12px;
+    display:inline-flex; align-items:center; gap:10px; font-weight:600;
+    border: 1px solid var(--stroke);
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+    will-change: transform;
+  }
+  .cta.primary {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04)),
+      linear-gradient(90deg, var(--a1), var(--a2));
+    color: #0c1222;
+    box-shadow: 0 10px 30px -12px rgba(138,180,255,0.6);
+  }
+  .cta.primary:hover { transform: translateY(-2px); }
+  .cta.ghost {
+    background: rgba(255,255,255,0.04); color: var(--text);
+  }
+  .cta.ghost:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.24);
+    transform: translateY(-2px);
+  }
+
+  .grid {
+    display:grid; gap:14px; margin-top: 14px;
+    grid-template-columns: repeat(12, 1fr);
+  }
+  .card {
+    grid-column: span 4;
+    min-height: 120px;
+    border-radius: 16px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    border: 1px solid var(--stroke);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 10px 30px -18px rgba(0,0,0,0.6);
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.24);
+    box-shadow: 0 18px 40px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.06) inset;
+  }
+  .card::after{
+    content:"";
+    position:absolute; inset:-2px;
+    pointer-events:none; border-radius: inherit;
+    background: radial-gradient(600px 160px at var(--mx, 50%) var(--my, 120%), rgba(255,255,255,0.16), transparent 60%),
+                conic-gradient(from 180deg at 50% 50%, rgba(138,180,255,0.18), rgba(178,125,255,0.18), rgba(77,226,192,0.12), rgba(138,180,255,0.18));
+    opacity: 0; transition: opacity .25s ease;
+    mix-blend-mode: screen;
+  }
+  .card:hover::after{ opacity: 1; }
+
+  .icon {
+    width: 28px; height: 28px; border-radius: 9px;
+    display:grid; place-items:center; color:#0c1222; font-size: 14px;
+    background: linear-gradient(135deg, var(--a1), var(--a2));
+    box-shadow: 0 6px 16px -8px rgba(178,125,255,0.7);
+  }
+  .card h3 { margin: 10px 0 6px; font-size: 16px; letter-spacing: 0.2px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  .meta {
+    margin-top: 18px;
+    display:flex; align-items:center; justify-content: space-between;
+    color: var(--muted);
+  }
+  .pill {
+    border: 1px solid var(--stroke);
+    border-radius: 999px;
+    padding: 6px 10px;
+    background: rgba(255,255,255,0.04);
+    display:inline-flex; align-items:center; gap:8px;
+  }
+
+  .vibe-1701[data-motion="off"] * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  @media (max-width: 920px){
+    .card { grid-column: span 6; }
+  }
+  @media (max-width: 600px){
+    .topbar { flex-direction: column; align-items: stretch; gap: 10px; }
+    .brand { justify-content: space-between; }
+    .grid { grid-template-columns: repeat(6, 1fr); }
+    .card { grid-column: span 6; }
+  }
+</style>
+
+<div class="vibe-1701" data-theme="dusk" data-motion="on">
+  <div class="chrome">
+    <div class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div class="name">Quiet Momentum</div>
+      </div>
+      <div class="toggles">
+        <button class="btn theme-toggle" aria-pressed="false" aria-label="Toggle theme">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3.5a8.5 8.5 0 1 0 8.5 8.5A5.5 5.5 0 0 1 12 3.5Z" stroke="currentColor" stroke-opacity=".8" stroke-width="1.6"/>
+          </svg>
+          Theme
+        </button>
+        <button class="btn motion-toggle" aria-pressed="false" aria-label="Toggle motion">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M8 5v14l11-7-11-7Z" stroke="currentColor" stroke-opacity=".85" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+          Motion
+        </button>
+      </div>
+    </div>
+
+    <div class="plane">
+      <div class="panel-tilt">
+        <section class="hero" aria-label="Showcase">
+          <div class="eyebrow">Refined • Calm • Kinetic</div>
+          <h1 class="title"><span class="accent">Design that breathes</span></h1>
+          <p class="lede">A living surface of light and hush—quiet interactions, soft depth, and color that listens. Drift forward, gently.</p>
+          <div class="cta-row">
+            <a href="#" class="cta primary">Begin</a>
+            <a href="#" class="cta ghost">Learn more</a>
+          </div>
+        </section>
+
+        <section class="grid" aria-label="Highlights">
+          <article class="card anim">
+            <div class="icon" aria-hidden="true">✦</div>
+            <h3>Glass with Gravity</h3>
+            <p>Subtle blur and weight create calm hierarchy without shouting.</p>
+          </article>
+
+          <article class="card anim">
+            <div class="icon" aria-hidden="true">▦</div>
+            <h3>Gentle Motion</h3>
+            <p>Micro-animations guide attention and invite exploration.</p>
+          </article>
+
+          <article class="card anim">
+            <div class="icon" aria-hidden="true">∞</div>
+            <h3>Adaptive Color</h3>
+            <p>Shift the mood—dawn to dusk—while preserving contrast.</p>
+          </article>
+        </section>
+      </div>
+    </div>
+
+    <footer class="meta">
+      <span class="pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-opacity=".6" stroke-width="1.4"/>
+          <path d="M12 6v6l4 2" stroke="currentColor" stroke-opacity=".85" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <span id="last-updated">Last updated: 2026-01-02 20:24:12 EST</span>
+      </span>
+      <span class="pill" aria-hidden="true">Softer by design</span>
+    </footer>
+  </div>
+</div>
+
+<script>
+(function(){
+  const root = document.currentScript.previousElementSibling;
+  const last = root.querySelector('#last-updated');
+  try {
+    const now = new Date();
+    last.textContent = 'Last updated: ' + now.toLocaleString(undefined, {
+      year:'numeric', month:'2-digit', day:'2-digit',
+      hour:'2-digit', minute:'2-digit', second:'2-digit',
+      hour12:false, timeZoneName:'short'
+    });
+  } catch(e){ last.textContent = 'Last updated: just now'; }
+
+  // Theme toggle with persistence
+  const themeBtn = root.querySelector('.theme-toggle');
+  const savedTheme = localStorage.getItem('vibe1701-theme');
+  if (savedTheme) root.setAttribute('data-theme', savedTheme);
+  const applyThemeAria = () => {
+    const isDawn = root.getAttribute('data-theme') === 'dawn';
+    themeBtn.setAttribute('aria-pressed', String(isDawn));
+  };
+  applyThemeAria();
+  themeBtn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dawn' ? 'dusk' : 'dawn';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('vibe1701-theme', next);
+    applyThemeAria();
+  });
+
+  // Motion toggle & prefers-reduced-motion
+  const motionBtn = root.querySelector('.motion-toggle');
+  const mediaReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const setMotion = (on) => {
+    root.setAttribute('data-motion', on ? 'on' : 'off');
+    motionBtn.setAttribute('aria-pressed', String(!on ? true : false));
+  };
+  if (mediaReduce.matches) setMotion(false);
+  motionBtn.addEventListener('click', () => {
+    const on = root.getAttribute('data-motion') !== 'off';
+    setMotion(!on);
+  });
+  mediaReduce.addEventListener && mediaReduce.addEventListener('change', (e) => setMotion(!e.matches));
+
+  // Tilt interaction
+  const chrome = root.querySelector('.chrome');
+  const tilt = root.querySelector('.panel-tilt');
+  const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+  let raf = null;
+
+  function handleMove(e){
+    if (root.getAttribute('data-motion') === 'off') return;
+    const rect = chrome.getBoundingClientRect();
+    const x = ('touches' in e) ? e.touches[0].clientX : e.clientX;
+    const y = ('touches' in e) ? e.touches[0].clientY : e.clientY;
+    const px = (x - rect.left) / rect.width - 0.5;
+    const py = (y - rect.top) / rect.height - 0.5;
+    const rx = (-py * 6).toFixed(2) + 'deg';
+    const ry = (px * 6).toFixed(2) + 'deg';
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      tilt.style.setProperty('--rx', rx);
+      tilt.style.setProperty('--ry', ry);
+    });
+  }
+  function resetTilt(){
+    tilt.style.setProperty('--rx', '0deg');
+    tilt.style.setProperty('--ry', '0deg');
+  }
+
+  if (!isCoarse){
+    chrome.addEventListener('mousemove', handleMove);
+    chrome.addEventListener('mouseleave', resetTilt);
+  }
+
+  // Card spotlight hover coordinates
+  root.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('pointermove', (e)=>{
+      const r = card.getBoundingClientRect();
+      const mx = ((e.clientX - r.left) / r.width) * 100;
+      const my = ((e.clientY - r.top) / r.height) * 100;
+      card.style.setProperty('--mx', mx + '%');
+      card.style.setProperty('--my', my + '%');
+    });
+  });
+})();
+</script>
       </section>
       <!-- END_EDITABLE -->
     <script>
