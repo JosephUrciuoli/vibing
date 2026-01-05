@@ -73,7 +73,398 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-01-05 09:22:47 EST</span></div>
+<section id="vibe1758" aria-label="Vibing Interface">
+  <style>
+    /* Scope everything to #vibe1758 */
+    #vibe1758 {
+      --radius: 18px;
+      --text: #eaf2ff;
+      --muted: #b9c7e3;
+      --card: rgba(14, 22, 38, 0.52);
+      --stroke: rgba(255, 255, 255, 0.14);
+      --shadow: 0 10px 30px rgba(2, 8, 23, 0.55);
+      --blur: 16px;
+
+      /* Serene default palette */
+      --bg-a: #0b1220;
+      --bg-b: #0d1a2e;
+      --halo-a: #6aa8ff;
+      --halo-b: #a07cff;
+      --accent: #8fb3ff;
+      --accent-strong: #c7d7ff;
+      --glow: #7fb6ff;
+      --speed: 38s;
+
+      position: relative;
+      border-radius: 20px;
+      padding: clamp(20px, 3.4vw, 36px);
+      color: var(--text);
+      overflow: hidden;
+      isolation: isolate;
+      background: radial-gradient(120% 160% at 0% 0%, var(--bg-a) 0%, var(--bg-b) 70%, #08101d 100%);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    /* Vivid mode overrides */
+    #vibe1758[data-tone="vivid"] {
+      --bg-a: #0a0b1a;
+      --bg-b: #121228;
+      --halo-a: #8df5ff;
+      --halo-b: #ffc6a8;
+      --accent: #9df1ff;
+      --accent-strong: #ffffff;
+      --glow: #ffb07a;
+      --speed: 26s;
+    }
+
+    /* Ambient halos */
+    #vibe1758::before,
+    #vibe1758::after {
+      content: "";
+      position: absolute;
+      inset: -20% -10%;
+      background:
+        radial-gradient(40% 40% at var(--glowX, 60%) var(--glowY, 30%), color-mix(in srgb, var(--halo-a) 35%, transparent), transparent 60%),
+        radial-gradient(35% 30% at 80% 70%, color-mix(in srgb, var(--halo-b) 25%, transparent), transparent 70%);
+      filter: blur(40px) saturate(1.15);
+      opacity: 0.9;
+      z-index: -2;
+      transition: opacity 400ms ease;
+    }
+    #vibe1758::after {
+      filter: blur(70px) saturate(1.2);
+      opacity: 0.5;
+      mix-blend-mode: screen;
+    }
+
+    /* Floating orbs */
+    #vibe1758 .orb {
+      position: absolute;
+      width: clamp(110px, 12vw, 160px);
+      height: clamp(110px, 12vw, 160px);
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.45), rgba(255,255,255,0.05) 55%, transparent 70%),
+                  radial-gradient(circle at 65% 70%, color-mix(in srgb, var(--glow) 60%, transparent), transparent 70%);
+      box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.15);
+      filter: blur(0.5px);
+      mix-blend-mode: screen;
+      opacity: 0.75;
+      animation: float var(--speed) ease-in-out infinite;
+      pointer-events: none;
+    }
+    #vibe1758 .orb.a { top: -6%; left: -2%; animation-delay: -3s; }
+    #vibe1758 .orb.b { bottom: -10%; right: -4%; animation-delay: -14s; width: clamp(150px, 16vw, 220px); height: clamp(150px, 16vw, 220px); }
+    #vibe1758 .orb.c { top: 40%; left: 65%; animation-delay: -8s; width: clamp(90px, 10vw, 140px); height: clamp(90px, 10vw, 140px); }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(-6px) translateX(0); }
+      50% { transform: translateY(10px) translateX(4px); }
+    }
+
+    /* Glass card */
+    #vibe1758 .card {
+      position: relative;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--card) 88%, transparent), color-mix(in srgb, var(--card) 72%, transparent));
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      padding: clamp(18px, 3vw, 28px);
+      max-width: 920px;
+      margin: 0 auto;
+      transform: perspective(900px) rotateX(var(--tiltX, 0deg)) rotateY(var(--tiltY, 0deg));
+      transition: transform 300ms ease, box-shadow 400ms ease;
+    }
+
+    #vibe1758 .header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: clamp(16px, 2.2vw, 22px);
+    }
+
+    #vibe1758 .title {
+      font-size: clamp(28px, 4.8vw, 52px);
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      margin: 0;
+      background: linear-gradient(92deg, var(--accent-strong), color-mix(in srgb, var(--accent) 55%, #c5d6ff));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-wrap: balance;
+    }
+
+    #vibe1758 .subtitle {
+      margin: 6px 0 0 0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.7vw, 18px);
+      text-wrap: balance;
+    }
+
+    /* Actions */
+    #vibe1758 .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    #vibe1758 .pill {
+      appearance: none;
+      border: 1px solid var(--stroke);
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      padding: 10px 14px;
+      border-radius: 999px;
+      font: 600 12px/1.1 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 160ms ease, background 260ms ease, border-color 260ms ease, color 260ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+    #vibe1758 .pill:focus-visible {
+      outline: 2px solid color-mix(in srgb, var(--accent) 50%, transparent);
+      outline-offset: 2px;
+    }
+    #vibe1758 .pill:hover {
+      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--accent) 60%, var(--stroke));
+      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04));
+    }
+    #vibe1758 .pill[data-active="true"] {
+      background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 24%, transparent), rgba(255,255,255,0.08));
+      color: var(--accent-strong);
+      border-color: color-mix(in srgb, var(--accent) 50%, var(--stroke));
+    }
+
+    /* Content grid */
+    #vibe1758 .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(16px, 2.6vw, 26px);
+    }
+    @media (max-width: 720px) {
+      #vibe1758 .grid { grid-template-columns: 1fr; }
+      #vibe1758 .actions { justify-content: flex-start; }
+    }
+
+    /* Feature list */
+    #vibe1758 .features {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    #vibe1758 .feature {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1px dashed rgba(255,255,255,0.14);
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    }
+    #vibe1758 .feature i {
+      display: inline-grid;
+      place-items: center;
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 45%, transparent), transparent 60%);
+      color: var(--accent-strong);
+      font-size: 14px;
+    }
+    #vibe1758 .feature b { color: var(--accent-strong); font-weight: 700; }
+    #vibe1758 .feature span { color: var(--muted); }
+
+    /* Right side: meter + quote */
+    #vibe1758 .module {
+      border-radius: 14px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      padding: 14px;
+    }
+    #vibe1758 .meter {
+      --track: rgba(255,255,255,0.14);
+      position: relative;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      overflow: hidden;
+      border: 1px solid var(--track);
+      margin: 4px 0 10px;
+    }
+    #vibe1758 .meter .dot {
+      position: absolute;
+      inset: 0;
+      width: 28%;
+      background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 60%, transparent), transparent);
+      filter: saturate(1.2) drop-shadow(0 0 10px color-mix(in srgb, var(--glow) 100%, transparent));
+      animation: sweep calc(var(--speed) * 0.38) ease-in-out infinite;
+    }
+    @keyframes sweep {
+      0%, 100% { transform: translateX(-15%); }
+      50% { transform: translateX(320%); }
+    }
+    #vibe1758 .quote {
+      color: var(--muted);
+      font-style: italic;
+      margin: 10px 2px 6px;
+      line-height: 1.4;
+    }
+
+    /* Footer line */
+    #vibe1758 .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: clamp(16px, 2.2vw, 22px);
+      padding-top: 14px;
+      border-top: 1px solid var(--stroke);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Glow ring that follows the pointer */
+    #vibe1758 .glow {
+      position: absolute;
+      pointer-events: none;
+      inset: 0;
+      background: radial-gradient(180px 180px at var(--glowX, 50%) var(--glowY, 50%), color-mix(in srgb, var(--glow) 24%, transparent), transparent 60%);
+      opacity: 0.65;
+      mix-blend-mode: screen;
+      transition: opacity 200ms ease;
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      #vibe1758 .orb,
+      #vibe1758 .meter .dot { animation: none; }
+      #vibe1758 .card { transition: none; transform: none !important; }
+      #vibe1758 .glow { display: none; }
+    }
+  </style>
+
+  <div class="orb a" aria-hidden="true"></div>
+  <div class="orb b" aria-hidden="true"></div>
+  <div class="orb c" aria-hidden="true"></div>
+  <div class="glow" aria-hidden="true"></div>
+
+  <div class="card" role="group" aria-label="Showcase card">
+    <div class="header">
+      <div>
+        <h1 class="title">Quietly Bold</h1>
+        <p class="subtitle">A calm interface with deliberate motion and precise light.</p>
+      </div>
+      <div class="actions" aria-label="Palette selector">
+        <button class="pill" data-tone="serene" data-active="true" aria-pressed="true">Serene</button>
+        <button class="pill" data-tone="vivid" aria-pressed="false">Vivid</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <div class="features" aria-label="Design notes">
+          <div class="feature">
+            <i>①</i>
+            <div><b>Soft gradients</b> <span>that breathe instead of shout.</span></div>
+          </div>
+          <div class="feature">
+            <i>②</i>
+            <div><b>Glass layers</b> <span>add depth without clutter.</span></div>
+          </div>
+          <div class="feature">
+            <i>③</i>
+            <div><b>Human pace</b> <span>motion that respects focus.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module" aria-label="Live vibe meter">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+          <span style="color:var(--accent-strong);font-weight:700;">Vibe meter</span>
+          <span style="color:var(--muted);">adaptive</span>
+        </div>
+        <div class="meter" aria-hidden="true">
+          <div class="dot"></div>
+        </div>
+        <p class="quote">“Simplicity is complexity resolved.” — Constantin Brâncuși</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>Move your cursor to tilt and paint with light.</span>
+      <span id="last-updated">Last updated: 2026-01-05 10:22:05 EST</span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('vibe1758');
+      const glow = root.querySelector('.glow');
+      const card = root.querySelector('.card');
+      const pills = root.querySelectorAll('.pill');
+      const updated = root.querySelector('#last-updated');
+
+      // Last updated timestamp
+      try {
+        const now = new Date();
+        const nice = now.toLocaleString(undefined, {
+          year: 'numeric', month: 'short', day: '2-digit',
+          hour: '2-digit', minute: '2-digit'
+        });
+        updated.textContent = 'Last updated: ' + nice;
+      } catch (e) { updated.textContent = ''; }
+
+      // Pointer parallax and glow
+      function setVars(e) {
+        const r = root.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        const gx = Math.max(0, Math.min(100, (x + 0.5) * 100));
+        const gy = Math.max(0, Math.min(100, (y + 0.5) * 100));
+        root.style.setProperty('--tiltX', (y * -7).toFixed(2) + 'deg');
+        root.style.setProperty('--tiltY', (x * 7).toFixed(2) + 'deg');
+        root.style.setProperty('--glowX', gx + '%');
+        root.style.setProperty('--glowY', gy + '%');
+        glow.style.opacity = '0.9';
+      }
+      function resetVars() {
+        root.style.setProperty('--tiltX', '0deg');
+        root.style.setProperty('--tiltY', '0deg');
+        glow.style.opacity = '0.65';
+      }
+      root.addEventListener('mousemove', setVars);
+      root.addEventListener('mouseleave', resetVars);
+      // Touch support
+      root.addEventListener('touchmove', (e) => {
+        const t = e.touches[0];
+        if (!t) return;
+        setVars(t);
+      }, { passive: true });
+      root.addEventListener('touchend', resetVars);
+
+      // Tone toggle
+      pills.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tone = btn.getAttribute('data-tone');
+          root.setAttribute('data-tone', tone);
+          pills.forEach(p => {
+            const active = p === btn;
+            p.dataset.active = active ? 'true' : 'false';
+            p.setAttribute('aria-pressed', active ? 'true' : 'false');
+          });
+        });
+      });
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
