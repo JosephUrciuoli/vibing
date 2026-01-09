@@ -74,432 +74,458 @@
     <!-- BEGIN_EDITABLE -->
       <section id="content">
 <style>
-  .vibe1847 {
-    --c1: #71d1ff;
-    --c2: #a78bfa;
-    --c3: #f9a8d4;
-    --bg1: #0a1220;
-    --bg2: #0b1b2e;
-    --glass: rgba(255,255,255,0.06);
-    --stroke: rgba(255,255,255,0.14);
-    --shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08);
-    --rx: 0deg;
-    --ry: 0deg;
-    --glow: 0 0 0 rgba(0,0,0,0);
+  .vibe1848 {
+    --bg: #f7f8fb;
+    --panel: #ffffff;
+    --ink: #0e1320;
+    --muted: #5b657a;
+    --line: rgba(20, 30, 50, 0.08);
+    --a1: hsl(12 88% 64%);   /* sunrise coral */
+    --a2: hsl(264 85% 72%);  /* violet */
+    --a3: hsl(195 88% 58%);  /* sky */
+    --glow: 0 20px 60px rgba(0,0,0,0.2);
+    --radius: 22px;
+    --circ: 289.03;          /* 2πr for r=46 */
+    --pct: .76;
+    --px: -10%;
+    --py: -10%;
     position: relative;
-    isolation: isolate;
-    color: #eaf1ff;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-    border-radius: 20px;
+    color: var(--ink);
+    background:
+      radial-gradient(1200px 700px at 10% -20%, rgba(255, 160, 120, 0.18), transparent 50%),
+      radial-gradient(900px 600px at 85% 120%, rgba(120, 200, 255, 0.16), transparent 55%),
+      var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
     overflow: hidden;
-    background: radial-gradient(120% 140% at 10% 0%, #0d1a30 0%, transparent 40%),
-                linear-gradient(165deg, var(--bg1), var(--bg2));
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
-    min-height: 440px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    padding: 28px clamp(18px, 3vw, 32px);
+    isolation: isolate;
+    min-height: 520px;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
   }
 
-  .vibe1847 .bg {
-    position: absolute;
-    inset: -10%;
-    pointer-events: none;
-    filter: saturate(120%);
-  }
-  .vibe1847 .blob {
-    position: absolute;
-    width: 55vmax;
-    height: 55vmax;
-    mix-blend-mode: screen;
-    filter: blur(40px);
-    opacity: 0.75;
-    transform: translateZ(0);
-  }
-  .vibe1847 .b1 {
-    background: radial-gradient(circle at 30% 35%, color-mix(in oklab, var(--c1) 75%, transparent), transparent 60%),
-                radial-gradient(circle at 80% 70%, color-mix(in oklab, var(--c2) 75%, transparent), transparent 60%);
-    animation: v1847-floatA 16s ease-in-out infinite alternate;
-  }
-  .vibe1847 .b2 {
-    background: radial-gradient(circle at 60% 45%, color-mix(in oklab, var(--c3) 70%, transparent), transparent 55%);
-    animation: v1847-floatB 19s ease-in-out infinite alternate-reverse;
-  }
-  .vibe1847 .mesh {
+  /* soft grid fabric */
+  .vibe1848 .fabric {
     position: absolute;
     inset: -2px;
-    background-image:
-      radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.06) 30%, transparent 31%),
-      radial-gradient(1.5px 1.5px at 70% 40%, rgba(255,255,255,0.05) 30%, transparent 31%),
-      radial-gradient(1.2px 1.2px at 30% 80%, rgba(255,255,255,0.05) 30%, transparent 31%);
-    background-size: 500px 500px, 400px 400px, 350px 350px;
-    animation: v1847-pan 60s linear infinite;
-    opacity: 0.7;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.6) 2%, transparent 20%) 0 0/100% 160px,
+      repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 32px);
+    mask: radial-gradient(100% 120% at 50% 0%, #000 40%, transparent 100%);
+    opacity: 0.55;
+    animation: v1848-pan 36s linear infinite;
   }
 
-  .vibe1847 .panel {
-    position: relative;
-    max-width: 980px;
-    margin: 36px auto;
-    padding: 28px;
-    border-radius: 18px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-    border: 1px solid var(--stroke);
-    box-shadow: var(--shadow);
-    backdrop-filter: blur(16px) saturate(120%);
-    transform-style: preserve-3d;
-    transform: rotateX(var(--rx)) rotateY(var(--ry));
-    transition: transform 300ms ease, box-shadow 300ms ease, background 400ms ease;
-  }
-  .vibe1847 .panel::before {
+  /* ink glow that follows pointer */
+  .vibe1848::after {
     content: "";
     position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 1px;
-    background: conic-gradient(from 0deg at 50% 50%, var(--c1), var(--c2), var(--c3), var(--c1));
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-    opacity: 0.65;
-    filter: blur(0.25px);
-    pointer-events: none;
-    animation: v1847-spin 14s linear infinite;
-  }
-  .vibe1847 .panel:hover {
-    box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12);
-  }
-  .vibe1847 .glint {
-    position: absolute;
     inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(120px 40px at var(--gx, -10%) var(--gy, -10%), rgba(255,255,255,0.22), transparent 60%);
-    mix-blend-mode: screen;
     pointer-events: none;
-    transition: opacity 300ms ease;
-    opacity: 0.0;
+    background: radial-gradient(220px 160px at var(--px) var(--py),
+                color-mix(in oklab, var(--a1) 14%, transparent),
+                transparent 60%);
+    mix-blend-mode: multiply;
+    opacity: .9;
+    transition: opacity .35s ease;
   }
-  .vibe1847 .panel:hover .glint { opacity: 1; }
+  .vibe1848:focus-within::after,
+  .vibe1848:hover::after { opacity: 1; }
 
-  .vibe1847 .topbar {
+  .vibe1848 .panel {
+    position: relative;
+    background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.9)) padding-box;
+    border: 1px solid rgba(10, 20, 40, 0.08);
+    border-radius: calc(var(--radius) - 4px);
+    box-shadow: var(--glow);
+    backdrop-filter: blur(8px) saturate(115%);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(18px, 3vw, 28px);
+    overflow: clip;
+  }
+
+  .vibe1848 .top {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
-  .vibe1847 .tag {
+  .vibe1848 .tag {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 10px;
-    border-radius: 999px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
-    border: 1px solid rgba(255,255,255,0.22);
+    gap: 10px;
+    padding: 8px 12px;
     font-size: 12px;
-    letter-spacing: 0.35px;
-    color: #d8e6ff;
+    letter-spacing: .32px;
     text-transform: uppercase;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(10,20,40,.06), rgba(10,20,40,.02));
+    border: 1px solid rgba(10,20,40,0.12);
+    color: var(--muted);
   }
-  .vibe1847 .tag::before {
+  .vibe1848 .tag::before {
     content: "";
     width: 8px; height: 8px; border-radius: 50%;
-    background: radial-gradient(circle, var(--c1) 0%, var(--c2) 60%, transparent 61%);
-    box-shadow: 0 0 10px var(--c1), 0 0 20px var(--c2);
+    background: radial-gradient(circle at 30% 30%, var(--a1), var(--a2));
+    box-shadow: 0 0 10px color-mix(in oklab, var(--a1) 50%, transparent);
   }
 
-  .vibe1847 .actions { display: inline-flex; gap: 10px; }
-  .vibe1847 .btn {
+  .vibe1848 .actions { display: inline-flex; gap: 8px; flex-wrap: wrap; }
+  .vibe1848 .btn {
     appearance: none;
-    border: 1px solid rgba(255,255,255,0.22);
-    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
-    color: #eaf1ff;
+    background: linear-gradient(180deg, rgba(10,20,40,0.06), rgba(10,20,40,0.02));
+    border: 1px solid rgba(10,20,40,0.14);
     padding: 8px 12px;
-    border-radius: 10px;
+    border-radius: 12px;
     font-size: 13px;
+    color: var(--ink);
     cursor: pointer;
-    transition: transform 160ms ease, box-shadow 160ms ease, background 240ms ease, border-color 240ms ease;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    transition: transform .15s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+    box-shadow: 0 6px 18px rgba(10,20,40,0.08);
   }
-  .vibe1847 .btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.35); }
-  .vibe1847 .btn:active { transform: translateY(0); }
-  .vibe1847 .btn-secondary {
-    background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
-  }
-  .vibe1847 .btn[aria-pressed="true"] {
+  .vibe1848 .btn:hover { transform: translateY(-1px); border-color: rgba(10,20,40,0.24); }
+  .vibe1848 .btn[aria-pressed="true"] {
+    background: linear-gradient(90deg, color-mix(in oklab, var(--a3) 25%, #fff), color-mix(in oklab, var(--a2) 25%, #fff));
     border-color: transparent;
-    background: linear-gradient(90deg, color-mix(in oklab, var(--c1) 35%, transparent), color-mix(in oklab, var(--c2) 35%, transparent));
-    box-shadow: 0 8px 22px color-mix(in oklab, var(--c2) 28%, transparent);
   }
 
-  .vibe1847 h1 {
-    font-size: clamp(28px, 5vw, 56px);
-    line-height: 1.05;
+  .vibe1848 .grid {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: clamp(16px, 4vw, 28px);
+    align-items: center;
+  }
+  @media (max-width: 840px) {
+    .vibe1848 .grid { grid-template-columns: 1fr; }
+  }
+
+  .vibe1848 h1 {
+    font-size: clamp(32px, 7vw, 72px);
+    line-height: .95;
     margin: 6px 0 10px;
-    letter-spacing: -0.5px;
-    background: linear-gradient(90deg, #ffffff, #d6e6ff 45%, color-mix(in oklab, var(--c1) 80%, #fff) 80%);
+    letter-spacing: -0.6px;
+    background: linear-gradient(90deg, #0e1320, color-mix(in oklab, var(--a1) 55%, #0e1320), color-mix(in oklab, var(--a3) 60%, #0e1320));
     -webkit-background-clip: text;
             background-clip: text;
     color: transparent;
-    text-wrap: balance;
   }
-  .vibe1847 .lede {
-    font-size: clamp(14px, 2.2vw, 18px);
-    opacity: 0.88;
+  .vibe1848 .lede {
+    font-size: clamp(15px, 2.4vw, 20px);
+    color: var(--muted);
     margin: 0 0 18px 0;
     text-wrap: pretty;
   }
 
-  .vibe1847 .meter {
-    position: relative;
-    height: 8px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.08);
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.15);
-    margin: 18px 0 10px;
-  }
-  .vibe1847 .meter .fill {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
-    transform-origin: left center;
-    animation: v1847-breathe 4.8s ease-in-out infinite;
-    filter: drop-shadow(0 0 14px color-mix(in oklab, var(--c2) 30%, transparent));
-  }
-
-  .vibe1847 .tips {
+  .vibe1848 .chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px 14px;
-    opacity: 0.9;
-    font-size: 12px;
-    color: #d0def8;
-    margin-top: 8px;
+    gap: 10px;
+    margin-top: 4px;
   }
-  .vibe1847 .chip {
-    border: 1px dashed rgba(255,255,255,0.24);
-    padding: 6px 8px;
+  .vibe1848 .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 10px;
     border-radius: 999px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border: 1px dashed rgba(10,20,40,0.22);
+    background: linear-gradient(180deg, rgba(10,20,40,0.04), rgba(10,20,40,0.02));
+    font-size: 12px; color: #3b465c;
+  }
+  .vibe1848 .chip svg { opacity: .7; }
+
+  .vibe1848 .right {
+    position: relative;
+    background: radial-gradient(80% 60% at 50% 10%, color-mix(in oklab, var(--a3) 10%, #fff), #fff);
+    border: 1px solid rgba(10,20,40,0.08);
+    border-radius: 18px;
+    padding: clamp(12px, 3vw, 18px);
+    box-shadow: 0 16px 40px rgba(10,20,40,0.10);
+    overflow: hidden;
+  }
+  .vibe1848 .right::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(300px 160px at 120% -20%, color-mix(in oklab, var(--a1) 20%, transparent), transparent 60%),
+                radial-gradient(220px 140px at -30% 120%, color-mix(in oklab, var(--a2) 18%, transparent), transparent 60%);
+    opacity: .7; pointer-events: none;
   }
 
-  .vibe1847 .footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: 18px;
-    padding-top: 12px;
-    border-top: 1px dashed rgba(255,255,255,0.15);
-    font-size: 12px;
-    color: #c9d8f6;
+  .vibe1848 .halo {
+    position: relative;
+    width: min(380px, 80vw);
+    aspect-ratio: 1/1;
+    margin: 0 auto;
+    display: grid; place-items: center;
+    filter: drop-shadow(0 8px 30px color-mix(in oklab, var(--a3) 28%, transparent));
   }
-  .vibe1847 .sig {
-    display: inline-flex; align-items: center; gap: 8px; opacity: 0.9;
+  .vibe1848 .halo .aura {
+    position: absolute; inset: 10% 10%;
+    border-radius: 50%;
+    background:
+      radial-gradient(closest-side, color-mix(in oklab, var(--a2) 35%, transparent), transparent 60%),
+      conic-gradient(from 0deg, color-mix(in oklab, var(--a1) 20%, transparent), transparent 30%, color-mix(in oklab, var(--a3) 18%, transparent) 70%, transparent 100%);
+    filter: blur(20px) saturate(120%);
+    animation: v1848-slowspin 18s linear infinite;
+    opacity: .9;
+    mix-blend-mode: multiply;
   }
-  .vibe1847 .sig svg { filter: drop-shadow(0 1px 6px rgba(255,255,255,0.15)); }
-
-  /* Decorative orbiters */
-  .vibe1847 .orbit {
-    position: absolute;
-    top: -24px; right: 16px;
-    width: 140px; height: 140px;
-    pointer-events: none;
-    opacity: 0.45;
+  .vibe1848 .halo svg {
+    width: 100%; height: 100%;
+    transform-origin: 50% 50%;
+    animation: v1848-slowspin 24s linear infinite reverse;
   }
-  .vibe1847 .orbit .ring {
+  .vibe1848 .track {
+    fill: none;
+    stroke: rgba(10,20,40,0.08);
+    stroke-width: 10;
+  }
+  .vibe1848 .prog {
+    fill: none;
+    stroke: url(#grad1848);
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: var(--circ);
+    stroke-dashoffset: calc(var(--circ) * (1 - var(--pct)));
+    filter: drop-shadow(0 0 14px color-mix(in oklab, var(--a2) 40%, transparent));
+    transition: stroke-dashoffset 700ms cubic-bezier(.2,.8,.2,1);
+  }
+  .vibe1848 .knob {
     position: absolute;
     inset: 0;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.16);
-    transform-origin: 50% 50%;
-    animation: v1847-orbit 12s linear infinite;
+    display: grid; place-items: center;
+    pointer-events: none;
   }
-  .vibe1847 .orbit .dot {
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 8px; height: 8px; border-radius: 50%;
-    background: radial-gradient(circle, #fff, var(--c1) 70%);
-    transform-origin: -55px 0;
-    transform: rotate(0deg) translateX(-55px);
-    box-shadow: 0 0 12px var(--c1);
+  .vibe1848 .knob .dot {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--a3) 80%, #fff));
+    box-shadow: 0 0 0 3px rgba(14,19,32,0.04), 0 6px 18px rgba(14,19,32,0.15);
+    transform: translate(var(--dx, 0), var(--dy, 0));
+    transition: transform 600ms cubic-bezier(.2,.8,.2,1);
   }
-  .vibe1847 .orbit .ring:nth-child(2) { transform: scale(0.7); animation-duration: 9s; opacity: 0.8; }
-  .vibe1847 .orbit .ring:nth-child(3) { transform: scale(0.45); animation-duration: 7s; opacity: 0.7; }
-  .vibe1847 .orbit .ring:nth-child(2) .dot { transform-origin: -42px 0; background: radial-gradient(circle, #fff, var(--c2) 70%); box-shadow: 0 0 12px var(--c2); }
-  .vibe1847 .orbit .ring:nth-child(3) .dot { transform-origin: -28px 0; background: radial-gradient(circle, #fff, var(--c3) 70%); box-shadow: 0 0 12px var(--c3); }
 
-  /* Calm mode */
-  .vibe1847.calm .blob,
-  .vibe1847.calm .mesh,
-  .vibe1847.calm .orbit .ring,
-  .vibe1847.calm .meter .fill {
-    animation-duration: calc(var(--_d, 1) * 3) !important;
-    animation-play-state: running;
+  .vibe1848 .meta {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; margin-top: 14px; color: var(--muted); font-size: 12px;
+    border-top: 1px dashed rgba(10,20,40,0.16);
+    padding-top: 10px;
   }
-  .vibe1847.calm .panel {
-    transform: none !important;
+  .vibe1848 .sig { display: inline-flex; align-items: center; gap: 8px; }
+  .vibe1848 .sig .mark {
+    width: 14px; height: 14px; border-radius: 3px;
+    background: linear-gradient(135deg, var(--a1), var(--a3));
+    box-shadow: 0 2px 10px color-mix(in oklab, var(--a1) 40%, transparent);
   }
+
+  /* NIGHT THEME */
+  .vibe1848.night {
+    --bg: #0b0f19;
+    --panel: #0f1524;
+    --ink: #e9f0ff;
+    --muted: #c6d2f8;
+    --line: rgba(255,255,255,0.08);
+    --glow: 0 20px 80px rgba(0,0,0,0.55);
+  }
+  .vibe1848.night .panel {
+    background: linear-gradient(180deg, rgba(19,26,45,0.75), rgba(19,26,45,0.9));
+    border-color: rgba(255,255,255,0.10);
+  }
+  .vibe1848.night .btn { color: var(--ink); background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); border-color: rgba(255,255,255,0.12); }
+  .vibe1848.night .tag { background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)); border-color: rgba(255,255,255,0.14); }
+  .vibe1848.night .right { background: radial-gradient(80% 60% at 50% 10%, color-mix(in oklab, var(--a3) 12%, #111726), #0f1524); border-color: rgba(255,255,255,0.08); }
+  .vibe1848.night .track { stroke: rgba(255,255,255,0.08); }
+  .vibe1848.night .chip { border-color: rgba(255,255,255,0.2); background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); color: #d5e2ff; }
+  .vibe1848.night .fabric { opacity: .35; }
+
+  /* PAUSED */
+  .vibe1848.paused .fabric,
+  .vibe1848.paused .halo .aura,
+  .vibe1848.paused .halo svg { animation-play-state: paused; }
 
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    .vibe1847 .blob,
-    .vibe1847 .mesh,
-    .vibe1847 .orbit .ring,
-    .vibe1847 .meter .fill,
-    .vibe1847 .panel::before {
-      animation: none !important;
-    }
-    .vibe1847 .panel { transform: none !important; }
+    .vibe1848 .fabric,
+    .vibe1848 .halo .aura,
+    .vibe1848 .halo svg { animation: none !important; }
+    .vibe1848::after { display: none; }
   }
 
   /* Animations */
-  @keyframes v1847-floatA {
-    0% { transform: translate(-12%, -6%) scale(1); }
-    100% { transform: translate(6%, 10%) scale(1.05); }
-  }
-  @keyframes v1847-floatB {
-    0% { transform: translate(12%, -4%) scale(1); }
-    100% { transform: translate(-8%, 8%) scale(1.08); }
-  }
-  @keyframes v1847-pan {
+  @keyframes v1848-pan {
     0% { background-position: 0 0, 0 0, 0 0; }
-    100% { background-position: 500px 500px, 400px 800px, -350px -350px; }
+    100% { background-position: 0 0, 320px 0, 0 320px; }
   }
-  @keyframes v1847-breathe {
-    0%, 100% { transform: scaleX(0.35); }
-    50% { transform: scaleX(0.92); }
-  }
-  @keyframes v1847-orbit {
+  @keyframes v1848-slowspin {
     from { transform: rotate(0turn); }
-    to { transform: rotate(1turn); }
-  }
-  @keyframes v1847-spin {
-    from { transform: rotate(0turn); }
-    to { transform: rotate(1turn); }
+    to   { transform: rotate(1turn); }
   }
 </style>
 
-<div class="vibe1847" id="vibe1847-root" aria-live="polite">
-  <div class="bg" aria-hidden="true">
-    <span class="blob b1"></span>
-    <span class="blob b2"></span>
-    <span class="mesh"></span>
-  </div>
+<div class="vibe1848" id="vibe1848-root" aria-live="polite">
+  <div class="fabric" aria-hidden="true"></div>
 
-  <div class="panel" id="v1847-panel" tabindex="0" aria-label="Luminous design panel">
-    <div class="glint" aria-hidden="true"></div>
-
-    <div class="topbar">
-      <span class="tag">Iteration 1847</span>
+  <div class="panel" id="v1848-panel" tabindex="0" aria-label="Daybreak control panel">
+    <div class="top">
+      <span class="tag">Iteration 1848</span>
       <div class="actions">
-        <button class="btn btn-secondary" data-action="calm" aria-pressed="false">Calm mode</button>
-        <button class="btn" data-action="shuffle" aria-pressed="false">Shuffle glow</button>
+        <button class="btn" data-action="theme" aria-pressed="false" title="Toggle day/night">Night</button>
+        <button class="btn" data-action="shuffle" aria-pressed="false" title="Shuffle palette">Shuffle</button>
+        <button class="btn" data-action="pause" aria-pressed="false" title="Pause/Play">Pause</button>
       </div>
     </div>
 
-    <h1>Luminous quiet, arranged.</h1>
-    <p class="lede">A soft-spoken interface with confident edges—balancing clarity, motion, and warmth.</p>
+    <div class="grid">
+      <section class="left" aria-label="Intro">
+        <h1>Dawn that thinks.</h1>
+        <p class="lede">A poster‑like interface that breathes in gradients and geometry—quietly kinetic, always legible.</p>
 
-    <div class="meter" aria-label="Harmony meter">
-      <div class="fill"></div>
-    </div>
+        <div class="chips" aria-label="Hints">
+          <span class="chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.4" opacity=".6"/>
+            </svg>
+            Move your cursor to paint light
+          </span>
+          <span class="chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="6.5" stroke="currentColor" stroke-width="1.4" opacity=".6"/>
+            </svg>
+            Drag the ring to set a mood
+          </span>
+          <span class="chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 12h12M6 12a6 6 0 1 1 12 0" stroke="currentColor" stroke-width="1.4" opacity=".6"/>
+            </svg>
+            Shuffle re-colors the sunrise
+          </span>
+        </div>
+      </section>
 
-    <div class="tips">
-      <span class="chip">Tip: move your cursor or focus this card</span>
-      <span class="chip">Press “Shuffle glow” to recolor the aurora</span>
-    </div>
-
-    <div class="orbit" aria-hidden="true">
-      <div class="ring"><div class="dot"></div></div>
-      <div class="ring"><div class="dot"></div></div>
-      <div class="ring"><div class="dot"></div></div>
-    </div>
-
-    <div class="footer">
-      <span class="sig">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M5 12c3-6 11-6 14 0-3 6-11 6-14 0Z" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
-          <circle cx="12" cy="12" r="3.5" fill="url(#g1847)"/>
-          <defs><radialGradient id="g1847" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(12 12) scale(5 5)">
-            <stop stop-color="#ffffff"/><stop offset="1" stop-color="#8ec5ff"/>
-          </radialGradient></defs>
-        </svg>
-        Designed to breathe, not shout.
-      </span>
-      <span id="last-updated">Last updated: 2026-01-09 11:25:48 EST</span>
+      <section class="right" aria-label="Kinetic ring">
+        <div class="halo" id="halo">
+          <div class="aura" aria-hidden="true"></div>
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <defs>
+              <linearGradient id="grad1848" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="var(--a3)"/>
+                <stop offset="60%" stop-color="var(--a2)"/>
+                <stop offset="100%" stop-color="var(--a1)"/>
+              </linearGradient>
+            </defs>
+            <circle class="track" cx="60" cy="60" r="46"></circle>
+            <circle class="prog" cx="60" cy="60" r="46"></circle>
+          </svg>
+          <div class="knob" aria-hidden="true"><div class="dot"></div></div>
+        </div>
+        <div class="meta">
+          <span class="sig"><span class="mark" aria-hidden="true"></span> Crafted for calm momentum</span>
+          <span id="last-updated">Last updated: 2026-01-09 12:21:24 EST</span>
+        </div>
+      </section>
     </div>
   </div>
 </div>
 
 <script>
-  (function initV1847(){
-    const root = document.getElementById('vibe1847-root');
-    const panel = document.getElementById('v1847-panel');
-    const glint = panel.querySelector('.glint');
-    const calmBtn = panel.querySelector('[data-action="calm"]');
-    const shuffleBtn = panel.querySelector('[data-action="shuffle"]');
+  (function initV1848(){
+    const root = document.getElementById('vibe1848-root');
+    const panel = document.getElementById('v1848-panel');
     const ts = panel.querySelector('#last-updated');
+    const themeBtn = panel.querySelector('[data-action="theme"]');
+    const shuffleBtn = panel.querySelector('[data-action="shuffle"]');
+    const pauseBtn = panel.querySelector('[data-action="pause"]');
+    const halo = document.getElementById('halo');
+    const prog = halo.querySelector('.prog');
+    const dot = halo.querySelector('.dot');
 
     // Timestamp
     try {
       const now = new Date();
-      const formatted = now.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
-      ts.textContent = 'Last updated: ' + formatted;
+      ts.textContent = 'Last updated: ' + now.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
     } catch(e) {
       ts.textContent = 'Last updated: ' + (new Date()).toISOString();
     }
 
-    // Parallax tilt + glint
-    let raf = null;
-    const setTilt = (x, y, rect) => {
-      const px = (x - rect.left) / rect.width;
-      const py = (y - rect.top) / rect.height;
-      const rx = (py - 0.5) * -6; // degrees
-      const ry = (px - 0.5) * 8;
-      panel.style.setProperty('--rx', rx.toFixed(2) + 'deg');
-      panel.style.setProperty('--ry', ry.toFixed(2) + 'deg');
-      panel.style.setProperty('--gx', (px * 100) + '%');
-      panel.style.setProperty('--gy', (py * 100) + '%');
+    // Pointer light painter
+    const setPointer = (x, y) => {
+      const r = root.getBoundingClientRect();
+      const px = ((x - r.left) / r.width) * 100;
+      const py = ((y - r.top) / r.height) * 100;
+      root.style.setProperty('--px', px + '%');
+      root.style.setProperty('--py', py + '%');
     };
+    root.addEventListener('mousemove', (e) => setPointer(e.clientX, e.clientY), { passive: true });
+    root.addEventListener('touchmove', (e) => {
+      const t = e.touches[0]; if (!t) return;
+      setPointer(t.clientX, t.clientY);
+    }, { passive: true });
 
-    const onMove = (evt) => {
-      if (root.classList.contains('calm')) return;
-      const rect = panel.getBoundingClientRect();
-      const x = evt.touches ? evt.touches[0].clientX : evt.clientX;
-      const y = evt.touches ? evt.touches[0].clientY : evt.clientY;
-      if (raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => setTilt(x, y, rect));
+    // Ring interaction
+    let dragging = false;
+    const CIRC = 289.03;
+    const setPercentFromAngle = (angle) => {
+      const pct = Math.max(0, Math.min(1, angle / (Math.PI * 2)));
+      root.style.setProperty('--pct', pct.toFixed(3));
+      prog.style.strokeDashoffset = (CIRC * (1 - pct)).toFixed(2);
+      // move knob along the circle
+      const r = 46;
+      const cx = 60, cy = 60;
+      const theta = angle - Math.PI / 2; // start at top
+      const kx = Math.cos(theta) * (r) * 1.0;
+      const ky = Math.sin(theta) * (r) * 1.0;
+      // map svg coords to dot container (centered)
+      dot.style.setProperty('--dx', (kx * 1.4) + 'px');
+      dot.style.setProperty('--dy', (ky * 1.4) + 'px');
     };
+    const angleFromEvent = (evt) => {
+      const rect = halo.getBoundingClientRect();
+      const x = (evt.touches ? evt.touches[0].clientX : evt.clientX) - rect.left - rect.width/2;
+      const y = (evt.touches ? evt.touches[0].clientY : evt.clientY) - rect.top - rect.height/2;
+      let ang = Math.atan2(y, x); // -PI..PI
+      ang = (ang + 2*Math.PI) % (2*Math.PI);
+      return ang;
+    };
+    const onDragStart = (evt) => { dragging = true; setPercentFromAngle(angleFromEvent(evt)); };
+    const onDragMove = (evt) => { if (!dragging) return; setPercentFromAngle(angleFromEvent(evt)); };
+    const onDragEnd = () => { dragging = false; };
+    halo.addEventListener('mousedown', onDragStart);
+    halo.addEventListener('touchstart', onDragStart, { passive: true });
+    window.addEventListener('mousemove', onDragMove, { passive: true });
+    window.addEventListener('touchmove', onDragMove, { passive: true });
+    window.addEventListener('mouseup', onDragEnd);
+    window.addEventListener('touchend', onDragEnd);
 
-    panel.addEventListener('mousemove', onMove, { passive: true });
-    panel.addEventListener('touchmove', onMove, { passive: true });
-    panel.addEventListener('mouseleave', () => {
-      panel.style.setProperty('--rx', '0deg');
-      panel.style.setProperty('--ry', '0deg');
+    // Set initial knob position
+    setPercentFromAngle(Math.random() * Math.PI * 2);
+
+    // Theme toggle
+    themeBtn.addEventListener('click', () => {
+      const night = !root.classList.contains('night');
+      root.classList.toggle('night', night);
+      themeBtn.setAttribute('aria-pressed', String(night));
+      themeBtn.textContent = night ? 'Day' : 'Night';
     });
 
-    // Keyboard focus shimmer
-    panel.addEventListener('focus', () => glint.style.opacity = '1');
-    panel.addEventListener('blur', () => glint.style.opacity = '0');
-
-    // Calm toggle
-    calmBtn.addEventListener('click', () => {
-      const nowCalm = !root.classList.contains('calm');
-      root.classList.toggle('calm', nowCalm);
-      calmBtn.setAttribute('aria-pressed', String(nowCalm));
-      calmBtn.textContent = nowCalm ? 'Calm mode: on' : 'Calm mode';
+    // Pause/Play animations
+    pauseBtn.addEventListener('click', () => {
+      const paused = !root.classList.contains('paused');
+      root.classList.toggle('paused', paused);
+      pauseBtn.setAttribute('aria-pressed', String(paused));
+      pauseBtn.textContent = paused ? 'Play' : 'Pause';
     });
 
-    // Shuffle colors
-    function hue(h, s=88, l=68) { return `hsl(${h} ${s}% ${l}%)`; }
+    // Palette shuffle
+    const hue = (h, s=82, l=62) => `hsl(${h} ${s}% ${l}%)`;
     shuffleBtn.addEventListener('click', () => {
       const base = Math.floor(Math.random() * 360);
-      root.style.setProperty('--c1', hue(base, 86, 70));
-      root.style.setProperty('--c2', hue((base + 60) % 360, 84, 68));
-      root.style.setProperty('--c3', hue((base + 120) % 360, 80, 72));
+      root.style.setProperty('--a1', hue(base + 12, 88, 62));
+      root.style.setProperty('--a2', hue(base + 132, 82, 70));
+      root.style.setProperty('--a3', hue(base + 212, 85, 58));
       shuffleBtn.setAttribute('aria-pressed', 'true');
-      setTimeout(() => shuffleBtn.setAttribute('aria-pressed', 'false'), 400);
+      setTimeout(() => shuffleBtn.setAttribute('aria-pressed', 'false'), 350);
     }, { passive: true });
   })();
 </script>
