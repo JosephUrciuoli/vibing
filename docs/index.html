@@ -73,7 +73,490 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-01-12 01:34:25 EST</span></div>
+<section id="aurora1902" role="region" aria-label="Aurora atelier">
+  <style>
+    /* Scoped styles */
+    #aurora1902 {
+      --hue: 232;
+      --tx: 0;
+      --ty: 0;
+
+      --text: rgba(245,247,255,0.96);
+      --muted: rgba(245,247,255,0.72);
+      --glass: rgba(255,255,255,0.08);
+      --line: rgba(255,255,255,0.15);
+      --shadow: rgba(2,6,20,0.6);
+
+      --c1: hsl(var(--hue) 82% 72%);
+      --c2: hsl(calc(var(--hue) + 40) 82% 60%);
+      --c3: hsl(calc(var(--hue) + 80) 82% 52%);
+
+      position: relative;
+      overflow: hidden;
+      padding: 28px;
+      border-radius: 20px;
+      color: var(--text);
+      background:
+        radial-gradient(120% 100% at 10% 5%, rgba(255,255,255,0.06), transparent 40%),
+        linear-gradient(180deg, #0b0f18, #0a0d14 38%, #0d101a);
+      outline: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 24px 80px var(--shadow), inset 0 1px 0 rgba(255,255,255,0.06);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      user-select: none;
+      isolation: isolate;
+    }
+
+    /* Aurora glow layers */
+    #aurora1902::before,
+    #aurora1902::after {
+      content: "";
+      position: absolute;
+      inset: -25%;
+      z-index: -2;
+      filter: blur(42px) saturate(1.05);
+      opacity: 0.6;
+      transition: opacity .25s ease;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+    #aurora1902::before {
+      background:
+        radial-gradient(40% 40% at 18% 24%, var(--c1), transparent 60%),
+        radial-gradient(45% 45% at 86% 70%, var(--c2), transparent 62%),
+        radial-gradient(38% 38% at 48% 68%, var(--c3), transparent 65%);
+      animation: auroraFloat 18s ease-in-out infinite alternate;
+    }
+    #aurora1902::after {
+      background:
+        radial-gradient(38% 38% at 80% 18%, color-mix(in hsl, var(--c2) 75%, white) 0%, transparent 60%),
+        radial-gradient(46% 46% at 14% 78%, color-mix(in hsl, var(--c3) 70%, black) 0%, transparent 68%);
+      animation: auroraFloat2 26s ease-in-out infinite alternate;
+      opacity: 0.45;
+    }
+
+    /* Subtle grid mask to add structure */
+    #aurora1902 .grid {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.16;
+      background-image:
+        linear-gradient(0deg, rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 26px 26px;
+      mask-image: radial-gradient(120% 120% at 50% 50%, black 55%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* Glass shell */
+    #aurora1902 .shell {
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+      border: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 22px 20px 16px;
+      box-shadow: 0 10px 40px var(--shadow), inset 0 1px 0 rgba(255,255,255,0.06);
+      transform: perspective(900px) rotateX(calc(var(--ty) * 2.2deg)) rotateY(calc(var(--tx) * -2.2deg));
+      transition: transform .25s ease, border-color .3s ease, background .3s ease;
+      position: relative;
+    }
+    #aurora1902 .shell::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.35) 50%, transparent 65%);
+      background-size: 200% 100%;
+      mix-blend-mode: screen;
+      animation: glint 7s ease-in-out infinite;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    /* Header */
+    #aurora1902 .head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    #aurora1902 .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #aurora1902 .mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      position: relative;
+      background: radial-gradient(120% 120% at 25% 25%, var(--c1), transparent 55%), radial-gradient(140% 140% at 75% 75%, var(--c2), transparent 55%);
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 6px 14px rgba(0,0,0,0.35);
+      overflow: hidden;
+    }
+    #aurora1902 .mark::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(120% 120% at 30% 30%, rgba(255,255,255,0.45), transparent 50%);
+      mix-blend-mode: screen;
+    }
+    #aurora1902 .title {
+      font-size: 18px;
+      letter-spacing: 0.2px;
+      font-weight: 630;
+      line-height: 1.2;
+      color: var(--text);
+    }
+    #aurora1902 .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.2px;
+      margin-top: 2px;
+    }
+
+    /* Controls */
+    #aurora1902 .controls {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: 12px;
+      margin: 12px 0 14px;
+    }
+    #aurora1902 .btn {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      transition: transform .12s ease, background .3s ease, border-color .3s ease;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+      cursor: pointer;
+    }
+    #aurora1902 .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.28);
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04));
+    }
+    #aurora1902 .btn:active { transform: translateY(0); }
+
+    /* Toggle */
+    #aurora1902 .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      user-select: none;
+    }
+    #aurora1902 .switch {
+      --w: 44px; --h: 24px;
+      width: var(--w);
+      height: var(--h);
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.06);
+      position: relative;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 4px 10px rgba(0,0,0,0.35);
+      transition: background .3s ease, border-color .3s ease;
+    }
+    #aurora1902 .switch input {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      opacity: 0; cursor: pointer; margin: 0;
+    }
+    #aurora1902 .knob {
+      position: absolute; top: 2px; left: 2px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: radial-gradient(90% 90% at 30% 30%, #fff, #dfe6ff);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.7);
+      transition: transform .25s cubic-bezier(.2,.8,.2,1);
+    }
+    #aurora1902 [data-vivid="true"] .knob,
+    #aurora1902 .switch input:checked + .knob {
+      transform: translateX(20px);
+      background: radial-gradient(90% 90% at 30% 30%, #fff, var(--c1));
+    }
+
+    /* Range */
+    #aurora1902 .range-wrap {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 10px;
+    }
+    #aurora1902 .range {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 28px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+      border: 1px solid var(--line);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 6px 14px rgba(0,0,0,0.35);
+      outline: none;
+      transition: box-shadow .2s ease, border-color .2s ease;
+    }
+    #aurora1902 .range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: radial-gradient(100% 100% at 30% 30%, #fff, #e9ecff);
+      border: 1px solid rgba(0,0,0,0.12);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.35), 0 0 0 4px rgba(255,255,255,0.14);
+      cursor: ew-resize;
+    }
+    #aurora1902 .range::-moz-range-thumb {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: radial-gradient(100% 100% at 30% 30%, #fff, #e9ecff);
+      border: 1px solid rgba(0,0,0,0.12);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.35), 0 0 0 4px rgba(255,255,255,0.14);
+      cursor: ew-resize;
+    }
+    #aurora1902 .bubble {
+      font-variant-numeric: tabular-nums;
+      min-width: 54px;
+      text-align: right;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-size: 12px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    /* Hero copy */
+    #aurora1902 .hero {
+      display: grid;
+      gap: 6px;
+      margin: 6px 0 8px;
+    }
+    #aurora1902 h1 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+      font-weight: 700;
+      line-height: 1.15;
+      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.35));
+    }
+    #aurora1902 .tagline {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* Chips */
+    #aurora1902 .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    #aurora1902 .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.07);
+      font-size: 12px;
+      letter-spacing: 0.2px;
+      color: var(--text);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 6px 14px rgba(0,0,0,0.35);
+      transition: transform .2s ease, background .3s ease, border-color .3s ease;
+    }
+    #aurora1902 .chip:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.28); }
+
+    /* Footer */
+    #aurora1902 .foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(255,255,255,0.14);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    #aurora1902 .help {
+      opacity: 0.85;
+    }
+
+    /* Vivid mode intensifies glow */
+    #aurora1902[data-vivid="true"]::before,
+    #aurora1902[data-vivid="true"]::after { opacity: 0.78; }
+    #aurora1902[data-vivid="true"] .shell { background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05)); }
+    #aurora1902[data-vivid="true"] .range { box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 10px 24px rgba(0,0,0,0.45); }
+
+    /* Motion */
+    @keyframes auroraFloat {
+      0% { transform: translate(-2%, -1%) scale(1.02) rotate(0.2deg); }
+      100% { transform: translate(2%, 1%) scale(1.04) rotate(-0.2deg); }
+    }
+    @keyframes auroraFloat2 {
+      0% { transform: translate(1%, 2%) scale(1.04) rotate(-0.3deg); }
+      100% { transform: translate(-1%, -2%) scale(1.02) rotate(0.3deg); }
+    }
+    @keyframes glint {
+      0%, 12% { background-position: -120% 0; opacity: 0.25; }
+      40% { background-position: 80% 0; opacity: 0.45; }
+      100% { background-position: 120% 0; opacity: 0.25; }
+    }
+
+    /* Responsive */
+    @media (max-width: 520px) {
+      #aurora1902 .controls { grid-template-columns: 1fr auto; grid-auto-rows: auto; }
+      #aurora1902 .toggle { order: 3; grid-column: 1 / -1; justify-self: start; }
+    }
+
+    /* Reduce motion for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      #aurora1902::before, #aurora1902::after, #aurora1902 .shell::after { animation: none !important; }
+      #aurora1902 .shell { transition: none !important; transform: none !important; }
+    }
+  </style>
+
+  <div class="grid" aria-hidden="true"></div>
+
+  <div class="shell">
+    <div class="head">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          <div class="title">Ambient Atelier</div>
+          <div class="subtitle">Light that listens to your touch</div>
+        </div>
+      </div>
+      <div class="toggle">
+        <div class="switch" aria-hidden="true">
+          <input id="vivid" type="checkbox" aria-label="Toggle vivid mode">
+          <span class="knob"></span>
+        </div>
+        <label for="vivid">Vivid</label>
+      </div>
+    </div>
+
+    <div class="hero">
+      <h1>Paint the air with hue</h1>
+      <p class="tagline">Slide the spectrum. Watch the scene breathe.</p>
+    </div>
+
+    <div class="controls">
+      <div class="range-wrap">
+        <input id="hue" class="range" type="range" min="0" max="360" step="1" value="232" aria-label="Hue">
+        <div id="hueBubble" class="bubble" aria-live="polite">Hue 232</div>
+      </div>
+      <button id="shuffle" class="btn" type="button" aria-label="Shuffle hue">Shuffle</button>
+      <button id="calm" class="btn" type="button" aria-label="Center the light">Center</button>
+    </div>
+
+    <div class="chips" aria-label="Quick stats">
+      <span class="chip">Iteration <strong>1902</strong></span>
+      <span class="chip" id="mood">Mode: Calm</span>
+      <span class="chip">Tip: move your cursor</span>
+    </div>
+
+    <div class="foot">
+      <span class="help">Gentle gradients. Real-time mood.</span>
+      <span id="last-updated">Last updated: 2026-01-12 02:25:54 EST</span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('aurora1902');
+      const hue = root.querySelector('#hue');
+      const bubble = root.querySelector('#hueBubble');
+      const vivid = root.querySelector('#vivid');
+      const shuffle = root.querySelector('#shuffle');
+      const calm = root.querySelector('#calm');
+      const mood = root.querySelector('#mood');
+      const updated = root.querySelector('#last-updated');
+
+      // Update time stamp
+      function stamp() {
+        try {
+          const d = new Date();
+          const opts = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+          updated.textContent = 'Updated ' + d.toLocaleString(undefined, opts);
+        } catch (_) {
+          updated.textContent = 'Updated just now';
+        }
+      }
+
+      // Set hue variable and bubble
+      function setHue(v) {
+        root.style.setProperty('--hue', v);
+        bubble.textContent = 'Hue ' + String(v).padStart(3, ' ');
+      }
+
+      // Pointer parallax
+      function parallax(e) {
+        const r = root.getBoundingClientRect();
+        const tx = ((e.clientX - r.left) / r.width - 0.5) * 1.0;  // -0.5..0.5
+        const ty = ((e.clientY - r.top) / r.height - 0.5) * 1.0;
+        root.style.setProperty('--tx', tx.toFixed(3));
+        root.style.setProperty('--ty', ty.toFixed(3));
+      }
+      function resetParallax() {
+        root.style.setProperty('--tx', 0);
+        root.style.setProperty('--ty', 0);
+      }
+
+      // Shuffle hue nicely
+      function randomHue() {
+        const v = Math.floor(Math.random() * 360);
+        hue.value = v;
+        setHue(v);
+      }
+
+      // Toggle vivid mode
+      function setVivid(on) {
+        if (on) {
+          root.setAttribute('data-vivid', 'true');
+          mood.textContent = 'Mode: Vivid';
+        } else {
+          root.removeAttribute('data-vivid');
+          mood.textContent = 'Mode: Calm';
+        }
+      }
+
+      // Bind events
+      hue.addEventListener('input', () => setHue(hue.value));
+      vivid.addEventListener('change', () => setVivid(vivid.checked));
+      shuffle.addEventListener('click', randomHue);
+      calm.addEventListener('click', () => {
+        vivid.checked = false;
+        setVivid(false);
+        resetParallax();
+      });
+
+      root.addEventListener('pointermove', parallax);
+      root.addEventListener('pointerleave', resetParallax);
+
+      // Init
+      randomHue();
+      setVivid(false);
+      stamp();
+    }());
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
