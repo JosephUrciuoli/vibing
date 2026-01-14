@@ -73,350 +73,408 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div class="vibe1954">
+<div class="vibe1955" data-theme="dawn" aria-live="polite">
   <style>
-    .vibe1954 {
-      --bg-0: #0b0f14;
-      --bg-1: #0b1220;
-      --fg: #eaf2ff;
-      --muted: #a6b4c7;
-      --accent: #8bd1ff;
-      --accent-2: #c5ffb7;
-      --ring: rgba(255,255,255,0.12);
-      --shine: rgba(255,255,255,0.08);
+    .vibe1955 {
+      /* Theme tokens (dawn by default) */
+      --bg: #fff7f2;
+      --bg2: #eaf4ff;
+      --ink: #0f1720;
+      --muted: #5c6b7b;
+      --ring: rgba(15, 23, 32, 0.12);
+      --card: rgba(255, 255, 255, 0.7);
+      --ac1: #ff8a5b;
+      --ac2: #5fa8ff;
+      --glow: rgba(95, 168, 255, 0.28);
+
       position: relative;
       display: grid;
-      place-items: center;
-      padding: clamp(18px, 3.8vw, 42px);
+      gap: 22px;
+      padding: clamp(20px, 4.5vw, 56px);
       border-radius: 28px;
-      background:
-        radial-gradient(900px 900px at var(--mx,50%) var(--my,50%), rgba(141,208,255,0.10), transparent 60%),
-        linear-gradient(145deg, var(--bg-0), var(--bg-1) 62%, #11183a);
-      border: 1px solid rgba(255,255,255,0.10);
+      background: radial-gradient(1000px 600px at var(--mx,50%) 0%, rgba(255,255,255,0.8), transparent 60%),
+                  linear-gradient(165deg, var(--bg) 0%, var(--bg2) 100%);
+      color: var(--ink);
+      border: 1px solid rgba(0,0,0,0.06);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        0 20px 60px rgba(0,0,0,0.35),
-        0 2px 8px rgba(0,0,0,0.25);
+        inset 0 1px 0 rgba(255,255,255,0.8),
+        0 20px 60px rgba(16,27,43,0.10),
+        0 4px 18px rgba(16,27,43,0.12);
       overflow: hidden;
       isolation: isolate;
-      perspective: 1200px;
-    }
-    .vibe1954:focus-within { outline: 2px solid var(--accent); outline-offset: 4px; }
-
-    /* Soft grid overlay */
-    .vibe1954 .grid {
-      position: absolute; inset: -2px;
-      background:
-        repeating-linear-gradient(to right, rgba(255,255,255,0.025) 0 1px, transparent 1px 40px),
-        repeating-linear-gradient(to bottom, rgba(255,255,255,0.025) 0 1px, transparent 1px 40px);
-      mask-image: radial-gradient(120% 120% at 50% 40%, black 50%, transparent 100%);
-      pointer-events: none;
-      z-index: 1;
+      font: 400 16px/1.5 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui;
     }
 
-    /* Floating aurora orbs */
-    .vibe1954 .orb {
+    /* THEMES */
+    .vibe1955[data-theme="noon"] { --bg:#f2fbff; --bg2:#f9fffb; --ac1:#00c2ff; --ac2:#59ffa1; --glow: rgba(0, 194, 255, 0.22); }
+    .vibe1955[data-theme="dusk"] { --bg:#fff0f6; --bg2:#e9e6ff; --ac1:#ff74d3; --ac2:#8c88ff; --glow: rgba(140, 136, 255, 0.26); }
+    .vibe1955[data-theme="midnight"] { --bg:#0e1320; --bg2:#101725; --ink:#eaf2ff; --muted:#a6b4c7; --ring:rgba(255,255,255,0.12); --card:rgba(255,255,255,0.06); --ac1:#8dd0ff; --ac2:#c5ffb7; --glow: rgba(141, 208, 255, 0.25); }
+
+    /* Decorative sky */
+    .vibe1955 .sun {
       position: absolute;
-      width: 42vmin; height: 42vmin;
-      background: radial-gradient(circle at 30% 30%, rgba(139,209,255,0.45), rgba(99,155,255,0.25) 40%, rgba(255,255,255,0) 65%);
-      filter: blur(18px) saturate(120%);
-      border-radius: 50%;
-      mix-blend-mode: screen;
-      animation: floatA 18s ease-in-out infinite alternate;
+      top: -18vmin; left: 50%; transform: translateX(-50%);
+      width: 70vmin; height: 70vmin; border-radius: 50%;
+      background: radial-gradient(circle at 50% 55%, rgba(255,238,178,0.9), rgba(255,180,130,0.65) 40%, rgba(255,255,255,0) 65%);
+      filter: blur(8px) saturate(120%);
+      pointer-events: none; z-index: 0;
+    }
+    .vibe1955 .burst {
+      position: absolute; inset: -30%;
+      background:
+        conic-gradient(from var(--spin, 0deg), var(--ac1), transparent 20%, var(--ac2), transparent 20%);
+      opacity: 0.25;
+      filter: blur(40px) saturate(120%);
+      mask-image: radial-gradient(60% 60% at 50% 30%, black 20%, transparent 60%);
+      animation: spin 60s linear infinite;
+      pointer-events: none; z-index: 0;
+    }
+    @keyframes spin { to { --spin: 360deg; } }
+
+    .vibe1955 .petal {
+      position: absolute; border-radius: 40% 60% 70% 30% / 50% 30% 70% 50%;
+      width: 40vmin; height: 26vmin;
+      filter: blur(22px) saturate(120%);
+      mix-blend-mode: multiply;
+      opacity: 0.42;
+      animation: drift var(--t, 26s) ease-in-out infinite alternate;
       z-index: 0;
-      transform: translateZ(0);
     }
-    .vibe1954 .orb.b { width: 48vmin; height: 48vmin; background: radial-gradient(circle at 70% 40%, rgba(197,255,183,0.45), rgba(120,255,214,0.25) 45%, rgba(255,255,255,0) 70%); animation: floatB 22s ease-in-out infinite alternate; }
-    .vibe1954 .orb.c { width: 36vmin; height: 36vmin; background: radial-gradient(circle at 40% 60%, rgba(255,196,255,0.35), rgba(154,134,255,0.25) 40%, rgba(255,255,255,0) 70%); animation: floatC 26s ease-in-out infinite alternate; filter: blur(24px); }
+    .vibe1955 .petal.a { background: radial-gradient(60% 80% at 40% 50%, var(--ac1), transparent 70%); top: 10%; left: -8%; --t: 28s; }
+    .vibe1955 .petal.b { background: radial-gradient(60% 80% at 60% 40%, var(--ac2), transparent 70%); bottom: -6%; right: -10%; --t: 32s; }
+    .vibe1955 .petal.c { background: radial-gradient(60% 80% at 50% 50%, rgba(255,255,255,0.9), transparent 70%); bottom: 8%; left: 6%; --t: 30s; opacity: 0.25; }
+    @keyframes drift {
+      0%   { transform: translate(0,0) rotate(0deg) scale(1); }
+      100% { transform: translate(6vmin, -4vmin) rotate(14deg) scale(1.06); }
+    }
 
-    @keyframes floatA { from { transform: translate(-20%, -8%) scale(1); } to { transform: translate(18%, 14%) scale(1.06); } }
-    @keyframes floatB { from { transform: translate(55%, -12%) scale(0.96); } to { transform: translate(20%, 10%) scale(1.04); } }
-    @keyframes floatC { from { transform: translate(-40%, 26%) scale(1.05); } to { transform: translate(-10%, -6%) scale(1); } }
-
-    /* Main panel */
-    .vibe1954 .panel {
+    /* Content card */
+    .vibe1955 .canvas {
       position: relative;
-      display: grid;
-      gap: clamp(14px, 2.2vw, 22px);
-      padding: clamp(18px, 3.5vw, 36px);
-      border-radius: 22px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
-      border: 1px solid var(--ring);
-      color: var(--fg);
       z-index: 2;
+      display: grid;
+      gap: clamp(14px, 2.5vw, 24px);
+      padding: clamp(18px, 3.6vw, 40px);
+      border-radius: 20px;
+      background: linear-gradient(180deg, var(--card), color-mix(in oklab, var(--card) 88%, transparent));
+      border: 1px solid var(--ring);
+      backdrop-filter: blur(14px) saturate(140%);
       box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.45),
-        0 2px 8px rgba(0,0,0,0.3),
-        inset 0 1px 0 rgba(255,255,255,0.08);
-      backdrop-filter: blur(14px) saturate(120%);
-      transform-style: preserve-3d;
-      transform: rotateX(var(--tiltX, 0deg)) rotateY(var(--tiltY, 0deg)) translateZ(0);
-      transition: transform 300ms cubic-bezier(.2,.8,.2,1), box-shadow 300ms ease;
-      max-width: min(900px, 95vw);
-    }
-    .vibe1954 .panel::before {
-      content: "";
-      position: absolute; inset: 0;
-      border-radius: inherit;
-      background: conic-gradient(from 180deg at 50% 50%, rgba(141,209,255,0.18), rgba(255,255,255,0) 20% 60%, rgba(197,255,183,0.18));
-      mask: radial-gradient(80% 80% at 50% 50%, black 35%, transparent 65%);
-      pointer-events: none;
+        0 24px 60px var(--glow),
+        0 8px 24px rgba(16,27,43,0.10),
+        inset 0 1px 0 rgba(255,255,255,0.65);
+      transform: translateZ(0);
+      max-width: min(980px, 96vw);
+      margin-inline: auto;
     }
 
-    .vibe1954 .badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      width: fit-content;
-      padding: 8px 12px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255,255,255,0.16);
-      border-radius: 999px;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
-      backdrop-filter: blur(8px);
+    .vibe1955 .topline {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
     }
-    .vibe1954 .badge .dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, var(--accent), #2ed1ff);
-      box-shadow: 0 0 0 3px rgba(141,209,255,0.18), 0 0 18px rgba(141,209,255,0.45);
-      animation: pulse 2.2s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.25); opacity: 1; } }
-
-    .vibe1954 h1 {
-      margin: 0;
-      font-size: clamp(28px, 5.8vw, 56px);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      background: linear-gradient(100deg, #ffffff, #dfeeff 40%, #a6d9ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.25);
-    }
-    .vibe1954 p.lead {
-      margin: 0;
-      font-size: clamp(14px, 2.2vw, 18px);
-      color: var(--muted);
-      max-width: 62ch;
-    }
-
-    /* Chips */
-    .vibe1954 .chips {
-      display: flex; flex-wrap: wrap; gap: 10px;
-    }
-    .vibe1954 .chip {
-      appearance: none; border: 0; cursor: pointer; user-select: none;
-      padding: 10px 14px;
-      border-radius: 999px;
-      font: 500 13px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      color: var(--fg);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255,255,255,0.15);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
-      transition: transform 200ms ease, background 200ms ease, border-color 200ms ease;
-    }
-    .vibe1954 .chip:hover { transform: translateY(-1px); }
-    .vibe1954 .chip.active {
-      background: linear-gradient(90deg, rgba(141,209,255,0.18), rgba(197,255,183,0.18));
-      border-color: rgba(141,209,255,0.45);
-    }
-
-    /* Progress */
-    .vibe1954 .progress {
-      position: relative; height: 10px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 999px;
-      overflow: hidden;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
-    }
-    .vibe1954 .bar {
-      width: var(--p, 42%);
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      box-shadow: 0 0 24px rgba(141,209,255,0.45);
-      transition: width 1200ms cubic-bezier(.2,.8,.2,1);
-    }
-
-    /* CTA + footer */
-    .vibe1954 .row {
-      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
-    }
-    .vibe1954 .cta {
+    .vibe1955 .flag {
       display: inline-flex; align-items: center; gap: 10px;
-      padding: 12px 16px;
-      color: #0a1016;
-      background: linear-gradient(90deg, #8dd0ff, #c5ffb7);
-      border: none;
-      border-radius: 14px;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      cursor: pointer;
-      box-shadow: 0 14px 32px rgba(141,209,255,0.32), 0 4px 12px rgba(0,0,0,0.35);
-      transition: transform 200ms ease, box-shadow 200ms ease;
-    }
-    .vibe1954 .cta:hover { transform: translateY(-2px); }
-    .vibe1954 .cta:active { transform: translateY(0); }
-
-    .vibe1954 .meta {
-      display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 12px;
-      opacity: 0.9;
-    }
-    .vibe1954 .toggle {
-      appearance: none;
-      display: inline-flex; align-items: center; gap: 8px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.16);
-      color: var(--muted);
       padding: 8px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
+      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.55));
+      color: var(--muted);
+      border: 1px solid var(--ring);
+      border-radius: 999px;
+      font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
     }
-    .vibe1954 .toggle:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.25); color: var(--fg); }
+    .vibe1955 .spark {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--ac1), var(--ac2));
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--ac1) 20%, transparent), 0 0 18px var(--ac2);
+      animation: twinkle 2.2s ease-in-out infinite;
+    }
+    @keyframes twinkle { 0%,100% { transform: scale(1); opacity: .9; } 50% { transform: scale(1.2); opacity: 1; } }
+
+    .vibe1955 h1 {
+      margin: 2px 0 0;
+      font-size: clamp(32px, 6.6vw, 64px);
+      letter-spacing: -0.02em;
+      line-height: 1.04;
+      background: linear-gradient(100deg, color-mix(in srgb, var(--ink) 86%, #fff) 30%, var(--ac1), var(--ac2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-wrap: balance;
+    }
+    .vibe1955 .sub {
+      margin: 0; max-width: 65ch; color: var(--muted);
+      font-size: clamp(14px, 2.2vw, 18px);
+      text-wrap: pretty;
+    }
+
+    /* Palette pills */
+    .vibe1955 .palettes { display: flex; flex-wrap: wrap; gap: 10px; }
+    .vibe1955 .pill {
+      appearance: none; border: 1px solid var(--ring); background: white; color: var(--ink);
+      padding: 10px 14px; border-radius: 999px; cursor: pointer; font-weight: 600;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset, 0 6px 18px rgba(16,27,43,0.08);
+      transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+    }
+    .vibe1955 .pill:hover { transform: translateY(-1px); }
+    .vibe1955 .pill.active {
+      background: linear-gradient(90deg, var(--ac1), var(--ac2));
+      color: #0a1016; border-color: transparent;
+      box-shadow: 0 10px 28px var(--glow);
+    }
+
+    /* Tiles */
+    .vibe1955 .tiles {
+      display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: clamp(10px, 2vw, 16px);
+    }
+    .vibe1955 .tile {
+      position: relative; overflow: hidden;
+      display: grid; align-content: space-between; gap: 10px;
+      padding: clamp(14px, 2.6vw, 18px);
+      border-radius: 16px; border: 1px solid var(--ring);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
+      color: var(--ink); text-align: left;
+      cursor: pointer; user-select: none;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.85) inset, 0 14px 28px rgba(16,27,43,0.08);
+      transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+      transition: box-shadow 220ms ease, transform 180ms ease;
+      will-change: transform;
+    }
+    .vibe1955 .tile:hover {
+      box-shadow: 0 18px 40px var(--glow), 0 8px 24px rgba(16,27,43,0.1);
+    }
+    .vibe1955 .tile .icon {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--ac1), var(--ac2));
+      box-shadow: 0 10px 22px var(--glow), inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+    .vibe1955 .tile h3 {
+      margin: 6px 0 0; font-size: clamp(14px, 2vw, 16px); letter-spacing: 0.01em;
+    }
+    .vibe1955 .tile p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+    .vibe1955 .tile.active {
+      background: linear-gradient(180deg, color-mix(in srgb, var(--ac2) 16%, white), rgba(255,255,255,0.6));
+      border-color: color-mix(in srgb, var(--ac2) 40%, var(--ring));
+    }
+    .vibe1955 .shine {
+      position: absolute; inset: -30%;
+      background: radial-gradient(40% 60% at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.8), transparent 60%);
+      opacity: 0.5; pointer-events: none;
+      mix-blend-mode: soft-light;
+    }
+
+    /* Meter */
+    .vibe1955 .meter {
+      position: relative; height: 12px; border-radius: 999px; overflow: hidden;
+      border: 1px solid var(--ring);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.55));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+    .vibe1955 .fill {
+      --p: 36%;
+      width: var(--p);
+      height: 100%;
+      background: linear-gradient(90deg, var(--ac1), var(--ac2));
+      box-shadow: 0 0 24px var(--glow);
+      transition: width 1000ms cubic-bezier(.2,.8,.2,1);
+    }
+
+    /* Footer controls */
+    .vibe1955 .foot {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    }
+    .vibe1955 .cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 16px; border-radius: 14px; border: 0;
+      font-weight: 800; letter-spacing: .01em; cursor: pointer; color: #0b0f14;
+      background: linear-gradient(90deg, var(--ac1), var(--ac2));
+      box-shadow: 0 16px 36px var(--glow), 0 6px 14px rgba(16,27,43,0.18);
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+    .vibe1955 .cta:hover { transform: translateY(-2px); }
+    .vibe1955 .cta:active { transform: translateY(0) scale(0.98); }
+
+    .vibe1955 .motion {
+      appearance: none; background: transparent; color: var(--muted); border: 1px solid var(--ring);
+      padding: 8px 12px; border-radius: 10px; cursor: pointer;
+      transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+    }
+    .vibe1955 .motion:hover { background: rgba(255,255,255,0.7); color: var(--ink); border-color: color-mix(in srgb, var(--ac2) 40%, var(--ring)); }
+
+    .vibe1955 .stamp {
+      display: inline-flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px;
+    }
+
+    /* Mobile */
+    @media (max-width: 760px) {
+      .vibe1955 .tiles { grid-template-columns: 1fr; }
+    }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      .vibe1954 .orb, .vibe1954 .bar { animation: none !important; transition: none !important; }
-      .vibe1954 .panel { transition: none !important; }
-    }
-
-    /* Mobile trims */
-    @media (max-width: 520px) {
-      .vibe1954 .row { gap: 10px; }
-      .vibe1954 .cta { flex: 1; justify-content: center; }
+      .vibe1955 .burst, .vibe1955 .petal, .vibe1955 .spark, .vibe1955 .fill { animation: none !important; transition: none !important; }
+      .vibe1955 .tile { transition: none !important; }
     }
   </style>
 
-  <!-- Ambient layers -->
-  <div class="orb a" style="left:-8vmin; top:-6vmin;"></div>
-  <div class="orb b" style="right:-10vmin; top:-10vmin;"></div>
-  <div class="orb c" style="left:-12vmin; bottom:-12vmin;"></div>
-  <div class="grid" aria-hidden="true"></div>
+  <!-- Ambient sky -->
+  <div class="sun" aria-hidden="true"></div>
+  <div class="burst anim" aria-hidden="true"></div>
+  <div class="petal a anim" aria-hidden="true"></div>
+  <div class="petal b anim" aria-hidden="true"></div>
+  <div class="petal c anim" aria-hidden="true"></div>
 
-  <!-- Content panel -->
-  <section class="panel" aria-label="Aurora Studio">
-    <span class="badge" aria-live="polite"><span class="dot" aria-hidden="true"></span> Live Preview • v1954</span>
-
-    <h1>Unfold the Calm</h1>
-    <p class="lead">A quiet interface for focused moments. Gentle motion, crisp type, and a touch of aurora to keep you in flow.</p>
-
-    <div class="chips" role="group" aria-label="Focus presets">
-      <button class="chip" type="button">Deep Work</button>
-      <button class="chip" type="button">Writing</button>
-      <button class="chip" type="button">Sketch</button>
-      <button class="chip" type="button">Reflect</button>
+  <!-- Content -->
+  <section class="canvas" aria-label="Daybreak Studio panel">
+    <div class="topline">
+      <span class="flag"><span class="spark anim" aria-hidden="true"></span> Daybreak • v1955</span>
+      <button class="motion" type="button" aria-pressed="false">Pause motion</button>
     </div>
 
-    <div class="progress" aria-label="Session progress">
-      <div class="bar" style="--p: 38%;" aria-hidden="true"></div>
+    <h1>Wake the ideas</h1>
+    <p class="sub">Light, air, and a gentle pulse. Shape a clear moment to think—and let the interface get out of the way.</p>
+
+    <div class="palettes" role="group" aria-label="Choose a palette">
+      <button class="pill active" data-theme="dawn" type="button" title="Soft warm dawn">Dawn</button>
+      <button class="pill" data-theme="noon" type="button" title="Bright and fresh">Noon</button>
+      <button class="pill" data-theme="dusk" type="button" title="Violet dusk glow">Dusk</button>
+      <button class="pill" data-theme="midnight" type="button" title="Deep midnight calm">Midnight</button>
     </div>
 
-    <div class="row">
-      <button class="cta" type="button" aria-label="Begin a focused session">
-        <span aria-hidden="true">▶</span> Begin
+    <div class="tiles" role="list">
+      <button class="tile" role="listitem" type="button" aria-pressed="false">
+        <div class="icon" aria-hidden="true"></div>
+        <h3>Sketch a notion</h3>
+        <p>Capture the first outline—fast and forgiving.</p>
+        <div class="shine" aria-hidden="true"></div>
       </button>
-      <div class="meta">
-        <button class="toggle" type="button" title="Pause or resume aurora motion" aria-pressed="false">Pause aurora</button>
-        <span id="last-updated">Last updated: 2026-01-14 12:25:44 EST</span>
-      </div>
+      <button class="tile" role="listitem" type="button" aria-pressed="false">
+        <div class="icon" aria-hidden="true"></div>
+        <h3>Shape the arc</h3>
+        <p>Arrange beats, frames, and connections.</p>
+        <div class="shine" aria-hidden="true"></div>
+      </button>
+      <button class="tile" role="listitem" type="button" aria-pressed="false">
+        <div class="icon" aria-hidden="true"></div>
+        <h3>Send it gently</h3>
+        <p>Share a crisp preview when it’s ready.</p>
+        <div class="shine" aria-hidden="true"></div>
+      </button>
+    </div>
+
+    <div class="meter" aria-label="Flow progress">
+      <div class="fill anim" style="--p: 36%;" aria-hidden="true"></div>
+    </div>
+
+    <div class="foot">
+      <button class="cta" type="button" aria-label="Begin a bright session">Begin ▶</button>
+      <span class="stamp">Status: serene • <span id="last-updated">Last updated: 2026-01-14 13:31:14 EST</span></span>
     </div>
   </section>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.vibe1954');
-      const panel = root.querySelector('.panel');
-      const bar = root.querySelector('.bar');
-      const chips = Array.from(root.querySelectorAll('.chip'));
-      const toggle = root.querySelector('.toggle');
+      const root = document.currentScript.closest('.vibe1955');
+      const pills = Array.from(root.querySelectorAll('.pill'));
+      const tiles = Array.from(root.querySelectorAll('.tile'));
+      const meter = root.querySelector('.fill');
+      const motionBtn = root.querySelector('.motion');
+      const cta = root.querySelector('.cta');
       const last = root.querySelector('#last-updated');
 
-      // Last updated timestamp
+      // Last updated
       try {
         const d = new Date();
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-        last.textContent = 'Last updated: ' + d.toLocaleString([], {
-          year: 'numeric', month: 'short', day: '2-digit',
-          hour: '2-digit', minute: '2-digit'
-        }) + (tz ? ' • ' + tz : '');
-      } catch (e) { last.textContent = ''; }
+        last.textContent = d.toLocaleString([], { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' }) + (tz ? ' • ' + tz : '');
+      } catch(e) { last.textContent = ''; }
 
-      // Pointer-driven glow and tilt
-      function setPointer(e) {
+      // Palette switching
+      function setTheme(theme) {
+        root.setAttribute('data-theme', theme);
+      }
+      function activatePill(btn) {
+        pills.forEach(p => p.classList.toggle('active', p === btn));
+        setTheme(btn.getAttribute('data-theme'));
+      }
+      pills.forEach(p => p.addEventListener('click', () => activatePill(p)));
+      // Default already active on Dawn
+
+      // Pointer glow across container
+      function moveGlow(e) {
         const r = root.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width * 100;
+        const y = (e.clientY - r.top) / r.height * 100;
+        root.style.setProperty('--mx', x.toFixed(2) + '%');
+        root.style.setProperty('--my', y.toFixed(2) + '%');
+      }
+      root.addEventListener('pointermove', moveGlow);
+
+      // Tile tilt and selection
+      function tiltTile(e, el) {
+        const r = el.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width;
         const y = (e.clientY - r.top) / r.height;
-        root.style.setProperty('--mx', (x * 100).toFixed(2) + '%');
-        root.style.setProperty('--my', (y * 100).toFixed(2) + '%');
-
-        // tilt within safe, subtle bounds
-        const tiltX = ((y - 0.5) * -8).toFixed(2) + 'deg';
-        const tiltY = ((x - 0.5) * 10).toFixed(2) + 'deg';
-        panel.style.setProperty('--tiltX', tiltX);
-        panel.style.setProperty('--tiltY', tiltY);
+        const rx = ((0.5 - y) * 10).toFixed(2) + 'deg';
+        const ry = ((x - 0.5) * 12).toFixed(2) + 'deg';
+        el.style.setProperty('--rx', rx);
+        el.style.setProperty('--ry', ry);
+        // pass local glow vars to .shine
+        const shine = el.querySelector('.shine');
+        if (shine) {
+          shine.style.setProperty('--mx', (x * 100).toFixed(2) + '%');
+          shine.style.setProperty('--my', (y * 100).toFixed(2) + '%');
+        }
       }
-      function resetTilt() {
-        panel.style.setProperty('--tiltX', '0deg');
-        panel.style.setProperty('--tiltY', '0deg');
+      function resetTilt(el) {
+        el.style.setProperty('--rx', '0deg');
+        el.style.setProperty('--ry', '0deg');
       }
-      root.addEventListener('pointermove', setPointer);
-      root.addEventListener('pointerleave', resetTilt);
+      tiles.forEach((t, i) => {
+        t.addEventListener('pointermove', (e) => tiltTile(e, t));
+        t.addEventListener('pointerleave', () => resetTilt(t));
+        t.addEventListener('click', () => {
+          const active = t.classList.toggle('active');
+          t.setAttribute('aria-pressed', String(active));
+          const activeCount = tiles.filter(x => x.classList.contains('active')).length;
+          const pct = Math.min(100, Math.max(12, Math.round((activeCount / tiles.length) * 100)));
+          meter.style.setProperty('--p', pct + '%');
+        });
+      });
 
-      // Chip toggles (single active)
-      function activateChip(btn) {
-        chips.forEach(c => c.classList.toggle('active', c === btn));
-      }
-      chips.forEach(c => c.addEventListener('click', () => activateChip(c)));
-      // Default active
-      activateChip(chips[0]);
-
-      // Progress "breathing" animation
+      // Progress breathing if idle
       let paused = false;
-      let target = 38;
-      function nudgeProgress() {
+      function nudge() {
         if (paused) return;
-        const min = 24, max = 86;
-        const drift = (Math.random() * (max - min)) + min;
-        target = drift;
-        bar.style.setProperty('--p', target.toFixed(0) + '%');
+        const current = parseFloat(getComputedStyle(meter).getPropertyValue('--p')) || 36;
+        const swing = (Math.random() * 10) - 5;
+        const next = Math.max(20, Math.min(92, current + swing));
+        meter.style.setProperty('--p', next.toFixed(0) + '%');
       }
-      const timer = setInterval(nudgeProgress, 2600);
+      const timer = setInterval(nudge, 2800);
 
-      // Pause/Resume aurora and progress
+      // Motion toggle controls all animated elements
       function setPaused(state) {
         paused = state;
-        const orbs = root.querySelectorAll('.orb');
-        orbs.forEach(o => o.style.animationPlayState = paused ? 'paused' : 'running');
-        bar.style.transition = paused ? 'none' : 'width 1200ms cubic-bezier(.2,.8,.2,1)';
-        toggle.textContent = paused ? 'Play aurora' : 'Pause aurora';
-        toggle.setAttribute('aria-pressed', String(paused));
+        root.querySelectorAll('.anim').forEach(el => el.style.animationPlayState = paused ? 'paused' : 'running');
+        meter.style.transition = paused ? 'none' : 'width 1000ms cubic-bezier(.2,.8,.2,1)';
+        motionBtn.textContent = paused ? 'Play motion' : 'Pause motion';
+        motionBtn.setAttribute('aria-pressed', String(paused));
       }
-      toggle.addEventListener('click', () => setPaused(!paused));
+      motionBtn.addEventListener('click', () => setPaused(!paused));
+
+      // CTA effect + quick progress bump
+      cta.addEventListener('click', () => {
+        cta.style.transform = 'translateY(-1px) scale(0.99)';
+        setTimeout(() => cta.style.transform = '', 180);
+        if (!paused) {
+          const current = parseFloat(getComputedStyle(meter).getPropertyValue('--p')) || 36;
+          const bump = Math.min(100, current + 12);
+          meter.style.setProperty('--p', bump.toFixed(0) + '%');
+        }
+      });
 
       // Respect reduced motion
       const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
       if (prefersReduced && prefersReduced.matches) setPaused(true);
 
-      // CTA bounce feedback
-      const cta = root.querySelector('.cta');
-      cta.addEventListener('click', () => {
-        cta.style.transform = 'translateY(-1px) scale(0.99)';
-        setTimeout(() => { cta.style.transform = ''; }, 180);
-        // Quick progress kick
-        if (!paused) {
-          const bump = Math.min(96, target + 8);
-          target = bump;
-          bar.style.setProperty('--p', target + '%');
-        }
-      });
-
-      // Clean up on detach
+      // Cleanup on detach
       root.addEventListener('DOMNodeRemoved', (e) => {
         if (e.target === root) clearInterval(timer);
       });
