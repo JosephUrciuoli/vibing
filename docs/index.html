@@ -73,7 +73,350 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-01-14 01:31:18 EST</span></div>
+<div class="vista-atelier" aria-label="Serene interactive showcase">
+  <style>
+    .vista-atelier {
+      --bg-0: #0b1220;
+      --bg-1: #17243d;
+      --accent: #86e7ff;
+      --accent-2: #b8a8ff;
+      --ink: #eaf2ff;
+      --muted: rgba(234, 242, 255, 0.7);
+      --ring: rgba(118, 203, 255, 0.22);
+      --glass: rgba(255,255,255,0.06);
+      --glass-2: rgba(255,255,255,0.08);
+      --mx: 0;
+      --my: 0;
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      padding: clamp(20px, 4vw, 40px);
+      background: radial-gradient(120% 120% at 10% 0%, var(--bg-1), var(--bg-0) 60%) no-repeat;
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+      isolation: isolate;
+      min-height: 420px;
+      display: grid;
+      gap: clamp(16px, 2vw, 28px);
+    }
+    .vista-atelier.light {
+      --bg-0: #f6f8ff;
+      --bg-1: #dfe8ff;
+      --ink: #11131a;
+      --muted: rgba(17, 19, 26, 0.7);
+      --glass: rgba(0,0,0,0.06);
+      --glass-2: rgba(0,0,0,0.08);
+      --ring: rgba(69, 116, 255, 0.18);
+      background: radial-gradient(120% 120% at 10% 0%, var(--bg-1), var(--bg-0) 60%) no-repeat;
+      box-shadow: 0 10px 30px rgba(15,30,65,0.15), inset 0 1px 0 rgba(255,255,255,0.65);
+    }
+
+    /* Ambient layers */
+    .va-ambient, .va-ambient::before, .va-ambient::after { position: absolute; inset: 0; pointer-events: none; }
+    .va-ambient {
+      z-index: 0;
+      background:
+        radial-gradient(80% 60% at calc(70% + var(--mx)*9%) calc(30% + var(--my)*6%), rgba(134,231,255,0.18), transparent 60%),
+        radial-gradient(60% 70% at calc(20% + var(--mx)*4%) calc(60% + var(--my)*7%), rgba(184,168,255,0.15), transparent 70%);
+      transition: background 0.3s ease;
+      mask-image: radial-gradient(120% 120% at 50% 50%, #000 60%, transparent 100%);
+    }
+    .va-ambient::before {
+      content: "";
+      background:
+        repeating-linear-gradient(90deg, transparent 0 18px, rgba(255,255,255,0.018) 18px 19px),
+        repeating-linear-gradient(0deg, transparent 0 18px, rgba(255,255,255,0.018) 18px 19px);
+      transform: translate(calc(var(--mx)*2%), calc(var(--my)*2%));
+      transition: transform 0.25s ease;
+      mix-blend-mode: overlay;
+    }
+    .va-ambient::after {
+      content: "";
+      background: radial-gradient(25% 25% at calc(55% + var(--mx)*10%) calc(45% + var(--my)*10%), rgba(255,255,255,0.08), transparent 60%);
+      filter: blur(20px);
+    }
+
+    /* Orbs */
+    .orb {
+      position: absolute; width: 38vmin; height: 38vmin; min-width: 220px; min-height: 220px;
+      border-radius: 50%;
+      filter: blur(28px) saturate(1.2);
+      mix-blend-mode: screen;
+      opacity: 0.7;
+      transform: translate(-50%, -50%);
+      will-change: transform, opacity;
+    }
+    .orb.o1 {
+      top: 12%; left: 78%;
+      background: radial-gradient(circle at 40% 40%, rgba(134,231,255,0.65), rgba(134,231,255,0.05) 70%);
+      animation: float1 16s ease-in-out infinite;
+    }
+    .orb.o2 {
+      top: 78%; left: 20%;
+      background: radial-gradient(circle at 60% 55%, rgba(184,168,255,0.55), rgba(184,168,255,0.06) 70%);
+      animation: float2 20s ease-in-out infinite;
+    }
+    .orb.o3 {
+      top: 10%; left: 15%;
+      background: radial-gradient(circle at 50% 50%, rgba(255,204,163,0.5), rgba(255,204,163,0.04) 70%);
+      animation: float3 22s ease-in-out infinite;
+    }
+    @keyframes float1 { 0%,100%{transform:translate(-50%,-50%) translate(0,0)} 50%{transform:translate(-50%,-50%) translate(10%,4%)}}
+    @keyframes float2 { 0%,100%{transform:translate(-50%,-50%) translate(0,0)} 50%{transform:translate(-50%,-50%) translate(-8%,-6%)}}
+    @keyframes float3 { 0%,100%{transform:translate(-50%,-50%) translate(0,0)} 50%{transform:translate(-50%,-50%) translate(6%,-3%)}}
+
+    /* Content */
+    .va-top {
+      position: relative; z-index: 2;
+      display: grid; gap: 18px;
+      align-content: start;
+    }
+    .va-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--glass-2), transparent);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.2);
+      backdrop-filter: blur(6px);
+      width: fit-content;
+    }
+    .va-badge .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), transparent 60%);
+      box-shadow: 0 0 0 6px var(--ring), 0 0 18px var(--accent);
+      animation: pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+
+    .va-title {
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      background: linear-gradient(90deg, var(--ink), rgba(255,255,255,0.85));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: clamp(28px, 5.8vw, 62px);
+      text-wrap: balance;
+    }
+    .va-sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(14px, 2.5vw, 18px);
+      max-width: 70ch;
+      text-wrap: pretty;
+    }
+
+    .va-actions {
+      display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+      margin-top: 6px;
+    }
+    .va-btn {
+      appearance: none; border: 0; border-radius: 14px; padding: 12px 16px;
+      font-weight: 600; cursor: pointer; position: relative; overflow: hidden;
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
+      outline: none;
+    }
+    .va-btn:active { transform: translateY(1px); }
+    .va-btn.primary {
+      color: #05111a; background: linear-gradient(180deg, #c8f3ff, #86e7ff);
+      box-shadow: 0 8px 26px rgba(134,231,255,0.35);
+    }
+    .va-btn.primary:hover { box-shadow: 0 12px 32px rgba(134,231,255,0.5); }
+    .va-btn.ghost {
+      color: var(--ink); background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(6px);
+    }
+    .va-btn.ghost:hover { background: var(--glass-2); }
+
+    /* Pillars */
+    .va-panes {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: clamp(10px, 2vw, 16px);
+    }
+    @media (max-width: 800px) { .va-panes { grid-template-columns: 1fr; } }
+    .pane {
+      position: relative; overflow: hidden; border-radius: 16px;
+      padding: 16px 16px 14px;
+      background: linear-gradient(180deg, var(--glass-2), transparent);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+    .pane:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.32); }
+    .pane svg { width: 28px; height: 28px; flex: none; }
+    .pane h3 { margin: 8px 0 2px 0; font-size: 16px; letter-spacing: 0.01em; }
+    .pane p { margin: 0; font-size: 13px; color: var(--muted); }
+
+    .pane .sheen {
+      position: absolute; inset: -40% -40%; transform: rotate(12deg) translateX(-50%);
+      background: radial-gradient(60% 50% at 40% 50%, rgba(255,255,255,0.14), transparent 70%);
+      opacity: 0; transition: opacity 0.35s ease;
+    }
+    .pane:hover .sheen { opacity: 0.5; }
+
+    /* Footer line */
+    .va-foot {
+      position: relative; z-index: 2; display: flex; align-items: center; gap: 14px; justify-content: space-between; flex-wrap: wrap;
+      padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.12);
+      margin-top: 2px;
+    }
+    .va-foot small { color: var(--muted); }
+    .va-foot .hint { opacity: 0.8; }
+    .va-foot .updated { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+    /* Animated border shimmer */
+    .vista-atelier::after {
+      content: "";
+      position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+      background: conic-gradient(from 0deg at 50% 50%, transparent 0 10%, rgba(255,255,255,0.18) 12%, transparent 15% 100%);
+      mask: radial-gradient(98% 98% at 50% 50%, transparent 0 calc(100% - 2px), #000 calc(100% - 1px));
+      animation: ring 12s linear infinite;
+      opacity: 0.6;
+    }
+    @keyframes ring { to { transform: rotate(360deg); } }
+
+    /* Focus styles */
+    .va-btn:focus-visible, .pane:focus-within {
+      box-shadow: 0 0 0 3px var(--ring), 0 8px 20px rgba(0,0,0,0.28);
+    }
+  </style>
+
+  <div class="va-ambient" aria-hidden="true">
+    <div class="orb o1" aria-hidden="true"></div>
+    <div class="orb o2" aria-hidden="true"></div>
+    <div class="orb o3" aria-hidden="true"></div>
+  </div>
+
+  <div class="va-top">
+    <div class="va-badge"><span class="dot"></span> Iteration 1945 · A bolder calm</div>
+    <h2 class="va-title">Serene Acceleration</h2>
+    <p class="va-sub">Quiet power, generous spacing, and motion that whispers. Shape delightful clarity without the visual noise.</p>
+    <div class="va-actions">
+      <button class="va-btn primary" type="button" aria-label="Begin exploring the interface">Begin</button>
+      <button class="va-btn ghost" type="button" data-toggle-theme aria-label="Toggle light and dark">Toggle light</button>
+    </div>
+  </div>
+
+  <div class="va-panes" role="list">
+    <article class="pane" role="listitem" tabindex="0">
+      <div class="sheen" aria-hidden="true"></div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="none" stroke="url(#g1)" stroke-width="1.5" d="M12 2l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4z"/>
+          <defs><linearGradient id="g1" x1="0" x2="1"><stop stop-color="#86e7ff"/><stop offset="1" stop-color="#b8a8ff"/></linearGradient></defs>
+        </svg>
+        <div>
+          <h3>Clarity</h3>
+          <p>Typographic balance and generous whitespace.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="pane" role="listitem" tabindex="0">
+      <div class="sheen" aria-hidden="true"></div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="none" stroke="url(#g2)" stroke-width="1.5" d="M2 12c2-6 6-6 8 0s6 6 8 0 4-6 4 0" />
+          <defs><linearGradient id="g2" x1="0" x2="1"><stop stop-color="#b8a8ff"/><stop offset="1" stop-color="#ffcaa3"/></linearGradient></defs>
+        </svg>
+        <div>
+          <h3>Rhythm</h3>
+          <p>Motion that guides, never distracts.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="pane" role="listitem" tabindex="0">
+      <div class="sheen" aria-hidden="true"></div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="none" stroke="url(#g3)" stroke-width="1.5" d="M3 3h18M3 9h18M3 15h18M3 21h18M3 3v18M9 3v18M15 3v18M21 3v18" />
+          <defs><linearGradient id="g3" x1="0" x2="1"><stop stop-color="#86e7ff"/><stop offset="1" stop-color="#ffcaa3"/></linearGradient></defs>
+        </svg>
+        <div>
+          <h3>Space</h3>
+          <p>Breathing room for ideas to land.</p>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="va-foot">
+    <small class="hint">Move your cursor to stir the sky. Tap to focus on mobile.</small>
+    <small class="updated"><span id="last-updated">Last updated: 2026-01-14 02:23:47 EST</span></small>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.currentScript.closest('.vista-atelier');
+      if (!root) return;
+
+      // Pointer parallax and idle oscillation
+      let lastMove = 0, idleT = 0;
+      function setParallax(x, y) {
+        root.style.setProperty('--mx', x.toFixed(3));
+        root.style.setProperty('--my', y.toFixed(3));
+      }
+      function onMove(e) {
+        const r = root.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const x = ((e.clientX ?? (e.touches && e.touches[0].clientX)) - cx) / (r.width / 2);
+        const y = ((e.clientY ?? (e.touches && e.touches[0].clientY)) - cy) / (r.height / 2);
+        setParallax(Math.max(-1, Math.min(1, x)), Math.max(-1, Math.min(1, y)));
+        lastMove = performance.now();
+      }
+      root.addEventListener('pointermove', onMove, { passive: true });
+      root.addEventListener('touchmove', onMove, { passive: true });
+
+      function loop(t) {
+        const now = t || performance.now();
+        const since = now - lastMove;
+        idleT += 0.015;
+        if (since > 1400) {
+          // gentle idle motion
+          const x = Math.sin(idleT) * 0.25;
+          const y = Math.cos(idleT * 0.8) * 0.2;
+          setParallax(x, y);
+        }
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+
+      // Light/Dark toggle
+      const toggle = root.querySelector('[data-toggle-theme]');
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          root.classList.toggle('light');
+        });
+      }
+
+      // Last updated timestamp
+      const span = root.querySelector('#last-updated');
+      if (span) {
+        try {
+          const d = new Date();
+          const fmt = new Intl.DateTimeFormat(undefined, {
+            year: 'numeric', month: 'short', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit',
+            hour12: false, timeZoneName: 'short'
+          });
+          span.textContent = 'Last updated: ' + fmt.format(d);
+        } catch (e) {
+          span.textContent = 'Last updated: ' + new Date().toLocaleString();
+        }
+      }
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
