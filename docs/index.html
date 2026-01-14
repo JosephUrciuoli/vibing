@@ -73,7 +73,467 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-01-13 22:45:28 EST</span></div>
+<section class="vibe-atelier" id="atelier" data-theme="midnight" aria-label="Atmospheric studio panel">
+  <style>
+    .vibe-atelier {
+      --ang: 140;
+      --mx: 0;
+      --my: 0;
+      --radius: 24px;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --fg: #e9eef6;
+      --fg-dim: #b9c2cf;
+      --chip-fg: #eaf2ff;
+      --chip-bg: rgba(255, 255, 255, 0.07);
+      --chip-br: rgba(255, 255, 255, 0.16);
+      --surface: rgba(20, 24, 32, 0.6);
+      --border: rgba(255, 255, 255, 0.14);
+      --bg1: #0d1117;
+      --bg2: #121826;
+      --accent: #7aa2ff;
+      --accent-2: #52ffd7;
+      position: relative;
+      width: min(980px, 92vw);
+      margin: 6vh auto;
+      border-radius: var(--radius);
+      overflow: hidden;
+      color: var(--fg);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+    }
+    /* Themes */
+    .vibe-atelier[data-theme="midnight"] {
+      --bg1: #0a0f1c;
+      --bg2: #111827;
+      --accent: #6ea8ff;
+      --accent-2: #4df3c9;
+      --chip-bg: rgba(255, 255, 255, 0.06);
+      --chip-fg: #e9f1ff;
+    }
+    .vibe-atelier[data-theme="dawn"] {
+      --bg1: #f7fafc;
+      --bg2: #e8f1ff;
+      --fg: #0d1b2a;
+      --fg-dim: #425466;
+      --surface: rgba(255, 255, 255, 0.7);
+      --border: rgba(0, 16, 46, 0.12);
+      --accent: #ff6d8a;
+      --accent-2: #7c8cff;
+      --chip-bg: rgba(13, 27, 42, 0.06);
+      --chip-br: rgba(13, 27, 42, 0.15);
+      --chip-fg: #0d1b2a;
+    }
+
+    /* Dynamic backdrop */
+    .vibe-atelier::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(1200px 600px at calc(50% + calc(var(--mx) * 160px)) calc(30% + calc(var(--my) * 120px)),
+          color-mix(in oklab, var(--accent) 32%, transparent), transparent 70%),
+        radial-gradient(900px 500px at calc(25% - calc(var(--mx) * 140px)) calc(80% - calc(var(--my) * 140px)),
+          color-mix(in oklab, var(--accent-2) 24%, transparent), transparent 70%),
+        linear-gradient(var(--ang)deg, var(--bg1), var(--bg2));
+      filter: saturate(105%);
+      z-index: -2;
+    }
+    .vibe-atelier::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), transparent 18%),
+        radial-gradient(200% 120% at 120% -10%, rgba(255,255,255,0.08), transparent 40%),
+        repeating-linear-gradient(90deg, transparent 0 40px, rgba(255,255,255,0.02) 40px 41px);
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .va-shell {
+      padding: clamp(18px, 2vw, 28px) clamp(18px, 3vw, 36px) clamp(22px, 4vw, 40px);
+      display: grid;
+      gap: clamp(14px, 2.2vw, 20px);
+    }
+    .va-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      letter-spacing: 0.24px;
+      color: var(--fg);
+    }
+    .logo-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent) 45%, transparent 70%);
+      box-shadow: 0 0 18px color-mix(in oklab, var(--accent) 60%, transparent);
+      transform: translateZ(0);
+    }
+    .theme-toggle {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: color-mix(in oklab, var(--surface), transparent 20%);
+      color: var(--fg);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font: 600 12px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      letter-spacing: 0.3px;
+      transition: transform 200ms ease, background 200ms ease, border-color 200ms ease;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+    }
+    .theme-toggle:hover { transform: translateY(-1px); }
+    .theme-toggle:active { transform: translateY(0); }
+
+    .va-hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: clamp(6px, 1vw, 12px) 0 clamp(6px, 1.5vw, 18px);
+    }
+    .blob {
+      position: absolute;
+      width: 58vmin;
+      max-width: 620px;
+      aspect-ratio: 1 / 1;
+      right: -8%;
+      top: -10%;
+      background:
+        radial-gradient(60% 60% at 35% 30%, rgba(255,255,255,0.35), transparent 60%),
+        conic-gradient(from calc(var(--ang) * 1deg), var(--accent), var(--accent-2), var(--accent));
+      filter: blur(32px) saturate(115%) contrast(105%);
+      opacity: 0.35;
+      border-radius: 53% 47% 60% 40% / 58% 44% 56% 42%;
+      transform: translate(calc(var(--mx) * 14px), calc(var(--my) * 10px)) rotate(calc(var(--mx) * 8deg));
+      transition: opacity 400ms ease;
+      pointer-events: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .blob { filter: blur(28px); }
+    }
+
+    h1 {
+      margin: 14px 0 2px 0;
+      font: 800 clamp(28px, 5.4vw, 60px)/1.06 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      letter-spacing: -0.8px;
+      background: linear-gradient(100deg, #fff 0%, color-mix(in oklab, var(--accent), #fff 40%) 30%, color-mix(in oklab, var(--accent-2), #fff 30%) 70%, #fff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 10px 24px rgba(0,0,0,0.25));
+    }
+    .sub {
+      color: var(--fg-dim);
+      font: 500 clamp(14px, 1.8vw, 18px)/1.45 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      max-width: 52ch;
+    }
+
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(10px, 1.5vw, 16px);
+      margin-top: 8px;
+    }
+    .tile {
+      position: relative;
+      padding: clamp(14px, 1.9vw, 18px);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--surface), transparent 8%), color-mix(in oklab, var(--surface), transparent 26%));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+      will-change: transform;
+      min-height: 90px;
+    }
+    .tile:hover {
+      transform: translateY(-4px);
+      border-color: color-mix(in oklab, var(--border), var(--accent) 24%);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--surface), transparent 2%), color-mix(in oklab, var(--surface), transparent 18%));
+    }
+    .tile h3 {
+      margin: 0 0 6px 0;
+      font: 700 clamp(14px, 1.6vw, 18px)/1.2 ui-sans-serif, system-ui, -apple-system;
+      color: var(--fg);
+      letter-spacing: 0.2px;
+    }
+    .tile p {
+      margin: 0;
+      color: var(--fg-dim);
+      font: 500 12.5px/1.45 ui-sans-serif, system-ui, -apple-system;
+    }
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .chip {
+      appearance: none;
+      border: 1px solid var(--chip-br);
+      background: var(--chip-bg);
+      color: var(--chip-fg);
+      padding: 7px 12px;
+      font: 600 12px/1 ui-sans-serif, system-ui, -apple-system;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 160ms ease, background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.05);
+    }
+    .chip:hover {
+      transform: translateY(-1px);
+      border-color: color-mix(in oklab, var(--chip-br), var(--accent) 20%);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    }
+    .chip.press { transform: translateY(0) scale(0.98); }
+
+    .va-foot {
+      display: grid;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .meter {
+      position: relative;
+      height: 6px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent);
+    }
+    .meter .bar {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      filter: saturate(115%);
+      animation: fill 7s ease-in-out infinite alternate;
+    }
+    @keyframes fill {
+      from { width: 18%; transform: translateX(0); }
+      to { width: 96%; transform: translateX(0); }
+    }
+
+    .meta {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      font: 500 12.5px/1.4 ui-sans-serif, system-ui, -apple-system;
+      color: var(--fg-dim);
+    }
+    .stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .stamp .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 40% 40%, #fff, var(--accent) 55%, transparent 70%);
+      box-shadow: 0 0 10px color-mix(in oklab, var(--accent) 50%, transparent);
+    }
+
+    /* Orbiting sparks */
+    .orbit {
+      position: absolute;
+      right: 10%;
+      top: 40%;
+      width: 140px;
+      height: 140px;
+      pointer-events: none;
+      opacity: 0.7;
+      mix-blend-mode: screen;
+    }
+    .spark {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 35% 35%, #fff, var(--accent) 70%, transparent 80%);
+      box-shadow: 0 0 12px color-mix(in oklab, var(--accent) 50%, transparent);
+      transform-origin: 70px 70px;
+      animation: spin 10s linear infinite;
+    }
+    .spark:nth-child(2) {
+      width: 5px; height: 5px;
+      background: radial-gradient(circle at 35% 35%, #fff, var(--accent-2) 70%, transparent 80%);
+      animation-duration: 13s;
+      transform-origin: 70px 70px;
+    }
+    .spark:nth-child(3) {
+      width: 7px; height: 7px;
+      animation-duration: 18s;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg) translate(60px) rotate(0deg); }
+      to   { transform: rotate(360deg) translate(60px) rotate(-360deg); }
+    }
+
+    /* Responsiveness */
+    @media (max-width: 720px) {
+      .tiles { grid-template-columns: 1fr; }
+      .blob { width: 76vmin; right: -18%; top: -16%; }
+      .orbit { right: 2%; top: 50%; }
+      .meta { flex-direction: column; align-items: flex-start; gap: 6px; }
+    }
+  </style>
+
+  <div class="va-shell">
+    <div class="va-top">
+      <div class="brand">
+        <span class="logo-dot" aria-hidden="true"></span>
+        <span aria-label="atelier version">atelier.1942</span>
+      </div>
+      <button class="theme-toggle" type="button" aria-live="polite" aria-label="Toggle theme">Dawn</button>
+    </div>
+
+    <div class="va-hero">
+      <div class="blob" aria-hidden="true"></div>
+      <h1>Space for good ideas.</h1>
+      <p class="sub">A quiet interface with living light—soft gradients, measured rhythm, and delightful micro‑interactions.</p>
+
+      <div class="tiles" role="list">
+        <div class="tile" role="listitem">
+          <h3>Clarity</h3>
+          <p>Typography that breathes. Contrast tuned for comfort day or night.</p>
+          <div class="chip-row">
+            <button class="chip" type="button">Legibility</button>
+            <button class="chip" type="button">Focus</button>
+          </div>
+        </div>
+        <div class="tile" role="listitem">
+          <h3>Balance</h3>
+          <p>Composed spacing and gentle motion reduce fatigue, not attention.</p>
+          <div class="chip-row">
+            <button class="chip" type="button">Rhythm</button>
+            <button class="chip" type="button">Calm</button>
+          </div>
+        </div>
+        <div class="tile" role="listitem">
+          <h3>Play</h3>
+          <p>Subtle sparks invite exploration without stealing the scene.</p>
+          <div class="chip-row">
+            <button class="chip" type="button">Delight</button>
+            <button class="chip" type="button">Curiosity</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="va-foot">
+      <div class="meter" aria-hidden="true"><span class="bar"></span></div>
+      <div class="meta">
+        <span class="stamp"><span class="dot" aria-hidden="true"></span>Refined <span id="last-updated">Last updated: 2026-01-13 23:44:53 EST</span></span>
+        <span>Tip: move your cursor—light responds.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="orbit" aria-hidden="true">
+    <span class="spark" style="top: 0; left: 0;"></span>
+    <span class="spark" style="top: 0; left: 0;"></span>
+    <span class="spark" style="top: 0; left: 0;"></span>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('atelier');
+      if (!root) return;
+
+      // Set last-updated
+      const stamp = root.querySelector('#last-updated');
+      try {
+        const formatted = new Intl.DateTimeFormat(navigator.language || 'en-US', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date());
+        stamp.textContent = formatted;
+      } catch {
+        stamp.textContent = new Date().toLocaleString();
+      }
+
+      // Theme handling
+      const btn = root.querySelector('.theme-toggle');
+      const saved = localStorage.getItem('va-theme');
+      if (saved === 'dawn' || saved === 'midnight') {
+        root.setAttribute('data-theme', saved);
+      }
+      const setBtnLabel = () => {
+        const mode = root.getAttribute('data-theme');
+        btn.textContent = mode === 'midnight' ? 'Dawn' : 'Midnight';
+        btn.setAttribute('aria-label', `Switch to ${btn.textContent} theme`);
+      };
+      setBtnLabel();
+
+      btn.addEventListener('click', () => {
+        const mode = root.getAttribute('data-theme') === 'midnight' ? 'dawn' : 'midnight';
+        root.setAttribute('data-theme', mode);
+        localStorage.setItem('va-theme', mode);
+        setBtnLabel();
+        btn.animate(
+          [{ transform: 'scale(1)' }, { transform: 'scale(0.94)' }, { transform: 'scale(1)' }],
+          { duration: 220, easing: 'cubic-bezier(.2,.8,.2,1)' }
+        );
+      });
+
+      // Motion responsiveness
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Light follows pointer
+      const onMove = (e) => {
+        const rect = root.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        root.style.setProperty('--mx', (x * 2).toFixed(3));
+        root.style.setProperty('--my', (y * 2).toFixed(3));
+      };
+      root.addEventListener('pointermove', onMove);
+      root.addEventListener('pointerleave', () => {
+        root.style.setProperty('--mx', '0');
+        root.style.setProperty('--my', '0');
+      });
+
+      // Subtle background angle drift
+      if (!prefersReduced) {
+        let ang = Number(getComputedStyle(root).getPropertyValue('--ang')) || 140;
+        let rafId;
+        const tick = () => {
+          ang = (ang + 0.05) % 360;
+          root.style.setProperty('--ang', ang.toFixed(2));
+          rafId = requestAnimationFrame(tick);
+        };
+        rafId = requestAnimationFrame(tick);
+        root.addEventListener('remove', () => cancelAnimationFrame(rafId), { once: true });
+      }
+
+      // Chip press feedback
+      root.querySelectorAll('.chip').forEach((chip) => {
+        chip.addEventListener('pointerdown', () => chip.classList.add('press'));
+        const clear = () => chip.classList.remove('press');
+        chip.addEventListener('pointerup', clear);
+        chip.addEventListener('pointerleave', clear);
+        chip.addEventListener('click', () => {
+          chip.animate(
+            [
+              { boxShadow: '0 0 0 0 rgba(255,255,255,0.0)' },
+              { boxShadow: '0 0 0 10px rgba(255,255,255,0.08)' },
+              { boxShadow: '0 0 0 0 rgba(255,255,255,0.0)' }
+            ],
+            { duration: 520, easing: 'cubic-bezier(.2,.8,.2,1)' }
+          );
+        });
+      });
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
