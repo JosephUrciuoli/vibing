@@ -73,18 +73,19 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="pond" aria-label="Ripple Clock — kinetic time surface" data-theme="mist">
+<section class="atelier" aria-label="Kaleidoscope Atelier — live symmetry painter" data-theme="pearl">
   <style>
-    .pond {
-      --ink: #0b0e14;
-      --muted: rgba(11,14,20,0.62);
-      --glass: rgba(255,255,255,0.45);
-      --glass-b: rgba(0,0,0,0.08);
+    .atelier {
+      --ink: #0c1020;
+      --muted: rgba(12,16,32,0.68);
+      --glass: rgba(255,255,255,0.50);
+      --glass-b: rgba(10,14,28,0.12);
+      --glow: rgba(255,255,255,0.55);
 
-      --a1: #46e1c3; /* accent */
-      --a2: #7ec8ff; /* secondary accent */
-      --bg-0: #f7fbff;
-      --bg-1: #eef6ff;
+      --bg-0: #f8fbff;
+      --bg-1: #eef4ff;
+      --a1: #68e4d2;
+      --a2: #7ba7ff;
 
       position: relative;
       isolation: isolate;
@@ -93,58 +94,60 @@
       border-radius: 36px;
       color: var(--ink);
       background:
-        radial-gradient(140% 120% at 20% -20%, color-mix(in hsl, var(--a2) 14%, transparent), transparent 65%),
-        radial-gradient(120% 120% at 120% 120%, color-mix(in hsl, var(--a1) 10%, transparent), transparent 70%),
-        conic-gradient(from var(--rot, 0deg), var(--bg-1), var(--bg-0));
+        radial-gradient(120% 120% at 10% -10%, color-mix(in hsl, var(--a2) 18%, transparent), transparent 70%),
+        radial-gradient(120% 120% at 110% 110%, color-mix(in hsl, var(--a1) 18%, transparent), transparent 70%),
+        linear-gradient(180deg, var(--bg-0), var(--bg-1));
       box-shadow:
         0 40px 120px rgba(10,12,16,0.16),
         inset 0 1px 0 rgba(255,255,255,0.9);
       overflow: hidden;
     }
-    .pond::before {
-      content:"";
-      position:absolute; inset:-2px; pointer-events:none; z-index:0;
+    .atelier::before {
+      content: "";
+      position: absolute; inset: -2px; z-index: 0; pointer-events: none;
       background:
-        repeating-linear-gradient(90deg, rgba(0,0,0,0.03), rgba(0,0,0,0.03) 1px, transparent 1px, transparent 24px),
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.02), rgba(0,0,0,0.02) 1px, transparent 1px, transparent 24px);
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.025), rgba(0,0,0,0.025) 1px, transparent 1px, transparent 22px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.02), rgba(0,0,0,0.02) 1px, transparent 1px, transparent 22px);
       mix-blend-mode: multiply;
-      opacity: 0.28;
+      opacity: 0.26;
     }
 
     /* Themes */
-    .pond[data-theme="mist"] {
-      --bg-0:#f7fbff; --bg-1:#ffffff;
-      --a1:#46e1c3; --a2:#7ec8ff;
-      --ink:#0b0e14; --muted:rgba(11,14,20,0.62);
+    .atelier[data-theme="pearl"] {
+      --bg-0:#f8fbff; --bg-1:#eef4ff;
+      --a1:#68e4d2; --a2:#7ba7ff;
+      --ink:#0c1020; --muted:rgba(12,16,32,0.68); --glow:rgba(255,255,255,0.55);
     }
-    .pond[data-theme="noir"] {
-      --bg-0:#0b0f18; --bg-1:#121a2a;
-      --a1:#7dd3fc; --a2:#a78bfa;
-      --ink:#eaf3ff; --muted:rgba(234,243,255,0.74);
+    .atelier[data-theme="noir"] {
+      --bg-0:#0b0f18; --bg-1:#0f1624;
+      --a1:#7ee6ff; --a2:#a491ff;
+      --ink:#eaf3ff; --muted:rgba(234,243,255,0.74); --glow:rgba(255,255,255,0.22);
     }
-    .pond[data-theme="sunset"] {
-      --bg-0:#1a0d10; --bg-1:#281116;
-      --a1:#ffb86b; --a2:#ff7aa2;
-      --ink:#fff7f2; --muted:rgba(255,247,242,0.76);
+    .atelier[data-theme="sunglow"] {
+      --bg-0:#160d0b; --bg-1:#26120f;
+      --a1:#ffbf74; --a2:#ff7ca5;
+      --ink:#fff7f2; --muted:rgba(255,247,242,0.78); --glow:rgba(255,255,255,0.18);
     }
 
-    .water {
-      position:absolute; inset:0; z-index:1;
+    .stage {
+      position: absolute; inset: 0; z-index: 1;
     }
     .halo {
-      position:absolute; inset:-20%; z-index:2; pointer-events:none;
+      position: absolute; inset: -30%; z-index: 2; pointer-events: none;
       --mx: 50%; --my: 50%;
       background:
-        radial-gradient(28% 22% at var(--mx) var(--my), color-mix(in hsl, var(--a2) 18%, transparent), transparent 60%);
-      filter: blur(36px) saturate(1.05);
+        radial-gradient(24% 20% at var(--mx) var(--my), color-mix(in hsl, var(--a2) 20%, transparent), transparent 60%);
+      filter: blur(38px) saturate(1.1);
       mix-blend-mode: screen;
       transition: background-position 0.1s ease;
     }
 
     .layer {
-      position: relative; z-index:3;
-      display: grid; gap: 14px;
+      position: relative; z-index: 3;
+      display: grid; gap: 16px;
       align-content: start;
+      max-width: 1100px;
+      margin-inline: auto;
     }
 
     .badge {
@@ -160,20 +163,20 @@
     .badge .dot {
       width: 8px; height: 8px; border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, var(--a1), transparent 65%);
-      box-shadow: 0 0 0 8px color-mix(in hsl, var(--a1) 22%, transparent), 0 0 14px var(--a1);
-      animation: pulse 3.4s ease-in-out infinite;
+      box-shadow: 0 0 0 8px color-mix(in hsl, var(--a1) 24%, transparent), 0 0 14px var(--a1);
+      animation: pulse 3.6s ease-in-out infinite;
     }
-    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.22)} }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.24)} }
 
     .title {
       margin: 0;
-      line-height: 0.92;
+      line-height: 0.9;
       letter-spacing: -0.02em;
       font-weight: 1000;
-      font-size: clamp(44px, 10vw, 120px);
+      font-size: clamp(46px, 9.6vw, 128px);
       background: linear-gradient(90deg,
         color-mix(in hsl, var(--ink) 85%, var(--a2)) 0%,
-        color-mix(in hsl, var(--a1) 60%, var(--ink)) 60%,
+        color-mix(in hsl, var(--a1) 60%, var(--ink)) 55%,
         color-mix(in hsl, var(--a2) 60%, var(--ink)) 100%);
       -webkit-background-clip:text; background-clip:text; color: transparent;
       text-wrap: balance;
@@ -181,13 +184,13 @@
     .lead {
       margin: 0;
       color: var(--muted);
-      font-size: clamp(14px, 2.3vw, 18px);
-      max-width: 66ch;
+      font-size: clamp(14px, 2.2vw, 18px);
+      max-width: 68ch;
       text-wrap: pretty;
     }
 
     .controls {
-      display:flex; flex-wrap: wrap; gap: 10px; align-items:center; margin-top: 10px;
+      display:flex; flex-wrap: wrap; gap: 10px; align-items:center; margin-top: 8px;
     }
     .seg {
       display:inline-flex; gap: 4px; padding: 4px;
@@ -202,7 +205,7 @@
       color: var(--muted); font-weight: 900; padding: 8px 12px; cursor: pointer;
       transition: color .18s ease, background .18s ease, transform .14s ease;
     }
-    .seg button.active { color: var(--ink); background: color-mix(in hsl, var(--a1) 16%, transparent); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9); }
+    .seg button.active { color: var(--ink); background: color-mix(in hsl, var(--a1) 18%, transparent); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9); }
 
     .slider {
       display:inline-flex; align-items:center; gap: 10px;
@@ -234,7 +237,7 @@
       appearance:none; cursor:pointer; outline:none;
       border: 1px solid var(--glass-b); border-radius: 14px;
       padding: 12px 16px; font-weight: 1000; letter-spacing: 0.02em;
-      background: linear-gradient(180deg, color-mix(in hsl, var(--a2) 38%, white), color-mix(in hsl, var(--a2) 14%, transparent));
+      background: linear-gradient(180deg, color-mix(in hsl, var(--a2) 36%, white), color-mix(in hsl, var(--a2) 12%, transparent));
       color: var(--ink);
       box-shadow: 0 14px 34px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.9);
       transition: transform .18s ease, box-shadow .25s ease, background .2s ease;
@@ -245,61 +248,66 @@
     }
 
     .foot {
-      position: relative; z-index:3; margin-top: 12px; padding-top: 14px;
+      position: relative; z-index: 3; margin-top: 14px; padding-top: 14px;
       border-top: 1px solid var(--glass-b);
       display:flex; flex-wrap:wrap; align-items:center; justify-content: space-between; gap: 12px;
       color: var(--muted); font-size: 13px;
     }
     .foot strong { color: var(--ink); font-weight: 1000; }
 
-    /* Dark mode specifics */
-    .pond[data-theme="noir"] .seg button.active,
-    .pond[data-theme="sunset"] .seg button.active { color:#0b0f18; background: color-mix(in hsl, var(--a2) 26%, #ffffff33); }
-    .pond[data-theme="noir"] .btn,
-    .pond[data-theme="sunset"] .btn { color:#0b0f18; background: linear-gradient(180deg, color-mix(in hsl, var(--a1) 62%, white), color-mix(in hsl, var(--a2) 26%, white)); }
+    /* Dark theme tweaks */
+    .atelier[data-theme="noir"] .seg button.active,
+    .atelier[data-theme="sunglow"] .seg button.active { color:#0b0f18; background: color-mix(in hsl, var(--a2) 26%, #ffffff33); }
+    .atelier[data-theme="noir"] .btn,
+    .atelier[data-theme="sunglow"] .btn { color:#0b0f18; background: linear-gradient(180deg, color-mix(in hsl, var(--a1) 62%, white), color-mix(in hsl, var(--a2) 26%, white)); }
   </style>
 
-  <canvas class="water" aria-hidden="true"></canvas>
+  <canvas class="stage" aria-hidden="true"></canvas>
   <div class="halo" aria-hidden="true"></div>
 
   <div class="layer">
-    <div class="badge"><span class="dot" aria-hidden="true"></span> Iteration 1950 · Ripple Clock</div>
-    <h1 class="title">Ripple the seconds.</h1>
-    <p class="lead">Time is a surface. Tap to ping. Drift to sculpt. Let rhythm breathe in circles.</p>
+    <div class="badge"><span class="dot" aria-hidden="true"></span> Iteration 1951 · Kaleidoscope Atelier</div>
+    <h1 class="title">Sketch with light.</h1>
+    <p class="lead">Drag to paint. Segments mirror your gesture into a living mandala. Let spin whisper; let color bloom.</p>
 
-    <div class="controls" role="toolbar" aria-label="Ripple controls">
-      <div class="seg" role="tablist" aria-label="Theme">
-        <button type="button" role="tab" aria-selected="true" class="active" data-theme="mist">Mist</button>
+    <div class="controls" role="toolbar" aria-label="Kaleidoscope controls">
+      <div class="seg" role="tablist" aria-label="Palette">
+        <button type="button" role="tab" aria-selected="true" class="active" data-theme="pearl">Pearl</button>
         <button type="button" role="tab" aria-selected="false" data-theme="noir">Noir</button>
-        <button type="button" role="tab" aria-selected="false" data-theme="sunset">Sunset</button>
+        <button type="button" role="tab" aria-selected="false" data-theme="sunglow">Sunglow</button>
       </div>
-      <div class="slider" aria-label="Tempo">
-        <span>Tempo</span>
-        <input type="range" min="30" max="180" value="92" step="1" data-bpm aria-label="Beats per minute">
+      <div class="slider" aria-label="Symmetry">
+        <span>Symmetry</span>
+        <input type="range" min="3" max="24" value="8" step="1" data-seg aria-label="Segments">
       </div>
-      <button class="btn" type="button" data-ping aria-label="Ping">Ping</button>
-      <button class="btn toggle" type="button" data-auto aria-label="Auto ping" aria-pressed="true">Auto</button>
+      <div class="slider" aria-label="Spin">
+        <span>Spin</span>
+        <input type="range" min="0" max="160" value="42" step="1" data-spin aria-label="Spin speed">
+      </div>
+      <button class="btn" type="button" data-burst aria-label="Burst">Burst</button>
+      <button class="btn toggle" type="button" data-auto aria-label="Auto paint" aria-pressed="true">Auto</button>
       <button class="btn" type="button" data-clear aria-label="Clear">Clear</button>
     </div>
   </div>
 
   <div class="foot">
-    <div><strong>Tip:</strong> Hold and glide—overlapping pings weave moiré rings.</div>
-    <div><span id="last-updated">Last updated: 2026-01-14 08:38:51 EST</span></div>
+    <div><strong>Hint:</strong> Hold near center for lace, near edge for petals. Try toggling Auto, then Burst.</div>
+    <div><span id="last-updated">Last updated: 2026-01-14 09:23:43 EST</span></div>
   </div>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.pond');
+      const root = document.currentScript.closest('.atelier');
       if (!root) return;
 
-      const canvas = root.querySelector('.water');
+      const canvas = root.querySelector('.stage');
       const ctx = canvas.getContext('2d', { alpha: true });
       const halo = root.querySelector('.halo');
 
       const themeTabs = Array.from(root.querySelectorAll('[data-theme]'));
-      const bpmSlider = root.querySelector('[data-bpm]');
-      const pingBtn = root.querySelector('[data-ping]');
+      const segSlider = root.querySelector('[data-seg]');
+      const spinSlider = root.querySelector('[data-spin]');
+      const burstBtn = root.querySelector('[data-burst]');
       const autoBtn = root.querySelector('[data-auto]');
       const clearBtn = root.querySelector('[data-clear]');
       const updated = root.querySelector('#last-updated');
@@ -307,124 +315,110 @@
       let w = 0, h = 0, dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
       let cx = 0, cy = 0, R = 0;
       let t = 0, last = performance.now();
-      let rot = 0;
 
       let down = false, mx = 0.5, my = 0.5, tx = 0.5, ty = 0.5;
+      let prev = null, aprev = null;
 
-      const ripples = [];
-      let bpm = 92;
+      let segments = 8;
+      let spin = 42; // degrees per second
       let auto = true;
-      let beatAccum = 0;
+      let rot = 0;
 
-      const THEMES = {
-        mist:   { a1: [168, 72, 58], a2: [205, 88, 66], fade: 'rgba(255,255,255,0.07)', film: 'source-over', ringL: 0.72 },
-        noir:   { a1: [198, 84, 72], a2: [265, 88, 74], fade: 'rgba(0,0,0,0.10)', film: 'source-over', ringL: 0.80 },
-        sunset: { a1: [38, 96, 66],  a2: [340, 86, 70], fade: 'rgba(0,0,0,0.08)', film: 'source-over', ringL: 0.82 },
+      // Palettes: hues plus canvas fade film per theme
+      const PALETTES = {
+        pearl:  { hues: [168, 205, 308], sat: 84, light: 62, fade: 'rgba(255,255,255,0.06)', film: 'source-over' },
+        noir:   { hues: [198, 265, 320], sat: 86, light: 64, fade: 'rgba(0,0,0,0.10)', film: 'source-over' },
+        sunglow:{ hues: [38, 340, 12],   sat: 90, light: 68, fade: 'rgba(0,0,0,0.08)', film: 'source-over' },
       };
       const hsl = (h,s,l,a=1)=>`hsla(${h},${s}%,${l}%,${a})`;
 
-      function currentTheme() {
-        return THEMES[root.getAttribute('data-theme') || 'mist'] || THEMES.mist;
+      function palette() {
+        return PALETTES[root.getAttribute('data-theme') || 'pearl'] || PALETTES.pearl;
       }
 
       function size() {
         const r = root.getBoundingClientRect();
-        w = Math.max(320, Math.floor(r.width));
-        h = Math.max(420, Math.floor(r.height));
+        w = Math.max(360, Math.floor(r.width));
+        h = Math.max(440, Math.floor(r.height));
         canvas.width = Math.floor(w * dpr);
         canvas.height = Math.floor(h * dpr);
         canvas.style.width = w + 'px';
         canvas.style.height = h + 'px';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        cx = w * 0.52;
-        cy = h * 0.52;
-        R = Math.min(w, h) * 0.28;
-        clear(true);
+        cx = w * 0.5;
+        cy = h * 0.5;
+        R = Math.min(w, h) * 0.45;
+        clearCanvas(true);
       }
 
-      function clear(instant = false) {
+      function clearCanvas(instant = false) {
         ctx.save();
         ctx.globalCompositeOperation = 'source-over';
-        ctx.fillStyle = instant ? 'rgba(255,255,255,0)' : currentTheme().fade;
+        ctx.fillStyle = instant ? 'rgba(255,255,255,0)' : palette().fade;
         ctx.fillRect(0, 0, w, h);
         ctx.restore();
       }
 
-      function ping(x = cx, y = cy, energy = 1) {
-        const th = currentTheme();
-        const pick = Math.random() < 0.5 ? th.a1 : th.a2;
-        ripples.push({
-          x, y,
-          r: Math.max(6, R * 0.04),
-          w: 2 + energy * 1.5,
-          speed: 1.8 + Math.random() * 0.8 + energy * 0.6,
-          alpha: 0.9,
-          hue: pick[0] + (Math.random() * 10 - 5),
-          sat: pick[1],
-          light: pick[2]
-        });
+      function pickColor(timeBias = 0) {
+        const p = palette();
+        const base = p.hues[Math.floor(Math.random() * p.hues.length)];
+        const hue = (base + timeBias + (Math.random() * 18 - 9) + rot * 0.2) % 360;
+        const sat = p.sat - Math.random() * 10;
+        const light = p.light + Math.random() * 8;
+        return hsl(hue, sat, light, 0.9);
       }
 
-      function drawClock(now) {
-        const th = currentTheme();
-        const sec = now.getSeconds() + now.getMilliseconds() / 1000;
-        const min = now.getMinutes() + sec / 60;
-        const hrs = (now.getHours() % 12) + min / 60;
+      let strokeColor = pickColor();
 
-        const secA = (sec / 60) * Math.PI * 2 - Math.PI / 2;
-        const minA = (min / 60) * Math.PI * 2 - Math.PI / 2;
-        const hrsA = (hrs / 12) * Math.PI * 2 - Math.PI / 2;
-
+      function drawSymLine(p0, p1, width = 2.2) {
+        const step = (Math.PI * 2) / segments;
         ctx.save();
+        // fade a touch each frame to keep trails silky
+        ctx.globalCompositeOperation = palette().film;
+        ctx.fillStyle = palette().fade;
+        ctx.fillRect(0, 0, w, h);
+
+        // glow pass
+        ctx.globalCompositeOperation = 'lighter';
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
+        ctx.shadowColor = getComputedStyle(root).getPropertyValue('--glow').trim();
+        ctx.shadowBlur = Math.max(6, R * 0.02);
 
-        // subtle glow base
-        ctx.globalCompositeOperation = 'screen';
-        let g = ctx.createRadialGradient(cx, cy, R*0.1, cx, cy, R*1.2);
-        g.addColorStop(0, hsl(th.a2[0], th.a2[1], th.ringL*100|0, 0.10));
-        g.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx,cy,R*1.2,0,Math.PI*2); ctx.fill();
+        // world transform with live spin
+        ctx.translate(cx, cy);
+        ctx.rotate(rot * Math.PI / 180);
+        ctx.translate(-cx, -cy);
 
-        // hours
-        ctx.strokeStyle = hsl(th.a1[0], th.a1[1], th.ringL*100|0, 0.85);
-        ctx.lineWidth = Math.max(3, R*0.06);
-        ctx.beginPath(); ctx.arc(cx, cy, R*0.54, -Math.PI/2, hrsA); ctx.stroke();
+        const rel0x = p0.x - cx, rel0y = p0.y - cy;
+        const rel1x = p1.x - cx, rel1y = p1.y - cy;
 
-        // minutes
-        ctx.strokeStyle = hsl(th.a2[0], th.a2[1], th.ringL*100|0, 0.85);
-        ctx.lineWidth = Math.max(2, R*0.045);
-        ctx.beginPath(); ctx.arc(cx, cy, R*0.74, -Math.PI/2, minA); ctx.stroke();
+        // two mirror passes
+        for (let mirror = 0; mirror < 2; mirror++) {
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.scale(mirror ? -1 : 1, 1);
+          ctx.translate(-cx, -cy);
 
-        // seconds (thin neon sweep)
-        ctx.strokeStyle = hsl(th.a2[0] + 20, th.a2[1], th.ringL*100|0, 0.9);
-        ctx.lineWidth = Math.max(1.5, R*0.025);
-        ctx.beginPath(); ctx.arc(cx, cy, R*0.88, -Math.PI/2, secA); ctx.stroke();
+          for (let i = 0; i < segments; i++) {
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(i * step);
+            ctx.translate(-cx, -cy);
 
-        // center dot pulse
-        const beat = Math.abs(Math.sin(t * (bpm/60) * Math.PI));
-        ctx.fillStyle = hsl(th.a1[0], th.a1[1], th.ringL*100|0, 0.35 + beat*0.35);
-        ctx.beginPath(); ctx.arc(cx, cy, R*0.06 + beat*2, 0, Math.PI*2); ctx.fill();
+            ctx.strokeStyle = strokeColor;
+            ctx.lineWidth = width;
+            ctx.beginPath();
+            ctx.moveTo(rel0x + cx, rel0y + cy);
+            ctx.lineTo(rel1x + cx, rel1y + cy);
+            ctx.stroke();
 
-        ctx.restore();
-      }
-
-      function drawRipples(dt) {
-        ctx.save();
-        ctx.globalCompositeOperation = 'screen';
-        for (let i = ripples.length - 1; i >= 0; i--) {
-          const r = ripples[i];
-          r.r += r.speed * (1 + dt * 60 * 0.01);
-          r.alpha *= 0.985 - dt * 0.02;
-          r.w *= 0.998;
-          if (r.alpha <= 0.02) { ripples.splice(i, 1); continue; }
-          ctx.strokeStyle = hsl(r.hue, r.sat, r.light, Math.max(0, r.alpha));
-          ctx.lineWidth = r.w;
-          ctx.beginPath();
-          ctx.arc(r.x, r.y, r.r, 0, Math.PI*2);
-          ctx.stroke();
+            ctx.restore();
+          }
+          ctx.restore();
         }
+
         ctx.restore();
       }
 
@@ -433,39 +427,32 @@
         last = nowTs;
         t += dt;
 
-        // gentle background rotation
-        rot = (rot + dt * 8) % 360;
-        root.style.setProperty('--rot', rot.toFixed(2) + 'deg');
-
-        // ease pointer;
+        // rotate according to spin setting
+        rot = (rot + (spin * dt)) % 360;
+        // pointer halo easing
         mx += (tx - mx) * 0.12;
         my += (ty - my) * 0.12;
         halo.style.setProperty('--mx', (mx * 100).toFixed(2) + '%');
         halo.style.setProperty('--my', (my * 100).toFixed(2) + '%');
 
-        // fade film
-        ctx.globalCompositeOperation = currentTheme().film;
-        ctx.fillStyle = currentTheme().fade;
-        ctx.fillRect(0, 0, w, h);
-
-        // clock + ripples
-        drawClock(new Date());
-        drawRipples(dt);
-
-        // auto beat ping
+        // autopaint (Lissajous/lemniscate blend)
         if (auto) {
-          beatAccum += dt;
-          const interval = 60 / bpm;
-          while (beatAccum >= interval) {
-            beatAccum -= interval;
-            ping(cx, cy, 1);
+          const k1 = 1.6, k2 = 2.3;
+          const r1 = R * (0.36 + 0.12 * Math.sin(t * 0.7));
+          const x = cx + Math.cos(t * k1) * r1 * (0.9 + 0.1 * Math.sin(t * 1.2));
+          const y = cy + Math.sin(t * k2) * r1 * (0.7 + 0.2 * Math.cos(t * 0.8));
+          const cur = { x, y };
+          if (aprev) {
+            if (Math.random() < 0.08) strokeColor = pickColor(t * 40);
+            drawSymLine(aprev, cur, 1.8 + Math.random() * 1.4);
           }
+          aprev = cur;
         }
 
         requestAnimationFrame(frame);
       }
 
-      // Events
+      // Interactions
       function pointerPos(e) {
         const p = e.touches ? e.touches[0] : e;
         const r = root.getBoundingClientRect();
@@ -474,25 +461,19 @@
         return { x: tx * w, y: ty * h };
       }
       function onMove(e) {
-        const pos = pointerPos(e);
-        if (down && Math.random() < 0.6) ping(pos.x, pos.y, 0.6);
+        const cur = pointerPos(e);
+        if (down) {
+          if (!prev) prev = cur;
+          drawSymLine(prev, cur, 2.2 + Math.random() * 1.6);
+          prev = cur;
+        }
       }
       function onDown(e) {
         down = true;
-        const pos = pointerPos(e);
-        ping(pos.x, pos.y, 1);
+        strokeColor = pickColor(t * 30);
+        prev = pointerPos(e);
       }
-      function onUp(){ down = false; }
-
-      size();
-      window.addEventListener('resize', size);
-      root.addEventListener('pointermove', onMove, { passive: true });
-      root.addEventListener('pointerdown', onDown, { passive: true });
-      root.addEventListener('pointerup', onUp, { passive: true });
-      root.addEventListener('pointercancel', onUp, { passive: true });
-      root.addEventListener('touchstart', onDown, { passive: true });
-      root.addEventListener('touchmove', onMove, { passive: true });
-      root.addEventListener('touchend', onUp, { passive: true });
+      function onUp(){ down = false; prev = null; }
 
       // Controls
       themeTabs.forEach(btn => {
@@ -504,21 +485,38 @@
             b.classList.toggle('active', active);
             b.setAttribute('aria-selected', active ? 'true' : 'false');
           });
-          clear(true);
+          clearCanvas(true);
         });
       });
 
-      if (bpmSlider) {
-        bpmSlider.addEventListener('input', () => {
-          bpm = Number(bpmSlider.value);
+      if (segSlider) {
+        segSlider.addEventListener('input', () => {
+          segments = Math.max(3, Math.min(24, Number(segSlider.value)));
         });
       }
 
-      if (pingBtn) {
-        pingBtn.addEventListener('click', () => {
-          ping(mx * w, my * h, 1.2);
-          pingBtn.style.transform = 'translateY(-1px) scale(0.98)';
-          setTimeout(() => pingBtn.style.transform = '', 140);
+      if (spinSlider) {
+        spinSlider.addEventListener('input', () => {
+          // map 0-160 to degrees per second
+          spin = Number(spinSlider.value);
+        });
+      }
+
+      if (burstBtn) {
+        burstBtn.addEventListener('click', () => {
+          const petals = 60 + Math.floor(Math.random() * 60);
+          const r0 = R * (0.1 + Math.random() * 0.1);
+          const r1 = R * (0.45 + Math.random() * 0.38);
+          let a = Math.random() * Math.PI * 2;
+          strokeColor = pickColor(t * 50);
+          for (let i = 0; i < petals; i++) {
+            const p0 = { x: cx + Math.cos(a) * r0, y: cy + Math.sin(a) * r0 };
+            const p1 = { x: cx + Math.cos(a) * r1 + (Math.random()-0.5)*8, y: cy + Math.sin(a) * r1 + (Math.random()-0.5)*8 };
+            drawSymLine(p0, p1, 1.6 + Math.random() * 2.4);
+            a += (Math.PI * 2) / petals;
+          }
+          burstBtn.style.transform = 'translateY(-1px) scale(0.98)';
+          setTimeout(() => burstBtn.style.transform = '', 140);
         });
       }
 
@@ -526,15 +524,27 @@
         autoBtn.addEventListener('click', () => {
           auto = !auto;
           autoBtn.setAttribute('aria-pressed', auto ? 'true' : 'false');
+          if (!auto) aprev = null;
         });
       }
 
       if (clearBtn) {
         clearBtn.addEventListener('click', () => {
-          ripples.length = 0;
-          clear(true);
+          aprev = null; prev = null;
+          clearCanvas(true);
         });
       }
+
+      // Sizing and events
+      size();
+      window.addEventListener('resize', size, { passive: true });
+      root.addEventListener('pointermove', onMove, { passive: true });
+      root.addEventListener('pointerdown', onDown, { passive: true });
+      root.addEventListener('pointerup', onUp, { passive: true });
+      root.addEventListener('pointercancel', onUp, { passive: true });
+      root.addEventListener('touchstart', onDown, { passive: true });
+      root.addEventListener('touchmove', onMove, { passive: true });
+      root.addEventListener('touchend', onUp, { passive: true });
 
       // Last updated
       if (updated) {
