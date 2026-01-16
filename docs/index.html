@@ -73,373 +73,506 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="vibe1985" aria-label="Kinetic design card">
+<div id="vibe1986" aria-label="Aurora Atelier — light as interface">
   <style>
-    /* Scope everything to #vibe1985 */
-    #vibe1985 {
-      --bg: #0b1016;
-      --panel: rgba(255,255,255,0.06);
-      --panel-stroke: rgba(255,255,255,0.18);
-      --fg: #eef4ff;
-      --muted: #bcd0f8;
-      --accent-a: #7dd3fc;
-      --accent-b: #c084fc;
-      --accent-c: #22d3ee;
-      --glow: 48;
-      --rx: 0deg; /* tilt X */
-      --ry: 0deg; /* tilt Y */
+    /* Scope everything to #vibe1986 */
+    #vibe1986 {
+      --bg: #f7f6f3;
+      --ink: #1c1d22;
+      --muted: #5a5f6b;
+      --card: rgba(255,255,255,0.7);
+      --stroke: rgba(10,12,16,0.08);
+      --accent1: #ff8a5c;
+      --accent2: #ffb86b;
+      --accent3: #ffd479;
+      --accent4: #7ee0d3;
       --mx: 50%;
       --my: 50%;
+      --angle: 120deg;
+      --glow: 42;
+      --grain: rgba(0,0,0,0.015);
+      --ring: rgba(255,255,255,0.65);
       position: relative;
-      isolation: isolate;
-      border-radius: 20px;
-      padding: 28px;
-      overflow: hidden;
-      background: radial-gradient(1200px 800px at 20% 10%, #0c1420, var(--bg) 55%),
-                  radial-gradient(900px 600px at 90% 120%, #0a0f1a, #05080e 60%);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.05);
-      color: var(--fg);
-    }
-
-    /* Ambient grid */
-    #vibe1985::before {
-      content: "";
-      position: absolute; inset: -5%;
+      color: var(--ink);
       background:
-        radial-gradient(400px 200px at var(--mx) var(--my), rgba(125,211,252,0.12), transparent 60%),
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 36px),
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 36px);
-      filter: saturate(1.1);
-      z-index: 0;
+        radial-gradient(1400px 900px at 20% 0%, #fff, var(--bg) 55%),
+        radial-gradient(1400px 900px at 120% 120%, #f0efe9, #eceae5 66%);
+      border-radius: 28px;
+      padding: clamp(20px, 3.2vw, 36px);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.10),
+        inset 0 0 0 1px var(--stroke);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* Subtle paper grain + mobile-friendly lens */
+    #vibe1986::before {
+      content: "";
+      position: absolute; inset: -2%;
+      background:
+        radial-gradient(600px 400px at var(--mx) var(--my), rgba(255,138,92,0.18), transparent 50%),
+        radial-gradient(900px 600px at calc(var(--mx) + 15%) calc(var(--my) + 25%), rgba(126,224,211,0.12), transparent 60%),
+        repeating-linear-gradient(145deg, var(--grain) 0 2px, transparent 2px 8px);
+      mix-blend-mode: multiply;
       pointer-events: none;
-    }
-
-    /* Floating orbs */
-    #vibe1985 .orb {
-      position: absolute;
-      width: 240px; height: 240px;
-      border-radius: 50%;
-      filter: blur(28px) saturate(1.2);
-      mix-blend-mode: screen;
-      opacity: 0.55;
       z-index: 0;
-      transform: translate3d(0,0,0);
-      animation: float 18s ease-in-out infinite;
-    }
-    #vibe1985 .orb.o1 { background: radial-gradient(circle at 30% 30%, var(--accent-a), transparent 60%); top: -40px; left: -40px; animation-delay: -2s; }
-    #vibe1985 .orb.o2 { background: radial-gradient(circle at 70% 40%, var(--accent-b), transparent 60%); bottom: -60px; right: -20px; animation-delay: -7s; }
-    #vibe1985 .orb.o3 { background: radial-gradient(circle at 50% 70%, var(--accent-c), transparent 60%); top: 30%; right: 35%; width: 180px; height: 180px; animation-delay: -11s; }
-
-    @keyframes float {
-      0%,100% { transform: translate3d(0,0,0) scale(1); }
-      50% { transform: translate3d(0,-14px,0) scale(1.04); }
     }
 
-    /* Glass panel */
-    #vibe1985 .panel {
+    /* Night theme */
+    #vibe1986[data-theme="night"] {
+      --bg: #0b0f17;
+      --ink: #e9eef9;
+      --muted: #a9b4c9;
+      --card: rgba(16,20,30,0.6);
+      --stroke: rgba(255,255,255,0.08);
+      --accent1: #7dd3fc;
+      --accent2: #c084fc;
+      --accent3: #22d3ee;
+      --accent4: #94f3c0;
+      --grain: rgba(255,255,255,0.02);
+      --ring: rgba(125,211,252,0.5);
+      background:
+        radial-gradient(1400px 900px at 10% -10%, #0f1624, var(--bg) 58%),
+        radial-gradient(1400px 900px at 120% 120%, #070b12, #05070d 70%);
+      box-shadow:
+        0 24px 70px rgba(0,0,0,0.45),
+        inset 0 0 0 1px var(--stroke);
+    }
+
+    /* Orbiting petals */
+    #vibe1986 .petal {
+      position: absolute;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent4), transparent 60%);
+      filter: blur(0.2px) saturate(1.1);
+      opacity: 0.7;
+      z-index: 0;
+      transform-origin: center;
+      animation: orbit 24s linear infinite;
+    }
+    #vibe1986 .petal.p1 { top: 6%; left: 14%; animation-delay: -3s; }
+    #vibe1986 .petal.p2 { bottom: 12%; right: 18%; animation-delay: -10s; }
+    #vibe1986 .petal.p3 { top: 22%; right: 30%; animation-delay: -16s; }
+    #vibe1986 .petal.p4 { bottom: 8%; left: 24%; animation-delay: -21s; }
+
+    @keyframes orbit {
+      0% { transform: rotate(0deg) translateX(20px) rotate(0deg); }
+      50% { transform: rotate(180deg) translateX(26px) rotate(-180deg); }
+      100% { transform: rotate(360deg) translateX(20px) rotate(-360deg); }
+    }
+
+    /* Layout */
+    #vibe1986 .shell {
       position: relative;
       z-index: 1;
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-      border: 1px solid var(--panel-stroke);
-      border-radius: 18px;
-      padding: 28px 26px;
-      box-shadow:
-        0 12px 40px rgba(0,0,0,0.35),
-        0 0 0 1px rgba(255,255,255,0.06) inset,
-        0 0 60px rgba(80,140,255,0.06);
-      transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
-      transition: transform 180ms ease, box-shadow 240ms ease;
-      backdrop-filter: blur(10px);
-    }
-
-    /* Gradient border glow */
-    #vibe1985 .panel::before {
-      content:"";
-      position:absolute; inset:-1px;
-      border-radius: inherit;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(125,211,252,0.6), rgba(192,132,252,0.55), rgba(34,211,238,0.55));
-      -webkit-mask: 
-        linear-gradient(#000 0 0) content-box, 
-        linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-              mask-composite: exclude;
-      opacity: 0.55;
-      pointer-events: none;
-    }
-
-    #vibe1985 .eyebrow {
-      display: inline-flex;
-      gap: 8px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: clamp(18px, 3vw, 32px);
       align-items: center;
-      letter-spacing: 0.12em;
+    }
+    @media (max-width: 760px) {
+      #vibe1986 .shell { grid-template-columns: 1fr; }
+    }
+
+    /* Card */
+    #vibe1986 .card {
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,0.45));
+      border: 1px solid var(--stroke);
+      border-radius: 22px;
+      padding: clamp(18px, 2.4vw, 26px);
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.12),
+        0 0 0 1px rgba(255,255,255,0.4) inset;
+      backdrop-filter: blur(10px) saturate(1.1);
+    }
+    #vibe1986[data-theme="night"] .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow:
+        0 16px 36px rgba(0,0,0,0.45),
+        0 0 0 1px rgba(255,255,255,0.05) inset;
+    }
+
+    /* Eyebrow */
+    #vibe1986 .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 12px;
       color: var(--muted);
-      opacity: 0.95;
     }
-    #vibe1985 .dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, var(--accent-a), transparent 70%);
-      box-shadow: 0 0 12px rgba(125,211,252,0.8), 0 0 24px rgba(192,132,252,0.3);
+    #vibe1986 .sun-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent2), transparent 70%);
+      box-shadow: 0 0 calc(var(--glow) * 0.3px) rgba(255,184,107,0.35);
     }
 
-    #vibe1985 h1 {
-      margin: 10px 0 8px 0;
-      font-size: clamp(28px, 4.4vw, 44px);
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-      background: linear-gradient(90deg, #eaf2ff, #cfe2ff 30%, #bde0ff 60%);
+    /* Headline */
+    #vibe1986 h1 {
+      margin: 10px 0 6px 0;
+      font-size: clamp(28px, 5vw, 56px);
+      line-height: 1.04;
+      letter-spacing: -0.015em;
+      background: linear-gradient(100deg, var(--ink), var(--accent1) 50%, var(--accent2));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.1);
     }
 
-    #vibe1985 .sub {
+    #vibe1986 .sub {
+      font-size: clamp(14px, 1.7vw, 18px);
       color: var(--muted);
-      font-size: clamp(14px, 1.6vw, 16px);
-      line-height: 1.6;
-      margin: 0 0 18px 0;
+      line-height: 1.7;
       max-width: 62ch;
+      margin-bottom: 16px;
     }
 
-    /* Chips */
-    #vibe1985 .chips {
+    /* Principles chips */
+    #vibe1986 .chips {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin: 14px 0 18px 0;
+      margin: 10px 0 16px 0;
     }
-    #vibe1985 .chip {
-      --ring: rgba(125,211,252,0.5);
+    #vibe1986 .chip {
       padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.16);
-      color: #e6f1ff;
-      font-size: 13px;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid var(--stroke);
+      color: var(--ink);
       font-weight: 600;
+      font-size: 13px;
       letter-spacing: 0.01em;
-      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease, border-color 160ms ease;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-      cursor: default;
-      position: relative;
-      overflow: hidden;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     }
-    #vibe1985 .chip:hover {
-      transform: translateY(-2px);
-      background: rgba(255,255,255,0.09);
-      border-color: var(--ring);
-      box-shadow: 0 6px 24px rgba(125,211,252,0.18), 0 14px 32px rgba(0,0,0,0.32);
+    #vibe1986[data-theme="night"] .chip {
+      background: rgba(255,255,255,0.08);
+      color: #e8f0ff;
+      border-color: rgba(255,255,255,0.14);
+      box-shadow: 0 3px 18px rgba(0,0,0,0.3);
     }
-    #vibe1985 .chip:focus-visible {
-      outline: 0;
-      box-shadow: 0 0 0 3px rgba(125,211,252,0.35);
-    }
+    #vibe1986 .chip:hover { transform: translateY(-2px); }
 
-    /* CTA row */
-    #vibe1985 .cta-row {
+    /* Controls */
+    #vibe1986 .controls {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 6px;
-      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
     }
-    #vibe1985 .cta {
+    #vibe1986 .btn {
       display: inline-flex;
       align-items: center;
       gap: 10px;
       padding: 12px 16px;
       border-radius: 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
-      border: 1px solid rgba(255,255,255,0.18);
-      color: var(--fg);
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.01em;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.05) inset;
-      transform: translateZ(0);
-      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
-      cursor: pointer;
-      user-select: none;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+      color: var(--ink);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1), 0 0 0 1px rgba(255,255,255,0.6) inset;
+      cursor: pointer; user-select: none;
+      transition: transform 160ms ease, box-shadow 180ms ease, background 180ms ease;
     }
-    #vibe1985 .cta:hover {
-      transform: translateY(-2px) scale(1.01);
-      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.08));
-      box-shadow: 0 16px 40px rgba(0,0,0,0.42), 0 0 0 1px rgba(255,255,255,0.06) inset;
+    #vibe1986 .btn:hover { transform: translateY(-2px); }
+    #vibe1986 .btn.ghost {
+      background: rgba(255,255,255,0.4);
+      font-weight: 700;
     }
-    #vibe1985 .cta.secondary {
-      background: rgba(0,0,0,0.25);
-      border: 1px solid rgba(255,255,255,0.16);
-      font-weight: 600;
-      color: #d5e7ff;
+    #vibe1986[data-theme="night"] .btn {
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      color: #e8f0ff;
+      border-color: rgba(255,255,255,0.16);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.42), 0 0 0 1px rgba(255,255,255,0.05) inset;
     }
 
-    #vibe1985 .kbd {
+    #vibe1986 .kbd {
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
       font-size: 12px;
       opacity: 0.8;
       padding: 2px 6px;
       border-radius: 6px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(0,0,0,0.06);
+      border: 1px solid var(--stroke);
+    }
+    #vibe1986[data-theme="night"] .kbd {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.16);
     }
 
-    /* Footer */
-    #vibe1985 .meta {
+    /* Dial */
+    #vibe1986 .dial-wrap {
+      display: grid;
+      gap: 14px;
+    }
+    #vibe1986 .dial {
+      position: relative;
+      width: clamp(240px, 36vw, 320px);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(closest-side, rgba(255,255,255,0.9), rgba(255,255,255,0.65) 60%, transparent 61%),
+        conic-gradient(from calc(var(--angle) - 40deg), rgba(255,255,255,0.7), rgba(255,255,255,0) 60deg);
+      border: 1px solid var(--stroke);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.12),
+        0 0 0 8px rgba(255,255,255,0.5) inset,
+        0 0 calc(var(--glow) * 0.7px) rgba(255,184,107,0.25);
+      backdrop-filter: blur(6px) saturate(1.05);
+      overflow: hidden;
+      cursor: pointer;
+      touch-action: none;
+    }
+    #vibe1986[data-theme="night"] .dial {
+      background:
+        radial-gradient(closest-side, rgba(255,255,255,0.08), rgba(255,255,255,0.04) 60%, transparent 61%),
+        conic-gradient(from calc(var(--angle) - 40deg), rgba(255,255,255,0.14), rgba(255,255,255,0) 60deg);
+      box-shadow:
+        0 26px 80px rgba(0,0,0,0.6),
+        0 0 0 8px rgba(255,255,255,0.06) inset,
+        0 0 calc(var(--glow) * 1px) rgba(125,211,252,0.16);
+    }
+
+    #vibe1986 .dial .ring {
+      position: absolute; inset: 8%;
+      border-radius: 50%;
+      background:
+        conic-gradient(from var(--angle),
+          var(--accent1) 0 10deg,
+          transparent 10.1deg 170deg,
+          var(--accent3) 170.1deg 180deg,
+          transparent 180.1deg 360deg);
+      filter: blur(8px);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    #vibe1986 .seed {
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 78px; height: 78px;
+      transform: translate(-50%, -50%);
+      border-radius: 24px 50% 50% 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent2), var(--accent1) 60%);
+      box-shadow:
+        calc(var(--sx, 0px)) calc(var(--sy, 0px)) 16px rgba(0,0,0,0.18),
+        0 0 calc(var(--glow) * 1px) rgba(255,184,107,0.24);
+      transition: border-radius 360ms ease;
+    }
+
+    #vibe1986 .dial:hover .seed { border-radius: 50% 24px 50% 50%; }
+
+    /* Range */
+    #vibe1986 .range {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+      outline: none;
+      opacity: 0.9;
+      cursor: pointer;
+    }
+    #vibe1986 .range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #fff;
+      border: 1px solid var(--stroke);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+    #vibe1986[data-theme="night"] .range::-webkit-slider-thumb {
+      background: #0c1220; border-color: rgba(255,255,255,0.18);
+    }
+    /* Firefox */
+    #vibe1986 .range::-moz-range-thumb {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #fff;
+      border: 1px solid var(--stroke);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    /* Footer/meta */
+    #vibe1986 .meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 12px;
       align-items: center;
-      margin-top: 16px;
+      margin-top: 14px;
       color: var(--muted);
       font-size: 13px;
     }
-    #vibe1985 .pulse {
+    #vibe1986 .live {
       width: 8px; height: 8px; border-radius: 50%;
-      background: #8be8ff;
-      box-shadow: 0 0 0 0 rgba(139,232,255,0.7);
-      animation: pulse 2.4s ease-out infinite;
+      background: #34d399;
+      box-shadow: 0 0 0 0 rgba(52,211,153,0.6);
+      animation: ping 2.4s ease-out infinite;
     }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(139,232,255,0.6); }
-      70% { box-shadow: 0 0 0 12px rgba(139,232,255,0); }
-      100% { box-shadow: 0 0 0 0 rgba(139,232,255,0); }
-    }
-
-    /* Responsive spacing */
-    @media (max-width: 520px) {
-      #vibe1985 { padding: 18px; border-radius: 16px; }
-      #vibe1985 .panel { padding: 20px; }
-      #vibe1985 .chips { gap: 8px; }
-      #vibe1985 .cta { width: 100%; justify-content: center; }
+    @keyframes ping {
+      0% { box-shadow: 0 0 0 0 rgba(52,211,153,0.6); }
+      70% { box-shadow: 0 0 0 12px rgba(52,211,153,0); }
+      100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
     }
 
-    /* Respect reduced motion */
+    /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      #vibe1985 .orb,
-      #vibe1985 .panel,
-      #vibe1985 .cta { animation: none !important; transition: none !important; }
-      #vibe1985 { --rx: 0deg; --ry: 0deg; }
+      #vibe1986 * { animation: none !important; transition: none !important; }
     }
   </style>
 
-  <!-- Ambient glow layers -->
-  <div class="orb o1" aria-hidden="true"></div>
-  <div class="orb o2" aria-hidden="true"></div>
-  <div class="orb o3" aria-hidden="true"></div>
+  <!-- Ambient petals -->
+  <div class="petal p1" aria-hidden="true"></div>
+  <div class="petal p2" aria-hidden="true"></div>
+  <div class="petal p3" aria-hidden="true"></div>
+  <div class="petal p4" aria-hidden="true"></div>
 
-  <!-- Main content panel -->
-  <div class="panel" role="region" aria-label="Quiet Momentum">
-    <div class="eyebrow"><span class="dot" aria-hidden="true"></span> Quiet Momentum</div>
-    <h1>Design that moves softly—and says more.</h1>
-    <p class="sub">
-      A serene interface with kinetic light. Minimal words, maximal feeling. Hover to tilt, breathe, and let the gradients speak.
-    </p>
+  <div class="shell">
+    <div class="card" role="region" aria-label="Aurora Atelier copy">
+      <div class="eyebrow"><span class="sun-dot" aria-hidden="true"></span> Aurora Atelier</div>
+      <h1>Craft light you can feel.</h1>
+      <p class="sub">
+        An interface that shifts with your touch. Dawn to dusk, softness to focus—every motion adds meaning.
+      </p>
 
-    <div class="chips" aria-label="Design notes">
-      <div class="chip">Glass & Glow</div>
-      <div class="chip">Soft Grid</div>
-      <div class="chip">Gentle Motion</div>
-      <div class="chip">Accessible Contrast</div>
-      <div class="chip">Parallax Touch</div>
+      <div class="chips" aria-label="Principles">
+        <div class="chip">Quiet edges</div>
+        <div class="chip">Living gradients</div>
+        <div class="chip">Human pace</div>
+        <div class="chip">Accessible contrast</div>
+        <div class="chip">Playful control</div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" type="button" data-action="day">🌤 Daybreak <span class="kbd">D</span></button>
+        <button class="btn ghost" type="button" data-action="night">🌙 Nightfall <span class="kbd">N</span></button>
+      </div>
+
+      <div class="meta">
+        <span class="live" aria-hidden="true"></span>
+        <span>Refreshed <span id="last-updated">Last updated: 2026-01-16 01:31:57 EST</span></span>
+        <span aria-hidden="true">•</span>
+        <span>Drag the dial to steer the light</span>
+      </div>
     </div>
 
-    <div class="cta-row">
-      <button class="cta" type="button" aria-label="Illuminate the panel">
-        ✨ Illuminate
-        <span class="kbd">H</span>
-      </button>
-      <button class="cta secondary" type="button" aria-label="Calm the motion">
-        ☁️ Calm
-        <span class="kbd">M</span>
-      </button>
-    </div>
-
-    <div class="meta">
-      <span class="pulse" aria-hidden="true"></span>
-      <span>Refreshed <span id="last-updated">Last updated: 2026-01-16 00:23:53 EST</span></span>
-      <span aria-hidden="true">•</span>
-      <span>Drag or move to tilt</span>
+    <div class="dial-wrap">
+      <div class="dial" role="img" aria-label="Interactive sun dial">
+        <div class="ring" aria-hidden="true"></div>
+        <div class="seed" aria-hidden="true"></div>
+      </div>
+      <label for="glow" class="eyebrow" style="gap:6px;">
+        <span class="sun-dot" aria-hidden="true" style="width:8px;height:8px;"></span>
+        Glow
+      </label>
+      <input id="glow" class="range" type="range" min="10" max="90" value="42" aria-label="Adjust glow">
     </div>
   </div>
 
   <script>
-    (function() {
-      const root = document.getElementById('vibe1985');
-      const panel = root.querySelector('.panel');
-      const ctaGlow = root.querySelector('.cta');
-      const ctaCalm = root.querySelector('.cta.secondary');
+    (function () {
+      const root = document.getElementById('vibe1986');
+      const dial = root.querySelector('.dial');
+      const seed = root.querySelector('.seed');
+      const glow = root.querySelector('#glow');
+      const btnDay = root.querySelector('[data-action="day"]');
+      const btnNight = root.querySelector('[data-action="night"]');
       const last = root.querySelector('#last-updated');
 
-      // Last updated timestamp
+      // Timestamp
       try {
         const now = new Date();
         last.textContent = now.toLocaleString(undefined, {
           year: 'numeric', month: 'short', day: '2-digit',
           hour: '2-digit', minute: '2-digit', second: '2-digit'
         });
-      } catch(e) {
+      } catch (e) {
         last.textContent = new Date().toISOString();
       }
 
-      // Tilt/parallax
-      const setTilt = (x, y) => {
-        const rect = root.getBoundingClientRect();
-        const rx = ((y - rect.top) / rect.height - 0.5) * -8;  // X tilt
-        const ry = ((x - rect.left) / rect.width - 0.5) * 10;  // Y tilt
-        root.style.setProperty('--rx', rx.toFixed(2) + 'deg');
-        root.style.setProperty('--ry', ry.toFixed(2) + 'deg');
-        root.style.setProperty('--mx', ((x - rect.left) / rect.width) * 100 + '%');
-        root.style.setProperty('--my', ((y - rect.top) / rect.height) * 100 + '%');
+      // Update background focus with pointer
+      const updateLens = (x, y) => {
+        const r = root.getBoundingClientRect();
+        const mx = ((x - r.left) / r.width) * 100;
+        const my = ((y - r.top) / r.height) * 100;
+        root.style.setProperty('--mx', mx + '%');
+        root.style.setProperty('--my', my + '%');
       };
 
-      let pointerActive = false;
+      // Dial angle from pointer
+      const updateDial = (x, y) => {
+        const rect = dial.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = x - cx;
+        const dy = y - cy;
+        const angle = Math.atan2(dy, dx) * 180 / Math.PI; // -180..180
+        // CSS angle expects deg with unit
+        root.style.setProperty('--angle', angle.toFixed(2) + 'deg');
 
-      const onMove = (ev) => {
-        const x = (ev.touches ? ev.touches[0].clientX : ev.clientX);
-        const y = (ev.touches ? ev.touches[0].clientY : ev.clientY);
-        setTilt(x, y);
+        // Shadow direction opposite the light
+        const rad = (angle + 180) * Math.PI / 180;
+        const sx = Math.cos(rad) * 12;
+        const sy = Math.sin(rad) * 12;
+        seed.style.setProperty('--sx', sx.toFixed(2) + 'px');
+        seed.style.setProperty('--sy', sy.toFixed(2) + 'px');
       };
 
-      root.addEventListener('mousemove', onMove, { passive: true });
-      root.addEventListener('touchmove', onMove, { passive: true });
+      // Pointer handlers
+      const onRootMove = (ev) => {
+        const x = ev.touches ? ev.touches[0].clientX : ev.clientX;
+        const y = ev.touches ? ev.touches[0].clientY : ev.clientY;
+        updateLens(x, y);
+      };
+      const onDialMove = (ev) => {
+        const x = ev.touches ? ev.touches[0].clientX : ev.clientX;
+        const y = ev.touches ? ev.touches[0].clientY : ev.clientY;
+        updateDial(x, y);
+      };
 
-      root.addEventListener('mouseenter', () => pointerActive = true);
-      root.addEventListener('mouseleave', () => {
-        pointerActive = false;
-        root.style.setProperty('--rx', '0deg');
-        root.style.setProperty('--ry', '0deg');
+      root.addEventListener('mousemove', onRootMove, { passive: true });
+      root.addEventListener('touchmove', onRootMove, { passive: true });
+
+      let dragging = false;
+      dial.addEventListener('mousedown', () => dragging = true);
+      window.addEventListener('mouseup', () => dragging = false);
+      window.addEventListener('mousemove', (e) => { if (dragging) onDialMove(e); });
+      dial.addEventListener('mousemove', onDialMove, { passive: true });
+      dial.addEventListener('touchstart', (e) => { dragging = true; onDialMove(e); }, { passive: true });
+      window.addEventListener('touchend', () => dragging = false);
+      dial.addEventListener('touchmove', onDialMove, { passive: true });
+
+      // Glow control
+      glow.addEventListener('input', (e) => {
+        const v = +e.target.value || 42;
+        root.style.setProperty('--glow', v);
       });
+
+      // Theme toggles
+      const setTheme = (mode) => {
+        root.setAttribute('data-theme', mode);
+      };
+      btnDay.addEventListener('click', () => setTheme('day'));
+      btnNight.addEventListener('click', () => setTheme('night'));
 
       // Keyboard shortcuts
-      const toggleGlow = () => {
-        const current = +getComputedStyle(root).getPropertyValue('--glow').trim() || 48;
-        const next = current > 40 ? 10 : 48;
-        root.style.setProperty('--glow', next);
-        panel.style.boxShadow = `0 12px 40px rgba(0,0,0,0.35),
-                                 0 0 0 1px rgba(255,255,255,0.06) inset,
-                                 0 0 ${next}px rgba(80,140,255,0.10)`;
-      };
-      const toggleMotion = () => {
-        const orbs = root.querySelectorAll('.orb');
-        const paused = root.dataset.motion === 'off';
-        root.dataset.motion = paused ? 'on' : 'off';
-        orbs.forEach(o => o.style.animationPlayState = paused ? 'running' : 'paused');
-      };
-
-      ctaGlow.addEventListener('click', toggleGlow);
-      ctaCalm.addEventListener('click', toggleMotion);
-
       root.addEventListener('keydown', (e) => {
-        if (e.key.toLowerCase() === 'h') { toggleGlow(); }
-        if (e.key.toLowerCase() === 'm') { toggleMotion(); }
+        const k = e.key.toLowerCase();
+        if (k === 'd') setTheme('day');
+        if (k === 'n') setTheme('night');
       });
 
-      // Initial gentle tilt center
+      // Initial placement: a gentle morning angle
       const rect = root.getBoundingClientRect();
-      setTilt(rect.left + rect.width * 0.5, rect.top + rect.height * 0.45);
+      updateLens(rect.left + rect.width * 0.25, rect.top + rect.height * 0.25);
+      const d = dial.getBoundingClientRect();
+      updateDial(d.left + d.width * 0.8, d.top + d.height * 0.3);
     })();
   </script>
 </div>
