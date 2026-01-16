@@ -73,7 +73,422 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-01-16 08:36:23 EST</span></div>
+<div id="vibe1994" class="stage" data-theme="aurora" aria-label="Interactive visual card">
+  <style>
+    /* Scope everything to #vibe1994 */
+    #vibe1994 {
+      --radius: 22px;
+      --pad: 28px;
+      --shadow: 0 12px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+      --surface: rgba(22,24,28,0.6);
+      --line: rgba(255,255,255,0.14);
+      --text: rgba(255,255,255,0.96);
+      --muted: rgba(255,255,255,0.75);
+      --accent: #8ee7ff;
+      --accent-2: #b28dff;
+      --accent-3: #45f7c1;
+
+      position: relative;
+      border-radius: var(--radius);
+      padding: var(--pad);
+      overflow: hidden;
+      isolation: isolate;
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(1400px 700px at 10% 10%, rgba(142,231,255,0.18), transparent 55%),
+        radial-gradient(900px 600px at 90% 120%, rgba(178,141,255,0.16), transparent 50%),
+        linear-gradient(180deg, #0f1220 0%, #0a0d19 60%, #090b14 100%);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+    /* Theme tokens */
+    #vibe1994[data-theme="aurora"] {
+      --surface: rgba(18,20,30,0.55);
+      --line: rgba(142,231,255,0.22);
+      --text: rgba(255,255,255,0.98);
+      --muted: rgba(235,241,255,0.82);
+      --accent: #8ee7ff;
+      --accent-2: #b28dff;
+      --accent-3: #45f7c1;
+    }
+    #vibe1994[data-theme="dawn"] {
+      --surface: rgba(255,255,255,0.58);
+      --line: rgba(0,0,0,0.08);
+      --text: rgba(16,20,28,0.96);
+      --muted: rgba(16,20,28,0.72);
+      --accent: #ffb36c;
+      --accent-2: #ff7aa2;
+      --accent-3: #7de2a8;
+      background:
+        radial-gradient(1200px 800px at 10% 10%, rgba(255,179,108,0.22), transparent 55%),
+        radial-gradient(900px 600px at 90% 120%, rgba(255,122,162,0.18), transparent 50%),
+        linear-gradient(180deg, #fff5ec 0%, #fff0f7 60%, #f0f7ff 100%);
+    }
+    #vibe1994[data-theme="noir"] {
+      --surface: rgba(10,10,12,0.65);
+      --line: rgba(255,255,255,0.12);
+      --text: rgba(245,245,248,0.98);
+      --muted: rgba(225,225,230,0.75);
+      --accent: #70f;
+      --accent-2: #0ff;
+      --accent-3: #0f8;
+      background:
+        radial-gradient(1200px 800px at 10% 10%, rgba(112,0,255,0.22), transparent 55%),
+        radial-gradient(900px 600px at 90% 120%, rgba(0,255,255,0.14), transparent 50%),
+        linear-gradient(180deg, #090909 0%, #0b0b12 60%, #0a0a0a 100%);
+    }
+
+    /* Ambient blobs */
+    #vibe1994 .glow {
+      position: absolute;
+      width: 42vmin;
+      height: 42vmin;
+      filter: blur(40px) saturate(130%);
+      opacity: 0.6;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      transform: translate3d(0,0,0);
+      animation: float 16s ease-in-out infinite;
+    }
+    #vibe1994 .glow.one {
+      background: radial-gradient(circle at 30% 30%, var(--accent), transparent 65%);
+      top: -10%; left: -10%;
+      animation-duration: 18s;
+    }
+    #vibe1994 .glow.two {
+      background: radial-gradient(circle at 70% 70%, var(--accent-2), transparent 60%);
+      bottom: -18%; right: -8%;
+      animation-duration: 22s;
+      animation-direction: reverse;
+    }
+    #vibe1994 .glow.three {
+      background: radial-gradient(circle at 60% 40%, var(--accent-3), transparent 60%);
+      top: 60%; left: 20%;
+      animation-duration: 28s;
+    }
+    @keyframes float {
+      0%   { transform: translate3d(0,0,0) scale(1); }
+      50%  { transform: translate3d(3%, -2%, 0) scale(1.05); }
+      100% { transform: translate3d(0,0,0) scale(1); }
+    }
+
+    /* The glass panel */
+    #vibe1994 .panel {
+      position: relative;
+      z-index: 2;
+      width: min(920px, 92vw);
+      padding: clamp(18px, 3vw, 32px);
+      border-radius: calc(var(--radius) - 6px);
+      background: linear-gradient(180deg, var(--surface), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 20px 40px rgba(0,0,0,0.35);
+      transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+      transition: transform 400ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms ease;
+      will-change: transform;
+      backdrop-filter: blur(10px) saturate(120%);
+    }
+    #vibe1994 .panel:hover {
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), 0 28px 50px rgba(0,0,0,0.42);
+    }
+
+    /* Header controls */
+    #vibe1994 .panel-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    #vibe1994 .crumbs {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font: 500 12px/1.2 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      opacity: 0.9;
+    }
+    #vibe1994 .crumbs .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    #vibe1994 .mode {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font: 600 12px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      letter-spacing: 0.02em;
+      transition: transform 220ms ease, background 220ms ease, border-color 220ms ease;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 6px 20px rgba(0,0,0,0.2);
+    }
+    #vibe1994 .mode:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.24); }
+    #vibe1994 .swatch {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.05), 0 0 16px rgba(0,0,0,0.3);
+    }
+
+    /* Hero */
+    #vibe1994 h1 {
+      margin: 8px 0 6px 0;
+      font: 700 clamp(28px, 6vw, 52px)/1.05 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-shadow: 0 2px 24px rgba(0,0,0,0.3);
+      background: linear-gradient(90deg, var(--text), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    #vibe1994 .lead {
+      margin: 0 0 14px 0;
+      color: var(--muted);
+      font: 500 clamp(14px, 2.2vw, 18px)/1.45 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+    }
+
+    /* Feature chips */
+    #vibe1994 .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0 18px 0;
+    }
+    #vibe1994 .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--text);
+      font: 600 12px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      letter-spacing: 0.025em;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      position: relative;
+      overflow: hidden;
+    }
+    #vibe1994 .chip::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+      transform: translateX(-120%);
+      transition: transform 600ms ease;
+    }
+    #vibe1994 .chip:hover::after { transform: translateX(120%); }
+
+    /* Buttons */
+    #vibe1994 .cta-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    #vibe1994 .cta {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 16px;
+      font: 700 13px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03));
+      transition: transform 200ms ease, border-color 180ms ease, background 180ms ease, box-shadow 200ms ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+    #vibe1994 .cta.primary {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06)),
+        linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+      border-color: transparent;
+      color: #0b0e16;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+    }
+    #vibe1994 .cta:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.28); }
+    #vibe1994 .cta:active { transform: translateY(0); }
+
+    /* Footer */
+    #vibe1994 .meta {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font: 500 12px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      opacity: 0.9;
+    }
+    #vibe1994 .hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    #vibe1994 .kbd {
+      font: 700 11px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+      color: var(--text);
+    }
+    #vibe1994 .last {
+      text-align: right;
+      opacity: 0.95;
+    }
+    #vibe1994 #last-updated {
+      display: inline-block;
+    }
+
+    /* Motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      #vibe1994 .glow { animation: none; }
+      #vibe1994 .panel { transition: none; transform: none !important; }
+      #vibe1994 .chip::after { transition: none; }
+    }
+  </style>
+
+  <!-- Ambient light -->
+  <div class="glow one" aria-hidden="true"></div>
+  <div class="glow two" aria-hidden="true"></div>
+  <div class="glow three" aria-hidden="true"></div>
+
+  <!-- Glass card -->
+  <div class="panel" id="vibe-card">
+    <div class="panel-top">
+      <div class="crumbs" aria-label="Breadcrumb">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Surface</span>
+        <span aria-hidden="true">/</span>
+        <span>1994</span>
+      </div>
+      <button class="mode" id="theme-toggle" type="button" aria-live="polite" aria-label="Switch theme">
+        <span class="swatch" aria-hidden="true"></span>
+        <span id="theme-label">Aurora</span>
+      </button>
+    </div>
+
+    <h1>Tactile Quiet</h1>
+    <p class="lead">A breathing surface with generous space, soft light, and crisp type. Tilt your pointer to feel the depth.</p>
+
+    <div class="chips" role="list">
+      <span class="chip" role="listitem">Glass + Glow</span>
+      <span class="chip" role="listitem">High Contrast</span>
+      <span class="chip" role="listitem">Reduced Motion Friendly</span>
+      <span class="chip" role="listitem">Theme Cycling</span>
+    </div>
+
+    <div class="cta-row">
+      <button class="cta primary" type="button" id="cta-explore">Explore Surface</button>
+      <button class="cta" type="button" id="cta-details">Details</button>
+    </div>
+
+    <div class="meta">
+      <div class="hint">
+        <span class="kbd">Move</span>
+        <span>tilt panel •</span>
+        <span class="kbd">T</span>
+        <span>theme</span>
+      </div>
+      <div class="last">
+        <span id="last-updated">Last updated: 2026-01-16 09:21:51 EST</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('vibe1994');
+      const panel = document.getElementById('vibe-card');
+      const toggle = document.getElementById('theme-toggle');
+      const label = document.getElementById('theme-label');
+      const last = document.getElementById('last-updated');
+
+      // Last updated timestamp
+      try {
+        const now = new Date();
+        last.textContent = 'Last updated: ' + now.toLocaleString(undefined, {
+          year: 'numeric',
+          month: 'short',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+      } catch (_) {
+        last.textContent = 'Last updated just now';
+      }
+
+      // Tilt interaction
+      let raf = null;
+      function onMove(e) {
+        const rect = panel.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        const ry = (x - 0.5) * 10; // deg
+        const rx = -(y - 0.5) * 8; // deg
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          panel.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+          panel.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+        });
+      }
+      function resetTilt() {
+        panel.style.setProperty('--rx', '0deg');
+        panel.style.setProperty('--ry', '0deg');
+      }
+      panel.addEventListener('pointermove', onMove);
+      panel.addEventListener('pointerleave', resetTilt);
+      panel.addEventListener('pointerdown', () => panel.style.transition = 'transform 80ms ease');
+      panel.addEventListener('pointerup', () => panel.style.transition = 'transform 400ms cubic-bezier(.2,.9,.2,1)');
+
+      // Theme cycling
+      const themes = ['aurora', 'dawn', 'noir'];
+      function setTheme(t) {
+        root.setAttribute('data-theme', t);
+        label.textContent = t.charAt(0).toUpperCase() + t.slice(1);
+      }
+      function cycleTheme() {
+        const idx = themes.indexOf(root.getAttribute('data-theme'));
+        const next = themes[(idx + 1) % themes.length];
+        setTheme(next);
+      }
+      toggle.addEventListener('click', cycleTheme);
+      // Keyboard: T toggles theme
+      root.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === 't') {
+          e.preventDefault();
+          cycleTheme();
+        }
+      });
+      // Make the region focusable for keyboard hint
+      root.tabIndex = 0;
+
+      // CTA micro-interactions
+      const explore = document.getElementById('cta-explore');
+      const details = document.getElementById('cta-details');
+      function ping(btn) {
+        btn.animate([
+          { transform: 'translateY(-2px) scale(1.00)' },
+          { transform: 'translateY(-4px) scale(1.02)' },
+          { transform: 'translateY(-2px) scale(1.00)' }
+        ], { duration: 420, easing: 'cubic-bezier(.2,.9,.2,1)' });
+      }
+      explore.addEventListener('mouseenter', () => ping(explore));
+      details.addEventListener('mouseenter', () => ping(details));
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
