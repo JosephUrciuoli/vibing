@@ -73,7 +73,331 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-01-19 15:22:17 EST</span></div>
+<section class="aurora" data-palette="vivid" aria-label="Aurora Interface">
+  <style>
+    .aurora {
+      --bg-0:#070a12;
+      --bg-1:#0c1424;
+      --text:#eaf0ff;
+      --muted:rgba(226,233,255,0.82);
+      --line:rgba(255,255,255,0.12);
+      --acc-1:#7ab7ff;
+      --acc-2:#b987ff;
+      --acc-3:#6ef3c5;
+      --ring:rgba(160,200,255,0.25);
+      --mx:0px; --my:0px; --tiltX:0deg; --tiltY:0deg;
+      position: relative;
+      padding: 28px;
+      border-radius: 20px;
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at 90% -10%, rgba(120,160,255,0.16), transparent 60%),
+        radial-gradient(700px 400px at -10% 110%, rgba(110,243,197,0.12), transparent 60%),
+        linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      border: 1px solid var(--line);
+      overflow: hidden;
+      isolation: isolate;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
+      transform: perspective(1000px) rotateX(var(--tiltX)) rotateY(var(--tiltY));
+      transition: transform 250ms ease;
+    }
+    .aurora[data-palette="calm"] {
+      --acc-1:#8ad0ff;
+      --acc-2:#a1c2ff;
+      --acc-3:#98f7e2;
+      --ring:rgba(180,220,255,0.22);
+    }
+    .aurora::before {
+      content:"";
+      position:absolute; inset:-2px;
+      background: conic-gradient(from 200deg at 20% 0%,
+        rgba(122,183,255,0.25),
+        rgba(185,135,255,0.18),
+        rgba(110,243,197,0.20),
+        rgba(122,183,255,0.25)
+      );
+      filter: blur(22px);
+      opacity: 0.5;
+      z-index: -1;
+    }
+
+    .aurora .orbs { pointer-events:none; position:absolute; inset:0; z-index:0; }
+    .aurora .orb {
+      position:absolute; width: 220px; height: 220px; border-radius:50%;
+      filter: blur(12px);
+      mix-blend-mode: screen; opacity: 0.55;
+      transform: translate(var(--mx), var(--my));
+      transition: opacity 250ms ease;
+    }
+    .aurora .orb.a { top:-60px; left:-40px;
+      background: radial-gradient(circle at 30% 30%, rgba(122,183,255,0.95), rgba(122,183,255,0.35) 40%, transparent 70%);
+      animation: drift-a 18s linear infinite alternate;
+    }
+    .aurora .orb.b { bottom:-80px; right:-60px;
+      background: radial-gradient(circle at 60% 40%, rgba(185,135,255,0.9), rgba(185,135,255,0.3) 40%, transparent 70%);
+      animation: drift-b 22s linear infinite alternate;
+    }
+    .aurora .orb.c { top:40%; left:50%;
+      width: 140px; height: 140px;
+      background: radial-gradient(circle at 40% 60%, rgba(110,243,197,0.95), rgba(110,243,197,0.35) 40%, transparent 70%);
+      animation: drift-c 26s ease-in-out infinite alternate;
+    }
+    @keyframes drift-a { to { transform: translate(calc(var(--mx) + 22px), calc(var(--my) + 14px)) rotate(12deg); } }
+    @keyframes drift-b { to { transform: translate(calc(var(--mx) - 18px), calc(var(--my) - 10px)) rotate(-10deg); } }
+    @keyframes drift-c { to { transform: translate(calc(var(--mx) + 10px), calc(var(--my) - 18px)) rotate(18deg); } }
+
+    .aurora .wrap { position: relative; z-index:1; }
+
+    .aurora .hero {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .aurora .eyebrow {
+      letter-spacing: .22em;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.9;
+    }
+    .aurora h1 {
+      margin: 0;
+      font-size: clamp(28px, 4.2vw, 46px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      background: linear-gradient(92deg, var(--acc-1), var(--acc-2), var(--acc-3));
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 12s ease-in-out infinite;
+      text-shadow: 0 4px 20px rgba(134,185,255,0.18);
+    }
+    @keyframes shimmer { 0%,100%{ background-position: 0% 50% } 50%{ background-position: 100% 50% } }
+    .aurora .tagline {
+      margin: 2px 0 0 0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.8vw, 16px);
+    }
+
+    .aurora .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .aurora .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      padding: 16px 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      backdrop-filter: blur(6px);
+      transform: translateZ(0);
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
+    }
+    .aurora .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.18);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 10px 30px -10px rgba(122,183,255,0.25);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    }
+    .aurora .card::after {
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius: inherit;
+      background: radial-gradient(600px 180px at var(--mx) var(--my), rgba(255,255,255,0.08), transparent 50%);
+      pointer-events:none;
+      transition: opacity 240ms ease;
+    }
+    .aurora .card .icon {
+      width: 28px; height: 28px; flex: 0 0 auto;
+      stroke-width: 2.2; fill: none; opacity: 0.95;
+    }
+    .aurora .card h3 {
+      margin: 8px 0 4px 0;
+      font-size: 16px;
+      letter-spacing:-0.01em;
+    }
+    .aurora .card p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .aurora .card:nth-child(1) { --c: var(--acc-1); }
+    .aurora .card:nth-child(2) { --c: var(--acc-2); }
+    .aurora .card:nth-child(3) { --c: var(--acc-3); }
+    .aurora .card .icon { stroke: var(--c); }
+    .aurora .card .chip {
+      display:inline-flex; align-items:center; gap:6px;
+      padding: 6px 10px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      font-size: 12px; color: var(--muted);
+    }
+    .aurora .card .dot {
+      width:8px; height:8px; border-radius:50%; background: var(--c);
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.06), 0 0 16px var(--c);
+    }
+
+    .aurora .meta {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      margin-top: 16px; color: var(--muted);
+      justify-content: space-between;
+    }
+    .aurora .actions { display:flex; gap: 8px; flex-wrap: wrap; }
+    .aurora .btn {
+      appearance: none; cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      padding: 8px 12px; border-radius: 10px;
+      font-size: 13px;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+    }
+    .aurora .btn:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.25); box-shadow: 0 8px 24px rgba(122,183,255,0.20); }
+    .aurora .btn[aria-pressed="true"] { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25), 0 8px 24px rgba(110,243,197,0.18); }
+
+    .aurora .stamp {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; opacity: 0.9;
+      border: 1px dashed rgba(255,255,255,0.18);
+      padding: 6px 10px; border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+    }
+    .aurora .stamp .spark {
+      width:10px; height:10px; border-radius:2px;
+      background: linear-gradient(90deg, var(--acc-1), var(--acc-2), var(--acc-3));
+      animation: spin 6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg) } }
+
+    .aurora.no-motion *,
+    .aurora.no-motion .orb { animation: none !important; transition: none !important; }
+    @media (prefers-reduced-motion: reduce) {
+      .aurora { transition: none; }
+      .aurora * { animation: none !important; }
+    }
+  </style>
+
+  <div class="orbs" aria-hidden="true">
+    <span class="orb a"></span>
+    <span class="orb b"></span>
+    <span class="orb c"></span>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="eyebrow">Studio · 2064</div>
+      <h1>Vibecraft — Quiet Interfaces, Bold Feeling</h1>
+      <p class="tagline">Shaped light, generous spacing, and rhythm you can sense.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="chip"><span class="dot"></span>Clarity</div>
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 4c3.6 0 6.5 2.9 6.5 6.5S15.6 17 12 20c-3.6-3-6.5-5.9-6.5-9.5S8.4 4 12 4z"></path>
+          <path d="M9.5 11.5c0-1.4 1.1-2.5 2.5-2.5"></path>
+        </svg>
+        <h3>Readable by default</h3>
+        <p>Measured contrast, generous line height, and obvious affordances.</p>
+      </article>
+
+      <article class="card">
+        <div class="chip"><span class="dot"></span>Rhythm</div>
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 15c3 0 3-6 6-6s3 6 6 6 3-6 6-6" stroke-linecap="round"></path>
+        </svg>
+        <h3>Motion with purpose</h3>
+        <p>Micro-movements guide attention, not steal it. Never ornamental only.</p>
+      </article>
+
+      <article class="card">
+        <div class="chip"><span class="dot"></span>Delight</div>
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" stroke-linecap="round"></path>
+        </svg>
+        <h3>Gentle spark</h3>
+        <p>Soft gradients and subtle glow—joy without glare.</p>
+      </article>
+    </div>
+
+    <div class="meta">
+      <div class="actions">
+        <button class="btn" id="toggle-palette" aria-pressed="false" title="Switch between vivid and calm tones">Tone: Vivid</button>
+        <button class="btn" id="toggle-motion" aria-pressed="false" title="Pause or resume motion">Motion: On</button>
+      </div>
+      <div class="stamp">
+        <span class="spark" aria-hidden="true"></span>
+        <span>Last updated <span id="last-updated">Last updated: 2026-01-19 16:18:03 EST</span></span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const root = document.currentScript.closest('.aurora');
+      const updated = root.querySelector('#last-updated');
+      const toneBtn = root.querySelector('#toggle-palette');
+      const motionBtn = root.querySelector('#toggle-motion');
+
+      // Last updated timestamp
+      try {
+        const fmt = new Intl.DateTimeFormat(navigator.language || 'en-US', { dateStyle:'medium', timeStyle:'short' });
+        updated.textContent = fmt.format(new Date());
+      } catch(e) {
+        updated.textContent = new Date().toLocaleString();
+      }
+
+      // Handle tone toggle
+      toneBtn.addEventListener('click', () => {
+        const next = root.getAttribute('data-palette') === 'vivid' ? 'calm' : 'vivid';
+        root.setAttribute('data-palette', next);
+        toneBtn.textContent = 'Tone: ' + (next.charAt(0).toUpperCase() + next.slice(1));
+        toneBtn.setAttribute('aria-pressed', next === 'calm');
+      });
+
+      // Respect reduced motion by default
+      const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduce) {
+        root.classList.add('no-motion');
+        motionBtn.setAttribute('aria-pressed', 'true');
+        motionBtn.textContent = 'Motion: Off';
+      }
+
+      // Motion toggle
+      motionBtn.addEventListener('click', () => {
+        const off = root.classList.toggle('no-motion');
+        motionBtn.setAttribute('aria-pressed', off ? 'true' : 'false');
+        motionBtn.textContent = off ? 'Motion: Off' : 'Motion: On';
+      });
+
+      // Parallax / tilt
+      const updateTilt = (e) => {
+        const rect = root.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        root.style.setProperty('--mx', (x * 28).toFixed(2) + 'px');
+        root.style.setProperty('--my', (y * 28).toFixed(2) + 'px');
+        root.style.setProperty('--tiltX', (y * -3.5).toFixed(2) + 'deg');
+        root.style.setProperty('--tiltY', (x * 3.5).toFixed(2) + 'deg');
+      };
+      const resetTilt = () => {
+        root.style.setProperty('--mx', '0px');
+        root.style.setProperty('--my', '0px');
+        root.style.setProperty('--tiltX', '0deg');
+        root.style.setProperty('--tiltY', '0deg');
+      };
+      root.addEventListener('pointermove', updateTilt);
+      root.addEventListener('pointerleave', resetTilt);
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
