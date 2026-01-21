@@ -73,452 +73,503 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="aurora2101" aria-label="Aurora Instrument 2101" data-scheme="light">
+<div id="halo2102" aria-label="Prismatic Halo 2102" data-scheme="dark" data-play="true" data-cycling="false">
   <style>
-    #aurora2101 {
-      --h: 210;               /* primary hue (controlled by slider) */
-      --s: 86%;
-      --l: 54%;
+    /* Root aesthetic */
+    #halo2102 {
+      --h: 262; /* spectrum hue */
+      --s: 92%;
+      --l: 60%;
       --accent: hsl(var(--h), var(--s), var(--l));
-      --accent-2: hsl(calc(var(--h) + 40), 75%, 60%);
-      --accent-3: hsl(calc(var(--h) - 40), 75%, 60%);
-      --fg: #0d1420;
-      --fg-soft: #3b4762;
-      --bg: #f8fafc;
-      --panel: #ffffff;
-      --stroke: rgba(12,18,32,0.09);
+      --accent-2: hsl(calc(var(--h) + 40), 85%, 62%);
+      --accent-3: hsl(calc(var(--h) - 40), 85%, 62%);
+      --fg: #eaf0ff;
+      --fg-soft: #b9c3da;
+      --bg-0: #0a0f1d;
+      --bg-1: #0e1630;
+      --panel: rgba(255,255,255,0.06);
+      --stroke: rgba(255,255,255,0.12);
 
       position: relative;
-      color: var(--fg);
-      background: radial-gradient(1200px 800px at 20% -10%, #ffffff 0%, #f7fbff 55%, #edf5ff 100%);
       border-radius: 28px;
-      border: 1px solid var(--stroke);
-      overflow: hidden;
-      padding: clamp(22px, 4.5vw, 46px);
-      box-shadow:
-        0 30px 90px rgba(10,20,40,0.12),
-        inset 0 1px 0 rgba(255,255,255,0.7);
+      padding: clamp(22px, 4.5vw, 48px);
+      color: var(--fg);
+      background:
+        radial-gradient(1400px 700px at 20% -10%, rgba(64,96,255,0.15), transparent 60%),
+        radial-gradient(1400px 700px at 120% 110%, rgba(0,180,255,0.12), transparent 60%),
+        linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      box-shadow: 0 30px 90px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
       font: 500 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
-      transform-style: preserve-3d;
+      overflow: hidden;
+      isolation: isolate;
     }
-    #aurora2101 * { box-sizing: border-box; }
-
-    /* Dark scheme */
-    #aurora2101[data-scheme="dark"] {
-      --fg: #eef2f8;
-      --fg-soft: #c5cfe3;
-      --bg: #0b0f18;
-      --panel: #101624;
-      --stroke: rgba(255,255,255,0.08);
+    #halo2102[data-scheme="light"] {
+      --fg: #101424;
+      --fg-soft: #44507a;
+      --bg-0: #f7faff;
+      --bg-1: #eef4ff;
+      --panel: rgba(255,255,255,0.7);
+      --stroke: rgba(12,18,32,0.12);
       background:
-        radial-gradient(1200px 800px at -10% -20%, #1b2030, #0b0f18 60%),
-        radial-gradient(900px 600px at 120% 10%, rgba(40,60,120,0.35), transparent 70%),
-        linear-gradient(180deg, #0b0f18, #0e1422 60%, #0b0f18);
+        radial-gradient(1200px 700px at -20% -10%, rgba(150,190,255,0.25), transparent 55%),
+        radial-gradient(1200px 700px at 120% 110%, rgba(255,200,160,0.18), transparent 55%),
+        linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      box-shadow: 0 30px 90px rgba(10,40,120,0.14), inset 0 1px 0 rgba(255,255,255,0.8);
     }
 
-    /* Backdrop layers */
-    #aurora2101 .backdrop {
-      position: absolute; inset: -8%;
-      pointer-events: none; z-index: 0;
-      filter: saturate(1.1);
-    }
-    #aurora2101 .mesh {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(40vmax 40vmax at 12% 0%, hsla(calc(var(--h) - 30), 95%, 82%, 0.70), transparent 55%),
-        radial-gradient(30vmax 30vmax at 88% 10%, hsla(calc(var(--h) + 30), 85%, 78%, 0.60), transparent 60%),
-        radial-gradient(28vmax 28vmax at 20% 100%, hsla(calc(var(--h) + 140), 80%, 85%, 0.55), transparent 50%),
-        conic-gradient(from 180deg at 70% 40%, transparent, hsla(var(--h), 80%, 60%, 0.10), transparent);
-      filter: blur(28px);
-      animation: drift 40s ease-in-out infinite alternate;
-      mix-blend-mode: screen;
-    }
-    #aurora2101 .orb {
-      position: absolute; width: 50vmin; height: 50vmin; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, hsla(var(--h), 95%, 70%, 0.22), transparent 60%);
-      mix-blend-mode: screen; filter: blur(18px);
-      animation: floatA 26s ease-in-out infinite;
-    }
-    #aurora2101 .orb.b { width: 42vmin; height: 42vmin; right: -12vmin; top: 8vmin; animation: floatB 32s ease-in-out infinite; background: radial-gradient(circle at 70% 70%, hsla(calc(var(--h) + 60), 82%, 68%, 0.22), transparent 60%); }
-    #aurora2101 .rays {
+    #halo2102 * { box-sizing: border-box; }
+
+    /* Starfield canvas + glow layers */
+    #halo2102 .stars { position: absolute; inset: 0; z-index: 0; filter: saturate(1.1) brightness(1.05); }
+    #halo2102 .mist {
       position: absolute; inset: -30%;
-      background: conic-gradient(from 0deg, transparent 0 12deg, hsla(var(--h), 90%, 60%, 0.14) 12deg 14deg, transparent 14deg 42deg, hsla(calc(var(--h) + 70), 85%, 65%, 0.12) 42deg 45deg, transparent 45deg 90deg);
-      mask: radial-gradient(closest-side, transparent 52%, #000 56%, #000 100%);
-      opacity: 0.8;
-      animation: spin 90s linear infinite;
-    }
-    #aurora2101 .grain {
-      position: absolute; inset: 0;
       background:
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 4px),
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0 3px, transparent 3px 6px);
-      mix-blend-mode: overlay; opacity: 0.25;
+        radial-gradient(60% 40% at 20% 10%, hsla(calc(var(--h) + 60), 95%, 70%, 0.10), transparent 70%),
+        radial-gradient(50% 35% at 90% 80%, hsla(calc(var(--h) - 60), 95%, 70%, 0.10), transparent 70%),
+        conic-gradient(from 180deg at 50% 20%, transparent, hsla(var(--h),85%,60%,0.08), transparent 70%);
+      filter: blur(30px);
+      z-index: 0;
+      animation: driftMist 38s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes driftMist {
+      0% { transform: translate3d(-2%, -1%, 0) scale(1); }
+      100% { transform: translate3d(2%, 1%, 0) scale(1.08); }
     }
 
-    /* Header + hero */
-    #aurora2101 .badge {
+    /* Header */
+    #halo2102 .crest {
       display: inline-flex; align-items: center; gap: 10px;
-      padding: 8px 14px; border-radius: 999px;
-      background: rgba(255,255,255,0.7); backdrop-filter: blur(6px);
-      color: rgba(10,20,35,0.7);
+      padding: 8px 14px;
       border: 1px solid var(--stroke);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
-      text-transform: uppercase; letter-spacing: .14em; font-size: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      backdrop-filter: blur(8px);
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 12px;
+      color: var(--fg-soft);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.08);
+      position: relative;
+      z-index: 2;
     }
-    #aurora2101[data-scheme="dark"] .badge { background: rgba(16,22,36,0.5); color: rgba(238,242,248,0.78); }
-
-    #aurora2101 .dot {
-      width: 9px; height: 9px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, var(--accent), hsla(var(--h), 90%, 60%, 0.6));
-      box-shadow: 0 0 12px hsla(var(--h), 95%, 60%, 0.9);
+    #halo2102 .crest .bead {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), rgba(255,255,255,0.15));
+      box-shadow: 0 0 14px hsla(var(--h), 90%, 60%, 0.8);
     }
-
-    #aurora2101 h1 {
-      margin: 16px 0 8px;
-      font-size: clamp(40px, 7.8vw, 84px);
-      line-height: 1.02; letter-spacing: -0.02em; font-weight: 850;
-      background: linear-gradient(90deg, #1b2234 0%, var(--accent) 35%, var(--accent-2) 65%, #1b2234 100%);
+    #halo2102 h1 {
+      margin: 16px 0 10px;
+      font-size: clamp(38px, 7.4vw, 86px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      font-weight: 850;
+      background: linear-gradient(90deg, var(--fg) 0%, var(--accent) 40%, var(--accent-2) 60%, var(--fg) 100%);
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      text-shadow: 0 14px 40px hsla(var(--h), 90%, 55%, 0.20);
+      text-shadow: 0 16px 50px hsla(var(--h), 90%, 55%, 0.25);
+      position: relative; z-index: 2;
     }
-    #aurora2101[data-scheme="dark"] h1 { text-shadow: 0 18px 50px hsla(var(--h), 95%, 65%, 0.28); }
+    #halo2102 .lede {
+      margin: 0 0 26px 0;
+      max-width: 70ch;
+      color: var(--fg-soft);
+      font-size: clamp(14px, 1.8vw, 18px);
+      line-height: 1.7;
+      position: relative; z-index: 2;
+    }
 
-    #aurora2101 .sub {
-      margin: 0 0 22px 0; max-width: 70ch; color: var(--fg-soft);
-      font-size: clamp(14px, 1.7vw, 18px); line-height: 1.7;
+    /* Halo stage */
+    #halo2102 .stage {
+      position: relative; z-index: 2;
+      display: grid; place-items: center;
+      margin: clamp(8px, 3vw, 24px) 0;
     }
-
-    /* Control strip */
-    #aurora2101 .controls {
-      display: grid; grid-template-columns: 1fr auto auto; gap: 12px;
-      align-items: center; margin: 12px 0 18px;
-    }
-    #aurora2101 .dial {
-      position: relative; display: grid; align-items: center;
-      grid-template-columns: 56px 1fr; gap: 14px;
-      padding: 12px; border-radius: 16px;
-      background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.9));
+    #halo2102 .sphere {
+      --tiltX: 0deg; --tiltY: 0deg;
+      width: clamp(280px, 60vmin, 640px);
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      position: relative;
+      background:
+        radial-gradient(60% 60% at 30% 25%, hsla(var(--h),85%,70%,0.22), transparent 60%),
+        radial-gradient(80% 80% at 70% 75%, hsla(calc(var(--h) + 90),85%,60%,0.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.06));
       border: 1px solid var(--stroke);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.7);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.2),
+        inset 0 -80px 120px rgba(0,0,0,0.25),
+        0 30px 80px rgba(0,0,0,0.35);
+      transform: rotateX(var(--tiltX)) rotateY(var(--tiltY));
+      transform-style: preserve-3d;
+      overflow: visible;
     }
-    #aurora2101[data-scheme="dark"] .dial {
-      background: linear-gradient(180deg, rgba(20,28,44,0.9), rgba(20,28,44,0.7));
-      box-shadow: 0 10px 26px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05);
+    #halo2102 .sphere::before {
+      content: ""; position: absolute; inset: -2%;
+      border-radius: 50%;
+      background: conic-gradient(from calc(var(--h) * 1deg), hsla(var(--h), 95%, 65%, 0.25), transparent 40%, transparent 60%, hsla(calc(var(--h)+120), 95%, 60%, 0.25));
+      filter: blur(18px);
+      animation: haloSpin 54s linear infinite;
     }
-    #aurora2101 .wheel {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: conic-gradient(from calc(var(--h) * 1deg),
-        hsl(0,80%,55%), hsl(60,80%,55%), hsl(120,80%,45%), hsl(180,80%,55%),
-        hsl(240,80%,60%), hsl(300,80%,60%), hsl(360,80%,55%));
-      position: relative; border: 1px solid rgba(0,0,0,0.08);
-      box-shadow: inset 0 0 0 6px rgba(255,255,255,0.45);
+    #halo2102 .sphere::after {
+      content: ""; position: absolute; inset: 12%; border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(255,255,255,0.08), transparent 70%);
+      pointer-events: none;
     }
-    #aurora2101[data-scheme="dark"] .wheel { border-color: rgba(255,255,255,0.08); box-shadow: inset 0 0 0 6px rgba(255,255,255,0.08); }
-    #aurora2101 .wheel::after {
-      content: ""; position: absolute; inset: 8px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0.2));
-      mix-blend-mode: screen;
+    @keyframes haloSpin { to { transform: rotate(360deg); } }
+
+    /* Rings */
+    #halo2102 .ring {
+      position: absolute; inset: 0; border-radius: 50%;
+      -webkit-mask:
+        radial-gradient(closest-side, transparent calc(50% - 1px), #000 calc(50% - 0px)),
+        radial-gradient(farthest-side, #000 calc(50% - 6px), transparent calc(50% - 5px));
+              mask:
+        radial-gradient(closest-side, transparent calc(50% - 1px), #000 calc(50% - 0px)),
+        radial-gradient(farthest-side, #000 calc(50% - 6px), transparent calc(50% - 5px));
+      pointer-events: none;
     }
-    #aurora2101 .slider {
-      appearance: none; width: 100%; height: 12px; border-radius: 999px;
-      background: linear-gradient(90deg, hsl(0,80%,55%), hsl(60,80%,55%), hsl(120,80%,45%), hsl(180,80%,55%), hsl(240,80%,60%), hsl(300,80%,60%), hsl(360,80%,55%));
-      outline: none; border: 1px solid var(--stroke);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    #halo2102 .ring.a {
+      background:
+        conic-gradient(from 0deg,
+          transparent 0 10deg, hsla(var(--h),90%,60%,0.8) 10deg 12deg, transparent 12deg 24deg,
+          hsla(calc(var(--h)+60),90%,65%,0.7) 24deg 26deg, transparent 26deg 40deg,
+          hsla(calc(var(--h)-60),90%,65%,0.7) 40deg 42deg, transparent 42deg 360deg);
+      animation: spinA 30s linear infinite;
     }
-    #aurora2101 .slider::-webkit-slider-thumb {
+    #halo2102 .ring.b {
+      inset: 6%; 
+      background:
+        conic-gradient(from 90deg,
+          transparent 0 2deg, hsla(var(--h),95%,60%,0.8) 2deg 3deg, transparent 3deg 6deg) 0 0/20deg 20deg repeat,
+        conic-gradient(from 180deg,
+          transparent 0 1deg, hsla(calc(var(--h)+120),95%,60%,0.6) 1deg 2deg, transparent 2deg 6deg) 0 0/30deg 30deg repeat;
+      filter: drop-shadow(0 0 10px hsla(var(--h),90%,60%,0.4));
+      animation: spinB 18s linear infinite reverse;
+    }
+    @keyframes spinA { to { transform: rotate(360deg); } }
+    @keyframes spinB { to { transform: rotate(-360deg); } }
+
+    /* Orbiting node */
+    #halo2102 .orbit {
+      position: absolute; inset: -2%; border-radius: 50%;
+      animation: orbitRoll 10s linear infinite;
+    }
+    @keyframes orbitRoll { to { transform: rotate(360deg); } }
+    #halo2102 .node {
+      position: absolute; left: 50%; top: -6px; transform: translateX(-50%);
+      width: 14px; height: 14px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
+      box-shadow: 0 0 22px hsla(var(--h), 90%, 60%, 0.9), 0 0 0 8px hsla(var(--h), 90%, 60%, 0.12);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    /* Readout */
+    #halo2102 .readout {
+      position: absolute; inset: 26% 26%;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      border: 1px dashed var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    #halo2102 .num {
+      font-feature-settings: "tnum" 1, "zero" 1;
+      font-variant-numeric: tabular-nums;
+      font-weight: 800;
+      font-size: clamp(28px, 6.2vmin, 56px);
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--accent-3), var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 10px 40px hsla(var(--h), 90%, 55%, 0.35);
+    }
+    #halo2102 .label {
+      margin-top: 4px;
+      color: var(--fg-soft);
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    /* Scene chips around the halo */
+    #halo2102 .scenes { position: absolute; inset: 0; }
+    #halo2102 .scene {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.02));
+      color: var(--fg);
+      font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.06);
+      cursor: pointer; user-select: none;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    #halo2102 .scene:hover { box-shadow: 0 14px 34px rgba(0,0,0,0.34); transform: translate(-50%, -50%) scale(1.06); }
+    #halo2102 .scene[aria-selected="true"] { outline: 2px solid var(--accent); outline-offset: 2px; }
+    #halo2102 .scene .dot {
+      width: 8px; height: 8px; border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, var(--accent), hsla(var(--h), 90%, 50%, 0.6));
+      box-shadow: 0 0 10px hsla(var(--h), 95%, 60%, 0.8);
+    }
+    #halo2102 .scene.dawn { transform: translate(-50%, -50%) rotate(-20deg) translateY(calc(-50% - 8vmin)) rotate(20deg); }
+    #halo2102 .scene.noon { transform: translate(-50%, -50%) rotate(70deg) translateY(calc(-50% - 8vmin)) rotate(-70deg); }
+    #halo2102 .scene.dusk { transform: translate(-50%, -50%) rotate(160deg) translateY(calc(-50% - 8vmin)) rotate(-160deg); }
+    #halo2102 .scene.night { transform: translate(-50%, -50%) rotate(250deg) translateY(calc(-50% - 8vmin)) rotate(-250deg); }
+
+    /* Controls */
+    #halo2102 .controls {
+      margin-top: clamp(16px, 3vw, 28px);
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 12px;
+      align-items: center;
+      position: relative; z-index: 2;
+    }
+    #halo2102 .sliderWrap {
+      display: grid; grid-template-columns: 50px 1fr; gap: 10px;
+      padding: 12px; border-radius: 16px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.02));
+      box-shadow: 0 10px 24px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    #halo2102 .swatch {
+      width: 50px; height: 50px; border-radius: 12px;
+      background: conic-gradient(from calc(var(--h)*1deg), hsl(0,90%,55%), hsl(60,90%,55%), hsl(120,90%,45%), hsl(180,90%,55%), hsl(240,90%,65%), hsl(300,90%,60%), hsl(360,90%,55%));
+      border: 1px solid var(--stroke);
+      box-shadow: inset 0 0 0 6px rgba(255,255,255,0.06);
+    }
+    #halo2102 .slider {
+      appearance: none; width: 100%; height: 14px; border-radius: 999px;
+      background: linear-gradient(90deg, hsl(0,90%,55%), hsl(60,90%,55%), hsl(120,90%,45%), hsl(180,90%,55%), hsl(240,90%,65%), hsl(300,90%,60%), hsl(360,90%,55%));
+      border: 1px solid var(--stroke);
+      outline: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    #halo2102 .slider::-webkit-slider-thumb {
       appearance: none; width: 22px; height: 22px; border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 8px 18px hsla(var(--h), 90%, 50%, 0.45), inset 0 0 0 3px rgba(255,255,255,0.8);
-      border: 1px solid rgba(0,0,0,0.08);
+      background: radial-gradient(circle at 35% 35%, #fff, var(--accent));
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 10px 24px hsla(var(--h),90%,50%,0.45), inset 0 0 0 3px rgba(255,255,255,0.4);
       cursor: pointer;
     }
-    #aurora2101 .btn {
+
+    #halo2102 .btn {
       display: inline-flex; align-items: center; gap: 10px;
       padding: 10px 14px; border-radius: 14px; font-weight: 600;
-      color: var(--fg); background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.94));
+      color: var(--fg);
+      background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.02));
       border: 1px solid var(--stroke);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.8);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.06);
       transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
       cursor: pointer; user-select: none;
     }
-    #aurora2101 .btn:hover { transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0,0,0,0.10); }
-    #aurora2101 .btn:active { transform: translateY(0); }
-    #aurora2101 .dotPulse {
+    #halo2102 .btn:hover { transform: translateY(-1px); box-shadow: 0 16px 34px rgba(0,0,0,0.28); }
+    #halo2102 .btn:active { transform: translateY(0); }
+    #halo2102 .btn .pulse {
       width: 9px; height: 9px; border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, var(--accent), hsla(var(--h), 90%, 60%, 0.7));
-      box-shadow: 0 0 10px hsla(var(--h), 95%, 55%, 0.9);
-      animation: pulse 3s ease-in-out infinite;
+      box-shadow: 0 0 10px hsla(var(--h), 95%, 55%, 0.8);
+      animation: pulse2102 3s ease-in-out infinite;
     }
-    #aurora2101.still .dotPulse { animation-play-state: paused; }
-
-    /* Showcase cluster */
-    #aurora2101 .cluster {
-      position: relative; z-index: 2; margin-top: 8px; perspective: 1200px;
-      display: grid; gap: 14px;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    @keyframes pulse2102 {
+      0%,100% { transform: scale(1); box-shadow: 0 0 10px hsla(var(--h),95%,55%,0.8); }
+      50% { transform: scale(1.22); box-shadow: 0 0 20px hsla(var(--h),95%,60%,1); }
     }
-    #aurora2101 .tile {
-      position: relative;
-      background: var(--panel);
-      border: 1px solid var(--stroke);
-      border-radius: 18px;
-      padding: 16px 16px 18px 16px;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.7);
-      overflow: hidden;
-      transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-      transition: box-shadow .35s ease, transform .2s ease;
-    }
-    #aurora2101[data-scheme="dark"] .tile { box-shadow: 0 16px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05); }
-    #aurora2101 .tile::after {
-      content: ""; position: absolute; inset: -1px; border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.3));
-      opacity: 0.6; pointer-events: none; mix-blend-mode: overlay;
-      mask: linear-gradient(180deg, transparent, black 60%);
-    }
-    #aurora2101 .tile:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
-    #aurora2101 .tile .top {
-      display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px;
-    }
-    #aurora2101 .chip {
-      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px;
-      border-radius: 12px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
-      border: 1px solid var(--stroke); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-soft);
-    }
-    #aurora2101[data-scheme="dark"] .chip { background: linear-gradient(180deg, rgba(20,28,44,0.9), rgba(20,28,44,0.7)); color: #c5cfe3; }
-
-    #aurora2101 .glyph {
-      width: 40px; height: 40px; border-radius: 12px;
-      background: radial-gradient(circle at 30% 30%, var(--accent), hsla(var(--h), 70%, 60%, 0.5));
-      border: 1px solid hsla(var(--h), 80%, 40%, 0.4);
-      box-shadow: 0 10px 16px hsla(var(--h), 85%, 55%, 0.25), 0 0 0 6px hsla(var(--h), 80%, 60%, 0.12);
-    }
-    #aurora2101 .tile h3 { margin: 4px 0 6px; font-size: 18px; color: var(--fg); letter-spacing: 0.01em; }
-    #aurora2101 .tile p { margin: 0 0 12px; font-size: 14px; color: var(--fg-soft); line-height: 1.65; }
-
-    /* Decorative animated lines inside tiles */
-    #aurora2101 .lines {
-      position: relative; height: 68px; border-radius: 12px; overflow: hidden;
-      border: 1px dashed rgba(12,18,32,0.15);
-      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
-    }
-    #aurora2101[data-scheme="dark"] .lines { background: linear-gradient(180deg, rgba(16,22,36,0.9), rgba(16,22,36,0.6)); border-color: rgba(255,255,255,0.12); }
-    #aurora2101 .lines svg { position: absolute; inset: 0; }
-    #aurora2101 .lines path {
-      stroke: var(--accent); stroke-width: 2; fill: none;
-      stroke-dasharray: 8 10; filter: drop-shadow(0 2px 8px hsla(var(--h), 90%, 55%, 0.35));
-      animation: dash 8s ease-in-out infinite;
-    }
-    #aurora2101.still .lines path { animation-play-state: paused; }
+    #halo2102[data-play="false"] .btn .pulse { animation-play-state: paused; }
 
     /* Footer */
-    #aurora2101 .foot {
+    #halo2102 .foot {
       display: flex; justify-content: space-between; align-items: center; gap: 12px;
-      margin-top: 22px; padding-top: 14px; border-top: 1px dashed rgba(12,18,32,0.18);
-      color: var(--fg-soft); font-size: 13px;
+      margin-top: 22px; padding-top: 16px; border-top: 1px dashed var(--stroke);
+      color: var(--fg-soft); font-size: 13px; position: relative; z-index: 2;
     }
-    #aurora2101[data-scheme="dark"] .foot { border-top-color: rgba(255,255,255,0.18); }
-
-    #aurora2101 .stamp {
+    #halo2102 .stamp {
       display: inline-flex; align-items: center; gap: 10px;
       padding: 8px 12px; border-radius: 12px;
       border: 1px solid var(--stroke);
-      background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.9));
-      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.02));
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
     }
 
-    /* Ripple cursor */
-    #aurora2101 .ripple {
+    /* Ripple */
+    #halo2102 .ripple {
       position: absolute; width: 12px; height: 12px; border-radius: 50%;
       pointer-events: none;
       background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
       mix-blend-mode: screen; opacity: 0.7; transform: translate(-50%, -50%) scale(0.6);
-      animation: ripple 900ms ease-out forwards;
+      animation: ripple2102 900ms ease-out forwards;
+      z-index: 3;
     }
+    @keyframes ripple2102 { to { transform: translate(-50%, -50%) scale(7); opacity: 0; } }
 
-    /* Motion state overrides */
-    #aurora2101.still .mesh,
-    #aurora2101.still .orb,
-    #aurora2101.still .rays { animation-play-state: paused !important; }
+    /* Motion pause switch */
+    #halo2102[data-play="false"] .ring,
+    #halo2102[data-play="false"] .orbit,
+    #halo2102[data-play="false"] .mist { animation-play-state: paused !important; }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      #aurora2101 .mesh, #aurora2101 .orb, #aurora2101 .rays, #aurora2101 .lines path, #aurora2101 .dotPulse { animation: none !important; }
-    }
-
-    /* Keyframes */
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes drift {
-      0% { transform: translate3d(0, 0, 0) scale(1); }
-      100% { transform: translate3d(2vmin, 1vmin, 0) scale(1.06); }
-    }
-    @keyframes floatA {
-      0%,100% { transform: translate3d(-8vmin, -4vmin, 0) scale(1); }
-      50% { transform: translate3d(-2vmin, 2vmin, 0) scale(1.08); }
-    }
-    @keyframes floatB {
-      0%,100% { transform: translate3d(6vmin, 4vmin, 0) scale(1); }
-      50% { transform: translate3d(0vmin, 0vmin, 0) scale(1.06); }
-    }
-    @keyframes dash {
-      0%,100% { stroke-dashoffset: 0; filter: drop-shadow(0 2px 8px hsla(var(--h), 90%, 55%, 0.35)); }
-      50% { stroke-dashoffset: 160; filter: drop-shadow(0 4px 18px hsla(var(--h), 90%, 60%, 0.55)); }
-    }
-    @keyframes pulse {
-      0%,100% { transform: scale(1); box-shadow: 0 0 10px hsla(var(--h), 95%, 55%, 0.8); }
-      50% { transform: scale(1.2); box-shadow: 0 0 18px hsla(var(--h), 95%, 60%, 1); }
-    }
-    @keyframes ripple {
-      to { transform: translate(-50%, -50%) scale(6); opacity: 0; }
+      #halo2102 .ring, #halo2102 .orbit, #halo2102 .mist, #halo2102 .btn .pulse { animation: none !important; }
     }
   </style>
 
-  <div class="backdrop" aria-hidden="true">
-    <div class="mesh"></div>
-    <div class="orb a" style="left:-12vmin; top:-18vmin;"></div>
-    <div class="orb b"></div>
-    <div class="rays"></div>
-    <div class="grain"></div>
+  <canvas class="stars" aria-hidden="true"></canvas>
+  <div class="mist" aria-hidden="true"></div>
+
+  <div class="head">
+    <div class="crest"><span class="bead" aria-hidden="true"></span> Prismatic Halo • 2102</div>
+    <h1>Color, choreographed.</h1>
+    <p class="lede">A circular instrument for mood and light. Drag the spectrum, pick a scene, and let the halo compose your atmosphere.</p>
   </div>
 
-  <div class="content" style="position:relative; z-index:2;">
-    <div class="badge" aria-hidden="true">
-      <span class="dot"></span> Aurora Instrument • 2101
-    </div>
+  <div class="stage">
+    <div class="sphere" role="region" aria-label="Spectral dial">
+      <div class="ring a anim" aria-hidden="true"></div>
+      <div class="ring b anim" aria-hidden="true"></div>
+      <div class="orbit anim" aria-hidden="true"><span class="node"></span></div>
 
-    <h1>Atmosphere, Composed.</h1>
-    <p class="sub">A quiet orchestra of light, depth, and motion. Tune the hue, pause the air, and let your interface breathe.</p>
-
-    <div class="controls" role="group" aria-label="Interface controls">
-      <div class="dial" role="region" aria-label="Hue dial">
-        <div class="wheel" aria-hidden="true"></div>
-        <input id="hue" class="slider" type="range" min="0" max="360" value="210" aria-label="Hue" />
+      <div class="readout" aria-live="polite">
+        <div class="num" id="read-hue">262</div>
+        <div class="label">HUE</div>
       </div>
 
-      <button id="toggleScheme" class="btn" type="button" aria-pressed="false" title="Toggle light/dark">
-        <span class="dotPulse" aria-hidden="true"></span> Switch Theme
-      </button>
-
-      <button id="toggleMotion" class="btn" type="button" aria-pressed="false" title="Pause or play motion">
-        <span class="dotPulse" aria-hidden="true"></span> Pause Motion
-      </button>
+      <nav class="scenes" role="tablist" aria-label="Scenes">
+        <button class="scene dawn" role="tab" aria-selected="false" data-scene="dawn" title="Dawn">
+          <span class="dot" aria-hidden="true"></span> Dawn
+        </button>
+        <button class="scene noon" role="tab" aria-selected="false" data-scene="noon" title="Noon">
+          <span class="dot" aria-hidden="true"></span> Noon
+        </button>
+        <button class="scene dusk" role="tab" aria-selected="false" data-scene="dusk" title="Dusk">
+          <span class="dot" aria-hidden="true"></span> Dusk
+        </button>
+        <button class="scene night" role="tab" aria-selected="true" data-scene="night" title="Night">
+          <span class="dot" aria-hidden="true"></span> Night
+        </button>
+      </nav>
     </div>
+  </div>
 
-    <div class="cluster" aria-label="Showcase tiles">
-      <section class="tile" aria-label="Focus">
-        <div class="top">
-          <span class="chip">Focus</span>
-          <div class="glyph" aria-hidden="true"></div>
-        </div>
-        <h3>Clarity without edges</h3>
-        <p>Contrast that guides—not shouts. Your content stays obvious; the chrome fades away.</p>
-        <div class="lines" aria-hidden="true">
-          <svg viewBox="0 0 600 160" preserveAspectRatio="none">
-            <path d="M0,80 C90,20 160,120 260,60 C360,0 420,140 520,80 C580,50 600,100 600,100" />
-          </svg>
-        </div>
-      </section>
-
-      <section class="tile" aria-label="Flow">
-        <div class="top">
-          <span class="chip">Flow</span>
-          <div class="glyph" aria-hidden="true" style="background: radial-gradient(circle at 30% 30%, var(--accent-2), hsla(calc(var(--h) + 40), 70%, 60%, 0.5)); box-shadow: 0 10px 16px hsla(calc(var(--h) + 40), 85%, 55%, 0.25), 0 0 0 6px hsla(calc(var(--h) + 40), 80%, 60%, 0.12);"></div>
-        </div>
-        <h3>Motion with manners</h3>
-        <p>Ambient rhythm sets the tempo. Nothing surprises—everything agrees.</p>
-        <div class="lines" aria-hidden="true">
-          <svg viewBox="0 0 600 160" preserveAspectRatio="none">
-            <path d="M0,120 C70,90 140,150 210,110 C300,60 380,140 450,100 C520,60 560,130 600,110" />
-          </svg>
-        </div>
-      </section>
-
-      <section class="tile" aria-label="Touch">
-        <div class="top">
-          <span class="chip">Touch</span>
-          <div class="glyph" aria-hidden="true" style="background: radial-gradient(circle at 30% 30%, var(--accent-3), hsla(calc(var(--h) - 40), 70%, 60%, 0.5)); box-shadow: 0 10px 16px hsla(calc(var(--h) - 40), 85%, 55%, 0.25), 0 0 0 6px hsla(calc(var(--h) - 40), 80%, 60%, 0.12);"></div>
-        </div>
-        <h3>Tactile tilt</h3>
-        <p>Cards lean toward your pointer, like pages eager to be turned.</p>
-        <div class="lines" aria-hidden="true">
-          <svg viewBox="0 0 600 160" preserveAspectRatio="none">
-            <path d="M0,60 C120,0 200,100 300,40 C400,-20 480,120 600,60" />
-          </svg>
-        </div>
-      </section>
+  <div class="controls" role="group" aria-label="Controls">
+    <div class="sliderWrap" role="region" aria-label="Hue">
+      <div class="swatch" aria-hidden="true"></div>
+      <input id="hue2102" class="slider" type="range" min="0" max="360" value="262" aria-label="Hue slider">
     </div>
+    <button id="theme2102" class="btn" type="button" aria-pressed="true" title="Toggle light/dark theme">
+      <span class="pulse" aria-hidden="true"></span> Theme
+    </button>
+    <button id="motion2102" class="btn" type="button" aria-pressed="true" title="Pause or play motion">
+      <span class="pulse" aria-hidden="true"></span> Pause
+    </button>
+    <button id="cycle2102" class="btn" type="button" aria-pressed="false" title="Auto-cycle hue">
+      <span class="pulse" aria-hidden="true"></span> Auto
+    </button>
+  </div>
 
-    <div class="foot">
-      <div class="stamp" aria-live="polite">
-        Crafted • <span id="last-updated">Last updated: 2026-01-21 10:30:08 EST</span>
-      </div>
-      <div class="hint" aria-hidden="true">Tip: drag the hue, toggle the theme, or pause the air.</div>
-    </div>
+  <div class="foot">
+    <div class="stamp">Composed • <span id="last-updated">Last updated: 2026-01-21 11:42:28 EST</span></div>
+    <div class="hint" aria-hidden="true">Tip: hover the halo to tilt it, or try the Dawn/Dusk scenes.</div>
   </div>
 
   <script>
-    (function () {
-      const root = document.getElementById('aurora2101');
-      const hue = root.querySelector('#hue');
-      const motionBtn = root.querySelector('#toggleMotion');
-      const schemeBtn = root.querySelector('#toggleScheme');
+    (function(){
+      const root = document.getElementById('halo2102');
+      const slider = root.querySelector('#hue2102');
+      const readout = root.querySelector('#read-hue');
+      const themeBtn = root.querySelector('#theme2102');
+      const motionBtn = root.querySelector('#motion2102');
+      const cycleBtn = root.querySelector('#cycle2102');
+      const scenes = Array.from(root.querySelectorAll('.scene'));
+      const sphere = root.querySelector('.sphere');
+      const canvas = root.querySelector('.stars');
+      const ctx = canvas.getContext('2d', { alpha: true });
       const updated = root.querySelector('#last-updated');
-      const tiles = Array.from(root.querySelectorAll('.tile'));
 
-      // Last updated
+      // Updated timestamp
       try {
         const now = new Date();
-        const opts = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+        const opts = { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' };
         updated.textContent = new Intl.DateTimeFormat(undefined, opts).format(now);
       } catch {
         updated.textContent = new Date().toLocaleString();
       }
 
-      // Hue control
-      const setHue = v => root.style.setProperty('--h', v);
-      hue.addEventListener('input', e => setHue(e.target.value));
-      setHue(hue.value);
+      // Utilities
+      const setHue = (v) => {
+        root.style.setProperty('--h', v);
+        readout.textContent = String(Math.round(v)).padStart(3, '0');
+      };
 
-      // Theme toggle (light/dark)
-      schemeBtn.addEventListener('click', () => {
+      // Slider
+      slider.addEventListener('input', e => setHue(e.target.value));
+      setHue(slider.value);
+
+      // Theme toggle
+      const toggleTheme = () => {
         const isDark = root.getAttribute('data-scheme') === 'dark';
         root.setAttribute('data-scheme', isDark ? 'light' : 'dark');
-        schemeBtn.setAttribute('aria-pressed', (!isDark).toString());
-      });
+        themeBtn.setAttribute('aria-pressed', (!isDark).toString());
+      };
+      themeBtn.addEventListener('click', toggleTheme);
 
       // Motion toggle
+      const setPlay = (play) => {
+        root.setAttribute('data-play', play ? 'true' : 'false');
+        motionBtn.setAttribute('aria-pressed', play ? 'true' : 'false');
+        motionBtn.lastChild.nodeValue = play ? ' Pause' : ' Play';
+      };
       motionBtn.addEventListener('click', () => {
-        const still = root.classList.toggle('still');
-        motionBtn.setAttribute('aria-pressed', still ? 'true' : 'false');
-        motionBtn.lastChild.nodeValue = still ? ' Play Motion' : ' Pause Motion';
+        const now = root.getAttribute('data-play') !== 'true';
+        setPlay(now);
       });
 
-      // Pointer parallax on tiles
-      let rx = 0, ry = 0, tx = 0, ty = 0, raf = null;
-      const lerp = (a, b, n) => a + (b - a) * n;
-
-      const onMove = (e) => {
-        const rect = root.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width;
-        const y = (e.clientY - rect.top) / rect.height;
-        tx = (x - 0.5) * 10;
-        ty = (y - 0.5) * -10;
-        if (!raf) animate();
+      // Scenes
+      const sceneMap = {
+        dawn:  { hue: 28,  scheme: 'light' },
+        noon:  { hue: 200, scheme: 'light' },
+        dusk:  { hue: 320, scheme: 'dark'  },
+        night: { hue: 210, scheme: 'dark'  }
       };
-      const animate = () => {
-        raf = requestAnimationFrame(animate);
-        rx = lerp(rx, ty, 0.08);
-        ry = lerp(ry, tx, 0.08);
-        tiles.forEach((s, i) => {
-          const depth = i + 1.5;
-          s.style.setProperty('--rx', rx / depth + 'deg');
-          s.style.setProperty('--ry', ry / depth + 'deg');
+      scenes.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const data = sceneMap[btn.dataset.scene];
+          if (!data) return;
+          slider.value = data.hue;
+          setHue(data.hue);
+          root.setAttribute('data-scheme', data.scheme);
+          themeBtn.setAttribute('aria-pressed', (data.scheme === 'light' ? 'false' : 'true'));
+          scenes.forEach(b => b.setAttribute('aria-selected','false'));
+          btn.setAttribute('aria-selected','true');
         });
-      };
-      root.addEventListener('pointermove', onMove);
-      root.addEventListener('pointerleave', () => { tx = 0; ty = 0; });
+      });
 
-      // Soft ripples on pointerdown
+      // Auto cycle
+      let cycling = false;
+      let lastT = 0;
+      cycleBtn.addEventListener('click', () => {
+        cycling = !cycling;
+        root.setAttribute('data-cycling', cycling ? 'true' : 'false');
+        cycleBtn.setAttribute('aria-pressed', cycling ? 'true' : 'false');
+      });
+
+      // Parallax tilt
+      let tx = 0, ty = 0, rx = 0, ry = 0;
+      const lerp = (a,b,t)=>a+(b-a)*t;
+      const onMove = (e) => {
+        const rect = sphere.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        tx = x * 14; // deg
+        ty = -y * 14;
+      };
+      sphere.addEventListener('pointermove', onMove);
+      sphere.addEventListener('pointerleave', ()=>{ tx=0; ty=0; });
+
+      // Ripples on clicks
       root.addEventListener('pointerdown', (e) => {
         const r = document.createElement('span');
         r.className = 'ripple';
@@ -528,14 +579,82 @@
         setTimeout(() => r.remove(), 900);
       });
 
-      // Respect reduced motion
-      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-      if (mq.matches) {
-        if (raf) cancelAnimationFrame(raf);
-        raf = null;
-        root.removeEventListener('pointermove', onMove);
-        tiles.forEach(s => { s.style.setProperty('--rx','0deg'); s.style.setProperty('--ry','0deg'); });
-      }
+      // Starfield
+      let stars = [];
+      const initStars = () => {
+        const { width, height } = root.getBoundingClientRect();
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.max(1, Math.floor(width * ratio));
+        canvas.height = Math.max(1, Math.floor(height * ratio));
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        const count = Math.floor((width * height) / 5500);
+        stars = Array.from({length: count}, () => ({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: Math.random() * 1.4 + 0.4,
+          tw: Math.random() * 2 * Math.PI,
+          sp: 0.4 + Math.random() * 0.8
+        }));
+      };
+      const drawStars = (t) => {
+        const { width, height } = root.getBoundingClientRect();
+        ctx.clearRect(0, 0, width, height);
+        for (const s of stars) {
+          s.tw += 0.01 * s.sp;
+          const a = 0.4 + Math.sin(s.tw) * 0.3;
+          ctx.globalAlpha = Math.max(0, Math.min(1, a));
+          ctx.fillStyle = 'white';
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      };
+      let resizeTO;
+      const onResize = () => {
+        clearTimeout(resizeTO);
+        resizeTO = setTimeout(initStars, 120);
+      };
+      window.addEventListener('resize', onResize, { passive: true });
+      initStars();
+
+      // Main loop
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) { setPlay(false); }
+      let raf = null;
+      const loop = (ts) => {
+        raf = requestAnimationFrame(loop);
+        // tilt easing
+        rx = lerp(rx, ty, 0.08);
+        ry = lerp(ry, tx, 0.08);
+        sphere.style.setProperty('--tiltX', rx + 'deg');
+        sphere.style.setProperty('--tiltY', ry + 'deg');
+
+        // cycle hue
+        if (cycling && root.getAttribute('data-play') === 'true') {
+          const dt = lastT ? (ts - lastT) : 16;
+          let h = parseFloat(getComputedStyle(root).getPropertyValue('--h')) || parseFloat(slider.value);
+          h = (h + dt * 0.02) % 360; // ~7.2 deg per second
+          slider.value = h;
+          setHue(h);
+        }
+        lastT = ts;
+
+        // stars
+        if (root.getAttribute('data-play') === 'true' && !reduce) {
+          drawStars(ts);
+        }
+      };
+      raf = requestAnimationFrame(loop);
+
+      // Clean up if ever removed
+      const stop = () => { if (raf) cancelAnimationFrame(raf); raf = null; };
+      window.addEventListener('visibilitychange', () => {
+        if (document.hidden) stop(); else raf = requestAnimationFrame(loop);
+      });
+
     })();
   </script>
 </div>
