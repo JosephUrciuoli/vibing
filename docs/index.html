@@ -73,278 +73,274 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="orrery2104" aria-label="Orbital Studio 2104" data-scheme="dark" data-play="true">
+<div id="atelier2105" data-scheme="light" data-play="true" aria-label="Kaleidoscope Atelier 2105">
   <style>
-    #orrery2104 {
-      --a1: 200; /* accent hues */
-      --a2: 320;
-      --a3: 48;
-      --fg: #eaf1ff;
-      --fg-soft: #b8c3df;
-      --bg-0: #050913;
-      --bg-1: #0b1223;
-      --panel: rgba(255,255,255,0.06);
-      --stroke: rgba(255,255,255,0.14);
-      --halo: hsla(var(--a1), 100%, 60%, 0.35);
-      --tiltX: 0deg;
-      --tiltY: 0deg;
-
-      position: relative;
-      border-radius: 34px;
-      padding: clamp(24px, 4vw, 44px);
-      color: var(--fg);
-      background:
-        radial-gradient(1200px 700px at -15% -20%, hsla(var(--a1), 90%, 62%, 0.18), transparent 60%),
-        radial-gradient(1200px 700px at 115% 120%, hsla(var(--a2), 90%, 62%, 0.15), transparent 60%),
-        linear-gradient(180deg, var(--bg-0), var(--bg-1));
-      box-shadow:
-        0 30px 90px rgba(0,0,0,0.5),
-        inset 0 1px 0 rgba(255,255,255,0.06);
-      overflow: hidden;
-      isolation: isolate;
-      perspective: 900px;
-      font: 500 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
-    }
-    #orrery2104[data-scheme="light"] {
-      --fg: #0c1327;
+    /* Design tokens */
+    #atelier2105{
+      --a1: 208; /* base hue */
+      --a2: 288;
+      --a3: 42;
+      --fg: #0b1221;
       --fg-soft: #465278;
       --bg-0: #f7fbff;
       --bg-1: #eef4ff;
-      --panel: rgba(255,255,255,0.85);
-      --stroke: rgba(12,18,32,0.16);
-      background:
-        radial-gradient(900px 600px at -10% -10%, hsla(var(--a1), 90%, 60%, 0.30), transparent 55%),
-        radial-gradient(900px 600px at 120% 110%, hsla(var(--a3), 90%, 60%, 0.24), transparent 55%),
-        linear-gradient(180deg, var(--bg-0), var(--bg-1));
-      box-shadow: 0 30px 90px rgba(30,60,140,0.20), inset 0 1px 0 rgba(255,255,255,0.85);
-    }
-    #orrery2104 * { box-sizing: border-box; }
+      --panel: rgba(255,255,255,0.9);
+      --stroke: rgba(12,18,32,0.14);
 
-    #orrery2104 .stage {
+      position: relative;
+      border-radius: 28px;
+      padding: clamp(26px, 4.4vw, 48px);
+      background:
+        radial-gradient(1800px 1200px at -20% -10%, hsla(var(--a1), 85%, 65%, 0.28), transparent 55%),
+        radial-gradient(1500px 900px at 125% 120%, hsla(var(--a3), 90%, 60%, 0.22), transparent 60%),
+        linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      color: var(--fg);
+      box-shadow: 0 50px 120px rgba(30,60,140,0.22), inset 0 1px 0 rgba(255,255,255,0.85);
+      overflow: hidden;
+      isolation: isolate;
+      perspective: 1000px;
+      font: 500 16px/1.6 ui-sans-serif, system-ui, -apple-system, "SF Pro Text", Segoe UI, Roboto, Inter, Arial, sans-serif;
+    }
+    #atelier2105[data-scheme="dark"]{
+      --fg: #ebf2ff;
+      --fg-soft: #b8c3df;
+      --bg-0: #080c17;
+      --bg-1: #0d1424;
+      --panel: rgba(255,255,255,0.06);
+      --stroke: rgba(255,255,255,0.16);
+      background:
+        radial-gradient(1600px 1000px at -20% -10%, hsla(var(--a2), 95%, 62%, 0.20), transparent 60%),
+        radial-gradient(1400px 900px at 120% 120%, hsla(var(--a3), 95%, 62%, 0.18), transparent 60%),
+        linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      box-shadow: 0 40px 100px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    #atelier2105 *{ box-sizing: border-box; }
+
+    /* Stage */
+    #atelier2105 .stage{
       position: absolute; inset: 0; z-index: 0;
       transform-style: preserve-3d;
-      transform: rotateX(var(--tiltY)) rotateY(var(--tiltX));
+      transform: rotateX(var(--tiltY,0deg)) rotateY(var(--tiltX,0deg));
       transition: transform 320ms cubic-bezier(.2,.9,.2,1);
-      filter: saturate(1.05) contrast(1.05);
+      filter: saturate(1.05) contrast(1.04);
     }
-    #orrery2104 .sky,
-    #orrery2104 .system {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
+    #atelier2105 .kaleid{
+      position: absolute; inset: 0; width: 100%; height: 100%;
       display: block;
     }
-    #orrery2104 .sky { opacity: 0.9; }
-    #orrery2104 .system { mix-blend-mode: lighten; }
+    #atelier2105 .grain{
+      position: absolute; inset: -15%; pointer-events: none; z-index: 1;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      background-size: 220px 220px;
+      mix-blend-mode: overlay;
+      animation: g2105 8s linear infinite;
+    }
+    @keyframes g2105 { to { transform: translate3d(50px, 40px, 0); } }
 
-    #orrery2104 .vignette {
-      position: absolute; inset: 0; pointer-events: none; z-index: 1;
-      background:
-        radial-gradient(80% 80% at 50% 50%, transparent 50%, rgba(0,0,0,0.35) 100%);
+    #atelier2105 .vignette{
+      position: absolute; inset: 0; pointer-events: none; z-index: 2;
+      background: radial-gradient(80% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.28) 100%);
       mix-blend-mode: multiply;
     }
 
-    #orrery2104 .glass {
-      position: relative; z-index: 2;
+    /* Chrome */
+    #atelier2105 .chrome{
+      position: relative; z-index: 3;
       display: grid; gap: clamp(12px, 2.2vw, 20px);
     }
-    #orrery2104 .badge {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 8px 14px; border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    #atelier2105 .badge{
+      display:flex; align-items:center; gap:10px;
+      width:max-content;
+      padding:8px 14px; border-radius:999px;
+      background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.02));
+      border:1px solid var(--stroke);
       color: var(--fg-soft);
-      letter-spacing: .16em; text-transform: uppercase; font-size: 12px;
+      letter-spacing:.16em; text-transform:uppercase; font-size:12px;
       backdrop-filter: blur(8px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.08);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.06);
     }
-    #orrery2104 .badge .bead {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, hsl(var(--a1), 90%, 60%), rgba(255,255,255,0.6));
-      box-shadow: 0 0 14px hsla(var(--a1), 100%, 60%, 0.55);
+    #atelier2105 .bead{
+      width:10px; height:10px; border-radius:50%;
+      background: radial-gradient(circle at 35% 35%, hsl(var(--a1),90%,60%), rgba(255,255,255,0.7));
+      box-shadow: 0 0 14px hsla(var(--a1),100%,60%,0.55);
     }
 
-    #orrery2104 h1 {
+    #atelier2105 h1{
       margin: 4px 0 2px;
       font-weight: 900; letter-spacing: -0.02em;
-      font-size: clamp(44px, 7.8vw, 98px); line-height: 1;
+      font-size: clamp(42px, 8.2vw, 110px); line-height: 0.98;
       background: linear-gradient(90deg,
-        hsl(var(--a1), 90%, 88%),
-        hsl(var(--a2), 90%, 74%),
-        hsl(var(--a3), 90%, 72%));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-      text-shadow: 0 18px 60px var(--halo);
+        hsl(var(--a1),90%,18%),
+        hsl(var(--a2),90%,24%),
+        hsl(var(--a3),90%,22%));
+      -webkit-background-clip:text; background-clip:text; color: transparent;
+      text-shadow: 0 14px 50px hsla(var(--a2),90%,60%,0.25);
     }
-    #orrery2104 .lede {
-      max-width: 72ch; margin: 0;
-      color: var(--fg-soft);
+    #atelier2105[data-scheme="dark"] h1{
+      background: linear-gradient(90deg,
+        hsl(var(--a1),90%,85%),
+        hsl(var(--a2),90%,78%),
+        hsl(var(--a3),90%,72%));
+    }
+    #atelier2105 .lede{
+      max-width: 70ch; margin: 0; color: var(--fg-soft);
       font-size: clamp(14px, 1.9vw, 18px);
     }
 
     /* Palette chips */
-    #orrery2104 .palette {
-      display: flex; flex-wrap: wrap; gap: 10px;
-    }
-    #orrery2104 .chip {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 10px 12px; border-radius: 999px; font-size: 12px;
-      letter-spacing: .08em; text-transform: uppercase;
-      border: 1px solid var(--stroke);
+    #atelier2105 .palette{ display:flex; flex-wrap:wrap; gap:10px; }
+    #atelier2105 .chip{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:999px; font-size:12px;
+      letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
+      border:1px solid var(--stroke);
       background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.02));
-      box-shadow: 0 10px 24px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.06);
-      cursor: pointer; user-select: none;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.06);
       transition: transform .2s ease, box-shadow .2s ease;
+      user-select:none;
     }
-    #orrery2104 .chip:hover { transform: translateY(-1px); box-shadow: 0 18px 34px rgba(0,0,0,0.3); }
-    #orrery2104 .chip[aria-selected="true"] { outline: 2px solid hsl(var(--a1), 90%, 60%); outline-offset: 2px; }
-    #orrery2104 .swatch {
-      width: 24px; height: 24px; border-radius: 7px; border: 1px solid var(--stroke);
+    #atelier2105 .chip:hover{ transform: translateY(-1px); box-shadow: 0 18px 34px rgba(0,0,0,0.22); }
+    #atelier2105 .chip[aria-selected="true"]{ outline: 2px solid hsl(var(--a1), 90%, 60%); outline-offset: 2px; }
+    #atelier2105 .swatch{
+      width:24px; height:24px; border-radius:7px; border:1px solid var(--stroke);
       box-shadow: inset 0 0 0 4px rgba(255,255,255,0.06);
     }
-    #orrery2104 .chip.aurora .swatch  { background: linear-gradient(135deg, hsl(196,90%,62%), hsl(160,80%,58%)); }
-    #orrery2104 .chip.solar .swatch   { background: linear-gradient(135deg, hsl(42,95%,60%), hsl(10,85%,60%)); }
-    #orrery2104 .chip.nebula .swatch  { background: linear-gradient(135deg, hsl(265,90%,68%), hsl(320,85%,70%)); }
-    #orrery2104 .chip.twilight .swatch{ background: linear-gradient(135deg, hsl(220,90%,65%), hsl(285,80%,70%)); }
+    #atelier2105 .chip.mist .swatch{ background: linear-gradient(135deg, hsl(200,90%,65%), hsl(160,80%,58%)); }
+    #atelier2105 .chip.citrus .swatch{ background: linear-gradient(135deg, hsl(42,95%,60%), hsl(18,85%,60%)); }
+    #atelier2105 .chip.orchid .swatch{ background: linear-gradient(135deg, hsl(280,80%,70%), hsl(320,85%,72%)); }
+    #atelier2105 .chip.ocean .swatch{ background: linear-gradient(135deg, hsl(212,90%,66%), hsl(258,75%,68%)); }
 
     /* Controls */
-    #orrery2104 .controls {
+    #atelier2105 .controls{
       margin-top: clamp(10px, 2.4vw, 16px);
-      display: grid; grid-template-columns: 1fr auto auto auto auto; gap: 12px; align-items: center;
+      display:grid; grid-template-columns: 1fr auto auto auto auto; gap:12px; align-items:center;
     }
-    #orrery2104 .sliderWrap {
-      display: grid; grid-template-columns: 80px 1fr; gap: 10px;
-      padding: 12px; border-radius: 16px;
-      border: 1px solid var(--stroke);
+    #atelier2105 .sliderWrap{
+      display:grid; grid-template-columns: 100px 1fr; gap:10px;
+      padding:12px; border-radius:16px;
+      border:1px solid var(--stroke);
       background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.02));
       color: var(--fg-soft);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.06);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.06);
     }
-    #orrery2104 .slider {
-      appearance: none; width: 100%; height: 14px; border-radius: 999px;
-      background: linear-gradient(90deg,
-        hsl(var(--a1), 90%, 60%),
-        hsl(var(--a2), 90%, 60%),
-        hsl(var(--a3), 90%, 60%));
+    #atelier2105 .slider{
+      appearance:none; width:100%; height:14px; border-radius:999px; outline:none;
+      background: linear-gradient(90deg, hsl(var(--a1),90%,60%), hsl(var(--a2),90%,60%), hsl(var(--a3),90%,60%));
       border: 1px solid var(--stroke);
-      outline: none;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
     }
-    #orrery2104 .slider::-webkit-slider-thumb {
-      appearance: none; width: 22px; height: 22px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff, hsl(var(--a2), 90%, 62%));
+    #atelier2105 .slider::-webkit-slider-thumb{
+      appearance:none; width:22px; height:22px; border-radius:50%;
+      background: radial-gradient(circle at 35% 35%, #fff, hsl(var(--a2),90%,62%));
       border: 1px solid rgba(255,255,255,0.7);
-      box-shadow: 0 10px 24px hsla(var(--a2),90%,50%,0.45), inset 0 0 0 3px rgba(255,255,255,0.4);
-      cursor: pointer;
+      box-shadow: 0 10px 24px hsla(var(--a2),90%,50%,0.35), inset 0 0 0 3px rgba(255,255,255,0.4);
+      cursor:pointer;
     }
-    #orrery2104 .btn {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 10px 14px; border-radius: 14px; font-weight: 600;
+
+    #atelier2105 .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px; border-radius:14px; font-weight:600; cursor:pointer; user-select:none;
       color: var(--fg);
       background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.02));
       border: 1px solid var(--stroke);
-      box-shadow: 0 8px 22px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.06);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.06);
       transition: transform .2s ease, box-shadow .2s ease;
-      cursor: pointer; user-select: none;
     }
-    #orrery2104 .btn:hover { transform: translateY(-1px); box-shadow: 0 16px 32px rgba(0,0,0,0.28); }
-    #orrery2104 .btn .pulse {
-      width: 9px; height: 9px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, hsl(var(--a1),90%,60%), hsla(var(--a1), 90%, 50%, 0.7));
-      box-shadow: 0 0 10px var(--halo);
-      animation: pulse2104 3s ease-in-out infinite;
+    #atelier2105 .btn:hover{ transform: translateY(-1px); box-shadow: 0 16px 32px rgba(0,0,0,0.22); }
+    #atelier2105 .btn .pulse{
+      width:9px; height:9px; border-radius:50%;
+      background: radial-gradient(circle at 35% 35%, hsl(var(--a1),90%,60%), hsla(var(--a1),90%,50%,0.7));
+      box-shadow: 0 0 10px hsla(var(--a1),100%,60%,0.55);
+      animation: p2105 2.8s ease-in-out infinite;
     }
-    @keyframes pulse2104 {
-      0%,100% { transform: scale(1); box-shadow: 0 0 10px var(--halo); }
-      50% { transform: scale(1.22); box-shadow: 0 0 20px hsla(var(--a2),95%,60%,.9); }
+    @keyframes p2105 {
+      0%,100%{ transform: scale(1); box-shadow: 0 0 10px hsla(var(--a1),100%,60%,0.55); }
+      50%{ transform: scale(1.22); box-shadow: 0 0 20px hsla(var(--a2),95%,60%,0.9); }
     }
 
     /* Footer */
-    #orrery2104 .foot {
-      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    #atelier2105 .foot{
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
       margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--stroke);
-      color: var(--fg-soft); font-size: 13px;
+      color: var(--fg-soft); font-size:13px;
     }
-    #orrery2104 .stamp {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 8px 12px; border-radius: 12px;
-      border: 1px solid var(--stroke);
+    #atelier2105 .stamp{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px; border-radius:12px;
+      border:1px solid var(--stroke);
       background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.02));
-      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.16);
     }
 
     /* Motion pause */
-    #orrery2104[data-play="false"] .btn .pulse { animation-play-state: paused; }
+    #atelier2105[data-play="false"] .btn .pulse{ animation-play-state: paused; }
 
     /* Reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      #orrery2104 .stage { transition: none !important; }
-      #orrery2104 .btn .pulse { animation: none !important; }
+    @media (prefers-reduced-motion: reduce){
+      #atelier2105 .stage{ transition:none !important; }
+      #atelier2105 .btn .pulse{ animation:none !important; }
+      #atelier2105 .grain{ animation: none !important; }
     }
   </style>
 
   <div class="stage" aria-hidden="true">
-    <canvas class="sky"></canvas>
-    <canvas class="system"></canvas>
+    <canvas class="kaleid"></canvas>
+    <div class="grain"></div>
   </div>
   <div class="vignette" aria-hidden="true"></div>
 
-  <div class="glass" role="region" aria-label="Orrery controls and description">
-    <div class="badge"><span class="bead" aria-hidden="true"></span> Orbital Studio • 2104</div>
-    <h1>Orbital poem.</h1>
-    <p class="lede">Spheres drift. Time curves. Touch to tilt the cosmos—slide the epoch to wind the clockwork sky.</p>
+  <div class="chrome" role="region" aria-label="Kaleidoscope controls and description">
+    <div class="badge"><span class="bead" aria-hidden="true"></span> Kaleidoscope Atelier • 2105</div>
+    <h1>Fold the Light.</h1>
+    <p class="lede">Drag to tilt. Slide to change folds and flux. Each palette reshapes the glass. Save a frame you love.</p>
 
     <div class="palette" role="tablist" aria-label="Palettes">
-      <button class="chip aurora" role="tab" aria-selected="true" data-palette="aurora">
-        <span class="swatch" aria-hidden="true"></span> Aurora
-      </button>
-      <button class="chip solar" role="tab" aria-selected="false" data-palette="solar">
-        <span class="swatch" aria-hidden="true"></span> Solar
-      </button>
-      <button class="chip nebula" role="tab" aria-selected="false" data-palette="nebula">
-        <span class="swatch" aria-hidden="true"></span> Nebula
-      </button>
-      <button class="chip twilight" role="tab" aria-selected="false" data-palette="twilight">
-        <span class="swatch" aria-hidden="true"></span> Twilight
-      </button>
+      <button class="chip mist" role="tab" aria-selected="true" data-palette="mist"><span class="swatch" aria-hidden="true"></span> Mist</button>
+      <button class="chip citrus" role="tab" aria-selected="false" data-palette="citrus"><span class="swatch" aria-hidden="true"></span> Citrus</button>
+      <button class="chip orchid" role="tab" aria-selected="false" data-palette="orchid"><span class="swatch" aria-hidden="true"></span> Orchid</button>
+      <button class="chip ocean" role="tab" aria-selected="false" data-palette="ocean"><span class="swatch" aria-hidden="true"></span> Ocean</button>
     </div>
 
     <div class="controls" role="group" aria-label="Controls">
-      <div class="sliderWrap" role="region" aria-label="Epoch">
-        <div>Epoch</div>
-        <input id="epoch2104" class="slider" type="range" min="0" max="100" value="60" aria-label="Epoch slider">
+      <div class="sliderWrap" role="region" aria-label="Folds">
+        <div>Folds</div>
+        <input id="folds2105" class="slider" type="range" min="4" max="24" value="12" aria-label="Folds slider">
       </div>
-      <button id="theme2104" class="btn" type="button" aria-pressed="true" title="Toggle light/dark theme">
+      <div class="sliderWrap" role="region" aria-label="Flux">
+        <div>Flux</div>
+        <input id="flux2105" class="slider" type="range" min="0" max="100" value="65" aria-label="Flux slider">
+      </div>
+      <button id="theme2105" class="btn" type="button" aria-pressed="false" title="Toggle light/dark theme">
         <span class="pulse" aria-hidden="true"></span> Theme
       </button>
-      <button id="play2104" class="btn" type="button" aria-pressed="true" title="Pause or play motion">
+      <button id="play2105" class="btn" type="button" aria-pressed="true" title="Pause or play motion">
         <span class="pulse" aria-hidden="true"></span> Pause
       </button>
-      <button id="reseed2104" class="btn" type="button" title="Reseed the system">
-        <span class="pulse" aria-hidden="true"></span> Reseed
+      <button id="shuffle2105" class="btn" type="button" title="Shuffle pattern">
+        <span class="pulse" aria-hidden="true"></span> Shuffle
       </button>
-      <button id="shot2104" class="btn" type="button" title="Save a snapshot">
+      <button id="shot2105" class="btn" type="button" title="Save a snapshot">
         <span class="pulse" aria-hidden="true"></span> Capture
       </button>
     </div>
 
     <div class="foot">
-      <div class="stamp">Revision 2104 • <span id="last-updated">Last updated: 2026-01-21 13:39:47 EST</span></div>
-      <div class="hint" aria-hidden="true">Tip: move your pointer to tilt; press and hold to bend orbits.</div>
+      <div class="stamp">Revision 2105 • <span id="last-updated">Last updated: 2026-01-21 14:25:18 EST</span></div>
+      <div class="hint" aria-hidden="true">Tip: move your pointer to tilt; use Capture to save a poster.</div>
     </div>
   </div>
 
   <script>
     (function(){
-      const root = document.getElementById('orrery2104');
-      const stage = root.querySelector('.stage');
-      const sky = root.querySelector('.sky');
-      const sys = root.querySelector('.system');
-      const sctx = sky.getContext('2d', { alpha: true });
-      const ctx = sys.getContext('2d', { alpha: true });
-      const epoch = root.querySelector('#epoch2104');
-      const themeBtn = root.querySelector('#theme2104');
-      const playBtn = root.querySelector('#play2104');
-      const reseedBtn = root.querySelector('#reseed2104');
-      const shotBtn = root.querySelector('#shot2104');
+      const root = document.getElementById('atelier2105');
+      const canvas = root.querySelector('.kaleid');
+      const ctx = canvas.getContext('2d', { alpha: true });
+      const foldsEl = root.querySelector('#folds2105');
+      const fluxEl = root.querySelector('#flux2105');
+      const themeBtn = root.querySelector('#theme2105');
+      const playBtn = root.querySelector('#play2105');
+      const shuffleBtn = root.querySelector('#shuffle2105');
+      const shotBtn = root.querySelector('#shot2105');
       const chips = Array.from(root.querySelectorAll('.chip'));
       const updated = root.querySelector('#last-updated');
 
@@ -353,28 +349,30 @@
         const now = new Date();
         const opts = { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' };
         updated.textContent = new Intl.DateTimeFormat(undefined, opts).format(now);
-      } catch { updated.textContent = new Date().toLocaleString(); }
+      } catch {
+        updated.textContent = new Date().toLocaleString();
+      }
 
       // Palettes
       const palettes = {
-        aurora:  { a1: 196, a2: 160, a3: 48,  scheme: 'dark'  },
-        solar:   { a1: 42,  a2: 10,  a3: 355, scheme: 'light' },
-        nebula:  { a1: 265, a2: 320, a3: 8,   scheme: 'dark'  },
-        twilight:{ a1: 220, a2: 285, a3: 14,  scheme: 'dark'  }
+        mist:   { a1: 200, a2: 160, a3: 48,  scheme: 'light' },
+        citrus: { a1: 42,  a2: 18,  a3: 355, scheme: 'light' },
+        orchid: { a1: 280, a2: 320, a3: 12,  scheme: 'dark'  },
+        ocean:  { a1: 212, a2: 258, a3: 14,  scheme: 'dark'  },
       };
       const applyPalette = ({a1,a2,a3,scheme}) => {
         root.style.setProperty('--a1', a1);
         root.style.setProperty('--a2', a2);
         root.style.setProperty('--a3', a3);
         root.setAttribute('data-scheme', scheme);
-        themeBtn.setAttribute('aria-pressed', scheme === 'dark' ? 'true' : 'false');
+        themeBtn.setAttribute('aria-pressed', (scheme === 'dark').toString());
       };
       chips.forEach(chip => {
         chip.addEventListener('click', () => {
           chips.forEach(c => c.setAttribute('aria-selected','false'));
           chip.setAttribute('aria-selected','true');
           applyPalette(palettes[chip.dataset.palette]);
-          reseedSystem();
+          shuffleSeed();
         });
       });
 
@@ -394,235 +392,174 @@
       playBtn.addEventListener('click', () => setPlay(root.getAttribute('data-play') !== 'true'));
 
       // Geometry
-      let width=1, height=1, ratio=1, centerX=0, centerY=0, minR=0;
-      const pointer = { x: 0, y: 0, down: false, over: false };
-      const stars = [];
-      let planets = [];
-      const STAR_COUNT = 180;
+      let width=1, height=1, ratio=1, cx=0, cy=0, radius=0;
+      const pointer = { x: 0, y: 0, over: false, down: false };
 
       const resize = () => {
         const rect = root.getBoundingClientRect();
         ratio = Math.min(window.devicePixelRatio || 1, 2);
         width = Math.max(1, Math.floor(rect.width));
         height = Math.max(1, Math.floor(rect.height));
-        centerX = width/2; centerY = height/2;
-        minR = Math.min(width, height) * 0.44;
+        cx = width/2; cy = height/2;
+        radius = Math.hypot(width, height) * 0.7;
 
-        [sky, sys].forEach(c => {
-          c.width = Math.floor(width * ratio);
-          c.height = Math.floor(height * ratio);
-          c.style.width = width + 'px';
-          c.style.height = height + 'px';
-        });
-        sctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        canvas.width = Math.floor(width * ratio);
+        canvas.height = Math.floor(height * ratio);
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-
-        seedStars();
-        if (!planets.length) seedPlanets();
       };
 
-      // Stars
-      const rand = (a,b)=>a+Math.random()*(b-a);
-      const seedStars = () => {
-        stars.length = 0;
-        for (let i=0;i<STAR_COUNT;i++) {
-          stars.push({
-            x: Math.random()*width,
-            y: Math.random()*height,
-            r: Math.random()<0.12 ? rand(1.2,1.8) : rand(0.3,0.9),
-            base: rand(0.35, 0.9),
-            spd: rand(0.6, 2.4),
-            hueShift: rand(-14,14)
-          });
+      // Seed + source drawing
+      let seed = Math.random() * 1000;
+      const shuffleSeed = () => { seed = Math.random()*1000; };
+      shuffleBtn.addEventListener('click', shuffleSeed);
+
+      // Kaleidoscope render
+      function drawSource(context, t){
+        // moving blobs with layered gradients
+        const c1 = +getComputedStyle(root).getPropertyValue('--a1') || 200;
+        const c2 = +getComputedStyle(root).getPropertyValue('--a2') || 280;
+        const c3 = +getComputedStyle(root).getPropertyValue('--a3') || 42;
+
+        const sp = (parseFloat(fluxEl.value) / 100) * 1.8 + 0.1;
+        const r = radius;
+        context.save();
+        context.globalCompositeOperation = 'lighter';
+
+        for(let i=0;i<5;i++){
+          const ang = t*0.0006*sp + seed*0.1 + i*1.2;
+          const rr = r*0.35 + Math.sin(t*0.001 + i)*r*0.12;
+          const x = Math.cos(ang)*rr;
+          const y = Math.sin(ang*1.3)*rr*0.7;
+
+          const g = context.createRadialGradient(x, y, 0, x, y, r*0.9);
+          const hue = i%3===0?c1: i%3===1?c2: c3;
+          g.addColorStop(0, `hsla(${(hue+ i*14)%360}, 95%, 70%, 0.9)`);
+          g.addColorStop(0.5, `hsla(${(hue+40+i*6)%360}, 85%, 58%, 0.55)`);
+          g.addColorStop(1, 'rgba(0,0,0,0)');
+          context.fillStyle = g;
+          context.beginPath();
+          context.arc(x, y, r*0.9, 0, Math.PI*2);
+          context.fill();
         }
-      };
 
-      const drawStars = (t) => {
-        const veil = root.getAttribute('data-scheme') === 'dark' ? 'rgba(6,10,20,0.10)' : 'rgba(250,252,255,0.12)';
-        sctx.globalCompositeOperation = 'source-over';
-        sctx.fillStyle = veil;
-        sctx.fillRect(0,0,width,height);
-
-        const a1 = +getComputedStyle(root).getPropertyValue('--a1') || 200;
-        for (let i=0;i<stars.length;i++){
-          const s = stars[i];
-          const tw = s.base + Math.sin((t*0.001 + i)*s.spd)*0.25;
-          sctx.beginPath();
-          sctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-          sctx.fillStyle = `hsla(${(a1 + s.hueShift + 360)%360}, 90%, 70%, ${Math.max(0, Math.min(1, tw))})`;
-          sctx.fill();
+        // fine spokes
+        context.globalAlpha = 0.22;
+        context.lineWidth = 1.2;
+        context.strokeStyle = `hsla(${(c2+20)%360},90%,60%,0.8)`;
+        context.beginPath();
+        const spokes = 64;
+        for(let i=0;i<spokes;i++){
+          const a = i/spokes * Math.PI*2 + t*0.0002*sp;
+          context.moveTo(0,0);
+          context.lineTo(Math.cos(a)*r, Math.sin(a)*r);
         }
-      };
+        context.stroke();
+        context.globalAlpha = 1;
+        context.restore();
+      }
 
-      // Planets
-      const seedPlanets = () => {
-        planets = [];
-        const count = 6;
-        for (let i=0;i<count;i++){
-          const pr = (i+1)/(count+1);
-          planets.push({
-            orbitR: minR * (0.15 + pr*0.75) * rand(0.9,1.08),
-            size: Math.max(3, minR * (0.02 + (0.055 - pr*0.03)))*rand(0.8,1.2),
-            angle: rand(0, Math.PI*2),
-            speed: (0.0008 + (0.0018 * (1-pr))) * rand(0.8,1.4),
-            hueShift: rand(-30,30)
-          });
-        }
-      };
-      const reseedSystem = () => {
-        seedPlanets();
-      };
-
-      // Draw system
-      const drawSystem = (t) => {
-        // fade trails
+      function render(t){
+        // fade
+        const veil = root.getAttribute('data-scheme') === 'dark' ? 'rgba(10,15,28,0.12)' : 'rgba(250,252,255,0.10)';
         ctx.globalCompositeOperation = 'source-over';
-        const veil = root.getAttribute('data-scheme') === 'dark' ? 'rgba(8,12,24,0.10)' : 'rgba(250,252,255,0.12)';
         ctx.fillStyle = veil;
         ctx.fillRect(0,0,width,height);
 
-        // central star
-        const a2 = +getComputedStyle(root).getPropertyValue('--a2') || 320;
-        const a3 = +getComputedStyle(root).getPropertyValue('--a3') || 48;
+        const folds = Math.round(parseInt(foldsEl.value,10) || 12);
+        const theta = Math.PI*2 / folds;
 
-        const starGrad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, minR*0.7);
-        starGrad.addColorStop(0, `hsla(${a2}, 95%, 72%, 0.55)`);
-        starGrad.addColorStop(0.2, `hsla(${a3}, 90%, 64%, 0.25)`);
-        starGrad.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = starGrad;
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, minR*0.7, 0, Math.PI*2);
-        ctx.fill();
+        ctx.save();
+        ctx.translate(cx, cy);
 
-        // ellipse factor and pointer gravity
-        const ellipse = 0.78 + Math.sin(t*0.0002)*0.04;
-        const grav = pointer.down ? 1.8 : 0.8;
-
-        // orbits + planets
-        for (let i=0;i<planets.length;i++){
-          const p = planets[i];
-          const hue = (+getComputedStyle(root).getPropertyValue('--a1') || 200) + p.hueShift;
-          const orbitGrad = ctx.createLinearGradient(centerX - p.orbitR, centerY, centerX + p.orbitR, centerY);
-          orbitGrad.addColorStop(0, `hsla(${(hue+360)%360},90%,60%,0.14)`);
-          orbitGrad.addColorStop(0.5, `hsla(${(a2+360)%360},90%,60%,0.25)`);
-          orbitGrad.addColorStop(1, `hsla(${(a3+360)%360},90%,60%,0.14)`);
-
-          ctx.beginPath();
-          ctx.ellipse(centerX, centerY, p.orbitR, p.orbitR*ellipse, 0, 0, Math.PI*2);
-          ctx.strokeStyle = orbitGrad;
-          ctx.lineWidth = 1.2;
-          ctx.globalCompositeOperation = 'lighter';
-          ctx.stroke();
-
-          // advance
-          const speedScale = (parseFloat(epoch.value)/100)*2.2 + 0.2;
-          p.angle += p.speed * speedScale;
-
-          // pointer bend
-          let bendX = 0, bendY = 0;
-          if (pointer.over){
-            const dx = pointer.x - centerX;
-            const dy = (pointer.y - centerY)*ellipse;
-            const d = Math.max(24, Math.hypot(dx, dy));
-            const influence = Math.min(14, (p.orbitR/d) * (pointer.down ? 24 : 10)) * grav;
-            bendX = (dx/d) * influence;
-            bendY = (dy/d) * influence;
-          }
-
-          const x = centerX + Math.cos(p.angle) * (p.orbitR + bendX);
-          const y = centerY + Math.sin(p.angle) * (p.orbitR*ellipse + bendY);
-
-          // planet
-          const g = ctx.createRadialGradient(x - p.size*0.3, y - p.size*0.3, p.size*0.2, x, y, p.size*1.4);
-          g.addColorStop(0, `hsla(${(hue+360)%360}, 90%, 75%, 0.95)`);
-          g.addColorStop(0.5, `hsla(${(hue+20+360)%360}, 90%, 58%, 0.85)`);
-          g.addColorStop(1, `rgba(0,0,0,0)`);
-          ctx.fillStyle = g;
-          ctx.beginPath();
-          ctx.arc(x, y, p.size, 0, Math.PI*2);
-          ctx.fill();
-
-          // small glow
-          ctx.shadowColor = `hsla(${(hue+20+360)%360}, 90%, 60%, 0.45)`;
-          ctx.shadowBlur = 16;
-          ctx.globalCompositeOperation = 'lighter';
-          ctx.beginPath();
-          ctx.arc(x, y, p.size*0.6, 0, Math.PI*2);
-          ctx.strokeStyle = `hsla(${(hue+20+360)%360}, 90%, 70%, 0.3)`;
-          ctx.lineWidth = 1;
-          ctx.stroke();
-          ctx.shadowBlur = 0;
+        // subtle pointer pull
+        let px=0, py=0, pull=0;
+        if (pointer.over){
+          px = (pointer.x - cx); py = (pointer.y - cy);
+          pull = Math.min(0.25, Math.hypot(px,py)/Math.max(200, Math.min(width,height)))* (pointer.down? 2.0 : 1.0);
         }
-      };
 
-      // Pointer -> tilt
+        for(let i=0;i<folds;i++){
+          ctx.save();
+          ctx.rotate(theta*i + pull*0.08*Math.sin(t*0.001 + i));
+          if (i%2===1) ctx.scale(1,-1);
+
+          // wedge clip
+          ctx.beginPath();
+          ctx.moveTo(0,0);
+          ctx.arc(0,0, radius, -theta/2, theta/2);
+          ctx.closePath();
+          ctx.clip();
+
+          // rotate source field over time + pointer drift
+          ctx.save();
+          const drift = pull ? Math.atan2(py,px) : 0;
+          ctx.rotate(t*0.00015 + seed*0.05 + drift*0.1);
+
+          drawSource(ctx, t);
+          ctx.restore();
+          ctx.restore();
+        }
+        ctx.restore();
+      }
+
+      // Pointer interactions: tilt and over
       const toLocal = (e) => {
-        const r = sys.getBoundingClientRect();
+        const r = canvas.getBoundingClientRect();
         pointer.x = e.clientX - r.left;
         pointer.y = e.clientY - r.top;
       };
       root.addEventListener('pointermove', (e) => {
-        toLocal(e);
-        pointer.over = true;
+        toLocal(e); pointer.over = true;
         const nx = (pointer.x / width) * 2 - 1;
         const ny = (pointer.y / height) * 2 - 1;
-        const maxTilt = 6;
+        const maxTilt = 7;
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (!reduce) {
+        if (!reduce){
           root.style.setProperty('--tiltX', (nx * maxTilt).toFixed(2) + 'deg');
           root.style.setProperty('--tiltY', (-ny * maxTilt).toFixed(2) + 'deg');
         }
       });
       root.addEventListener('pointerleave', () => {
-        pointer.over = false;
-        pointer.down = false;
+        pointer.over = false; pointer.down = false;
         root.style.setProperty('--tiltX', '0deg');
         root.style.setProperty('--tiltY', '0deg');
       });
       root.addEventListener('pointerdown', (e) => { pointer.down = true; toLocal(e); });
       window.addEventListener('pointerup', () => { pointer.down = false; });
 
-      // Reseed + Snapshot
-      reseedBtn.addEventListener('click', () => reseedSystem());
+      // Snapshot
       shotBtn.addEventListener('click', () => {
         const off = document.createElement('canvas');
         off.width = Math.floor(width * ratio);
         off.height = Math.floor(height * ratio);
         const octx = off.getContext('2d');
-        // draw both layers into offscreen
-        octx.drawImage(sky, 0, 0);
-        octx.drawImage(sys, 0, 0);
+        octx.drawImage(canvas, 0, 0);
         const link = document.createElement('a');
         link.href = off.toDataURL('image/png');
-        link.download = 'orbital-studio-2104.png';
+        link.download = 'kaleidoscope-atelier-2105.png';
         document.body.appendChild(link); link.click(); link.remove();
       });
 
       // Loop
-      let raf = null, lastT = 0;
+      let raf = null;
       const draw = (ts) => {
         raf = requestAnimationFrame(draw);
-        if (root.getAttribute('data-play') !== 'true') { lastT = ts; return; }
-        drawStars(ts);
-        drawSystem(ts);
-        lastT = ts;
+        if (root.getAttribute('data-play') !== 'true') return;
+        render(ts);
       };
 
       // Init
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduce) setPlay(false);
-
       resize();
-      seedStars();
-      seedPlanets();
-      applyPalette(palettes.aurora);
+      applyPalette(palettes.mist);
 
-      // Resize
-      let rTO;
-      const onResize = () => { clearTimeout(rTO); rTO = setTimeout(()=>{ resize(); }, 120); };
+      // Resize debounce
+      let rTO; const onResize = () => { clearTimeout(rTO); rTO = setTimeout(resize, 100); };
       window.addEventListener('resize', onResize, { passive: true });
 
-      // Start + visibility
       raf = requestAnimationFrame(draw);
       const stop = () => { if (raf) cancelAnimationFrame(raf); raf = null; };
       document.addEventListener('visibilitychange', () => {
