@@ -74,255 +74,224 @@
     <!-- BEGIN_EDITABLE -->
       <section id="content">
 <style>
-  .vibe-2110 {
-    --accent: #8EE3F5;
-    --bg1: #0b0f1f;
-    --bg2: #101a34;
-    --fg: rgba(255,255,255,0.92);
-    --muted: rgba(255,255,255,0.65);
-    --ring: rgba(255,255,255,0.12);
+  .vibe-2111 {
+    --paper: #f7f5ef;
+    --ink: #1a1d21;
+    --muted: #5f6469;
+    --ring: rgba(0,0,0,0.08);
+    --accent1: #ffb84d; /* sunrise amber */
+    --accent2: #ff6f61; /* warm coral */
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    border-radius: 20px;
-    padding: 28px;
-    color: var(--fg);
+    border-radius: 26px;
+    padding: 36px 32px 28px;
+    color: var(--ink);
     background:
-      radial-gradient(120% 120% at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.08), transparent 55%),
-      linear-gradient(145deg, var(--bg1) 0%, var(--bg2) 80%);
+      radial-gradient(800px 600px at var(--mx,65%) var(--my,35%), rgba(255,255,255,0.85), rgba(255,255,255,0) 60%),
+      linear-gradient(180deg, #fff 0%, var(--paper) 60%, #f3f1ea 100%);
     box-shadow:
-      0 12px 38px rgba(0,0,0,0.45),
-      inset 0 0 0 1px rgba(255,255,255,0.06);
+      0 22px 70px rgba(0,0,0,0.12),
+      0 2px 0 rgba(255,255,255,0.8) inset;
   }
 
-  /* Ambient layers */
-  .vibe-2110 .decor { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-  .vibe-2110 .aurora {
-    position: absolute; inset: -20% -10% -10% -20%;
-    filter: blur(42px) saturate(120%);
+  /* Subtle paper texture */
+  .vibe-2111::after {
+    content: "";
+    position: absolute; inset: -40% -20%;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.03) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0 1px, transparent 1px 4px);
+    mix-blend-mode: multiply;
     opacity: 0.35;
-    mix-blend-mode: screen;
-    transform: translateZ(0);
-    background:
-      conic-gradient(from 210deg at 30% 40%,
-        rgba(142, 227, 245, 0.9),
-        rgba(181, 142, 227, 0.9),
-        rgba(142, 245, 194, 0.9),
-        rgba(142, 227, 245, 0.9));
-    animation: v2110-drift 28s ease-in-out infinite alternate;
-  }
-  .vibe-2110 .aurora.a2 {
-    inset: -15% -25% -25% -15%;
-    opacity: 0.28;
-    filter: blur(55px) saturate(140%);
-    transform: rotate(8deg);
-    background:
-      conic-gradient(from 60deg at 70% 60%,
-        rgba(181, 142, 227, 0.9),
-        rgba(142, 245, 194, 0.9),
-        rgba(142, 227, 245, 0.9),
-        rgba(181, 142, 227, 0.9));
-    animation: v2110-drift-2 36s ease-in-out infinite alternate;
+    filter: blur(0.2px);
   }
 
-  .vibe-2110 .orb {
+  /* Floating suns (ambient color) */
+  .vibe-2111 .sun {
     position: absolute;
-    width: 180px; height: 180px;
-    background: radial-gradient(closest-side, color-mix(in srgb, var(--accent), white 18%) 0%, transparent 70%);
-    filter: blur(1px);
-    opacity: 0.22;
-    transform: translate3d(0,0,0);
-    transition: transform 0.15s linear;
-  }
-  .vibe-2110 .orb.o1 { top: 8%; left: 6%; }
-  .vibe-2110 .orb.o2 { bottom: 10%; right: 8%; width: 140px; height: 140px; }
-  .vibe-2110 .orb.o3 { top: 50%; left: 60%; width: 220px; height: 220px; }
-
-  .vibe-2110 .grain {
-    position: absolute; inset: -100% -100%;
-    background-image:
-      repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0 1px, transparent 1px 2px),
-      repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 2px);
-    opacity: 0.5;
-    mix-blend-mode: overlay;
-    animation: v2110-grain 15s steps(60) infinite;
-  }
-  .vibe-2110 .scan {
-    position: absolute; inset: 0;
-    background: radial-gradient(1200px 200px at var(--mx,50%) -10%, rgba(255,255,255,0.06), transparent 60%);
-    opacity: 0.8;
+    border-radius: 50%;
+    filter: blur(1px) saturate(120%);
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background: radial-gradient(closest-side, var(--accent1), color-mix(in srgb, var(--accent2), white 30%) 60%, transparent 70%);
+    animation: v2111-float 24s ease-in-out infinite alternate;
     transform: translateZ(0);
-    animation: v2110-sheen 12s ease-in-out infinite;
+  }
+  .vibe-2111 .sun.s1 { width: 260px; height: 260px; top: -60px; right: -40px; }
+  .vibe-2111 .sun.s2 { width: 160px; height: 160px; bottom: -40px; left: -30px; animation-duration: 28s; }
+
+  /* Canvas light sketch */
+  .vibe-2111 .sketch {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    opacity: 0.9;
+    mix-blend-mode: screen;
   }
 
   /* Content */
-  .vibe-2110 .card { position: relative; z-index: 2; max-width: 880px; margin: 0 auto; }
-  .vibe-2110 .eyebrow {
-    display: inline-block;
-    padding: 6px 10px;
+  .vibe-2111 .wrap { position: relative; z-index: 2; max-width: 920px; margin: 0 auto; }
+
+  .vibe-2111 .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 6px 12px;
     border-radius: 999px;
     font-size: 12px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--muted);
-    background: rgba(255,255,255,0.06);
     border: 1px solid var(--ring);
-    backdrop-filter: saturate(120%) blur(2px);
+    background: rgba(255,255,255,0.7);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset;
+    backdrop-filter: blur(2px);
   }
-  .vibe-2110 h1 {
-    margin: 14px 0 6px;
-    font-size: clamp(36px, 6.5vw, 72px);
-    line-height: 1.02;
+  .vibe-2111 .eyebrow .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  }
+
+  .vibe-2111 h1 {
+    margin: 14px 0 8px;
+    font-size: clamp(40px, 7vw, 88px);
+    line-height: 0.96;
     letter-spacing: -0.02em;
-    font-weight: 700;
-    background: linear-gradient(90deg, var(--accent), #ffffff 60%, var(--accent));
-    background-size: 200% 100%;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: v2110-title-shift 18s ease-in-out infinite;
-  }
-  .vibe-2110 .lead {
-    margin: 8px 0 18px;
-    font-size: clamp(14px, 1.8vw, 18px);
-    color: var(--muted);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+    animation: v2111-breathe 9s ease-in-out infinite;
   }
 
-  .vibe-2110 .controls {
-    display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center;
-    margin: 10px 0 18px;
+  .vibe-2111 .lead {
+    margin: 8px 0 20px;
+    font-size: clamp(15px, 2vw, 20px);
+    color: var(--muted);
+    max-width: 52ch;
   }
-  .vibe-2110 .pill {
-    appearance: none; border: 1px solid var(--ring);
-    background: rgba(255,255,255,0.05);
-    color: var(--fg);
+
+  .vibe-2111 .controls {
+    display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center;
+    margin: 6px 0 18px;
+  }
+  .vibe-2111 .pill {
+    appearance: none;
+    border: 1px solid var(--ring);
+    background: linear-gradient(180deg, #fff, #f6f4ee);
+    color: var(--ink);
     border-radius: 999px;
     padding: 10px 14px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.01em;
     cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
-    backdrop-filter: blur(2px) saturate(120%);
+    transition: transform 0.12s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.9) inset,
+      0 10px 24px rgba(0,0,0,0.06);
   }
-  .vibe-2110 .pill:hover { background: rgba(255,255,255,0.08); transform: translateY(-1px); }
-  .vibe-2110 .pill:active { transform: translateY(0); }
-  .vibe-2110 .pill.breathe[aria-pressed="true"] {
-    border-color: color-mix(in srgb, var(--accent), white 30%);
-    box-shadow: 0 0 0 3px rgba(142,227,245,0.10);
+  .vibe-2111 .pill:hover { transform: translateY(-1px); box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 14px 28px rgba(0,0,0,0.08); }
+  .vibe-2111 .pill:active { transform: translateY(0); }
+  .vibe-2111 .pill.toggle[aria-pressed="true"] {
+    border-color: color-mix(in srgb, var(--accent2), black 6%);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent1), transparent 80%), 0 10px 24px rgba(0,0,0,0.06);
   }
 
-  .vibe-2110 .dots { display: inline-flex; align-items: center; gap: 8px; margin-left: 2px; }
-  .vibe-2110 .dot {
-    width: 24px; height: 24px; border-radius: 50%;
+  .vibe-2111 .swatches { display: inline-flex; gap: 8px; align-items: center; }
+  .vibe-2111 .swatch {
+    width: 28px; height: 28px; border-radius: 50%;
     border: 1px solid var(--ring);
-    background: radial-gradient(circle at 30% 30%, white 0 15%, var(--c) 15% 60%, rgba(0,0,0,0.1) 60% 100%);
+    background: var(--preview, linear-gradient(90deg, var(--accent1), var(--accent2)));
     cursor: pointer;
-    transition: transform 0.12s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.12s ease, box-shadow 0.2s ease;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.06);
   }
-  .vibe-2110 .dot:hover { transform: translateY(-1px) scale(1.04); }
-  .vibe-2110 .dot.active { box-shadow: 0 0 0 3px rgba(255,255,255,0.06), 0 0 0 6px color-mix(in srgb, var(--c), transparent 70%); border-color: color-mix(in srgb, var(--c), white 20%); }
+  .vibe-2111 .swatch:hover { transform: translateY(-2px) scale(1.04); }
+  .vibe-2111 .swatch.active { box-shadow: 0 0 0 3px rgba(255,255,255,0.9), 0 0 0 7px color-mix(in srgb, var(--accent1), transparent 80%); }
 
-  .vibe-2110 .quote {
+  .vibe-2111 .quote {
     position: relative;
-    margin: 6px 0 16px;
-    padding: 14px 16px 14px 18px;
-    border-radius: 14px;
-    color: var(--fg);
-    background: rgba(255,255,255,0.05);
+    margin: 4px 0 18px;
+    padding: 14px 18px 14px 16px;
+    border-radius: 16px;
+    color: var(--ink);
+    background: rgba(255,255,255,0.85);
     border: 1px solid var(--ring);
-    backdrop-filter: blur(2px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.04);
   }
-  .vibe-2110 .quote::before {
+  .vibe-2111 .quote::before {
     content: "";
-    position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
-    border-radius: 14px 0 0 14px;
-    background: linear-gradient(180deg, var(--accent), rgba(255,255,255,0.4));
+    position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+    border-radius: 16px 0 0 16px;
+    background: linear-gradient(180deg, var(--accent1), var(--accent2));
   }
 
-  .vibe-2110 .meta {
+  .vibe-2111 .meta {
     display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
     font-size: 12px; color: var(--muted);
   }
-  .vibe-2110 .meta .dot-sep { width: 4px; height: 4px; border-radius: 50%; background: var(--ring); opacity: 0.8; }
+  .vibe-2111 .meta .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--ring); }
 
-  /* Breathing state tweaks */
-  .vibe-2110.breathing .aurora { animation-duration: 38s; }
-  .vibe-2110.breathing .aurora.a2 { animation-duration: 48s; }
-  .vibe-2110.breathing .scan { animation-duration: 16s; }
-  .vibe-2110.breathing { background-position: 0 0; }
+  /* Calm mode reduces motion and glow */
+  .vibe-2111.calm .sun { opacity: 0.22; animation-duration: 40s; }
+  .vibe-2111.calm .sketch { opacity: 0.25; }
+  .vibe-2111.calm h1 { animation-duration: 16s; }
 
   /* Animations */
-  @keyframes v2110-drift {
-    0% { transform: translate3d(-3%, 0, 0) rotate(0deg) scale(1.0); }
-    50% { transform: translate3d(2%, -2%, 0) rotate(2deg) scale(1.05); }
-    100% { transform: translate3d(4%, 3%, 0) rotate(-2deg) scale(1.02); }
+  @keyframes v2111-float {
+    0% { transform: translate3d(0,0,0) scale(1); }
+    50% { transform: translate3d(14px, -10px, 0) scale(1.04); }
+    100% { transform: translate3d(-8px, 8px, 0) scale(1.02); }
   }
-  @keyframes v2110-drift-2 {
-    0% { transform: translate3d(2%, -3%, 0) rotate(8deg) scale(1.02); }
-    50% { transform: translate3d(-1%, 2%, 0) rotate(6deg) scale(1.06); }
-    100% { transform: translate3d(-4%, -1%, 0) rotate(10deg) scale(1.02); }
-  }
-  @keyframes v2110-grain {
-    0% { transform: translate3d(0,0,0); }
-    100% { transform: translate3d(-10%, -10%, 0); }
-  }
-  @keyframes v2110-sheen {
-    0%, 100% { opacity: 0.55; }
-    50% { opacity: 0.9; }
-  }
-  @keyframes v2110-title-shift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  @keyframes v2111-breathe {
+    0%, 100% { letter-spacing: -0.01em; filter: saturate(100%); }
+    50% { letter-spacing: -0.03em; filter: saturate(110%); }
   }
 
-  /* Accessibility: reduced motion */
+  /* Reduced motion accessibility */
   @media (prefers-reduced-motion: reduce) {
-    .vibe-2110 .aurora,
-    .vibe-2110 .grain,
-    .vibe-2110 .scan,
-    .vibe-2110 h1 { animation: none !important; }
+    .vibe-2111 .sun,
+    .vibe-2111 .sketch,
+    .vibe-2111 h1 { animation: none !important; }
+    .vibe-2111 .sketch { display: none; }
   }
 
   /* Small screens */
-  @media (max-width: 520px) {
-    .vibe-2110 { padding: 22px; }
-    .vibe-2110 .pill { padding: 9px 12px; }
+  @media (max-width: 560px) {
+    .vibe-2111 { padding: 26px 22px; border-radius: 22px; }
+    .vibe-2111 h1 { font-size: clamp(34px, 10vw, 60px); }
+    .vibe-2111 .swatch { width: 26px; height: 26px; }
   }
 </style>
 
-<div class="vibe-2110" role="region" aria-label="Drift — an ambient interface">
-  <div class="decor" aria-hidden="true">
-    <div class="aurora a1"></div>
-    <div class="aurora a2"></div>
-    <div class="orb o1"></div>
-    <div class="orb o2"></div>
-    <div class="orb o3"></div>
-    <div class="grain"></div>
-    <div class="scan"></div>
-  </div>
+<div class="vibe-2111" role="region" aria-label="Daybreak Atelier — a sunlit interface">
+  <canvas class="sketch" aria-hidden="true"></canvas>
+  <div class="sun s1" aria-hidden="true"></div>
+  <div class="sun s2" aria-hidden="true"></div>
 
-  <div class="card">
-    <div class="eyebrow">Concept No. 2110</div>
-    <h1><span>Drift</span></h1>
-    <p class="lead">Quiet motion. Clear intent. A small place to breathe and focus.</p>
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot" aria-hidden="true"></span> Concept No. 2111</div>
+    <h1>Daybreak Atelier</h1>
+    <p class="lead">Sun on paper. Air between ideas. A studio for clear thinking.</p>
 
-    <div class="controls" role="group" aria-label="Mood and Accent">
-      <button class="pill breathe" aria-pressed="false" title="Toggle breathing motion">Breathe</button>
-      <div class="dots" aria-label="Choose accent">
-        <button class="dot" data-accent="#8EE3F5" style="--c:#8EE3F5" aria-label="Sky"></button>
-        <button class="dot" data-accent="#B58EE3" style="--c:#B58EE3" aria-label="Lavender"></button>
-        <button class="dot" data-accent="#8EF5C2" style="--c:#8EF5C2" aria-label="Mint"></button>
+    <div class="controls" role="group" aria-label="Mood and Palette">
+      <button class="pill toggle" aria-pressed="false" title="Reduce motion and glow">Calm mode</button>
+      <div class="swatches" aria-label="Choose palette">
+        <button class="swatch" data-palette="#ffb84d|#ff6f61" style="--preview:linear-gradient(90deg,#ffb84d,#ff6f61)" aria-label="Sunrise"></button>
+        <button class="swatch" data-palette="#73e7c6|#23b6e6" style="--preview:linear-gradient(90deg,#73e7c6,#23b6e6)" aria-label="Seafoam"></button>
+        <button class="swatch" data-palette="#b48df2|#ff8cc3" style="--preview:linear-gradient(90deg,#b48df2,#ff8cc3)" aria-label="Lilium"></button>
+        <button class="swatch" data-palette="#ffd36e|#9be26c" style="--preview:linear-gradient(90deg,#ffd36e,#9be26c)" aria-label="Citrus"></button>
       </div>
     </div>
 
-    <div class="quote" aria-live="polite">"Make it simple, but significant."</div>
+    <div class="quote" aria-live="polite">“Design is the courage to leave space.”</div>
 
     <div class="meta">
-      <span id="last-updated">Last updated: 2026-01-21 20:42:01 EST</span>
-      <span class="dot-sep" aria-hidden="true"></span>
-      <span>Hover to paint the light.</span>
+      <span id="last-updated">Last updated: 2026-01-21 22:46:04 EST</span>
+      <span class="sep" aria-hidden="true"></span>
+      <span>Move to paint with light. Click a palette to shift the sun.</span>
     </div>
   </div>
 </div>
@@ -330,6 +299,8 @@
 <script>
 (function () {
   const root = document.currentScript.previousElementSibling;
+  const canvas = root.querySelector('.sketch');
+  const ctx = canvas.getContext('2d', { alpha: true });
   const updatedEl = root.querySelector('#last-updated');
 
   // Last updated stamp
@@ -345,48 +316,124 @@
     updatedEl.textContent = 'Last updated: ' + new Date().toLocaleString();
   }
 
-  // Pointer light + parallax
-  const setMouseVars = (e) => {
+  // Resize canvas to element size with DPR
+  let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+  function sizeCanvas() {
     const rect = root.getBoundingClientRect();
-    const xPct = ((e.clientX - rect.left) / rect.width) * 100;
-    const yPct = ((e.clientY - rect.top) / rect.height) * 100;
-    root.style.setProperty('--mx', xPct + '%');
-    root.style.setProperty('--my', yPct + '%');
-  };
-  root.addEventListener('mousemove', setMouseVars);
+    canvas.width = Math.max(1, rect.width * dpr);
+    canvas.height = Math.max(1, rect.height * dpr);
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  sizeCanvas();
+  window.addEventListener('resize', sizeCanvas);
+
+  // Pointer-reactive light and paint
+  let targetX = 0.6, targetY = 0.35;
+  let px = targetX, py = targetY; // normalized [0..1]
+  let lastX = null, lastY = null, lastT = performance.now();
+
+  function setMouseVars(clientX, clientY) {
+    const rect = root.getBoundingClientRect();
+    const x = (clientX - rect.left) / rect.width;
+    const y = (clientY - rect.top) / rect.height;
+    targetX = Math.max(0, Math.min(1, x));
+    targetY = Math.max(0, Math.min(1, y));
+    root.style.setProperty('--mx', (targetX * 100) + '%');
+    root.style.setProperty('--my', (targetY * 100) + '%');
+  }
+
+  root.addEventListener('pointermove', (e) => setMouseVars(e.clientX, e.clientY));
   root.addEventListener('touchmove', (e) => {
-    if (e.touches && e.touches[0]) setMouseVars(e.touches[0]);
+    if (e.touches && e.touches[0]) setMouseVars(e.touches[0].clientX, e.touches[0].clientY);
   }, { passive: true });
 
-  // Orb parallax
-  const orbs = root.querySelectorAll('.orb');
-  root.addEventListener('pointermove', (e) => {
+  // Palette switching
+  function applyPalette(c1, c2) {
+    root.style.setProperty('--accent1', c1);
+    root.style.setProperty('--accent2', c2);
+  }
+  const swatches = Array.from(root.querySelectorAll('.swatch'));
+  swatches.forEach((b, i) => {
+    b.addEventListener('click', () => {
+      swatches.forEach(x => x.classList.toggle('active', x === b));
+      const [c1, c2] = (b.getAttribute('data-palette') || '').split('|');
+      if (c1 && c2) applyPalette(c1, c2);
+    });
+    if (i === 0) b.click();
+  });
+
+  // Calm mode toggle
+  const calmBtn = root.querySelector('.pill.toggle');
+  calmBtn.addEventListener('click', () => {
+    const on = !root.classList.contains('calm');
+    root.classList.toggle('calm', on);
+    calmBtn.setAttribute('aria-pressed', String(on));
+  });
+
+  // Light painting loop
+  function loop(t) {
     const rect = root.getBoundingClientRect();
-    const cx = e.clientX - rect.left - rect.width / 2;
-    const cy = e.clientY - rect.top - rect.height / 2;
-    orbs.forEach((el, i) => {
-      const s = (i + 1) * 0.02;
-      el.style.transform = 'translate3d(' + (-cx * s) + 'px,' + (-cy * s) + 'px,0)';
-    });
-  });
+    const w = rect.width, h = rect.height;
+    // Easing towards target for silky motion
+    px += (targetX - px) * 0.12;
+    py += (targetY - py) * 0.12;
 
-  // Accent selection
-  root.querySelectorAll('.dot').forEach((btn, idx) => {
-    btn.addEventListener('click', () => {
-      const color = btn.getAttribute('data-accent') || '#8EE3F5';
-      root.style.setProperty('--accent', color);
-      root.querySelectorAll('.dot').forEach(b => b.classList.toggle('active', b === btn));
-    });
-    if (idx === 0) btn.click();
-  });
+    // Fade canvas gently towards white
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgba(255,255,255,0.06)';
+    ctx.fillRect(0, 0, w, h);
 
-  // Breathe toggle
-  const breatheBtn = root.querySelector('.breathe');
-  breatheBtn.addEventListener('click', () => {
-    const on = !root.classList.contains('breathing');
-    root.classList.toggle('breathing', on);
-    breatheBtn.setAttribute('aria-pressed', String(on));
-  });
+    // Compute motion-based radius
+    const dt = Math.max(16, t - lastT);
+    const dx = (lastX == null) ? 0 : (px - lastX) * w;
+    const dy = (lastY == null) ? 0 : (py - lastY) * h;
+    const speed = Math.min(1, Math.hypot(dx, dy) / 140);
+    const base = 24;
+    const r = base + speed * 48;
+
+    // Draw luminous dab
+    const cx = px * w;
+    const cy = py * h;
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    grad.addColorStop(0, getTint(0.0));
+    grad.addColorStop(0.6, getTint(0.5));
+    grad.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
+
+    lastX = px; lastY = py; lastT = t;
+    requestAnimationFrame(loop);
+  }
+
+  // Utility: mix accent colors into luminous tints
+  function getTint(bias) {
+    const c1 = getComputedStyle(root).getPropertyValue('--accent1').trim();
+    const c2 = getComputedStyle(root).getPropertyValue('--accent2').trim();
+    // Simple lerp between two hex colors to avoid color-mix in JS
+    function hexToRgb(h) {
+      const s = h.replace('#','');
+      const n = s.length === 3
+        ? s.split('').map(ch => ch + ch).join('')
+        : s;
+      const num = parseInt(n, 16);
+      return [(num>>16)&255, (num>>8)&255, num&255];
+    }
+    function lerp(a,b,t){ return a + (b-a)*t; }
+    const a = hexToRgb(c1), b = hexToRgb(c2);
+    const r = Math.round(lerp(a[0], b[0], bias));
+    const g = Math.round(lerp(a[1], b[1], bias));
+    const bl = Math.round(lerp(a[2], b[2], bias));
+    const alpha = 0.32 + bias * 0.25;
+    return 'rgba(' + r + ',' + g + ',' + bl + ',' + alpha + ')';
+  }
+
+  // Kick off
+  requestAnimationFrame(loop);
 })();
 </script>
       </section>
