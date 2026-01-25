@@ -73,493 +73,462 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="vibe-2189" aria-label="Paper Garden">
+<section id="vibe-2190" aria-label="Aurora Orrery">
   <style>
-    /* Scope to #vibe-2189 */
-    #vibe-2189 {
-      --bg1: #fafaf7;
-      --bg2: #f2f6ff;
-      --ink: #1b2430;
-      --muted: #5a677a;
-      --accent: #4b77f3;
-      --accent-2: #ff7aa2;
-      --leaf: #2fb47c;
-      --depth: 14;
-      --shine-x: 50%;
-      --shine-y: 50%;
+    /* Scope everything to #vibe-2190 */
+    #vibe-2190 {
+      --h: 210;
+      --ink: #0f1328;
+      --muted: #56607b;
+      --paper: #ffffff;
+      --bg1: hsl(var(--h) 80% 98%);
+      --bg2: hsl(calc(var(--h) + 50) 90% 96%);
+      --a1: hsl(var(--h) 85% 60%);
+      --a2: hsl(calc(var(--h) + 50) 80% 63%);
+      --a3: hsl(calc(var(--h) + 100) 70% 62%);
+      --tempo: 12s;
+      --rx: 0deg;
+      --ry: 0deg;
       position: relative;
-      border-radius: 22px;
-      overflow: hidden;
+      border-radius: 28px;
+      padding: clamp(18px, 3vw, 28px);
       color: var(--ink);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans";
-      background: radial-gradient(1200px 800px at 20% -10%, rgba(75,119,243,0.12), transparent 60%),
-                  radial-gradient(1000px 600px at 120% 110%, rgba(255,122,162,0.12), transparent 60%),
-                  linear-gradient(180deg, var(--bg1), var(--bg2));
-      padding: 28px;
+      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Text", Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, color-mix(in oklab, var(--a1) 10%, transparent), transparent 60%),
+        radial-gradient(900px 500px at 120% 110%, color-mix(in oklab, var(--a2) 12%, transparent), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      border: 1px solid rgba(10, 20, 60, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.7), 0 30px 120px rgba(20,30,60,0.14);
+      overflow: hidden;
       isolation: isolate;
-      border: 1px solid rgba(0,0,0,0.06);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6), 0 28px 90px rgba(34,53,89,0.10);
+      perspective: 1200px;
     }
-
-    /* Dusk theme */
-    #vibe-2189[data-theme="dusk"] {
-      --bg1: #0f1221;
-      --bg2: #191d33;
+    #vibe-2190[data-theme="night"] {
       --ink: #eef3ff;
-      --muted: #b9c3d9;
-      --accent: #8bdcf0;
-      --accent-2: #ffd27e;
-      --leaf: #8ce9b3;
-      border-color: rgba(255,255,255,0.14);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 28px 90px rgba(0,0,0,0.40);
+      --muted: #b7c3e6;
+      --paper: rgba(20,26,60,0.55);
+      --bg1: #0a0e1f;
+      --bg2: #151a35;
+      border-color: rgba(255,255,255,0.12);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 30px 120px rgba(0,0,0,0.5);
     }
-
-    /* Subtle paper grain */
-    #vibe-2189::after {
+    /* Subtle grain + vignette */
+    #vibe-2190::before,
+    #vibe-2190::after {
       content: "";
       position: absolute; inset: 0;
+      pointer-events: none;
+    }
+    #vibe-2190::before {
       background:
         repeating-linear-gradient(90deg, rgba(0,0,0,0.015), rgba(0,0,0,0.015) 1px, transparent 1px, transparent 3px),
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.01), rgba(0,0,0,0.01) 1px, transparent 1px, transparent 3px);
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.012), rgba(0,0,0,0.012) 1px, transparent 1px, transparent 3px);
+      opacity: .35;
       mix-blend-mode: multiply;
-      opacity: 0.35;
-      pointer-events: none;
-      animation: grain-move 8s steps(6) infinite;
+      animation: v190-grain 8s steps(6) infinite;
     }
-    @keyframes grain-move {
-      0%,100% { transform: translate(0,0); }
-      50% { transform: translate(-0.6%, 0.8%); }
+    #vibe-2190::after {
+      background: radial-gradient(120% 120% at 50% 120%, rgba(0,0,0,0.18), transparent 50%);
+      opacity: .35;
     }
+    @keyframes v190-grain { 50% { transform: translate(-0.5%, 0.7%); } }
 
-    /* Decorative breeze lines (SVG) */
-    #vibe-2189 .breeze {
-      position: absolute; inset: 0;
-      pointer-events: none;
-      opacity: 0.55;
-      mix-blend-mode: multiply;
-    }
-    #vibe-2189[data-theme="dusk"] .breeze { mix-blend-mode: screen; opacity: 0.35; }
-    #vibe-2189 .breeze path {
-      stroke: linear-gradient(90deg, var(--accent), var(--accent-2));
-      stroke: url(#v189-grad);
-      stroke-width: 1.5;
-      fill: none;
-      stroke-linecap: round;
-      stroke-dasharray: 140 28;
-      animation: drift 14s linear infinite;
-      filter: blur(0.2px);
-    }
-    @keyframes drift {
-      to { stroke-dashoffset: -168; }
-    }
-
-    /* Folded paper card */
-    #vibe-2189 .fold {
+    /* Tilted stage */
+    #vibe-2190 .stage {
       position: relative;
-      background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.78));
-      border: 1px solid rgba(0,0,0,0.06);
-      border-radius: 18px;
-      padding: 22px 22px 18px 22px;
-      backdrop-filter: blur(6px) saturate(120%);
-      box-shadow:
-        0 1px 0 rgba(255,255,255,0.9) inset,
-        0 10px calc(var(--depth) * 1px) rgba(34,53,89,0.12),
-        0 2px 6px rgba(34,53,89,0.08);
-      transform: translateZ(0);
-      overflow: hidden;
+      min-height: clamp(300px, 44vw, 560px);
+      border-radius: 22px;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transform: rotateX(var(--rx)) rotateY(var(--ry));
     }
-    #vibe-2189[data-theme="dusk"] .fold {
-      background: linear-gradient(180deg, rgba(21,25,45,0.9), rgba(21,25,45,0.72));
-      border-color: rgba(255,255,255,0.12);
-      box-shadow:
-        0 1px 0 rgba(255,255,255,0.05) inset,
-        0 10px calc(var(--depth) * 1px) rgba(0,0,0,0.45),
-        0 2px 6px rgba(0,0,0,0.25);
-    }
-    #vibe-2189 .fold::before,
-    #vibe-2189 .fold::after {
+
+    /* Aurora backlights */
+    #vibe-2190 .aurora,
+    #vibe-2190 .aurora::before,
+    #vibe-2190 .aurora::after {
+      position: absolute; inset: 0; border-radius: 22px; filter: blur(28px);
       content: "";
-      position: absolute;
-      width: 220px; height: 220px;
-      background: radial-gradient(140px 140px at var(--shine-x) var(--shine-y), rgba(255,255,255,0.9), transparent 60%);
-      top: -50px; left: -50px;
-      opacity: 0.65;
-      transition: opacity 180ms ease;
-      pointer-events: none;
     }
-    #vibe-2189 .fold::after {
-      top: auto; left: auto; right: -80px; bottom: -80px;
-      opacity: 0.35;
+    #vibe-2190 .aurora {
+      z-index: 0;
+      background:
+        radial-gradient(40% 55% at 20% 70%, color-mix(in oklab, var(--a1) 35%, transparent), transparent 70%),
+        radial-gradient(35% 50% at 85% 30%, color-mix(in oklab, var(--a2) 35%, transparent), transparent 70%);
+      opacity: .9;
+      transform: translateZ(-40px);
+      animation: v190-sway 18s ease-in-out infinite;
     }
-    #vibe-2189[data-theme="dusk"] .fold::before,
-    #vibe-2189[data-theme="dusk"] .fold::after {
-      background: radial-gradient(160px 160px at var(--shine-x) var(--shine-y), rgba(255,255,255,0.25), transparent 60%);
+    #vibe-2190 .aurora::before {
+      background: radial-gradient(60% 60% at 50% 40%, color-mix(in oklab, var(--a3) 28%, transparent), transparent 70%);
+      mix-blend-mode: screen;
+      animation: v190-sway-2 22s ease-in-out infinite reverse;
+    }
+    #vibe-2190 .aurora::after {
+      background: conic-gradient(from 180deg at 50% 50%, color-mix(in oklab, var(--a1) 16%, transparent), color-mix(in oklab, var(--a2) 16%, transparent), color-mix(in oklab, var(--a3) 16%, transparent), transparent);
+      opacity: .6;
+      animation: v190-spin 36s linear infinite;
+      transform: translateZ(-60px);
+    }
+    @keyframes v190-sway { 50% { transform: translateZ(-40px) translateY(-2%) scale(1.02); } }
+    @keyframes v190-sway-2 { 50% { transform: translateY(2%) scale(1.04); } }
+    @keyframes v190-spin { to { transform: translateZ(-60px) rotate(360deg); } }
+
+    /* Orrery */
+    #vibe-2190 .orrery {
+      position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none;
+      transform: translateZ(20px);
+    }
+    #vibe-2190 .orbit {
+      position: absolute; display: grid; place-items: start center;
+      aspect-ratio: 1/1; border-radius: 50%;
+      animation: v190-rotate var(--tempo) linear infinite;
+      filter: drop-shadow(0 4px 12px rgba(20,30,60,0.15));
+    }
+    #vibe-2190 .orbit::before {
+      content: ""; position: absolute; inset: 0; border-radius: 50%;
+      background:
+        radial-gradient(60% 60% at 50% 50%, transparent 60%, rgba(0,0,0,0.08) 61%, transparent 63%),
+        radial-gradient(60% 60% at 50% 50%, transparent 72%, rgba(0,0,0,0.06) 73%, transparent 75%);
+      mix-blend-mode: multiply; opacity: .45;
+    }
+    #vibe-2190[data-theme="night"] .orbit::before {
+      background:
+        radial-gradient(60% 60% at 50% 50%, transparent 60%, rgba(255,255,255,0.18) 61%, transparent 63%),
+        radial-gradient(60% 60% at 50% 50%, transparent 72%, rgba(255,255,255,0.12) 73%, transparent 75%);
+      opacity: .35;
+      mix-blend-mode: screen;
+    }
+    #vibe-2190 .o1 { width: clamp(220px, 36vmin, 420px); animation-duration: calc(var(--tempo) * .8); }
+    #vibe-2190 .o2 { width: clamp(300px, 48vmin, 540px); animation-duration: var(--tempo); }
+    #vibe-2190 .o3 { width: clamp(380px, 60vmin, 660px); animation-duration: calc(var(--tempo) * 1.4); }
+    @keyframes v190-rotate { to { transform: rotate(360deg); } }
+
+    #vibe-2190 .planet {
+      position: relative; top: -1px; transform: translateY(-50%);
+      width: 14px; height: 14px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--a1) 60%);
+      box-shadow: 0 0 0 2px color-mix(in oklab, var(--a1) 25%, transparent), 0 8px 18px color-mix(in oklab, var(--a1) 30%, transparent);
+    }
+    #vibe-2190 .o2 .planet { width: 10px; height: 10px; background: radial-gradient(circle at 30% 30%, #fff, var(--a2) 60%); box-shadow: 0 0 0 2px color-mix(in oklab, var(--a2) 25%, transparent), 0 8px 18px color-mix(in oklab, var(--a2) 30%, transparent); }
+    #vibe-2190 .o3 .planet { width: 8px; height: 8px; background: radial-gradient(circle at 30% 30%, #fff, var(--a3) 60%); box-shadow: 0 0 0 2px color-mix(in oklab, var(--a3) 25%, transparent), 0 8px 18px color-mix(in oklab, var(--a3) 30%, transparent); }
+
+    /* Glass console */
+    #vibe-2190 .glass {
+      position: relative; z-index: 2; transform: translateZ(40px);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--paper) 82%, transparent), color-mix(in oklab, var(--paper) 65%, transparent));
+      -webkit-backdrop-filter: blur(8px) saturate(120%); backdrop-filter: blur(8px) saturate(120%);
+      border: 1px solid rgba(10,20,60,0.08);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 14px 36px rgba(20,30,60,0.18);
+    }
+    #vibe-2190[data-theme="night"] .glass { border-color: rgba(255,255,255,0.14); box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 14px 36px rgba(0,0,0,0.45); }
+
+    #vibe-2190 .badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.08);
+      padding: 6px 10px; border-radius: 999px;
+    }
+    #vibe-2190[data-theme="night"] .badge { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); }
+
+    #vibe-2190 .swatch {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.08) inset;
     }
 
-    /* Header badge */
-    #vibe-2189 .badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase;
-      color: var(--muted);
-      background: rgba(0,0,0,0.04);
-      border: 1px solid rgba(0,0,0,0.06);
-      padding: 6px 10px;
-      border-radius: 999px;
-    }
-    #vibe-2189[data-theme="dusk"] .badge {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(255,255,255,0.12);
-      color: var(--muted);
-    }
-    #vibe-2189 .leaf {
-      width: 10px; height: 10px; border-radius: 2px 8px 8px 2px / 2px 8px 8px 2px;
-      background: radial-gradient(circle at 30% 30%, #fff, var(--leaf));
-      transform: rotate(-18deg);
-      box-shadow: 0 0 0 2px rgba(47,180,124,0.15);
-    }
-
-    /* Title + tagline */
-    #vibe-2189 .title {
-      margin: 10px 0 6px;
-      font-size: clamp(28px, 5vw, 44px);
-      line-height: 1.04;
-      letter-spacing: -0.02em;
-      font-weight: 800;
-      background: conic-gradient(from 200deg at 50% 50%, var(--ink), var(--accent), var(--accent-2), var(--ink));
+    #vibe-2190 .title {
+      margin: 12px 0 4px;
+      font-weight: 900; letter-spacing: -0.02em;
+      font-size: clamp(28px, 5vw, 48px);
+      line-height: 1.02;
+      background: conic-gradient(from 200deg at 50% 50%, var(--ink), var(--a1), var(--a2), var(--a3), var(--ink));
       background-size: 200% 200%;
-      -webkit-background-clip: text; background-clip: text;
-      color: transparent;
-      animation: hue-pan 12s linear infinite;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: v190-hue 20s linear infinite;
     }
-    @keyframes hue-pan { to { background-position: 200% 200%; } }
-    #vibe-2189 .tag {
-      margin: 0 0 14px;
-      font-size: 16px; color: var(--muted);
+    @keyframes v190-hue { to { background-position: 200% 200%; } }
+
+    #vibe-2190 .tag {
+      margin: 0 0 10px; color: var(--muted); font-size: 15px;
     }
 
-    /* Principles list */
-    #vibe-2189 .principles {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin: 10px 0 14px;
-    }
-    #vibe-2189 .pill {
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.06);
-      background: rgba(0,0,0,0.03);
-      color: var(--ink);
-      font-weight: 600; font-size: 13px;
-    }
-    #vibe-2189 .pill .dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 20%, transparent);
-    }
-    #vibe-2189[data-theme="dusk"] .pill {
-      background: rgba(255,255,255,0.05);
-      border-color: rgba(255,255,255,0.12);
+    /* Clock row */
+    #vibe-2190 .clock {
+      display: inline-flex; align-items: baseline; gap: 10px;
+      font-variant-numeric: tabular-nums;
       color: var(--ink);
     }
+    #vibe-2190 .time {
+      font-size: clamp(20px, 4vw, 36px); font-weight: 800; letter-spacing: 0.02em;
+    }
+    #vibe-2190 .tz { font-size: 12px; color: var(--muted); }
 
     /* Controls */
-    #vibe-2189 .controls {
-      display: flex; flex-wrap: wrap; gap: 12px 14px;
-      align-items: center;
-      margin: 8px 0 6px;
+    #vibe-2190 .controls {
+      display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center; margin: 14px 0 8px;
     }
-    #vibe-2189 .btn {
-      appearance: none;
-      border: 1px solid rgba(0,0,0,0.08);
-      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));
+    #vibe-2190 .btn {
+      appearance: none; cursor: pointer;
+      border: 1px solid rgba(10,20,60,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.8));
       color: var(--ink);
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-weight: 700; font-size: 14px; letter-spacing: .01em;
-      cursor: pointer;
-      transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, background 140ms ease;
-      box-shadow: 0 6px 16px rgba(34,53,89,0.10);
+      padding: 10px 14px; border-radius: 12px;
+      font-weight: 700; font-size: 14px;
+      box-shadow: 0 8px 20px rgba(20,30,60,0.12);
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
     }
-    #vibe-2189 .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 28px rgba(34,53,89,0.18);
-      border-color: color-mix(in oklab, var(--accent) 35%, transparent);
-      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
-    }
-    #vibe-2189[data-theme="dusk"] .btn {
-      background: linear-gradient(180deg, rgba(36,41,72,0.9), rgba(36,41,72,0.7));
-      border-color: rgba(255,255,255,0.16);
-      color: var(--ink);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+    #vibe-2190 .btn:hover { transform: translateY(-1px); box-shadow: 0 14px 32px rgba(20,30,60,0.18); border-color: color-mix(in oklab, var(--a2) 35%, transparent); }
+    #vibe-2190[data-theme="night"] .btn {
+      background: linear-gradient(180deg, rgba(32,38,72,0.9), rgba(32,38,72,0.7));
+      border-color: rgba(255,255,255,0.16); color: var(--ink); box-shadow: 0 8px 20px rgba(0,0,0,0.35);
     }
 
-    /* Toggle */
-    #vibe-2189 .toggle {
-      display: inline-flex; align-items: center; gap: 8px; user-select: none;
-      color: var(--muted); font-size: 13px;
-    }
-    #vibe-2189 .toggle input { position: absolute; opacity: 0; pointer-events: none; }
-    #vibe-2189 .track {
-      width: 58px; height: 30px; border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.08);
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
-      display: inline-flex; align-items: center; padding: 3px;
-    }
-    #vibe-2189 .thumb {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: radial-gradient(120% 120% at -10% -10%, #fff, rgba(0,0,0,0.1) 70%);
-      border: 1px solid rgba(0,0,0,0.08);
-      transform: translateX(0);
-      transition: transform 200ms cubic-bezier(.2,.6,.2,1), background 200ms ease;
-      box-shadow: 0 3px 10px rgba(34,53,89,0.15);
-    }
-    #vibe-2189 .toggle input:checked + .track .thumb { transform: translateX(28px); background: radial-gradient(120% 120% at -10% -10%, #fff, rgba(0,0,0,0.2) 70%); }
-    #vibe-2189[data-theme="dusk"] .track { border-color: rgba(255,255,255,0.16); background: linear-gradient(180deg, rgba(36,41,72,0.9), rgba(36,41,72,0.7)); }
+    #vibe-2190 .toggle { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; user-select: none; }
+    #vibe-2190 .toggle input { position: absolute; opacity: 0; pointer-events: none; }
+    #vibe-2190 .track { width: 58px; height: 30px; border-radius: 999px; border: 1px solid rgba(10,20,60,0.12); background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.75)); display: inline-flex; align-items: center; padding: 3px; }
+    #vibe-2190 .thumb { width: 24px; height: 24px; border-radius: 50%; background: radial-gradient(120% 120% at -10% -10%, #fff, rgba(0,0,0,0.12) 70%); border: 1px solid rgba(0,0,0,0.12); transform: translateX(0); transition: transform .2s cubic-bezier(.2,.6,.2,1); box-shadow: 0 3px 10px rgba(20,30,60,0.15); }
+    #vibe-2190 .toggle input:checked + .track .thumb { transform: translateX(28px); }
+    #vibe-2190[data-theme="night"] .track { border-color: rgba(255,255,255,0.2); background: linear-gradient(180deg, rgba(34,40,78,0.9), rgba(34,40,78,0.7)); }
 
-    /* Slider */
-    #vibe-2189 .slider-group { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
-    #vibe-2189 input[type="range"] {
-      -webkit-appearance: none; appearance: none;
-      height: 28px; width: 150px; background: transparent;
+    #vibe-2190 .slider {
+      margin-left: auto; display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px;
     }
-    #vibe-2189 input[type="range"]::-webkit-slider-runnable-track,
-    #vibe-2189 input[type="range"]::-moz-range-track {
-      height: 6px; border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      opacity: .6;
+    #vibe-2190 input[type="range"] {
+      -webkit-appearance: none; appearance: none; height: 28px; width: 160px; background: transparent;
     }
-    #vibe-2189 input[type="range"]::-webkit-slider-thumb,
-    #vibe-2189 input[type="range"]::-moz-range-thumb {
-      -webkit-appearance: none;
-      width: 16px; height: 16px; border-radius: 50%;
-      background: #fff; border: 2px solid rgba(0,0,0,0.15);
-      box-shadow: 0 2px 6px rgba(34,53,89,0.20);
-      margin-top: -5px;
+    #vibe-2190 input[type="range"]::-webkit-slider-runnable-track,
+    #vibe-2190 input[type="range"]::-moz-range-track {
+      height: 6px; border-radius: 999px; background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3)); opacity: .7;
+    }
+    #vibe-2190 input[type="range"]::-webkit-slider-thumb,
+    #vibe-2190 input[type="range"]::-moz-range-thumb {
+      -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 2px solid rgba(0,0,0,0.15); margin-top: -5px; box-shadow: 0 2px 6px rgba(20,30,60,0.18);
     }
 
-    /* Petals */
-    #vibe-2189 .petals { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-    #vibe-2189 .petal {
-      position: absolute;
-      width: var(--s, 12px); height: var(--s, 12px);
-      left: var(--x, 50%); top: var(--y, 60%);
-      background: radial-gradient(40% 40% at 30% 30%, #fff, var(--petal, var(--accent-2)));
-      border-radius: 40% 60% 60% 40% / 50% 40% 60% 50%;
-      opacity: 0.9;
-      transform: translate(-50%, -50%) rotate(var(--r, 0deg));
-      animation: float var(--t, 6s) ease-in forwards;
-      filter: drop-shadow(0 2px 4px rgba(34,53,89,0.18));
-    }
-    @keyframes float {
-      0% { transform: translate(calc(-50% + var(--sx, 0px)), calc(-50% + var(--sy, 0px))) rotate(var(--r, 0deg)); opacity: 1; }
-      70% { opacity: 0.95; }
-      100% { transform: translate(calc(-50% + var(--tx, 0px)), calc(-150% - var(--ty, 60px))) rotate(calc(var(--r, 0deg) + 120deg)); opacity: 0; }
-    }
+    /* Divider + meta */
+    #vibe-2190 .line { height: 1px; margin: 12px 0; background: linear-gradient(90deg, transparent, rgba(0,0,0,0.25), transparent); opacity: .18; }
+    #vibe-2190[data-theme="night"] .line { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent); opacity: .26; }
+    #vibe-2190 .meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; font-size: 12px; color: var(--muted); }
+    #vibe-2190 .kbd { background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 6px; color: var(--ink); }
+    #vibe-2190[data-theme="night"] .kbd { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
 
-    /* Divider */
-    #vibe-2189 .line {
-      height: 1px; margin: 12px 0;
-      background: linear-gradient(90deg, transparent, rgba(0,0,0,0.25), transparent);
-      opacity: 0.18;
+    /* Effects: sparks + rings */
+    #vibe-2190 .effects { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+    #vibe-2190 .spark {
+      position: absolute; left: 50%; top: 60%;
+      width: var(--w, 2px); height: var(--h, 26px);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--a1) 70%, transparent), transparent);
+      border-radius: 2px;
+      transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+      opacity: .9; filter: blur(.2px) drop-shadow(0 4px 8px rgba(0,0,0,0.18));
+      animation: v190-spark var(--t, 1000ms) ease-out forwards;
     }
-    #vibe-2189[data-theme="dusk"] .line { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); opacity: 0.28; }
+    @keyframes v190-spark {
+      0% { transform: translate(calc(-50% + var(--ox, 0px)), calc(-50% + var(--oy, 0px))) rotate(var(--rot, 0deg)); opacity: 1; }
+      100% { transform: translate(calc(-50% + var(--tx, 0px)), calc(-180% + var(--ty, -40px))) rotate(calc(var(--rot, 0deg) + 100deg)); opacity: 0; }
+    }
+    #vibe-2190 .ring {
+      position: absolute; left: 50%; top: 50%; width: 40px; height: 40px;
+      border-radius: 50%; border: 2px solid color-mix(in oklab, var(--a2) 60%, transparent);
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: .6; animation: v190-ring 900ms ease-out forwards;
+      filter: drop-shadow(0 2px 10px color-mix(in oklab, var(--a2) 40%, transparent));
+    }
+    @keyframes v190-ring { to { transform: translate(-50%, -50%) scale(2.4); opacity: 0; } }
 
-    /* Meta */
-    #vibe-2189 .meta {
-      display: flex; flex-wrap: wrap; gap: 10px;
-      align-items: center; justify-content: space-between;
-      font-size: 12px; color: var(--muted);
-    }
-    #vibe-2189 .kbd {
-      font-variant-numeric: tabular-nums;
-      background: rgba(0,0,0,0.04);
-      border: 1px solid rgba(0,0,0,0.08);
-      padding: 4px 8px; border-radius: 6px;
-      color: var(--ink);
-    }
-    #vibe-2189[data-theme="dusk"] .kbd {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.16);
-      color: var(--ink);
-    }
+    /* Focus outlines */
+    #vibe-2190 .btn:focus-visible,
+    #vibe-2190 .track:focus-visible,
+    #vibe-2190 input[type="range"]:focus-visible { outline: 2px dotted var(--a2); outline-offset: 3px; }
 
-    /* Focus visibility */
-    #vibe-2189 .btn:focus-visible,
-    #vibe-2189 .track:focus-visible,
-    #vibe-2189 input[type="range"]:focus-visible {
-      outline: 2px dotted var(--accent);
-      outline-offset: 3px;
-    }
-
-    /* Motion preferences */
+    /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      #vibe-2189 .breeze path,
-      #vibe-2189::after,
-      #vibe-2189 .title,
-      #vibe-2189 .petal {
-        animation: none !important;
-      }
-      #vibe-2189 .fold::before, #vibe-2189 .fold::after { transition: none; }
+      #vibe-2190 .aurora,
+      #vibe-2190 .aurora::before,
+      #vibe-2190 .aurora::after,
+      #vibe-2190 .orbit,
+      #vibe-2190 .title { animation: none !important; }
+      #vibe-2190 .stage { transform: none !important; }
     }
   </style>
 
-  <!-- Breeze SVG -->
-  <svg class="breeze" viewBox="0 0 1200 400" aria-hidden="true" preserveAspectRatio="none">
-    <defs>
-      <linearGradient id="v189-grad" x1="0" x2="1" y1="0" y2="0">
-        <stop offset="0" stop-color="var(--accent)" />
-        <stop offset="1" stop-color="var(--accent-2)" />
-      </linearGradient>
-    </defs>
-    <path d="M-20 70 C 140 20, 280 140, 460 90 S 840 40, 1220 100" />
-    <path d="M-20 180 C 180 140, 360 240, 540 190 S 920 120, 1220 160" style="animation-delay: -3s" />
-    <path d="M-20 300 C 200 260, 360 340, 620 300 S 980 240, 1220 280" style="animation-delay: -6s" />
-  </svg>
+  <div class="stage" id="stage">
+    <div class="aurora" aria-hidden="true"></div>
 
-  <!-- Main card -->
-  <article class="fold" tabindex="0" aria-label="Paper Garden card">
-    <div class="badge"><span class="leaf" aria-hidden="true"></span> Paper Garden • Edition 2189</div>
-    <h1 class="title">Tactile calm. Joy in small motions.</h1>
-    <p class="tag" id="line">Design that feels like fresh paper and a light breeze.</p>
-
-    <div class="principles" aria-hidden="true">
-      <div class="pill"><span class="dot"></span> Clarity</div>
-      <div class="pill"><span class="dot" style="background: var(--accent-2); box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent-2) 20%, transparent);"></span> Warmth</div>
-      <div class="pill"><span class="dot" style="background: var(--leaf); box-shadow: 0 0 0 6px color-mix(in oklab, var(--leaf) 20%, transparent);"></span> Poise</div>
+    <div class="orrery" aria-hidden="true">
+      <div class="orbit o1"><span class="planet"></span></div>
+      <div class="orbit o2"><span class="planet"></span></div>
+      <div class="orbit o3"><span class="planet"></span></div>
     </div>
 
-    <div class="controls">
-      <button class="btn" id="petal-btn" aria-label="Scatter petals">Scatter petals</button>
-      <button class="btn" id="shuffle-line" aria-label="Shuffle tagline">Shuffle line</button>
+    <article class="glass" aria-label="Aurora console" tabindex="0">
+      <span class="badge"><span class="swatch" aria-hidden="true"></span> Aurora Orrery • 2190</span>
+      <h1 class="title">Kinetic calm. Orbits of light.</h1>
+      <p class="tag" id="tagline">Design that moves just enough to make you breathe out.</p>
 
-      <label class="toggle" for="dusk">
-        <input type="checkbox" id="dusk" aria-label="Toggle dusk mode">
-        <span class="track" tabindex="0"><span class="thumb"></span></span>
-        <span> Dusk mode</span>
-      </label>
-
-      <div class="slider-group" aria-label="Shadow depth">
-        <span>Depth</span>
-        <input type="range" id="depth" min="6" max="28" value="14" aria-valuemin="6" aria-valuemax="28" aria-valuenow="14">
+      <div class="clock" aria-live="polite">
+        <span class="time" id="time">—:—:—</span>
+        <span class="tz" id="tz"></span>
       </div>
-    </div>
 
-    <div class="line" aria-hidden="true"></div>
+      <div class="controls">
+        <button class="btn" id="spark-btn" aria-label="Release sparks">Release sparks</button>
+        <button class="btn" id="palette-btn" aria-label="Shuffle palette">Shuffle palette</button>
 
-    <div class="meta">
-      <span class="kbd">Tip: press P to scatter petals</span>
-      <span id="last-updated">Last updated: 2026-01-25 12:16:22 EST</span>
-    </div>
+        <label class="toggle" for="night">
+          <input type="checkbox" id="night" aria-label="Toggle night mode">
+          <span class="track" tabindex="0"><span class="thumb"></span></span>
+          <span> Night</span>
+        </label>
 
-    <div class="petals" aria-hidden="true"></div>
-  </article>
+        <div class="slider" aria-label="Orbit tempo">
+          <span>Tempo</span>
+          <input type="range" id="tempo" min="6" max="24" value="12" aria-valuemin="6" aria-valuemax="24" aria-valuenow="12">
+        </div>
+      </div>
+
+      <div class="line" aria-hidden="true"></div>
+      <div class="meta">
+        <span class="kbd">Tips: R to shuffle • S to spark • T to toggle night</span>
+        <span id="last-updated">Last updated: 2026-01-25 13:27:40 EST</span>
+      </div>
+    </article>
+
+    <div class="effects" aria-hidden="true"></div>
+  </div>
 
   <script>
     (function () {
-      const root = document.getElementById('vibe-2189');
-      const fold = root.querySelector('.fold');
-      const petalsLayer = root.querySelector('.petals');
-      const dusk = root.querySelector('#dusk');
-      const track = root.querySelector('.track');
-      const depthRange = root.querySelector('#depth');
-      const petalBtn = root.querySelector('#petal-btn');
-      const shuffleBtn = root.querySelector('#shuffle-line');
-      const line = root.querySelector('#line');
+      const root = document.getElementById('vibe-2190');
+      const stage = document.getElementById('stage');
       const last = root.querySelector('#last-updated');
+      const timeEl = root.querySelector('#time');
+      const tzEl = root.querySelector('#tz');
+      const sparkBtn = root.querySelector('#spark-btn');
+      const paletteBtn = root.querySelector('#palette-btn');
+      const nightToggle = root.querySelector('#night');
+      const tempoRange = root.querySelector('#tempo');
+      const track = root.querySelector('.track');
+      const effects = root.querySelector('.effects');
+      const tagline = root.querySelector('#tagline');
 
       // Last updated
       try {
         const now = new Date();
         last.textContent = 'Last updated: ' + now.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
-      } catch (e) { last.textContent = 'Last updated: just now'; }
+      } catch (_) { last.textContent = 'Last updated: just now'; }
 
-      // Taglines
-      const phrases = [
-        'Design that feels like fresh paper and a light breeze.',
-        'Quiet surfaces. Confident rhythm.',
-        'Less gloss. More grace.',
-        'Soft edges, sharp ideas.',
-        'Motion that whispers.',
-        'Honest materials, vivid intent.'
+      // Clock
+      function tick() {
+        const d = new Date();
+        timeEl.textContent = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      }
+      tzEl.textContent = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      tick();
+      const clockInt = setInterval(tick, 1000);
+
+      // Taglines to shuffle on palette
+      const lines = [
+        'Design that moves just enough to make you breathe out.',
+        'Soft motion. Strong intent.',
+        'Less chrome. More clarity.',
+        'Light on the surface, depth in the details.',
+        'Motion that feels like a nod, not a shout.'
       ];
-      let idx = 0;
-      shuffleBtn.addEventListener('click', () => {
-        idx = (idx + 1) % phrases.length;
-        line.textContent = phrases[idx];
-      });
 
-      // Dusk theme
+      // Palette
+      function ring() {
+        const r = document.createElement('span');
+        r.className = 'ring';
+        effects.appendChild(r);
+        r.addEventListener('animationend', () => r.remove());
+      }
+      function shufflePalette() {
+        const hue = Math.floor(Math.random() * 360);
+        root.style.setProperty('--h', hue);
+        tagline.textContent = lines[Math.floor(Math.random() * lines.length)];
+        ring();
+      }
+      paletteBtn.addEventListener('click', shufflePalette);
+
+      // Night mode
       function setTheme() {
-        if (dusk.checked) root.setAttribute('data-theme', 'dusk');
+        if (nightToggle.checked) root.setAttribute('data-theme', 'night');
         else root.removeAttribute('data-theme');
       }
-      dusk.addEventListener('change', setTheme);
+      nightToggle.addEventListener('change', setTheme);
       track.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
-          dusk.checked = !dusk.checked; setTheme(); e.preventDefault();
+          nightToggle.checked = !nightToggle.checked; setTheme(); e.preventDefault();
         }
       });
 
-      // Depth control
-      function setDepth(val) { root.style.setProperty('--depth', String(val)); }
-      depthRange.addEventListener('input', (e) => setDepth(e.target.value));
-      setDepth(depthRange.value);
-
-      // Shine follow
-      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      function setShine(x, y, rect) {
-        const px = (x / rect.width) * 100;
-        const py = (y / rect.height) * 100;
-        root.style.setProperty('--shine-x', px + '%');
-        root.style.setProperty('--shine-y', py + '%');
+      // Tempo control (lower is faster visually, but we keep seconds literal)
+      function setTempo(v) {
+        const sec = Math.max(6, Math.min(24, Number(v)));
+        root.style.setProperty('--tempo', sec + 's');
       }
-      if (!reduceMotion) {
-        fold.addEventListener('pointermove', (e) => {
-          const r = fold.getBoundingClientRect();
-          setShine(e.clientX - r.left, e.clientY - r.top, r);
-        }, { passive: true });
-        fold.addEventListener('pointerenter', (e) => {
-          const r = fold.getBoundingClientRect(); setShine(r.width/2, r.height/2, r);
-        });
-      }
+      tempoRange.addEventListener('input', (e) => setTempo(e.target.value));
+      setTempo(tempoRange.value);
 
-      // Petal confetti
-      function scatter(count = 18) {
-        const r = fold.getBoundingClientRect();
-        for (let i = 0; i < count; i++) {
+      // Sparks
+      function sparks(n = 28) {
+        const rect = stage.getBoundingClientRect();
+        for (let i = 0; i < n; i++) {
           const s = document.createElement('span');
-          s.className = 'petal';
-          const x = Math.random() * r.width;
-          const y = r.height * (0.55 + Math.random() * 0.2);
-          const size = 8 + Math.random() * 12;
-          const time = 4.5 + Math.random() * 3.5;
-          const driftX = (Math.random() - 0.5) * 200;
-          const driftY = 40 + Math.random() * 120;
-          const rot = Math.random() * 180;
-          const hue = Math.random();
-          const colorA = getComputedStyle(root).getPropertyValue('--accent').trim();
-          const colorB = getComputedStyle(root).getPropertyValue('--accent-2').trim();
-          const petColor = Math.random() > 0.5 ? colorA : colorB;
-
-          s.style.setProperty('--x', x + 'px');
-          s.style.setProperty('--y', y + 'px');
-          s.style.setProperty('--s', size + 'px');
-          s.style.setProperty('--t', time + 's');
-          s.style.setProperty('--tx', driftX + 'px');
-          s.style.setProperty('--ty', driftY + 'px');
-          s.style.setProperty('--r', rot + 'deg');
-          s.style.setProperty('--sx', (Math.random() * 20 - 10).toFixed(1) + 'px');
-          s.style.setProperty('--sy', (Math.random() * 12 - 6).toFixed(1) + 'px');
-          s.style.setProperty('--petal', petColor);
-          petalsLayer.appendChild(s);
+          s.className = 'spark';
+          const angle = Math.random() * 360;
+          const radius = 40 + Math.random() * 200;
+          const w = 2;
+          const h = 16 + Math.random() * 26;
+          const t = 700 + Math.random() * 900;
+          s.style.setProperty('--rot', angle + 'deg');
+          s.style.setProperty('--w', w + 'px');
+          s.style.setProperty('--h', h + 'px');
+          s.style.setProperty('--t', t + 'ms');
+          s.style.setProperty('--ox', (Math.random() * 20 - 10).toFixed(1) + 'px');
+          s.style.setProperty('--oy', (Math.random() * 10 - 5).toFixed(1) + 'px');
+          s.style.setProperty('--tx', (Math.cos(angle * Math.PI/180) * radius).toFixed(1) + 'px');
+          s.style.setProperty('--ty', (Math.sin(angle * Math.PI/180) * radius).toFixed(1) + 'px');
+          effects.appendChild(s);
           s.addEventListener('animationend', () => s.remove());
         }
+        ring();
       }
-      petalBtn.addEventListener('click', () => scatter(24));
+      sparkBtn.addEventListener('click', () => sparks(36));
+
+      // Tilt interaction
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduceMotion) {
+        function tilt(e) {
+          const r = stage.getBoundingClientRect();
+          const cx = r.left + r.width / 2;
+          const cy = r.top + r.height / 2;
+          const dx = (e.clientX - cx) / (r.width / 2);
+          const dy = (e.clientY - cy) / (r.height / 2);
+          root.style.setProperty('--ry', (dx * 6).toFixed(2) + 'deg');
+          root.style.setProperty('--rx', (-dy * 6).toFixed(2) + 'deg');
+        }
+        function resetTilt() {
+          root.style.setProperty('--ry', '0deg');
+          root.style.setProperty('--rx', '0deg');
+        }
+        stage.addEventListener('pointermove', tilt, { passive: true });
+        stage.addEventListener('pointerleave', resetTilt);
+        stage.addEventListener('pointerenter', (e) => tilt(e), { passive: true });
+      }
+
+      // Keyboard shortcuts
       document.addEventListener('keydown', (e) => {
-        if (e.key.toLowerCase() === 'p') scatter(24);
+        const k = e.key.toLowerCase();
+        if (k === 'r') { shufflePalette(); }
+        if (k === 's') { sparks(36); }
+        if (k === 't') { nightToggle.checked = !nightToggle.checked; setTheme(); }
       });
     })();
   </script>
