@@ -73,415 +73,335 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="v2198" data-theme="nocturne" aria-live="polite">
+<div id="v2199" data-theme="aurora" aria-live="polite">
   <style>
-    /* Theme tokens */
-    #v2198 {
-      --bg-1: #0b1020;
-      --bg-2: #131b33;
-      --ink: #f6f8ff;
-      --muted: #c9d3ff;
-      --border: rgba(255,255,255,0.14);
-      --card: rgba(255,255,255,0.06);
-      --ring: rgba(255,255,255,0.22);
-      --g1a: rgba(111,255,255,0.18);
-      --g2a: rgba(179,161,255,0.14);
+    /* Tokens */
+    #v2199 {
+      --ink: #eef7ff;
+      --muted: #b9c7e6;
+      --panel: rgba(255,255,255,0.07);
+      --line: rgba(255,255,255,0.16);
+      --ring: rgba(255,255,255,0.28);
+      --h: 210;              /* dynamic hue (JS) */
+      --rot: 0deg;           /* dynamic rotation (pointer) */
       --mx: 50%;
       --my: 50%;
-      --rx: 0deg;
-      --ry: 0deg;
+      --depth: 0deg;
+      --bg-1: hsl(208 45% 7%);
+      --bg-2: hsl(223 39% 14%);
+      --acc-1: hsl(var(--h) 92% 62%);
+      --acc-2: hsl(calc(var(--h) + 60) 86% 60%);
+      --acc-3: hsl(calc(var(--h) + 140) 80% 60%);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
       color: var(--ink);
     }
-    #v2198[data-theme="dawn"] {
-      --bg-1: #1a1012;
-      --bg-2: #3a2126;
-      --ink: #fff7f3;
-      --muted: #ffd9cd;
-      --g1a: rgba(255,179,107,0.24);
-      --g2a: rgba(255,106,223,0.18);
+    #v2199[data-theme="sunrise"] {
+      --bg-1: hsl(18 62% 10%);
+      --bg-2: hsl(337 46% 22%);
+      --acc-1: hsl(calc(var(--h) + 20) 90% 64%);
+      --acc-2: hsl(calc(var(--h) + 80) 90% 62%);
+      --acc-3: hsl(calc(var(--h) + 140) 85% 58%);
+      --muted: #ffd6c7;
+      --ink: #fff8f5;
+      --panel: rgba(255,255,255,0.08);
+      --line: rgba(255,255,255,0.18);
+      --ring: rgba(255,255,255,0.3);
     }
-    #v2198[data-theme="neon"] {
-      --bg-1: #04131a;
-      --bg-2: #062735;
-      --ink: #eafffb;
-      --muted: #a6d8cf;
-      --g1a: rgba(0,255,209,0.25);
-      --g2a: rgba(136,160,255,0.16);
+    #v2199[data-theme="mono"] {
+      --bg-1: hsl(220 10% 12%);
+      --bg-2: hsl(220 12% 18%);
+      --acc-1: hsl(200 12% 80%);
+      --acc-2: hsl(200 12% 66%);
+      --acc-3: hsl(200 12% 58%);
+      --muted: #d9dde6;
+      --ink: #f6f7fb;
+      --panel: rgba(255,255,255,0.06);
+      --line: rgba(255,255,255,0.14);
+      --ring: rgba(255,255,255,0.24);
     }
 
-    /* Layout */
-    #v2198 .stage {
+    /* Canvas */
+    #v2199 .poster {
       position: relative;
       border-radius: 28px;
       overflow: hidden;
-      min-height: clamp(420px, 58vh, 680px);
-      padding: clamp(20px, 5vw, 42px);
-      display: grid;
-      grid-template-rows: auto auto 1fr auto;
-      gap: 16px;
-      background: linear-gradient(160deg, var(--bg-1), var(--bg-2));
-      border: 1px solid var(--border);
+      min-height: clamp(520px, 64vh, 860px);
+      padding: clamp(18px, 3.6vw, 36px);
+      background:
+        radial-gradient(120% 120% at var(--mx) var(--my), color-mix(in srgb, var(--acc-2) 10%, transparent), transparent 60%),
+        linear-gradient(160deg, var(--bg-1), var(--bg-2));
+      border: 1px solid var(--line);
       box-shadow:
-        0 30px 80px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.06);
-      transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry));
-      transition: transform 400ms cubic-bezier(.2,.7,.2,1), box-shadow 400ms ease;
-      will-change: transform;
+        0 24px 80px rgba(0,0,0,0.55),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+      transform: perspective(1200px) rotateX(calc(var(--depth) * -1)) rotateY(var(--depth));
+      transition: box-shadow 300ms ease, background 400ms ease;
       isolation: isolate;
     }
-    #v2198 .stage:focus-within {
-      box-shadow:
-        0 36px 90px rgba(0,0,0,0.5),
-        0 0 0 2px color-mix(in oklab, transparent, var(--ring) 46%),
-        inset 0 1px 0 rgba(255,255,255,0.06);
-      outline: none;
-    }
 
-    /* Ambient layers */
-    #v2198 .halo,
-    #v2198 .halo::after {
-      content: "";
-      position: absolute;
-      inset: -10%;
-      pointer-events: none;
-      z-index: 0;
-      background:
-        radial-gradient(40% 34% at var(--mx) var(--my), var(--g1a), transparent 60%),
-        radial-gradient(65% 55% at calc(100% - var(--mx)) calc(100% - var(--my)), var(--g2a), transparent 75%);
-      transition: opacity 300ms ease;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      #v2198 .halo, #v2198 .halo::after { transition: none; }
-    }
-    #v2198 .grid {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background:
-        linear-gradient(to bottom, rgba(255,255,255,0.03), rgba(0,0,0,0.08)),
-        repeating-linear-gradient(
-          0deg,
-          rgba(255,255,255,0.05) 0,
-          rgba(255,255,255,0.05) 1px,
-          transparent 1px,
-          transparent 30px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          rgba(255,255,255,0.05) 0,
-          rgba(255,255,255,0.05) 1px,
-          transparent 1px,
-          transparent 30px
-        );
-      mask-image: radial-gradient(120% 120% at 50% 60%, #000 40%, transparent 100%);
-      opacity: 0.6;
-    }
-
-    /* Floating orbs */
-    #v2198 .orbs { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
-    #v2198 .orbs i {
-      position: absolute;
-      left: var(--x);
-      top: var(--y);
-      width: var(--s);
-      height: var(--s);
-      border-radius: 999px;
-      background:
-        radial-gradient(60% 60% at 30% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.1)),
-        radial-gradient(100% 100% at 70% 70%, var(--g1a), transparent 70%);
-      box-shadow:
-        0 2px 10px rgba(0,0,0,0.3),
-        0 0 20px var(--g1a);
-      animation: float var(--d, 8s) ease-in-out infinite alternate;
-      opacity: 0.7;
-      filter: saturate(1.1);
-    }
-    @keyframes float {
-      from { transform: translate3d(0,0,0) scale(1); }
-      to { transform: translate3d(0, -14px, 0) scale(1.06); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      #v2198 .orbs i { animation: none; }
-    }
-
-    /* Topline */
-    #v2198 .topline {
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    #v2198 .pill {
-      font-size: 12px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--ink);
-      opacity: 0.92;
-      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 8px 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      backdrop-filter: blur(6px);
-    }
-    #v2198 .pill .dot {
-      width: 6px; height: 6px; border-radius: 999px;
-      background: color-mix(in oklab, #00ffcc 30%, #ffffff 70%);
-      box-shadow: 0 0 12px rgba(0,255,204,0.8);
-    }
-
-    /* Heading */
-    #v2198 h1 {
-      z-index: 2;
-      margin: 2px 0 0 0;
-      font-size: clamp(32px, 6.2vw, 72px);
-      line-height: 1.02;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      text-shadow:
-        0 1px 0 rgba(255,255,255,0.08),
-        0 18px 40px rgba(0,0,0,0.55);
-    }
-    #v2198 .kicker {
-      z-index: 2;
-      margin: 6px 0 4px 0;
-      color: var(--muted);
-      font-size: clamp(14px, 2.6vw, 18px);
-      line-height: 1.5;
-      max-width: 62ch;
-      opacity: 0.95;
-    }
-
-    /* Features */
-    #v2198 .features {
-      z-index: 2;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 12px;
-      margin-top: 12px;
-    }
-    @media (max-width: 720px) {
-      #v2198 .features { grid-template-columns: 1fr; }
-    }
-    #v2198 .feature {
-      position: relative;
-      padding: 16px 16px 16px 16px;
-      border-radius: 16px;
-      background: linear-gradient(180deg, var(--card), transparent);
-      border: 1px solid var(--border);
-      overflow: hidden;
-    }
-    #v2198 .feature h3 {
-      margin: 0 0 6px 0;
-      font-size: 14px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    #v2198 .feature p {
-      margin: 0;
-      font-size: 16px;
-      color: var(--ink);
-      opacity: 0.92;
-    }
-    #v2198 .feature::after {
-      content: "";
+    /* Ambient mesh */
+    #v2199 .mesh {
       position: absolute;
       inset: -20%;
-      background: radial-gradient(40% 30% at var(--mx) var(--my), rgba(255,255,255,0.12), transparent 60%);
-      opacity: 0;
-      transition: opacity 300ms ease;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(40px) saturate(1.2);
+      background:
+        radial-gradient(40% 38% at 20% 30%, color-mix(in srgb, var(--acc-1) 30%, transparent), transparent 65%),
+        radial-gradient(35% 40% at 85% 28%, color-mix(in srgb, var(--acc-2) 28%, transparent), transparent 70%),
+        radial-gradient(45% 50% at 50% 78%, color-mix(in srgb, var(--acc-3) 24%, transparent), transparent 72%);
+      opacity: 0.8;
     }
-    #v2198 .feature:hover::after { opacity: 1; }
-
-    /* Controls */
-    #v2198 .controls {
-      z-index: 2;
-      margin-top: 6px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    #v2198 .segmented {
-      display: inline-flex;
-      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 6px;
-      gap: 6px;
-      backdrop-filter: blur(6px);
-    }
-    #v2198 .segmented button {
-      appearance: none;
-      border: 0;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: transparent;
-      color: var(--ink);
-      font-weight: 600;
-      font-size: 14px;
-      opacity: 0.9;
-      cursor: pointer;
-      position: relative;
-      transition: color 200ms ease, transform 150ms ease;
-    }
-    #v2198 .segmented button[aria-pressed="true"] {
-      color: #101010;
-    }
-    #v2198 .segmented button[aria-pressed="true"]::before {
-      content: "";
+    #v2199 .grid {
       position: absolute;
       inset: 0;
-      border-radius: 999px;
-      background: linear-gradient(180deg, #ffffff, #dfe8ff);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.6) inset;
-      z-index: -1;
-    }
-    #v2198 .segmented button:focus-visible {
-      outline: 2px solid var(--ring);
-      outline-offset: 2px;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.06), transparent 40%, rgba(0,0,0,0.25)),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 28px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 28px);
+      mask-image: radial-gradient(120% 120% at 50% 60%, #000 42%, transparent);
+      opacity: 0.5;
     }
 
-    #v2198 .cta-row {
+    /* Top bar */
+    #v2199 .topbar {
+      position: relative;
       z-index: 2;
-      margin-top: auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 10px;
     }
-    #v2198 .cta {
-      position: relative;
+    #v2199 .brand {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 14px 18px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      color: var(--ink);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-      cursor: pointer;
-      text-decoration: none;
-      font-weight: 700;
-      letter-spacing: .01em;
-      transition: transform 160ms ease, box-shadow 200ms ease, background 200ms ease;
-      overflow: hidden;
-    }
-    #v2198 .cta:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 36px rgba(0,0,0,0.42), 0 0 0 1px rgba(255,255,255,0.06) inset;
-      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05));
-    }
-    #v2198 .cta:active { transform: translateY(0); }
-    #v2198 .cta .glow {
-      position: absolute;
-      inset: -40%;
-      background:
-        radial-gradient(60% 60% at var(--mx) var(--my), var(--g1a), transparent 60%);
-      opacity: 0.0;
-      transition: opacity 240ms ease;
-      pointer-events: none;
-    }
-    #v2198 .cta:hover .glow { opacity: 0.5; }
-
-    #v2198 .meta {
-      color: var(--muted);
-      font-size: 13px;
-      opacity: 0.9;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    #v2198 .meta .dot {
-      width: 6px;
-      height: 6px;
+      padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.5);
-      box-shadow: 0 0 0 2px rgba(255,255,255,0.12) inset;
+      background: linear-gradient(180deg, var(--panel), transparent);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(6px);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    #v2199 .brand i {
+      width: 8px; height: 8px; border-radius: 999px; display: inline-block;
+      background: var(--acc-1);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--acc-1) 18%, transparent);
+      animation: twinkle 2s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { from { transform: scale(0.9); opacity: .8; } to { transform: scale(1.15); opacity: 1; } }
+
+    /* Modes */
+    #v2199 .modes {
+      display: inline-flex; gap: 6px; padding: 6px; border-radius: 999px;
+      background: linear-gradient(180deg, var(--panel), transparent);
+      border: 1px solid var(--line); backdrop-filter: blur(6px);
+    }
+    #v2199 .modes button {
+      appearance: none; border: 0; cursor: pointer; position: relative;
+      color: var(--ink); font-weight: 700; font-size: 13px;
+      padding: 8px 12px; border-radius: 999px; background: transparent; opacity: 0.9;
+      transition: transform 160ms ease, color 200ms ease;
+    }
+    #v2199 .modes button[aria-pressed="true"] {
+      color: hsl(220 10% 10%);
+    }
+    #v2199 .modes button[aria-pressed="true"]::before {
+      content: ""; position: absolute; inset: 0; border-radius: 999px; z-index: -1;
+      background: linear-gradient(180deg, #ffffff, #dbe7ff);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.6) inset;
+    }
+    #v2199 .modes button:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+
+    /* Hero */
+    #v2199 .hero {
+      position: relative; z-index: 2; margin-top: min(4vh, 24px);
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(16px, 4vw, 34px); align-items: center;
+    }
+    @media (max-width: 820px) { #v2199 .hero { grid-template-columns: 1fr; } }
+
+    #v2199 h1 {
+      margin: 4px 0 8px 0;
+      font-size: clamp(36px, 7vw, 88px);
+      line-height: .98; letter-spacing: -0.02em;
+      text-shadow: 0 12px 44px rgba(0,0,0,0.5);
+    }
+    #v2199 .sub {
+      margin: 6px 0 0 0; max-width: 60ch; color: var(--muted);
+      font-size: clamp(14px, 2.2vw, 18px); line-height: 1.6;
     }
 
-    /* Accessibility + selection */
-    #v2198 ::selection {
-      background: color-mix(in oklab, #8bd9ff 40%, #ffffff 60%);
-      color: #0d1020;
+    /* Dial */
+    #v2199 .dial {
+      position: relative; aspect-ratio: 1/1; width: min(62vw, 520px); margin-inline: auto;
+      border-radius: 999px; isolation: isolate;
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.45));
     }
+    #v2199 .ring {
+      position: absolute; inset: 0;
+      background:
+        conic-gradient(from var(--rot), var(--acc-1), var(--acc-2), var(--acc-3), var(--acc-1)),
+        repeating-conic-gradient(from 0deg, rgba(255,255,255,0.18) 0deg, rgba(255,255,255,0.18) 1deg, transparent 1deg, transparent 6deg);
+      mask: radial-gradient(circle at 50% 50%, transparent 56%, #000 57%, #000 100%);
+      border-radius: 999px;
+      opacity: 0.9;
+    }
+    #v2199 .face {
+      position: absolute; inset: 12%; border-radius: 999px;
+      background:
+        radial-gradient(120% 120% at var(--mx) var(--my), color-mix(in srgb, var(--acc-1) 12%, transparent), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      backdrop-filter: blur(8px) saturate(1.1);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    #v2199 .ticks {
+      position: absolute; inset: 0; border-radius: 999px; pointer-events: none;
+      background:
+        repeating-conic-gradient(from -90deg, rgba(255,255,255,0.28) 0deg 1deg, transparent 1deg 6deg);
+      mask: radial-gradient(circle at 50% 50%, transparent 64%, #000 65%);
+      opacity: 0.5;
+    }
+    #v2199 .center-dot {
+      position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+      width: 12px; height: 12px; border-radius: 999px; background: var(--acc-2);
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--acc-2) 18%, transparent);
+    }
+
+    /* Orbiters */
+    #v2199 .orbits { position: absolute; inset: 0; }
+    #v2199 .orb {
+      --r: 38%;
+      --size: 14px;
+      --dur: 18s;
+      position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+      width: var(--size); height: var(--size); border-radius: 999px;
+      background: radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,0.16) 40%, transparent 70%),
+                  radial-gradient(circle at 75% 75%, var(--acc-1), transparent 70%);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35), 0 0 16px color-mix(in srgb, var(--acc-1) 40%, transparent);
+      animation: orbit var(--dur) linear infinite;
+      transform-origin: calc(var(--r)) 0;
+    }
+    #v2199 .orb::after {
+      content: ""; position: absolute; inset: -40%;
+      background: radial-gradient(60% 60% at 50% 50%, var(--acc-1), transparent 60%);
+      filter: blur(8px); opacity: 0.25; border-radius: 999px; pointer-events: none;
+    }
+    #v2199 .orb.b { --r: 28%; --size: 10px; --dur: 12s; background:
+      radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,0.12) 40%, transparent 70%),
+      radial-gradient(circle at 75% 75%, var(--acc-2), transparent 70%); }
+    #v2199 .orb.c { --r: 48%; --size: 12px; --dur: 24s; background:
+      radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,0.12) 40%, transparent 70%),
+      radial-gradient(circle at 75% 75%, var(--acc-3), transparent 70%); }
+
+    @keyframes orbit {
+      from { transform: rotate(0deg) translateX(var(--r)) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(var(--r)) rotate(-360deg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #v2199 .orb { animation: none; }
+    }
+
+    /* Chips */
+    #v2199 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    #v2199 .chip {
+      padding: 8px 12px; border-radius: 999px; font-size: 12.5px; color: var(--ink);
+      border: 1px solid var(--line); background: linear-gradient(180deg, var(--panel), transparent);
+      backdrop-filter: blur(6px);
+    }
+
+    /* CTA + meta */
+    #v2199 .footer {
+      z-index: 2; margin-top: clamp(20px, 4vh, 36px);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    }
+    #v2199 .cta {
+      position: relative; display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 18px; border-radius: 14px; border: 1px solid var(--line);
+      color: var(--ink); text-decoration: none; font-weight: 800; letter-spacing: .01em;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35); cursor: pointer; overflow: hidden;
+      transition: transform 160ms ease, background 200ms ease, box-shadow 200ms ease;
+    }
+    #v2199 .cta:hover { transform: translateY(-1px); background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06)); }
+    #v2199 .cta:active { transform: translateY(0); }
+    #v2199 .cta .pulse {
+      position: absolute; inset: -40%;
+      background: radial-gradient(60% 60% at var(--mx) var(--my), var(--acc-2), transparent 60%);
+      opacity: 0; transition: opacity 240ms ease; pointer-events: none;
+    }
+    #v2199 .cta:hover .pulse { opacity: .45; }
+
+    #v2199 .meta { color: var(--muted); font-size: 13px; display: flex; align-items: center; gap: 8px; }
+    #v2199 .meta .dot { width: 6px; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.6); box-shadow: 0 0 0 2px rgba(255,255,255,0.12) inset; }
+
+    /* Selection */
+    #v2199 ::selection { background: hsl(calc(var(--h) + 120) 80% 70% / 0.6); color: #0b0f18; }
   </style>
 
-  <div class="stage" role="region" aria-label="Luminous interactive surface">
-    <div class="halo" aria-hidden="true"></div>
+  <div class="poster" role="region" aria-label="Orbital kinetic poster">
+    <div class="mesh" aria-hidden="true"></div>
     <div class="grid" aria-hidden="true"></div>
-    <div class="orbs" aria-hidden="true">
-      <i style="--x: 10%; --y: 68%; --s: 18px; --d: 7s;"></i>
-      <i style="--x: 82%; --y: 22%; --s: 14px; --d: 6s;"></i>
-      <i style="--x: 54%; --y: 74%; --s: 22px; --d: 8s;"></i>
-      <i style="--x: 28%; --y: 18%; --s: 12px; --d: 5.5s;"></i>
-      <i style="--x: 92%; --y: 70%; --s: 10px; --d: 5s;"></i>
-      <i style="--x: 4%;  --y: 34%; --s: 14px; --d: 7.5s;"></i>
-      <i style="--x: 66%; --y: 10%; --s: 16px; --d: 6.5s;"></i>
-      <i style="--x: 46%; --y: 42%; --s: 10px; --d: 4.8s;"></i>
-    </div>
 
-    <div class="topline">
-      <span class="pill"><span class="dot"></span> Live design experiment</span>
-    </div>
-
-    <h1>Luminous Surface</h1>
-    <p class="kicker">A tactile canvas of light and motion. Tilt, tap, and change the mood—minimal, calm, and delightfully alive.</p>
-
-    <div class="features">
-      <div class="feature">
-        <h3>Motion</h3>
-        <p>Cursor-driven glow and gentle depth respond to you.</p>
-      </div>
-      <div class="feature">
-        <h3>Clarity</h3>
-        <p>High-contrast type, refined spacing, and soft edges.</p>
-      </div>
-      <div class="feature">
-        <h3>Mood</h3>
-        <p>Switch palettes: Nocturne, Dawn, or Neon.</p>
+    <div class="topbar">
+      <span class="brand"><i aria-hidden="true"></i> Orbital · Live</span>
+      <div class="modes" role="tablist" aria-label="Color mode">
+        <button type="button" role="tab" aria-pressed="true" data-mode="aurora">Aurora</button>
+        <button type="button" role="tab" aria-pressed="false" data-mode="sunrise">Sunrise</button>
+        <button type="button" role="tab" aria-pressed="false" data-mode="mono">Mono</button>
       </div>
     </div>
 
-    <div class="controls" role="group" aria-label="Theme selector">
-      <div class="segmented" role="tablist" aria-label="Palette">
-        <button type="button" role="tab" aria-pressed="true" data-theme-btn="nocturne">Nocturne</button>
-        <button type="button" role="tab" aria-pressed="false" data-theme-btn="dawn">Dawn</button>
-        <button type="button" role="tab" aria-pressed="false" data-theme-btn="neon">Neon</button>
+    <div class="hero">
+      <div>
+        <h1>Orbital Garden</h1>
+        <p class="sub">A serene field of motion. The dial breathes with time, the palette drifts with seconds, and your pointer bends light across the glass.</p>
+        <div class="chips" aria-hidden="true">
+          <span class="chip">Real‑time color drift</span>
+          <span class="chip">Pointer parallax</span>
+          <span class="chip">Themeable</span>
+        </div>
+      </div>
+
+      <div class="dial" aria-label="Live dial">
+        <div class="ring" aria-hidden="true"></div>
+        <div class="face"></div>
+        <div class="ticks" aria-hidden="true"></div>
+        <div class="orbits" aria-hidden="true">
+          <span class="orb a"></span>
+          <span class="orb b"></span>
+          <span class="orb c"></span>
+        </div>
+        <span class="center-dot" aria-hidden="true"></span>
       </div>
     </div>
 
-    <div class="cta-row">
-      <a href="#" class="cta" aria-label="Feel the surface">
-        <span>Feel the surface</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="opacity:0.9">
-          <path fill="currentColor" d="M13 5l7 7-7 7v-4H4v-6h9V5z"/>
-        </svg>
-        <span class="glow"></span>
+    <div class="footer">
+      <a href="#" class="cta" aria-label="Compose your orbit">
+        <span>Compose your orbit</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="opacity:.9"><path fill="currentColor" d="M13 5l7 7-7 7v-4H4v-6h9V5z"/></svg>
+        <span class="pulse"></span>
       </a>
       <div class="meta">
         <span class="dot" aria-hidden="true"></span>
-        <span id="last-updated">Last updated: 2026-01-26 00:31:49 EST</span>
+        <span id="last-updated">Last updated: 2026-01-26 01:34:56 EST</span>
       </div>
     </div>
   </div>
 
   <script>
     (function () {
-      const root = document.getElementById('v2198');
-      const stage = root.querySelector('.stage');
-      const themeButtons = root.querySelectorAll('[data-theme-btn]');
+      const root = document.getElementById('v2199');
+      const poster = root.querySelector('.poster');
+      const modes = root.querySelectorAll('[data-mode]');
       const lastUpdated = root.querySelector('#last-updated');
 
-      // Time stamp
+      // Timestamp
       try {
         const now = new Date();
         const fmt = new Intl.DateTimeFormat(undefined, {
@@ -490,59 +410,75 @@
           hour12: false, timeZoneName: 'short'
         });
         lastUpdated.textContent = 'Last updated: ' + fmt.format(now);
-      } catch (e) {
+      } catch {
         lastUpdated.textContent = 'Last updated: ' + new Date().toLocaleString();
       }
 
-      // Theme switching
-      function setTheme(theme) {
-        root.setAttribute('data-theme', theme);
-        themeButtons.forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.themeBtn === theme)));
+      // Mode switching
+      function setMode(m) {
+        root.setAttribute('data-theme', m);
+        modes.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
       }
-      themeButtons.forEach(btn => {
-        btn.addEventListener('click', () => setTheme(btn.dataset.themeBtn));
-        btn.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            setTheme(btn.dataset.themeBtn);
-          }
+      modes.forEach(b => {
+        b.addEventListener('click', () => setMode(b.dataset.mode));
+        b.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setMode(b.dataset.mode); }
         });
       });
+      setMode(root.getAttribute('data-theme') || 'aurora');
 
-      // Motion/tilt
-      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      function updateMotion(e) {
-        const rect = stage.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const px = (x / rect.width);
-        const py = (y / rect.height);
+      // Pointer parallax + light anchor
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let rafId;
+      function onPointer(e) {
+        const r = poster.getBoundingClientRect();
+        const x = Math.min(Math.max(e.clientX - r.left, 0), r.width);
+        const y = Math.min(Math.max(e.clientY - r.top, 0), r.height);
+        const px = x / r.width;
+        const py = y / r.height;
 
-        // gradient anchor
-        const mx = (px * 100).toFixed(2) + '%';
-        const my = (py * 100).toFixed(2) + '%';
-        stage.style.setProperty('--mx', mx);
-        stage.style.setProperty('--my', my);
+        poster.style.setProperty('--mx', (px * 100).toFixed(2) + '%');
+        poster.style.setProperty('--my', (py * 100).toFixed(2) + '%');
 
-        if (!reduceMotion) {
-          // subtle tilt
-          const ry = ((px - 0.5) * 8).toFixed(2) + 'deg';
-          const rx = ((0.5 - py) * 6).toFixed(2) + 'deg';
-          stage.style.setProperty('--ry', ry);
-          stage.style.setProperty('--rx', rx);
+        if (!reduce) {
+          const d = ((px - 0.5) * 10).toFixed(2) + 'deg';
+          poster.style.setProperty('--depth', d);
+          // Subtle ring rotation
+          cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(() => {
+            poster.style.setProperty('--rot', ((px * 360) + (py * 60)).toFixed(2) + 'deg');
+          });
         }
       }
-      function resetMotion() {
-        stage.style.setProperty('--mx', '50%');
-        stage.style.setProperty('--my', '50%');
-        stage.style.setProperty('--rx', '0deg');
-        stage.style.setProperty('--ry', '0deg');
+      function onLeave() {
+        poster.style.setProperty('--mx', '50%');
+        poster.style.setProperty('--my', '50%');
+        poster.style.setProperty('--depth', '0deg');
       }
-      stage.addEventListener('pointermove', updateMotion);
-      stage.addEventListener('pointerleave', resetMotion);
-      stage.addEventListener('pointerdown', updateMotion);
+      poster.addEventListener('pointermove', onPointer);
+      poster.addEventListener('pointerdown', onPointer);
+      poster.addEventListener('pointerleave', onLeave);
 
-      // CTA ripple feedback
+      // Live hue drift (seconds drive hue)
+      function tickHue() {
+        const d = new Date();
+        const s = d.getSeconds() + d.getMilliseconds() / 1000;
+        const hue = Math.floor((s / 60) * 360);
+        root.style.setProperty('--h', String(hue));
+        if (!reduce) requestAnimationFrame(tickHue);
+      }
+      if (reduce) {
+        // Set static hue but update each second for accessibility
+        setInterval(() => {
+          const d = new Date();
+          const s = d.getSeconds();
+          root.style.setProperty('--h', String(Math.floor((s / 60) * 360)));
+        }, 1000);
+      } else {
+        tickHue();
+      }
+
+      // CTA ripple
       const cta = root.querySelector('.cta');
       cta.addEventListener('click', (e) => {
         e.preventDefault();
@@ -566,10 +502,6 @@
         });
         setTimeout(() => ripple.remove(), 820);
       });
-
-      // Ensure starting theme reflects attribute
-      const initialTheme = root.getAttribute('data-theme') || 'nocturne';
-      setTheme(initialTheme);
     }());
   </script>
 </div>
