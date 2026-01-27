@@ -73,7 +73,382 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-01-27 06:21:30 EST</span></div>
+<section class="va-aurora" data-motion="on">
+  <style>
+    .va-aurora {
+      --h: 218deg;
+      --fg: hsl(0 0% 98%);
+      --muted: hsl(0 0% 80% / 0.85);
+      --surface: hsl(0 0% 100% / 0.06);
+      --surface-2: hsl(0 0% 100% / 0.12);
+      --shadow: 0 10px 30px hsl(0 0% 0% / 0.35);
+      --accent: hsl(var(--h) 90% 62%);
+      --accent-2: hsl(calc(var(--h) + 24deg) 84% 60%);
+      --radius: 16px;
+      position: relative;
+      display: grid;
+      place-content: center;
+      min-height: 64vh;
+      padding: clamp(16px, 3vw, 40px);
+      color: var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      overflow: hidden;
+      border-radius: 20px;
+      background:
+        radial-gradient(1200px 900px at 10% -10%, hsl(215 82% 18% / 0.9), transparent 60%),
+        radial-gradient(900px 600px at 110% 20%, hsl(280 72% 20% / 0.6), transparent 60%),
+        linear-gradient(180deg, hsl(220 30% 8%), hsl(220 28% 6%));
+      box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.06), 0 20px 60px hsl(220 60% 4% / 0.6);
+      isolation: isolate;
+    }
+    .va-aurora .bg {
+      position: absolute;
+      inset: -10%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .va-aurora .orb {
+      position: absolute;
+      width: 38vmin;
+      height: 38vmin;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, hsl(0 0% 100% / 0.55), transparent 35%),
+                  radial-gradient(circle at 70% 70%, var(--accent), transparent 45%);
+      filter: blur(12px) saturate(1.2);
+      opacity: 0.5;
+      mix-blend-mode: screen;
+      animation: float-a 12s ease-in-out infinite;
+      transform: translateZ(0);
+    }
+    .va-aurora .orb.b {
+      width: 46vmin; height: 46vmin;
+      left: 65%; top: 6%;
+      background: radial-gradient(circle at 70% 30%, hsl(0 0% 100% / 0.45), transparent 35%),
+                  radial-gradient(circle at 40% 80%, var(--accent-2), transparent 50%);
+      animation: float-b 16s ease-in-out infinite;
+    }
+    .va-aurora .orb.a { left: -8%; top: 20%; }
+    .va-aurora .orb.c {
+      width: 28vmin; height: 28vmin;
+      right: -6%; bottom: -4%;
+      background: radial-gradient(circle at 30% 30%, hsl(0 0% 100% / 0.45), transparent 35%),
+                  radial-gradient(circle at 60% 40%, hsl(190 85% 60%), transparent 50%);
+      animation: float-c 14s ease-in-out infinite;
+    }
+    .va-aurora .mesh {
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(60% 60% at 20% 40%, hsl(220 80% 62% / 0.25), transparent 60%),
+        radial-gradient(50% 40% at 80% 20%, hsl(300 70% 60% / 0.25), transparent 60%),
+        radial-gradient(40% 50% at 50% 90%, hsl(190 70% 60% / 0.2), transparent 60%);
+      filter: blur(40px);
+      opacity: 0.6;
+      transform: translateZ(0);
+      animation: drift 30s ease-in-out infinite;
+    }
+    .va-aurora .lines {
+      position: absolute;
+      inset: 0;
+      mask-image: radial-gradient(90% 90% at 50% 50%, black 40%, transparent 100%);
+      background:
+        repeating-conic-gradient(from 0deg, hsl(0 0% 100% / 0.06) 0 2deg, transparent 2deg 6deg);
+      opacity: 0.25;
+      animation: slow-spin 60s linear infinite;
+    }
+    .va-aurora .card {
+      position: relative;
+      z-index: 1;
+      max-width: 880px;
+      margin: auto;
+      padding: clamp(20px, 4vw, 36px);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.03));
+      border: 1px solid var(--surface-2);
+      box-shadow: var(--shadow), inset 0 0 0 1px hsl(0 0% 100% / 0.04);
+      backdrop-filter: blur(12px) saturate(140%);
+      -webkit-backdrop-filter: blur(12px) saturate(140%);
+    }
+    .va-aurora .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: hsl(0 0% 100% / 0.06);
+      border: 1px solid hsl(0 0% 100% / 0.14);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .va-aurora .twinkle {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: linear-gradient(120deg, var(--accent), hsl(0 0% 100%));
+      box-shadow: 0 0 16px var(--accent);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    .va-aurora h1 {
+      margin: 14px 0 10px 0;
+      font-weight: 800;
+      line-height: 1.06;
+      font-size: clamp(36px, 6vw, 68px);
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-wrap: balance;
+    }
+    .va-aurora .tag {
+      margin: 0 0 20px 0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.6vw, 18px);
+      text-wrap: balance;
+    }
+    .va-aurora .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 8px 0 22px 0;
+      padding: 0;
+      list-style: none;
+    }
+    .va-aurora .pills li {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: hsl(0 0% 100% / 0.06);
+      border: 1px solid hsl(0 0% 100% / 0.12);
+      color: hsl(0 0% 98%);
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .va-aurora .pills li::before {
+      content: "";
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, white, var(--accent));
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    .va-aurora .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px 18px;
+      justify-content: space-between;
+      border-top: 1px solid hsl(0 0% 100% / 0.12);
+      padding-top: 16px;
+      margin-top: 6px;
+    }
+    .va-aurora .left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .va-aurora .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      color: hsl(220 20% 12%);
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      box-shadow: 0 12px 30px hsl(240 70% 50% / 0.35), 0 1px 0 hsl(0 0% 100% / 0.5) inset;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 200ms ease, filter 200ms ease, box-shadow 200ms ease;
+    }
+    .va-aurora .btn:hover { transform: translateY(-1px); filter: saturate(1.1); }
+    .va-aurora .btn:active { transform: translateY(0); }
+
+    .va-aurora .swatches {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .va-aurora .sw {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1px solid hsl(0 0% 100% / 0.22);
+      background: conic-gradient(from 180deg, hsl(var(--hh) 90% 62%), hsl(calc(var(--hh) + 36deg) 82% 58%));
+      box-shadow: 0 8px 18px hsl(var(--hh) 80% 50% / 0.45);
+      cursor: pointer;
+      display: grid; place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .va-aurora .sw:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+    .va-aurora .sw::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(35% 35% at 30% 30%, #fff8, transparent 45%);
+      mix-blend-mode: screen;
+    }
+
+    .va-aurora .foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed hsl(0 0% 100% / 0.16);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .va-aurora .meter {
+      flex: 1 1 auto;
+      height: 6px;
+      border-radius: 999px;
+      background: hsl(0 0% 100% / 0.08);
+      overflow: hidden;
+      position: relative;
+      max-width: 200px;
+    }
+    .va-aurora .meter > i {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      transform: translateX(-100%);
+      animation: sweep 6s ease-in-out infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes float-a { 0%,100%{ transform: translate(-2%, -2%) scale(1); } 50%{ transform: translate(4%, 3%) scale(1.06);} }
+    @keyframes float-b { 0%,100%{ transform: translate(-3%, 2%) scale(1); } 50%{ transform: translate(2%, -3%) scale(1.05);} }
+    @keyframes float-c { 0%,100%{ transform: translate(2%, -1%) scale(1); } 50%{ transform: translate(-3%, 2%) scale(1.08);} }
+    @keyframes drift { 0%,100% { transform: translateY(-2%) } 50% { transform: translateY(2%) } }
+    @keyframes slow-spin { to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.25); opacity: 1; } }
+    @keyframes sweep { 0%,100%{ transform: translateX(-100%);} 50%{ transform: translateX(100%);} }
+
+    /* Motion toggle */
+    .va-aurora[data-motion="off"] .orb,
+    .va-aurora[data-motion="off"] .mesh,
+    .va-aurora[data-motion="off"] .lines,
+    .va-aurora[data-motion="off"] .meter > i { animation: none !important; }
+    .va-aurora[data-motion="off"] .btn { filter: grayscale(0.1); }
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      .va-aurora .orb,
+      .va-aurora .mesh,
+      .va-aurora .lines,
+      .va-aurora .meter > i { animation: none !important; }
+    }
+  </style>
+
+  <div class="bg" aria-hidden="true">
+    <div class="orb a"></div>
+    <div class="orb b"></div>
+    <div class="orb c"></div>
+    <div class="mesh"></div>
+    <div class="lines"></div>
+  </div>
+
+  <article class="card" role="region" aria-label="Quiet Momentum">
+    <span class="eyebrow"><i class="twinkle" aria-hidden="true"></i> Studio Mode</span>
+    <h1>Quiet Momentum</h1>
+    <p class="tag">A luminous canvas for thoughtful work — soft light, strong focus, and just enough motion to breathe.</p>
+
+    <ul class="pills" aria-label="Design notes">
+      <li>Glass layers</li>
+      <li>Gradient mesh</li>
+      <li>Accessible contrast</li>
+      <li>Subtle parallax</li>
+    </ul>
+
+    <div class="controls">
+      <div class="left">
+        <button class="btn" id="toggle-motion" aria-pressed="false">Pause Motion</button>
+        <div class="swatches" role="group" aria-label="Accent palette">
+          <button class="sw" style="--hh: 218deg" data-hue="218" aria-label="Blue Violet"></button>
+          <button class="sw" style="--hh: 190deg" data-hue="190" aria-label="Teal"></button>
+          <button class="sw" style="--hh: 345deg" data-hue="345" aria-label="Crimson"></button>
+          <button class="sw" style="--hh: 52deg" data-hue="52" aria-label="Sunrise"></button>
+        </div>
+      </div>
+      <div class="meter" aria-hidden="true"><i></i></div>
+    </div>
+
+    <div class="foot">
+      <span>Tip: click a color to shift the vibe</span>
+      <span id="last-updated">Last updated: 2026-01-27 07:45:34 EST</span>
+    </div>
+  </article>
+
+  <script>
+    (function(){
+      const root = document.currentScript.closest('.va-aurora');
+      const btn = root.querySelector('#toggle-motion');
+      const swatches = root.querySelectorAll('.sw');
+      const updated = root.querySelector('#last-updated');
+
+      function formatUpdated(d) {
+        try {
+          return 'Last updated • ' + d.toLocaleString([], {
+            year: 'numeric', month: 'short', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit',
+            hour12: false, timeZoneName: 'short'
+          });
+        } catch {
+          return 'Last updated • ' + d.toUTCString();
+        }
+      }
+      updated.textContent = formatUpdated(new Date());
+
+      btn.addEventListener('click', () => {
+        const on = root.getAttribute('data-motion') !== 'off';
+        root.setAttribute('data-motion', on ? 'off' : 'on');
+        btn.textContent = on ? 'Resume Motion' : 'Pause Motion';
+        btn.setAttribute('aria-pressed', String(!on));
+      });
+
+      swatches.forEach(sw => {
+        sw.addEventListener('click', () => {
+          const hue = sw.getAttribute('data-hue');
+          root.style.setProperty('--h', hue + 'deg');
+          // tiny accent spark
+          const spark = document.createElement('span');
+          spark.style.position = 'absolute';
+          spark.style.inset = '0';
+          spark.style.borderRadius = '50%';
+          spark.style.boxShadow = `0 0 0 0 hsl(${hue} 90% 60% / 0.8)`;
+          spark.style.animation = 'va-spark 600ms ease-out forwards';
+          sw.appendChild(spark);
+          setTimeout(() => spark.remove(), 620);
+        });
+      });
+
+      // Parallax tilt on pointer
+      root.addEventListener('pointermove', (e) => {
+        const r = root.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        const intensity = 6;
+        root.style.transform = `perspective(1000px) rotateX(${(-y*intensity)}deg) rotateY(${(x*intensity)}deg)`;
+      });
+      root.addEventListener('pointerleave', () => {
+        root.style.transform = '';
+      });
+
+      // Spark keyframes injected once
+      const kfId = 'va-spark-kf';
+      if (!document.getElementById(kfId)) {
+        const st = document.createElement('style');
+        st.id = kfId;
+        st.textContent = `
+          @keyframes va-spark {
+            0% { box-shadow: 0 0 0 0 var(--accent); opacity: 1; }
+            100% { box-shadow: 0 0 0 18px transparent; opacity: 0; }
+          }
+        `;
+        root.appendChild(st);
+      }
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
