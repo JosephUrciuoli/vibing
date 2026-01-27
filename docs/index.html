@@ -73,77 +73,63 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div class="observatory" role="region" aria-labelledby="orbital-title" aria-label="Orbital Atlas">
+<div class="tide" role="region" aria-labelledby="tide-title" aria-label="Tide Studio">
   <style>
-    .observatory{
-      --ink:#0f1220;
-      --muted:#55607a;
+    .tide{
+      --ink:#0c1220;
+      --muted:#4b5a77;
       --glass:rgba(255,255,255,0.6);
       --stroke:rgba(15,20,40,0.12);
-      --a1:hsl(210 86% 56%);
-      --a2:hsl(320 82% 58%);
+      --bg1:#eef4ff;
+      --bg2:#e7edff;
+      --a1:hsl(198 84% 56%);
+      --a2:hsl(12 84% 58%);
       --px:0.5; --py:0.5;
 
-      position: relative;
-      border-radius: 28px;
-      padding: clamp(20px, 3.2vw, 44px);
+      position:relative;
+      border-radius:28px;
+      padding:clamp(20px,3.2vw,44px);
       color:var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, "Helvetica Neue", Arial;
       min-height: clamp(640px, 70vh, 980px);
-      overflow: hidden;
+      overflow:hidden;
       isolation:isolate;
-      box-shadow: 0 28px 90px rgba(10, 20, 40, 0.18);
-
+      box-shadow: 0 28px 90px rgba(10,20,40,0.18);
       background:
         radial-gradient(1200px 800px at calc(var(--px)*100%) calc(var(--py)*100%),
-          color-mix(in oklab, var(--a2) 18%, transparent),
-          transparent 60%),
-        conic-gradient(from 180deg at 75% 20%,
-          color-mix(in oklab, var(--a1) 14%, transparent) 0 18%,
-          transparent 18% 52%,
-          color-mix(in oklab, var(--a2) 14%, transparent) 52% 66%,
-          transparent 66% 100%),
-        linear-gradient(180deg, #f5f7fc, #ecf1fd 50%, #e7edff);
+          color-mix(in oklab, var(--a2) 16%, transparent), transparent 60%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
     }
-    .observatory::before,
-    .observatory::after{
-      content:""; position:absolute; inset:-15%;
-      pointer-events:none; z-index:1; mix-blend-mode:overlay;
-    }
-    .observatory::before{
+    .tide::before{
+      content:""; position:absolute; inset:-10%;
       background:
-        radial-gradient(40% 40% at 10% 8%, rgba(255,255,255,0.36), transparent 70%),
-        radial-gradient(60% 60% at 90% 90%, rgba(255,255,255,0.22), transparent 70%);
-      opacity:0.6;
-    }
-    .observatory::after{
-      background:
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 12px),
+        radial-gradient(40% 40% at 10% 8%, rgba(255,255,255,0.38), transparent 70%),
+        radial-gradient(60% 60% at 90% 90%, rgba(255,255,255,0.22), transparent 70%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 14px),
         repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 14px);
-      opacity:0.35;
+      mix-blend-mode: overlay;
+      pointer-events:none;
+      z-index:1;
     }
 
     /* Themes */
-    .observatory.dawn{ --ink:#0f1220; --muted:#445675; --glass:rgba(255,255,255,0.64); --stroke:rgba(10,16,32,0.12); --a1:hsl(202 88% 54%); --a2:hsl(38 92% 56%); }
-    .observatory.dusk{ --ink:#0d1428; --muted:#4a5d7f; --glass:rgba(255,255,255,0.52); --stroke:rgba(12,18,36,0.14); --a1:hsl(262 86% 64%); --a2:hsl(14 92% 58%); 
-      background: radial-gradient(1000px 700px at calc(var(--px)*100%) calc(var(--py)*100%), color-mix(in oklab, var(--a2) 22%, transparent), transparent 60%),
-                  linear-gradient(180deg, #eaeefe, #e5ebfb 52%, #dde6ff);
-    }
-    .observatory.midnight{ --ink:#eaf1ff; --muted:#b6c3d9; --glass:rgba(8,14,28,0.54); --stroke:rgba(255,255,255,0.16); --a1:hsl(200 92% 62%); --a2:hsl(320 82% 62%);
-      background: radial-gradient(1000px 700px at calc(var(--px)*100%) calc(var(--py)*100%), color-mix(in oklab, var(--a1) 22%, transparent), transparent 60%),
-                  linear-gradient(180deg, #070a12, #0a0f1b 50%, #070a12);
-    }
+    .tide.day{ --ink:#0c1220; --muted:#4b5a77; --glass:rgba(255,255,255,0.64); --stroke:rgba(10,16,32,0.12);
+      --bg1:#eef6ff; --bg2:#e7f0ff; --a1:hsl(202 90% 56%); --a2:hsl(38 90% 58%); }
+    .tide.twilight{ --ink:#0b1328; --muted:#465a80; --glass:rgba(255,255,255,0.54); --stroke:rgba(12,18,36,0.14);
+      --bg1:#eaeefe; --bg2:#dfe7ff; --a1:hsl(264 82% 64%); --a2:hsl(16 90% 58%); }
+    .tide.night{ --ink:#e9f1ff; --muted:#b6c6e1; --glass:rgba(8,14,28,0.52); --stroke:rgba(255,255,255,0.16);
+      --bg1:#070a12; --bg2:#0a1120; --a1:hsl(200 94% 62%); --a2:hsl(320 82% 62%); }
 
-    .observatory .wrap{
+    .tide .wrap{
       position:relative; z-index:2;
-      display:grid; gap:clamp(16px, 2vw, 22px);
+      display:grid; gap:clamp(16px,2vw,22px);
       grid-template-columns: 1.05fr 1fr;
-      max-width: 1240px; margin:0 auto;
-      align-items: stretch;
+      max-width:1240px; margin:0 auto;
+      align-items:stretch;
     }
-    @media (max-width: 1000px){ .observatory .wrap{ grid-template-columns: 1fr; } }
+    @media (max-width: 1000px){ .tide .wrap{ grid-template-columns:1fr; } }
 
-    .observatory .card{
+    .tide .card{
       background: var(--glass);
       border:1px solid var(--stroke);
       border-radius: 20px;
@@ -152,11 +138,8 @@
       box-shadow: 0 16px 46px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.7);
     }
 
-    .observatory .intro{
-      padding: clamp(18px, 2.4vw, 30px);
-      display:grid; align-content:start; gap:14px;
-    }
-    .observatory .badge{
+    .tide .hero{ padding:clamp(18px,2.4vw,30px); display:grid; gap:14px; align-content:start; }
+    .tide .eyebrow{
       display:inline-flex; gap:10px; align-items:center;
       padding:6px 12px; border-radius:999px;
       font-size:11px; letter-spacing:0.18em; text-transform:uppercase; font-weight:800;
@@ -166,12 +149,10 @@
       width:max-content; user-select:none;
     }
 
-    .observatory h1{
-      margin:2px 0 0;
-      font-size: clamp(48px, 9.6vw, 130px);
-      line-height:0.86;
-      letter-spacing:-0.02em;
-      font-weight: 950;
+    .tide h1{
+      margin:0;
+      font-size: clamp(48px, 9.6vw, 128px);
+      line-height:0.86; letter-spacing:-0.02em; font-weight:950;
       background: radial-gradient(140% 160% at 5% 0%,
         #111,
         color-mix(in oklab, var(--a1) 52%, #111) 35%,
@@ -180,7 +161,7 @@
       -webkit-background-clip:text; background-clip:text; color:transparent;
       filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12));
     }
-    .observatory.midnight h1{
+    .tide.night h1{
       background: radial-gradient(140% 160% at 5% 0%,
         #fff,
         color-mix(in oklab, var(--a1) 52%, #fff) 35%,
@@ -188,36 +169,34 @@
         #fff 100%);
     }
 
-    .observatory .lede{
-      color: var(--muted);
+    .tide .lede{
+      color:var(--muted);
       font-size: clamp(14px, 2.2vw, 18px);
-      line-height:1.75;
-      max-width:62ch;
-      text-wrap:pretty;
+      line-height:1.75; max-width:64ch; text-wrap:pretty;
     }
 
-    .observatory .seg{
+    .tide .seg{
       display:inline-flex; overflow:hidden; border-radius:14px;
       background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.64));
       border:1px solid rgba(10,16,32,0.16);
       box-shadow: 0 14px 26px rgba(0,0,0,0.14);
-      width: max-content;
+      width:max-content;
     }
-    .observatory.midnight .seg{ background: linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0.10)); border-color: rgba(255,255,255,0.18); }
-    .observatory .seg button{
+    .tide.night .seg{ background: linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0.10)); border-color: rgba(255,255,255,0.18); }
+    .tide .seg button{
       appearance:none; border:0; background:transparent; padding:10px 14px;
       font-weight:800; font-size:13px; letter-spacing:0.02em; color:var(--ink); cursor:pointer;
       transition: transform 160ms ease, background 160ms ease, color 160ms ease;
     }
-    .observatory .seg button:hover{ transform: translateY(-1px); }
-    .observatory .seg button[aria-pressed="true"]{
+    .tide .seg button:hover{ transform: translateY(-1px); }
+    .tide .seg button[aria-pressed="true"]{
       background: linear-gradient(135deg, color-mix(in oklab, var(--a1) 58%, white), color-mix(in oklab, var(--a2) 58%, white));
       color:#0b1020;
     }
-    .observatory.midnight .seg button{ color:#eaf2ff; }
+    .tide.night .seg button{ color:#eaf2ff; }
 
-    .observatory .controls{ display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
-    .observatory .btn{
+    .tide .controls{ display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
+    .tide .btn{
       appearance:none; border:1px solid rgba(10,16,32,0.18);
       border-radius:14px; padding:11px 16px;
       font-size:14px; font-weight:800; letter-spacing:0.02em;
@@ -226,54 +205,54 @@
       transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, filter 160ms ease;
       box-shadow: 0 12px 24px rgba(0,0,0,0.14);
     }
-    .observatory .btn:hover{ transform: translateY(-1px); box-shadow: 0 16px 34px rgba(0,0,0,0.18); border-color: rgba(10,16,32,0.28); }
-    .observatory .btn:active{ transform: translateY(0); }
-    .observatory .btn.accent{
+    .tide .btn:hover{ transform: translateY(-1px); box-shadow: 0 16px 34px rgba(0,0,0,0.18); border-color: rgba(10,16,32,0.28); }
+    .tide .btn:active{ transform: translateY(0); }
+    .tide .btn.accent{
       background: linear-gradient(135deg, color-mix(in oklab, var(--a1) 66%, white), color-mix(in oklab, var(--a2) 66%, white));
       border-color: rgba(255,255,255,0.86);
       color:#0b1020;
       box-shadow: 0 14px 30px color-mix(in oklab, var(--a1) 30%, rgba(0,0,0,0));
     }
-    .observatory.midnight .btn{ background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.12)); border-color: rgba(255,255,255,0.22); color:#eaf2ff; }
+    .tide.night .btn{ background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.12)); border-color: rgba(255,255,255,0.22); color:#eaf2ff; }
 
-    .observatory .sliders{ display:flex; flex-wrap:wrap; gap:12px; margin-top:2px; align-items:center; }
-    .observatory .knob{
+    .tide .sliders{ display:flex; flex-wrap:wrap; gap:12px; margin-top:2px; align-items:center; }
+    .tide .knob{
       display:flex; align-items:center; gap:10px; padding:8px 10px;
       border-radius:12px; border:1px dashed rgba(10,16,32,0.18);
       background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
       color:var(--ink); font-size:12px; font-weight:700;
     }
-    .observatory.midnight .knob{ border-color: rgba(255,255,255,0.22); background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.10)); color:#eaf2ff; }
-    .observatory input[type="range"]{
+    .tide.night .knob{ border-color: rgba(255,255,255,0.22); background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.10)); color:#eaf2ff; }
+    .tide input[type="range"]{
       -webkit-appearance:none; appearance:none; width:160px; height:28px; background:transparent; cursor:pointer;
     }
-    .observatory input[type="range"]::-webkit-slider-runnable-track{
+    .tide input[type="range"]::-webkit-slider-runnable-track{
       height: 8px; border-radius: 999px; border:1px solid rgba(10,16,32,0.16);
       background: linear-gradient(90deg, var(--a1), var(--a2));
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
     }
-    .observatory input[type="range"]::-moz-range-track{
+    .tide input[type="range"]::-moz-range-track{
       height: 8px; border-radius: 999px; border:1px solid rgba(10,16,32,0.16);
       background: linear-gradient(90deg, var(--a1), var(--a2));
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
     }
-    .observatory input[type="range"]::-webkit-slider-thumb{
+    .tide input[type="range"]::-webkit-slider-thumb{
       -webkit-appearance:none; appearance:none; margin-top:-6px;
       width:20px; height:20px; border-radius:50%;
-      background: #fff; border:1px solid rgba(10,16,32,0.16);
+      background:#fff; border:1px solid rgba(10,16,32,0.16);
       box-shadow: 0 8px 16px rgba(0,0,0,0.16);
     }
-    .observatory input[type="range"]::-moz-range-thumb{
+    .tide input[type="range"]::-moz-range-thumb{
       width:20px; height:20px; border-radius:50%;
-      background: #fff; border:1px solid rgba(10,16,32,0.16);
+      background:#fff; border:1px solid rgba(10,16,32,0.16);
       box-shadow: 0 8px 16px rgba(0,0,0,0.16);
     }
 
-    .observatory .status{
+    .tide .status{
       display:flex; align-items:center; gap:10px; margin-top:10px;
       color: var(--muted); font-size:12px; opacity:0.96;
     }
-    .observatory .dot{
+    .tide .dot{
       width:8px; height:8px; border-radius:50%;
       background: var(--a1);
       box-shadow: 0 0 0 0 color-mix(in oklab, var(--a1) 36%, transparent);
@@ -285,121 +264,121 @@
       100%{ box-shadow: 0 0 0 0 rgba(0,0,0,0); }
     }
     @media (prefers-reduced-motion: reduce){
-      .observatory .dot{ animation:none; }
+      .tide .dot{ animation:none; }
     }
 
-    .observatory .vista{ position:relative; display:grid; place-items:center; padding:clamp(8px, 2vw, 14px); overflow:hidden; }
-    .observatory .vista::before{
+    .tide .viewport{ position:relative; display:grid; place-items:center; padding:clamp(8px, 2vw, 14px); overflow:hidden; }
+    .tide .viewport::before{
       content:""; position:absolute; inset:0; border-radius:18px; z-index:1;
       background:
         radial-gradient(80% 60% at 50% 15%, rgba(255,255,255,0.35), transparent 60%),
         radial-gradient(40% 60% at 80% 80%, rgba(255,255,255,0.18), transparent 70%);
       mix-blend-mode: overlay; pointer-events:none;
     }
-    .observatory canvas{
+    .tide canvas{
       width:100%; height:auto; aspect-ratio: 1 / 1;
       border-radius:18px; display:block;
       background: radial-gradient(120% 120% at 50% 50%, rgba(255,255,255,0.06), rgba(0,0,0,0.03));
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
     }
 
-    .observatory .notes{ padding: clamp(14px, 2.2vw, 22px); display:grid; gap:12px; align-content:start; }
-    .observatory .chip{
+    .tide .notes{ padding: clamp(14px, 2.2vw, 22px); display:grid; gap:12px; align-content:start; }
+    .tide .chip{
       display:flex; align-items:center; gap:10px; padding:10px 12px;
       border-radius:12px; border:1px dashed rgba(10,16,32,0.18);
       background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
       color: var(--ink); font-size:13px;
     }
-    .observatory .cc{ width:10px; height:10px; border-radius:50%; background: color-mix(in oklab, var(--a1) 70%, white); box-shadow: 0 6px 14px color-mix(in oklab, var(--a1) 30%, transparent); }
-    .observatory .cc.t2{ background: color-mix(in oklab, var(--a2) 70%, white); box-shadow: 0 6px 14px color-mix(in oklab, var(--a2) 30%, transparent); }
+    .tide .cc{ width:10px; height:10px; border-radius:50%; background: color-mix(in oklab, var(--a1) 70%, white); box-shadow: 0 6px 14px color-mix(in oklab, var(--a1) 30%, transparent); }
+    .tide .cc.t2{ background: color-mix(in oklab, var(--a2) 70%, white); box-shadow: 0 6px 14px color-mix(in oklab, var(--a2) 30%, transparent); }
 
-    .observatory button:focus-visible, .observatory input[type="range"]:focus-visible{
+    .tide button:focus-visible, .tide input[type="range"]:focus-visible{
       outline: 2px solid color-mix(in oklab, var(--a1) 60%, white);
       outline-offset: 2px; border-radius: 14px;
     }
   </style>
 
   <div class="wrap">
-    <section class="intro card">
-      <div class="badge">Edition 2218</div>
-      <h1 id="orbital-title">Orbital&nbsp;Index</h1>
-      <p class="lede">Sketches of motion and light. Guide the sky with your pointer: Pulse for a flash, Randomize for new harmonies, Pause to study the drift.</p>
+    <section class="hero card">
+      <div class="eyebrow">Edition 2219</div>
+      <h1 id="tide-title">Tide&nbsp;Atlas</h1>
+      <p class="lede">Kinetic gradients and living water. Drag your pointer to stir the swell. Bloom for a shimmer, Shuffle for a new horizon, Pause to study the calm.</p>
 
       <div class="seg" role="group" aria-label="Theme">
-        <button id="th-dawn" aria-pressed="true">Dawn</button>
-        <button id="th-dusk" aria-pressed="false">Dusk</button>
-        <button id="th-midnight" aria-pressed="false">Midnight</button>
+        <button id="th-day" aria-pressed="true">Daybreak</button>
+        <button id="th-twilight" aria-pressed="false">Twilight</button>
+        <button id="th-night" aria-pressed="false">Midnight</button>
       </div>
 
       <div class="controls" role="group" aria-label="Controls">
-        <button class="btn accent" id="pulse">Pulse</button>
-        <button class="btn" id="randomize">Randomize</button>
+        <button class="btn accent" id="bloom">Bloom</button>
+        <button class="btn" id="shuffle">Shuffle</button>
         <button class="btn" id="pause" aria-pressed="false">Pause</button>
       </div>
 
       <div class="sliders">
         <div class="knob">
-          Trails
-          <input id="trail" type="range" min="0" max="100" value="8" aria-label="Trail length">
+          Swell
+          <input id="swell" type="range" min="0" max="100" value="34" aria-label="Wave amplitude">
         </div>
         <div class="knob">
-          Gravity
-          <input id="grav" type="range" min="0" max="100" value="22" aria-label="Pointer gravity">
+          Tempo
+          <input id="tempo" type="range" min="0" max="100" value="42" aria-label="Wave speed">
         </div>
       </div>
 
       <div class="status" aria-live="polite">
         <span class="dot" aria-hidden="true"></span>
-        <span id="last-updated">Last updated: 2026-01-26 22:46:13 EST</span>
+        <span id="last-updated">Last updated: 2026-01-26 23:45:18 EST</span>
       </div>
     </section>
 
-    <section class="vista card" aria-label="Sky viewport">
-      <canvas id="sky" width="640" height="640" aria-hidden="true"></canvas>
+    <section class="viewport card" aria-label="Ocean viewport">
+      <canvas id="sea" width="640" height="640" aria-hidden="true"></canvas>
     </section>
 
     <aside class="notes card" aria-label="Notes">
-      <div class="chip"><span class="cc"></span> Orbits flex toward your pointer; hold to intensify the pull.</div>
-      <div class="chip"><span class="cc t2"></span> Randomize reshapes rings, tilt, and palette in one breath.</div>
-      <div class="chip"><span class="cc"></span> Midnight brightens through screen blending; Dawn overlays softly.</div>
+      <div class="chip"><span class="cc"></span> Waves follow your pointer; hold to heighten the pull.</div>
+      <div class="chip"><span class="cc t2"></span> Shuffle spins palette, swell, and tempo in one breath.</div>
+      <div class="chip"><span class="cc"></span> Midnight favors screen blend; Daybreak overlays softly.</div>
     </aside>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.observatory');
+      const root = document.currentScript.closest('.tide');
 
       // Theme startup based on hour
       const hour = new Date().getHours();
-      const start = (hour >= 20 || hour < 6) ? 'midnight' : (hour >= 16 ? 'dusk' : 'dawn');
+      const start = (hour >= 20 || hour < 6) ? 'night' : (hour >= 16 ? 'twilight' : 'day');
       root.classList.add(start);
 
       const themeBtns = {
-        dawn: root.querySelector('#th-dawn'),
-        dusk: root.querySelector('#th-dusk'),
-        midnight: root.querySelector('#th-midnight')
+        day: root.querySelector('#th-day'),
+        twilight: root.querySelector('#th-twilight'),
+        night: root.querySelector('#th-night')
       };
       function setTheme(name){
-        root.classList.remove('dawn','dusk','midnight');
+        root.classList.remove('day','twilight','night');
         root.classList.add(name);
-        themeBtns.dawn.setAttribute('aria-pressed', String(name==='dawn'));
-        themeBtns.dusk.setAttribute('aria-pressed', String(name==='dusk'));
-        themeBtns.midnight.setAttribute('aria-pressed', String(name==='midnight'));
-        touch('Theme: ' + name[0].toUpperCase()+name.slice(1));
+        themeBtns.day.setAttribute('aria-pressed', String(name==='day'));
+        themeBtns.twilight.setAttribute('aria-pressed', String(name==='twilight'));
+        themeBtns.night.setAttribute('aria-pressed', String(name==='night'));
+        touch('Theme: ' + (name==='day'?'Daybreak':name[0].toUpperCase()+name.slice(1)));
       }
-      themeBtns.dawn.addEventListener('click', ()=>setTheme('dawn'));
-      themeBtns.dusk.addEventListener('click', ()=>setTheme('dusk'));
-      themeBtns.midnight.addEventListener('click', ()=>setTheme('midnight'));
+      themeBtns.day.addEventListener('click', ()=>setTheme('day'));
+      themeBtns.twilight.addEventListener('click', ()=>setTheme('twilight'));
+      themeBtns.night.addEventListener('click', ()=>setTheme('night'));
       setTheme(start);
 
       // Elements
-      const canvas = root.querySelector('#sky');
+      const canvas = root.querySelector('#sea');
       const ctx = canvas.getContext('2d');
-      const pulseBtn = root.querySelector('#pulse');
-      const randBtn = root.querySelector('#randomize');
+      const bloomBtn = root.querySelector('#bloom');
+      const shuffleBtn = root.querySelector('#shuffle');
       const pauseBtn = root.querySelector('#pause');
-      const trailInput = root.querySelector('#trail');
-      const gravInput = root.querySelector('#grav');
+      const swellInput = root.querySelector('#swell');
+      const tempoInput = root.querySelector('#tempo');
       const last = root.querySelector('#last-updated');
       const fmt = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' });
       function touch(tag){ last.textContent = tag + " • " + fmt.format(new Date()); }
@@ -423,7 +402,7 @@
       function setPalette(h){
         baseHue = (h+360)%360;
         const a1 = `hsl(${baseHue} 86% 56%)`;
-        const a2 = `hsl(${(baseHue+180)%360} 82% 58%)`;
+        const a2 = `hsl(${(baseHue+160)%360} 82% 58%)`;
         root.style.setProperty('--a1', a1);
         root.style.setProperty('--a2', a2);
       }
@@ -431,12 +410,11 @@
 
       // Canvas sizing
       let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-      let W=0, H=0, CX=0, CY=0;
+      let W=0, H=0;
       function resize(){
         const r = canvas.getBoundingClientRect();
         const s = Math.max(360, Math.min(r.width, r.height || r.width));
         W = H = Math.floor(s);
-        CX = W*0.5; CY = H*0.5;
         canvas.width = Math.floor(W*dpr);
         canvas.height = Math.floor(H*dpr);
         ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -444,6 +422,25 @@
       const ro = new ResizeObserver(resize);
       ro.observe(canvas);
       resize();
+
+      // Waves model
+      const layers = [];
+      function regen(){
+        layers.length = 0;
+        const count = 6 + Math.floor(Math.random()*4); // 6..9
+        for (let i=0; i<count; i++){
+          const t = i/(count-1);
+          layers.push({
+            amp: 10 + 60 * (0.6 - Math.abs(t-0.5)), // center layers higher
+            len: 140 + Math.random()*240,
+            speed: (0.15 + Math.random()*0.45) * (Math.random()<0.5 ? 1 : -1),
+            phase: Math.random()*Math.PI*2,
+            hue: (baseHue + i*14) % 360,
+            alpha: 0.22 + Math.random()*0.18
+          });
+        }
+      }
+      regen();
 
       // System settings
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -457,51 +454,19 @@
       }
       pauseBtn.addEventListener('click', ()=> setRunning(!running));
 
-      // Orbit system
-      const orbits = [];
-      function regen(){
-        orbits.length = 0;
-        const count = 7 + Math.floor(Math.random()*7); // 7..13
-        const maxR = Math.min(W,H)*0.43;
-        for (let i=0;i<count;i++){
-          const t = (i+1)/count;
-          const radius = 40 + t*maxR;
-          orbits.push({
-            r: radius,
-            tilt: Math.random()*Math.PI*2,
-            ex: 0.08 + Math.random()*0.28,
-            a: Math.random()*Math.PI*2,
-            w: (0.2 + Math.random()*0.6) * (Math.random()<0.5 ? 1 : -1),
-            hue: (baseHue + i*18) % 360,
-            size: 2.2 + Math.random()*3.5
-          });
-        }
-      }
-      regen();
-
       // Controls
-      randBtn.addEventListener('click', ()=>{
+      shuffleBtn.addEventListener('click', ()=>{
         setPalette(Math.floor(Math.random()*360));
         regen();
-        touch('Randomized');
+        touch('Shuffled');
       });
 
-      // Pulse
       let bloom = 0;
-      pulseBtn.addEventListener('click', ()=>{
+      bloomBtn.addEventListener('click', ()=>{
         bloom = 1;
         root.animate([{filter:'saturate(1)'},{filter:'saturate(1.18)'},{filter:'saturate(1)'}], {duration: 620, easing:'ease-out'});
-        touch('Pulse');
+        touch('Bloom');
       });
-
-      // Draw helpers
-      function clear(trail){
-        const dark = root.classList.contains('midnight');
-        if (trail <= 0){ ctx.clearRect(0,0,W,H); return; }
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.fillStyle = dark ? `rgba(0,0,0,${trail})` : `rgba(255,255,255,${trail})`;
-        ctx.fillRect(0,0,W,H);
-      }
 
       // Frame
       let prev = performance.now();
@@ -515,100 +480,81 @@
       }
 
       function step(dt){
-        const g = (+gravInput.value)/100; // 0..1
-        const pull = (0.05 + g*0.6) * (pointer.down ? 1.25 : 1.0);
-        const px = (pointer.x||0.5)*W;
-        const py = (pointer.y||0.5)*H;
-
-        for (let i=0;i<orbits.length;i++){
-          const o = orbits[i];
-          // speed mod from gravity toward pointer
-          const mx = px - CX;
-          const my = py - CY;
-          const angToP = Math.atan2(my, mx) - o.tilt;
-          const bias = Math.cos(angToP) * 0.15;
-          o.a += (o.w + bias) * dt * (0.6 + i*0.04);
-          // gentle wobble by bloom
-          o.a += bloom * 0.02;
+        const tempo = (+tempoInput.value)/100; // 0..1
+        const speedScale = 0.4 + tempo*1.3;
+        for (let i=0;i<layers.length;i++){
+          const L = layers[i];
+          L.phase += L.speed * speedScale * dt;
         }
         if (bloom>0){ bloom *= 0.92; if (bloom<0.02) bloom = 0; }
       }
 
+      function clear(trail){
+        const dark = root.classList.contains('night');
+        if (trail <= 0){ ctx.clearRect(0,0,W,H); return; }
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = dark ? `rgba(0,0,0,${trail})` : `rgba(255,255,255,${trail})`;
+        ctx.fillRect(0,0,W,H);
+      }
+
       function draw(staticOnce=false){
-        const dark = root.classList.contains('midnight');
-        const trail = staticOnce ? 0 : Math.max(0, Math.min(0.25, (+trailInput.value)/100));
+        const dark = root.classList.contains('night');
+        const trail = staticOnce ? 0 : 0.18;
         clear(trail);
 
-        // Composition
         ctx.save();
+        const centerBias = (pointer.y||0.5) * H;
+        const pInfluence = (pointer.down ? 1.4 : 1.0);
 
-        // Orbit tracks
-        for (let i=0;i<orbits.length;i++){
-          const o = orbits[i];
-          const stroke = ctx.createLinearGradient(0,0,W,H);
-          stroke.addColorStop(0, `hsla(${(o.hue+10)%360} 90% 60% / ${dark?0.45:0.28})`);
-          stroke.addColorStop(1, `hsla(${(o.hue+80)%360} 90% 60% / ${dark?0.45:0.28})`);
-
-          ctx.globalCompositeOperation = dark ? 'screen' : 'overlay';
-          ctx.save();
-          ctx.translate(CX, CY);
-          ctx.rotate(o.tilt);
-          ctx.scale(1, 1 - o.ex);
-          ctx.beginPath();
-          ctx.arc(0, 0, o.r, 0, Math.PI*2);
-          ctx.strokeStyle = stroke;
-          ctx.lineWidth = 1 + Math.sin(o.a*0.8 + i)*0.4 + bloom*0.2;
-          ctx.stroke();
-          ctx.restore();
-        }
-
-        // Satellites and connections
-        const pts = [];
-        for (let i=0;i<orbits.length;i++){
-          const o = orbits[i];
-          const cos = Math.cos(o.a), sin = Math.sin(o.a);
-          const ex = (1 - o.ex);
-          const x1 = o.r * cos;
-          const y1 = o.r * sin * ex;
-          // rotate by tilt and translate
-          const ct = Math.cos(o.tilt), st = Math.sin(o.tilt);
-          const x = CX + (x1*ct - y1*st);
-          const y = CY + (x1*st + y1*ct);
-          pts.push({x,y,h:o.hue, s:o.size});
-
-          // satellite glow
-          ctx.globalCompositeOperation = dark ? 'screen' : 'plus-lighter';
-          const rad = o.size + Math.sin(o.a*2+i)*0.6 + bloom*3.0;
-          const g = ctx.createRadialGradient(x,y,0, x,y, rad*6);
-          g.addColorStop(0, `hsla(${o.hue} 96% ${dark?72:58}% / ${dark?0.9:0.8})`);
-          g.addColorStop(1, `hsla(${o.hue} 96% 50% / 0)`);
-          ctx.fillStyle = g;
-          ctx.beginPath(); ctx.arc(x,y, rad, 0, Math.PI*2); ctx.fill();
-        }
-
-        // Connect a lace between every second point
-        ctx.globalCompositeOperation = dark ? 'screen' : 'plus-lighter';
-        ctx.beginPath();
-        for (let i=0;i<pts.length; i+=2){
-          const p = pts[i];
-          if (i===0) ctx.moveTo(p.x, p.y);
-          else ctx.lineTo(p.x, p.y);
-        }
-        if (pts.length>2) ctx.closePath();
-        const lgrad = ctx.createLinearGradient(CX-80, CY-80, CX+80, CY+80);
-        lgrad.addColorStop(0, `hsla(${(baseHue+10)%360} 90% 60% / ${dark?0.6:0.35})`);
-        lgrad.addColorStop(1, `hsla(${(baseHue+160)%360} 90% 60% / ${dark?0.6:0.35})`);
-        ctx.strokeStyle = lgrad;
-        ctx.lineWidth = 1.2 + bloom*0.8;
-        ctx.stroke();
-
-        // Nucleus glow
-        const nrad = Math.min(W,H)*0.12 + bloom*10;
-        const nucleus = ctx.createRadialGradient(CX, CY, 0, CX, CY, nrad*3.2);
-        nucleus.addColorStop(0, `hsla(${(baseHue+220)%360} 90% ${dark?80:70}% / ${dark?0.20:0.12})`);
-        nucleus.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = nucleus;
+        // Water gradient base
+        const gBase = ctx.createLinearGradient(0,0,0,H);
+        gBase.addColorStop(0, `hsla(${(baseHue+200)%360} 80% ${dark?80:38}% / ${dark?0.10:0.10})`);
+        gBase.addColorStop(1, `hsla(${(baseHue+20)%360} 80% ${dark?72:52}% / ${dark?0.10:0.10})`);
+        ctx.globalCompositeOperation = dark ? 'screen' : 'overlay';
+        ctx.fillStyle = gBase;
         ctx.fillRect(0,0,W,H);
+
+        // Waves
+        for (let i=0;i<layers.length;i++){
+          const L = layers[i];
+          const swell = (+swellInput.value)/100; // 0..1
+          const amp = (L.amp * (0.2 + swell*1.6) + bloom*30) * pInfluence;
+          const len = L.len * (0.6 + (1 - swell)*0.8);
+          const ph = L.phase + (pointer.x - 0.5)*2.4;
+
+          // Path
+          ctx.beginPath();
+          const baseline = H*0.2 + (i/(layers.length-1))*H*0.6;
+          const bias = (centerBias - baseline) * 0.18 * (0.5 - Math.abs(i/(layers.length-1)-0.5));
+          for (let x=0; x<=W; x+=6){
+            const y = baseline + bias + Math.sin((x/len) + ph) * amp * (0.8 + Math.sin(ph*0.8 + i)*0.2);
+            if (x===0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.lineTo(W, H);
+          ctx.lineTo(0, H);
+          ctx.closePath();
+
+          // Fill
+          const lg = ctx.createLinearGradient(0, baseline-80, 0, H);
+          lg.addColorStop(0, `hsla(${(L.hue)%360} 90% ${dark?76:52}% / ${dark?L.alpha+0.12:L.alpha})`);
+          lg.addColorStop(1, `hsla(${(L.hue+60)%360} 90% ${dark?74:50}% / ${dark?L.alpha+0.12:L.alpha})`);
+          ctx.globalCompositeOperation = dark ? 'screen' : 'plus-lighter';
+          ctx.fillStyle = lg;
+          ctx.fill();
+
+          // Crest shimmer
+          ctx.globalCompositeOperation = dark ? 'screen' : 'overlay';
+          ctx.strokeStyle = `hsla(${(L.hue+10)%360} 96% ${dark?90:70}% / ${dark?0.22:0.14})`;
+          ctx.lineWidth = 1 + Math.sin(ph*1.2+i)*0.4 + bloom*0.2;
+          ctx.beginPath();
+          for (let x=0; x<=W; x+=8){
+            const y = baseline + bias + Math.sin((x/len) + ph) * amp;
+            if (x===0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        }
 
         // Pointer halo
         if (!staticOnce){
