@@ -73,354 +73,370 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div class="loom" role="region" aria-labelledby="loom-title" aria-label="Prism Loom">
+<div class="observatory" role="region" aria-labelledby="orbital-title" aria-label="Orbital Atlas">
   <style>
-    .loom {
-      --ink: #0e1220;
-      --muted: #53607a;
-      --panel: rgba(255,255,255,0.66);
-      --stroke: rgba(12,18,36,0.12);
-      --acc1: hsl(200 92% 52%);
-      --acc2: hsl(320 82% 58%);
-      --acc3: hsl(38 92% 56%);
-      --mx: 0.5;
-      --my: 0.5;
+    .observatory{
+      --ink:#0f1220;
+      --muted:#55607a;
+      --glass:rgba(255,255,255,0.6);
+      --stroke:rgba(15,20,40,0.12);
+      --a1:hsl(210 86% 56%);
+      --a2:hsl(320 82% 58%);
+      --px:0.5; --py:0.5;
 
       position: relative;
       border-radius: 28px;
-      padding: clamp(22px, 3.6vw, 46px);
-      color: var(--ink);
+      padding: clamp(20px, 3.2vw, 44px);
+      color:var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, "Helvetica Neue", Arial;
-      background:
-        radial-gradient(1200px 800px at calc(var(--mx)*100%) calc(var(--my)*100%),
-          color-mix(in oklab, var(--acc2) 16%, transparent),
-          transparent 60%),
-        conic-gradient(from 180deg at 80% 20%,
-          color-mix(in oklab, var(--acc1) 12%, transparent) 0 18%,
-          transparent 18% 52%,
-          color-mix(in oklab, var(--acc3) 12%, transparent) 52% 64%,
-          transparent 64% 100%),
-        linear-gradient(180deg, #f5f7fc, #eef2fb 40%, #e9efff);
-      box-shadow: 0 28px 90px rgba(10, 20, 40, 0.18);
+      min-height: clamp(640px, 70vh, 980px);
       overflow: hidden;
-      isolation: isolate;
-      min-height: clamp(620px, 68vh, 980px);
-    }
-    .loom::before,
-    .loom::after{
-      content:"";
-      position: absolute; inset: -20%;
+      isolation:isolate;
+      box-shadow: 0 28px 90px rgba(10, 20, 40, 0.18);
+
       background:
-        radial-gradient(30% 20% at 20% 10%, rgba(255,255,255,0.45), transparent 70%),
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 12px),
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 10px);
-      mix-blend-mode: overlay;
-      pointer-events: none;
-      opacity: 0.55;
-      z-index: 1;
+        radial-gradient(1200px 800px at calc(var(--px)*100%) calc(var(--py)*100%),
+          color-mix(in oklab, var(--a2) 18%, transparent),
+          transparent 60%),
+        conic-gradient(from 180deg at 75% 20%,
+          color-mix(in oklab, var(--a1) 14%, transparent) 0 18%,
+          transparent 18% 52%,
+          color-mix(in oklab, var(--a2) 14%, transparent) 52% 66%,
+          transparent 66% 100%),
+        linear-gradient(180deg, #f5f7fc, #ecf1fd 50%, #e7edff);
     }
-    .loom::after{
-      inset: -10%;
-      background: radial-gradient(60% 60% at 80% 90%, rgba(255,255,255,0.2), transparent 70%);
-      opacity: 0.6;
+    .observatory::before,
+    .observatory::after{
+      content:""; position:absolute; inset:-15%;
+      pointer-events:none; z-index:1; mix-blend-mode:overlay;
+    }
+    .observatory::before{
+      background:
+        radial-gradient(40% 40% at 10% 8%, rgba(255,255,255,0.36), transparent 70%),
+        radial-gradient(60% 60% at 90% 90%, rgba(255,255,255,0.22), transparent 70%);
+      opacity:0.6;
+    }
+    .observatory::after{
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 12px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 14px);
+      opacity:0.35;
     }
 
     /* Themes */
-    .loom.ivory { --ink:#0e1220; --muted:#53607a; --panel: rgba(255,255,255,0.66); --stroke: rgba(12,18,36,0.12); }
-    .loom.slate { --ink:#0d1426; --muted:#4a5a78; --panel: rgba(255,255,255,0.52); --stroke: rgba(12,18,36,0.14);
-      background: radial-gradient(1000px 700px at calc(var(--mx)*100%) calc(var(--my)*100%), color-mix(in oklab, var(--acc1) 18%, transparent), transparent 60%),
-                  linear-gradient(180deg, #e7ecfa, #e5ebfb 50%, #dde6ff);
+    .observatory.dawn{ --ink:#0f1220; --muted:#445675; --glass:rgba(255,255,255,0.64); --stroke:rgba(10,16,32,0.12); --a1:hsl(202 88% 54%); --a2:hsl(38 92% 56%); }
+    .observatory.dusk{ --ink:#0d1428; --muted:#4a5d7f; --glass:rgba(255,255,255,0.52); --stroke:rgba(12,18,36,0.14); --a1:hsl(262 86% 64%); --a2:hsl(14 92% 58%); 
+      background: radial-gradient(1000px 700px at calc(var(--px)*100%) calc(var(--py)*100%), color-mix(in oklab, var(--a2) 22%, transparent), transparent 60%),
+                  linear-gradient(180deg, #eaeefe, #e5ebfb 52%, #dde6ff);
     }
-    .loom.noir { --ink:#eaefff; --muted:#b5c0d6; --panel: rgba(8,12,24,0.52); --stroke: rgba(255,255,255,0.16);
-      background: radial-gradient(1000px 700px at calc(var(--mx)*100%) calc(var(--my)*100%), color-mix(in oklab, var(--acc2) 20%, transparent), transparent 60%),
-                  linear-gradient(180deg, #0a0f19, #0b1020 50%, #070a12);
+    .observatory.midnight{ --ink:#eaf1ff; --muted:#b6c3d9; --glass:rgba(8,14,28,0.54); --stroke:rgba(255,255,255,0.16); --a1:hsl(200 92% 62%); --a2:hsl(320 82% 62%);
+      background: radial-gradient(1000px 700px at calc(var(--px)*100%) calc(var(--py)*100%), color-mix(in oklab, var(--a1) 22%, transparent), transparent 60%),
+                  linear-gradient(180deg, #070a12, #0a0f1b 50%, #070a12);
     }
 
-    .loom .grid {
-      position: relative; z-index: 2;
-      display: grid; gap: clamp(16px, 2vw, 22px);
-      grid-template-columns: 1.1fr 1fr;
-      max-width: 1240px; margin: 0 auto;
+    .observatory .wrap{
+      position:relative; z-index:2;
+      display:grid; gap:clamp(16px, 2vw, 22px);
+      grid-template-columns: 1.05fr 1fr;
+      max-width: 1240px; margin:0 auto;
       align-items: stretch;
     }
-    @media (max-width: 1000px) { .loom .grid { grid-template-columns: 1fr; } }
+    @media (max-width: 1000px){ .observatory .wrap{ grid-template-columns: 1fr; } }
 
-    .loom .card {
-      background: var(--panel);
-      border: 1px solid var(--stroke);
+    .observatory .card{
+      background: var(--glass);
+      border:1px solid var(--stroke);
       border-radius: 20px;
       backdrop-filter: blur(16px) saturate(120%);
       -webkit-backdrop-filter: blur(16px) saturate(120%);
       box-shadow: 0 16px 46px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.7);
     }
 
-    .loom .mast {
-      padding: clamp(18px, 2.6vw, 30px);
-      display: grid; align-content: start;
-      gap: 14px;
+    .observatory .intro{
+      padding: clamp(18px, 2.4vw, 30px);
+      display:grid; align-content:start; gap:14px;
     }
-    .loom .stamp {
-      display:inline-flex; align-items:center; gap:10px;
+    .observatory .badge{
+      display:inline-flex; gap:10px; align-items:center;
       padding:6px 12px; border-radius:999px;
-      font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
-      background: linear-gradient(90deg, color-mix(in oklab, var(--acc1) 76%, white), color-mix(in oklab, var(--acc2) 76%, white));
+      font-size:11px; letter-spacing:0.18em; text-transform:uppercase; font-weight:800;
+      background: linear-gradient(90deg, color-mix(in oklab, var(--a1) 76%, white), color-mix(in oklab, var(--a2) 76%, white));
       color:#0b1020; border:1px solid rgba(255,255,255,0.9);
       box-shadow: 0 12px 22px rgba(0,0,0,0.16);
       width:max-content; user-select:none;
     }
-    .loom.noir .stamp { color:#0b1020; }
 
-    .loom h1 {
-      margin: 2px 0 0;
-      font-size: clamp(46px, 9vw, 120px);
-      line-height: 0.88;
-      letter-spacing: -0.02em;
-      font-weight: 900;
-      background: radial-gradient(140% 180% at 10% 0%,
+    .observatory h1{
+      margin:2px 0 0;
+      font-size: clamp(48px, 9.6vw, 130px);
+      line-height:0.86;
+      letter-spacing:-0.02em;
+      font-weight: 950;
+      background: radial-gradient(140% 160% at 5% 0%,
         #111,
-        color-mix(in oklab, var(--acc1) 50%, #111) 33%,
-        color-mix(in oklab, var(--acc2) 55%, #222) 66%,
-        color-mix(in oklab, var(--acc3) 50%, #333) 100%);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
+        color-mix(in oklab, var(--a1) 52%, #111) 35%,
+        color-mix(in oklab, var(--a2) 56%, #333) 75%,
+        #111 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
       filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12));
     }
-    .loom.noir h1 {
-      background: radial-gradient(140% 180% at 10% 0%,
+    .observatory.midnight h1{
+      background: radial-gradient(140% 160% at 5% 0%,
         #fff,
-        color-mix(in oklab, var(--acc1) 50%, #fff) 33%,
-        color-mix(in oklab, var(--acc2) 55%, #fff) 66%,
-        color-mix(in oklab, var(--acc3) 50%, #fff) 100%);
+        color-mix(in oklab, var(--a1) 52%, #fff) 35%,
+        color-mix(in oklab, var(--a2) 56%, #fff) 75%,
+        #fff 100%);
     }
 
-    .loom .lede {
+    .observatory .lede{
       color: var(--muted);
       font-size: clamp(14px, 2.2vw, 18px);
-      line-height: 1.75;
-      max-width: 64ch;
-      text-wrap: pretty;
+      line-height:1.75;
+      max-width:62ch;
+      text-wrap:pretty;
     }
 
-    .loom .controls { display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
-    .loom .btn {
-      appearance: none; border:1px solid rgba(10,16,32,0.18);
-      border-radius: 14px; padding: 11px 16px;
-      font-size: 14px; font-weight: 650; letter-spacing: 0.02em;
+    .observatory .seg{
+      display:inline-flex; overflow:hidden; border-radius:14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.64));
+      border:1px solid rgba(10,16,32,0.16);
+      box-shadow: 0 14px 26px rgba(0,0,0,0.14);
+      width: max-content;
+    }
+    .observatory.midnight .seg{ background: linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0.10)); border-color: rgba(255,255,255,0.18); }
+    .observatory .seg button{
+      appearance:none; border:0; background:transparent; padding:10px 14px;
+      font-weight:800; font-size:13px; letter-spacing:0.02em; color:var(--ink); cursor:pointer;
+      transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+    }
+    .observatory .seg button:hover{ transform: translateY(-1px); }
+    .observatory .seg button[aria-pressed="true"]{
+      background: linear-gradient(135deg, color-mix(in oklab, var(--a1) 58%, white), color-mix(in oklab, var(--a2) 58%, white));
+      color:#0b1020;
+    }
+    .observatory.midnight .seg button{ color:#eaf2ff; }
+
+    .observatory .controls{ display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
+    .observatory .btn{
+      appearance:none; border:1px solid rgba(10,16,32,0.18);
+      border-radius:14px; padding:11px 16px;
+      font-size:14px; font-weight:800; letter-spacing:0.02em;
       background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.66));
-      color: var(--ink); cursor: pointer;
+      color:var(--ink); cursor:pointer;
       transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, filter 160ms ease;
       box-shadow: 0 12px 24px rgba(0,0,0,0.14);
     }
-    .loom .btn:hover { transform: translateY(-1px); box-shadow: 0 16px 34px rgba(0,0,0,0.18); border-color: rgba(10,16,32,0.28); }
-    .loom .btn:active { transform: translateY(0); }
-    .loom .btn.accent {
-      background: linear-gradient(135deg, color-mix(in oklab, var(--acc1) 66%, white), color-mix(in oklab, var(--acc3) 66%, white));
+    .observatory .btn:hover{ transform: translateY(-1px); box-shadow: 0 16px 34px rgba(0,0,0,0.18); border-color: rgba(10,16,32,0.28); }
+    .observatory .btn:active{ transform: translateY(0); }
+    .observatory .btn.accent{
+      background: linear-gradient(135deg, color-mix(in oklab, var(--a1) 66%, white), color-mix(in oklab, var(--a2) 66%, white));
       border-color: rgba(255,255,255,0.86);
-      color: #0b1020;
-      box-shadow: 0 14px 30px color-mix(in oklab, var(--acc1) 30%, rgba(0,0,0,0));
-    }
-    .loom.noir .btn { background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.12)); border-color: rgba(255,255,255,0.22); color: #eaf2ff; }
-
-    .loom .seg { display:inline-flex; overflow:hidden; border-radius:14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.62));
-      border:1px solid rgba(10,16,32,0.16);
-      box-shadow: 0 14px 26px rgba(0,0,0,0.14);
-    }
-    .loom.noir .seg { background: linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0.10)); border-color: rgba(255,255,255,0.18); }
-    .loom .seg button {
-      appearance:none; border:0; background:transparent; padding:10px 14px;
-      font-weight:700; font-size:13px; letter-spacing:0.02em; color:var(--ink); cursor:pointer;
-      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
-    }
-    .loom .seg button:hover { transform: translateY(-1px); }
-    .loom .seg button[aria-pressed="true"]{
-      background: linear-gradient(135deg, color-mix(in oklab, var(--acc1) 58%, white), color-mix(in oklab, var(--acc2) 58%, white));
       color:#0b1020;
+      box-shadow: 0 14px 30px color-mix(in oklab, var(--a1) 30%, rgba(0,0,0,0));
+    }
+    .observatory.midnight .btn{ background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.12)); border-color: rgba(255,255,255,0.22); color:#eaf2ff; }
+
+    .observatory .sliders{ display:flex; flex-wrap:wrap; gap:12px; margin-top:2px; align-items:center; }
+    .observatory .knob{
+      display:flex; align-items:center; gap:10px; padding:8px 10px;
+      border-radius:12px; border:1px dashed rgba(10,16,32,0.18);
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
+      color:var(--ink); font-size:12px; font-weight:700;
+    }
+    .observatory.midnight .knob{ border-color: rgba(255,255,255,0.22); background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.10)); color:#eaf2ff; }
+    .observatory input[type="range"]{
+      -webkit-appearance:none; appearance:none; width:160px; height:28px; background:transparent; cursor:pointer;
+    }
+    .observatory input[type="range"]::-webkit-slider-runnable-track{
+      height: 8px; border-radius: 999px; border:1px solid rgba(10,16,32,0.16);
+      background: linear-gradient(90deg, var(--a1), var(--a2));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+    .observatory input[type="range"]::-moz-range-track{
+      height: 8px; border-radius: 999px; border:1px solid rgba(10,16,32,0.16);
+      background: linear-gradient(90deg, var(--a1), var(--a2));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+    .observatory input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance:none; appearance:none; margin-top:-6px;
+      width:20px; height:20px; border-radius:50%;
+      background: #fff; border:1px solid rgba(10,16,32,0.16);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.16);
+    }
+    .observatory input[type="range"]::-moz-range-thumb{
+      width:20px; height:20px; border-radius:50%;
+      background: #fff; border:1px solid rgba(10,16,32,0.16);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.16);
     }
 
-    .loom .ticker {
+    .observatory .status{
       display:flex; align-items:center; gap:10px; margin-top:10px;
       color: var(--muted); font-size:12px; opacity:0.96;
     }
-    .loom .blink {
+    .observatory .dot{
       width:8px; height:8px; border-radius:50%;
-      background: var(--acc1);
-      box-shadow: 0 0 0 0 color-mix(in oklab, var(--acc1) 40%, transparent);
-      animation: blip 3s ease-out infinite;
+      background: var(--a1);
+      box-shadow: 0 0 0 0 color-mix(in oklab, var(--a1) 36%, transparent);
+      animation: ping 3s ease-out infinite;
     }
-    @keyframes blip { 0%{box-shadow:0 0 0 0 color-mix(in oklab, var(--acc1) 40%, transparent)} 70%{box-shadow:0 0 0 12px rgba(0,0,0,0)} 100%{box-shadow:0 0 0 0 rgba(0,0,0,0)} }
-    @media (prefers-reduced-motion: reduce) { .loom .blink { animation: none; } }
+    @keyframes ping{
+      0%{ box-shadow: 0 0 0 0 color-mix(in oklab, var(--a1) 40%, transparent); }
+      70%{ box-shadow: 0 0 0 12px rgba(0,0,0,0); }
+      100%{ box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .observatory .dot{ animation:none; }
+    }
 
-    .loom .scene { position:relative; display:grid; place-items:center; padding: clamp(8px, 2vw, 14px); overflow:hidden; }
-    .loom .scene::before {
-      content:""; position:absolute; inset:0; border-radius:18px;
+    .observatory .vista{ position:relative; display:grid; place-items:center; padding:clamp(8px, 2vw, 14px); overflow:hidden; }
+    .observatory .vista::before{
+      content:""; position:absolute; inset:0; border-radius:18px; z-index:1;
       background:
         radial-gradient(80% 60% at 50% 15%, rgba(255,255,255,0.35), transparent 60%),
         radial-gradient(40% 60% at 80% 80%, rgba(255,255,255,0.18), transparent 70%);
-      mix-blend-mode: overlay; pointer-events:none; z-index:1;
+      mix-blend-mode: overlay; pointer-events:none;
     }
-    .loom canvas {
+    .observatory canvas{
       width:100%; height:auto; aspect-ratio: 1 / 1;
-      border-radius: 18px; display:block;
+      border-radius:18px; display:block;
       background: radial-gradient(120% 120% at 50% 50%, rgba(255,255,255,0.06), rgba(0,0,0,0.03));
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
     }
 
-    .loom .notes { padding: clamp(14px, 2.2vw, 22px); display:grid; gap:12px; align-content:start; }
-    .loom .chip {
+    .observatory .notes{ padding: clamp(14px, 2.2vw, 22px); display:grid; gap:12px; align-content:start; }
+    .observatory .chip{
       display:flex; align-items:center; gap:10px; padding:10px 12px;
       border-radius:12px; border:1px dashed rgba(10,16,32,0.18);
       background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
       color: var(--ink); font-size:13px;
     }
-    .loom .c { width:10px; height:10px; border-radius:50%;
-      background: color-mix(in oklab, var(--acc1) 70%, white);
-      box-shadow: 0 6px 14px color-mix(in oklab, var(--acc1) 30%, transparent);
-    }
-    .loom .c.t2{ background: color-mix(in oklab, var(--acc2) 70%, white); box-shadow: 0 6px 14px color-mix(in oklab, var(--acc2) 30%, transparent); }
-    .loom .c.t3{ background: color-mix(in oklab, var(--acc3) 70%, white); box-shadow: 0 6px 14px color-mix(in oklab, var(--acc3) 30%, transparent); }
+    .observatory .cc{ width:10px; height:10px; border-radius:50%; background: color-mix(in oklab, var(--a1) 70%, white); box-shadow: 0 6px 14px color-mix(in oklab, var(--a1) 30%, transparent); }
+    .observatory .cc.t2{ background: color-mix(in oklab, var(--a2) 70%, white); box-shadow: 0 6px 14px color-mix(in oklab, var(--a2) 30%, transparent); }
 
-    .loom button:focus-visible { outline: 2px solid color-mix(in oklab, var(--acc1) 60%, white); outline-offset: 2px; border-radius: 14px; }
+    .observatory button:focus-visible, .observatory input[type="range"]:focus-visible{
+      outline: 2px solid color-mix(in oklab, var(--a1) 60%, white);
+      outline-offset: 2px; border-radius: 14px;
+    }
   </style>
 
-  <div class="grid">
-    <section class="mast card">
-      <div class="stamp">Edition 2217</div>
-      <h1 id="loom-title">Prism&nbsp;Loom</h1>
-      <p class="lede">Silken ribbons drift across a quiet field. Guide the weave with your cursor; Bloom for a flare, Shuffle to recolor, Freeze to still the air.</p>
+  <div class="wrap">
+    <section class="intro card">
+      <div class="badge">Edition 2218</div>
+      <h1 id="orbital-title">Orbital&nbsp;Index</h1>
+      <p class="lede">Sketches of motion and light. Guide the sky with your pointer: Pulse for a flash, Randomize for new harmonies, Pause to study the drift.</p>
 
       <div class="seg" role="group" aria-label="Theme">
-        <button id="th-ivory" aria-pressed="true">Ivory</button>
-        <button id="th-slate" aria-pressed="false">Slate</button>
-        <button id="th-noir" aria-pressed="false">Noir</button>
+        <button id="th-dawn" aria-pressed="true">Dawn</button>
+        <button id="th-dusk" aria-pressed="false">Dusk</button>
+        <button id="th-midnight" aria-pressed="false">Midnight</button>
       </div>
 
       <div class="controls" role="group" aria-label="Controls">
-        <button class="btn accent" id="bloom">Bloom</button>
-        <button class="btn" id="shuffle">Shuffle</button>
-        <button class="btn" id="freeze" aria-pressed="false">Freeze</button>
+        <button class="btn accent" id="pulse">Pulse</button>
+        <button class="btn" id="randomize">Randomize</button>
+        <button class="btn" id="pause" aria-pressed="false">Pause</button>
       </div>
 
-      <div class="seg" role="group" aria-label="Mode" style="margin-top:10px;">
-        <button id="md-ribbons" aria-pressed="true">Ribbons</button>
-        <button id="md-silk" aria-pressed="false">Silk</button>
-        <button id="md-jet" aria-pressed="false">Jet</button>
+      <div class="sliders">
+        <div class="knob">
+          Trails
+          <input id="trail" type="range" min="0" max="100" value="8" aria-label="Trail length">
+        </div>
+        <div class="knob">
+          Gravity
+          <input id="grav" type="range" min="0" max="100" value="22" aria-label="Pointer gravity">
+        </div>
       </div>
 
-      <div class="ticker" aria-live="polite">
-        <span class="blink" aria-hidden="true"></span>
-        <span id="last-updated">Last updated: 2026-01-26 20:45:23 EST</span>
+      <div class="status" aria-live="polite">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="last-updated">Last updated: 2026-01-26 22:46:13 EST</span>
       </div>
     </section>
 
-    <section class="scene card" aria-label="Loom field">
-      <canvas id="loom" width="640" height="640" aria-hidden="true"></canvas>
+    <section class="vista card" aria-label="Sky viewport">
+      <canvas id="sky" width="640" height="640" aria-hidden="true"></canvas>
     </section>
 
     <aside class="notes card" aria-label="Notes">
-      <div class="chip"><span class="c"></span> Pointer attracts the warp; motion is gentle and reversible.</div>
-      <div class="chip"><span class="c t2"></span> Palettes bend with Shuffle; each ribbon gets a hue sibling.</div>
-      <div class="chip"><span class="c t3"></span> Use Freeze to study the grain; Bloom to light the threads.</div>
+      <div class="chip"><span class="cc"></span> Orbits flex toward your pointer; hold to intensify the pull.</div>
+      <div class="chip"><span class="cc t2"></span> Randomize reshapes rings, tilt, and palette in one breath.</div>
+      <div class="chip"><span class="cc"></span> Midnight brightens through screen blending; Dawn overlays softly.</div>
     </aside>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.loom');
-      // Start in theme based on hour
-      const hour = new Date().getHours();
-      const startTheme = (hour >= 20 || hour < 6) ? 'noir' : (hour >= 16 ? 'slate' : 'ivory');
-      root.classList.add(startTheme);
+      const root = document.currentScript.closest('.observatory');
 
-      const canvas = root.querySelector('#loom');
-      const ctx = canvas.getContext('2d');
+      // Theme startup based on hour
+      const hour = new Date().getHours();
+      const start = (hour >= 20 || hour < 6) ? 'midnight' : (hour >= 16 ? 'dusk' : 'dawn');
+      root.classList.add(start);
 
       const themeBtns = {
-        ivory: root.querySelector('#th-ivory'),
-        slate: root.querySelector('#th-slate'),
-        noir: root.querySelector('#th-noir')
+        dawn: root.querySelector('#th-dawn'),
+        dusk: root.querySelector('#th-dusk'),
+        midnight: root.querySelector('#th-midnight')
       };
       function setTheme(name){
-        root.classList.remove('ivory','slate','noir');
+        root.classList.remove('dawn','dusk','midnight');
         root.classList.add(name);
-        themeBtns.ivory.setAttribute('aria-pressed', String(name==='ivory'));
-        themeBtns.slate.setAttribute('aria-pressed', String(name==='slate'));
-        themeBtns.noir.setAttribute('aria-pressed', String(name==='noir'));
-        touchLast(name[0].toUpperCase()+name.slice(1));
+        themeBtns.dawn.setAttribute('aria-pressed', String(name==='dawn'));
+        themeBtns.dusk.setAttribute('aria-pressed', String(name==='dusk'));
+        themeBtns.midnight.setAttribute('aria-pressed', String(name==='midnight'));
+        touch('Theme: ' + name[0].toUpperCase()+name.slice(1));
       }
-      themeBtns.ivory.addEventListener('click', ()=>setTheme('ivory'));
-      themeBtns.slate.addEventListener('click', ()=>setTheme('slate'));
-      themeBtns.noir.addEventListener('click', ()=>setTheme('noir'));
-      // set to computed start
-      setTheme(startTheme);
+      themeBtns.dawn.addEventListener('click', ()=>setTheme('dawn'));
+      themeBtns.dusk.addEventListener('click', ()=>setTheme('dusk'));
+      themeBtns.midnight.addEventListener('click', ()=>setTheme('midnight'));
+      setTheme(start);
 
-      // Mode
-      let mode = 'ribbons';
-      const modeBtns = {
-        ribbons: root.querySelector('#md-ribbons'),
-        silk: root.querySelector('#md-silk'),
-        jet: root.querySelector('#md-jet')
-      };
-      function setMode(m){
-        mode = m;
-        modeBtns.ribbons.setAttribute('aria-pressed', String(m==='ribbons'));
-        modeBtns.silk.setAttribute('aria-pressed', String(m==='silk'));
-        modeBtns.jet.setAttribute('aria-pressed', String(m==='jet'));
-        touchLast(m[0].toUpperCase()+m.slice(1));
-      }
-      modeBtns.ribbons.addEventListener('click', ()=>setMode('ribbons'));
-      modeBtns.silk.addEventListener('click', ()=>setMode('silk'));
-      modeBtns.jet.addEventListener('click', ()=>setMode('jet'));
-
-      // Controls
-      const bloomBtn = root.querySelector('#bloom');
-      const shuffleBtn = root.querySelector('#shuffle');
-      const freezeBtn = root.querySelector('#freeze');
+      // Elements
+      const canvas = root.querySelector('#sky');
+      const ctx = canvas.getContext('2d');
+      const pulseBtn = root.querySelector('#pulse');
+      const randBtn = root.querySelector('#randomize');
+      const pauseBtn = root.querySelector('#pause');
+      const trailInput = root.querySelector('#trail');
+      const gravInput = root.querySelector('#grav');
       const last = root.querySelector('#last-updated');
       const fmt = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' });
-      function touchLast(tag){
-        last.textContent = tag + " • " + fmt.format(new Date());
-      }
+      function touch(tag){ last.textContent = tag + " • " + fmt.format(new Date()); }
       last.textContent = "Loaded • " + fmt.format(new Date());
 
-      // Pointer
-      const pointer = { x: 0.5, y: 0.5, down: false };
+      // Pointer -> CSS vars for background highlight
+      const pointer = { x:0.5, y:0.5, down:false };
       root.addEventListener('pointermove', (e)=>{
         const r = root.getBoundingClientRect();
         pointer.x = (e.clientX - r.left) / r.width;
         pointer.y = (e.clientY - r.top) / r.height;
-        root.style.setProperty('--mx', pointer.x.toFixed(3));
-        root.style.setProperty('--my', pointer.y.toFixed(3));
+        root.style.setProperty('--px', pointer.x.toFixed(3));
+        root.style.setProperty('--py', pointer.y.toFixed(3));
       });
       root.addEventListener('pointerdown', ()=> pointer.down = true);
       root.addEventListener('pointerup', ()=> pointer.down = false);
       root.addEventListener('mouseleave', ()=> pointer.down = false);
 
       // Palette
-      let baseHue = Math.floor((Date.now()/400) % 360);
+      let baseHue = Math.floor((Date.now()/500) % 360);
       function setPalette(h){
-        baseHue = (h + 360) % 360;
-        const a1 = `hsl(${baseHue} 92% 52%)`;
-        const a2 = `hsl(${(baseHue + 120) % 360} 82% 58%)`;
-        const a3 = `hsl(${(baseHue + 230) % 360} 92% 56%)`;
-        root.style.setProperty('--acc1', a1);
-        root.style.setProperty('--acc2', a2);
-        root.style.setProperty('--acc3', a3);
+        baseHue = (h+360)%360;
+        const a1 = `hsl(${baseHue} 86% 56%)`;
+        const a2 = `hsl(${(baseHue+180)%360} 82% 58%)`;
+        root.style.setProperty('--a1', a1);
+        root.style.setProperty('--a2', a2);
       }
       setPalette(baseHue);
 
-      shuffleBtn.addEventListener('click', ()=>{
-        setPalette(Math.floor(Math.random()*360));
-        ribbons.forEach((rb,i)=> rb.hue = (baseHue + i*27) % 360);
-        touchLast('Shuffled');
-      });
-
       // Canvas sizing
       let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-      let W=0, H=0;
+      let W=0, H=0, CX=0, CY=0;
       function resize(){
         const r = canvas.getBoundingClientRect();
         const s = Math.max(360, Math.min(r.width, r.height || r.width));
         W = H = Math.floor(s);
+        CX = W*0.5; CY = H*0.5;
         canvas.width = Math.floor(W*dpr);
         canvas.height = Math.floor(H*dpr);
         ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -429,200 +445,65 @@
       ro.observe(canvas);
       resize();
 
-      // Field + Ribbons
+      // System settings
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const RIBBON_COUNT = 7;
-      const SEGMENTS = 48;
-      const ribbons = [];
-      function init(){
-        ribbons.length = 0;
-        for (let i=0;i<RIBBON_COUNT;i++){
-          ribbons.push(makeRibbon(i));
-        }
-      }
-      function makeRibbon(i){
-        const pts = [];
-        const angle = Math.random()*Math.PI*2;
-        const cx = W*0.5 + Math.cos(angle)*W*0.15;
-        const cy = H*0.5 + Math.sin(angle)*H*0.15;
-        for (let j=0;j<SEGMENTS;j++){
-          const t = j/(SEGMENTS-1);
-          pts.push({
-            x: cx + (Math.random()-0.5)*W*0.05 + (t-0.5)*W*(0.3+Math.random()*0.1),
-            y: cy + (Math.random()-0.5)*H*0.05 + Math.sin(t*Math.PI*2+angle)*H*0.06,
-            vx: 0, vy: 0
-          });
-        }
-        return {
-          pts,
-          hue: (baseHue + i*27) % 360,
-          width: 6 + Math.random()*10,
-          wobble: Math.random()*2 + 0.8,
-          phase: Math.random()*Math.PI*2
-        };
-      }
-      init();
-
-      // Noise helper (cheap, fast)
-      function n2(x, y, t){
-        return Math.sin(x*0.006 + t*0.8) * Math.cos(y*0.006 - t*0.7) +
-               Math.sin((x+y)*0.004 - t*0.5)*0.6;
-      }
-
       let running = !prefersReduced;
       function setRunning(on){
         running = on;
-        freezeBtn.setAttribute('aria-pressed', String(!on));
-        touchLast(on ? 'Resumed' : 'Frozen');
+        pauseBtn.setAttribute('aria-pressed', String(!on));
+        touch(on ? 'Resumed' : 'Paused');
         if (on) requestAnimationFrame(frame);
         else draw(true);
       }
-      freezeBtn.addEventListener('click', ()=> setRunning(!running));
+      pauseBtn.addEventListener('click', ()=> setRunning(!running));
 
-      // Bloom (pulse)
-      let bloom = 0;
-      bloomBtn.addEventListener('click', ()=>{
-        bloom = 1;
-        root.animate([{filter:'brightness(1)'},{filter:'brightness(1.14)'},{filter:'brightness(1)'}], {duration: 520, easing:'ease-out'});
-        touchLast('Bloom');
+      // Orbit system
+      const orbits = [];
+      function regen(){
+        orbits.length = 0;
+        const count = 7 + Math.floor(Math.random()*7); // 7..13
+        const maxR = Math.min(W,H)*0.43;
+        for (let i=0;i<count;i++){
+          const t = (i+1)/count;
+          const radius = 40 + t*maxR;
+          orbits.push({
+            r: radius,
+            tilt: Math.random()*Math.PI*2,
+            ex: 0.08 + Math.random()*0.28,
+            a: Math.random()*Math.PI*2,
+            w: (0.2 + Math.random()*0.6) * (Math.random()<0.5 ? 1 : -1),
+            hue: (baseHue + i*18) % 360,
+            size: 2.2 + Math.random()*3.5
+          });
+        }
+      }
+      regen();
+
+      // Controls
+      randBtn.addEventListener('click', ()=>{
+        setPalette(Math.floor(Math.random()*360));
+        regen();
+        touch('Randomized');
       });
 
-      // Drawing
-      function clear(trail=0.08){
-        const dark = root.classList.contains('noir');
+      // Pulse
+      let bloom = 0;
+      pulseBtn.addEventListener('click', ()=>{
+        bloom = 1;
+        root.animate([{filter:'saturate(1)'},{filter:'saturate(1.18)'},{filter:'saturate(1)'}], {duration: 620, easing:'ease-out'});
+        touch('Pulse');
+      });
+
+      // Draw helpers
+      function clear(trail){
+        const dark = root.classList.contains('midnight');
         if (trail <= 0){ ctx.clearRect(0,0,W,H); return; }
         ctx.globalCompositeOperation = 'source-over';
         ctx.fillStyle = dark ? `rgba(0,0,0,${trail})` : `rgba(255,255,255,${trail})`;
         ctx.fillRect(0,0,W,H);
       }
 
-      let t = 0;
-      function step(dt){
-        t += dt;
-        const mx = (pointer.x||0.5)*W;
-        const my = (pointer.y||0.5)*H;
-        const attract = 0.12 + (pointer.down?0.06:0) + (bloom?0.08:0);
-        for (let r=0; r<ribbons.length; r++){
-          const rb = ribbons[r];
-          for (let i=0;i<rb.pts.length;i++){
-            const p = rb.pts[i];
-            const force = n2(p.x, p.y, t*0.25 + rb.phase);
-            const angle = force * Math.PI*2;
-            p.vx += Math.cos(angle) * 0.3;
-            p.vy += Math.sin(angle) * 0.3;
-            // gentle attraction to pointer
-            const dx = mx - p.x;
-            const dy = my - p.y;
-            p.vx += dx * 0.00012 * attract;
-            p.vy += dy * 0.00012 * attract;
-
-            // spring to neighbors
-            if (i>0){
-              const prev = rb.pts[i-1];
-              const sx = prev.x - p.x;
-              const sy = prev.y - p.y;
-              p.vx += sx * 0.002;
-              p.vy += sy * 0.002;
-            }
-            p.vx *= 0.96; p.vy *= 0.96;
-            p.x += p.vx; p.y += p.vy;
-          }
-        }
-        if (bloom>0){ bloom *= 0.92; if (bloom<0.02) bloom = 0; }
-      }
-
-      function draw(staticOnce=false){
-        const dark = root.classList.contains('noir');
-        const trail = mode==='jet' ? 0.06 : 0.08;
-        clear(prefersReduced || staticOnce ? 0 : trail);
-
-        for (let r=0; r<ribbons.length; r++){
-          const rb = ribbons[r];
-          const pts = rb.pts;
-          // Gradient stroke per ribbon
-          const g = ctx.createLinearGradient(pts[0].x, pts[0].y, pts[pts.length-1].x, pts[pts.length-1].y);
-          g.addColorStop(0, `hsla(${(rb.hue+0)%360} 90% 60% / ${dark?0.9:0.7})`);
-          g.addColorStop(1, `hsla(${(rb.hue+50)%360} 90% 60% / ${dark?0.9:0.7})`);
-
-          const thickness = rb.width + Math.sin(t*1.6 + rb.phase)*rb.wobble + bloom*6;
-
-          if (mode === 'silk'){
-            ctx.globalCompositeOperation = dark ? 'screen' : 'multiply';
-            ctx.beginPath();
-            for (let i=0;i<pts.length;i++){
-              const p = pts[i];
-              const nx = i===0 ? pts[i+1].x - p.x : p.x - pts[i-1].x;
-              const ny = i===0 ? pts[i+1].y - p.y : p.y - pts[i-1].y;
-              const len = Math.hypot(nx,ny) || 1;
-              const ox = -ny/len * thickness*0.6;
-              const oy = nx/len * thickness*0.6;
-              if (i===0) ctx.moveTo(p.x+ox, p.y+oy);
-              else ctx.lineTo(p.x+ox, p.y+oy);
-            }
-            for (let i=pts.length-1;i>=0;i--){
-              const p = pts[i];
-              const nx = i===0 ? pts[i+1].x - p.x : p.x - pts[i-1].x;
-              const ny = i===0 ? pts[i+1].y - p.y : p.y - pts[i-1].y;
-              const len = Math.hypot(nx,ny) || 1;
-              const ox = ny/len * thickness*0.6;
-              const oy = -nx/len * thickness*0.6;
-              ctx.lineTo(p.x+ox, p.y+oy);
-            }
-            ctx.closePath();
-            ctx.fillStyle = g;
-            ctx.shadowColor = `hsla(${rb.hue} 90% 60% / ${dark?0.35:0.25})`;
-            ctx.shadowBlur = 20 + thickness*1.5;
-            ctx.fill();
-            ctx.shadowBlur = 0;
-          } else if (mode === 'jet'){
-            ctx.globalCompositeOperation = dark ? 'screen' : 'plus-lighter';
-            for (let i=0;i<pts.length;i+=2){
-              const p = pts[i];
-              ctx.beginPath();
-              ctx.fillStyle = `hsla(${(rb.hue + i) % 360} 90% 60% / ${dark?0.9:0.7})`;
-              ctx.shadowColor = `hsla(${(rb.hue + i) % 360} 90% 60% / ${dark?0.7:0.5})`;
-              ctx.shadowBlur = 12 + bloom*8;
-              ctx.arc(p.x, p.y, 1.6 + (thickness*0.06) + Math.sin(t*2+i)*0.4, 0, Math.PI*2);
-              ctx.fill();
-            }
-            ctx.shadowBlur = 0;
-          } else {
-            // ribbons
-            ctx.globalCompositeOperation = dark ? 'screen' : 'overlay';
-            ctx.beginPath();
-            for (let i=0;i<pts.length;i++){
-              const p = pts[i];
-              const nx = i===0 ? pts[i+1].x : pts[i-1].x;
-              const ny = i===0 ? pts[i+1].y : pts[i-1].y;
-              const mx = (p.x + nx)/2;
-              const my = (p.y + ny)/2;
-              if (i===0) ctx.moveTo(mx, my);
-              else ctx.quadraticCurveTo(nx, ny, p.x, p.y);
-            }
-            ctx.strokeStyle = g;
-            ctx.lineWidth = Math.max(1, thickness);
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.shadowColor = `hsla(${rb.hue} 90% 60% / ${dark?0.35:0.25})`;
-            ctx.shadowBlur = 18 + thickness*1.2 + (bloom?8:0);
-            ctx.stroke();
-            ctx.shadowBlur = 0;
-          }
-        }
-
-        // soft halo at pointer (mode ribbons & silk)
-        if (mode !== 'jet'){
-          const px = (pointer.x||0.5)*W;
-          const py = (pointer.y||0.5)*H;
-          const halo = ctx.createRadialGradient(px,py,0, px,py, Math.max(W,H)*0.45);
-          halo.addColorStop(0, root.classList.contains('noir') ? 'rgba(255,255,255,0.06)': 'rgba(255,255,255,0.10)');
-          halo.addColorStop(1, 'rgba(255,255,255,0)');
-          ctx.globalCompositeOperation = root.classList.contains('noir') ? 'screen' : 'overlay';
-          ctx.fillStyle = halo;
-          ctx.fillRect(0,0,W,H);
-        }
-      }
-
+      // Frame
       let prev = performance.now();
       function frame(now){
         if (!running) return;
@@ -633,11 +514,121 @@
         requestAnimationFrame(frame);
       }
 
-      // Run
+      function step(dt){
+        const g = (+gravInput.value)/100; // 0..1
+        const pull = (0.05 + g*0.6) * (pointer.down ? 1.25 : 1.0);
+        const px = (pointer.x||0.5)*W;
+        const py = (pointer.y||0.5)*H;
+
+        for (let i=0;i<orbits.length;i++){
+          const o = orbits[i];
+          // speed mod from gravity toward pointer
+          const mx = px - CX;
+          const my = py - CY;
+          const angToP = Math.atan2(my, mx) - o.tilt;
+          const bias = Math.cos(angToP) * 0.15;
+          o.a += (o.w + bias) * dt * (0.6 + i*0.04);
+          // gentle wobble by bloom
+          o.a += bloom * 0.02;
+        }
+        if (bloom>0){ bloom *= 0.92; if (bloom<0.02) bloom = 0; }
+      }
+
+      function draw(staticOnce=false){
+        const dark = root.classList.contains('midnight');
+        const trail = staticOnce ? 0 : Math.max(0, Math.min(0.25, (+trailInput.value)/100));
+        clear(trail);
+
+        // Composition
+        ctx.save();
+
+        // Orbit tracks
+        for (let i=0;i<orbits.length;i++){
+          const o = orbits[i];
+          const stroke = ctx.createLinearGradient(0,0,W,H);
+          stroke.addColorStop(0, `hsla(${(o.hue+10)%360} 90% 60% / ${dark?0.45:0.28})`);
+          stroke.addColorStop(1, `hsla(${(o.hue+80)%360} 90% 60% / ${dark?0.45:0.28})`);
+
+          ctx.globalCompositeOperation = dark ? 'screen' : 'overlay';
+          ctx.save();
+          ctx.translate(CX, CY);
+          ctx.rotate(o.tilt);
+          ctx.scale(1, 1 - o.ex);
+          ctx.beginPath();
+          ctx.arc(0, 0, o.r, 0, Math.PI*2);
+          ctx.strokeStyle = stroke;
+          ctx.lineWidth = 1 + Math.sin(o.a*0.8 + i)*0.4 + bloom*0.2;
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        // Satellites and connections
+        const pts = [];
+        for (let i=0;i<orbits.length;i++){
+          const o = orbits[i];
+          const cos = Math.cos(o.a), sin = Math.sin(o.a);
+          const ex = (1 - o.ex);
+          const x1 = o.r * cos;
+          const y1 = o.r * sin * ex;
+          // rotate by tilt and translate
+          const ct = Math.cos(o.tilt), st = Math.sin(o.tilt);
+          const x = CX + (x1*ct - y1*st);
+          const y = CY + (x1*st + y1*ct);
+          pts.push({x,y,h:o.hue, s:o.size});
+
+          // satellite glow
+          ctx.globalCompositeOperation = dark ? 'screen' : 'plus-lighter';
+          const rad = o.size + Math.sin(o.a*2+i)*0.6 + bloom*3.0;
+          const g = ctx.createRadialGradient(x,y,0, x,y, rad*6);
+          g.addColorStop(0, `hsla(${o.hue} 96% ${dark?72:58}% / ${dark?0.9:0.8})`);
+          g.addColorStop(1, `hsla(${o.hue} 96% 50% / 0)`);
+          ctx.fillStyle = g;
+          ctx.beginPath(); ctx.arc(x,y, rad, 0, Math.PI*2); ctx.fill();
+        }
+
+        // Connect a lace between every second point
+        ctx.globalCompositeOperation = dark ? 'screen' : 'plus-lighter';
+        ctx.beginPath();
+        for (let i=0;i<pts.length; i+=2){
+          const p = pts[i];
+          if (i===0) ctx.moveTo(p.x, p.y);
+          else ctx.lineTo(p.x, p.y);
+        }
+        if (pts.length>2) ctx.closePath();
+        const lgrad = ctx.createLinearGradient(CX-80, CY-80, CX+80, CY+80);
+        lgrad.addColorStop(0, `hsla(${(baseHue+10)%360} 90% 60% / ${dark?0.6:0.35})`);
+        lgrad.addColorStop(1, `hsla(${(baseHue+160)%360} 90% 60% / ${dark?0.6:0.35})`);
+        ctx.strokeStyle = lgrad;
+        ctx.lineWidth = 1.2 + bloom*0.8;
+        ctx.stroke();
+
+        // Nucleus glow
+        const nrad = Math.min(W,H)*0.12 + bloom*10;
+        const nucleus = ctx.createRadialGradient(CX, CY, 0, CX, CY, nrad*3.2);
+        nucleus.addColorStop(0, `hsla(${(baseHue+220)%360} 90% ${dark?80:70}% / ${dark?0.20:0.12})`);
+        nucleus.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = nucleus;
+        ctx.fillRect(0,0,W,H);
+
+        // Pointer halo
+        if (!staticOnce){
+          const px = (pointer.x||0.5)*W;
+          const py = (pointer.y||0.5)*H;
+          const halo = ctx.createRadialGradient(px,py,0, px,py, Math.max(W,H)*0.42);
+          halo.addColorStop(0, dark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.10)');
+          halo.addColorStop(1, 'rgba(255,255,255,0)');
+          ctx.globalCompositeOperation = dark ? 'screen' : 'overlay';
+          ctx.fillStyle = halo; ctx.fillRect(0,0,W,H);
+        }
+
+        ctx.restore();
+      }
+
+      // Kickoff
       if (running) requestAnimationFrame(frame); else draw(true);
 
       // Delight on load
-      setTimeout(()=>{ bloom = 1; root.animate([{filter:'saturate(1)'},{filter:'saturate(1.18)'},{filter:'saturate(1)'}], {duration: 620, easing:'ease-out'}); }, 260);
+      setTimeout(()=>{ bloom = 1; root.animate([{filter:'brightness(1)'},{filter:'brightness(1.12)'},{filter:'brightness(1)'}], {duration: 520, easing:'ease-out'}); }, 240);
     })();
   </script>
 </div>
