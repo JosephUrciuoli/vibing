@@ -73,331 +73,339 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div class="tide" role="region" aria-labelledby="tide-title" aria-label="Tide Studio">
+<div class="loom" role="region" aria-labelledby="loom-title" aria-label="Nebula Loom">
   <style>
-    .tide{
-      --ink:#0c1220;
-      --muted:#4b5a77;
-      --glass:rgba(255,255,255,0.6);
-      --stroke:rgba(15,20,40,0.12);
-      --bg1:#eef4ff;
-      --bg2:#e7edff;
-      --a1:hsl(198 84% 56%);
-      --a2:hsl(12 84% 58%);
+    .loom{
+      --ink:#0e1222;
+      --muted:#55607a;
+      --glass:rgba(255,255,255,0.65);
+      --stroke:rgba(12,18,40,0.14);
+      --bg1:#eef3ff;
+      --bg2:#e6ecff;
+      --a1:hsl(204 86% 52%);
+      --a2:hsl(14 86% 56%);
       --px:0.5; --py:0.5;
 
-      position:relative;
+      position:relative; isolation:isolate; overflow:hidden;
       border-radius:28px;
-      padding:clamp(20px,3.2vw,44px);
+      min-height: clamp(680px, 72vh, 1040px);
+      padding:clamp(22px,3vw,44px);
       color:var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, "Helvetica Neue", Arial;
-      min-height: clamp(640px, 70vh, 980px);
-      overflow:hidden;
-      isolation:isolate;
-      box-shadow: 0 28px 90px rgba(10,20,40,0.18);
       background:
         radial-gradient(1200px 800px at calc(var(--px)*100%) calc(var(--py)*100%),
-          color-mix(in oklab, var(--a2) 16%, transparent), transparent 60%),
+          color-mix(in oklab, var(--a2) 18%, transparent), transparent 65%),
         linear-gradient(160deg, var(--bg1), var(--bg2));
+      box-shadow: 0 30px 90px rgba(12,18,40,0.18);
     }
-    .tide::before{
-      content:""; position:absolute; inset:-10%;
+    .loom::before,
+    .loom::after{
+      content:""; position:absolute; inset:-10%; z-index:1; pointer-events:none; mix-blend-mode:overlay;
       background:
-        radial-gradient(40% 40% at 10% 8%, rgba(255,255,255,0.38), transparent 70%),
-        radial-gradient(60% 60% at 90% 90%, rgba(255,255,255,0.22), transparent 70%),
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 14px),
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 14px);
-      mix-blend-mode: overlay;
-      pointer-events:none;
-      z-index:1;
+        radial-gradient(38% 32% at 16% 12%, rgba(255,255,255,0.36), transparent 70%),
+        radial-gradient(60% 60% at 90% 90%, rgba(255,255,255,0.2), transparent 70%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 18px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 18px);
+    }
+    .loom::after{
+      background:
+        conic-gradient(from 0deg at 80% 10%, color-mix(in oklab, var(--a1) 12%, transparent), transparent 50%),
+        conic-gradient(from 180deg at 10% 90%, color-mix(in oklab, var(--a2) 12%, transparent), transparent 50%);
+      filter: blur(26px) saturate(1.1);
+      opacity:0.7;
+      animation: floatOrbs 18s ease-in-out infinite alternate;
+    }
+    @keyframes floatOrbs{
+      0%{ transform: translateY(-2%) scale(1); }
+      100%{ transform: translateY(2%) scale(1.02); }
     }
 
     /* Themes */
-    .tide.day{ --ink:#0c1220; --muted:#4b5a77; --glass:rgba(255,255,255,0.64); --stroke:rgba(10,16,32,0.12);
-      --bg1:#eef6ff; --bg2:#e7f0ff; --a1:hsl(202 90% 56%); --a2:hsl(38 90% 58%); }
-    .tide.twilight{ --ink:#0b1328; --muted:#465a80; --glass:rgba(255,255,255,0.54); --stroke:rgba(12,18,36,0.14);
-      --bg1:#eaeefe; --bg2:#dfe7ff; --a1:hsl(264 82% 64%); --a2:hsl(16 90% 58%); }
-    .tide.night{ --ink:#e9f1ff; --muted:#b6c6e1; --glass:rgba(8,14,28,0.52); --stroke:rgba(255,255,255,0.16);
-      --bg1:#070a12; --bg2:#0a1120; --a1:hsl(200 94% 62%); --a2:hsl(320 82% 62%); }
+    .loom.dawn{
+      --ink:#0e1222; --muted:#516281; --glass:rgba(255,255,255,0.68); --stroke:rgba(12,18,40,0.14);
+      --bg1:#f2f7ff; --bg2:#e9f1ff; --a1:hsl(210 92% 52%); --a2:hsl(42 92% 52%);
+    }
+    .loom.dusk{
+      --ink:#0e1022; --muted:#586192; --glass:rgba(255,255,255,0.58); --stroke:rgba(12,18,40,0.16);
+      --bg1:#ebe9ff; --bg2:#dee4ff; --a1:hsl(274 86% 62%); --a2:hsl(16 88% 58%);
+    }
+    .loom.void{
+      --ink:#eaf2ff; --muted:#b6c6e4; --glass:rgba(10,16,28,0.55); --stroke:rgba(255,255,255,0.16);
+      --bg1:#070a12; --bg2:#0b1020; --a1:hsl(200 92% 62%); --a2:hsl(322 82% 64%);
+    }
 
-    .tide .wrap{
+    .loom .wrap{
       position:relative; z-index:2;
       display:grid; gap:clamp(16px,2vw,22px);
-      grid-template-columns: 1.05fr 1fr;
-      max-width:1240px; margin:0 auto;
+      grid-template-columns: 1fr 1.15fr;
       align-items:stretch;
+      max-width:1280px; margin:0 auto;
     }
-    @media (max-width: 1000px){ .tide .wrap{ grid-template-columns:1fr; } }
+    @media (max-width: 1040px){ .loom .wrap{ grid-template-columns:1fr; } }
 
-    .tide .card{
+    .loom .card{
       background: var(--glass);
       border:1px solid var(--stroke);
-      border-radius: 20px;
-      backdrop-filter: blur(16px) saturate(120%);
-      -webkit-backdrop-filter: blur(16px) saturate(120%);
-      box-shadow: 0 16px 46px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.7);
+      border-radius:22px;
+      backdrop-filter: blur(18px) saturate(120%);
+      -webkit-backdrop-filter: blur(18px) saturate(120%);
+      box-shadow: 0 18px 48px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.75);
     }
 
-    .tide .hero{ padding:clamp(18px,2.4vw,30px); display:grid; gap:14px; align-content:start; }
-    .tide .eyebrow{
-      display:inline-flex; gap:10px; align-items:center;
-      padding:6px 12px; border-radius:999px;
-      font-size:11px; letter-spacing:0.18em; text-transform:uppercase; font-weight:800;
-      background: linear-gradient(90deg, color-mix(in oklab, var(--a1) 76%, white), color-mix(in oklab, var(--a2) 76%, white));
-      color:#0b1020; border:1px solid rgba(255,255,255,0.9);
-      box-shadow: 0 12px 22px rgba(0,0,0,0.16);
+    .loom .hero{ padding:clamp(18px,2.4vw,28px); display:grid; gap:14px; align-content:start; }
+    .loom .eyebrow{
       width:max-content; user-select:none;
+      display:inline-flex; align-items:center; gap:10px;
+      padding:6px 12px; border-radius:999px;
+      font-size:11px; letter-spacing:0.18em; text-transform:uppercase; font-weight:900;
+      color:#0b0f20;
+      background: linear-gradient(90deg, color-mix(in oklab, var(--a1) 78%, white), color-mix(in oklab, var(--a2) 78%, white));
+      border:1px solid rgba(255,255,255,0.92);
+      box-shadow: 0 12px 22px rgba(0,0,0,0.14);
     }
 
-    .tide h1{
+    .loom h1{
       margin:0;
-      font-size: clamp(48px, 9.6vw, 128px);
-      line-height:0.86; letter-spacing:-0.02em; font-weight:950;
-      background: radial-gradient(140% 160% at 5% 0%,
-        #111,
-        color-mix(in oklab, var(--a1) 52%, #111) 35%,
-        color-mix(in oklab, var(--a2) 56%, #333) 75%,
+      font-size: clamp(50px, 9vw, 136px);
+      font-weight:950; letter-spacing:-0.02em; line-height:0.86;
+      background:
+        radial-gradient(140% 160% at 0% 0%,
+        #111, color-mix(in oklab, var(--a1) 48%, #111) 35%,
+        color-mix(in oklab, var(--a2) 60%, #222) 75%,
         #111 100%);
       -webkit-background-clip:text; background-clip:text; color:transparent;
-      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12));
+      filter: drop-shadow(0 24px 40px rgba(0,0,0,0.16));
     }
-    .tide.night h1{
-      background: radial-gradient(140% 160% at 5% 0%,
-        #fff,
-        color-mix(in oklab, var(--a1) 52%, #fff) 35%,
-        color-mix(in oklab, var(--a2) 56%, #fff) 75%,
+    .loom.void h1{
+      background:
+        radial-gradient(140% 160% at 0% 0%,
+        #fff, color-mix(in oklab, var(--a1) 48%, #fff) 35%,
+        color-mix(in oklab, var(--a2) 60%, #fff) 75%,
         #fff 100%);
     }
 
-    .tide .lede{
+    .loom .lede{
       color:var(--muted);
       font-size: clamp(14px, 2.2vw, 18px);
-      line-height:1.75; max-width:64ch; text-wrap:pretty;
+      line-height:1.75; max-width:65ch; text-wrap:pretty;
     }
 
-    .tide .seg{
+    .loom .seg{
       display:inline-flex; overflow:hidden; border-radius:14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.64));
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.66));
       border:1px solid rgba(10,16,32,0.16);
-      box-shadow: 0 14px 26px rgba(0,0,0,0.14);
-      width:max-content;
+      width:max-content; box-shadow: 0 14px 26px rgba(0,0,0,0.14);
     }
-    .tide.night .seg{ background: linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0.10)); border-color: rgba(255,255,255,0.18); }
-    .tide .seg button{
+    .loom.void .seg{ background: linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.12)); border-color: rgba(255,255,255,0.18); }
+    .loom .seg button{
       appearance:none; border:0; background:transparent; padding:10px 14px;
-      font-weight:800; font-size:13px; letter-spacing:0.02em; color:var(--ink); cursor:pointer;
-      transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+      font-weight:900; font-size:13px; letter-spacing:0.02em; color:var(--ink); cursor:pointer;
+      transition: transform 160ms ease, background 160ms ease, color 160ms ease, filter 160ms ease;
     }
-    .tide .seg button:hover{ transform: translateY(-1px); }
-    .tide .seg button[aria-pressed="true"]{
-      background: linear-gradient(135deg, color-mix(in oklab, var(--a1) 58%, white), color-mix(in oklab, var(--a2) 58%, white));
+    .loom .seg button:hover{ transform: translateY(-1px); }
+    .loom .seg button[aria-pressed="true"]{
+      background: linear-gradient(135deg, color-mix(in oklab, var(--a1) 62%, white), color-mix(in oklab, var(--a2) 62%, white));
       color:#0b1020;
     }
-    .tide.night .seg button{ color:#eaf2ff; }
+    .loom.void .seg button{ color:#eaf2ff; }
 
-    .tide .controls{ display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
-    .tide .btn{
+    .loom .controls{ display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+    .loom .btn{
       appearance:none; border:1px solid rgba(10,16,32,0.18);
       border-radius:14px; padding:11px 16px;
-      font-size:14px; font-weight:800; letter-spacing:0.02em;
-      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.66));
+      font-size:14px; font-weight:900; letter-spacing:0.02em;
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.7));
       color:var(--ink); cursor:pointer;
       transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, filter 160ms ease;
       box-shadow: 0 12px 24px rgba(0,0,0,0.14);
     }
-    .tide .btn:hover{ transform: translateY(-1px); box-shadow: 0 16px 34px rgba(0,0,0,0.18); border-color: rgba(10,16,32,0.28); }
-    .tide .btn:active{ transform: translateY(0); }
-    .tide .btn.accent{
-      background: linear-gradient(135deg, color-mix(in oklab, var(--a1) 66%, white), color-mix(in oklab, var(--a2) 66%, white));
-      border-color: rgba(255,255,255,0.86);
-      color:#0b1020;
-      box-shadow: 0 14px 30px color-mix(in oklab, var(--a1) 30%, rgba(0,0,0,0));
+    .loom .btn:hover{ transform: translateY(-1px); box-shadow: 0 16px 34px rgba(0,0,0,0.18); border-color: rgba(10,16,32,0.28); }
+    .loom .btn:active{ transform: translateY(0); }
+    .loom .btn.accent{
+      background: linear-gradient(135deg, color-mix(in oklab, var(--a1) 70%, white), color-mix(in oklab, var(--a2) 70%, white));
+      border-color: rgba(255,255,255,0.9);
+      color:#0c1020;
+      box-shadow: 0 16px 30px color-mix(in oklab, var(--a1) 30%, rgba(0,0,0,0));
     }
-    .tide.night .btn{ background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.12)); border-color: rgba(255,255,255,0.22); color:#eaf2ff; }
+    .loom.void .btn{ background: linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.12)); border-color: rgba(255,255,255,0.22); color:#eaf2ff; }
+    .loom .btn[aria-pressed="true"]{ filter: contrast(1.1) saturate(1.1); }
 
-    .tide .sliders{ display:flex; flex-wrap:wrap; gap:12px; margin-top:2px; align-items:center; }
-    .tide .knob{
+    .loom .sliders{ display:flex; flex-wrap:wrap; gap:12px; margin-top:2px; align-items:center; }
+    .loom .knob{
       display:flex; align-items:center; gap:10px; padding:8px 10px;
       border-radius:12px; border:1px dashed rgba(10,16,32,0.18);
       background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
-      color:var(--ink); font-size:12px; font-weight:700;
+      color:var(--ink); font-size:12px; font-weight:800;
     }
-    .tide.night .knob{ border-color: rgba(255,255,255,0.22); background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.10)); color:#eaf2ff; }
-    .tide input[type="range"]{
-      -webkit-appearance:none; appearance:none; width:160px; height:28px; background:transparent; cursor:pointer;
+    .loom.void .knob{ border-color: rgba(255,255,255,0.22); background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.10)); color:#eaf2ff; }
+    .loom input[type="range"]{
+      -webkit-appearance:none; appearance:none; width:170px; height:28px; background:transparent; cursor:pointer;
     }
-    .tide input[type="range"]::-webkit-slider-runnable-track{
-      height: 8px; border-radius: 999px; border:1px solid rgba(10,16,32,0.16);
+    .loom input[type="range"]::-webkit-slider-runnable-track,
+    .loom input[type="range"]::-moz-range-track{
+      height:8px; border-radius:999px; border:1px solid rgba(10,16,32,0.16);
       background: linear-gradient(90deg, var(--a1), var(--a2));
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
     }
-    .tide input[type="range"]::-moz-range-track{
-      height: 8px; border-radius: 999px; border:1px solid rgba(10,16,32,0.16);
-      background: linear-gradient(90deg, var(--a1), var(--a2));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
-    }
-    .tide input[type="range"]::-webkit-slider-thumb{
+    .loom input[type="range"]::-webkit-slider-thumb{
       -webkit-appearance:none; appearance:none; margin-top:-6px;
-      width:20px; height:20px; border-radius:50%;
-      background:#fff; border:1px solid rgba(10,16,32,0.16);
+      width:20px; height:20px; border-radius:50%; background:#fff; border:1px solid rgba(10,16,32,0.16);
       box-shadow: 0 8px 16px rgba(0,0,0,0.16);
     }
-    .tide input[type="range"]::-moz-range-thumb{
-      width:20px; height:20px; border-radius:50%;
-      background:#fff; border:1px solid rgba(10,16,32,0.16);
+    .loom input[type="range"]::-moz-range-thumb{
+      width:20px; height:20px; border-radius:50%; background:#fff; border:1px solid rgba(10,16,32,0.16);
       box-shadow: 0 8px 16px rgba(0,0,0,0.16);
     }
 
-    .tide .status{
-      display:flex; align-items:center; gap:10px; margin-top:10px;
+    .loom .status{
+      display:flex; align-items:center; gap:10px; margin-top:8px;
       color: var(--muted); font-size:12px; opacity:0.96;
     }
-    .tide .dot{
+    .loom .dot{
       width:8px; height:8px; border-radius:50%;
       background: var(--a1);
       box-shadow: 0 0 0 0 color-mix(in oklab, var(--a1) 36%, transparent);
       animation: ping 3s ease-out infinite;
     }
     @keyframes ping{
-      0%{ box-shadow: 0 0 0 0 color-mix(in oklab, var(--a1) 40%, transparent); }
+      0%{ box-shadow: 0 0 0 0 color-mix(in oklab, var(--a1) 42%, transparent); }
       70%{ box-shadow: 0 0 0 12px rgba(0,0,0,0); }
       100%{ box-shadow: 0 0 0 0 rgba(0,0,0,0); }
     }
     @media (prefers-reduced-motion: reduce){
-      .tide .dot{ animation:none; }
+      .loom .dot{ animation:none; }
+      .loom::after{ animation:none; }
     }
 
-    .tide .viewport{ position:relative; display:grid; place-items:center; padding:clamp(8px, 2vw, 14px); overflow:hidden; }
-    .tide .viewport::before{
-      content:""; position:absolute; inset:0; border-radius:18px; z-index:1;
+    .loom .viewport{ position:relative; display:grid; place-items:center; padding:clamp(8px, 2vw, 14px); overflow:hidden; }
+    .loom .viewport::before{
+      content:""; position:absolute; inset:0; border-radius:20px; z-index:1; pointer-events:none;
       background:
         radial-gradient(80% 60% at 50% 15%, rgba(255,255,255,0.35), transparent 60%),
-        radial-gradient(40% 60% at 80% 80%, rgba(255,255,255,0.18), transparent 70%);
-      mix-blend-mode: overlay; pointer-events:none;
+        radial-gradient(40% 60% at 80% 80%, rgba(255,255,255,0.20), transparent 70%);
+      mix-blend-mode: overlay;
     }
-    .tide canvas{
+    .loom canvas{
       width:100%; height:auto; aspect-ratio: 1 / 1;
-      border-radius:18px; display:block;
+      display:block; border-radius:20px;
       background: radial-gradient(120% 120% at 50% 50%, rgba(255,255,255,0.06), rgba(0,0,0,0.03));
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
     }
 
-    .tide .notes{ padding: clamp(14px, 2.2vw, 22px); display:grid; gap:12px; align-content:start; }
-    .tide .chip{
+    .loom .notes{ padding:clamp(14px,2.2vw,22px); display:grid; gap:12px; align-content:start; }
+    .loom .chip{
       display:flex; align-items:center; gap:10px; padding:10px 12px;
       border-radius:12px; border:1px dashed rgba(10,16,32,0.18);
       background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
       color: var(--ink); font-size:13px;
     }
-    .tide .cc{ width:10px; height:10px; border-radius:50%; background: color-mix(in oklab, var(--a1) 70%, white); box-shadow: 0 6px 14px color-mix(in oklab, var(--a1) 30%, transparent); }
-    .tide .cc.t2{ background: color-mix(in oklab, var(--a2) 70%, white); box-shadow: 0 6px 14px color-mix(in oklab, var(--a2) 30%, transparent); }
+    .loom .cc{ width:10px; height:10px; border-radius:50%; background: color-mix(in oklab, var(--a1) 70%, white); box-shadow: 0 6px 14px color-mix(in oklab, var(--a1) 30%, transparent); }
+    .loom .cc.t2{ background: color-mix(in oklab, var(--a2) 70%, white); box-shadow: 0 6px 14px color-mix(in oklab, var(--a2) 30%, transparent); }
 
-    .tide button:focus-visible, .tide input[type="range"]:focus-visible{
+    .loom button:focus-visible, .loom input[type="range"]:focus-visible{
       outline: 2px solid color-mix(in oklab, var(--a1) 60%, white);
-      outline-offset: 2px; border-radius: 14px;
+      outline-offset: 2px; border-radius:14px;
     }
   </style>
 
   <div class="wrap">
     <section class="hero card">
-      <div class="eyebrow">Edition 2219</div>
-      <h1 id="tide-title">Tide&nbsp;Atlas</h1>
-      <p class="lede">Kinetic gradients and living water. Drag your pointer to stir the swell. Bloom for a shimmer, Shuffle for a new horizon, Pause to study the calm.</p>
+      <div class="eyebrow">Edition 2220</div>
+      <h1 id="loom-title">Nebula&nbsp;Loom</h1>
+      <p class="lede">Paint with gravity. Drag to bend stardust. Spark for a flare, Reseed for a fresh cosmos, Pause to study the stillness.</p>
 
       <div class="seg" role="group" aria-label="Theme">
-        <button id="th-day" aria-pressed="true">Daybreak</button>
-        <button id="th-twilight" aria-pressed="false">Twilight</button>
-        <button id="th-night" aria-pressed="false">Midnight</button>
+        <button id="th-dawn" aria-pressed="true">Dawn</button>
+        <button id="th-dusk" aria-pressed="false">Dusk</button>
+        <button id="th-void" aria-pressed="false">Void</button>
       </div>
 
       <div class="controls" role="group" aria-label="Controls">
-        <button class="btn accent" id="bloom">Bloom</button>
-        <button class="btn" id="shuffle">Shuffle</button>
+        <button class="btn accent" id="spark">Spark</button>
+        <button class="btn" id="reseed">Reseed</button>
         <button class="btn" id="pause" aria-pressed="false">Pause</button>
       </div>
 
       <div class="sliders">
         <div class="knob">
-          Swell
-          <input id="swell" type="range" min="0" max="100" value="34" aria-label="Wave amplitude">
+          Flux
+          <input id="flux" type="range" min="0" max="100" value="55" aria-label="Particle energy">
         </div>
         <div class="knob">
-          Tempo
-          <input id="tempo" type="range" min="0" max="100" value="42" aria-label="Wave speed">
+          Drift
+          <input id="drift" type="range" min="0" max="100" value="38" aria-label="Field motion">
         </div>
       </div>
 
       <div class="status" aria-live="polite">
         <span class="dot" aria-hidden="true"></span>
-        <span id="last-updated">Last updated: 2026-01-26 23:45:18 EST</span>
+        <span id="last-updated">Last updated: 2026-01-27 00:25:08 EST</span>
       </div>
     </section>
 
-    <section class="viewport card" aria-label="Ocean viewport">
-      <canvas id="sea" width="640" height="640" aria-hidden="true"></canvas>
+    <section class="viewport card" aria-label="Starfield viewport">
+      <canvas id="nebula" width="640" height="640" aria-hidden="true"></canvas>
     </section>
 
     <aside class="notes card" aria-label="Notes">
-      <div class="chip"><span class="cc"></span> Waves follow your pointer; hold to heighten the pull.</div>
-      <div class="chip"><span class="cc t2"></span> Shuffle spins palette, swell, and tempo in one breath.</div>
-      <div class="chip"><span class="cc"></span> Midnight favors screen blend; Daybreak overlays softly.</div>
+      <div class="chip"><span class="cc"></span> Pointer attracts the flow; press and hold to intensify gravity.</div>
+      <div class="chip"><span class="cc t2"></span> Reseed shuffles the universe: palette, noise, and particle birthplaces.</div>
+      <div class="chip"><span class="cc"></span> Void uses screen blend for a gentle glow; Dawn and Dusk overlay softly.</div>
     </aside>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.tide');
+      const root = document.currentScript.closest('.loom');
 
-      // Theme startup based on hour
+      // Theme bootstrap
       const hour = new Date().getHours();
-      const start = (hour >= 20 || hour < 6) ? 'night' : (hour >= 16 ? 'twilight' : 'day');
-      root.classList.add(start);
-
-      const themeBtns = {
-        day: root.querySelector('#th-day'),
-        twilight: root.querySelector('#th-twilight'),
-        night: root.querySelector('#th-night')
-      };
+      const start = (hour >= 20 || hour < 6) ? 'void' : (hour >= 15 ? 'dusk' : 'dawn');
       function setTheme(name){
-        root.classList.remove('day','twilight','night');
+        root.classList.remove('dawn','dusk','void');
         root.classList.add(name);
-        themeBtns.day.setAttribute('aria-pressed', String(name==='day'));
-        themeBtns.twilight.setAttribute('aria-pressed', String(name==='twilight'));
-        themeBtns.night.setAttribute('aria-pressed', String(name==='night'));
-        touch('Theme: ' + (name==='day'?'Daybreak':name[0].toUpperCase()+name.slice(1)));
+        themeBtn.dawn.setAttribute('aria-pressed', String(name==='dawn'));
+        themeBtn.dusk.setAttribute('aria-pressed', String(name==='dusk'));
+        themeBtn.void.setAttribute('aria-pressed', String(name==='void'));
+        touch('Theme: ' + name[0].toUpperCase() + name.slice(1));
       }
-      themeBtns.day.addEventListener('click', ()=>setTheme('day'));
-      themeBtns.twilight.addEventListener('click', ()=>setTheme('twilight'));
-      themeBtns.night.addEventListener('click', ()=>setTheme('night'));
+      const themeBtn = {
+        dawn: root.querySelector('#th-dawn'),
+        dusk: root.querySelector('#th-dusk'),
+        void: root.querySelector('#th-void')
+      };
+      themeBtn.dawn.addEventListener('click', ()=> setTheme('dawn'));
+      themeBtn.dusk.addEventListener('click', ()=> setTheme('dusk'));
+      themeBtn.void.addEventListener('click', ()=> setTheme('void'));
       setTheme(start);
 
       // Elements
-      const canvas = root.querySelector('#sea');
+      const canvas = root.querySelector('#nebula');
       const ctx = canvas.getContext('2d');
-      const bloomBtn = root.querySelector('#bloom');
-      const shuffleBtn = root.querySelector('#shuffle');
+      const sparkBtn = root.querySelector('#spark');
+      const reseedBtn = root.querySelector('#reseed');
       const pauseBtn = root.querySelector('#pause');
-      const swellInput = root.querySelector('#swell');
-      const tempoInput = root.querySelector('#tempo');
+      const fluxInput = root.querySelector('#flux');
+      const driftInput = root.querySelector('#drift');
       const last = root.querySelector('#last-updated');
       const fmt = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' });
       function touch(tag){ last.textContent = tag + " • " + fmt.format(new Date()); }
       last.textContent = "Loaded • " + fmt.format(new Date());
 
-      // Pointer -> CSS vars for background highlight
-      const pointer = { x:0.5, y:0.5, down:false };
-      root.addEventListener('pointermove', (e)=>{
+      // Pointer tracking
+      const pointer = { x:0.5, y:0.5, px:0.5, py:0.5, down:false };
+      function setPointer(e){
         const r = root.getBoundingClientRect();
-        pointer.x = (e.clientX - r.left) / r.width;
-        pointer.y = (e.clientY - r.top) / r.height;
+        pointer.x = (e.clientX - r.left) / r.width; pointer.y = (e.clientY - r.top) / r.height;
         root.style.setProperty('--px', pointer.x.toFixed(3));
         root.style.setProperty('--py', pointer.y.toFixed(3));
-      });
-      root.addEventListener('pointerdown', ()=> pointer.down = true);
+      }
+      root.addEventListener('pointermove', (e)=>{ pointer.px=pointer.x; pointer.py=pointer.y; setPointer(e); });
+      root.addEventListener('pointerdown', (e)=>{ pointer.down = true; setPointer(e); });
       root.addEventListener('pointerup', ()=> pointer.down = false);
       root.addEventListener('mouseleave', ()=> pointer.down = false);
 
-      // Palette
+      // Palette modulation
       let baseHue = Math.floor((Date.now()/500) % 360);
       function setPalette(h){
         baseHue = (h+360)%360;
@@ -409,42 +417,57 @@
       setPalette(baseHue);
 
       // Canvas sizing
-      let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      let dpr = Math.max(1, Math.min(2, window.devicePixelRatio||1));
       let W=0, H=0;
       function resize(){
         const r = canvas.getBoundingClientRect();
-        const s = Math.max(360, Math.min(r.width, r.height || r.width));
+        const s = Math.max(380, Math.min(r.width, r.height || r.width));
         W = H = Math.floor(s);
         canvas.width = Math.floor(W*dpr);
         canvas.height = Math.floor(H*dpr);
         ctx.setTransform(dpr,0,0,dpr,0,0);
       }
-      const ro = new ResizeObserver(resize);
-      ro.observe(canvas);
-      resize();
+      const ro = new ResizeObserver(resize); ro.observe(canvas); resize();
 
-      // Waves model
-      const layers = [];
-      function regen(){
-        layers.length = 0;
-        const count = 6 + Math.floor(Math.random()*4); // 6..9
-        for (let i=0; i<count; i++){
-          const t = i/(count-1);
-          layers.push({
-            amp: 10 + 60 * (0.6 - Math.abs(t-0.5)), // center layers higher
-            len: 140 + Math.random()*240,
-            speed: (0.15 + Math.random()*0.45) * (Math.random()<0.5 ? 1 : -1),
-            phase: Math.random()*Math.PI*2,
-            hue: (baseHue + i*14) % 360,
-            alpha: 0.22 + Math.random()*0.18
+      // Particles
+      let particles = [];
+      let seed = Math.random()*1000|0;
+      function rand(){
+        // simple LCG
+        seed = (seed * 1664525 + 1013904223) >>> 0;
+        return seed / 0xFFFFFFFF;
+      }
+      function reseed(){
+        seed = (Math.random()*0xFFFFFFFF)>>>0;
+        particles = [];
+        const count = 1100 + Math.floor(rand()*500); // 1100..1599
+        for (let i=0;i<count;i++){
+          particles.push({
+            x: rand()*W, y: rand()*H,
+            vx: 0, vy: 0,
+            life: rand()*1,
+            hueOfs: rand()*60
           });
         }
       }
-      regen();
+      reseed();
 
-      // System settings
+      // Field
+      function field(x, y, t, scale, freq){
+        // gentle curl-ish field via layered sin/cos
+        const nx = (x/W - 0.5), ny = (y/H - 0.5);
+        const a = Math.sin((y/scale) + t*freq*1.3) + Math.cos((x/scale) - t*freq*0.9);
+        const b = Math.cos((x/scale)*0.8 + t*freq*0.6) - Math.sin((y/scale)*1.1 - t*freq*0.7);
+        // rotate for curl
+        const dx = (a - ny*0.6), dy = (b + nx*0.6);
+        return {dx, dy};
+      }
+
+      // Motion and draw
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let running = !prefersReduced;
+      let spark = 0;
+
       function setRunning(on){
         running = on;
         pauseBtn.setAttribute('aria-pressed', String(!on));
@@ -454,43 +477,21 @@
       }
       pauseBtn.addEventListener('click', ()=> setRunning(!running));
 
-      // Controls
-      shuffleBtn.addEventListener('click', ()=>{
+      reseedBtn.addEventListener('click', ()=>{
         setPalette(Math.floor(Math.random()*360));
-        regen();
-        touch('Shuffled');
+        reseed();
+        touch('Reseeded');
       });
 
-      let bloom = 0;
-      bloomBtn.addEventListener('click', ()=>{
-        bloom = 1;
-        root.animate([{filter:'saturate(1)'},{filter:'saturate(1.18)'},{filter:'saturate(1)'}], {duration: 620, easing:'ease-out'});
-        touch('Bloom');
+      sparkBtn.addEventListener('click', ()=>{
+        spark = 1;
+        root.animate([{filter:'brightness(1) saturate(1)'},{filter:'brightness(1.14) saturate(1.18)'},{filter:'brightness(1) saturate(1)'}], {duration: 620, easing:'ease-out'});
+        touch('Spark');
       });
 
-      // Frame
-      let prev = performance.now();
-      function frame(now){
-        if (!running) return;
-        const dt = Math.min(0.06, (now - prev)/1000);
-        prev = now;
-        step(dt);
-        draw();
-        requestAnimationFrame(frame);
-      }
-
-      function step(dt){
-        const tempo = (+tempoInput.value)/100; // 0..1
-        const speedScale = 0.4 + tempo*1.3;
-        for (let i=0;i<layers.length;i++){
-          const L = layers[i];
-          L.phase += L.speed * speedScale * dt;
-        }
-        if (bloom>0){ bloom *= 0.92; if (bloom<0.02) bloom = 0; }
-      }
-
+      // Render helpers
       function clear(trail){
-        const dark = root.classList.contains('night');
+        const dark = root.classList.contains('void');
         if (trail <= 0){ ctx.clearRect(0,0,W,H); return; }
         ctx.globalCompositeOperation = 'source-over';
         ctx.fillStyle = dark ? `rgba(0,0,0,${trail})` : `rgba(255,255,255,${trail})`;
@@ -498,83 +499,97 @@
       }
 
       function draw(staticOnce=false){
-        const dark = root.classList.contains('night');
-        const trail = staticOnce ? 0 : 0.18;
+        const dark = root.classList.contains('void');
+        const trail = staticOnce ? 0 : 0.14;
         clear(trail);
 
-        ctx.save();
-        const centerBias = (pointer.y||0.5) * H;
-        const pInfluence = (pointer.down ? 1.4 : 1.0);
-
-        // Water gradient base
-        const gBase = ctx.createLinearGradient(0,0,0,H);
-        gBase.addColorStop(0, `hsla(${(baseHue+200)%360} 80% ${dark?80:38}% / ${dark?0.10:0.10})`);
-        gBase.addColorStop(1, `hsla(${(baseHue+20)%360} 80% ${dark?72:52}% / ${dark?0.10:0.10})`);
+        // soft base wash
         ctx.globalCompositeOperation = dark ? 'screen' : 'overlay';
-        ctx.fillStyle = gBase;
-        ctx.fillRect(0,0,W,H);
+        const g = ctx.createLinearGradient(0,0,0,H);
+        g.addColorStop(0, `hsla(${(baseHue+200)%360} 90% ${dark?82:44}% / ${dark?0.12:0.10})`);
+        g.addColorStop(1, `hsla(${(baseHue+20)%360} 90% ${dark?78:54}% / ${dark?0.12:0.10})`);
+        ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
 
-        // Waves
-        for (let i=0;i<layers.length;i++){
-          const L = layers[i];
-          const swell = (+swellInput.value)/100; // 0..1
-          const amp = (L.amp * (0.2 + swell*1.6) + bloom*30) * pInfluence;
-          const len = L.len * (0.6 + (1 - swell)*0.8);
-          const ph = L.phase + (pointer.x - 0.5)*2.4;
-
-          // Path
-          ctx.beginPath();
-          const baseline = H*0.2 + (i/(layers.length-1))*H*0.6;
-          const bias = (centerBias - baseline) * 0.18 * (0.5 - Math.abs(i/(layers.length-1)-0.5));
-          for (let x=0; x<=W; x+=6){
-            const y = baseline + bias + Math.sin((x/len) + ph) * amp * (0.8 + Math.sin(ph*0.8 + i)*0.2);
-            if (x===0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-          }
-          ctx.lineTo(W, H);
-          ctx.lineTo(0, H);
-          ctx.closePath();
-
-          // Fill
-          const lg = ctx.createLinearGradient(0, baseline-80, 0, H);
-          lg.addColorStop(0, `hsla(${(L.hue)%360} 90% ${dark?76:52}% / ${dark?L.alpha+0.12:L.alpha})`);
-          lg.addColorStop(1, `hsla(${(L.hue+60)%360} 90% ${dark?74:50}% / ${dark?L.alpha+0.12:L.alpha})`);
-          ctx.globalCompositeOperation = dark ? 'screen' : 'plus-lighter';
-          ctx.fillStyle = lg;
-          ctx.fill();
-
-          // Crest shimmer
-          ctx.globalCompositeOperation = dark ? 'screen' : 'overlay';
-          ctx.strokeStyle = `hsla(${(L.hue+10)%360} 96% ${dark?90:70}% / ${dark?0.22:0.14})`;
-          ctx.lineWidth = 1 + Math.sin(ph*1.2+i)*0.4 + bloom*0.2;
-          ctx.beginPath();
-          for (let x=0; x<=W; x+=8){
-            const y = baseline + bias + Math.sin((x/len) + ph) * amp;
-            if (x===0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-          }
-          ctx.stroke();
-        }
-
-        // Pointer halo
+        // pointer halo
         if (!staticOnce){
-          const px = (pointer.x||0.5)*W;
-          const py = (pointer.y||0.5)*H;
-          const halo = ctx.createRadialGradient(px,py,0, px,py, Math.max(W,H)*0.42);
+          const px = (pointer.x||0.5)*W, py = (pointer.y||0.5)*H;
+          const halo = ctx.createRadialGradient(px,py,0, px,py, Math.max(W,H)*0.45);
           halo.addColorStop(0, dark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.10)');
           halo.addColorStop(1, 'rgba(255,255,255,0)');
           ctx.globalCompositeOperation = dark ? 'screen' : 'overlay';
           ctx.fillStyle = halo; ctx.fillRect(0,0,W,H);
         }
 
-        ctx.restore();
+        // particles
+        ctx.globalCompositeOperation = dark ? 'screen' : 'plus-lighter';
+        for (let i=0;i<particles.length;i++){
+          const p = particles[i];
+          const ox = p.x, oy = p.y;
+
+          // wrap edges softly
+          if (p.x< -2) p.x+=W+4; else if (p.x>W+2) p.x-=W+4;
+          if (p.y< -2) p.y+=H+4; else if (p.y>H+2) p.y-=H+4;
+
+          // compute field
+          const drift = (+driftInput.value)/100; // 0..1
+          const flux = (+fluxInput.value)/100; // 0..1
+          const t = performance.now()/1000;
+          const scl = 60 + (1 - drift)*140;
+          const freq = 0.3 + drift*1.3;
+          const F = field(p.x, p.y, t, scl, freq);
+
+          // pointer gravity
+          const gx = ((pointer.x||0.5)*W) - p.x;
+          const gy = ((pointer.y||0.5)*H) - p.y;
+          const dist = Math.hypot(gx, gy) + 1e-4;
+          const grav = (pointer.down ? 0.8 : 0.32) * (1 / (1 + dist*0.004));
+
+          // integrate
+          p.vx += (F.dx*0.8 + gx*grav*0.02) * (0.2 + flux*1.4);
+          p.vy += (F.dy*0.8 + gy*grav*0.02) * (0.2 + flux*1.4);
+          // damp
+          const damp = 0.92 - flux*0.18 + (spark*0.08);
+          p.vx *= damp; p.vy *= damp;
+          p.x += p.vx; p.y += p.vy;
+
+          // color and stroke
+          const spd = Math.hypot(p.vx, p.vy);
+          const h = (baseHue + p.hueOfs + spd*120) % 360;
+          const a = Math.min(0.08 + spd*0.06 + spark*0.05, 0.5);
+          ctx.strokeStyle = `hsla(${h} 90% ${dark?78:56}% / ${a})`;
+          ctx.lineWidth = 0.6 + spd*0.7 + spark*0.8;
+
+          ctx.beginPath();
+          ctx.moveTo(ox, oy);
+          ctx.lineTo(p.x, p.y);
+          ctx.stroke();
+
+          // life respawn
+          p.life += 0.002 + spd*0.001;
+          if (p.life > 1){
+            p.life = 0;
+            p.x = rand()*W; p.y = rand()*H;
+            p.vx = p.vy = 0;
+            p.hueOfs = rand()*60;
+          }
+        }
       }
 
-      // Kickoff
+      let prev = performance.now();
+      function frame(now){
+        if (!running) return;
+        const dt = Math.min(0.06, (now - prev)/1000);
+        prev = now;
+        if (spark>0){ spark *= 0.90; if (spark<0.02) spark=0; }
+        draw();
+        requestAnimationFrame(frame);
+      }
+
+      // Start
       if (running) requestAnimationFrame(frame); else draw(true);
 
       // Delight on load
-      setTimeout(()=>{ bloom = 1; root.animate([{filter:'brightness(1)'},{filter:'brightness(1.12)'},{filter:'brightness(1)'}], {duration: 520, easing:'ease-out'}); }, 240);
+      setTimeout(()=>{ spark = 1; root.animate([{filter:'brightness(1)'},{filter:'brightness(1.12)'},{filter:'brightness(1)'}], {duration: 520, easing:'ease-out'}); }, 220);
     })();
   </script>
 </div>
