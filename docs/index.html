@@ -73,374 +73,579 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="va-aurora" data-motion="on">
+<section class="va-solaris" data-motion="on">
   <style>
-    .va-aurora {
-      --h: 218deg;
+    .va-solaris {
+      --h: 206;
       --fg: hsl(0 0% 98%);
-      --muted: hsl(0 0% 80% / 0.85);
+      --muted: hsl(0 0% 88% / 0.8);
       --surface: hsl(0 0% 100% / 0.06);
       --surface-2: hsl(0 0% 100% / 0.12);
-      --shadow: 0 10px 30px hsl(0 0% 0% / 0.35);
       --accent: hsl(var(--h) 90% 62%);
-      --accent-2: hsl(calc(var(--h) + 24deg) 84% 60%);
-      --radius: 16px;
+      --accent-2: hsl(calc(var(--h) + 28) 85% 58%);
+      --glow: hsl(var(--h) 90% 60% / 0.55);
+      --radius: 18px;
+      --speed: 1;
+      --seed: 22;
       position: relative;
+      min-height: 68vh;
       display: grid;
       place-content: center;
-      min-height: 64vh;
-      padding: clamp(16px, 3vw, 40px);
+      padding: clamp(16px, 3.5vw, 40px);
       color: var(--fg);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
       overflow: hidden;
       border-radius: 20px;
       background:
-        radial-gradient(1200px 900px at 10% -10%, hsl(215 82% 18% / 0.9), transparent 60%),
-        radial-gradient(900px 600px at 110% 20%, hsl(280 72% 20% / 0.6), transparent 60%),
-        linear-gradient(180deg, hsl(220 30% 8%), hsl(220 28% 6%));
-      box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.06), 0 20px 60px hsl(220 60% 4% / 0.6);
+        radial-gradient(900px 800px at -10% 0%, hsl(210 58% 18% / 0.9), transparent 60%),
+        radial-gradient(800px 650px at 110% 30%, hsl(280 55% 20% / 0.65), transparent 60%),
+        linear-gradient(180deg, hsl(225 28% 10%), hsl(223 26% 7%));
+      box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.06), 0 20px 60px hsl(223 60% 4% / 0.6);
       isolation: isolate;
     }
-    .va-aurora .bg {
+
+    /* Background ambiance */
+    .va-solaris .sky {
       position: absolute;
-      inset: -10%;
+      inset: -12%;
       pointer-events: none;
       z-index: 0;
     }
-    .va-aurora .orb {
-      position: absolute;
-      width: 38vmin;
-      height: 38vmin;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, hsl(0 0% 100% / 0.55), transparent 35%),
-                  radial-gradient(circle at 70% 70%, var(--accent), transparent 45%);
-      filter: blur(12px) saturate(1.2);
-      opacity: 0.5;
-      mix-blend-mode: screen;
-      animation: float-a 12s ease-in-out infinite;
-      transform: translateZ(0);
-    }
-    .va-aurora .orb.b {
-      width: 46vmin; height: 46vmin;
-      left: 65%; top: 6%;
-      background: radial-gradient(circle at 70% 30%, hsl(0 0% 100% / 0.45), transparent 35%),
-                  radial-gradient(circle at 40% 80%, var(--accent-2), transparent 50%);
-      animation: float-b 16s ease-in-out infinite;
-    }
-    .va-aurora .orb.a { left: -8%; top: 20%; }
-    .va-aurora .orb.c {
-      width: 28vmin; height: 28vmin;
-      right: -6%; bottom: -4%;
-      background: radial-gradient(circle at 30% 30%, hsl(0 0% 100% / 0.45), transparent 35%),
-                  radial-gradient(circle at 60% 40%, hsl(190 85% 60%), transparent 50%);
-      animation: float-c 14s ease-in-out infinite;
-    }
-    .va-aurora .mesh {
+    .va-solaris .nebula {
       position: absolute;
       inset: -20%;
       background:
-        radial-gradient(60% 60% at 20% 40%, hsl(220 80% 62% / 0.25), transparent 60%),
-        radial-gradient(50% 40% at 80% 20%, hsl(300 70% 60% / 0.25), transparent 60%),
-        radial-gradient(40% 50% at 50% 90%, hsl(190 70% 60% / 0.2), transparent 60%);
-      filter: blur(40px);
-      opacity: 0.6;
-      transform: translateZ(0);
-      animation: drift 30s ease-in-out infinite;
+        radial-gradient(40% 35% at 20% 40%, hsl(calc(var(--h) + 12) 80% 60% / 0.25), transparent 60%),
+        radial-gradient(35% 30% at 75% 20%, hsl(calc(var(--h) + 80) 70% 60% / 0.22), transparent 60%),
+        radial-gradient(50% 40% at 50% 90%, hsl(calc(var(--h) - 30) 75% 60% / 0.18), transparent 60%);
+      filter: blur(44px) saturate(1.2);
+      animation: va-drift calc(34s / var(--speed)) ease-in-out infinite;
+      opacity: 0.7;
     }
-    .va-aurora .lines {
+    .va-solaris .stars {
       position: absolute;
       inset: 0;
-      mask-image: radial-gradient(90% 90% at 50% 50%, black 40%, transparent 100%);
-      background:
-        repeating-conic-gradient(from 0deg, hsl(0 0% 100% / 0.06) 0 2deg, transparent 2deg 6deg);
-      opacity: 0.25;
-      animation: slow-spin 60s linear infinite;
+      opacity: 0.55;
     }
-    .va-aurora .card {
+    .va-solaris .stars i {
+      position: absolute;
+      width: 2px; height: 2px; border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 10px var(--glow);
+      animation: va-twinkle calc(4s / var(--speed)) ease-in-out infinite;
+    }
+
+    /* Dial */
+    .va-solaris .dial {
       position: relative;
-      z-index: 1;
-      max-width: 880px;
+      width: min(66vmin, 680px);
+      aspect-ratio: 1 / 1;
       margin: auto;
-      padding: clamp(20px, 4vw, 36px);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.03));
+      display: grid;
+      place-items: center;
+      transform-style: preserve-3d;
+      z-index: 1;
+    }
+
+    .va-solaris .ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        conic-gradient(from calc(var(--seed) * 1deg),
+          hsl(var(--h) 100% 80% / 0.0) 0%,
+          hsl(var(--h) 100% 80% / 0.4) 10%,
+          hsl(calc(var(--h) + 24) 100% 70% / 0.7) 18%,
+          hsl(calc(var(--h) + 48) 100% 65% / 0.0) 28%,
+          hsl(calc(var(--h) - 12) 100% 72% / 0.6) 40%,
+          hsl(calc(var(--h) + 16) 100% 70% / 0.0) 60%,
+          hsl(calc(var(--h) + 32) 100% 70% / 0.65) 72%,
+          hsl(var(--h) 100% 80% / 0.0) 90% 100%);
+      filter: blur(10px) saturate(1.3);
+      -webkit-mask: radial-gradient(circle, transparent 54%, #000 56% 78%, transparent 80%);
+              mask: radial-gradient(circle, transparent 54%, #000 56% 78%, transparent 80%);
+      animation: va-spin calc(80s / var(--speed)) linear infinite;
+      box-shadow: inset 0 0 0 2px hsl(0 0% 100% / 0.05);
+    }
+    .va-solaris .ticks {
+      position: absolute;
+      inset: 8%;
+      border-radius: 50%;
+      background:
+        repeating-conic-gradient(from calc(var(--seed) * 1deg),
+          hsl(0 0% 100% / 0.08) 0deg 1deg,
+          transparent 1deg 6deg);
+      -webkit-mask: radial-gradient(circle, transparent 0 72%, #000 73%);
+              mask: radial-gradient(circle, transparent 0 72%, #000 73%);
+      filter: drop-shadow(0 0 8px hsl(0 0% 0% / 0.4));
+      animation: va-spin-rev calc(120s / var(--speed)) linear infinite;
+      opacity: 0.8;
+    }
+
+    /* Satellites */
+    .va-solaris .orbit {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .va-solaris .sat {
+      --r: 40%;
+      --d: 22s;
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 10px; height: 10px;
+      margin: -5px 0 0 -5px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
+      box-shadow: 0 0 14px var(--glow), 0 0 2px 1px hsl(0 0% 100% / 0.3) inset;
+      transform-origin: -1px -1px;
+      animation: va-revolve calc(var(--d) / var(--speed)) linear infinite;
+      mix-blend-mode: screen;
+    }
+    .va-solaris .sat::after {
+      content: "";
+      position: absolute;
+      inset: -20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--glow), transparent 60%);
+      filter: blur(10px);
+      opacity: 0.35;
+    }
+    .va-solaris .sat.s2 { --r: 32%; --d: 16s; width: 8px; height: 8px; margin: -4px 0 0 -4px; opacity: 0.9; }
+    .va-solaris .sat.s3 { --r: 24%; --d: 13s; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; opacity: 0.8; }
+    .va-solaris .sat.s4 { --r: 18%; --d: 10s; width: 6px; height: 6px; margin: -3px 0 0 -3px; opacity: 0.8; }
+
+    /* Core */
+    .va-solaris .core {
+      position: relative;
+      width: 58%;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background: radial-gradient(120% 120% at 30% 25%, hsl(0 0% 100% / 0.12), hsl(0 0% 100% / 0.04));
       border: 1px solid var(--surface-2);
-      box-shadow: var(--shadow), inset 0 0 0 1px hsl(0 0% 100% / 0.04);
-      backdrop-filter: blur(12px) saturate(140%);
-      -webkit-backdrop-filter: blur(12px) saturate(140%);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      display: grid;
+      place-items: center;
+      box-shadow:
+        0 10px 30px hsl(0 0% 0% / 0.35),
+        inset 0 0 0 1px hsl(0 0% 100% / 0.05);
+      overflow: hidden;
+      text-align: center;
     }
-    .va-aurora .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: hsl(0 0% 100% / 0.06);
-      border: 1px solid hsl(0 0% 100% / 0.14);
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
+    .va-solaris .core::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(45% 45% at 30% 25%, hsl(0 0% 100% / 0.25), transparent 60%),
+        radial-gradient(30% 30% at 70% 70%, var(--accent-2), transparent 60%);
+      mix-blend-mode: overlay;
+      opacity: 0.55;
+      pointer-events: none;
     }
-    .va-aurora .twinkle {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: linear-gradient(120deg, var(--accent), hsl(0 0% 100%));
-      box-shadow: 0 0 16px var(--accent);
-      animation: pulse 2.4s ease-in-out infinite;
+
+    .va-solaris .title {
+      display: grid;
+      gap: 10px;
+      padding: clamp(16px, 2vw, 24px);
     }
-    .va-aurora h1 {
-      margin: 14px 0 10px 0;
-      font-weight: 800;
-      line-height: 1.06;
-      font-size: clamp(36px, 6vw, 68px);
+    .va-solaris h1 {
+      margin: 0;
+      font-size: clamp(32px, 6.5vw, 62px);
+      font-weight: 900;
       letter-spacing: -0.02em;
+      line-height: 1.05;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-wrap: balance;
     }
-    .va-aurora .tag {
-      margin: 0 0 20px 0;
+    .va-solaris .tag {
+      margin: 0 auto;
+      max-width: 32ch;
       color: var(--muted);
-      font-size: clamp(14px, 1.6vw, 18px);
+      font-size: clamp(13px, 1.6vw, 17px);
       text-wrap: balance;
     }
-    .va-aurora .pills {
+    .va-solaris .chips {
       display: flex;
+      gap: 8px;
+      justify-content: center;
       flex-wrap: wrap;
-      gap: 10px;
-      margin: 8px 0 22px 0;
-      padding: 0;
-      list-style: none;
+      margin-top: 10px;
+      filter: drop-shadow(0 6px 16px hsl(0 0% 0% / 0.4));
     }
-    .va-aurora .pills li {
-      padding: 10px 12px;
-      border-radius: 12px;
+    .va-solaris .chip {
+      padding: 8px 10px;
+      border-radius: 999px;
       background: hsl(0 0% 100% / 0.06);
-      border: 1px solid hsl(0 0% 100% / 0.12);
-      color: hsl(0 0% 98%);
-      font-size: 13px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+      border: 1px solid hsl(0 0% 100% / 0.14);
+      font-size: 12px;
+      color: var(--fg);
+      display: inline-flex; align-items: center; gap: 8px;
     }
-    .va-aurora .pills li::before {
+    .va-solaris .chip::before {
       content: "";
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, white, var(--accent));
-      box-shadow: 0 0 12px var(--accent);
+      width: 7px; height: 7px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
+      box-shadow: 0 0 10px var(--accent);
     }
 
-    .va-aurora .controls {
+    /* Panel */
+    .va-solaris .panel {
+      position: relative;
+      z-index: 2;
+      margin-top: clamp(16px, 3vw, 26px);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 12px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, hsl(0 0% 100% / 0.07), hsl(0 0% 100% / 0.03));
+      border: 1px solid var(--surface-2);
+      backdrop-filter: blur(10px) saturate(130%);
+      -webkit-backdrop-filter: blur(10px) saturate(130%);
+      box-shadow: 0 8px 24px hsl(0 0% 0% / 0.35), inset 0 0 0 1px hsl(0 0% 100% / 0.04);
+    }
+    .va-solaris .controls {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 14px 18px;
-      justify-content: space-between;
-      border-top: 1px solid hsl(0 0% 100% / 0.12);
-      padding-top: 16px;
-      margin-top: 6px;
+      gap: 10px 14px;
     }
-    .va-aurora .left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .va-aurora .btn {
+
+    .va-solaris .btn {
       appearance: none;
       border: 0;
       border-radius: 12px;
       padding: 10px 14px;
-      color: hsl(220 20% 12%);
+      color: hsl(222 24% 12%);
       background: linear-gradient(180deg, var(--accent), var(--accent-2));
-      box-shadow: 0 12px 30px hsl(240 70% 50% / 0.35), 0 1px 0 hsl(0 0% 100% / 0.5) inset;
-      font-weight: 700;
+      box-shadow: 0 12px 28px hsl(var(--h) 70% 50% / 0.35), 0 1px 0 hsl(0 0% 100% / 0.5) inset;
+      font-weight: 800;
+      letter-spacing: 0.02em;
       cursor: pointer;
-      transition: transform 200ms ease, filter 200ms ease, box-shadow 200ms ease;
+      transition: transform 180ms ease, filter 180ms ease, box-shadow 180ms ease;
     }
-    .va-aurora .btn:hover { transform: translateY(-1px); filter: saturate(1.1); }
-    .va-aurora .btn:active { transform: translateY(0); }
+    .va-solaris .btn:hover { transform: translateY(-1px); filter: saturate(1.1); }
+    .va-solaris .btn:active { transform: translateY(0); }
 
-    .va-aurora .swatches {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+    .va-solaris .swatches {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding-left: 6px;
+      border-left: 1px dashed hsl(0 0% 100% / 0.14);
+      margin-left: 2px;
     }
-    .va-aurora .sw {
+    .va-solaris .sw {
       width: 28px; height: 28px; border-radius: 50%;
-      border: 1px solid hsl(0 0% 100% / 0.22);
-      background: conic-gradient(from 180deg, hsl(var(--hh) 90% 62%), hsl(calc(var(--hh) + 36deg) 82% 58%));
+      border: 1px solid hsl(0 0% 100% / 0.2);
+      background: conic-gradient(from 180deg, hsl(var(--hh) 90% 62%), hsl(calc(var(--hh) + 42) 80% 58%));
       box-shadow: 0 8px 18px hsl(var(--hh) 80% 50% / 0.45);
-      cursor: pointer;
-      display: grid; place-items: center;
       position: relative;
       overflow: hidden;
+      cursor: pointer;
+      display: grid; place-items: center;
     }
-    .va-aurora .sw:focus-visible { outline: 2px solid white; outline-offset: 2px; }
-    .va-aurora .sw::after {
+    .va-solaris .sw::after {
       content: "";
       position: absolute; inset: 0;
-      background: radial-gradient(35% 35% at 30% 30%, #fff8, transparent 45%);
+      background: radial-gradient(40% 40% at 30% 30%, #fff8, transparent 50%);
+      mix-blend-mode: screen;
+    }
+    .va-solaris .sw:focus-visible { outline: 2px solid white; outline-offset: 2px; }
+
+    .va-solaris .range {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-left: 10px; color: var(--muted); font-size: 12px;
+    }
+    .va-solaris input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      width: min(28vw, 220px);
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      outline: none;
+      box-shadow: inset 0 0 0 1px hsl(0 0% 100% / 0.25);
+    }
+    .va-solaris input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 0 3px var(--accent) inset, 0 4px 10px hsl(0 0% 0% / 0.3);
+      cursor: pointer;
+    }
+    .va-solaris input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #fff; border: 0;
+      box-shadow: 0 0 0 3px var(--accent) inset, 0 4px 10px hsl(0 0% 0% / 0.3);
+      cursor: pointer;
+    }
+
+    .va-solaris .meta {
+      display: flex; align-items: center; gap: 12px; color: var(--muted);
+      font-size: 12px;
+    }
+    .va-solaris .legend-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    /* Pulses on click */
+    .va-solaris .pulse {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid hsl(0 0% 100% / 0.45);
+      box-shadow: 0 0 20px var(--glow);
+      transform: translate(-50%, -50%) scale(0.2);
+      opacity: 0.9;
+      animation: va-pulse 900ms ease-out forwards;
+      pointer-events: none;
       mix-blend-mode: screen;
     }
 
-    .va-aurora .foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 16px;
-      padding-top: 14px;
-      border-top: 1px dashed hsl(0 0% 100% / 0.16);
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .va-aurora .meter {
-      flex: 1 1 auto;
-      height: 6px;
-      border-radius: 999px;
-      background: hsl(0 0% 100% / 0.08);
-      overflow: hidden;
-      position: relative;
-      max-width: 200px;
-    }
-    .va-aurora .meter > i {
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      transform: translateX(-100%);
-      animation: sweep 6s ease-in-out infinite;
-      opacity: 0.7;
-    }
+    /* Motion toggles */
+    .va-solaris[data-motion="off"] .nebula,
+    .va-solaris[data-motion="off"] .ring,
+    .va-solaris[data-motion="off"] .ticks,
+    .va-solaris[data-motion="off"] .sat,
+    .va-solaris[data-motion="off"] .stars i { animation: none !important; }
+    .va-solaris[data-motion="off"] .btn { filter: grayscale(0.05); }
 
-    @keyframes float-a { 0%,100%{ transform: translate(-2%, -2%) scale(1); } 50%{ transform: translate(4%, 3%) scale(1.06);} }
-    @keyframes float-b { 0%,100%{ transform: translate(-3%, 2%) scale(1); } 50%{ transform: translate(2%, -3%) scale(1.05);} }
-    @keyframes float-c { 0%,100%{ transform: translate(2%, -1%) scale(1); } 50%{ transform: translate(-3%, 2%) scale(1.08);} }
-    @keyframes drift { 0%,100% { transform: translateY(-2%) } 50% { transform: translateY(2%) } }
-    @keyframes slow-spin { to { transform: rotate(360deg); } }
-    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.25); opacity: 1; } }
-    @keyframes sweep { 0%,100%{ transform: translateX(-100%);} 50%{ transform: translateX(100%);} }
-
-    /* Motion toggle */
-    .va-aurora[data-motion="off"] .orb,
-    .va-aurora[data-motion="off"] .mesh,
-    .va-aurora[data-motion="off"] .lines,
-    .va-aurora[data-motion="off"] .meter > i { animation: none !important; }
-    .va-aurora[data-motion="off"] .btn { filter: grayscale(0.1); }
-
-    /* Reduced motion respect */
     @media (prefers-reduced-motion: reduce) {
-      .va-aurora .orb,
-      .va-aurora .mesh,
-      .va-aurora .lines,
-      .va-aurora .meter > i { animation: none !important; }
+      .va-solaris .nebula,
+      .va-solaris .ring,
+      .va-solaris .ticks,
+      .va-solaris .sat,
+      .va-solaris .stars i { animation: none !important; }
+    }
+
+    /* Keyframes */
+    @keyframes va-spin { to { transform: rotate(360deg); } }
+    @keyframes va-spin-rev { to { transform: rotate(-360deg); } }
+    @keyframes va-revolve {
+      from { transform: rotate(0deg) translateX(var(--r)) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(var(--r)) rotate(-360deg); }
+    }
+    @keyframes va-drift { 0%,100% { transform: translateY(-2%) } 50% { transform: translateY(2%) } }
+    @keyframes va-twinkle { 0%,100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.4); } }
+    @keyframes va-pulse {
+      0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0.9; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
     }
   </style>
 
-  <div class="bg" aria-hidden="true">
-    <div class="orb a"></div>
-    <div class="orb b"></div>
-    <div class="orb c"></div>
-    <div class="mesh"></div>
-    <div class="lines"></div>
+  <div class="sky" aria-hidden="true">
+    <div class="nebula"></div>
+    <div class="stars"></div>
   </div>
 
-  <article class="card" role="region" aria-label="Quiet Momentum">
-    <span class="eyebrow"><i class="twinkle" aria-hidden="true"></i> Studio Mode</span>
-    <h1>Quiet Momentum</h1>
-    <p class="tag">A luminous canvas for thoughtful work — soft light, strong focus, and just enough motion to breathe.</p>
+  <div class="dial" role="img" aria-label="Luminous rotating dial with orbiting particles">
+    <div class="ring"></div>
+    <div class="ticks"></div>
 
-    <ul class="pills" aria-label="Design notes">
-      <li>Glass layers</li>
-      <li>Gradient mesh</li>
-      <li>Accessible contrast</li>
-      <li>Subtle parallax</li>
-    </ul>
+    <div class="orbit">
+      <span class="sat" style="--r: 40%; --d: 24s;"></span>
+      <span class="sat s2" style="--r: 32%; --d: 18s;"></span>
+      <span class="sat s3" style="--r: 24%; --d: 14s;"></span>
+      <span class="sat s4" style="--r: 17%; --d: 11s;"></span>
+    </div>
 
-    <div class="controls">
-      <div class="left">
-        <button class="btn" id="toggle-motion" aria-pressed="false">Pause Motion</button>
-        <div class="swatches" role="group" aria-label="Accent palette">
-          <button class="sw" style="--hh: 218deg" data-hue="218" aria-label="Blue Violet"></button>
-          <button class="sw" style="--hh: 190deg" data-hue="190" aria-label="Teal"></button>
-          <button class="sw" style="--hh: 345deg" data-hue="345" aria-label="Crimson"></button>
-          <button class="sw" style="--hh: 52deg" data-hue="52" aria-label="Sunrise"></button>
+    <div class="core" id="core">
+      <div class="title" aria-live="polite">
+        <h1>Solar Draft</h1>
+        <p class="tag">A kinetic dial for clear thinking — quiet, bright, and beautifully in orbit.</p>
+        <div class="chips" aria-label="Design tenets">
+          <span class="chip">Clarity</span>
+          <span class="chip">Poise</span>
+          <span class="chip">Motion</span>
         </div>
       </div>
-      <div class="meter" aria-hidden="true"><i></i></div>
+    </div>
+  </div>
+
+  <div class="panel" role="region" aria-label="Controls">
+    <div class="controls">
+      <button class="btn" id="toggle" aria-pressed="false">Pause Motion</button>
+      <button class="btn" id="shuffle" aria-label="Randomize the dial">Shuffle ◯</button>
+
+      <div class="swatches" role="group" aria-label="Accent palette">
+        <button class="sw" style="--hh: 206" data-hue="206" aria-label="Azure"></button>
+        <button class="sw" style="--hh: 188" data-hue="188" aria-label="Teal"></button>
+        <button class="sw" style="--hh: 268" data-hue="268" aria-label="Violet"></button>
+        <button class="sw" style="--hh: 35" data-hue="35" aria-label="Amber"></button>
+        <button class="sw" style="--hh: 344" data-hue="344" aria-label="Crimson"></button>
+      </div>
+
+      <label class="range" for="spd">
+        Speed
+        <input type="range" id="spd" min="0.35" max="2.2" step="0.01" value="1">
+      </label>
     </div>
 
-    <div class="foot">
-      <span>Tip: click a color to shift the vibe</span>
-      <span id="last-updated">Last updated: 2026-01-27 07:45:34 EST</span>
+    <div class="meta">
+      <span class="legend-dot" aria-hidden="true"></span>
+      <span>Orbit Studio</span>
+      <span id="last-updated">Last updated: 2026-01-27 08:44:55 EST</span>
     </div>
-  </article>
+  </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.va-aurora');
-      const btn = root.querySelector('#toggle-motion');
-      const swatches = root.querySelectorAll('.sw');
+      const root = document.currentScript.closest('.va-solaris');
+      const starsEl = root.querySelector('.stars');
       const updated = root.querySelector('#last-updated');
+      const toggle = root.querySelector('#toggle');
+      const shuffle = root.querySelector('#shuffle');
+      const swatches = root.querySelectorAll('.sw');
+      const range = root.querySelector('#spd');
+      const core = root.querySelector('#core');
+      const dial = root.querySelector('.dial');
 
-      function formatUpdated(d) {
+      // Stars
+      const STAR_COUNT = 54;
+      for (let i = 0; i < STAR_COUNT; i++) {
+        const s = document.createElement('i');
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        s.style.opacity = (0.4 + Math.random() * 0.6).toFixed(2);
+        s.style.animationDelay = (Math.random() * 5).toFixed(2) + 's';
+        s.style.transform = `scale(${0.8 + Math.random()*1.4})`;
+        starsEl.appendChild(s);
+      }
+
+      // Updated time
+      function fmt(d) {
         try {
-          return 'Last updated • ' + d.toLocaleString([], {
+          return '• ' + d.toLocaleString([], {
             year: 'numeric', month: 'short', day: '2-digit',
             hour: '2-digit', minute: '2-digit', second: '2-digit',
             hour12: false, timeZoneName: 'short'
           });
-        } catch {
-          return 'Last updated • ' + d.toUTCString();
-        }
+        } catch { return '• ' + d.toUTCString(); }
       }
-      updated.textContent = formatUpdated(new Date());
+      updated.textContent = fmt(new Date());
 
-      btn.addEventListener('click', () => {
-        const on = root.getAttribute('data-motion') !== 'off';
-        root.setAttribute('data-motion', on ? 'off' : 'on');
-        btn.textContent = on ? 'Resume Motion' : 'Pause Motion';
-        btn.setAttribute('aria-pressed', String(!on));
+      // Motion toggle
+      toggle.addEventListener('click', () => {
+        const off = root.getAttribute('data-motion') === 'off';
+        root.setAttribute('data-motion', off ? 'on' : 'off');
+        toggle.textContent = off ? 'Pause Motion' : 'Resume Motion';
+        toggle.setAttribute('aria-pressed', String(!off));
+        ripple(toggle);
       });
 
+      // Hue swatches
       swatches.forEach(sw => {
         sw.addEventListener('click', () => {
           const hue = sw.getAttribute('data-hue');
-          root.style.setProperty('--h', hue + 'deg');
-          // tiny accent spark
-          const spark = document.createElement('span');
-          spark.style.position = 'absolute';
-          spark.style.inset = '0';
-          spark.style.borderRadius = '50%';
-          spark.style.boxShadow = `0 0 0 0 hsl(${hue} 90% 60% / 0.8)`;
-          spark.style.animation = 'va-spark 600ms ease-out forwards';
-          sw.appendChild(spark);
-          setTimeout(() => spark.remove(), 620);
+          root.style.setProperty('--h', hue);
+          spark(sw, hue);
         });
       });
 
-      // Parallax tilt on pointer
+      // Speed control
+      function setSpeed(v) {
+        root.style.setProperty('--speed', v);
+      }
+      range.addEventListener('input', e => setSpeed(e.target.value));
+      setSpeed(range.value);
+
+      // Shuffle seeds & small celebration
+      shuffle.addEventListener('click', () => {
+        const seed = Math.floor(Math.random() * 360);
+        root.style.setProperty('--seed', seed);
+        confetti(dial);
+        ripple(shuffle);
+      });
+
+      // Tilt parallax
       root.addEventListener('pointermove', (e) => {
-        const r = root.getBoundingClientRect();
+        const r = dial.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width - 0.5;
         const y = (e.clientY - r.top) / r.height - 0.5;
         const intensity = 6;
-        root.style.transform = `perspective(1000px) rotateX(${(-y*intensity)}deg) rotateY(${(x*intensity)}deg)`;
+        dial.style.transform = `perspective(1000px) rotateX(${(-y*intensity)}deg) rotateY(${(x*intensity)}deg)`;
       });
-      root.addEventListener('pointerleave', () => {
-        root.style.transform = '';
+      root.addEventListener('pointerleave', () => { dial.style.transform = ''; });
+
+      // Core pulse on tap/click
+      core.addEventListener('pointerdown', (e) => {
+        const rect = core.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const p = document.createElement('span');
+        p.className = 'pulse';
+        p.style.left = x + 'px';
+        p.style.top = y + 'px';
+        const size = Math.max(rect.width, rect.height) * 0.9;
+        p.style.width = p.style.height = size + 'px';
+        core.appendChild(p);
+        setTimeout(() => p.remove(), 920);
       });
 
-      // Spark keyframes injected once
+      // Little helpers
+      function spark(el, hue) {
+        const s = document.createElement('span');
+        s.style.position = 'absolute';
+        s.style.inset = '0';
+        s.style.borderRadius = '50%';
+        s.style.boxShadow = `0 0 0 0 hsl(${hue} 90% 60% / 0.8)`;
+        s.style.animation = 'va-spark 620ms ease-out forwards';
+        el.appendChild(s);
+        setTimeout(() => s.remove(), 640);
+      }
+      function ripple(btn) {
+        const r = document.createElement('span');
+        r.className = 'pulse';
+        const b = btn.getBoundingClientRect();
+        r.style.left = (b.width/2) + 'px';
+        r.style.top = (b.clientHeight? b.clientHeight : b.height)/2 + 'px';
+        r.style.width = r.style.height = Math.max(b.width, b.height) * 1.4 + 'px';
+        btn.style.position = 'relative';
+        btn.appendChild(r);
+        setTimeout(() => r.remove(), 950);
+      }
+      function confetti(target) {
+        const burst = document.createDocumentFragment();
+        const rect = target.getBoundingClientRect();
+        for (let i = 0; i < 18; i++) {
+          const c = document.createElement('span');
+          c.style.position = 'absolute';
+          c.style.left = rect.width/2 + 'px';
+          c.style.top = rect.height/2 + 'px';
+          c.style.width = '6px';
+          c.style.height = '6px';
+          c.style.borderRadius = '50%';
+          c.style.background = `hsl(${(+getComputedStyle(root).getPropertyValue('--h') || 206) + (Math.random()*60-30)} 90% ${60 + Math.random()*20}%)`;
+          c.style.boxShadow = '0 0 12px hsl(0 0% 100% / 0.35)';
+          c.style.pointerEvents = 'none';
+          const ang = Math.random() * Math.PI * 2;
+          const dist = 60 + Math.random() * 120;
+          const tx = Math.cos(ang) * dist;
+          const ty = Math.sin(ang) * dist;
+          c.style.transition = `transform 700ms cubic-bezier(.16,.84,.44,1), opacity 700ms linear`;
+          c.style.transform = `translate(0,0)`;
+          c.style.opacity = '1';
+          burst.appendChild(c);
+          requestAnimationFrame(() => { c.style.transform = `translate(${tx}px, ${ty}px)`; c.style.opacity = '0'; });
+          setTimeout(() => c.remove(), 720);
+        }
+        target.appendChild(burst);
+      }
+
+      // Inject spark keyframes once (scoped)
       const kfId = 'va-spark-kf';
       if (!document.getElementById(kfId)) {
         const st = document.createElement('style');
         st.id = kfId;
         st.textContent = `
           @keyframes va-spark {
-            0% { box-shadow: 0 0 0 0 var(--accent); opacity: 1; }
+            0% { box-shadow: 0 0 0 0 var(--glow); opacity: 1; }
             100% { box-shadow: 0 0 0 18px transparent; opacity: 0; }
           }
         `;
