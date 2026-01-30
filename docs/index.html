@@ -74,306 +74,331 @@
     <!-- BEGIN_EDITABLE -->
       <section id="content">
 <style>
-  .vibe-2291 {
-    --bg-a: #f7fafc;
-    --bg-b: #eaf1ff;
-    --ink: #0f172a;
-    --muted: #475569;
-    --accent: #0ea5e9;
-    --accent-2: #22d3ee;
-    --ring: rgba(14,165,233,.18);
-    --glow: 0 8px 28px rgba(34,211,238,.35);
+  .vibe-2292 {
+    --bg-0: #0b1020;
+    --bg-1: #121a32;
+    --ink: #eef2ff;
+    --muted: #94a3b8;
+    --accent: #7dd3fc;
+    --accent-2: #a78bfa;
+    --glass: rgba(255,255,255,.06);
+    --ring: rgba(125, 211, 252, .28);
     --speed: 1;
     position: relative;
+    padding: clamp(18px, 5.5vmin, 42px);
     border-radius: 28px;
-    overflow: hidden;
-    padding: clamp(18px, 5vmin, 36px);
     color: var(--ink);
-    background: radial-gradient(120% 140% at 10% -10%, var(--bg-a) 10%, var(--bg-b) 70%, #dfe8ff 100%);
-    box-shadow: 0 18px 50px rgba(15, 23, 42, .1), inset 0 1px 0 rgba(255,255,255,.7);
+    background:
+      radial-gradient(140% 120% at 0% 100%, #0f172a 0%, transparent 50%),
+      radial-gradient(120% 120% at 100% 0%, #111827 0%, transparent 40%),
+      linear-gradient(180deg, var(--bg-1), var(--bg-0));
+    box-shadow: 0 30px 70px rgba(2, 6, 23, .55), inset 0 1px 0 rgba(255,255,255,.08);
     font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    overflow: clip;
     isolate: isolate;
   }
 
   /* Themes */
-  .vibe-2291[data-theme="solar"] {
-    --bg-a: #fefefe; --bg-b: #eaf1ff;
-    --accent: #0ea5e9; --accent-2: #22d3ee; --ring: rgba(14,165,233,.18);
+  .vibe-2292[data-theme="day"] {
+    --bg-0: #f4f7ff; --bg-1: #eaf1ff;
+    --ink: #0b1220; --muted: #475569;
+    --accent: #0ea5e9; --accent-2: #22d3ee;
+    --glass: rgba(255,255,255,.72); --ring: rgba(14,165,233,.25);
+    box-shadow: 0 20px 60px rgba(2, 6, 23, .18), inset 0 1px 0 rgba(255,255,255,.9);
   }
-  .vibe-2291[data-theme="lunar"] {
-    --bg-a: #f6f7fb; --bg-b: #e7ecf7;
-    --accent: #6366f1; --accent-2: #a78bfa; --ring: rgba(99,102,241,.2);
+  .vibe-2292[data-theme="dusk"] {
+    --bg-0: #0b1020; --bg-1: #141b33;
+    --ink: #eef2ff; --muted: #9aa7c2;
+    --accent: #7dd3fc; --accent-2: #a78bfa;
+    --glass: rgba(255,255,255,.06); --ring: rgba(125,211,252,.28);
   }
-  .vibe-2291[data-theme="flora"] {
-    --bg-a: #f7fff8; --bg-b: #e8fbf0;
-    --accent: #10b981; --accent-2: #34d399; --ring: rgba(16,185,129,.2);
+  .vibe-2292[data-theme="midnight"] {
+    --bg-0: #0a0a0f; --bg-1: #0a0f1a;
+    --ink: #e5e7eb; --muted: #9ca3af;
+    --accent: #34d399; --accent-2: #22d3ee;
+    --glass: rgba(255,255,255,.04); --ring: rgba(34,211,238,.22);
   }
 
-  /* Ambient beams */
-  .vibe-2291 .beams {
+  /* Moving environment */
+  .vibe-2292 .field {
     position: absolute; inset: -30%;
-    background:
-      conic-gradient(from 0deg at 70% 30%, color-mix(in oklch, var(--accent) 25%, transparent), transparent 45%),
-      conic-gradient(from 180deg at 20% 80%, color-mix(in oklch, var(--accent-2) 22%, transparent), transparent 55%);
-    filter: blur(48px) saturate(1.1);
-    opacity: .55;
-    pointer-events: none;
-    z-index: 0;
-    animation: sweep 26s linear infinite;
+    pointer-events: none; z-index: 0;
+    filter: saturate(1.2) blur(2px);
+    opacity: .75;
   }
-  @keyframes sweep { to { transform: rotate(1turn); } }
+  .vibe-2292 .sheet {
+    position: absolute; inset: 0;
+    background:
+      conic-gradient(from 0turn at 20% 30%, color-mix(in oklch, var(--accent) 40%, transparent), transparent 55%),
+      conic-gradient(from .5turn at 80% 70%, color-mix(in oklch, var(--accent-2) 45%, transparent), transparent 60%);
+    transform-origin: 50% 50%;
+    mix-blend-mode: screen;
+    animation: swirl calc(38s/var(--speed)) linear infinite;
+  }
+  .vibe-2292 .sheet.s2 {
+    filter: blur(24px);
+    opacity: .8;
+    animation-duration: calc(54s/var(--speed)); animation-direction: reverse;
+  }
+  .vibe-2292 .sheet.s3 {
+    filter: blur(36px);
+    opacity: .55;
+    animation-duration: calc(72s/var(--speed));
+  }
+  @keyframes swirl { to { transform: rotate(1turn) scale(1.02); } }
 
-  .vibe-2291 .grain {
+  .vibe-2292 .grain {
     position: absolute; inset: 0; pointer-events: none; z-index: 0;
     background:
-      radial-gradient(800px 400px at 0% 0%, rgba(255,255,255,.6), transparent 70%),
-      repeating-linear-gradient(45deg, rgba(0,0,0,.02) 0 2px, rgba(0,0,0,0) 2px 4px);
-    mix-blend-mode: multiply;
-    opacity: .6;
+      repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 2px, rgba(0,0,0,0) 2px 4px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, rgba(0,0,0,0) 1px 3px);
+    mix-blend-mode: soft-light; opacity: .35;
   }
 
   /* Layout */
-  .vibe-2291 .grid {
+  .vibe-2292 .wrap {
     position: relative; z-index: 2;
-    display: grid; gap: clamp(14px, 3.6vmin, 28px);
-    grid-template-columns: 1.1fr 1fr;
+    display: grid; gap: clamp(16px, 4vmin, 32px);
+    grid-template-columns: 1.05fr 1fr;
     align-items: center;
   }
-  @media (max-width: 860px) {
-    .vibe-2291 .grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 900px) { .vibe-2292 .wrap { grid-template-columns: 1fr; } }
 
   /* Copy */
-  .vibe-2291 .title {
-    margin: 0;
-    font-weight: 800;
-    line-height: 1.02;
-    letter-spacing: -0.02em;
-    font-size: clamp(28px, 6.8vmin, 64px);
-    background: linear-gradient(90deg, #0f172a, color-mix(in oklab, var(--accent) 50%, #0f172a));
+  .vibe-2292 .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 10px; border-radius: 999px;
+    background: var(--glass);
+    border: 1px solid color-mix(in oklab, var(--accent) 30%, rgba(255,255,255,.35));
+    font-size: 12px; letter-spacing: .06em; color: var(--muted); text-transform: uppercase;
+    backdrop-filter: blur(6px);
+  }
+  .vibe-2292 .spark {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--accent) 40%, #fff));
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 18%, transparent);
+  }
+  .vibe-2292 .title {
+    margin: 8px 0 4px;
+    font-weight: 900; line-height: .96; letter-spacing: -0.02em;
+    font-size: clamp(30px, 7.6vmin, 80px);
+    background: linear-gradient(90deg, var(--ink) 0%, color-mix(in oklch, var(--accent) 45%, var(--ink)) 50%, var(--ink) 100%);
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
-  .vibe-2291 .lede {
-    margin: 8px 0 18px;
-    max-width: 50ch;
-    color: var(--muted);
-    font-size: clamp(14px, 2.3vmin, 18px);
+  .vibe-2292 .lede {
+    margin: 6px 0 18px; max-width: 58ch;
+    color: var(--muted); font-size: clamp(14px, 2.4vmin, 18px); line-height: 1.6;
   }
 
   /* Controls */
-  .vibe-2291 .controls {
+  .vibe-2292 .toolbar {
     display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center;
   }
-  .vibe-2291 .chip {
-    appearance: none; border: 1px solid color-mix(in oklab, var(--accent) 30%, #cbd5e1);
-    background: linear-gradient(180deg, #fff, #f4f7fb);
-    color: #0f172a; font-weight: 700; font-size: 13px; letter-spacing: .02em;
+  .vibe-2292 .chip {
+    appearance: none;
+    background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.06));
+    color: var(--ink); font-weight: 700; font-size: 12px;
     padding: 10px 14px; border-radius: 999px; cursor: pointer;
-    box-shadow: 0 6px 20px rgba(2, 6, 23, .06), inset 0 1px 0 rgba(255,255,255,.8);
-    transition: transform .18s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+    border: 1px solid rgba(255,255,255,.16);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 10px 26px rgba(2,6,23,.25);
+    transition: transform .15s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+    backdrop-filter: blur(6px);
   }
-  .vibe-2291 .chip:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(2,6,23,.09); }
-  .vibe-2291 .chip[aria-pressed="true"] {
-    background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 15%, #fff), #eef5ff);
-    border-color: color-mix(in oklab, var(--accent) 60%, #cbd5e1);
-    box-shadow: var(--glow), inset 0 1px 0 rgba(255,255,255,.9);
+  .vibe-2292 .chip:hover { transform: translateY(-1px); box-shadow: 0 14px 32px rgba(2,6,23,.35); }
+  .vibe-2292 .chip[aria-pressed="true"] {
+    border-color: var(--ring);
+    background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 12%, rgba(255,255,255,.2)), rgba(255,255,255,.08));
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 14%, transparent), 0 18px 38px rgba(2,6,23,.4);
   }
-  .vibe-2291 .group {
+  .vibe-2292 .group {
     display: inline-flex; align-items: center; gap: 10px;
-    padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,.7); border: 1px solid #e2e8f0;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+    padding: 8px 12px; border-radius: 12px; background: var(--glass); border: 1px solid rgba(255,255,255,.16);
+    backdrop-filter: blur(6px);
+    color: var(--muted); font-size: 12px;
   }
-  .vibe-2291 .group span { font-size: 12px; color: #475569; }
-  .vibe-2291 input[type="range"] {
-    appearance: none; width: 160px; height: 5px; border-radius: 999px; outline: none;
-    background: linear-gradient(90deg, #cbd5e1, #e2e8f0);
+  .vibe-2292 input[type="range"] {
+    appearance: none; width: 170px; height: 5px; border-radius: 999px; outline: none;
+    background: linear-gradient(90deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
   }
-  .vibe-2291 input[type="range"]::-webkit-slider-thumb {
+  .vibe-2292 input[type="range"]::-webkit-slider-thumb,
+  .vibe-2292 input[type="range"]::-moz-range-thumb {
     appearance: none; width: 18px; height: 18px; border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--accent) 22%, #fff));
-    border: 1px solid #94a3b8; box-shadow: 0 2px 8px rgba(2, 6, 23, .25);
-  }
-  .vibe-2291 input[type="range"]::-moz-range-thumb {
-    width: 18px; height: 18px; border-radius: 50%; border: 1px solid #94a3b8;
-    background: radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--accent) 22%, #fff));
-    box-shadow: 0 2px 8px rgba(2, 6, 23, .25);
+    background: radial-gradient(circle at 35% 35%, #fff, color-mix(in oklab, var(--accent) 22%, #fff));
+    border: 1px solid rgba(255,255,255,.4); box-shadow: 0 2px 10px rgba(2,6,23,.6);
   }
 
-  /* Orbital sculpture */
-  .vibe-2291 .orbital {
-    place-self: center;
-    width: min(62vmin, 520px); aspect-ratio: 1; margin-inline: auto;
+  /* Canvas */
+  .vibe-2292 .canvas {
     position: relative;
-    perspective: 900px;
-  }
-  .vibe-2291 .sculpture {
-    position: absolute; inset: 0; transform-style: preserve-3d;
+    width: min(68vmin, 620px);
+    aspect-ratio: 1.18/1;
+    margin-inline: auto;
+    border-radius: 24px;
+    background:
+      radial-gradient(120% 100% at var(--mx,50%) var(--my,50%), color-mix(in oklch, var(--accent) 8%, transparent), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    border: 1px solid rgba(255,255,255,.18);
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(2,6,23,.55), inset 0 1px 0 rgba(255,255,255,.2);
+    transform-style: preserve-3d;
     transition: transform .2s ease;
   }
-  .vibe-2291 .core {
-    position: absolute; inset: 24% 24%;
-    border-radius: 50%;
-    background: conic-gradient(from 180deg, var(--accent), var(--accent-2), var(--accent));
-    filter: saturate(1.1);
-    box-shadow: 0 10px 30px rgba(2,6,23,.08), inset 0 1px 0 rgba(255,255,255,.7);
-    animation: rotateCore calc(26s / var(--speed)) linear infinite;
+  .vibe-2292 .orbs {
+    position: absolute; inset: -10%;
+    filter: blur(8px) saturate(1.2);
+    mix-blend-mode: screen;
   }
-  @keyframes rotateCore { to { transform: rotate(1turn); } }
-
-  .vibe-2291 .ring {
-    position: absolute; inset: 6% 6%;
-    border-radius: 50%;
-    border: 1px solid var(--ring);
-    box-shadow: inset 0 0 40px color-mix(in oklab, var(--accent) 10%, transparent);
-    transform: translateZ(0);
-    animation: spin calc(42s / var(--speed)) linear infinite;
+  .vibe-2292 .orb {
+    position: absolute; width: 28vmin; height: 28vmin; min-width: 180px; min-height: 180px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, color-mix(in oklab, var(--accent) 15%, #fff), color-mix(in oklab, var(--accent-2) 50%, transparent) 70%, transparent 80%);
+    opacity: .8;
+    animation: drift1 calc(36s/var(--speed)) ease-in-out infinite;
   }
-  .vibe-2291 .ring.r2 { inset: 16% 16%; animation-duration: calc(32s / var(--speed)); animation-direction: reverse; }
-  .vibe-2291 .ring.r3 { inset: 32% 32%; animation-duration: calc(24s / var(--speed)); }
+  .vibe-2292 .orb.o2 { width: 22vmin; height: 22vmin; min-width: 140px; min-height: 140px; animation: drift2 calc(28s/var(--speed)) ease-in-out infinite; opacity: .7; }
+  .vibe-2292 .orb.o3 { width: 18vmin; height: 18vmin; min-width: 120px; min-height: 120px; animation: drift3 calc(42s/var(--speed)) ease-in-out infinite; opacity: .65; }
+  @keyframes drift1 { 0% { transform: translate(-10%, -10%); } 50% { transform: translate(40%, 20%); } 100% { transform: translate(-10%, -10%); } }
+  @keyframes drift2 { 0% { transform: translate(60%, -20%); } 50% { transform: translate(10%, 40%); } 100% { transform: translate(60%, -20%); } }
+  @keyframes drift3 { 0% { transform: translate(10%, 60%); } 50% { transform: translate(70%, 10%); } 100% { transform: translate(10%, 60%); } }
 
-  @keyframes spin { to { transform: rotate(1turn); } }
+  .vibe-2292 .rays {
+    position: absolute; inset: -20%;
+    background:
+      conic-gradient(from .25turn, rgba(255,255,255,.14), transparent 30% 70%, rgba(255,255,255,.06)),
+      conic-gradient(from .75turn, color-mix(in oklch, var(--accent) 20%, transparent), transparent 60%),
+      conic-gradient(from .9turn, color-mix(in oklch, var(--accent-2) 18%, transparent), transparent 65%);
+    filter: blur(28px);
+    mix-blend-mode: screen;
+    animation: rays calc(48s/var(--speed)) linear infinite;
+    opacity: .8;
+  }
+  @keyframes rays { to { transform: rotate(-1turn); } }
 
-  .vibe-2291 .node {
-    position: absolute; top: 50%; left: 50%;
-    width: 9px; height: 9px; border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #fff, color-mix(in oklab, var(--accent) 40%, #fff));
-    border: 1px solid rgba(2,6,23,.08);
-    box-shadow: 0 0 0 5px color-mix(in oklab, var(--accent) 18%, transparent), var(--glow);
-    transform: translate(-50%, -50%) rotate(var(--a)) translateX(var(--rad));
+  .vibe-2292 .cursor-light {
+    position: absolute; width: 160px; height: 160px; border-radius: 50%;
+    pointer-events: none; z-index: 3; opacity: .0;
+    background: radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--accent) 30%, #fff), transparent 60%);
+    mix-blend-mode: screen; filter: blur(12px);
+    transition: opacity .2s ease;
   }
 
-  .vibe-2291.paused .ring,
-  .vibe-2291.paused .core,
-  .vibe-2291.paused .beams { animation-play-state: paused; }
-
-  /* Seeds (tiles) */
-  .vibe-2291 .seeds {
-    margin-top: clamp(12px, 3vmin, 22px);
+  /* Cards */
+  .vibe-2292 .cards {
+    margin-top: clamp(10px, 3vmin, 22px);
     display: grid; gap: 12px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  @media (max-width: 760px) { .vibe-2291 .seeds { grid-template-columns: 1fr; } }
-  .vibe-2291 .seed {
+  @media (max-width: 760px) { .vibe-2292 .cards { grid-template-columns: 1fr; } }
+  .vibe-2292 .card {
     position: relative; overflow: clip; border-radius: 16px;
-    background: #ffffffd9; border: 1px solid #e5e7eb;
     padding: clamp(14px, 2.6vmin, 18px);
-    transition: transform .2s ease, box-shadow .3s ease, border-color .2s ease, background .2s ease;
-    box-shadow: 0 10px 26px rgba(2,6,23,.06);
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,.14);
+    box-shadow: 0 14px 28px rgba(2,6,23,.35), inset 0 1px 0 rgba(255,255,255,.2);
+    transform: perspective(800px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);
+    transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+    will-change: transform;
   }
-  .vibe-2291 .seed:hover {
-    transform: translateY(-2px);
-    border-color: color-mix(in oklab, var(--accent) 28%, #e5e7eb);
-    box-shadow: 0 16px 36px rgba(2,6,23,.1), var(--glow);
+  .vibe-2292 .card:hover {
+    box-shadow: 0 20px 44px rgba(2,6,23,.45), 0 0 0 6px color-mix(in oklab, var(--accent) 12%, transparent);
+    border-color: color-mix(in oklab, var(--accent) 26%, rgba(255,255,255,.14));
   }
-  .vibe-2291 .seed h3 { margin: 0 0 6px; font-size: clamp(15px, 2.4vmin, 19px); letter-spacing: .01em; }
-  .vibe-2291 .seed p { margin: 0; color: #475569; font-size: clamp(13px, 2vmin, 16px); line-height: 1.55; }
-  .vibe-2291 .halo {
-    content: ""; position: absolute; inset: -30%;
-    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), color-mix(in oklab, var(--accent) 20%, transparent) 0%, transparent 45%);
+  .vibe-2292 .card h3 { margin: 0 0 6px; font-size: clamp(15px, 2.4vmin, 19px); letter-spacing: .01em; color: var(--ink); }
+  .vibe-2292 .card p { margin: 0; color: var(--muted); font-size: clamp(13px, 2vmin, 16px); line-height: 1.55; }
+  .vibe-2292 .shine {
+    position: absolute; inset: -40%;
+    background: radial-gradient(90% 60% at var(--x,50%) var(--y,0%), color-mix(in oklab, var(--accent) 20%, transparent), transparent 30%);
     opacity: .0; transition: opacity .2s ease; pointer-events: none;
   }
-  .vibe-2291 .seed:hover .halo { opacity: .35; }
+  .vibe-2292 .card:hover .shine { opacity: .4; }
 
   /* Meta */
-  .vibe-2291 .meta {
+  .vibe-2292 .meta {
+    position: relative; z-index: 2;
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    margin-top: clamp(14px, 2.6vmin, 18px); color: #475569; font-size: 12px;
+    margin-top: clamp(16px, 3vmin, 22px); color: var(--muted); font-size: 12px;
   }
-  .vibe-2291 .pulse-dot {
-    width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 8px;
-    background: var(--accent);
-    box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 60%, transparent);
-    animation: pulse 2.4s ease-out infinite;
-    vertical-align: -1px;
+  .vibe-2292 .tip {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--glass); border: 1px solid rgba(255,255,255,.14);
+    padding: 8px 12px; border-radius: 999px; backdrop-filter: blur(6px);
   }
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 40%, transparent); opacity: 1; }
-    70% { box-shadow: 0 0 0 14px rgba(255,255,255,0); opacity: .5; }
-    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); opacity: 1; }
+  .vibe-2292 kbd { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px;
+    padding: 2px 6px; border-radius: 6px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); color: var(--ink);
   }
+
+  /* Pause handling */
+  .vibe-2292.paused .sheet,
+  .vibe-2292.paused .rays,
+  .vibe-2292.paused .orb { animation-play-state: paused !important; }
 </style>
 
-<section class="vibe-2291" data-theme="solar" aria-label="Aster Garden">
-  <div class="beams" aria-hidden="true"></div>
+<section class="vibe-2292" data-theme="dusk" aria-label="Aurora Atelier">
+  <div class="field" aria-hidden="true">
+    <div class="sheet s1"></div>
+    <div class="sheet s2"></div>
+    <div class="sheet s3"></div>
+  </div>
   <div class="grain" aria-hidden="true"></div>
 
-  <div class="grid">
+  <div class="wrap">
     <div>
-      <h1 class="title">Aster Garden</h1>
-      <p class="lede">A luminous, quiet interface. Rings in slow orbit; focus in clear air.</p>
+      <span class="eyebrow"><span class="spark" aria-hidden="true"></span> Living Surface</span>
+      <h1 class="title">Aurora Atelier</h1>
+      <p class="lede">Kinetic calm. A studio of light where motion is a whisper and every pixel earns its keep.</p>
 
-      <div class="controls" role="toolbar" aria-label="Appearance and Motion">
-        <button class="chip" data-theme="solar" aria-pressed="true">Solar</button>
-        <button class="chip" data-theme="lunar" aria-pressed="false">Lunar</button>
-        <button class="chip" data-theme="flora" aria-pressed="false">Flora</button>
+      <div class="toolbar" role="toolbar" aria-label="Theme and Motion">
+        <button class="chip" data-theme="day" aria-pressed="false">Day</button>
+        <button class="chip" data-theme="dusk" aria-pressed="true">Dusk</button>
+        <button class="chip" data-theme="midnight" aria-pressed="false">Midnight</button>
 
-        <label class="group" title="Adjust motion tempo">
-          <span>Tempo</span>
-          <input type="range" min="0.5" max="2.0" step="0.1" value="1.0" aria-label="Motion speed">
+        <label class="group" title="Adjust breeze (animation speed)">
+          <span>Breeze</span>
+          <input type="range" min="0.5" max="2.0" step="0.1" value="1.0" aria-label="Breeze speed">
           <span class="tval">1.0×</span>
         </label>
 
         <button class="chip pause" aria-pressed="false">Pause</button>
       </div>
 
-      <div class="seeds">
-        <article class="seed">
-          <div class="halo" aria-hidden="true"></div>
-          <h3>Clarity over noise</h3>
-          <p>Breathing room, gentle contrast, decisions that whisper.</p>
+      <div class="cards">
+        <article class="card">
+          <div class="shine" aria-hidden="true"></div>
+          <h3>Less chrome, more clarity</h3>
+          <p>Remove the loud; reveal the line. Space lets meaning breathe.</p>
         </article>
-        <article class="seed">
-          <div class="halo" aria-hidden="true"></div>
+        <article class="card">
+          <div class="shine" aria-hidden="true"></div>
+          <h3>Motion as punctuation</h3>
+          <p>Gentle movement guides the eye—never steals the stage.</p>
+        </article>
+        <article class="card">
+          <div class="shine" aria-hidden="true"></div>
           <h3>Tactile light</h3>
-          <p>Soft edges, subtle shine, a surface that invites touch.</p>
-        </article>
-        <article class="seed">
-          <div class="halo" aria-hidden="true"></div>
-          <h3>Living rhythm</h3>
-          <p>Motion as punctuation: present, purposeful, calm.</p>
+          <p>Soft glass, quiet borders, a surface that feels humane.</p>
         </article>
       </div>
     </div>
 
-    <div class="orbital" aria-hidden="true">
-      <div class="sculpture">
-        <div class="ring r1">
-          <span class="node" style="--a: 0deg; --rad: 45%"></span>
-          <span class="node" style="--a: 60deg; --rad: 45%"></span>
-          <span class="node" style="--a: 120deg; --rad: 45%"></span>
-          <span class="node" style="--a: 180deg; --rad: 45%"></span>
-          <span class="node" style="--a: 240deg; --rad: 45%"></span>
-          <span class="node" style="--a: 300deg; --rad: 45%"></span>
-        </div>
-        <div class="ring r2">
-          <span class="node" style="--a: 30deg; --rad: 34%"></span>
-          <span class="node" style="--a: 90deg; --rad: 34%"></span>
-          <span class="node" style="--a: 150deg; --rad: 34%"></span>
-          <span class="node" style="--a: 210deg; --rad: 34%"></span>
-          <span class="node" style="--a: 270deg; --rad: 34%"></span>
-          <span class="node" style="--a: 330deg; --rad: 34%"></span>
-        </div>
-        <div class="ring r3">
-          <span class="node" style="--a: 0deg; --rad: 22%"></span>
-          <span class="node" style="--a: 72deg; --rad: 22%"></span>
-          <span class="node" style="--a: 144deg; --rad: 22%"></span>
-          <span class="node" style="--a: 216deg; --rad: 22%"></span>
-          <span class="node" style="--a: 288deg; --rad: 22%"></span>
-        </div>
-        <div class="core"></div>
+    <div class="canvas" aria-label="Kinetic canvas">
+      <div class="orbs" aria-hidden="true">
+        <span class="orb o1" style="left: -6%; top: -8%"></span>
+        <span class="orb o2" style="right: -6%; top: -10%"></span>
+        <span class="orb o3" style="left: 10%; bottom: -12%"></span>
       </div>
+      <div class="rays" aria-hidden="true"></div>
+      <div class="cursor-light" aria-hidden="true"></div>
     </div>
   </div>
 
   <div class="meta">
-    <span><span class="pulse-dot" aria-hidden="true"></span>Tip: drag the orbits · choose a mood · tune tempo</span>
-    <span id="last-updated">Last updated: 2026-01-30 07:51:58 EST</span>
+    <span class="tip">Tip: move the pointer · press <kbd>space</kbd> to pause · choose a sky</span>
+    <span id="last-updated">Last updated: 2026-01-30 08:55:02 EST</span>
   </div>
 </section>
 
 <script>
   (function () {
-    const root = document.querySelector('.vibe-2291');
+    const root = document.querySelector('.vibe-2292');
     if (!root) return;
 
     // Last updated
@@ -398,51 +423,81 @@
       });
     });
 
-    // Tempo slider
+    // Breeze slider
     const slider = root.querySelector('input[type="range"]');
     const tval = root.querySelector('.tval');
-    function setTempo() {
+    function setBreeze() {
       const v = Number(slider.value) || 1;
       root.style.setProperty('--speed', v.toString());
       tval.textContent = v.toFixed(1) + '×';
     }
-    slider.addEventListener('input', setTempo);
-    setTempo();
+    slider.addEventListener('input', setBreeze);
+    setBreeze();
 
     // Pause toggle
     const pauseBtn = root.querySelector('.chip.pause');
-    pauseBtn.addEventListener('click', () => {
-      const paused = root.classList.toggle('paused');
+    function togglePause(explicit) {
+      const paused = typeof explicit === 'boolean' ? explicit : !root.classList.contains('paused');
+      root.classList.toggle('paused', paused);
       pauseBtn.textContent = paused ? 'Resume' : 'Pause';
       pauseBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
-    });
-
-    // Orbit tilt on pointer
-    const orbital = root.querySelector('.orbital');
-    const sculpture = root.querySelector('.sculpture');
-    function onMove(e) {
-      const rect = orbital.getBoundingClientRect();
-      const x = e.clientX - rect.left, y = e.clientY - rect.top;
-      const nx = (x / rect.width) - 0.5;
-      const ny = (y / rect.height) - 0.5;
-      const rx = ny * -10;
-      const ry = nx * 12;
-      sculpture.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
     }
-    orbital.addEventListener('pointermove', onMove);
-    orbital.addEventListener('pointerleave', () => {
-      sculpture.style.transform = 'rotateX(0deg) rotateY(0deg)';
+    pauseBtn.addEventListener('click', () => togglePause());
+
+    // Keyboard: space to pause
+    root.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        togglePause();
+      }
+    });
+    root.tabIndex = 0;
+
+    // Pointer parallax and glow
+    const canvas = root.querySelector('.canvas');
+    const cursorLight = root.querySelector('.cursor-light');
+    function onMove(e) {
+      const rect = canvas.getBoundingClientRect();
+      const x = Math.min(Math.max(e.clientX - rect.left, 0), rect.width);
+      const y = Math.min(Math.max(e.clientY - rect.top, 0), rect.height);
+      const nx = x / rect.width;
+      const ny = y / rect.height;
+      root.style.setProperty('--mx', (nx * 100).toFixed(2) + '%');
+      root.style.setProperty('--my', (ny * 100).toFixed(2) + '%');
+      // canvas tilt
+      const rx = (0.5 - ny) * 8;
+      const ry = (nx - 0.5) * 10;
+      canvas.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+      // cursor light follow
+      cursorLight.style.opacity = .9;
+      const cx = e.clientX - rect.left - 80;
+      const cy = e.clientY - rect.top - 80;
+      cursorLight.style.transform = `translate(${cx}px, ${cy}px)`;
+    }
+    canvas.addEventListener('pointermove', onMove);
+    canvas.addEventListener('pointerleave', () => {
+      canvas.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      cursorLight.style.opacity = 0;
     });
 
-    // Seed halos follow pointer
-    root.querySelectorAll('.seed').forEach(card => {
-      const halo = card.querySelector('.halo');
-      card.addEventListener('pointermove', (e) => {
+    // Card tilt + shine follow
+    root.querySelectorAll('.card').forEach(card => {
+      const shine = card.querySelector('.shine');
+      function tilt(e) {
         const r = card.getBoundingClientRect();
-        const x = ((e.clientX - r.left) / r.width) * 100;
-        const y = ((e.clientY - r.top) / r.height) * 100;
-        halo.style.setProperty('--x', x.toFixed(1) + '%');
-        halo.style.setProperty('--y', y.toFixed(1) + '%');
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+        const rx = (0.5 - y) * 8;
+        const ry = (x - 0.5) * 10;
+        card.style.setProperty('--rx', rx + 'deg');
+        card.style.setProperty('--ry', ry + 'deg');
+        shine.style.setProperty('--x', (x * 100).toFixed(1) + '%');
+        shine.style.setProperty('--y', (y * 100).toFixed(1) + '%');
+      }
+      card.addEventListener('pointermove', tilt);
+      card.addEventListener('pointerleave', () => {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
       });
     });
   })();
