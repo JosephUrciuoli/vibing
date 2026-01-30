@@ -73,7 +73,388 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-01-30 05:32:01 EST</span></div>
+<style>
+  .vibe-2290 {
+    --bg-a: #0b1020;
+    --bg-b: #13233c;
+    --accent: #7cc9ff;
+    --accent-soft: rgba(124, 201, 255, .45);
+    --tint: 0deg;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: min(6vmin, 40px);
+    color: #fff;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    background: linear-gradient(180deg, var(--bg-a), var(--bg-b));
+    box-shadow: 0 10px 40px rgba(0,0,0,.35), inset 0 1px rgba(255,255,255,.06);
+    isolate: isolate;
+  }
+  .vibe-2290[data-theme="dawn"] {
+    --bg-a: #243042;
+    --bg-b: #566b92;
+    --accent: #ffd18e;
+    --accent-soft: rgba(255, 209, 142, .45);
+  }
+
+  /* Animated backdrop */
+  .vibe-2290 .backdrop {
+    position: absolute;
+    inset: -12%;
+    pointer-events: none;
+    filter: hue-rotate(var(--tint));
+    z-index: 0;
+  }
+  .vibe-2290 .blob {
+    position: absolute;
+    width: 55vmax;
+    height: 55vmax;
+    border-radius: 50%;
+    opacity: .35;
+    filter: blur(42px) saturate(1.15);
+    mix-blend-mode: screen;
+  }
+  .vibe-2290 .b1 {
+    background: radial-gradient(circle at 35% 35%, #6bc1ff 0 40%, transparent 60%);
+    top: -10%;
+    left: -15%;
+    animation: floatA 18s ease-in-out infinite alternate;
+  }
+  .vibe-2290 .b2 {
+    background: radial-gradient(circle at 65% 60%, #b388ff 0 38%, transparent 62%);
+    bottom: -22%;
+    right: -12%;
+    animation: floatB 22s ease-in-out infinite alternate;
+  }
+  @keyframes floatA { from { transform: translate3d(0,0,0) scale(1);} to { transform: translate3d(8%, -6%, 0) scale(1.08);} }
+  @keyframes floatB { from { transform: translate3d(0,0,0) scale(1);} to { transform: translate3d(-7%, 9%, 0) scale(1.06);} }
+
+  .vibe-2290 .grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    opacity: .45;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(255,255,255,.06), transparent 70%),
+      radial-gradient(1200px 600px at 110% 110%, rgba(0,0,0,.24), transparent 70%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,.035) 0 2px, transparent 2px 4px);
+    animation: grainShift 12s linear infinite;
+  }
+  @keyframes grainShift { from { transform: translate3d(0,0,0); } to { transform: translate3d(-2%,2%,0); } }
+
+  .vibe-2290.paused .blob,
+  .vibe-2290.paused .grain { animation-play-state: paused; }
+
+  /* Masthead */
+  .vibe-2290 .mast {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 3vmin 2vmin 2vmin;
+  }
+  .vibe-2290 .mast h1 {
+    margin: 0;
+    font-size: clamp(28px, 6vmin, 64px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,.88) 50%, #fff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 28px rgba(255,255,255,.1);
+  }
+  .vibe-2290 .mast p {
+    margin: .65rem auto 0;
+    max-width: 42ch;
+    color: rgba(255,255,255,.9);
+    font-size: clamp(14px, 2.1vmin, 18px);
+    letter-spacing: .01em;
+  }
+
+  /* Glass panel */
+  .vibe-2290 .panel {
+    position: relative;
+    z-index: 3;
+    margin: 2vmin auto 0;
+    max-width: 1000px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 16px;
+    padding: clamp(14px, 3vmin, 24px);
+    backdrop-filter: blur(18px) saturate(1.2);
+    box-shadow:
+      0 12px 36px rgba(0,0,0,.32),
+      inset 0 1px rgba(255,255,255,.25);
+  }
+
+  /* Controls */
+  .vibe-2290 .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: clamp(12px, 2.6vmin, 18px);
+  }
+  .vibe-2290 .chip {
+    appearance: none;
+    border: 1px solid rgba(255,255,255,.18);
+    background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,.2);
+  }
+  .vibe-2290 .chip:hover { transform: translateY(-1px); background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.09)); }
+  .vibe-2290 .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .vibe-2290 .chip[aria-pressed="true"] {
+    box-shadow: 0 8px 24px rgba(0,0,0,.28), 0 0 0 2px color-mix(in oklab, var(--accent) 60%, transparent);
+    background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.1));
+  }
+
+  .vibe-2290 .tgroup {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(0,0,0,.22);
+    box-shadow: inset 0 1px rgba(255,255,255,.08);
+  }
+  .vibe-2290 .tgroup .label { opacity: .85; font-size: 13px; }
+  .vibe-2290 .tgroup .tval { font-variant-numeric: tabular-nums; opacity: .9; min-width: 3ch; text-align: right; }
+
+  .vibe-2290 input[type="range"] {
+    appearance: none;
+    width: 150px;
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(255,255,255,.35), rgba(255,255,255,.12));
+    outline: none;
+    cursor: pointer;
+  }
+  .vibe-2290 input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 1px solid rgba(255,255,255,.6);
+    box-shadow: 0 2px 8px rgba(0,0,0,.4), 0 0 0 4px rgba(255,255,255,.12) inset;
+  }
+  .vibe-2290 input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 2px 8px rgba(0,0,0,.4), 0 0 0 4px rgba(255,255,255,.12) inset;
+  }
+  .vibe-2290 input[type="range"]::-moz-range-track {
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(255,255,255,.35), rgba(255,255,255,.12));
+  }
+
+  /* Tiles */
+  .vibe-2290 .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(12px, 2.8vmin, 22px);
+  }
+  @media (max-width: 760px) { .vibe-2290 .cards { grid-template-columns: 1fr; } }
+
+  .vibe-2290 .tile {
+    position: relative;
+    padding: clamp(16px, 3vmin, 22px);
+    background: rgba(0,0,0,.22);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform .2s ease, box-shadow .3s ease, background .3s ease, border-color .2s ease;
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    transform: rotateX(var(--ry, 0deg)) rotateY(var(--rx, 0deg));
+    will-change: transform;
+  }
+  .vibe-2290 .tile:hover {
+    background: rgba(255,255,255,.06);
+    box-shadow: 0 12px 30px rgba(0,0,0,.35);
+    border-color: rgba(255,255,255,.2);
+  }
+  .vibe-2290 .tile::after {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    background: radial-gradient(circle at var(--px, 50%) var(--py, 50%), var(--accent-soft) 0%, transparent 60%);
+    opacity: .15;
+    transition: opacity .2s ease;
+    pointer-events: none;
+  }
+  .vibe-2290 .tile:hover::after { opacity: .22; }
+  .vibe-2290 .tile h3 {
+    margin: 0 0 6px 0;
+    font-size: clamp(16px, 2.6vmin, 22px);
+    letter-spacing: .01em;
+  }
+  .vibe-2290 .tile p {
+    margin: 0;
+    color: rgba(255,255,255,.82);
+    font-size: clamp(13px, 2vmin, 16px);
+    line-height: 1.55;
+  }
+
+  .vibe-2290 .meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: clamp(10px, 2vmin, 14px);
+    font-size: 12px;
+    color: rgba(255,255,255,.8);
+  }
+  .vibe-2290 .meta .tip { opacity: .85; }
+
+  /* Small flourish */
+  .vibe-2290 .pulse-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 var(--accent);
+    animation: ping 2.2s ease-out infinite;
+    vertical-align: middle;
+  }
+  @keyframes ping {
+    0% { box-shadow: 0 0 0 0 var(--accent); opacity: 1; }
+    80% { box-shadow: 0 0 0 12px rgba(255,255,255,0); opacity: .4; }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); opacity: 1; }
+  }
+</style>
+
+<section class="vibe-2290" data-theme="dusk" aria-label="Vibe Canvas">
+  <div class="backdrop" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="grain"></div>
+  </div>
+
+  <div class="mast">
+    <h1>Nova Quiet</h1>
+    <p>Minimal motion. Maximum calm. A tiny interface that breathes with you.</p>
+  </div>
+
+  <div class="panel">
+    <div class="controls">
+      <button class="chip" data-theme="dawn" aria-pressed="false">Dawn</button>
+      <button class="chip" data-theme="dusk" aria-pressed="true">Dusk</button>
+
+      <label class="tgroup" title="Shift the ambient hue">
+        <span class="label">Hue</span>
+        <input type="range" min="-60" max="60" value="0" step="1" aria-label="Hue tint">
+        <span class="tval">0°</span>
+      </label>
+
+      <button class="chip pulse" aria-pressed="false">Pause Motion</button>
+    </div>
+
+    <div class="cards">
+      <article class="tile">
+        <h3>Clarity</h3>
+        <p>Whitespace, rhythm, and balance—space that lets ideas land softly.</p>
+      </article>
+      <article class="tile">
+        <h3>Texture</h3>
+        <p>Soft grain and gentle depth for a tactile, humane digital surface.</p>
+      </article>
+      <article class="tile">
+        <h3>Rhythm</h3>
+        <p>Subtle animations that soothe rather than shout. A quiet pulse.</p>
+      </article>
+    </div>
+
+    <div class="meta">
+      <span class="tip"><span class="pulse-dot" aria-hidden="true"></span>Try: drag for parallax · hue to recolor</span>
+      <span id="last-updated">Last updated: 2026-01-30 06:26:27 EST</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const root = document.querySelector('.vibe-2290');
+    if (!root) return;
+
+    // Last updated
+    const updatedEl = root.querySelector('#last-updated');
+    const now = new Date();
+    try {
+      updatedEl.textContent = 'Last updated: ' + now.toLocaleString([], {
+        year: 'numeric', month: 'short', day: '2-digit',
+        hour: '2-digit', minute: '2-digit'
+      });
+    } catch (_) {
+      updatedEl.textContent = 'Last updated: ' + now.toString();
+    }
+
+    // Theme toggles
+    const themeBtns = root.querySelectorAll('.chip[data-theme]');
+    themeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const theme = btn.getAttribute('data-theme');
+        root.setAttribute('data-theme', theme);
+        themeBtns.forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+      });
+    });
+
+    // Hue slider
+    const slider = root.querySelector('input[type="range"]');
+    const tval = root.querySelector('.tval');
+    function setTint() {
+      const deg = Number(slider.value) || 0;
+      root.style.setProperty('--tint', deg + 'deg');
+      tval.textContent = (deg > 0 ? '+' : '') + deg + '°';
+    }
+    slider.addEventListener('input', setTint);
+    setTint();
+
+    // Motion toggle
+    const pulseBtn = root.querySelector('.chip.pulse');
+    pulseBtn.addEventListener('click', () => {
+      const paused = root.classList.toggle('paused');
+      pulseBtn.textContent = paused ? 'Resume Motion' : 'Pause Motion';
+      pulseBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+    });
+
+    // Parallax sheen + tilt
+    const panel = root.querySelector('.panel');
+    function handleMove(e) {
+      const rect = panel.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const nx = x / rect.width;
+      const ny = y / rect.height;
+      const rx = (nx - 0.5) * 8;   // deg
+      const ry = (ny - 0.5) * -8;  // deg
+      root.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+      root.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+      root.style.setProperty('--px', (nx * 100).toFixed(1) + '%');
+      root.style.setProperty('--py', (ny * 100).toFixed(1) + '%');
+    }
+    panel.addEventListener('pointermove', handleMove);
+    panel.addEventListener('pointerleave', () => {
+      root.style.setProperty('--rx', '0deg');
+      root.style.setProperty('--ry', '0deg');
+    });
+  })();
+</script>
       </section>
       <!-- END_EDITABLE -->
     <script>
