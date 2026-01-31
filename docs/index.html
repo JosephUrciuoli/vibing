@@ -73,377 +73,432 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div id="vibe2314" role="region" aria-label="Aurora Canvas — interactive design vignette" data-theme="cool">
+<div id="vibe2315" role="region" aria-label="Kinetic Poster — day/night study" data-theme="day">
   <style>
-    /* Root */
-    #vibe2314 {
-      --c1: #60a5fa; /* cool blue */
-      --c2: #a78bfa; /* violet */
-      --c3: #22d3ee; /* cyan */
-      --bg-deep: #070a14;
-      --bg-soft: #0b1222;
-      --text: #eaf2ff;
-      --muted: #a9b6d9;
-      --glow: 0.6; /* 0..1 */
-      --tiltX: 0;
-      --tiltY: 0;
-      --radius: 22px;
-      color-scheme: dark;
+    /* ————— Root theme & tokens ————— */
+    #vibe2315 {
+      --bg: #f8f7f4;
+      --fg: #0b0f14;
+      --muted: #5b6575;
+      --line: rgba(12, 17, 24, 0.06);
+      --ink-soft: rgba(12, 17, 24, 0.16);
+      --a1: #ef4444; /* coral red */
+      --a2: #f59e0b; /* amber */
+      --a3: #06b6d4; /* cyan */
+      --radius: 26px;
+      --spin: 16s;
+      --grain: 0.14;
+      --auto: 0deg;
+      --pointer: 0deg;
+      color-scheme: light;
       position: relative;
       isolation: isolate;
-      font: 500 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
-      color: var(--text);
+      font: 500 15px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      color: var(--fg);
       background:
-        radial-gradient(120vmax 120vmax at 0% 0%, #0d1731 0%, transparent 60%),
-        radial-gradient(100vmax 100vmax at 100% 100%, #071127 0%, transparent 55%),
-        linear-gradient(180deg, var(--bg-soft), var(--bg-deep));
-      border-radius: 28px;
-      padding: clamp(18px, 2.4vw, 28px);
+        radial-gradient(120vmax 120vmax at 0% 100%, rgba(0,0,0,0.02), transparent 60%),
+        radial-gradient(120vmax 120vmax at 100% 0%, rgba(0,0,0,0.02), transparent 60%),
+        repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 24px),
+        var(--bg);
+      border-radius: var(--radius);
+      padding: clamp(18px, 2.5vw, 30px);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.08),
-        0 20px 60px rgba(0, 0, 0, 0.45);
+        inset 0 1px 0 rgba(255,255,255,0.9),
+        0 30px 70px rgba(0,0,0,0.18);
       overflow: hidden;
     }
-    #vibe2314[data-theme="warm"] {
-      --c1: #f59e0b; /* amber */
-      --c2: #ef4444; /* red */
-      --c3: #f472b6; /* pink */
-      --bg-soft: #1a0e09;
-      --bg-deep: #0c0705;
+    #vibe2315[data-theme="night"] {
+      --bg: #0a0f1c;
+      --fg: #eef3ff;
+      --muted: #a7b3cc;
+      --line: rgba(255,255,255,0.06);
+      --ink-soft: rgba(255,255,255,0.18);
+      --a1: #60a5fa; /* blue */
+      --a2: #a78bfa; /* violet */
+      --a3: #22d3ee; /* cyan */
+      color-scheme: dark;
     }
 
-    /* Background orbs and subtle grain */
-    #vibe2314 .bg {
-      position: absolute;
-      inset: 0;
+    /* subtle grain */
+    #vibe2315::after {
+      content: "";
       pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-      mask-image: radial-gradient(120% 120% at 50% 50%, #000 70%, rgba(0,0,0,0.2));
-    }
-    #vibe2314 .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(40px) saturate(140%);
-      opacity: 0.5;
-      mix-blend-mode: screen;
-      transform: translate3d(0,0,0);
-      transition: opacity 400ms ease;
-    }
-    #vibe2314 .o1 {
-      width: 52vmin; height: 52vmin;
-      left: -8vmin; top: -10vmin;
-      background: radial-gradient(closest-side at 35% 35%, color-mix(in oklab, var(--c1) 90%, white) 0%, transparent 62%);
-      animation: float1 22s ease-in-out infinite alternate;
-      transform: translate3d(calc(var(--tiltX) * 0.05px), calc(var(--tiltY) * 0.05px), 0);
-    }
-    #vibe2314 .o2 {
-      width: 60vmin; height: 60vmin;
-      right: -12vmin; bottom: -16vmin;
-      background: radial-gradient(closest-side at 60% 40%, color-mix(in oklab, var(--c2) 88%, white) 0%, transparent 65%);
-      animation: float2 28s ease-in-out infinite alternate;
-      transform: translate3d(calc(var(--tiltX) * -0.04px), calc(var(--tiltY) * -0.04px), 0);
-    }
-    #vibe2314 .o3 {
-      width: 36vmin; height: 36vmin;
-      right: 20vmin; top: -8vmin;
-      background: radial-gradient(closest-side at 45% 55%, color-mix(in oklab, var(--c3) 90%, white) 0%, transparent 58%);
-      animation: float3 26s ease-in-out infinite alternate;
-      opacity: 0.35;
-      transform: translate3d(calc(var(--tiltX) * 0.03px), calc(var(--tiltY) * 0.03px), 0);
-    }
-    #vibe2314 .grain {
-      position: absolute;
-      inset: -200%;
+      position: absolute; inset: -150%;
       background-image:
-        repeating-conic-gradient(from 0deg, rgba(255,255,255,0.02) 0deg 10deg, transparent 10deg 20deg);
-      animation: spin 90s linear infinite;
-      opacity: 0.35;
-      filter: blur(1px);
+        repeating-conic-gradient(from 0deg, rgba(0,0,0,0.03) 0deg 10deg, transparent 10deg 20deg);
+      opacity: var(--grain);
+      filter: blur(0.7px) contrast(1.2);
       mix-blend-mode: soft-light;
+      animation: vibe2315-spin 120s linear infinite;
     }
-    @keyframes float1 {
-      0% { transform: translate3d(-2vmin, -1vmin, 0) scale(1.05); }
-      100% { transform: translate3d(3vmin, 2vmin, 0) scale(1.12); }
-    }
-    @keyframes float2 {
-      0% { transform: translate3d(1vmin, 1vmin, 0) scale(1.0); }
-      100% { transform: translate3d(-3vmin, -2vmin, 0) scale(1.1); }
-    }
-    @keyframes float3 {
-      0% { transform: translate3d(0vmin, 2vmin, 0) scale(0.95); }
-      100% { transform: translate3d(-2vmin, -1vmin, 0) scale(1.05); }
-    }
-    @keyframes spin {
-      to { transform: rotate(1turn); }
-    }
+    @keyframes vibe2315-spin { to { transform: rotate(1turn); } }
 
-    /* Layout */
-    #vibe2314 .inner {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      gap: clamp(16px, 2.4vw, 28px);
-      grid-template-columns: 1.2fr 1fr;
+    /* ————— Layout ————— */
+    #vibe2315 .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: clamp(14px, 2.2vw, 20px);
+    }
+    #vibe2315 .brand {
+      display: inline-flex; gap: 10px; align-items: center;
+      letter-spacing: 0.12em; text-transform: uppercase; font-size: 12px; color: var(--muted);
+    }
+    #vibe2315 .brand .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--a3), transparent 70%);
+      box-shadow: 0 0 12px var(--a3);
+    }
+    #vibe2315 .grid {
+      display: grid; gap: clamp(16px, 2.6vw, 28px);
+      grid-template-columns: 1.3fr 0.9fr;
       align-items: stretch;
     }
     @media (max-width: 900px) {
-      #vibe2314 .inner { grid-template-columns: 1fr; }
+      #vibe2315 .grid { grid-template-columns: 1fr; }
     }
 
-    /* Hero panel */
-    #vibe2314 .hero {
-      border-radius: var(--radius);
-      padding: clamp(20px, 3.2vw, 34px);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)) padding-box,
-        linear-gradient(135deg, color-mix(in oklab, var(--c1) 30%, transparent), color-mix(in oklab, var(--c2) 30%, transparent)) border-box;
-      border: 1px solid transparent;
-      backdrop-filter: blur(18px) saturate(130%);
+    /* ————— Poster ————— */
+    #vibe2315 .poster {
+      position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.4)) padding-box;
+      border: 2px solid var(--ink-soft);
+      border-radius: 20px;
+      padding: clamp(14px, 1.8vw, 20px);
       box-shadow:
-        0 10px 30px rgba(0,0,0,0.35),
-        0 0 0 1px rgba(255,255,255,0.06) inset,
-        0 0 80px color-mix(in oklab, var(--c2) 20%, transparent);
-      transform: translate3d(calc(var(--tiltX) * 0.02px), calc(var(--tiltY) * 0.02px), 0);
+        0 20px 50px rgba(0,0,0,0.12),
+        0 1px 0 rgba(255,255,255,0.6) inset;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
     }
-    #vibe2314 .kicker {
-      display: inline-flex; gap: 10px; align-items: center;
-      font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+    #vibe2315[data-theme="night"] .poster {
+      background: linear-gradient(180deg, rgba(16,20,34,0.7), rgba(16,20,34,0.5));
     }
-    #vibe2314 .kicker .dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, var(--c3), transparent 70%);
-      box-shadow: 0 0 14px color-mix(in oklab, var(--c3) calc(70% * var(--glow)), transparent);
-    }
-    #vibe2314 h1 {
-      margin: 8px 0 10px;
-      font-size: clamp(34px, 5.4vw, 72px);
-      line-height: 1.03;
+
+    #vibe2315 .title {
+      margin: clamp(4px, 0.6vw, 8px) 2px;
       letter-spacing: -0.02em;
-      background: linear-gradient(90deg, var(--c1), var(--c2) 50%, var(--c3));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.06);
-      animation: title-breathe 8s ease-in-out infinite;
+      line-height: 0.88;
+      user-select: none;
+      font-weight: 800;
+      font-size: clamp(38px, 6.8vw, 96px);
+      background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 1px 0 rgba(255,255,255,0.5));
     }
-    @keyframes title-breathe {
-      0%,100% { filter: drop-shadow(0 6px 18px rgba(0,0,0,0.25)); }
-      50% { filter: drop-shadow(0 10px 22px rgba(0,0,0,0.35)); }
+    #vibe2315 .title .word { display: block; }
+    #vibe2315 .title .ch {
+      display: inline-block;
+      transform: translateY(0);
+      transition: transform 260ms cubic-bezier(.2,.7,.2,1);
     }
-    #vibe2314 .sub {
-      margin: 0 0 18px 0;
-      font-size: clamp(14px, 1.6vw, 18px);
-      color: color-mix(in oklab, var(--muted) 90%, white);
-      max-width: 40ch;
-    }
-    #vibe2314 .cta-row {
-      display: flex; flex-wrap: wrap; gap: 12px;
-      margin-top: 10px;
-    }
-    #vibe2314 .button {
-      appearance: none; border: none; cursor: pointer;
-      padding: 10px 14px;
-      border-radius: 14px;
-      font-weight: 600;
-      color: #0a0f1a;
-      background: linear-gradient(180deg, color-mix(in oklab, var(--c1) 85%, white), color-mix(in oklab, var(--c2) 70%, black));
-      box-shadow: 0 8px 18px color-mix(in oklab, var(--c2) calc(38% * var(--glow)), transparent);
-      transition: transform 160ms ease, box-shadow 220ms ease, filter 220ms ease;
-    }
-    #vibe2314 .button:hover { transform: translateY(-1px); filter: brightness(1.06); }
-    #vibe2314 .button:active { transform: translateY(0); filter: brightness(0.98); }
-
-    #vibe2314 .ghost {
-      color: var(--text);
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-      box-shadow: 0 1px 0 rgba(255,255,255,0.08) inset, 0 8px 18px rgba(0,0,0,0.26);
-      border: 1px solid rgba(255,255,255,0.12);
+    #vibe2315 .poster:hover .title .ch {
+      transform: translateY(var(--j, 0px));
+      transition-delay: calc(var(--i) * 7ms);
     }
 
-    /* Control slab */
-    #vibe2314 .slab {
-      border-radius: var(--radius);
-      padding: clamp(18px, 2.2vw, 26px);
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(14px) saturate(120%);
-      display: grid; gap: 16px;
-      align-content: start;
+    /* Dial */
+    #vibe2315 .dial {
+      position: relative;
+      display: grid; place-items: center;
+      margin: clamp(8px, 2.2vw, 18px) auto;
+      width: clamp(220px, 32vw, 440px);
+      aspect-ratio: 1;
+      transform: translateZ(0);
+    }
+    #vibe2315 .ring,
+    #vibe2315 .ticks { position: absolute; inset: 0; border-radius: 50%; }
+    #vibe2315 .ring {
+      --thick: clamp(12px, 5vmin, 34px);
+      background: conic-gradient(from 0deg, var(--a1), var(--a2), var(--a3), var(--a1));
       box-shadow:
-        0 10px 30px rgba(0,0,0,0.35),
-        0 0 0 1px rgba(255,255,255,0.05) inset;
-      transform: translate3d(calc(var(--tiltX) * -0.01px), calc(var(--tiltY) * -0.01px), 0);
+        0 0 0 1px var(--ink-soft) inset,
+        0 12px 28px rgba(0,0,0,0.16);
+      transform: rotate(var(--auto)) rotate(var(--pointer));
+      transition: transform 280ms cubic-bezier(.2,.7,.2,1);
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(50% - var(--thick)), #000 calc(50% - calc(var(--thick) - 1px)));
+              mask: radial-gradient(farthest-side, transparent calc(50% - var(--thick)), #000 calc(50% - calc(var(--thick) - 1px)));
     }
-    #vibe2314 .control-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-    #vibe2314 label { color: var(--muted); font-size: 13px; }
+    #vibe2315 .ticks {
+      --thick: clamp(12px, 5vmin, 34px);
+      background:
+        repeating-conic-gradient(from 0deg, rgba(0,0,0,0.18) 0deg 1deg, transparent 1deg 6deg),
+        repeating-conic-gradient(from 0deg, rgba(0,0,0,0.12) 0deg 0.2deg, transparent 0.2deg 0.8deg);
+      opacity: 0.28;
+      transform: rotate(calc(var(--auto) * -1)) rotate(calc(var(--pointer) * -1));
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(50% - var(--thick)), #000 calc(50% - calc(var(--thick) - 1px)));
+              mask: radial-gradient(farthest-side, transparent calc(50% - var(--thick)), #000 calc(50% - calc(var(--thick) - 1px)));
+    }
+    #vibe2315[data-theme="night"] .ticks { background:
+      repeating-conic-gradient(from 0deg, rgba(255,255,255,0.35) 0deg 1deg, transparent 1deg 6deg),
+      repeating-conic-gradient(from 0deg, rgba(255,255,255,0.22) 0deg 0.2deg, transparent 0.2deg 0.8deg);
+      opacity: 0.35;
+    }
+    #vibe2315 .core {
+      position: absolute; width: 44%; aspect-ratio: 1; border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0.2) 55%, transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(0,0,0,0.18), transparent 55%);
+      border: 1px solid var(--ink-soft);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18) inset, 0 8px 22px rgba(0,0,0,0.16);
+      overflow: hidden;
+    }
+    #vibe2315[data-theme="night"] .core {
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.04) 60%, transparent 65%),
+        radial-gradient(circle at 70% 70%, rgba(255,255,255,0.08), transparent 60%);
+      box-shadow: 0 10px 34px rgba(0,0,0,0.4) inset, 0 8px 22px rgba(0,0,0,0.5);
+    }
+    #vibe2315 .hand {
+      position: absolute; left: 50%; top: 50%;
+      width: 40%; height: 2px; transform-origin: 0% 50%;
+      background: linear-gradient(90deg, var(--a1), var(--a3));
+      border-radius: 4px;
+      transform: rotate(calc(var(--auto) * 0.25 + var(--pointer)));
+      box-shadow: 0 0 12px rgba(0,0,0,0.15);
+    }
 
-    #vibe2314 input[type="range"] {
-      -webkit-appearance: none; appearance: none;
-      width: 200px; max-width: 50vw;
-      height: 10px; border-radius: 999px;
-      background: linear-gradient(90deg, color-mix(in oklab, var(--c1) 60%, #000), color-mix(in oklab, var(--c2) 60%, #000));
-      outline: none; border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3) inset;
+    #vibe2315 .caption {
+      margin: 8px 2px 0;
+      color: var(--muted); font-size: 13px;
     }
-    #vibe2314 input[type="range"]::-webkit-slider-thumb {
+
+    /* marquee */
+    #vibe2315 .marquee {
+      position: relative;
+      display: block; overflow: hidden;
+      margin-top: clamp(8px, 1.4vw, 12px);
+      border-top: 1px dashed var(--ink-soft);
+      color: var(--muted);
+      height: 28px;
+    }
+    #vibe2315 .marquee .track {
+      position: absolute; white-space: nowrap; will-change: transform;
+      animation: vibe2315-marquee 18s linear infinite;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+      padding-top: 7px;
+    }
+    @keyframes vibe2315-marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ————— Panel ————— */
+    #vibe2315 .panel {
+      display: grid; align-content: start; gap: 14px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.5)) padding-box;
+      border: 2px solid var(--ink-soft);
+      border-radius: 20px;
+      padding: clamp(14px, 2vw, 20px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12), 0 1px 0 rgba(255,255,255,0.6) inset;
+    }
+    #vibe2315[data-theme="night"] .panel {
+      background: linear-gradient(180deg, rgba(16,20,34,0.8), rgba(16,20,34,0.6));
+    }
+
+    #vibe2315 .button {
+      appearance: none; border: 1px solid var(--ink-soft);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+      color: var(--fg);
+      border-radius: 999px; padding: 8px 12px; font-weight: 700;
+      letter-spacing: 0.02em; cursor: pointer;
+      transition: transform 140ms ease, filter 180ms ease, box-shadow 180ms ease;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.08);
+    }
+    #vibe2315 .button:hover { transform: translateY(-1px); filter: brightness(1.03); }
+    #vibe2315 .button:active { transform: translateY(0); filter: brightness(0.98); }
+    #vibe2315 .button.primary {
+      background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
+      color: #0b0f14;
+      border: none;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+    }
+
+    #vibe2315 .control { display: grid; gap: 6px; }
+    #vibe2315 label { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    #vibe2315 .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    #vibe2315 input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      width: 220px; max-width: 70vw; height: 12px;
+      background:
+        linear-gradient(90deg, var(--a1), var(--a2), var(--a3)) left/var(--pct, 50%) 100% no-repeat,
+        rgba(0,0,0,0.08);
+      border-radius: 999px;
+      outline: none;
+      border: 1px solid var(--ink-soft);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08) inset;
+    }
+    #vibe2315 input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none; appearance: none;
       width: 18px; height: 18px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, white, color-mix(in oklab, var(--c3) 70%, black));
-      border: 1px solid rgba(255,255,255,0.6);
-      box-shadow: 0 6px 16px color-mix(in oklab, var(--c3) calc(45% * var(--glow)), transparent);
-      cursor: grab;
+      background: radial-gradient(circle at 35% 35%, #fff, #dfe6f2);
+      border: 1px solid var(--ink-soft);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.16);
+      cursor: pointer;
     }
-    #vibe2314 .pill {
+    #vibe2315 input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff, #dfe6f2);
+      border: 1px solid var(--ink-soft);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.16);
+      cursor: pointer;
+    }
+
+    #vibe2315 .pill {
       display: inline-flex; align-items: center; gap: 10px;
       padding: 8px 12px; border-radius: 999px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.14);
-      color: var(--muted);
+      border: 1px dashed var(--ink-soft); color: var(--muted);
+      background: transparent;
     }
-    #vibe2314 .swatch {
+    #vibe2315 .swatch {
       width: 18px; height: 18px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, var(--c1), var(--c2));
-      box-shadow: 0 0 18px color-mix(in oklab, var(--c1) calc(35% * var(--glow)), transparent);
+      background: conic-gradient(var(--a1), var(--a2), var(--a3), var(--a1));
+      box-shadow: 0 0 18px rgba(0,0,0,0.12);
+      border: 1px solid var(--ink-soft);
     }
 
-    /* Cards */
-    #vibe2314 .cards {
-      display: grid; gap: 14px;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-top: 12px;
+    #vibe2315 .principles {
+      display: grid; gap: 10px; margin-top: 8px;
+      grid-template-columns: 1fr 1fr 1fr;
     }
     @media (max-width: 900px) {
-      #vibe2314 .cards { grid-template-columns: 1fr; }
+      #vibe2315 .principles { grid-template-columns: 1fr; }
     }
-    #vibe2314 .card {
-      position: relative;
-      border-radius: 16px;
-      padding: 16px 16px 18px 16px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)) padding-box,
-        linear-gradient(135deg, color-mix(in oklab, var(--c1) 28%, transparent), color-mix(in oklab, var(--c2) 28%, transparent)) border-box;
-      border: 1px solid transparent;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-      transform-style: preserve-3d;
-      transition: transform 200ms ease, box-shadow 300ms ease;
-      will-change: transform;
+    #vibe2315 .card {
+      border: 1px solid var(--ink-soft);
+      border-radius: 14px;
+      padding: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.55));
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+      transition: transform 160ms ease, box-shadow 200ms ease;
     }
-    #vibe2314 .card:hover {
-      box-shadow: 0 18px 40px rgba(0,0,0,0.45), 0 0 60px color-mix(in oklab, var(--c1) calc(25% * var(--glow)), transparent);
+    #vibe2315[data-theme="night"] .card {
+      background: linear-gradient(180deg, rgba(16,20,34,0.85), rgba(16,20,34,0.6));
     }
-    #vibe2314 .card .shine {
-      pointer-events: none;
-      position: absolute; inset: -1px;
-      border-radius: inherit;
-      background: radial-gradient(200px 200px at var(--px, 50%) var(--py, 50%), rgba(255,255,255,0.22), transparent 55%);
-      opacity: 0; transition: opacity 220ms ease;
-      mix-blend-mode: screen;
-    }
-    #vibe2314 .card:hover .shine { opacity: 1; }
-    #vibe2314 .icon {
-      width: 34px; height: 34px; border-radius: 12px;
-      display: grid; place-items: center;
-      color: #091120;
-      background: linear-gradient(180deg, color-mix(in oklab, var(--c1) 90%, white), color-mix(in oklab, var(--c2) 70%, black));
-      box-shadow: 0 8px 16px color-mix(in oklab, var(--c2) calc(35% * var(--glow)), transparent);
-      transform: translateZ(24px);
-    }
-    #vibe2314 .card h3 {
-      margin: 10px 0 4px 0; font-size: 16px; letter-spacing: 0.02em;
-    }
-    #vibe2314 .card p {
-      margin: 0; font-size: 13px; color: var(--muted);
+    #vibe2315 .card:hover { transform: translateY(-2px); box-shadow: 0 18px 36px rgba(0,0,0,0.14); }
+    #vibe2315 .card b { font-weight: 800; }
+    #vibe2315 .card p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+    #vibe2315 .icon {
+      width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center;
+      background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
+      color: #0b0f14; font-weight: 900; box-shadow: 0 8px 16px rgba(0,0,0,0.12);
     }
 
-    /* Footer line */
-    #vibe2314 .foot {
+    /* footer info */
+    #vibe2315 .foot {
       display: flex; justify-content: space-between; align-items: center;
-      margin-top: 10px; color: var(--muted); font-size: 12px;
-      opacity: 0.9;
-    }
-    #vibe2314 .foot .sig {
-      display: inline-flex; gap: 8px; align-items: center;
-    }
-    #vibe2314 .foot .sig i {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, var(--c2), transparent 70%);
-      box-shadow: 0 0 10px color-mix(in oklab, var(--c2) calc(70% * var(--glow)), transparent);
+      margin-top: 6px; color: var(--muted); font-size: 12px; flex-wrap: wrap; gap: 8px;
     }
 
-    /* Reduced motion */
+    /* Waves (pulse) */
+    #vibe2315 .waves {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+    }
+    #vibe2315 .wave {
+      position: absolute; width: 20px; height: 20px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.8), rgba(255,255,255,0) 65%);
+      transform: translate(-50%, -50%) scale(0.1);
+      animation: vibe2315-wave 900ms cubic-bezier(.16,1,.3,1) forwards;
+      mix-blend-mode: overlay;
+    }
+    #vibe2315[data-theme="night"] .wave {
+      background: radial-gradient(circle, rgba(255,255,255,0.25), rgba(255,255,255,0) 70%);
+    }
+    @keyframes vibe2315-wave {
+      60% { opacity: 1; }
+      to { transform: translate(-50%, -50%) scale(18); opacity: 0; }
+    }
+
+    /* reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      #vibe2314 .orb, #vibe2314 .grain, #vibe2314 h1 { animation: none !important; }
-      #vibe2314 .card, #vibe2314 .hero, #vibe2314 .slab { transition: none !important; }
+      #vibe2315 *, #vibe2315::after { animation: none !important; transition: none !important; }
     }
   </style>
 
-  <div class="bg" aria-hidden="true">
-    <div class="orb o1"></div>
-    <div class="orb o2"></div>
-    <div class="orb o3"></div>
-    <div class="grain"></div>
+  <div class="topbar">
+    <div class="brand">Studio Quiet <span class="dot" aria-hidden="true"></span></div>
+    <div class="row">
+      <span class="pill" title="Current palette"><span class="swatch" aria-hidden="true"></span> Palette</span>
+      <button class="button mode" type="button" aria-pressed="false" title="Toggle day/night">Night</button>
+    </div>
   </div>
 
-  <div class="inner">
-    <section class="hero" aria-labelledby="aurora-title">
-      <div class="kicker"><span class="dot" aria-hidden="true"></span><span>Studio Aurora</span></div>
-      <h1 id="aurora-title">Resonant Canvas</h1>
-      <p class="sub">Light, motion, and thoughtful space — a living vignette for calm, confident design.</p>
-      <div class="cta-row">
-        <button class="button toggle" type="button" aria-pressed="false" aria-label="Shift color palette">Shift Palette</button>
-        <button class="button ghost" type="button" data-jiggle="true" aria-label="Delight me">Delight me</button>
+  <div class="grid">
+    <section class="poster" aria-labelledby="poster-title">
+      <h1 class="title" id="poster-title">
+        <span class="word" data-word="KINETIC">KINETIC</span>
+        <span class="word" data-word="SILENCE">SILENCE</span>
+      </h1>
+
+      <div class="dial" role="img" aria-label="Rotating ring that responds to your pointer">
+        <div class="ring"></div>
+        <div class="ticks" aria-hidden="true"></div>
+        <div class="core" aria-hidden="true"></div>
+        <div class="hand" aria-hidden="true"></div>
+        <div class="waves" aria-hidden="true"></div>
       </div>
 
-      <div class="cards" aria-label="Design principles">
-        <article class="card" tabindex="0">
-          <div class="shine"></div>
-          <div class="icon" aria-hidden="true">✦</div>
-          <h3>Clarity</h3>
-          <p>Whitespace that breathes. Intent that shows.</p>
-        </article>
-        <article class="card" tabindex="0">
-          <div class="shine"></div>
-          <div class="icon" aria-hidden="true">◔</div>
-          <h3>Poise</h3>
-          <p>Soft edges, steady rhythm, gentle contrast.</p>
-        </article>
-        <article class="card" tabindex="0">
-          <div class="shine"></div>
-          <div class="icon" aria-hidden="true">∞</div>
-          <h3>Play</h3>
-          <p>Tiny moments of joy — never shouting.</p>
-        </article>
+      <p class="caption">A kinetic study in rhythm, balance, and hush.</p>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="track">
+          • Kinetic, not chaotic • Quiet, not dull • Poised, not static •
+          Kinetic, not chaotic • Quiet, not dull • Poised, not static •
+        </div>
       </div>
     </section>
 
-    <aside class="slab" aria-label="Live controls">
-      <div class="control-row">
-        <span class="pill" title="Palette swatch"><span class="swatch" aria-hidden="true"></span> Palette</span>
-        <button class="button ghost toggle" type="button" aria-pressed="false">Toggle Warm/Cool</button>
+    <aside class="panel" aria-label="Controls">
+      <div class="control">
+        <label for="tempo">Tempo</label>
+        <div class="row">
+          <input id="tempo" type="range" min="0.3" max="3" step="0.1" value="1.2" aria-valuemin="0.3" aria-valuemax="3" aria-valuenow="1.2" aria-label="Rotation tempo">
+          <button class="button primary pulse" type="button" title="Send a pulse">Pulse</button>
+        </div>
       </div>
-      <div class="control-row">
-        <label for="glow">Glow</label>
-        <input id="glow" type="range" min="0" max="100" value="60" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60" aria-label="Glow intensity">
+
+      <div class="control">
+        <label for="texture">Texture</label>
+        <input id="texture" type="range" min="0" max="40" step="1" value="14" aria-valuemin="0" aria-valuemax="40" aria-valuenow="14" aria-label="Grain intensity">
       </div>
-      <p style="margin:0;color:var(--muted);font-size:13px;">
-        Move your cursor to nudge the light. Hover cards to see the shine tilt with you.
-      </p>
+
+      <div class="principles" aria-label="Design principles">
+        <div class="card">
+          <div class="icon">R</div>
+          <b>Rhythm</b>
+          <p>Motion with measure—silence between beats.</p>
+        </div>
+        <div class="card">
+          <div class="icon">B</div>
+          <b>Balance</b>
+          <p>Weight, space, and light kept in gentle tension.</p>
+        </div>
+        <div class="card">
+          <div class="icon">C</div>
+          <b>Contrast</b>
+          <p>Bold edges, soft gradients, and honest type.</p>
+        </div>
+      </div>
+
       <div class="foot" role="contentinfo">
-        <div class="sig"><i aria-hidden="true"></i> Crafted with quiet confidence</div>
-        <span id="last-updated">Last updated: 2026-01-31 10:21:20 EST</span>
+        <span>Field Poster No. 5</span>
+        <span id="last-updated">Last updated: 2026-01-31 11:25:25 EST</span>
       </div>
     </aside>
   </div>
 
   <script>
     (function () {
-      const root = document.getElementById('vibe2314');
+      const root = document.getElementById('vibe2315');
+      const tempo = root.querySelector('#tempo');
+      const texture = root.querySelector('#texture');
+      const dial = root.querySelector('.dial');
+      const waves = root.querySelector('.waves');
+      const modeBtn = root.querySelector('.mode');
+      const pulseBtn = root.querySelector('.pulse');
       const updated = document.getElementById('last-updated');
-      const glow = root.querySelector('#glow');
-      const toggles = root.querySelectorAll('.toggle');
-      const cards = Array.from(root.querySelectorAll('.card'));
-      const delightBtn = root.querySelector('[data-jiggle="true"]');
 
       // Last updated
       function fmt(d) {
@@ -456,71 +511,98 @@
           return d.toLocaleString();
         }
       }
-      const now = new Date();
-      updated.textContent = 'Last updated: ' + fmt(now);
+      updated.textContent = 'Last updated: ' + fmt(new Date());
 
-      // Mouse parallax
-      function handleMove(e) {
-        const r = root.getBoundingClientRect();
-        const cx = r.left + r.width / 2;
-        const cy = r.top + r.height / 2;
-        const dx = (e.clientX - cx);
-        const dy = (e.clientY - cy);
-        root.style.setProperty('--tiltX', dx.toFixed(2));
-        root.style.setProperty('--tiltY', dy.toFixed(2));
-      }
-      root.addEventListener('pointermove', handleMove, { passive: true });
-
-      // Card tilt / shine
-      cards.forEach(card => {
-        function tilt(e) {
-          const b = card.getBoundingClientRect();
-          const x = e.clientX - b.left;
-          const y = e.clientY - b.top;
-          const rx = ((y / b.height) - 0.5) * -10; // rotateX
-          const ry = ((x / b.width) - 0.5) * 10;   // rotateY
-          card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
-          card.style.setProperty('--px', `${x}px`);
-          card.style.setProperty('--py', `${y}px`);
-        }
-        card.addEventListener('pointermove', tilt);
-        card.addEventListener('pointerenter', () => card.style.transition = 'transform 80ms ease');
-        card.addEventListener('pointerleave', () => {
-          card.style.transition = 'transform 260ms ease';
-          card.style.transform = 'perspective(700px) rotateX(0) rotateY(0)';
+      // Title: split letters & set jitter
+      const words = root.querySelectorAll('.title .word');
+      words.forEach(w => {
+        const text = w.textContent.trim();
+        w.innerHTML = '';
+        Array.from(text).forEach((ch, i) => {
+          const span = document.createElement('span');
+          span.className = 'ch';
+          span.style.setProperty('--i', i);
+          span.style.setProperty('--j', (Math.random() * 10 - 5).toFixed(1) + 'px');
+          span.textContent = ch;
+          w.appendChild(span);
         });
       });
 
-      // Glow control
-      function updateGlow(v) {
-        const n = Math.max(0, Math.min(1, v / 100));
-        root.style.setProperty('--glow', n.toFixed(2));
-        glow.setAttribute('aria-valuenow', String(v));
+      // Pointer angle
+      function pointerAngle(e) {
+        const r = dial.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
+        const deg = Math.atan2(dy, dx) * 180 / Math.PI;
+        return (deg + 360) % 360;
       }
-      updateGlow(parseFloat(glow.value || '60'));
-      glow.addEventListener('input', (e) => updateGlow(parseFloat(e.target.value)));
-
-      // Palette toggles
-      function flipTheme() {
-        const warm = root.getAttribute('data-theme') === 'warm';
-        root.setAttribute('data-theme', warm ? 'cool' : 'warm');
-        toggles.forEach(btn => btn.setAttribute('aria-pressed', (!warm).toString()));
+      function setPointer(deg) {
+        root.style.setProperty('--pointer', deg.toFixed(1) + 'deg');
       }
-      toggles.forEach(btn => btn.addEventListener('click', flipTheme));
+      dial.addEventListener('pointermove', (e) => setPointer(pointerAngle(e)), { passive: true });
+      dial.addEventListener('pointerleave', () => setPointer(0), { passive: true });
 
-      // Delight: gentle jiggle and flash
-      delightBtn.addEventListener('click', () => {
-        const hero = root.querySelector('.hero');
-        hero.animate([
-          { transform: 'translate3d(0,0,0)' },
-          { transform: 'translate3d(0,-4px,0)' },
-          { transform: 'translate3d(0,0,0)' }
-        ], { duration: 320, easing: 'cubic-bezier(.4,0,.2,1)' });
-        // quick color pulse
-        const prev = root.style.filter;
-        root.style.filter = 'saturate(115%) brightness(105%)';
-        setTimeout(() => { root.style.filter = prev || ''; }, 220);
-      }, { passive: true });
+      // Tempo & texture
+      function updateTempo() {
+        const t = parseFloat(tempo.value || '1.2');
+        tempo.setAttribute('aria-valuenow', String(t));
+        // range fill
+        const p = (t - tempo.min) / (tempo.max - tempo.min) * 100;
+        tempo.style.setProperty('--pct', p + '%');
+        speedFactor = t;
+      }
+      function updateTexture() {
+        const v = parseInt(texture.value || '14', 10);
+        texture.setAttribute('aria-valuenow', String(v));
+        root.style.setProperty('--grain', (v / 100).toFixed(2));
+        texture.style.setProperty('--pct', (v / texture.max * 100) + '%');
+      }
+      updateTempo();
+      updateTexture();
+      tempo.addEventListener('input', updateTempo);
+      texture.addEventListener('input', updateTexture);
+
+      // Mode toggle
+      function toggleMode() {
+        const night = root.getAttribute('data-theme') === 'night';
+        root.setAttribute('data-theme', night ? 'day' : 'night');
+        modeBtn.setAttribute('aria-pressed', (!night).toString());
+        modeBtn.textContent = night ? 'Night' : 'Day';
+      }
+      modeBtn.addEventListener('click', toggleMode);
+
+      // Pulse waves
+      function spawnWave(x, y) {
+        const w = document.createElement('span');
+        w.className = 'wave';
+        w.style.left = x + 'px';
+        w.style.top = y + 'px';
+        waves.appendChild(w);
+        w.addEventListener('animationend', () => w.remove());
+      }
+      pulseBtn.addEventListener('click', () => {
+        const r = dial.getBoundingClientRect();
+        spawnWave(r.width / 2, r.height / 2);
+      });
+      dial.addEventListener('pointerdown', (e) => {
+        const r = dial.getBoundingClientRect();
+        spawnWave(e.clientX - r.left, e.clientY - r.top);
+      });
+
+      // Auto rotation loop
+      let speedFactor = parseFloat(tempo.value || '1.2');
+      let prev = performance.now();
+      let angle = 0;
+      function tick(now) {
+        const dt = Math.min(60, now - prev);
+        prev = now;
+        angle = (angle + dt * speedFactor * 0.03) % 360; // deg per ms factor
+        root.style.setProperty('--auto', angle.toFixed(2) + 'deg');
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
     }());
   </script>
 </div>
