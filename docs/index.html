@@ -75,111 +75,273 @@
       <section id="content">
 <style>
 /* Scoped to this snippet only */
-.vibe2308 {
+.vibe2309 {
   --mx: 50%;
   --my: 50%;
-  --rx: 0deg;
-  --ry: 0deg;
-
-  --bg1: #f6f9ff;
-  --bg2: #eafaf3;
-  --ink: #0e1224;
-  --sub: #5b657b;
-  --hi: #6ea6ff;
-  --hi2: #00d4a6;
+  --ink: #0b1020;
+  --muted: #5a6580;
+  --bg1: #f7fbff;
+  --bg2: #eaf7f1;
+  --acc1: #5f8bff;
+  --acc2: #0ed0b5;
 
   position: relative;
-  min-height: 620px;
-  border-radius: 32px;
+  min-height: 680px;
+  border-radius: 36px;
   overflow: hidden;
   isolation: isolate;
   color: var(--ink);
   display: grid;
   place-items: center;
-  padding: clamp(18px, 4vw, 44px);
+  padding: clamp(16px, 4vw, 48px);
   background:
-    radial-gradient(120vmax 120vmax at var(--mx) var(--my), color-mix(in oklab, var(--hi) 18%, transparent), transparent 50%),
+    radial-gradient(120vmax 120vmax at var(--mx) var(--my), color-mix(in oklab, var(--acc1) 20%, transparent), transparent 50%),
     linear-gradient(140deg, var(--bg1), var(--bg2));
   box-shadow:
     inset 0 0 0 1px color-mix(in oklab, black 8%, transparent),
     0 28px 80px rgba(0,0,0,0.18);
 }
 
-/* Aurora blooms */
-.vibe2308::before {
+/* Spectral veils */
+.vibe2309::before {
   content: "";
   position: absolute;
   inset: -20%;
   background:
-    radial-gradient(40% 40% at 20% 30%, color-mix(in oklab, var(--hi) 24%, transparent), transparent 60%),
-    radial-gradient(36% 36% at 85% 25%, color-mix(in oklab, var(--hi2) 26%, transparent), transparent 60%),
-    radial-gradient(60% 60% at 50% 90%, color-mix(in oklab, var(--ink) 6%, transparent), transparent 60%);
-  filter: blur(38px) saturate(1.05);
-  opacity: 0.7;
+    radial-gradient(36% 42% at 18% 24%, color-mix(in oklab, var(--acc1) 22%, transparent), transparent 60%),
+    radial-gradient(40% 38% at 80% 30%, color-mix(in oklab, var(--acc2) 22%, transparent), transparent 62%),
+    radial-gradient(52% 60% at 50% 90%, color-mix(in oklab, var(--ink) 6%, transparent), transparent 62%);
+  filter: blur(36px) saturate(1.05);
+  opacity: 0.75;
   z-index: 0;
-  animation: auroraDrift 42s ease-in-out infinite;
+  animation: v2309Veil 48s ease-in-out infinite;
   pointer-events: none;
 }
 
-/* Grain */
-.vibe2308::after {
+/* Grain + soft rays */
+.vibe2309::after {
   content: "";
   position: absolute;
   inset: 0;
-  background-image:
-    radial-gradient(circle at 25% 15%, rgba(0,0,0,0.06), transparent 38%),
-    radial-gradient(circle at 75% 85%, rgba(0,0,0,0.05), transparent 40%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E");
+  background:
+    repeating-conic-gradient(from 0deg at 50% 40%, rgba(255,255,255,0.14) 0deg 1.2deg, transparent 1.2deg 3.4deg),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
   mix-blend-mode: soft-light;
-  opacity: 0.3;
+  opacity: 0.35;
   z-index: 0;
   pointer-events: none;
 }
 
-/* Starfield canvas */
-.vibe2308 .sky {
+/* Canvas field */
+.vibe2309 .field {
   position: absolute;
   inset: 0;
-  z-index: 0;
-  filter: saturate(1.05) brightness(1.02);
-  opacity: 0.9;
+  z-index: 1;
+  filter: saturate(1.02) brightness(1.02);
+  opacity: 0.95;
 }
 
-/* Meta: time + palette */
-.vibe2308 .meta {
+/* Meta bar */
+.vibe2309 .meta {
   position: absolute;
+  left: 14px;
+  right: 14px;
   top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  z-index: 4;
+}
+.vibe2309 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.72);
+  border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.85);
+  backdrop-filter: blur(8px);
+  font: 800 11px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+  letter-spacing: 0.1em;
+  color: color-mix(in oklab, var(--ink) 90%, var(--acc1));
+  text-transform: uppercase;
+}
+.vibe2309 .dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, var(--acc1), var(--acc2));
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.9);
+}
+.vibe2309 .timechip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.85);
+  backdrop-filter: blur(8px);
+  color: var(--muted);
+  font: 700 11px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+  letter-spacing: 0.06em;
+}
+
+/* The dial */
+.vibe2309 .dial {
+  --a: 0deg;           /* live angle */
+  --gl: rgba(255,255,255,0.85);
+  position: relative;
+  z-index: 3;
+  width: min(720px, 92vw);
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background:
+    radial-gradient(120% 120% at 50% 20%, rgba(255,255,255,0.75), rgba(255,255,255,0.42) 58%, rgba(255,255,255,0.25)),
+    linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.36));
+  border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+  box-shadow:
+    0 28px 80px rgba(0,0,0,0.18),
+    inset 0 0 0 1px rgba(255,255,255,0.75);
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+/* Halo ring + ticks */
+.vibe2309 .ring {
+  position: absolute;
+  inset: 18px;
+  border-radius: 50%;
+  background:
+    conic-gradient(from 0deg, color-mix(in oklab, var(--acc1) 38%, transparent), transparent 60%),
+    radial-gradient(circle at 50% 50%, transparent 62%, rgba(0,0,0,0.08) 63%, transparent 64%),
+    radial-gradient(circle at 50% 50%, transparent 70%, rgba(255,255,255,0.7) 71%, transparent 72%),
+    repeating-conic-gradient(from -10deg, rgba(0,0,0,0.035) 0deg 1deg, transparent 1deg 6deg);
+  filter: saturate(1.08);
+  animation: v2309Spin 64s linear infinite;
+  transform: rotate(var(--a));
+}
+.vibe2309 .ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(80% 80% at 60% 20%, rgba(255,255,255,0.6), transparent 60%),
+    linear-gradient(180deg, transparent 60%, rgba(255,255,255,0.28));
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Center label */
+.vibe2309 .center {
+  position: absolute;
+  inset: 24% 24%;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background:
+    radial-gradient(90% 90% at 50% 35%, rgba(255,255,255,0.75), rgba(255,255,255,0.46) 60%, rgba(255,255,255,0.24));
+  border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.85);
+}
+.vibe2309 .hero {
+  margin: 0 0 6px 0;
+  font: 900 clamp(34px, 6.8vw, 72px)/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+  letter-spacing: -0.02em;
+  color: color-mix(in oklab, var(--ink) 92%, var(--acc1));
+  text-shadow: 0 1px 0 rgba(255,255,255,0.7), 0 18px 38px rgba(0,0,0,0.12);
+}
+.vibe2309 .sub {
+  margin: 0;
+  font: 500 clamp(13px, 2.4vw, 18px)/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+  color: var(--muted);
+}
+
+/* Orbiting chips */
+.vibe2309 .orbit {
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: v2309SpinRev 90s linear infinite;
+  transform: rotate(calc(var(--a) / -1));
+}
+.vibe2309 .orb {
+  --theta: 0deg;
+  position: absolute;
+  left: 50%; top: 50%;
+  translate: -50% -50%;
+  transform: rotate(var(--theta)) translateX(calc(50% - 18px));
+}
+.vibe2309 .chip {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.72);
+  border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.14), inset 0 0 0 1px rgba(255,255,255,0.85);
+  color: color-mix(in oklab, var(--ink) 86%, var(--acc1));
+  font: 800 12px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 140ms ease, box-shadow 240ms ease, color 200ms ease;
+  backdrop-filter: blur(6px);
+}
+.vibe2309 .chip:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(0,0,0,0.2); color: color-mix(in oklab, var(--ink) 78%, var(--acc2)); }
+
+/* Actions + palette */
+.vibe2309 .controls {
+  position: absolute;
+  bottom: 16px;
   left: 14px;
   right: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  z-index: 3;
+  z-index: 4;
 }
-.vibe2308 .chip {
+.vibe2309 .actions {
+  display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+}
+.vibe2309 .btn {
+  appearance: none;
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 18px;
+  cursor: pointer;
+  font: 800 13px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+  color: #0a0f1b;
+  background: linear-gradient(90deg, var(--acc1), var(--acc2));
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.9);
+  transition: transform 140ms ease, background-position 280ms ease, box-shadow 220ms ease;
+}
+.vibe2309 .btn:hover { transform: translateY(-2px); background-position: 100% 50%; box-shadow: 0 22px 44px rgba(0,0,0,0.22); }
+.vibe2309 .btn.ghost {
+  color: var(--ink);
+  background: rgba(255,255,255,0.72);
+  border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12), inset 0 0 0 1px rgba(255,255,255,0.85);
+}
+
+.vibe2309 .palette {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
-  background: rgba(255,255,255,0.68);
-  color: color-mix(in oklab, var(--ink) 86%, var(--hi));
-  font: 700 11px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
-  letter-spacing: 0.06em;
-  backdrop-filter: blur(6px);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6);
 }
-.vibe2308 .palette {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.vibe2308 .swatch {
-  --c1: var(--hi);
-  --c2: var(--hi2);
-  width: 26px; height: 26px;
+.vibe2309 .sw {
+  --c1: var(--acc1);
+  --c2: var(--acc2);
+  width: 28px; height: 28px;
   border-radius: 999px;
   border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
   background: conic-gradient(from 120deg, var(--c1), var(--c2));
@@ -188,151 +350,52 @@
   position: relative;
   transition: transform 160ms ease, box-shadow 200ms ease;
 }
-.vibe2308 .swatch:focus-visible { outline: 2px solid color-mix(in oklab, var(--hi) 70%, white); outline-offset: 2px; }
-.vibe2308 .swatch:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(255,255,255,0.8); }
-.vibe2308 .swatch[aria-pressed="true"]::after {
+.vibe2309 .sw:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(255,255,255,0.8); }
+.vibe2309 .sw[aria-pressed="true"]::after {
   content: "";
-  position: absolute;
-  inset: 5px;
-  border-radius: 999px;
+  position: absolute; inset: 6px; border-radius: 999px;
   border: 2px solid rgba(255,255,255,0.9);
   box-shadow: 0 0 0 1px color-mix(in oklab, var(--ink) 16%, transparent);
 }
 
-/* Central panel */
-.vibe2308 .panel {
-  position: relative;
-  z-index: 2;
-  width: min(860px, 92vw);
-  padding: clamp(22px, 4.2vw, 48px);
-  border-radius: 28px;
-  background:
-    radial-gradient(140% 120% at 20% 0%, rgba(255,255,255,0.85), rgba(255,255,255,0.55) 60%, rgba(255,255,255,0.38)),
-    linear-gradient(180deg, rgba(255,255,255,0.68), rgba(255,255,255,0.42));
-  border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
-  box-shadow:
-    0 28px 80px rgba(0,0,0,0.18),
-    inset 0 0 0 1px rgba(255,255,255,0.7);
-  transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry));
-  transition: transform 120ms ease-out, box-shadow 220ms ease-out;
-}
-
-/* Panel glaze highlight */
-.vibe2308 .panel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background:
-    radial-gradient(60% 40% at 15% 0%, rgba(255,255,255,0.5), transparent 60%),
-    linear-gradient(180deg, transparent 70%, rgba(255,255,255,0.4));
-  mix-blend-mode: overlay;
-  pointer-events: none;
-}
-
-/* Typography */
-.vibe2308 .title {
-  margin: 0 0 10px 0;
-  font: 900 clamp(36px, 7.8vw, 76px)/1.02 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-  letter-spacing: -0.02em;
-  color: color-mix(in oklab, var(--ink) 92%, var(--hi));
-  text-shadow: 0 1px 0 rgba(255,255,255,0.7), 0 18px 38px rgba(0,0,0,0.12);
-}
-.vibe2308 .lead {
-  margin: 0 0 18px 0;
-  font: 500 clamp(14px, 2.6vw, 20px)/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
-  color: var(--sub);
-}
-
-/* Tag chips within panel */
-.vibe2308 .tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 6px 0 22px 0;
-}
-.vibe2308 .tag {
-  padding: 10px 14px;
-  border-radius: 999px;
-  border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
-  background: color-mix(in oklab, white 76%, transparent);
-  color: color-mix(in oklab, var(--ink) 78%, var(--hi));
-  font: 700 12px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: transform 120ms ease, box-shadow 200ms ease, color 200ms ease;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.12), inset 0 0 0 1px rgba(255,255,255,0.85);
-  cursor: pointer;
-}
-.vibe2308 .tag:hover { transform: translateY(-2px); box-shadow: 0 18px 36px rgba(0,0,0,0.18); color: color-mix(in oklab, var(--ink) 78%, var(--hi2)); }
-
-/* Actions */
-.vibe2308 .actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-top: 6px;
-  flex-wrap: wrap;
-}
-.vibe2308 .btn {
-  appearance: none;
-  border: 0;
-  border-radius: 14px;
-  padding: 14px 18px;
-  cursor: pointer;
-  font: 800 13px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
-  color: #0a0f1b;
-  background: linear-gradient(90deg, var(--hi), var(--hi2));
-  background-size: 220% 100%;
-  background-position: 0% 50%;
-  box-shadow: 0 16px 36px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.9);
-  transition: transform 140ms ease, background-position 280ms ease, box-shadow 220ms ease;
-}
-.vibe2308 .btn:hover { transform: translateY(-2px); background-position: 100% 50%; box-shadow: 0 22px 44px rgba(0,0,0,0.22); }
-.vibe2308 .btn.ghost {
-  color: var(--ink);
-  background: rgba(255,255,255,0.7);
-  border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.12), inset 0 0 0 1px rgba(255,255,255,0.85);
-}
-
-/* Bottom quote */
-.vibe2308 .quote {
+/* Quote */
+.vibe2309 .quote {
   position: absolute;
   right: 16px;
-  bottom: 16px;
-  z-index: 2;
+  top: 50%;
+  transform: translateY(-50%) rotate(-6deg);
+  z-index: 3;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: var(--sub);
-  font: 500 12px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+  color: var(--muted);
+  font: 600 12px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
   padding: 8px 10px;
   border-radius: 12px;
-  background: rgba(255,255,255,0.65);
+  background: rgba(255,255,255,0.7);
   border: 1px solid color-mix(in oklab, var(--ink) 12%, transparent);
   backdrop-filter: blur(6px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
 }
 
-/* Click ripple pulses */
-.vibe2308 .pulse {
+/* Click pulse */
+.vibe2309 .pulse {
   position: absolute;
   width: 16px; height: 16px;
   border-radius: 50%;
   pointer-events: none;
-  background: radial-gradient(circle, color-mix(in oklab, var(--hi) 60%, white) 0%, transparent 60%);
+  background: radial-gradient(circle, color-mix(in oklab, var(--acc1) 60%, white) 0%, transparent 60%);
   transform: translate(-50%, -50%) scale(0.2);
   opacity: 0.9;
-  animation: pulse 900ms ease-out forwards;
+  animation: v2309Pulse 900ms ease-out forwards;
   z-index: 2;
 }
 
 /* Animations */
-@keyframes auroraDrift {
-  0%,100% { transform: rotate(0deg) scale(1.05); }
-  50% { transform: rotate(1.2deg) scale(1.08); }
-}
-@keyframes pulse {
+@keyframes v2309Veil { 0%,100% { transform: rotate(0) scale(1.06); } 50% { transform: rotate(1.6deg) scale(1.09); } }
+@keyframes v2309Spin { to { transform: rotate(360deg); } }
+@keyframes v2309SpinRev { to { transform: rotate(-360deg); } }
+@keyframes v2309Pulse {
   0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0.9; }
   70% { transform: translate(-50%, -50%) scale(6); opacity: 0.14; }
   100% { transform: translate(-50%, -50%) scale(7.2); opacity: 0; }
@@ -340,76 +403,84 @@
 
 /* Motion sensitivity */
 @media (prefers-reduced-motion: reduce) {
-  .vibe2308::before { animation: none !important; }
+  .vibe2309::before,
+  .vibe2309 .ring,
+  .vibe2309 .orbit { animation: none !important; }
 }
 </style>
 
-<section class="vibe2308" aria-label="Luminous Atlas — kinetic poster">
-  <canvas class="sky" aria-hidden="true"></canvas>
+<section class="vibe2309" aria-label="Orbital Desk — kinetic dial">
+  <canvas class="field" aria-hidden="true"></canvas>
 
   <div class="meta">
-    <span class="chip"><span id="last-updated">Last updated: 2026-01-31 04:26:12 EST</span></span>
-    <div class="palette" role="group" aria-label="Color themes">
-      <button class="swatch s1" data-theme="dawn" aria-label="Dawn" aria-pressed="false" style="--c1:#ff9a7a;--c2:#8ec5ff"></button>
-      <button class="swatch s2" data-theme="day" aria-label="Day" aria-pressed="false" style="--c1:#5b8cff;--c2:#00d4a6"></button>
-      <button class="swatch s3" data-theme="dusk" aria-label="Dusk" aria-pressed="false" style="--c1:#a58bff;--c2:#ff8ad8"></button>
-      <button class="swatch s4" data-theme="night" aria-label="Night" aria-pressed="false" style="--c1:#6aa8ff;--c2:#9d7cff"></button>
+    <span class="brand"><span class="dot" aria-hidden="true"></span>Orbital Desk</span>
+    <span class="timechip"><span id="last-updated">Last updated: 2026-01-31 05:22:17 EST</span></span>
+  </div>
+
+  <div class="dial" role="group" aria-label="Interactive dial">
+    <div class="ring" aria-hidden="true"></div>
+
+    <div class="center" aria-live="polite">
+      <h1 class="hero">Orbit Manual</h1>
+      <p class="sub">A calm instrument for rhythm, focus, and bright ideas.</p>
+    </div>
+
+    <div class="orbit" aria-hidden="false">
+      <div class="orb" style="--theta: 0deg"><button class="chip">Rhythm</button></div>
+      <div class="orb" style="--theta: 90deg"><button class="chip">Focus</button></div>
+      <div class="orb" style="--theta: 180deg"><button class="chip">Clarity</button></div>
+      <div class="orb" style="--theta: 270deg"><button class="chip">Play</button></div>
     </div>
   </div>
 
-  <article class="panel" aria-label="Hero panel">
-    <h1 class="title">Luminous Atlas</h1>
-    <p class="lead">Make space. Make meaning. A quiet interface for bright ideas.</p>
-
-    <div class="tags" aria-label="Values">
-      <button class="tag">Clarity</button>
-      <button class="tag">Poise</button>
-      <button class="tag">Play</button>
-      <button class="tag">Flow</button>
-    </div>
-
+  <div class="controls">
     <div class="actions" aria-label="Primary actions">
-      <button class="btn" aria-label="Begin the journey">Begin</button>
-      <button class="btn ghost" aria-label="Read the notes">Notes</button>
+      <button class="btn" aria-label="Start a focused session">Begin</button>
+      <button class="btn ghost" aria-label="Open notes">Notes</button>
     </div>
-  </article>
-
-  <div class="quote" aria-hidden="false">
-    “Craft is the slowest way to fast.”
+    <div class="palette" role="group" aria-label="Themes">
+      <button class="sw s1" data-theme="aurora" aria-pressed="false" style="--c1:#6aa8ff;--c2:#0ed0b5" aria-label="Aurora"></button>
+      <button class="sw s2" data-theme="citrus" aria-pressed="false" style="--c1:#ffb86b;--c2:#46e2a2" aria-label="Citrus"></button>
+      <button class="sw s3" data-theme="cherry" aria-pressed="false" style="--c1:#ff7aa7;--c2:#a98bff" aria-label="Cherry"></button>
+      <button class="sw s4" data-theme="midnight" aria-pressed="false" style="--c1:#84a1ff;--c2:#7b6dff" aria-label="Midnight"></button>
+    </div>
   </div>
+
+  <div class="quote">“Design the calm, then turn the volume.”</div>
 </section>
 
 <script>
 (function(){
   const root = document.currentScript.previousElementSibling;
-  const canvas = root.querySelector('.sky');
+  const canvas = root.querySelector('.field');
   const ctx = canvas.getContext('2d', { alpha: true });
-  const panel = root.querySelector('.panel');
+  const ring = root.querySelector('.ring');
+  const orbit = root.querySelector('.orbit');
   const updated = root.querySelector('#last-updated');
-  const swatches = root.querySelectorAll('.swatch');
+  const swatches = root.querySelectorAll('.sw');
 
   // Themes
   const themes = {
-    dawn: { bg1:'#fff7f0', bg2:'#eaf1ff', ink:'#1b1f29', sub:'#5b6372', hi:'#ff9a7a', hi2:'#8ec5ff' },
-    day:  { bg1:'#f3f8ff', bg2:'#eaf9f2', ink:'#0f1224', sub:'#5a6478', hi:'#5b8cff', hi2:'#00d4a6' },
-    dusk: { bg1:'#f4f1ff', bg2:'#eaf0ff', ink:'#15172a', sub:'#5a5f7a', hi:'#a58bff', hi2:'#ff8ad8' },
-    night:{ bg1:'#111524', bg2:'#202746', ink:'#e7ecff', sub:'#b9c2da', hi:'#6aa8ff', hi2:'#9d7cff' }
+    aurora:  { bg1:'#f3f8ff', bg2:'#eaf9f2', ink:'#0e1224', muted:'#5a6478', acc1:'#6aa8ff', acc2:'#0ed0b5' },
+    citrus:  { bg1:'#fff8ef', bg2:'#ecfff4', ink:'#191c2c', muted:'#656e80', acc1:'#ffb86b', acc2:'#46e2a2' },
+    cherry:  { bg1:'#fff3f7', bg2:'#f1ecff', ink:'#1b1d2e', muted:'#666e83', acc1:'#ff7aa7', acc2:'#a98bff' },
+    midnight:{ bg1:'#0f1424', bg2:'#1a2142', ink:'#e9efff', muted:'#bac6de', acc1:'#84a1ff', acc2:'#7b6dff' }
   };
 
   // Pick initial theme by time
   const hour = new Date().getHours();
-  let current = (hour >= 5 && hour < 8) ? 'dawn' : (hour >= 8 && hour < 16) ? 'day' : (hour >= 16 && hour < 21) ? 'dusk' : 'night';
+  let current = (hour >= 6 && hour < 11) ? 'citrus' : (hour >= 11 && hour < 17) ? 'aurora' : (hour >= 17 && hour < 21) ? 'cherry' : 'midnight';
   applyTheme(current);
   setPressed(current);
 
   function applyTheme(name) {
-    const t = themes[name] || themes.day;
+    const t = themes[name] || themes.aurora;
     root.style.setProperty('--bg1', t.bg1);
     root.style.setProperty('--bg2', t.bg2);
     root.style.setProperty('--ink', t.ink);
-    root.style.setProperty('--sub', t.sub);
-    root.style.setProperty('--hi', t.hi);
-    root.style.setProperty('--hi2', t.hi2);
+    root.style.setProperty('--muted', t.muted);
+    root.style.setProperty('--acc1', t.acc1);
+    root.style.setProperty('--acc2', t.acc2);
     current = name;
   }
   function setPressed(name) {
@@ -428,7 +499,7 @@
     updated.textContent = 'Updated • just now';
   }
 
-  // Pointer spotlight + panel tilt
+  // Spotlight follows pointer
   function setFromEvent(e) {
     const r = root.getBoundingClientRect();
     const x = (e.clientX ?? (e.touches && e.touches[0].clientX) ?? r.left + r.width/2) - r.left;
@@ -438,22 +509,18 @@
     root.style.setProperty('--mx', mx + '%');
     root.style.setProperty('--my', my + '%');
 
-    // Panel tilt
-    const pr = panel.getBoundingClientRect();
-    const cx = pr.left + pr.width/2;
-    const cy = pr.top + pr.height/2;
-    const dx = (e.clientX ?? cx) - cx;
-    const dy = (e.clientY ?? cy) - cy;
-    const rx = Math.max(-6, Math.min(6, (-dy / pr.height) * 12));
-    const ry = Math.max(-6, Math.min(6, (dx / pr.width) * 12));
-    root.style.setProperty('--rx', rx.toFixed(2) + 'deg');
-    root.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+    // Update dial angle
+    const c = ring.getBoundingClientRect();
+    const cx = c.left + c.width/2;
+    const cy = c.top + c.height/2;
+    const ang = Math.atan2((e.clientY ?? cy) - cy, (e.clientX ?? cx) - cx);
+    ring.style.setProperty('--a', (ang * 180 / Math.PI) + 'deg');
+    orbit.style.setProperty('--a', (ang * 180 / Math.PI) + 'deg');
   }
   root.addEventListener('mousemove', setFromEvent);
   root.addEventListener('touchmove', setFromEvent, { passive: true });
-  root.addEventListener('mouseleave', () => { root.style.setProperty('--rx', '0deg'); root.style.setProperty('--ry', '0deg'); });
 
-  // Click ripple pulses
+  // Click pulse
   function pulse(x, y) {
     const dot = document.createElement('span');
     dot.className = 'pulse';
@@ -473,25 +540,17 @@
     pulse(t.clientX - r.left, t.clientY - r.top);
   });
 
-  // Tag magnetic nudge
-  root.querySelectorAll('.tag').forEach(tag => {
-    let raf;
-    tag.addEventListener('mousemove', (e) => {
-      const a = tag.getBoundingClientRect();
-      const dx = (e.clientX - (a.left + a.width/2)) / (a.width/2);
-      const dy = (e.clientY - (a.top + a.height/2)) / (a.height/2);
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        tag.style.transform = `translate(${dx * 6}px, ${dy * 4}px)`;
-      });
-    });
-    tag.addEventListener('mouseleave', () => { tag.style.transform = ''; });
-  });
-
-  // Constellation field
-  let stars = [];
+  // Canvas: sonar rings + sweeping beams
   let animId;
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let mouse = { x: null, y: null };
+
+  root.addEventListener('pointermove', (e) => {
+    const r = root.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+  }, { passive: true });
+  root.addEventListener('pointerleave', () => { mouse.x = mouse.y = null; }, { passive: true });
 
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -501,90 +560,93 @@
     canvas.style.width = width + 'px';
     canvas.style.height = height + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    spawn(width, height);
   }
 
-  function spawn(w, h) {
-    const count = Math.floor(Math.min(120, (w * h) / 9000));
-    stars = Array.from({ length: count }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25,
-      r: Math.random() * 1.6 + 0.4
-    }));
-  }
-
-  let mouse = { x: null, y: null };
-  root.addEventListener('pointermove', (e) => {
-    const r = root.getBoundingClientRect();
-    mouse.x = e.clientX - r.left;
-    mouse.y = e.clientY - r.top;
-  });
-  root.addEventListener('pointerleave', () => { mouse.x = mouse.y = null; });
-
-  function draw() {
+  function draw(t = 0) {
     const w = canvas.clientWidth;
     const h = canvas.clientHeight;
+    const cx = w / 2;
+    const cy = h / 2;
+
     ctx.clearRect(0, 0, w, h);
 
-    // Update + draw stars
-    for (const s of stars) {
-      if (!prefersReduced) {
-        s.x += s.vx; s.y += s.vy;
-        if (s.x < -10) s.x = w + 10;
-        if (s.x > w + 10) s.x = -10;
-        if (s.y < -10) s.y = h + 10;
-        if (s.y > h + 10) s.y = -10;
-      }
+    // Subtle radial glow
+    const rg = ctx.createRadialGradient(cx, cy * 0.8, 0, cx, cy * 0.8, Math.max(w, h) * 0.7);
+    rg.addColorStop(0, 'rgba(255,255,255,0.55)');
+    rg.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = rg;
+    ctx.fillRect(0, 0, w, h);
 
+    // Concentric rings
+    ctx.save();
+    ctx.translate(cx, cy);
+    const R = Math.min(w, h) * 0.44;
+    for (let i = 0; i < 9; i++) {
+      const r = (R * (i + 1)) / 9;
       ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      ctx.strokeStyle = `rgba(0,0,0,${0.08 - i*0.006})`;
+      ctx.lineWidth = 1;
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Accent edge
+      ctx.strokeStyle = `rgba(120, 170, 255, ${0.22 - i*0.02})`;
+      ctx.stroke();
+    }
+
+    // Sweeping beams
+    const base = t * 0.0004;
+    const angMouse = mouse.x == null ? 0 : Math.atan2(mouse.y - cy, mouse.x - cx);
+    const sweepCount = 3;
+    for (let k = 0; k < sweepCount; k++) {
+      const ang = base * (k + 1) * (mouse.x ? 1.2 : 1) + angMouse * 0.12 * (k + 1);
+      ctx.save();
+      ctx.rotate(ang);
+      const grad = ctx.createLinearGradient(0, 0, R, 0);
+      grad.addColorStop(0, `rgba(0,0,0,0.05)`);
+      grad.addColorStop(0.5, `rgba(0,0,0,0.0)`);
+      grad.addColorStop(1, `rgba(0,0,0,0.0)`);
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.arc(0, 0, R, -0.28, 0.28);
+      ctx.closePath();
+      ctx.fill();
+
+      const grad2 = ctx.createLinearGradient(0, 0, R, 0);
+      grad2.addColorStop(0, `color-mix(in oklab, var(--acc2) 60%, transparent)`);
+      grad2.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grad2;
+      ctx.globalAlpha = 0.36;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.arc(0, 0, R, -0.22, 0.22);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Orbiting dots
+    const dots = 24;
+    const spin = prefersReduced ? 0 : base * 2;
+    for (let i = 0; i < dots; i++) {
+      const a = (i / dots) * Math.PI * 2 + spin;
+      const r = R * (0.62 + 0.1 * Math.sin(base * 6 + i));
+      const x = cx + Math.cos(a) * r;
+      const y = cy + Math.sin(a) * r;
+      ctx.beginPath();
+      ctx.arc(x, y, 1.4 + 0.6 * Math.sin(base * 5 + i), 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
       ctx.fill();
     }
 
-    // Lines between close stars
-    for (let i = 0; i < stars.length; i++) {
-      for (let j = i + 1; j < stars.length; j++) {
-        const a = stars[i], b = stars[j];
-        const dx = a.x - b.x, dy = a.y - b.y;
-        const d2 = dx*dx + dy*dy;
-        if (d2 < 120*120) {
-          const alpha = Math.max(0, 1 - Math.sqrt(d2) / 120) * 0.25;
-          ctx.strokeStyle = `rgba(0, 0, 0, ${alpha * 0.08})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-
-          // Accent overlay
-          ctx.strokeStyle = `rgba(100, 160, 255, ${alpha * 0.25})`;
-          ctx.stroke();
-        }
-      }
-    }
-
-    // Mouse connections
-    if (mouse.x != null) {
-      for (const s of stars) {
-        const dx = s.x - mouse.x, dy = s.y - mouse.y;
-        const d = Math.hypot(dx, dy);
-        if (d < 140) {
-          const alpha = Math.max(0, 1 - d / 140);
-          ctx.strokeStyle = `rgba(0,0,0,${alpha * 0.08})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.moveTo(mouse.x, mouse.y); ctx.lineTo(s.x, s.y); ctx.stroke();
-          ctx.strokeStyle = `rgba(0, 180, 150, ${alpha * 0.28})`;
-          ctx.stroke();
-        }
-      }
-    }
-
+    ctx.restore();
     animId = requestAnimationFrame(draw);
   }
 
   window.addEventListener('resize', () => { cancelAnimationFrame(animId); resize(); draw(); }, { passive: true });
   resize();
-  draw();
+  if (!prefersReduced) draw(); else draw(0);
 })();
 </script>
       </section>
