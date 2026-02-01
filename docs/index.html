@@ -73,76 +73,55 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="observatory" aria-label="Solaris Observatory">
+<section class="atelier" aria-label="Aurora Atelier">
   <style>
-    .observatory {
-      --space0: #05070d;
-      --space1: #0a1020;
-      --ink: #e9f1ff;
+    .atelier {
+      --bg0: #04060b;
+      --bg1: #0a0f1b;
+      --ink: #ecf2ff;
       --ink-dim: #9fb1cc;
-      --accent: 208;
-      --accent2: 48;
+      --hl1: 210;
+      --hl2: 36;
       --rate: 1;
       --tiltX: 0;
       --tiltY: 0;
       position: relative;
-      padding: clamp(18px, 3.2vw, 32px);
-      border-radius: 30px;
+      padding: clamp(18px, 3.6vw, 36px);
+      border-radius: 32px;
       color: var(--ink);
       background:
-        radial-gradient(1400px 900px at 14% -10%, hsla(var(--accent), 90%, 55%, 0.07), transparent 60%),
-        radial-gradient(1200px 800px at 86% -6%, hsla(var(--accent2), 100%, 60%, 0.06), transparent 60%),
-        conic-gradient(from 220deg at 50% 10%, #0a1223, #090f1d, #0b1224, #0b1328, #0a1020),
-        linear-gradient(180deg, var(--space0), var(--space1));
-      box-shadow: 0 28px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+        radial-gradient(1400px 900px at 10% -12%, hsla(var(--hl1), 100%, 60%, 0.10), transparent 55%),
+        radial-gradient(1200px 800px at 90% -8%, hsla(var(--hl2), 100%, 62%, 0.10), transparent 55%),
+        conic-gradient(from 220deg at 50% 5%, #0b1224, #07101e, #0b1529, #08101f, #0a0f1b),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      box-shadow: 0 28px 80px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
       overflow: hidden;
       isolation: isolate;
     }
-    .observatory::before {
-      content: "";
-      position: absolute; inset: -20%;
+    .atelier.dawn {
+      --bg0: #f8fbff;
+      --bg1: #e8f0ff;
+      --ink: #0b1220;
+      --ink-dim: #465772;
+      box-shadow: 0 22px 70px rgba(10,20,40,0.16), inset 0 1px 0 rgba(255,255,255,0.8);
       background:
-        radial-gradient(1000px 600px at calc(50% + var(--tiltX)*1%) calc(0% + var(--tiltY)*1%), hsla(var(--accent), 90%, 60%, 0.12), transparent 60%),
-        radial-gradient(900px 520px at calc(40% - var(--tiltX)*1%) calc(8% - var(--tiltY)*1%), hsla(var(--accent2), 100%, 60%, 0.1), transparent 60%);
-      filter: blur(30px) saturate(120%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .grain {
-      content: "";
-      position: absolute; inset: -2px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0.012 0.02 0.012 0'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      opacity: .35;
-      mix-blend-mode: soft-light;
-      pointer-events: none;
-      z-index: 1;
+        radial-gradient(1400px 900px at 8% -10%, hsla(var(--hl1), 100%, 70%, 0.2), transparent 55%),
+        radial-gradient(1200px 800px at 90% -8%, hsla(var(--hl2), 100%, 70%, 0.18), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
     }
 
-    /* Dawn (light) theme */
-    .observatory.dawn {
-      --space0: #f7fbff;
-      --space1: #eaf2ff;
-      --ink: #0e1420;
-      --ink-dim: #44536b;
-      box-shadow: 0 24px 70px rgba(9, 20, 40, 0.18), inset 0 1px 0 rgba(255,255,255,0.8);
-      background:
-        radial-gradient(1400px 900px at 8% -10%, hsla(var(--accent), 100%, 75%, 0.22), transparent 60%),
-        radial-gradient(1200px 800px at 86% -6%, hsla(var(--accent2), 100%, 70%, 0.18), transparent 60%),
-        linear-gradient(180deg, var(--space0), var(--space1));
-    }
-
-    /* Top chrome */
+    /* chrome */
     .chrome {
       position: relative;
-      z-index: 3;
+      z-index: 4;
       display: grid;
       grid-template-columns: 1fr auto;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       padding-bottom: 12px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-    .observatory.dawn .chrome { border-bottom-color: rgba(10,20,40,0.08); }
+    .atelier.dawn .chrome { border-bottom-color: rgba(10,20,40,0.08); }
     .brand {
       display: inline-grid;
       grid-auto-flow: column;
@@ -152,21 +131,22 @@
       letter-spacing: 0.2px;
       font-size: 16px;
     }
-    .sigil {
-      --c1: hsla(var(--accent), 100%, 70%, 1);
-      --c2: hsla(var(--accent2), 100%, 65%, 1);
-      width: 28px; height: 28px; border-radius: 50%;
+    .glyph {
+      --c1: hsla(var(--hl1), 100%, 70%, 1);
+      --c2: hsla(var(--hl2), 100%, 64%, 1);
+      width: 28px; height: 28px; border-radius: 10px;
       background:
-        radial-gradient(circle at 35% 35%, #fff8, transparent 36%),
+        radial-gradient(circle at 35% 35%, #fff8, transparent 40%),
         conic-gradient(from 0deg, var(--c1), var(--c2), var(--c1));
       box-shadow: 0 12px 28px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.5);
       position: relative;
+      transform: rotate(8deg);
     }
-    .sigil::after {
+    .glyph::after {
       content: "";
       position: absolute; inset: -6px;
       border: 1px solid rgba(255,255,255,0.16);
-      border-radius: 50%;
+      border-radius: 12px;
       animation: pulse 4.6s ease-in-out infinite;
     }
     @keyframes pulse { 50% { transform: scale(1.04); opacity: 0.7 } }
@@ -181,7 +161,7 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
       white-space: nowrap;
     }
-    .observatory.dawn #last-updated {
+    .atelier.dawn #last-updated {
       background: rgba(10,20,40,0.06);
       border-color: rgba(10,20,40,0.12);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
@@ -200,158 +180,148 @@
     }
     .btn:hover { transform: translateY(-2px); }
     .btn:active { transform: translateY(0); filter: brightness(0.94); }
-    .observatory.dawn .btn, .observatory.dawn .range {
-      background: rgba(255,255,255,0.8);
+    .atelier.dawn .btn, .atelier.dawn .range {
+      background: rgba(255,255,255,0.85);
       border-color: rgba(0,0,0,0.06);
       box-shadow: 0 10px 20px rgba(10,20,40,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
     }
     .range {
-      display: inline-grid; grid-template-columns: auto 140px; align-items: center; gap: 8px;
+      display: inline-grid; grid-template-columns: auto 150px; align-items: center; gap: 8px;
       padding: 8px 12px;
     }
     .range label { font-size: 12px; color: var(--ink-dim); font-weight: 700; letter-spacing: 0.3px; }
     .range input[type="range"] {
-      appearance: none; width: 140px; height: 6px; border-radius: 999px;
-      background: linear-gradient(90deg, hsla(var(--accent),100%,60%,.9), hsla(var(--accent2),100%,60%,.9));
+      appearance: none; width: 150px; height: 6px; border-radius: 999px;
+      background: linear-gradient(90deg, hsla(var(--hl1),100%,60%,.9), hsla(var(--hl2),100%,60%,.9));
       outline: none; position: relative;
     }
-    .range input[type="range"]::-webkit-slider-thumb {
+    .range input[type="range"]::-webkit-slider-thumb,
+    .range input[type="range"]::-moz-range-thumb {
       appearance: none; width: 16px; height: 16px; border-radius: 50%;
       background: #fff; border: 1px solid rgba(0,0,0,.1); box-shadow: 0 2px 8px rgba(0,0,0,.25);
     }
-    .range input[type="range"]::-moz-range-thumb {
-      width: 16px; height: 16px; border-radius: 50%;
-      background: #fff; border: 1px solid rgba(0,0,0,.1); box-shadow: 0 2px 8px rgba(0,0,0,.25);
-    }
 
-    /* Headline */
+    /* headline */
     .headline {
       margin: 16px 0 0 0;
       font-weight: 900; letter-spacing: -0.02em;
-      font-size: clamp(34px, 7.6vw, 84px);
+      font-size: clamp(36px, 7.8vw, 92px);
       line-height: 0.92;
-      background: linear-gradient(90deg, #fff, hsla(var(--accent), 100%, 75%, 1), hsla(var(--accent2), 100%, 70%, 1));
+      background: linear-gradient(90deg, #fff, hsla(var(--hl1), 100%, 75%, 1), hsla(var(--hl2), 100%, 70%, 1));
       -webkit-background-clip: text; background-clip: text; color: transparent;
       text-wrap: balance;
-      position: relative; z-index: 2;
-      text-shadow: 0 2px 40px hsla(var(--accent), 100%, 70%, 0.35);
+      position: relative; z-index: 3;
+      text-shadow: 0 2px 40px hsla(var(--hl1), 100%, 70%, 0.35);
     }
-    .observatory.dawn .headline {
-      background: linear-gradient(90deg, #0e1420, hsl(var(--accent) 100% 35%), hsl(var(--accent2) 100% 32%));
-      -webkit-background-clip: text; color: transparent;
-      text-shadow: none;
+    .atelier.dawn .headline {
+      background: linear-gradient(90deg, #0b1220, hsl(var(--hl1) 100% 36%), hsl(var(--hl2) 100% 34%));
+      -webkit-background-clip: text; color: transparent; text-shadow: none;
     }
     .sub {
       margin-top: 10px; color: var(--ink-dim);
-      max-width: 70ch; font-size: clamp(14px, 2.3vw, 18px);
+      max-width: 74ch; font-size: clamp(14px, 2.2vw, 20px);
     }
 
-    /* Sky and Orrery */
-    .sky {
+    /* canvas */
+    .canvas {
       position: relative;
       z-index: 1;
       margin-top: clamp(18px, 3.2vw, 28px);
       border-radius: 22px;
-      min-height: clamp(420px, 52vw, 620px);
+      min-height: clamp(440px, 52vw, 660px);
       border: 1px solid rgba(255,255,255,0.12);
       background:
-        radial-gradient(120% 120% at 50% 120%, rgba(255,255,255,0.04), rgba(255,255,255,0.0) 60%),
         linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       overflow: hidden;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 28px 70px rgba(0,0,0,0.5);
     }
-    .observatory.dawn .sky {
+    .atelier.dawn .canvas {
       border-color: rgba(10,20,40,0.08);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 22px 60px rgba(10,20,40,0.12);
-      background:
-        radial-gradient(120% 120% at 50% 120%, rgba(255,255,255,0.9), rgba(255,255,255,0.4) 60%, transparent 70%),
-        linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.4));
+      background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.42));
     }
-    .stars {
-      position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none;
+
+    .ribbons {
+      position: absolute; inset: -20%; z-index: 0; pointer-events: none;
+      filter: blur(10px) saturate(120%);
+      transform: translate3d(calc(var(--tiltX)*0.2%), calc(var(--tiltY)*0.2%), 0);
+    }
+    .ribbons::before, .ribbons::after {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        repeating-conic-gradient(from 0deg, hsla(var(--hl1),100%,65%,0.10) 0 12deg, transparent 12deg 24deg),
+        radial-gradient(1000px 700px at 30% 10%, hsla(var(--hl2),100%,65%,0.12), transparent 60%);
+      animation: spinA calc(24s * var(--rate)) linear infinite;
+    }
+    .ribbons::after {
+      background:
+        repeating-conic-gradient(from 30deg, hsla(var(--hl2),100%,65%,0.10) 0 10deg, transparent 10deg 20deg),
+        radial-gradient(1000px 700px at 70% 0%, hsla(var(--hl1),100%,65%,0.12), transparent 60%);
+      animation: spinB calc(36s * var(--rate)) linear infinite reverse;
+      mix-blend-mode: screen;
+    }
+    @keyframes spinA { to { transform: rotate(360deg) } }
+    @keyframes spinB { to { transform: rotate(-360deg) } }
+
+    .petals {
+      position: absolute; inset: 0; z-index: 1;
       transform: translate3d(calc(var(--tiltX)*0.6px), calc(var(--tiltY)*0.6px), 0);
-    }
-    .star {
-      position: absolute; border-radius: 50%;
-      background: radial-gradient(circle at 50% 50%, #fff, rgba(255,255,255,0.2) 60%, transparent 70%);
-      box-shadow: 0 0 10px rgba(255,255,255,0.25);
-      opacity: 0.85;
-      animation: twinkle var(--tw, 4s) ease-in-out infinite alternate;
-    }
-    @keyframes twinkle { from { filter: brightness(0.9) } to { filter: brightness(1.2) } }
-
-    .orrery {
-      position: absolute; inset: 0; display: grid; place-items: center; z-index: 2;
-      perspective: 1000px;
-    }
-    .system {
-      position: relative; width: min(80vmin, 620px); height: min(80vmin, 620px);
-      transform: rotateX(calc(var(--tiltY) * 0.25deg)) rotateY(calc(var(--tiltX) * -0.25deg));
-      transition: transform 160ms ease;
-    }
-    .sun {
-      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-      width: clamp(68px, 10vmin, 120px); height: clamp(68px, 10vmin, 120px); border-radius: 50%;
-      background:
-        radial-gradient(circle at 35% 35%, #fff8, transparent 40%),
-        radial-gradient(circle at 50% 50%, hsl(var(--accent) 100% 65%), hsl(var(--accent2) 100% 62%));
-      box-shadow: 0 0 80px hsla(var(--accent2), 100%, 60%, 0.4), 0 0 160px hsla(var(--accent),100%,60%,0.28);
-    }
-    .ring {
-      --size: 220px; --duration: 24s;
-      position: absolute; left: 50%; top: 50%;
-      width: var(--size); height: var(--size);
-      transform: translate(-50%, -50%);
-      border: 1px dashed rgba(255,255,255,0.18);
-      border-radius: 50%;
-      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.25));
-      animation: spin calc(var(--duration) * var(--rate)) linear infinite;
-    }
-    .observatory.dawn .ring { border-color: rgba(10,20,40,0.14); }
-    .planet {
-      --p: 10px; /* planet size */
-      position: absolute; left: 50%; top: 50%;
-      width: var(--p); height: var(--p); border-radius: 50%;
-      transform: translate(calc(var(--size) / 2 - var(--p) / 2), calc(-1 * var(--p) / 2));
-      background:
-        radial-gradient(circle at 40% 35%, #fff, #fff0 55%),
-        linear-gradient(180deg, hsla(var(--accent), 100%, 75%, 1), hsla(var(--accent2), 100%, 65%, 1));
-      box-shadow: 0 0 20px hsla(var(--accent),100%,70%,0.5);
-    }
-    .planet.big { --p: 18px; filter: saturate(1.1); }
-    .planet.tiny { --p: 7px; filter: saturate(1.2); }
-    .moon {
-      --m: 5px;
-      position: absolute; width: var(--m); height: var(--m); border-radius: 50%;
-      left: 50%; top: 50%;
-      transform: translate(calc(var(--p) * 1.2), calc(-1 * var(--m) / 2));
-      background: radial-gradient(circle at 40% 40%, #fff, #fff0 60%), linear-gradient(180deg, #e6f0ff, #cbd7ff);
-      box-shadow: 0 0 8px rgba(255,255,255,0.3);
-      animation: spin calc((var(--duration) * var(--rate)) * 0.35) linear infinite reverse;
-      transform-origin: calc(-1 * (var(--p) * 1.2)) 50%;
-    }
-    @keyframes spin { to { transform: rotate(360deg) } }
-
-    .flare {
-      position: absolute; inset: -20%;
-      background:
-        radial-gradient(400px 240px at 60% 20%, hsla(var(--accent), 100%, 70%, 0.14), transparent 60%),
-        radial-gradient(340px 200px at 40% 10%, hsla(var(--accent2), 100%, 70%, 0.12), transparent 70%);
-      filter: blur(20px) saturate(120%);
       pointer-events: none;
-      z-index: 1;
-      animation: drift calc(24s * var(--rate)) ease-in-out infinite alternate;
     }
-    @keyframes drift { 50% { transform: translate3d(2%, -1%, 0) } }
+    .petal {
+      position: absolute;
+      width: var(--sz, 36px); height: var(--sz, 36px);
+      border-radius: 60% 40% 60% 40%;
+      transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+      background:
+        radial-gradient(120% 80% at 30% 30%, #fff8, transparent 46%),
+        linear-gradient(135deg, hsla(var(--hl1), 100%, 70%, 0.95), hsla(var(--hl2), 100%, 65%, 0.95));
+      box-shadow: 0 6px 18px hsla(var(--hl1), 100%, 60%, 0.28);
+      opacity: 0.9;
+      animation: bob var(--dur, 12s) ease-in-out infinite;
+    }
+    .petal::after {
+      content: "";
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(255,255,255,0.16);
+      mix-blend-mode: overlay;
+    }
+    @keyframes bob {
+      0% { transform: translate(-50%, -50%) translateY(0) rotate(var(--rot, 0deg)) }
+      50% { transform: translate(-50%, -50%) translateY(-18px) rotate(calc(var(--rot, 0deg) + 2deg)) }
+      100% { transform: translate(-50%, -50%) translateY(0) rotate(var(--rot, 0deg)) }
+    }
 
-    /* Cards */
-    .notes {
-      position: relative; z-index: 2;
+    .cursor {
+      position: absolute; width: 220px; height: 220px;
+      left: 0; top: 0; transform: translate(-50%, -50%);
+      pointer-events: none; z-index: 2;
+      background: radial-gradient(closest-side, rgba(255,255,255,0.12), rgba(255,255,255,0));
+      border-radius: 50%;
+      mix-blend-mode: screen;
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+
+    .grain {
+      position: absolute; inset: -2px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0.012 0.02 0.012 0'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: .32;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* panels */
+    .panels {
+      position: relative; z-index: 3;
       display: grid; gap: 12px;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       margin-top: clamp(16px, 3vw, 24px);
     }
-    .card {
+    .panel {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: 16px;
@@ -359,14 +329,20 @@
       box-shadow: 0 20px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
       transition: transform 160ms ease, box-shadow 220ms ease;
     }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 28px 64px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08); }
-    .observatory.dawn .card { background: rgba(255,255,255,0.85); border-color: rgba(10,20,40,0.08); box-shadow: 0 16px 40px rgba(10,20,40,0.12), inset 0 1px 0 rgba(255,255,255,0.9); }
-    .card h3 { margin: 2px 0 8px 0; font-size: 12px; letter-spacing: 0.3px; text-transform: uppercase; color: var(--ink-dim); }
-    .card p { margin: 0; font-size: 14px; color: var(--ink); }
+    .panel:hover { transform: translateY(-4px); box-shadow: 0 28px 64px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08); }
+    .atelier.dawn .panel { background: rgba(255,255,255,0.85); border-color: rgba(10,20,40,0.08); box-shadow: 0 16px 40px rgba(10,20,40,0.12), inset 0 1px 0 rgba(255,255,255,0.9); }
+    .panel h3 { margin: 2px 0 8px 0; font-size: 12px; letter-spacing: 0.3px; text-transform: uppercase; color: var(--ink-dim); }
+    .panel p { margin: 0; font-size: 14px; color: var(--ink); }
+    .icon {
+      width: 28px; height: 28px; border-radius: 8px; display: inline-grid; place-items: center;
+      margin-bottom: 8px; color: var(--ink);
+      background: linear-gradient(135deg, hsla(var(--hl1), 100%, 70%, 0.9), hsla(var(--hl2), 100%, 65%, 0.9));
+      box-shadow: 0 10px 24px hsla(var(--hl1),100%,60%,0.3);
+    }
 
-    /* Mantra carousel */
-    .mantra {
-      position: relative; z-index: 2;
+    /* ticker */
+    .ticker {
+      position: relative; z-index: 3;
       margin-top: clamp(12px, 2.6vw, 18px);
       overflow: hidden;
       border-radius: 12px; border: 1px solid rgba(255,255,255,0.12);
@@ -376,114 +352,101 @@
       box-shadow: 0 10px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
       display: grid;
     }
-    .observatory.dawn .mantra { background: rgba(255,255,255,0.8); border-color: rgba(10,20,40,0.08); box-shadow: 0 10px 24px rgba(10,20,40,0.1), inset 0 1px 0 rgba(255,255,255,0.9); }
-    .mantra .line {
+    .atelier.dawn .ticker { background: rgba(255,255,255,0.8); border-color: rgba(10,20,40,0.08); box-shadow: 0 10px 24px rgba(10,20,40,0.1), inset 0 1px 0 rgba(255,255,255,0.9); }
+    .ticker .line {
       grid-area: 1/1;
       padding: 10px 14px;
       opacity: 0; transform: translateY(6px);
       animation: cycle 12s linear infinite;
     }
-    .mantra .line:nth-child(1) { animation-delay: 0s }
-    .mantra .line:nth-child(2) { animation-delay: 4s }
-    .mantra .line:nth-child(3) { animation-delay: 8s }
+    .ticker .line:nth-child(1) { animation-delay: 0s }
+    .ticker .line:nth-child(2) { animation-delay: 4s }
+    .ticker .line:nth-child(3) { animation-delay: 8s }
     @keyframes cycle {
       0% { opacity: 0; transform: translateY(6px) }
       5%, 28% { opacity: 1; transform: translateY(0) }
       33%, 100% { opacity: 0; transform: translateY(-6px) }
     }
 
-    /* Paused + reduced motion */
-    .paused, .paused *, .paused::before { animation-play-state: paused !important; transition: none !important; }
+    /* pause + motion */
+    .paused, .paused * , .paused::before, .paused::after { animation-play-state: paused !important; transition: none !important; }
     @media (prefers-reduced-motion: reduce) {
-      .observatory, .observatory * { animation: none !important; transition: none !important; }
+      .atelier, .atelier * { animation: none !important; transition: none !important; }
     }
 
     @media (max-width: 860px) {
-      .notes { grid-template-columns: 1fr; }
+      .panels { grid-template-columns: 1fr; }
       .controls { gap: 6px; }
     }
   </style>
 
   <div class="chrome" role="banner">
-    <div class="brand"><span class="sigil" aria-hidden="true"></span> Solaris — Observatory</div>
+    <div class="brand"><span class="glyph" aria-hidden="true"></span> Aurora — Atelier</div>
     <div style="display:flex; align-items:center; gap: 10px; flex-wrap: wrap;">
       <span id="last-updated" aria-live="polite">Last updated: —</span>
       <div class="controls" role="group" aria-label="Controls">
-        <button class="btn" id="pause">Pause Sky</button>
+        <button class="btn" id="pause">Pause Garden</button>
         <button class="btn" id="theme">Dawn</button>
         <button class="btn" id="recolor">Recolor</button>
         <span class="range">
-          <label for="tempo">Tempo</label>
-          <input id="tempo" type="range" min="0.6" max="1.6" step="0.1" value="1" aria-label="Animation speed">
+          <label for="density">Petals</label>
+          <input id="density" type="range" min="12" max="72" step="4" value="36" aria-label="Floating element count">
         </span>
       </div>
     </div>
   </div>
 
-  <h1 class="headline">Designs that orbit around calm</h1>
-  <p class="sub">A quiet orrery for ideas. Gravity as guidance. Light as language.</p>
+  <h1 class="headline">Clarity that blooms, gently</h1>
+  <p class="sub">A kinetic garden for ideas: soft gradients, honest contrast, motion that invites—never insists.</p>
 
-  <div class="sky" id="sky" role="img" aria-label="Animated starfield and orrery">
-    <div class="stars" id="stars" aria-hidden="true"></div>
-
-    <div class="orrery" aria-hidden="true">
-      <div class="system" id="system">
-        <div class="sun"></div>
-
-        <div class="ring" style="--size: 200px; --duration: 22s;">
-          <span class="planet tiny"></span>
-        </div>
-
-        <div class="ring" style="--size: 290px; --duration: 32s;">
-          <span class="planet"></span>
-        </div>
-
-        <div class="ring" style="--size: 380px; --duration: 44s;">
-          <span class="planet big"></span>
-          <span class="moon"></span>
-        </div>
-
-        <div class="ring" style="--size: 470px; --duration: 64s;">
-          <span class="planet"></span>
-        </div>
-      </div>
-    </div>
-
-    <div class="flare" aria-hidden="true"></div>
+  <div class="canvas" id="canvas" role="img" aria-label="Animated gradient ribbons with floating petals">
+    <div class="ribbons" aria-hidden="true"></div>
+    <div class="petals" id="petals" aria-hidden="true"></div>
+    <div class="cursor" id="cursor" aria-hidden="true"></div>
     <i class="grain" aria-hidden="true"></i>
   </div>
 
-  <div class="notes" role="list" aria-label="Principles">
-    <article class="card" role="listitem">
-      <h3>Orbital Clarity</h3>
-      <p>Arrange complexity into simple paths that feel inevitable.</p>
+  <div class="panels" role="list" aria-label="Principles">
+    <article class="panel" role="listitem">
+      <div class="icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.39 4.84L20 8.27l-4 3.9.94 5.48L12 15.77 7.06 17.65 8 12.73 4 8.27l5.61-1.43L12 2z"/></svg>
+      </div>
+      <h3>Considered Brilliance</h3>
+      <p>Let light guide, not glare. Make the right thing obvious, and the rest quiet.</p>
     </article>
-    <article class="card" role="listitem">
-      <h3>Temporal Ease</h3>
-      <p>Let motion guide attention—never demand it.</p>
+    <article class="panel" role="listitem">
+      <div class="icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 12a8 8 0 108 8v-2a6 6 0 110-12V4a8 8 0 00-8 8z"/></svg>
+      </div>
+      <h3>Tempo With Care</h3>
+      <p>Motion earns attention by being calm, purposeful, and easy to ignore when you wish.</p>
     </article>
-    <article class="card" role="listitem">
-      <h3>Luminous Honesty</h3>
-      <p>Contrast that stays kind; color that speaks softly and precisely.</p>
+    <article class="panel" role="listitem">
+      <div class="icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 12l7-9 7 9-7 9-7-9zm7-5l-4 5 4 5 4-5-4-5z"/></svg>
+      </div>
+      <h3>Shape the Quiet</h3>
+      <p>Space is a feature. Let typography breathe; let decisions feel inevitable.</p>
     </article>
   </div>
 
-  <div class="mantra" aria-hidden="true">
-    <div class="line">Less orbiting, more arriving.</div>
-    <div class="line">Tools that feel inevitable.</div>
-    <div class="line">Quiet power, bright intent.</div>
+  <div class="ticker" aria-hidden="true">
+    <div class="line">Design is a promise kept softly.</div>
+    <div class="line">Fewer edges, clearer intent.</div>
+    <div class="line">Build tools that disappear.</div>
   </div>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.observatory');
-      const starsWrap = root.querySelector('#stars');
-      const sky = root.querySelector('#sky');
-      const last = root.querySelector('#last-updated');
+      const root = document.currentScript.closest('.atelier');
+      const canvas = root.querySelector('#canvas');
+      const petalsWrap = root.querySelector('#petals');
+      const cursor = root.querySelector('#cursor');
       const pauseBtn = root.querySelector('#pause');
       const themeBtn = root.querySelector('#theme');
       const recolorBtn = root.querySelector('#recolor');
-      const tempo = root.querySelector('#tempo');
+      const density = root.querySelector('#density');
+      const last = root.querySelector('#last-updated');
 
       // Timestamp
       try {
@@ -495,93 +458,79 @@
         });
       } catch {}
 
-      // Build starfield
-      function buildStars() {
-        starsWrap.innerHTML = '';
-        const rect = sky.getBoundingClientRect();
-        const area = rect.width * rect.height;
-        const count = Math.min(240, Math.max(90, Math.floor(area / 5000)));
+      // Build petals
+      function buildPetals(count) {
+        petalsWrap.innerHTML = '';
+        const rect = canvas.getBoundingClientRect();
         for (let i = 0; i < count; i++) {
-          const s = document.createElement('span');
-          s.className = 'star';
-          const size = Math.random() < 0.12 ? (1.6 + Math.random() * 1.8) : (0.8 + Math.random() * 0.9);
-          const x = (Math.random() * 100).toFixed(3) + '%';
-          const y = (Math.random() * 100).toFixed(3) + '%';
-          const tw = (3.5 + Math.random() * 6).toFixed(2) + 's';
-          s.style.left = x;
-          s.style.top = y;
-          s.style.width = size + 'px';
-          s.style.height = size + 'px';
-          s.style.setProperty('--tw', tw);
-          starsWrap.appendChild(s);
+          const p = document.createElement('span');
+          p.className = 'petal';
+          const size = (10 + Math.random() * 40);
+          const left = (Math.random() * 100).toFixed(3) + '%';
+          const top = (Math.random() * 100).toFixed(3) + '%';
+          const rot = (Math.random() * 360).toFixed(2) + 'deg';
+          const dur = (10 + Math.random() * 12).toFixed(2) + 's';
+          p.style.left = left;
+          p.style.top = top;
+          p.style.setProperty('--sz', size + 'px');
+          p.style.setProperty('--rot', rot);
+          p.style.setProperty('--dur', `calc(${dur} * var(--rate))`);
+          petalsWrap.appendChild(p);
         }
       }
-      buildStars();
+
+      // Initial build based on slider
+      buildPetals(parseInt(density.value, 10));
+
+      // Resize rebuild
       let resizeTimer = null;
       window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(buildStars, 150);
+        resizeTimer = setTimeout(() => buildPetals(parseInt(density.value, 10)), 150);
       });
 
-      // Pointer tilt
+      // Density change
+      density.addEventListener('input', () => buildPetals(parseInt(density.value, 10)));
+
+      // Pointer tilt + cursor glow
       function tilt(e) {
-        const r = sky.getBoundingClientRect();
+        const r = canvas.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width;
         const y = (e.clientY - r.top) / r.height;
-        const tx = ((x - 0.5) * 24).toFixed(2);
-        const ty = ((y - 0.5) * 24).toFixed(2);
+        const tx = ((x - 0.5) * 28).toFixed(2);
+        const ty = ((y - 0.5) * 28).toFixed(2);
         root.style.setProperty('--tiltX', tx);
         root.style.setProperty('--tiltY', ty);
+        cursor.style.left = e.clientX - r.left + 'px';
+        cursor.style.top = e.clientY - r.top + 'px';
+        cursor.style.opacity = '1';
       }
-      sky.addEventListener('pointermove', tilt);
-      sky.addEventListener('pointerleave', () => {
+      canvas.addEventListener('pointermove', tilt);
+      canvas.addEventListener('pointerleave', () => {
         root.style.setProperty('--tiltX', '0');
         root.style.setProperty('--tiltY', '0');
+        cursor.style.opacity = '0';
       });
 
-      // Comets
-      function shootComet() {
-        const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReduce || root.classList.contains('paused')) return;
-        const comet = document.createElement('span');
-        comet.style.position = 'absolute';
-        comet.style.width = '2px';
-        comet.style.height = '2px';
-        comet.style.borderRadius = '50%';
-        comet.style.background = '#fff';
-        comet.style.boxShadow = '0 0 10px rgba(255,255,255,0.8), 0 0 30px hsla(var(--accent),100%,70%,0.7)';
-        comet.style.left = '-4%';
-        comet.style.top = (10 + Math.random() * 40).toFixed(2) + '%';
-        comet.style.zIndex = '2';
-        comet.style.transform = 'translate3d(0,0,0)';
-        comet.style.pointerEvents = 'none';
-
-        // Tail
-        const tail = document.createElement('span');
-        tail.style.position = 'absolute';
-        tail.style.left = '-140px';
-        tail.style.top = '-1px';
-        tail.style.width = '140px';
-        tail.style.height = '2px';
-        tail.style.borderRadius = '2px';
-        tail.style.background = 'linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.8))';
-        tail.style.filter = 'blur(0.5px)';
-        comet.appendChild(tail);
-
-        starsWrap.appendChild(comet);
-        const dur = (4 + Math.random() * 3).toFixed(2);
-        comet.animate([
-          { transform: 'translate3d(0,0,0)', opacity: 1 },
-          { transform: 'translate3d(120vw, -30vh, 0)', opacity: 0.2 }
-        ], { duration: dur * 1000 * parseFloat(getComputedStyle(root).getPropertyValue('--rate') || 1), easing: 'ease-out' })
-        .addEventListener('finish', () => comet.remove());
+      // Petal drift bursts
+      function burst() {
+        if (root.classList.contains('paused')) return;
+        const pts = petalsWrap.querySelectorAll('.petal');
+        if (!pts.length) return;
+        const i = Math.floor(Math.random() * pts.length);
+        const el = pts[i];
+        el.animate([
+          { transform: el.style.transform || 'translate(-50%, -50%) rotate(var(--rot))' , filter: 'brightness(1)' },
+          { transform: 'translate(-48%, -62%) rotate(calc(var(--rot) + 12deg))', filter: 'brightness(1.4)' },
+          { transform: 'translate(-50%, -50%) rotate(var(--rot))', filter: 'brightness(1)' }
+        ], { duration: 1600 * parseFloat(getComputedStyle(root).getPropertyValue('--rate') || 1), easing: 'ease-in-out' });
       }
-      setInterval(shootComet, 3800 + Math.random() * 1200);
+      setInterval(burst, 900);
 
       // Pause
       pauseBtn.addEventListener('click', () => {
         const paused = root.classList.toggle('paused');
-        pauseBtn.textContent = paused ? 'Resume Sky' : 'Pause Sky';
+        pauseBtn.textContent = paused ? 'Resume Garden' : 'Pause Garden';
       });
 
       // Theme
@@ -593,24 +542,17 @@
       // Recolor
       function recolor() {
         const a = Math.floor(Math.random() * 360);
-        const b = (a + 120 + Math.floor(Math.random() * 60)) % 360;
-        root.style.setProperty('--accent', a);
-        root.style.setProperty('--accent2', b);
+        const b = (a + 110 + Math.floor(Math.random() * 70)) % 360;
+        root.style.setProperty('--hl1', a);
+        root.style.setProperty('--hl2', b);
       }
       recolorBtn.addEventListener('click', recolor);
-
-      // Tempo
-      function updateTempo() {
-        root.style.setProperty('--rate', tempo.value);
-      }
-      tempo.addEventListener('input', updateTempo);
-      updateTempo();
 
       // Respect reduced motion
       const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReduce) {
         root.classList.add('paused');
-        pauseBtn.textContent = 'Resume Sky';
+        pauseBtn.textContent = 'Resume Garden';
       }
     }());
   </script>
