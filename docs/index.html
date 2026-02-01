@@ -73,7 +73,345 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-02-01 12:22:25 EST</span></div>
+<section class="vista" aria-label="Kinetic Poster">
+  <style>
+    .vista {
+      --mx: 50%;
+      --my: 50%;
+      --ink: #eaf2ff;
+      --ink-dim: #c8d2e8;
+      --panel: rgba(255,255,255,0.06);
+      --panel-b: rgba(255,255,255,0.10);
+      --glow: 0 10px 30px rgba(0,0,0,0.35);
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      padding: clamp(20px, 4vw, 48px);
+      color: var(--ink);
+      background:
+        radial-gradient(900px 600px at var(--mx) var(--my), rgba(120,200,255,0.18), transparent 60%),
+        linear-gradient(180deg, #0a0d17, #0b1020 55%, #0a0c14 100%);
+      box-shadow: 0 16px 50px rgba(0,0,0,0.4), inset 0 1px rgba(255,255,255,0.04);
+      isolation: isolate;
+    }
+    .vista::before {
+      content: "";
+      position: absolute; inset: -20%;
+      background:
+        conic-gradient(from 0deg,
+          rgba(120,255,214,0.16),
+          rgba(82,102,255,0.14),
+          rgba(255,95,109,0.14),
+          rgba(120,255,214,0.16));
+      filter: blur(64px) saturate(115%);
+      mix-blend-mode: screen;
+      transform: rotate(0deg) scale(1.05);
+      animation: aurora 44s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .vista::after {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(800px 400px at 15% 0%, rgba(255,255,255,0.05), transparent 65%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 4px);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .vista .content { position: relative; z-index: 2; }
+
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: saturate(120%) blur(2px);
+      -webkit-backdrop-filter: saturate(120%) blur(2px);
+    }
+    .logo {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-weight: 700; letter-spacing: 0.3px;
+      color: #f2f7ff;
+    }
+    .logo-badge {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #9efcff, #6ecbff 35%, #7a64ff 70%);
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.12), 0 8px 20px rgba(104,140,255,0.35);
+    }
+    #last-updated {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      color: var(--ink-dim);
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .hero {
+      padding: clamp(12px, 2vw, 24px) 0;
+      display: grid; gap: 16px;
+    }
+    .title {
+      margin: 6px 0 0 0;
+      font-size: clamp(28px, 6.2vw, 68px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+      background: linear-gradient(90deg, #f7fbff, #a6c8ff 40%, #d7b4ff 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .title .thin { font-weight: 300; opacity: 0.9; }
+    .subtitle {
+      margin: 0;
+      font-size: clamp(14px, 2.2vw, 18px);
+      color: var(--ink-dim);
+      max-width: 60ch;
+    }
+
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+    .btn {
+      position: relative;
+      appearance: none; border: 0; cursor: pointer;
+      padding: 10px 14px;
+      font-weight: 600; letter-spacing: 0.2px;
+      border-radius: 14px;
+      color: #0a0c14;
+      background: linear-gradient(180deg, #eaf2ff, #cfe0ff);
+      box-shadow: 0 8px 24px rgba(143,173,255,0.28), inset 0 1px rgba(255,255,255,0.7);
+      transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(143,173,255,0.38), inset 0 1px rgba(255,255,255,0.85); }
+    .btn:active { transform: translateY(0); }
+    .btn.ghost {
+      background: rgba(255,255,255,0.06);
+      color: var(--ink);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: none;
+    }
+    .btn.ghost:hover { background: rgba(255,255,255,0.10); }
+
+    .panel {
+      margin-top: clamp(10px, 2.5vw, 20px);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+    }
+    .metric {
+      position: relative;
+      background: var(--panel);
+      border: 1px solid var(--panel-b);
+      border-radius: 16px;
+      padding: 14px;
+      backdrop-filter: blur(8px) saturate(120%);
+      -webkit-backdrop-filter: blur(8px) saturate(120%);
+      box-shadow: var(--glow);
+      overflow: hidden;
+    }
+    .metric::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(500px 200px at 0% 0%, rgba(255,255,255,0.06), transparent 60%);
+      pointer-events: none;
+    }
+    .dial {
+      width: 88px; height: 88px; border-radius: 50%;
+      background: conic-gradient(from -90deg, var(--accent, #7cf7e8) calc(var(--p, 0.6)*360deg), rgba(255,255,255,0.12) 0);
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10), 0 8px 24px rgba(0,0,0,0.25);
+      transform: translateZ(0);
+      transition: transform 240ms ease;
+    }
+    .dial:hover { transform: scale(1.03); }
+    .dial .hole {
+      position: absolute; inset: 12px; border-radius: 50%;
+      background: linear-gradient(180deg, rgba(7,12,20,0.7), rgba(10,14,24,0.6));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    .label {
+      margin-top: 10px; font-weight: 700; letter-spacing: 0.3px;
+    }
+    .desc {
+      margin: 4px 0 0 0; font-size: 13px; color: var(--ink-dim);
+    }
+
+    .note {
+      grid-column: 1 / -1;
+      font-size: 13px; color: var(--ink-dim);
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 12px; border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .dot {
+      width: 6px; height: 6px; border-radius: 50%; background: #a6c8ff; box-shadow: 0 0 0 2px rgba(166,200,255,0.25);
+      display: inline-block;
+    }
+
+    .orbs { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; z-index: 1; pointer-events: none; }
+    .orbs li {
+      position: absolute;
+      width: 260px; height: 260px; border-radius: 50%;
+      top: var(--y); left: var(--x); transform: translate(-50%, -50%) scale(var(--s,1));
+      background: radial-gradient(circle at 30% 30%, hsla(var(--h,200),85%,64%,0.32), transparent 65%);
+      filter: blur(18px);
+      opacity: 0.34;
+      animation: drift var(--t, 18s) ease-in-out infinite alternate;
+    }
+
+    .foot {
+      margin-top: clamp(12px, 3vw, 24px);
+      display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+      color: var(--ink-dim);
+      font-size: 13px;
+    }
+    .pill {
+      padding: 6px 10px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .vista.paused *,.vista.paused::before { animation-play-state: paused !important; }
+    .btn:focus-visible { outline: 2px solid #9cc7ff; outline-offset: 2px; }
+
+    @keyframes aurora { to { transform: rotate(360deg) scale(1.05); } }
+    @keyframes drift {
+      0% { transform: translate(-50%, -50%) scale(var(--s,1)); filter: blur(18px); }
+      100% { transform: translate(calc(-50% + var(--dx, 20px)), calc(-50% + var(--dy, 30px))) scale(calc(var(--s,1) * 1.05)); filter: blur(22px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .vista, .vista * { animation: none !important; transition: none !important; }
+    }
+  </style>
+
+  <div class="content">
+    <div class="topbar" role="banner">
+      <div class="logo">
+        <span class="logo-badge" aria-hidden="true"></span>
+        Vibe Studio
+      </div>
+      <span id="last-updated">Last updated: 2026-02-01 13:32:18 EST</span>
+    </div>
+
+    <div class="hero">
+      <h1 class="title"><span class="thin">Breathe</span> the Interface</h1>
+      <p class="subtitle">A luminous surface with calm motion, generous spacing, and crisp edges—quietly confident.</p>
+      <div class="actions" role="group" aria-label="Actions">
+        <button class="btn primary" id="toggle-motion" aria-pressed="false">Pause Motion</button>
+        <button class="btn ghost" id="shift-theme">Shift Hue</button>
+      </div>
+    </div>
+
+    <div class="panel" role="region" aria-label="Clarity Metrics">
+      <div class="metric">
+        <div class="dial" style="--accent:#7cf7e8; --p:0.86;"><span class="hole"></span></div>
+        <div class="label">Clarity</div>
+        <p class="desc">Readable, breathable, and balanced.</p>
+      </div>
+      <div class="metric">
+        <div class="dial" style="--accent:#a98cff; --p:0.74;"><span class="hole"></span></div>
+        <div class="label">Delight</div>
+        <p class="desc">Subtle joy without distraction.</p>
+      </div>
+      <div class="metric">
+        <div class="dial" style="--accent:#ff9fb3; --p:0.68;"><span class="hole"></span></div>
+        <div class="label">Focus</div>
+        <p class="desc">Attention guides the eye, gently.</p>
+      </div>
+      <div class="note">
+        <span class="dot" aria-hidden="true"></span>
+        Motion respects your settings. Toggle anytime.
+      </div>
+    </div>
+
+    <div class="foot">
+      <span class="pill">“Simple is sophisticated.”</span>
+      <span>Crafted with light, shadow, and a little patience.</span>
+    </div>
+  </div>
+
+  <ul class="orbs" aria-hidden="true">
+    <li style="--x: 10%; --y: 24%; --h: 205; --s: 0.9; --t: 19s; --dx: 14px; --dy: 28px;"></li>
+    <li style="--x: 88%; --y: 18%; --h: 280; --s: 0.8; --t: 22s; --dx: -16px; --dy: 24px;"></li>
+    <li style="--x: 78%; --y: 72%; --h: 320; --s: 1.0; --t: 20s; --dx: -10px; --dy: -22px;"></li>
+    <li style="--x: 26%; --y: 80%; --h: 340; --s: 0.95; --t: 24s; --dx: 12px; --dy: -18px;"></li>
+    <li style="--x: 50%; --y: 50%; --h: 260; --s: 1.1; --t: 26s; --dx: 0px; --dy: 16px;"></li>
+    <li style="--x: 4%;  --y: 92%; --h: 180; --s: 0.85; --t: 28s; --dx: 18px; --dy: -8px;"></li>
+  </ul>
+
+  <script>
+    (function () {
+      const root = document.currentScript.closest('.vista');
+      const updated = root.querySelector('#last-updated');
+      const motionBtn = root.querySelector('#toggle-motion');
+      const hueBtn = root.querySelector('#shift-theme');
+
+      // Last updated timestamp
+      try {
+        const now = new Date();
+        updated.textContent = "Last updated: " + now.toLocaleString(undefined, {
+          year: 'numeric', month: 'short', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          hour12: false
+        });
+      } catch (e) { /* noop */ }
+
+      // Interactive spotlight follows pointer; drifts when idle
+      let lastMove = performance.now();
+      let mx = 50, my = 50;
+      const preferReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function setSpot(x, y) {
+        root.style.setProperty('--mx', x + '%');
+        root.style.setProperty('--my', y + '%');
+      }
+
+      root.addEventListener('pointermove', (e) => {
+        const r = root.getBoundingClientRect();
+        mx = Math.max(0, Math.min(100, ((e.clientX - r.left) / r.width) * 100));
+        my = Math.max(0, Math.min(100, ((e.clientY - r.top) / r.height) * 100));
+        setSpot(mx, my);
+        lastMove = performance.now();
+      });
+
+      if (!preferReduce) {
+        (function drift() {
+          const t = performance.now();
+          const idle = t - lastMove > 1800;
+          if (idle && !root.classList.contains('paused')) {
+            const s = t / 1000;
+            const dx = Math.sin(s * 0.35) * 18;
+            const dy = Math.cos(s * 0.28) * 14;
+            setSpot(50 + dx, 50 + dy);
+          }
+          requestAnimationFrame(drift);
+        })();
+      }
+
+      // Toggle motion
+      motionBtn.addEventListener('click', () => {
+        const paused = root.classList.toggle('paused');
+        motionBtn.setAttribute('aria-pressed', String(paused));
+        motionBtn.textContent = paused ? 'Resume Motion' : 'Pause Motion';
+      });
+
+      // Shift hue subtly (cycles accent in the aurora via CSS rotate)
+      let hue = 0;
+      hueBtn.addEventListener('click', () => {
+        hue = (hue + 32) % 360;
+        root.style.filter = `hue-rotate(${hue}deg)`;
+      });
+    }());
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
