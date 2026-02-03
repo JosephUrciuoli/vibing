@@ -73,299 +73,307 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="orbloom" aria-label="Quiet Orbit Interface" data-theme="light">
+<section class="silk-sky" aria-label="Aerial Ribbons Interface" data-theme="light">
   <style>
-    .orbloom {
-      --bg1: #f7fbff;
-      --bg2: #eaf1ff;
-      --fg: #0f1530;
-      --muted: #3d4666cc;
-      --card: rgba(255,255,255,0.75);
-      --line: rgba(20,30,60,0.12);
-      --ring: rgba(20,30,60,0.18);
-      --acc-hue: 212;
-      --acc: hsl(var(--acc-hue) 92% 56%);
-      --acc2: hsl(calc(var(--acc-hue) + 60) 85% 62%);
-      --shadow: 0 10px 30px rgba(6,16,46,0.15), 0 2px 8px rgba(10,20,40,0.08);
+    .silk-sky {
+      --hue: 212;
+      --bg1: hsl(var(--hue) 85% 98%);
+      --bg2: hsl(calc(var(--hue) + 24) 92% 92%);
+      --fg: #0e1428;
+      --muted: color-mix(in oklab, var(--fg), transparent 40%);
+      --card: rgba(255,255,255,0.55);
+      --line: rgba(10,20,40,0.15);
+      --ring: rgba(10,20,40,0.2);
+      --shadow: 0 18px 50px rgba(10, 20, 40, 0.18), 0 2px 10px rgba(10,20,40,0.08);
       position: relative;
       isolation: isolate;
       border-radius: 22px;
       border: 1px solid var(--line);
-      overflow: hidden;
-      color: var(--fg);
       padding: clamp(18px, 3.5vw, 28px);
-      min-height: 520px;
+      min-height: 560px;
       display: grid;
-      grid-template-rows: auto auto 1fr auto;
+      grid-template-rows: auto auto 1fr auto auto;
       gap: 16px;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
+      color: var(--fg);
       background:
-        radial-gradient(900px 700px at var(--mx,60%) var(--my,40%), rgba(255,255,255,0.7), transparent 55%),
+        radial-gradient(1200px 700px at var(--mx,60%) var(--my,35%), rgba(255,255,255,0.72), transparent 55%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
+      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Text", Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans";
+      overflow: hidden;
       box-shadow: var(--shadow);
     }
-    .orbloom[data-theme="dark"] {
-      --bg1: #0b0f1e;
-      --bg2: #0e1428;
-      --fg: #f6f7ff;
-      --muted: #d8def6cc;
-      --card: rgba(255,255,255,0.06);
-      --line: rgba(255,255,255,0.14);
-      --ring: rgba(255,255,255,0.18);
-      --shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+    .silk-sky[data-theme="dark"] {
+      --bg1: hsl(var(--hue) 20% 9%);
+      --bg2: hsl(calc(var(--hue) + 24) 25% 13%);
+      --fg: #eef2ff;
+      --muted: color-mix(in oklab, var(--fg), transparent 40%);
+      --card: rgba(255,255,255,0.08);
+      --line: rgba(255,255,255,0.16);
+      --ring: rgba(255,255,255,0.22);
+      --shadow: 0 28px 70px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04);
     }
-    .orbloom .grain {
-      position: absolute; inset: 0; pointer-events: none; z-index: 0;
-    }
-    .orbloom .grain::before {
-      content: "";
-      position: absolute; inset: -30%;
-      background:
-        radial-gradient(1px 1px at 15% 25%, rgba(0,0,0,0.03) 50%, transparent 51%),
-        radial-gradient(1px 1px at 45% 80%, rgba(0,0,0,0.02) 50%, transparent 51%),
-        radial-gradient(1px 1px at 75% 30%, rgba(0,0,0,0.03) 50%, transparent 51%),
-        radial-gradient(2px 2px at 22% 55%, rgba(0,0,0,0.025) 50%, transparent 52%);
-      mix-blend-mode: multiply;
-      opacity: 0.6;
-      filter: blur(0.2px);
-      animation: driftGrain 120s linear infinite;
-    }
-    @keyframes driftGrain { to { transform: translate(10%, 8%); } }
 
-    .orbloom .topbar {
-      display: flex; align-items: center; justify-content: space-between; z-index: 2;
+    /* Ambient backdrop */
+    .silk-sky .bg { position: absolute; inset: -10% -8% -8% -8%; z-index: 0; filter: saturate(1.05); }
+    .silk-sky .aurora {
+      position: absolute; width: 90vmax; height: 90vmax; border-radius: 50%;
+      filter: blur(40px);
+      mix-blend-mode: screen; opacity: 0.55;
+      transform: translate(-20%, -30%);
+      background:
+        radial-gradient(circle at 50% 50%, hsl(var(--hue) 90% 70% / 0.6), transparent 60%),
+        radial-gradient(circle at 70% 30%, hsl(calc(var(--hue) + 60) 85% 62% / 0.5), transparent 55%);
+      animation: drift 60s linear infinite;
     }
-    .orbloom .brand {
+    .silk-sky .aurora.b {
+      left: 40%; top: 30%;
+      background:
+        radial-gradient(circle at 30% 60%, hsl(calc(var(--hue) + 120) 75% 62% / 0.56), transparent 55%),
+        radial-gradient(circle at 70% 30%, hsl(calc(var(--hue) - 20) 75% 58% / 0.5), transparent 58%);
+      animation-duration: 72s; animation-direction: reverse; opacity: 0.45;
+    }
+    .silk-sky .aurora.c {
+      left: 20%; top: 60%;
+      background:
+        radial-gradient(circle at 20% 40%, hsl(calc(var(--hue) + 180) 68% 64% / 0.48), transparent 58%),
+        radial-gradient(circle at 70% 70%, hsl(calc(var(--hue) + 240) 80% 62% / 0.42), transparent 60%);
+      animation-duration: 86s; opacity: 0.38;
+    }
+    @keyframes drift { to { transform: translate(10%, -16%) rotate(1turn); } }
+
+    .silk-sky .grain {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: .18; mix-blend-mode: multiply;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(0,0,0,.15), transparent 50%),
+        radial-gradient(1px 1px at 70% 80%, rgba(0,0,0,.12), transparent 50%),
+        radial-gradient(1px 1px at 40% 50%, rgba(0,0,0,.1), transparent 50%);
+      animation: grainShift 120s linear infinite;
+    }
+    @keyframes grainShift { to { transform: translate(6%, 4%); } }
+
+    /* Top bar */
+    .silk-sky .top {
+      z-index: 2; display: flex; align-items: center; justify-content: space-between;
+    }
+    .silk-sky .brand {
       display: inline-flex; align-items: center; gap: 10px;
       padding: 8px 12px; border-radius: 999px;
       border: 1px solid var(--line);
       background: linear-gradient(180deg, var(--card), transparent);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       box-shadow: var(--shadow);
+      user-select: none;
     }
-    .orbloom .logo-dot {
-      width: 14px; height: 14px; border-radius: 50%;
-      background: conic-gradient(from 0deg, var(--acc), var(--acc2), var(--acc));
-      box-shadow: 0 0 0 2px rgba(255,255,255,0.6) inset, 0 0 22px var(--acc);
-      animation: hueSpin 12s linear infinite;
+    .silk-sky .gem {
+      width: 16px; height: 16px; border-radius: 4px;
+      background: conic-gradient(from 0deg, hsl(var(--hue) 90% 60%), hsl(calc(var(--hue)+80) 85% 62%), hsl(calc(var(--hue)+160) 80% 62%), hsl(var(--hue) 90% 60%));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.6), 0 0 22px hsl(var(--hue) 90% 60% / .6);
+      animation: hueRoll 14s linear infinite;
     }
-    .orbloom .name {
-      font-weight: 700; letter-spacing: 0.2px; font-size: 0.95rem;
-    }
-    .orbloom .theme-toggle {
+    .silk-sky .title { font-weight: 800; letter-spacing: .3px; font-size: .98rem; }
+
+    .silk-sky .toggle {
       display: inline-flex; align-items: center; gap: 8px;
       border: 1px solid var(--line);
       padding: 8px 12px; border-radius: 12px;
-      color: var(--fg);
       background: linear-gradient(180deg, var(--card), transparent);
-      cursor: pointer; font-weight: 600;
-      transition: transform .2s ease, background .3s ease, border-color .3s ease;
+      color: var(--fg); cursor: pointer; font-weight: 700;
       box-shadow: var(--shadow);
+      transition: transform .2s ease, filter .3s ease;
     }
-    .orbloom .theme-toggle:hover { transform: translateY(-1px); }
-    .orbloom .theme-toggle:active { transform: translateY(0); }
-    .orbloom .theme-toggle .icon { font-size: 1rem; }
+    .silk-sky .toggle:hover { transform: translateY(-1px); filter: saturate(1.06); }
+    .silk-sky .toggle .i { font-size: 1rem; }
+    @keyframes hueRoll { to { filter: hue-rotate(1turn); } }
 
-    .orbloom .hero {
-      z-index: 2; display: grid; gap: 4px; text-align: center; margin-top: 2px;
+    /* Hero */
+    .silk-sky .hero {
+      z-index: 2; text-align: center; display: grid; gap: 6px; margin-top: 2px;
     }
-    .orbloom h1 {
+    .silk-sky h1 {
       margin: 0;
-      font-size: clamp(1.9rem, 4.8vw, 3.4rem);
-      line-height: 1.06;
+      font-size: clamp(2.1rem, 5.6vw, 3.8rem);
+      line-height: 1.03;
       letter-spacing: 0.2px;
-      background: linear-gradient(90deg, var(--fg), var(--acc) 50%, var(--acc2));
+      background: linear-gradient(90deg, var(--fg), hsl(var(--hue) 90% 58%) 55%, hsl(calc(var(--hue)+60) 85% 60%));
       -webkit-background-clip: text; background-clip: text; color: transparent;
     }
-    .orbloom .subtitle {
+    .silk-sky .sub {
       margin: 0 auto; max-width: 60ch; color: var(--muted);
       font-size: clamp(0.95rem, 1.8vw, 1.1rem);
     }
 
-    .orbloom .stage {
+    /* Ribbon field */
+    .silk-sky .canvas {
       position: relative;
-      width: min(720px, 100%); aspect-ratio: 16/10;
+      width: min(820px, 100%); aspect-ratio: 16/9;
       margin: 10px auto 0;
-      border-radius: 20px;
+      border-radius: 22px;
       border: 1px solid var(--line);
       background: linear-gradient(180deg, var(--card), transparent);
       box-shadow: var(--shadow);
       overflow: hidden;
       transform-style: preserve-3d;
       perspective: 1000px;
+      z-index: 1;
     }
-    .orbloom .stage .halo {
-      position: absolute; inset: 10% 16%;
-      border-radius: 50%;
-      filter: blur(12px) saturate(1.1);
-      opacity: 0.9;
+    .silk-sky .ribbons { position: absolute; inset: -10% -20%; transform: translateZ(48px); }
+    .silk-sky .ribbon {
+      position: absolute; left: -20%; width: 140%; height: 18px;
+      border-radius: 999px;
+      filter: blur(0.3px) saturate(1.04);
+      opacity: 0.75; mix-blend-mode: screen;
       background:
-        radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--acc) 40%, transparent), transparent 60%),
-        conic-gradient(from 0deg, transparent 0 25%, color-mix(in oklab, var(--acc2) 65%, transparent) 25% 45%, transparent 45% 70%, color-mix(in oklab, var(--acc) 65%, transparent) 70% 85%, transparent 85% 100%);
-      -webkit-mask: radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 44%, #000 45% 56%, rgba(0,0,0,0) 57%);
-      animation: rotateSlow 40s linear infinite;
+        linear-gradient(90deg, transparent, hsl(var(--hue) 95% 70% / 0.9), hsl(calc(var(--hue)+60) 90% 65% / 0.9), transparent);
+      transform: rotate(calc(-8deg + var(--i) * 1.2deg)) translateY(calc(var(--i) * 5%));
+      animation: sway calc(16s + var(--i) * 1.6s) ease-in-out infinite alternate;
+      box-shadow: 0 10px 40px hsl(var(--hue) 80% 60% / 0.25);
     }
-    .orbloom .core {
-      position: absolute; inset: 28% 36%;
-      border-radius: 50%;
-      background:
-        radial-gradient(120% 120% at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.9), transparent 45%),
-        radial-gradient(circle at 50% 50%, var(--acc), var(--acc2) 55%, transparent 70%);
-      box-shadow: inset 0 0 40px rgba(255,255,255,0.5), 0 18px 50px color-mix(in oklab, var(--acc) 35%, transparent);
-      transform: translateZ(40px);
+    .silk-sky .ribbon:nth-child(odd) {
+      height: 14px; opacity: .6;
+      background: linear-gradient(90deg, transparent, hsl(calc(var(--hue)+100) 90% 70% / 0.85), hsl(calc(var(--hue)+160) 85% 68% / 0.9), transparent);
+      animation-duration: calc(18s + var(--i) * 1.8s);
     }
-    .orbloom .ring {
-      position: absolute; inset: 16% 10%;
-      border-radius: 50%;
+    @keyframes sway {
+      0% { transform: rotate(calc(-10deg + var(--i) * 1.2deg)) translateY(calc(var(--i) * 5%)) translateX(-2%); }
+      100% { transform: rotate(calc(-6deg + var(--i) * 1.2deg)) translateY(calc(var(--i) * 5% + 2%)) translateX(2%); }
+    }
+    .silk-sky[data-fast="on"] .ribbon { animation-duration: calc(8s + var(--i) * 0.8s); }
+    .silk-sky .ring {
+      position: absolute; inset: 8% 10%;
+      border-radius: 30px;
       border: 1px dashed var(--ring);
-      opacity: 0.9; pointer-events: none;
-      transform: translateZ(20px);
-    }
-    .orbloom .ring.r2 { inset: 22% 18%; opacity: 0.7; }
-    .orbloom .ring.r3 { inset: 30% 26%; opacity: 0.55; }
-
-    .orbloom .orbit {
-      position: absolute; inset: 0; transform: translateZ(60px);
-      animation: orbitA 26s linear infinite;
-    }
-    .orbloom .orbit.b { animation-duration: 34s; }
-    .orbloom .orbit.c { animation-duration: 46s; }
-    .orbloom[data-fast="on"] .orbit { animation-duration: 12s; }
-    .orbloom .sat {
-      position: absolute; top: 50%; left: 50%;
-      width: 12px; height: 12px; border-radius: 50%;
-      transform-origin: -240px 0;
-      background: radial-gradient(circle at 30% 30%, #fff, var(--acc));
-      box-shadow: 0 0 18px color-mix(in oklab, var(--acc) 70%, transparent), 0 0 0 2px rgba(255,255,255,0.65) inset;
-    }
-    .orbloom .orbit.b .sat { transform-origin: -180px 0; width: 10px; height: 10px; background: radial-gradient(circle at 30% 30%, #fff, var(--acc2)); }
-    .orbloom .orbit.c .sat { transform-origin: -120px 0; width: 9px; height: 9px; background: radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--acc) 55%, var(--acc2))); }
-
-    @keyframes orbitA { to { transform: rotate(1turn) translateZ(60px); } }
-    @keyframes rotateSlow { to { transform: rotate(1turn); } }
-    @keyframes hueSpin {
-      to { filter: hue-rotate(360deg); }
+      transform: translateZ(10px);
+      opacity: 0.8; pointer-events: none;
     }
 
-    .orbloom .pulse {
-      position: absolute; width: 12px; height: 12px; border-radius: 50%;
+    /* Pulses */
+    .silk-sky .pulse {
+      position: absolute; width: 10px; height: 10px; border-radius: 50%;
       left: var(--x); top: var(--y);
       pointer-events: none;
-      background: radial-gradient(circle, rgba(255,255,255,0.9), transparent 60%);
+      background: radial-gradient(circle, rgba(255,255,255,0.95), transparent 60%);
       mix-blend-mode: screen;
-      animation: ringPulse 1200ms ease-out forwards;
+      animation: pulseOut 1200ms ease-out forwards;
     }
-    @keyframes ringPulse {
-      to { opacity: 0; transform: translate(-50%, -50%) scale(24); }
+    @keyframes pulseOut {
       from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      to { opacity: 0; transform: translate(-50%, -50%) scale(26); }
     }
 
-    .orbloom .controls {
-      z-index: 2; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 10px;
+    /* Controls & ticker */
+    .silk-sky .controls {
+      z-index: 2; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 8px;
     }
-    .orbloom .btn {
+    .silk-sky .btn {
       border: 1px solid var(--line);
-      background: linear-gradient(90deg, var(--acc), var(--acc2));
-      color: #0b0f1e;
-      padding: 10px 14px; border-radius: 14px;
-      cursor: pointer; font-weight: 700; letter-spacing: 0.2px;
+      background: linear-gradient(90deg, hsl(var(--hue) 90% 60%), hsl(calc(var(--hue)+60) 85% 62%));
+      color: #0b0f1e; padding: 10px 14px; border-radius: 14px;
+      cursor: pointer; font-weight: 800; letter-spacing: 0.2px;
       box-shadow: var(--shadow);
-      transition: transform .15s ease, box-shadow .3s ease, filter .3s ease;
+      transition: transform .15s ease, filter .3s ease;
       text-shadow: 0 1px 0 rgba(255,255,255,0.4);
     }
-    .orbloom .btn:hover { transform: translateY(-1px); filter: saturate(1.06); }
-    .orbloom .btn.secondary {
+    .silk-sky .btn:hover { transform: translateY(-1px); filter: saturate(1.06); }
+    .silk-sky .btn.secondary {
       background: linear-gradient(180deg, var(--card), transparent);
-      color: var(--fg);
-      text-shadow: none; font-weight: 600;
+      color: var(--fg); text-shadow: none; font-weight: 700;
     }
 
-    .orbloom .ticker {
-      margin: 2px auto 0; text-align: center; color: var(--muted);
-      min-height: 1.4em; font-size: 0.98rem;
+    .silk-sky .ticker {
+      z-index: 2; margin: 2px auto 0; text-align: center; color: var(--muted);
+      min-height: 1.4em; font-size: 0.98rem; transition: opacity .24s ease;
     }
 
-    .orbloom .status {
+    /* Footer */
+    .silk-sky .status {
       z-index: 2; display: flex; align-items: center; justify-content: space-between;
       border-top: 1px dashed var(--line);
       padding-top: 10px; margin-top: 4px; font-size: 0.92rem; color: var(--muted);
       gap: 10px;
     }
-    .orbloom #last-updated { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .silk-sky #last-updated { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-    .orbloom .tilt {
-      transition: transform 300ms ease;
-      will-change: transform;
-    }
+    /* Tilt */
+    .silk-sky .tilt { transition: transform 300ms ease; will-change: transform; }
 
     @media (max-width: 760px) {
-      .orbloom .stage { aspect-ratio: 1/1; }
-      .orbloom .status { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .silk-sky .canvas { aspect-ratio: 1/1; }
+      .silk-sky .status { flex-direction: column; align-items: flex-start; gap: 6px; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .orbloom *, .orbloom *::before, .orbloom *::after {
+      .silk-sky *, .silk-sky *::before, .silk-sky *::after {
         animation: none !important; transition: none !important;
       }
     }
   </style>
 
-  <div class="grain" aria-hidden="true"></div>
+  <div class="bg" aria-hidden="true">
+    <div class="aurora a"></div>
+    <div class="aurora b"></div>
+    <div class="aurora c"></div>
+    <div class="grain"></div>
+  </div>
 
-  <div class="topbar">
+  <div class="top">
     <div class="brand">
-      <span class="logo-dot" aria-hidden="true"></span>
-      <span class="name">Orbit Atelier</span>
+      <span class="gem" aria-hidden="true"></span>
+      <span class="title">Aerial Atelier</span>
     </div>
-    <button class="theme-toggle" type="button" aria-label="Toggle theme">
-      <span class="icon" aria-hidden="true">☼</span>
-      <span class="label">Light</span>
+    <button class="toggle" type="button" aria-label="Toggle theme">
+      <span class="i" aria-hidden="true">☼</span>
+      <span class="l">Light</span>
     </button>
   </div>
 
   <div class="hero tilt">
-    <h1>Quiet Orbit</h1>
-    <p class="subtitle">Calm motion. Considered interface. A space to collect your focus.</p>
+    <h1>Soft Kinetics</h1>
+    <p class="sub">Gentle motion. Honest materials. Interfaces that breathe.</p>
   </div>
 
-  <div class="stage tilt" role="img" aria-label="Generative orbit scene">
-    <div class="halo" aria-hidden="true"></div>
-    <div class="ring r1" aria-hidden="true"></div>
-    <div class="ring r2" aria-hidden="true"></div>
-    <div class="ring r3" aria-hidden="true"></div>
-
-    <div class="core" aria-hidden="true"></div>
-
-    <div class="orbit a"><span class="sat"></span></div>
-    <div class="orbit b"><span class="sat"></span></div>
-    <div class="orbit c"><span class="sat"></span></div>
+  <div class="canvas tilt" role="img" aria-label="Generative ribbon field">
+    <div class="ribbons" aria-hidden="true">
+      <span class="ribbon" style="--i:0"></span>
+      <span class="ribbon" style="--i:1"></span>
+      <span class="ribbon" style="--i:2"></span>
+      <span class="ribbon" style="--i:3"></span>
+      <span class="ribbon" style="--i:4"></span>
+      <span class="ribbon" style="--i:5"></span>
+      <span class="ribbon" style="--i:6"></span>
+      <span class="ribbon" style="--i:7"></span>
+      <span class="ribbon" style="--i:8"></span>
+      <span class="ribbon" style="--i:9"></span>
+      <span class="ribbon" style="--i:10"></span>
+      <span class="ribbon" style="--i:11"></span>
+    </div>
+    <div class="ring" aria-hidden="true"></div>
   </div>
 
-  <div class="controls tilt" role="group" aria-label="Orbit controls">
-    <button class="btn" type="button" data-mode="focus">Focus</button>
-    <button class="btn secondary" type="button" data-mode="flow">Flow</button>
-    <button class="btn secondary" type="button" data-mode="reset">Reset</button>
+  <div class="controls tilt" role="group" aria-label="Ribbon controls">
+    <button class="btn" type="button" data-action="bloom">Bloom</button>
+    <button class="btn secondary" type="button" data-action="drift">Drift</button>
+    <button class="btn secondary" type="button" data-action="reset">Reset</button>
   </div>
 
   <div class="ticker tilt" aria-live="polite"></div>
 
   <div class="status tilt">
-    <span>Tip: Move the cursor to steer the light; click the scene to send a pulse.</span>
-    <span id="last-updated">Last updated: 2026-02-03 17:27:31 EST</span>
+    <span>Tip: Move to tilt the scene; click inside to cast a ripple.</span>
+    <span id="last-updated">Last updated: 2026-02-03 18:26:38 EST</span>
   </div>
 
   <script>
     (function () {
       const root = document.currentScript.parentElement;
-      const toggle = root.querySelector('.theme-toggle');
-      const icon = toggle.querySelector('.icon');
-      const label = toggle.querySelector('.label');
+      const toggle = root.querySelector('.toggle');
+      const icon = toggle.querySelector('.i');
+      const label = toggle.querySelector('.l');
       const tilts = root.querySelectorAll('.tilt');
-      const stage = root.querySelector('.stage');
+      const canvas = root.querySelector('.canvas');
       const ticker = root.querySelector('.ticker');
 
       // Theme persistence
-      const saved = localStorage.getItem('orbloomTheme');
+      const saved = localStorage.getItem('silkTheme');
       if (saved) root.dataset.theme = saved;
 
       function reflectTheme() {
@@ -377,7 +385,7 @@
 
       toggle.addEventListener('click', () => {
         root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
-        localStorage.setItem('orbloomTheme', root.dataset.theme);
+        localStorage.setItem('silkTheme', root.dataset.theme);
         reflectTheme();
       });
 
@@ -388,8 +396,8 @@
         const py = (clientY - r.top) / r.height;
         root.style.setProperty('--mx', Math.round(px * 100) + '%');
         root.style.setProperty('--my', Math.round(py * 100) + '%');
-        const rx = (py - 0.5) * -6;
-        const ry = (px - 0.5) * 6;
+        const rx = (py - 0.5) * -7;
+        const ry = (px - 0.5) * 7;
         tilts.forEach(el => el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`);
       }
       root.addEventListener('pointermove', (e) => setMouseVars(e.clientX, e.clientY));
@@ -398,60 +406,60 @@
         tilts.forEach(el => el.style.transform = 'none');
       });
 
-      // Click pulse
-      stage.addEventListener('click', (e) => {
-        const rect = stage.getBoundingClientRect();
+      // Click ripple
+      canvas.addEventListener('click', (e) => {
+        const rect = canvas.getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100 + '%';
         const y = ((e.clientY - rect.top) / rect.height) * 100 + '%';
         const pulse = document.createElement('span');
         pulse.className = 'pulse';
         pulse.style.setProperty('--x', x);
         pulse.style.setProperty('--y', y);
-        stage.appendChild(pulse);
+        canvas.appendChild(pulse);
         pulse.addEventListener('animationend', () => pulse.remove());
       });
 
       // Controls
-      const hues = [198, 212, 226, 260, 280];
+      const hues = [198, 212, 226, 260, 280, 318, 350];
       const lines = [
-        "Make space for clarity.",
-        "One orbit at a time.",
-        "Polish the essential.",
-        "Let momentum be gentle.",
-        "Breath in, ship out."
+        "Design less, reveal more.",
+        "Motion that waits for you.",
+        "Elegance is subtraction.",
+        "Let color do the whispering.",
+        "Edges soft, ideas sharp."
       ];
       let idx = 0;
-      function tick() {
-        ticker.style.opacity = 0;
+      function tick(immediate = false) {
+        if (!immediate) ticker.style.opacity = 0;
         setTimeout(() => {
           ticker.textContent = lines[idx % lines.length];
           ticker.style.opacity = 1;
           idx++;
-        }, 180);
+        }, immediate ? 0 : 200);
       }
-      tick();
+      tick(true);
       let tickerTimer = setInterval(tick, 4200);
 
-      root.querySelector('[data-mode="focus"]').addEventListener('click', () => {
+      root.querySelector('[data-action="bloom"]').addEventListener('click', () => {
         const hue = hues[Math.floor(Math.random() * hues.length)];
-        root.style.setProperty('--acc-hue', hue);
-        ticker.textContent = "Focus mode: reduce, refine, release.";
+        root.style.setProperty('--hue', hue);
+        ticker.textContent = "Bloom: palette refreshed.";
         clearInterval(tickerTimer);
         tickerTimer = setInterval(tick, 4200);
       });
 
-      root.querySelector('[data-mode="flow"]').addEventListener('click', () => {
+      root.querySelector('[data-action="drift"]').addEventListener('click', () => {
         const fast = root.getAttribute('data-fast') === 'on';
         root.setAttribute('data-fast', fast ? 'off' : 'on');
-        ticker.textContent = fast ? "Flow eased." : "Flow accelerated.";
+        ticker.textContent = fast ? "Drift eased." : "Drift accelerated.";
         clearInterval(tickerTimer);
         tickerTimer = setInterval(tick, 4200);
       });
 
-      root.querySelector('[data-mode="reset"]').addEventListener('click', () => {
+      root.querySelector('[data-action="reset"]').addEventListener('click', () => {
         root.removeAttribute('data-fast');
-        root.style.removeProperty('--acc-hue');
-        ticker.textContent = "Reset: back to quiet balance.";
+        root.style.removeProperty('--hue');
+        ticker.textContent = "Reset: back to soft balance.";
         clearInterval(tickerTimer);
         tickerTimer = setInterval(tick, 4200);
       });
