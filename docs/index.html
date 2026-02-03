@@ -73,7 +73,476 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-02-03 15:33:37 EST</span></div>
+<section class="vibe-aurora" aria-label="Serene Momentum Experience" data-theme="night">
+  <style>
+    .vibe-aurora {
+      --bg1: #0a0f24;
+      --bg2: #121a3b;
+      --text: #f6f8ff;
+      --muted: #cfd7ffcc;
+      --card: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.18);
+      --accent: #7ad7ff;
+      --accent2: #e3aaff;
+      --glow: 0 10px 30px -10px rgba(122,215,255,0.35), 0 25px 60px -30px rgba(227,170,255,0.25);
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 26px;
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, Noto Sans, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(800px 600px at var(--mx,55%) var(--my,35%), rgba(255,255,255,0.06), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      border: 1px solid var(--border);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 40px rgba(0,0,0,0.35);
+      min-height: 480px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+      isolation: isolate;
+    }
+    .vibe-aurora[data-theme="day"] {
+      --bg1: #f2f7ff;
+      --bg2: #e8f1ff;
+      --text: #0f1427;
+      --muted: #0f1427cc;
+      --card: rgba(255,255,255,0.7);
+      --border: rgba(30,60,120,0.18);
+      --accent: #2e7bff;
+      --accent2: #ff5ec9;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 12px 36px rgba(30,60,120,0.18);
+    }
+    .vibe-aurora .backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .vibe-aurora .backdrop::before,
+    .vibe-aurora .backdrop::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.6;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: screen;
+    }
+    .vibe-aurora .backdrop::before {
+      top: 20%;
+      left: 15%;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle at 30% 40%, var(--accent) 0%, transparent 60%);
+      animation: floatA 18s ease-in-out infinite;
+    }
+    .vibe-aurora .backdrop::after {
+      top: 70%;
+      left: 80%;
+      width: 520px; height: 520px;
+      background: radial-gradient(circle at 70% 60%, var(--accent2) 0%, transparent 60%);
+      animation: floatB 22s ease-in-out infinite;
+    }
+    .vibe-aurora .stars, .vibe-aurora .stars::before, .vibe-aurora .stars::after {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.7) 50%, transparent 52%),
+        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.6) 50%, transparent 52%),
+        radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,0.5) 50%, transparent 52%),
+        radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.4) 50%, transparent 52%),
+        radial-gradient(2px 2px at 25% 50%, rgba(255,255,255,0.65) 50%, transparent 52%);
+      background-repeat: repeat;
+      background-size: 600px 600px;
+      opacity: 0.35;
+      animation: drift 80s linear infinite;
+    }
+    .vibe-aurora .stars::before { animation-duration: 120s; opacity: 0.25; transform: scale(1.2); }
+    .vibe-aurora .stars::after  { animation-duration: 160s; opacity: 0.2; transform: scale(1.4); }
+    .vibe-aurora .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      z-index: 2;
+    }
+    .vibe-aurora .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+      border: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: var(--glow);
+    }
+    .vibe-aurora .brand .dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent2));
+      box-shadow: 0 0 16px var(--accent);
+      animation: pulse 3.5s ease-in-out infinite;
+    }
+    .vibe-aurora .brand .name {
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      font-size: 0.95rem;
+      opacity: 0.95;
+    }
+    .vibe-aurora .theme-toggle {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05));
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, background 0.3s ease, border-color 0.3s ease;
+      box-shadow: var(--glow);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .vibe-aurora .theme-toggle:hover { transform: translateY(-1px); }
+    .vibe-aurora .theme-toggle:active { transform: translateY(0); }
+    .vibe-aurora .hero {
+      z-index: 2;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      text-align: center;
+      margin-top: 6px;
+    }
+    .vibe-aurora h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4.5vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: 0.2px;
+      background: linear-gradient(90deg, var(--text), var(--accent) 50%, var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 1px 0 rgba(255,255,255,0.15));
+    }
+    .vibe-aurora .subtitle {
+      margin: 0 auto;
+      max-width: 50ch;
+      color: var(--muted);
+      font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+      letter-spacing: 0.2px;
+    }
+    .vibe-aurora .glass {
+      z-index: 2;
+      margin: 16px auto 0;
+      width: min(900px, 100%);
+      background: linear-gradient(180deg, var(--card), transparent 140%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: clamp(16px, 2.5vw, 24px);
+      display: grid;
+      gap: 16px;
+      backdrop-filter: blur(12px) saturate(1.2);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--glow);
+    }
+    .vibe-aurora .glass::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: conic-gradient(from 180deg at 50% 50%, rgba(255,255,255,0.25), rgba(255,255,255,0.05), rgba(255,255,255,0.25));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0.35;
+      animation: spin 24s linear infinite;
+    }
+    .vibe-aurora .lines {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .vibe-aurora .blurb {
+      margin: 0;
+      color: var(--text);
+      opacity: 0.92;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .vibe-aurora .quote {
+      margin: 0;
+      color: var(--muted);
+      font-style: italic;
+      font-size: 0.95rem;
+    }
+    .vibe-aurora .meter {
+      position: relative;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(0,0,0,0.1));
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .vibe-aurora .meter .fill {
+      position: absolute;
+      inset: 0;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 20px rgba(122,215,255,0.35);
+      transition: width 1.2s cubic-bezier(.2,.8,.2,1);
+    }
+    .vibe-aurora .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .vibe-aurora .btn {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05));
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+      box-shadow: var(--glow);
+      position: relative;
+      overflow: hidden;
+    }
+    .vibe-aurora .btn.primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: #0d0f1e;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+    }
+    .vibe-aurora .btn:hover { transform: translateY(-1px); }
+    .vibe-aurora .btn:active { transform: translateY(0); }
+    .vibe-aurora .prompt {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .vibe-aurora .status {
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 4px;
+      border-top: 1px dashed rgba(255,255,255,0.12);
+      opacity: 0.95;
+      font-size: 0.9rem;
+    }
+    .vibe-aurora .status .hint { color: var(--muted); }
+    .vibe-aurora #last-updated {
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .vibe-aurora .ripple {
+      position: absolute;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.6), transparent 60%);
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(1);
+      animation: ripple 1000ms ease-out forwards;
+      mix-blend-mode: screen;
+      z-index: 1;
+    }
+    .vibe-aurora .content-tilt {
+      transition: transform 300ms ease;
+      will-change: transform;
+    }
+
+    @keyframes drift { to { background-position: 600px 600px; } }
+    @keyframes floatA {
+      0%,100% { transform: translate(-50%, -50%) translateY(0); }
+      50% { transform: translate(-50%, -50%) translateY(18px); }
+    }
+    @keyframes floatB {
+      0%,100% { transform: translate(-50%, -50%) translateY(0); }
+      50% { transform: translate(-50%, -50%) translateY(-22px); }
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 10px var(--accent); transform: scale(1); }
+      50% { box-shadow: 0 0 18px var(--accent); transform: scale(1.08); }
+    }
+    @keyframes spin { to { transform: rotate(1turn); } }
+    @keyframes ripple {
+      to { opacity: 0; transform: translate(-50%, -50%) scale(18); }
+    }
+
+    @media (max-width: 720px) {
+      .vibe-aurora .lines { grid-template-columns: 1fr; }
+      .vibe-aurora { min-height: 520px; }
+      .vibe-aurora .status { flex-direction: column; align-items: flex-start; gap: 6px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vibe-aurora *, .vibe-aurora *::before, .vibe-aurora *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+
+  <div class="backdrop">
+    <div class="stars"></div>
+  </div>
+
+  <div class="topbar content-tilt">
+    <div class="brand" aria-label="Brand">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="name">Liminal Studio</span>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">
+      <span class="icon" aria-hidden="true">☾</span>
+      <span class="label">Night</span>
+    </button>
+  </div>
+
+  <div class="hero content-tilt">
+    <h1>Serene Momentum</h1>
+    <p class="subtitle">A living canvas for focus, calm, and delightful micro-motions.</p>
+  </div>
+
+  <div class="glass content-tilt" role="region" aria-label="Focus Card">
+    <div class="lines">
+      <p class="blurb">Shape your next minute with intention. Tap the card to ripple the night, or choose a prompt to nudge your day forward.</p>
+      <p class="quote">“Simplicity is about subtracting the obvious and adding the meaningful.” — John Maeda</p>
+    </div>
+
+    <div class="meter" aria-label="Vibe meter">
+      <div class="fill" style="width: 0%"></div>
+    </div>
+
+    <div class="cta">
+      <button class="btn primary" type="button" data-action="session">Start a Session</button>
+      <button class="btn" type="button" data-action="prompt">Random Prompt</button>
+    </div>
+
+    <div class="prompt" aria-live="polite"></div>
+  </div>
+
+  <div class="status content-tilt">
+    <span class="hint">Tip: Move your cursor to tilt; click anywhere to make ripples.</span>
+    <span id="last-updated">Last updated: 2026-02-03 16:32:35 EST</span>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.currentScript.parentElement;
+      const themeBtn = root.querySelector('.theme-toggle');
+      const icon = themeBtn.querySelector('.icon');
+      const label = themeBtn.querySelector('.label');
+      const fill = root.querySelector('.fill');
+      const promptEl = root.querySelector('.prompt');
+      const contentTilts = root.querySelectorAll('.content-tilt');
+
+      // Theme persistence
+      const saved = localStorage.getItem('vibeTheme');
+      if (saved) root.dataset.theme = saved;
+
+      function reflectTheme() {
+        const day = root.dataset.theme === 'day';
+        icon.textContent = day ? '☼' : '☾';
+        label.textContent = day ? 'Day' : 'Night';
+      }
+      reflectTheme();
+
+      themeBtn.addEventListener('click', () => {
+        root.dataset.theme = root.dataset.theme === 'day' ? 'night' : 'day';
+        localStorage.setItem('vibeTheme', root.dataset.theme);
+        reflectTheme();
+      });
+
+      // Meter animation
+      requestAnimationFrame(() => {
+        setTimeout(() => { fill.style.width = (60 + Math.round(Math.random()*25)) + '%'; }, 120);
+      });
+
+      // CTA actions
+      const prompts = [
+        "Write one crisp sentence that clarifies your goal.",
+        "Breathe in for 4, hold 4, out for 6. Repeat twice.",
+        "Tidy one small thing in your space.",
+        "Draft the worst version first—then improve one line.",
+        "Stand, stretch, and look at something 20 feet away.",
+        "Choose the next 5-minute task and start the timer.",
+        "Remove one non-essential step from what you're doing.",
+        "Switch to mono-tasking for just three minutes.",
+        "Ask: what would make this 10% simpler?",
+        "Commit to a small win before the next song ends."
+      ];
+
+      root.addEventListener('click', (e) => {
+        // Avoid ripples for button clicks; still handle session action
+        const target = e.target.closest('button');
+        if (target?.dataset.action === 'session') {
+          fill.style.width = (80 + Math.round(Math.random()*20)) + '%';
+          promptEl.textContent = "Session started: focus gently, ship deliberately.";
+          return;
+        }
+        if (target?.dataset.action === 'prompt') {
+          const choice = prompts[Math.floor(Math.random() * prompts.length)];
+          promptEl.textContent = choice;
+          return;
+        }
+        // Ripple effect
+        const rect = root.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        root.appendChild(ripple);
+        ripple.addEventListener('animationend', () => ripple.remove());
+      });
+
+      // Parallax tilt and highlight
+      function setMouseVars(x, y) {
+        const r = root.getBoundingClientRect();
+        const px = (x - r.left) / r.width;
+        const py = (y - r.top) / r.height;
+        root.style.setProperty('--mx', Math.round(px*100) + '%');
+        root.style.setProperty('--my', Math.round(py*100) + '%');
+        const rx = (py - 0.5) * -6; // degrees
+        const ry = (px - 0.5) * 6;
+        contentTilts.forEach(el => { el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`; });
+      }
+
+      root.addEventListener('pointermove', (e) => setMouseVars(e.clientX, e.clientY));
+      root.addEventListener('pointerleave', () => {
+        root.style.removeProperty('--mx');
+        root.style.removeProperty('--my');
+        contentTilts.forEach(el => { el.style.transform = 'none'; });
+      });
+
+      // Last updated timestamp
+      const last = root.querySelector('#last-updated');
+      try {
+        const dt = new Date();
+        const withTZ = new Intl.DateTimeFormat([], {
+          year: 'numeric', month: 'short', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+        }).format(dt);
+        last.textContent = `Last updated: ${withTZ}`;
+      } catch {
+        last.textContent = `Last updated: ${new Date().toLocaleString()}`;
+      }
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
