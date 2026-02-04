@@ -73,485 +73,282 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="observatory" data-theme="lunar" aria-label="Aurora Observatory — an interactive sky canvas">
+<section class="loom" data-theme="velvet" aria-label="Kaleido Loom — an interactive generative tapestry">
   <style>
-    .observatory {
-      --h: 230;                 /* accent hue */
-      --tempo: 1;               /* motion multiplier */
-      --ink: hsl(225 25% 14%);
-      --fg: hsl(220 20% 98%);
-      --stroke: color-mix(in srgb, var(--fg), transparent 80%);
+    .loom {
+      --h: 268;                  /* base hue */
+      --ink: hsl(0 0% 98%);
+      --bg-1: hsl(250 36% 10%);
+      --bg-2: hsl(260 42% 16%);
+      --stroke: color-mix(in srgb, white, transparent 82%);
       --glass-1: rgba(255,255,255,.08);
       --glass-2: rgba(255,255,255,.18);
-
+      --tempo: 1;
+      --mx: 50%;
+      --my: 50%;
       position: relative;
       display: grid;
-      gap: 18px;
-      padding: clamp(18px, 3.6vw, 34px);
+      gap: 16px;
+      padding: clamp(18px, 3.6vw, 36px);
       border-radius: 28px;
       border: 1px solid var(--stroke);
-      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro", Inter, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      color: var(--fg);
+      color: var(--ink);
       background:
-        radial-gradient(1100px 600px at var(--mx, 62%) var(--my, 20%), rgba(255,255,255,.08), transparent 55%),
-        linear-gradient(180deg, hsl(calc(var(--h) - 40) 40% 12%), hsl(calc(var(--h) + 10) 50% 16%) 55%, hsl(calc(var(--h) + 40) 50% 10%));
-      box-shadow: 0 34px 120px rgba(5, 10, 25, .6), inset 0 1px 0 rgba(255,255,255,.06);
+        radial-gradient(1000px 600px at var(--mx) var(--my), rgba(255,255,255,.10), transparent 45%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro", Inter, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      box-shadow: 0 40px 120px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
       overflow: clip;
       isolation: isolate;
     }
-    .observatory[data-theme="solar"] {
-      --ink: hsl(222 33% 12%);
-      --fg: hsl(222 20% 10%);
-      --stroke: color-mix(in srgb, var(--ink), transparent 85%);
-      --glass-1: rgba(255,255,255,.55);
-      --glass-2: rgba(255,255,255,.75);
+    .loom[data-theme="silk"]{
+      --ink: hsl(220 20% 16%);
+      --bg-1: hsl(240 30% 94%);
+      --bg-2: hsl(250 36% 88%);
+      --stroke: color-mix(in srgb, black, transparent 86%);
+      --glass-1: rgba(255,255,255,.65);
+      --glass-2: rgba(255,255,255,.85);
       color: var(--ink);
-      background:
-        radial-gradient(1200px 700px at var(--mx, 60%) var(--my, 24%), rgba(255,255,255,.55), transparent 50%),
-        linear-gradient(180deg, hsl(calc(var(--h)-40) 75% 95%), hsl(calc(var(--h)-10) 70% 86%) 55%, hsl(calc(var(--h)+20) 68% 90%));
-      box-shadow: 0 28px 90px rgba(24, 32, 56, 0.22), inset 0 1px 0 rgba(255,255,255,.55);
+      box-shadow: 0 26px 80px rgba(16, 22, 40, .20), inset 0 1px 0 rgba(255,255,255,.65);
     }
 
-    /* Ambient grain */
-    .observatory::after {
-      content: "";
-      position: absolute; inset: -20%;
+    /* Ambient texture */
+    .loom::after{
+      content:"";
+      position: absolute; inset: -12%;
       background:
-        radial-gradient(1000px 420px at 18% 12%, rgba(0,0,0,.08), transparent 60%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2' type='fractalNoise'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+        radial-gradient(1000px 380px at 14% 10%, rgba(0,0,0,.08), transparent 60%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='2' type='fractalNoise'/%3E%3CfeColorMatrix values='0 0 0 0 0   0 0 0 0 0   0 0 0 0 0   0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       mix-blend-mode: multiply;
-      opacity: .8;
+      opacity: .9;
       pointer-events: none;
       animation: drift 28s linear infinite;
     }
     @keyframes drift { to { transform: translate3d(2%, -2%, 0); } }
 
-    /* Chrome */
-    .observatory .chrome { display: flex; align-items: center; justify-content: space-between; gap: 12px; z-index: 2; }
-    .observatory .brand {
-      display: inline-flex; align-items: center; gap: 12px; padding: 10px 14px;
-      border-radius: 999px; border: 1px solid var(--stroke);
+    /* Top bar */
+    .loom .topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; z-index:2; }
+    .loom .brand{
+      display:inline-flex; align-items:center; gap:12px; padding:10px 14px;
+      border-radius:999px; border:1px solid var(--stroke);
       background: linear-gradient(180deg, var(--glass-1), transparent);
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-      user-select: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+      user-select:none;
     }
-    .observatory .mark {
-      width: 22px; height: 22px; border-radius: 50%;
+    .loom .logo{
+      width:22px; height:22px; border-radius:8px; position:relative; display:inline-block;
       background:
-        radial-gradient(circle at 35% 35%, white 10%, hsl(var(--h) 90% 70%) 35%, transparent 45%),
-        conic-gradient(from 0deg, hsl(var(--h) 85% 55%), hsl(calc(var(--h)+70) 80% 55%), hsl(calc(var(--h)+140) 80% 55%), hsl(var(--h) 85% 55%));
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,.7), 0 0 22px hsl(var(--h) 90% 60% / .6);
-      animation: spin 18s linear infinite;
+        conic-gradient(from 0deg, hsl(var(--h) 85% 62%), hsl(calc(var(--h)+80) 85% 62%), hsl(calc(var(--h)+160) 85% 62%), hsl(var(--h) 85% 62%));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.65), 0 0 16px hsl(var(--h) 90% 60% / .55);
+      animation: roll calc(18s * var(--tempo)) linear infinite;
     }
-    @keyframes spin { to { transform: rotate(1turn) hue-rotate(1turn); } }
-    .observatory .brand .name { font-weight: 800; letter-spacing: .2px; font-size: .98rem; }
+    @keyframes roll { to { transform: rotate(1turn) hue-rotate(1turn); } }
+    .loom .name{ font-weight:900; letter-spacing:.2px; font-size:.98rem; }
 
-    .observatory .toggle {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 14px; border-radius: 14px; cursor: pointer;
-      font-weight: 800; border: 1px solid var(--stroke);
+    .loom .controls{ display:flex; flex-wrap: wrap; gap:10px; }
+    .loom .pill{
+      border:1px solid var(--stroke);
       background: linear-gradient(180deg, var(--glass-1), transparent);
       color: currentColor;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.14);
-      transition: transform .18s ease, filter .28s ease;
+      padding:10px 14px; border-radius:14px; cursor:pointer; font-weight:800; letter-spacing:.25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.14);
+      transition: transform .16s ease, filter .24s ease, background .24s ease;
     }
-    .observatory .toggle:hover { transform: translateY(-1px); filter: saturate(1.05); }
+    .loom .pill:hover{ transform: translateY(-1px); filter: saturate(1.05); }
+    .loom .pill.primary{
+      background: linear-gradient(90deg, hsl(var(--h) 78% 60%), hsl(calc(var(--h)+90) 78% 60%));
+      color: #0b1022; text-shadow: 0 1px 0 rgba(255,255,255,.45);
+      box-shadow: 0 12px 32px rgba(0,0,0,.2);
+    }
 
     /* Hero */
-    .observatory .hero { text-align: center; display: grid; gap: 6px; z-index: 2; }
-    .observatory h1 {
-      margin: 0;
-      font-size: clamp(2.4rem, 6.6vw, 4.6rem);
-      line-height: 1.02;
-      letter-spacing: .2px;
+    .loom .hero{ display:grid; gap:6px; text-align:center; z-index:2; }
+    .loom h1{
+      margin:0;
+      font-size: clamp(2.4rem, 6.4vw, 4.8rem);
+      line-height:1.02; letter-spacing:.2px;
       background: linear-gradient(90deg, hsl(calc(var(--h)+40) 85% 70%), hsl(calc(var(--h)+240) 80% 75%));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
+      -webkit-background-clip:text; background-clip:text; color: transparent;
       filter: drop-shadow(0 6px 18px rgba(0,0,0,.25));
     }
-    .observatory .sub { margin: 0 auto; max-width: 62ch; color: color-mix(in srgb, var(--fg), transparent 40%); font-size: clamp(1rem, 2.1vw, 1.14rem); }
+    .loom .sub{ margin:0 auto; max-width:62ch; color: color-mix(in srgb, var(--ink), transparent 38%); font-size: clamp(1rem, 2.1vw, 1.14rem); }
 
-    /* Sky canvas */
-    .observatory .sky {
+    /* Kaleido canvas */
+    .loom .kaleido{
       position: relative;
-      width: min(1000px, 100%);
-      aspect-ratio: 21 / 9;
+      width: min(980px, 100%);
+      aspect-ratio: 1 / 1;
       margin: 8px auto 0;
-      border-radius: 24px;
+      border-radius: 26px;
       border: 1px solid var(--stroke);
       overflow: hidden;
       background:
-        radial-gradient(180% 120% at 30% 10%, rgba(255,255,255,.12), transparent 50%),
-        linear-gradient(180deg, hsl(calc(var(--h)-20) 50% 16%), hsl(calc(var(--h)+30) 55% 12%));
-      box-shadow: 0 24px 70px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.08);
+        radial-gradient(120% 120% at 40% 20%, rgba(255,255,255,.10), transparent 45%),
+        linear-gradient(180deg, hsl(calc(var(--h)-20) 55% 16%), hsl(calc(var(--h)+30) 60% 12%));
+      box-shadow: 0 26px 70px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.06);
       transform-style: preserve-3d;
-      perspective: 1200px;
+      perspective: 1000px;
     }
-    .observatory[data-theme="solar"] .sky {
+    .loom[data-theme="silk"] .kaleido{
       background:
-        radial-gradient(180% 120% at 30% 10%, rgba(255,255,255,.45), transparent 50%),
-        linear-gradient(180deg, hsl(calc(var(--h)-20) 70% 92%), hsl(calc(var(--h)+16) 72% 86%));
+        radial-gradient(110% 110% at 40% 20%, rgba(255,255,255,.55), transparent 45%),
+        linear-gradient(180deg, hsl(calc(var(--h)-20) 85% 93%), hsl(calc(var(--h)+30) 82% 86%));
     }
-
-    /* Stars */
-    .observatory .star {
-      position: absolute;
-      width: var(--s, 2px); height: var(--s, 2px);
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,.95), rgba(255,255,255,.0) 60%);
-      opacity: .75;
-      animation: twinkle var(--d, 6s) ease-in-out infinite;
-      animation-delay: var(--delay, 0s);
-      filter: drop-shadow(0 0 6px rgba(255,255,255,.35));
-      z-index: 1;
+    .loom .kaleido-svg{
+      width: 100%; height: 100%;
+      display: block;
+      transform-origin: 50% 50%;
+      transform: rotate(var(--spin, 0deg));
+      transition: filter .28s ease;
+      filter: saturate(1.15) contrast(1.02);
     }
-    @keyframes twinkle { 50% { opacity: 1; transform: scale(1.35); } }
-
-    /* Aurora ribbons */
-    .observatory .aurora {
-      position: absolute; inset: -20% -40%;
+    .loom .grain{
+      position:absolute; inset:-10%;
       background:
-        conic-gradient(from 0deg at 50% 50%,
-          hsl(calc(var(--h) + 60) 90% 70% / .0) 0 8%,
-          hsl(calc(var(--h) + 60) 90% 70% / .35) 14%,
-          hsl(calc(var(--h) + 120) 90% 70% / .45) 22%,
-          hsl(calc(var(--h) + 180) 90% 70% / .35) 30%,
-          hsl(calc(var(--h) + 240) 90% 70% / .0) 38% 100%);
+        repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 1px, transparent 1px 40px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 40px);
+      opacity:.35; mix-blend-mode: overlay; pointer-events:none;
+      animation: pan 18s linear infinite;
+    }
+    @keyframes pan { to { transform: translate3d(2%, -2%, 0) } }
+
+    /* Ripples */
+    .loom .ripple{
+      position:absolute; left:0; top:0; width:18px; height:18px; border-radius:50%;
+      background: radial-gradient(circle, rgba(255,255,255,.8), rgba(255,255,255,0) 62%);
+      transform: translate(-50%, -50%) scale(.6);
+      animation: ring 1100ms ease-out forwards;
       mix-blend-mode: screen;
-      filter: blur(24px) saturate(1.2);
-      transform: translate3d(0,0,0);
-      animation: wave calc(16s * var(--tempo)) linear infinite;
-      opacity: .9;
-      z-index: 0;
-      mask-image: radial-gradient(120% 120% at 50% 80%, black 35%, transparent 80%);
+      pointer-events:none;
     }
-    .observatory .aurora.alt {
-      animation-duration: calc(22s * var(--tempo));
-      filter: blur(28px) saturate(1.25) hue-rotate(30deg);
-      opacity: .85;
-      mask-image: radial-gradient(120% 120% at 55% 60%, black 40%, transparent 85%);
-    }
-    .observatory .aurora.thin {
-      filter: blur(18px) saturate(1.3) hue-rotate(-20deg);
-      animation-duration: calc(12s * var(--tempo));
-      opacity: .75;
-      mask-image: radial-gradient(120% 120% at 45% 70%, black 26%, transparent 78%);
-    }
-    @keyframes wave { to { transform: rotate(1turn) } }
-    .observatory[data-theme="solar"] .aurora { mix-blend-mode: overlay; opacity: .6; }
-
-    /* Planets (orbits) */
-    .observatory .planet {
-      position: absolute;
-      width: var(--size, 12px); height: var(--size, 12px);
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, white, hsl(calc(var(--h) + var(--tint, 0)) 80% 60%));
-      box-shadow: 0 0 18px hsl(calc(var(--h) + var(--tint, 0)) 90% 60% / .35);
-      offset-rotate: 0deg;
-      animation: orbit linear infinite;
-      z-index: 2;
-    }
-    @keyframes orbit { to { offset-distance: 100%; } }
-
-    /* Comets */
-    .observatory .meteor {
-      position: absolute; left: 0; top: 0;
-      width: var(--w, 160px); height: 2px;
-      background: linear-gradient(90deg, white, rgba(255,255,255,0) 65%);
-      border-radius: 2px;
-      box-shadow: 0 0 12px rgba(255,255,255,.4);
-      transform: translate(-50%, -50%) rotate(var(--a, -28deg));
-      animation: streak var(--t, 1200ms) linear forwards;
-      z-index: 3;
-      pointer-events: none;
-      opacity: .95;
-    }
-    @keyframes streak { to { transform: translate(calc(-50% + var(--dx, 50vw)), calc(-50% + var(--dy, 28vh))) rotate(var(--a, -28deg)); opacity: 0; } }
-
-    /* Constellations */
-    .observatory .constellations {
-      position: absolute; inset: 0; z-index: 2; pointer-events: none;
-      opacity: .9;
-      filter: drop-shadow(0 0 8px rgba(255,255,255,.25));
-    }
-    .observatory .constellations line {
-      stroke: rgba(255,255,255,.75);
-      stroke-width: 1.2;
-      stroke-linecap: round;
-      vector-effect: non-scaling-stroke;
-    }
-    .observatory .constellations circle {
-      fill: rgba(255,255,255,.9);
-      r: 1.8;
+    @keyframes ring {
+      60% { transform: translate(-50%, -50%) scale(16); opacity: .28; }
+      100%{ transform: translate(-50%, -50%) scale(22); opacity: 0; }
     }
 
-    /* Controls & meta */
-    .observatory .controls { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; z-index: 2; }
-    .observatory .btn {
-      border: 1px solid var(--stroke);
-      background: linear-gradient(90deg, hsl(var(--h) 75% 60%), hsl(calc(var(--h)+80) 75% 60%));
-      color: #091021;
-      padding: 10px 14px; border-radius: 14px; cursor: pointer; font-weight: 900; letter-spacing: .25px;
-      text-shadow: 0 1px 0 rgba(255,255,255,.45);
-      box-shadow: 0 10px 28px rgba(0,0,0,.18);
-      transition: transform .14s ease, filter .28s ease;
+    /* Meta */
+    .loom .ticker{ min-height:1.4em; margin:2px auto 0; text-align:center; color: color-mix(in srgb, var(--ink), transparent 40%); font-size:.98rem; transition: opacity .22s ease; z-index:2; }
+    .loom .status{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border-top:1px dashed var(--stroke); padding-top:10px; margin-top:2px;
+      font-size:.92rem; color: color-mix(in srgb, var(--ink), transparent 40%);
+      z-index:2;
     }
-    .observatory .btn:hover { transform: translateY(-1px); filter: saturate(1.06); }
-    .observatory .btn.ghost {
-      background: linear-gradient(180deg, var(--glass-1), transparent);
-      color: currentColor; text-shadow: none; font-weight: 700;
-    }
-
-    .observatory .ticker { min-height: 1.4em; margin: 2px auto 0; text-align: center; color: color-mix(in srgb, var(--fg), transparent 40%); font-size: .98rem; transition: opacity .24s ease; z-index: 2; }
-
-    .observatory .status {
-      display: flex; align-items: center; justify-content: space-between; gap: 10px;
-      border-top: 1px dashed var(--stroke); padding-top: 10px; margin-top: 2px;
-      font-size: .92rem; color: color-mix(in srgb, var(--fg), transparent 40%);
-      z-index: 2;
-    }
-    .observatory #last-updated { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .loom #last-updated{ font-variant-numeric: tabular-nums; white-space: nowrap; }
 
     /* Tilt */
-    .observatory .tilt { transition: transform 280ms ease; will-change: transform; }
+    .loom .tilt{ transition: transform 260ms ease; will-change: transform; }
 
-    @media (max-width: 760px) {
-      .observatory .sky { aspect-ratio: 1 / 1; }
-      .observatory .status { flex-direction: column; align-items: flex-start; gap: 6px; }
+    @media (max-width: 760px){
+      .loom .status{ flex-direction: column; align-items: flex-start; gap:6px; }
     }
-    @media (prefers-reduced-motion: reduce) {
-      .observatory *, .observatory *::before, .observatory *::after {
+    @media (prefers-reduced-motion: reduce){
+      .loom *, .loom *::before, .loom *::after{
         animation: none !important; transition: none !important;
       }
     }
   </style>
 
-  <div class="chrome">
+  <div class="topbar">
     <div class="brand">
-      <span class="mark" aria-hidden="true"></span>
-      <span class="name">Aurora Observatory</span>
+      <span class="logo" aria-hidden="true"></span>
+      <span class="name">Kaleido Loom</span>
     </div>
-    <button class="toggle" type="button" aria-label="Toggle theme">
-      <span class="i" aria-hidden="true">☾</span>
-      <span class="l">Lunar</span>
-    </button>
+    <div class="controls">
+      <button class="pill primary" type="button" data-action="palette">Palette</button>
+      <button class="pill" type="button" data-action="pulse">Pulse</button>
+      <button class="pill" type="button" data-action="shuffle">Shuffle</button>
+      <button class="pill" type="button" data-action="theme"><span class="ico" aria-hidden="true">◐</span> <span class="lab">Velvet</span></button>
+    </div>
   </div>
 
   <div class="hero">
-    <h1>Listen to the Light</h1>
-    <p class="sub">An ambient sky poster. Move to parallax, tap to cast a comet, and redraw the heavens.</p>
+    <h1>Weave Light</h1>
+    <p class="sub">An interactive tapestry. Drag to tilt and orbit, tap to ripple, shuffle to remix the loom.</p>
   </div>
 
-  <div class="sky tilt" role="img" aria-label="Generative aurora with stars, constellations, orbits, and comets">
-    <div class="aurora"></div>
-    <div class="aurora alt"></div>
-    <div class="aurora thin"></div>
-    <svg class="constellations" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
-    <!-- stars, planets, and comets are generated -->
+  <div class="kaleido tilt" role="img" aria-label="Generative kaleidoscopic tapestry">
+    <svg class="kaleido-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <defs>
+        <filter id="glow" color-interpolation-filters="sRGB">
+          <feGaussianBlur stdDeviation="0.6" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- geometry generated by script -->
+    </svg>
+    <div class="grain" aria-hidden="true"></div>
   </div>
 
-  <div class="controls tilt" role="group" aria-label="Observatory controls">
-    <button class="btn" type="button" data-action="palette">Palette</button>
-    <button class="btn ghost" type="button" data-action="constellations">Constellations</button>
-    <button class="btn ghost" type="button" data-action="comet">Comet</button>
-    <button class="btn ghost" type="button" data-action="reset">Reset</button>
-  </div>
-
-  <div class="ticker tilt" aria-live="polite"></div>
+  <div class="ticker" aria-live="polite"></div>
 
   <div class="status tilt">
-    <span>Tip: Drag to tilt; click anywhere in the sky to launch a comet.</span>
-    <span id="last-updated">Last updated: 2026-02-04 00:47:03 EST</span>
+    <span>Tip: Orbit with your cursor. Click inside the canvas to cast ripples.</span>
+    <span id="last-updated">Last updated: 2026-02-04 01:49:55 EST</span>
   </div>
 
   <script>
-    (function () {
+    (function(){
       const root = document.currentScript.parentElement;
-      const sky = root.querySelector('.sky');
-      const toggle = root.querySelector('.toggle');
-      const icon = toggle.querySelector('.i');
-      const label = toggle.querySelector('.l');
+      const svg = root.querySelector('.kaleido-svg');
+      const canvas = root.querySelector('.kaleido');
       const ticker = root.querySelector('.ticker');
-      const svg = root.querySelector('.constellations');
+      const lab = root.querySelector('[data-action="theme"] .lab');
 
-      // Theme persistence
-      const savedTheme = localStorage.getItem('observatoryTheme');
-      if (savedTheme) root.dataset.theme = savedTheme;
+      // Theme
+      const saved = localStorage.getItem('loomTheme');
+      if(saved) root.dataset.theme = saved;
       reflectTheme();
-
-      function reflectTheme() {
-        const solar = root.dataset.theme === 'solar';
-        icon.textContent = solar ? '☼' : '☾';
-        label.textContent = solar ? 'Solar' : 'Lunar';
-      }
-      toggle.addEventListener('click', () => {
-        root.dataset.theme = root.dataset.theme === 'solar' ? 'lunar' : 'solar';
-        localStorage.setItem('observatoryTheme', root.dataset.theme);
+      root.querySelector('[data-action="theme"]').addEventListener('click', () => {
+        root.dataset.theme = root.dataset.theme === 'silk' ? 'velvet' : 'silk';
+        localStorage.setItem('loomTheme', root.dataset.theme);
         reflectTheme();
-        speak(root.dataset.theme === 'solar' ? "Daybreak lifts the veil." : "Night gathers its colors.");
+        speak(root.dataset.theme === 'silk' ? "Silk morning, crisp and clear." : "Velvet night, deep and warm.");
       });
+      function reflectTheme(){ lab.textContent = root.dataset.theme === 'silk' ? 'Silk' : 'Velvet'; }
 
-      // Stars
-      function generateStars(n = 140) {
-        const rect = sky.getBoundingClientRect();
-        for (let i = 0; i < n; i++) {
-          const s = document.createElement('span');
-          s.className = 'star';
-          const size = Math.random() < .12 ? 3 : 1 + Math.random() * 2;
-          s.style.setProperty('--s', size + 'px');
-          s.style.left = Math.random() * rect.width + 'px';
-          s.style.top = Math.random() * rect.height + 'px';
-          s.style.setProperty('--d', (4 + Math.random() * 6) + 's');
-          s.style.setProperty('--delay', (-Math.random() * 6) + 's');
-          sky.appendChild(s);
-        }
-      }
-      generateStars(160);
-
-      // Planets (orbits)
-      const planets = [];
-      addPlanet({ size: 12, tint: 80, dur: 26, path: ellipse(50, 37, 42, 28, 10) });
-      addPlanet({ size: 8, tint: -40, dur: 18, path: ellipse(50, 60, 32, 18, -30) });
-      function addPlanet({ size, tint, dur, path }) {
-        const p = document.createElement('div');
-        p.className = 'planet';
-        p.style.setProperty('--size', size + 'px');
-        p.style.setProperty('--tint', tint);
-        p.style.setProperty('--dur', dur + 's');
-        p.style.setProperty('offset-path', `path('${path}')`);
-        p.style.animationDuration = `calc(${dur}s * var(--tempo))`;
-        p.style.setProperty('offset-distance', (Math.random()*100) + '%');
-        sky.appendChild(p);
-        planets.push(p);
-      }
-      function ellipse(cx, cy, rx, ry, tilt = 0) {
-        // SVG arc path in percentage space of the sky box (0..100)
-        const toXY = (a) => [cx + rx * Math.cos(a), cy + ry * Math.sin(a)];
-        const a0 = (tilt) * Math.PI / 180, a1 = a0 + Math.PI * 2;
-        const [x0, y0] = toXY(a0), [x1, y1] = toXY(a1);
-        // Approximate ellipse with two arcs
-        const mid = a0 + Math.PI;
-        const [xm, ym] = toXY(mid);
-        return `M ${x0} ${y0} A ${rx} ${ry} ${tilt} 0 1 ${xm} ${ym} A ${rx} ${ry} ${tilt} 0 1 ${x1} ${y1}`;
-      }
-
-      // Constellations
-      let constellationsOn = false;
-      function drawConstellations() {
-        while (svg.firstChild) svg.removeChild(svg.firstChild);
-        const groups = 3 + Math.floor(Math.random() * 2);
-        for (let g = 0; g < groups; g++) {
-          const nodes = 5 + Math.floor(Math.random() * 3);
-          const pts = [];
-          for (let i = 0; i < nodes; i++) {
-            pts.push([rand(8, 92), rand(8, 72)]);
-          }
-          for (let i = 0; i < pts.length - 1; i++) {
-            const ln = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-            ln.setAttribute('x1', pts[i][0]); ln.setAttribute('y1', pts[i][1]);
-            ln.setAttribute('x2', pts[i+1][0]); ln.setAttribute('y2', pts[i+1][1]);
-            svg.appendChild(ln);
-          }
-          for (const [x, y] of pts) {
-            const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', '1.4');
-            svg.appendChild(c);
-          }
-        }
-        svg.style.opacity = 1;
-      }
-      function clearConstellations() {
-        svg.style.opacity = 0;
-        while (svg.firstChild) svg.removeChild(svg.firstChild);
-      }
-      function rand(a, b) { return (Math.random() * (b - a) + a).toFixed(2); }
-
-      // Pointer glow & tilt
-      const tilts = root.querySelectorAll('.tilt');
-      function setMouseVars(clientX, clientY) {
-        const r = root.getBoundingClientRect();
-        const px = (clientX - r.left) / r.width;
-        const py = (clientY - r.top) / r.height;
-        root.style.setProperty('--mx', Math.round(px * 100) + '%');
-        root.style.setProperty('--my', Math.round(py * 100) + '%');
-        const rx = (py - 0.5) * -6;
-        const ry = (px - 0.5) * 6;
-        tilts.forEach(el => el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`);
-      }
-      root.addEventListener('pointermove', e => setMouseVars(e.clientX, e.clientY));
-      root.addEventListener('pointerleave', () => {
-        root.style.removeProperty('--mx'); root.style.removeProperty('--my');
-        tilts.forEach(el => el.style.transform = 'none');
-      });
-
-      // Sky interactions: click to comet
-      sky.addEventListener('click', (e) => {
-        const rect = sky.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        comet({ x, y, dx: rect.width * .6, dy: rect.height * .34, angle: -28 + (Math.random()*8-4) });
-        speak("A comet writes for a moment.");
-      });
-
-      function comet({ x, y, dx, dy, angle }) {
-        const m = document.createElement('span');
-        m.className = 'meteor';
-        m.style.left = x + 'px';
-        m.style.top = y + 'px';
-        m.style.setProperty('--dx', dx + 'px');
-        m.style.setProperty('--dy', dy + 'px');
-        m.style.setProperty('--a', angle + 'deg');
-        m.style.setProperty('--w', (120 + Math.random()*120) + 'px');
-        m.style.setProperty('--t', (900 + Math.random()*700) + 'ms');
-        sky.appendChild(m);
-        setTimeout(() => m.remove(), 2000);
-      }
-
-      // Controls
-      const hues = [200, 230, 262, 295, 340, 32, 155];
+      // Palette
+      const hues = [195, 222, 268, 312, 18, 142, 356];
       root.querySelector('[data-action="palette"]').addEventListener('click', () => {
-        const hue = hues[Math.floor(Math.random() * hues.length)];
+        const hue = hues[Math.floor(Math.random()*hues.length)];
         root.style.setProperty('--h', hue);
-        speak("Palette shifts across the spectrum.");
-      });
-      root.querySelector('[data-action="constellations"]').addEventListener('click', () => {
-        constellationsOn = !constellationsOn;
-        if (constellationsOn) { drawConstellations(); speak("Lines connect the quiet."); }
-        else { clearConstellations(); speak("The sky unthreads."); }
-      });
-      root.querySelector('[data-action="comet"]').addEventListener('click', () => {
-        const rect = sky.getBoundingClientRect();
-        const x = rand(0.05*rect.width, 0.35*rect.width);
-        const y = rand(0.05*rect.height, 0.35*rect.height);
-        comet({ x, y, dx: rect.width * .7, dy: rect.height * .42, angle: -26 });
-      });
-      root.querySelector('[data-action="reset"]').addEventListener('click', () => {
-        root.style.removeProperty('--h');
-        clearConstellations(); constellationsOn = false;
-        Array.from(sky.querySelectorAll('.meteor')).forEach(m => m.remove());
-        speak("Back to first night.");
-        if (root.dataset.theme !== 'lunar') {
-          root.dataset.theme = 'lunar'; localStorage.setItem('observatoryTheme', 'lunar'); reflectTheme();
-        }
+        draw(); // recolor strokes
+        speak("Palette threads shift.");
       });
 
-      // Ticker cycle
+      // Pulse
+      let pulsing = false;
+      root.querySelector('[data-action="pulse"]').addEventListener('click', () => {
+        pulsing = !pulsing;
+        root.style.setProperty('--tempo', pulsing ? 1.8 : 1);
+        speak(pulsing ? "The loom quickens." : "The loom settles.");
+      });
+
+      // Shuffle geometry
+      root.querySelector('[data-action="shuffle"]').addEventListener('click', () => {
+        seed = Math.random();
+        draw(true);
+        speak("Pattern remixed.");
+      });
+
+      // Ticker
       const lines = [
-        "Light is just time with color.",
-        "Quiet is the loudest contrast.",
-        "Let motion earn its place.",
-        "Leave room for wonder to enter."
+        "Symmetry is a kind of kindness.",
+        "Tension, then release.",
+        "Let color breathe.",
+        "Small motions, big feelings."
       ];
       let idx = 0, timer;
-      function cycle() {
+      function cycle(){
         ticker.style.opacity = 0;
         setTimeout(() => {
           ticker.textContent = lines[idx % lines.length];
           ticker.style.opacity = 1;
           idx++;
-        }, 180);
+        }, 160);
       }
-      function speak(text) {
+      function speak(text){
         clearInterval(timer);
         ticker.textContent = text;
         ticker.style.opacity = 1;
@@ -559,18 +356,147 @@
       }
       speak(lines[0]);
 
+      // Pointer glow + tilt + orbit speed
+      const tilts = root.querySelectorAll('.tilt');
+      let speed = 0.035, base = 0.035, spin = 0, drag = false;
+      canvas.addEventListener('pointermove', e => {
+        const r = root.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        root.style.setProperty('--mx', Math.round(px*100)+'%');
+        root.style.setProperty('--my', Math.round(py*100)+'%');
+
+        const rx = (py - .5) * -8;
+        const ry = (px - .5) * 8;
+        tilts.forEach(el => el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`);
+
+        const skew = (px - .5) * .12;
+        speed = base + skew * (pulsing ? 14 : 8);
+      });
+      canvas.addEventListener('pointerleave', () => {
+        root.style.removeProperty('--mx'); root.style.removeProperty('--my');
+        tilts.forEach(el => el.style.transform = 'none');
+        speed = base;
+      });
+      canvas.addEventListener('pointerdown', () => { drag = true; });
+      window.addEventListener('pointerup', () => { drag = false; });
+
+      // Ripples
+      canvas.addEventListener('click', e => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left, y = e.clientY - rect.top;
+        const r = document.createElement('span');
+        r.className = 'ripple';
+        r.style.left = x + 'px';
+        r.style.top = y + 'px';
+        canvas.appendChild(r);
+        setTimeout(() => r.remove(), 1200);
+        speak("A ripple threads through.");
+      });
+
+      // Kaleidoscope geometry
+      let seed = Math.random();
+      let slices = 16, layers = 8;
+      function draw(remix=false){
+        while (svg.lastChild && svg.lastChild.tagName !== 'DEFS') svg.removeChild(svg.lastChild);
+        const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        group.setAttribute('filter', 'url(#glow)');
+        svg.appendChild(group);
+
+        const step = 360 / slices;
+        const rnd = mulberry(seed);
+        const hue = getComputedStyle(root).getPropertyValue('--h').trim() || '268';
+
+        for(let L=0; L<layers; L++){
+          const t = L / (layers - 1 || 1);
+          const sat = 68 + Math.round(18*Math.sin(t*Math.PI));
+          const lit = 55 + Math.round(10*Math.cos(t*Math.PI/2));
+          const tint = (parseFloat(hue) + (L*22)) % 360;
+          const width = 1.2 - t*0.6;
+          const wobble = 6 + t*16;
+
+          for(let i=0; i<slices; i++){
+            const a0 = i * step;
+            const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            const r0 = 10 + t*10 + rnd()*4;
+            const r1 = 40 + t*22 + rnd()*8;
+
+            const d = petal(50,50, a0, step, r0, r1, wobble, rnd);
+            p.setAttribute('d', d);
+            p.setAttribute('fill', 'none');
+            p.setAttribute('stroke-linecap', 'round');
+            p.setAttribute('stroke', `hsl(${tint} ${sat}% ${lit}%)`);
+            p.setAttribute('stroke-width', width);
+            p.setAttribute('opacity', 0.85);
+            group.appendChild(p);
+          }
+        }
+        if(remix){
+          // occasionally change slice count to keep it fresh
+          slices = [12, 14, 16, 18, 20][Math.floor(rnd()*5)];
+        }
+      }
+
+      function petal(cx, cy, deg, span, r0, r1, bulge, rnd){
+        const a = toRad(deg), s = toRad(span);
+        const mid = a + s/2;
+        const twist = (rnd()-0.5) * 0.6;
+        const b = mid + twist;
+
+        const i0 = polar(cx, cy, r0, a);
+        const oM = polar(cx, cy, r1, mid);
+        const i1 = polar(cx, cy, r0, a + s);
+        const ctrl = polar(cx, cy, (r0 + r1)/2 + bulge*(rnd()-0.5), b);
+
+        return `M ${i0.x.toFixed(2)} ${i0.y.toFixed(2)} Q ${ctrl.x.toFixed(2)} ${ctrl.y.toFixed(2)} ${oM.x.toFixed(2)} ${oM.y.toFixed(2)} T ${i1.x.toFixed(2)} ${i1.y.toFixed(2)}`;
+      }
+      function polar(cx, cy, r, ang){
+        return { x: cx + r*Math.cos(ang), y: cy + r*Math.sin(ang) };
+      }
+      function toRad(d){ return d * Math.PI / 180; }
+
+      // Small deterministic PRNG
+      function mulberry(a){
+        let t = Math.floor(a*1e9) ^ 0x9E3779B9;
+        return function(){
+          t |= 0; t = (t + 0x6D2B79F5) | 0;
+          let r = Math.imul(t ^ (t >>> 15), 1 | t);
+          r ^= r + Math.imul(r ^ (r >>> 7), 61 | r);
+          return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+        }
+      }
+
+      // Spin loop
+      let raf;
+      function loop(){
+        spin += (drag ? speed*1.6 : speed) * (pulsing ? 1.8 : 1);
+        svg.style.setProperty('--spin', spin + 'deg');
+        raf = requestAnimationFrame(loop);
+      }
+
+      // Build initial
+      draw();
+      loop();
+
       // Last updated
       const last = root.querySelector('#last-updated');
-      try {
+      try{
         const dt = new Date();
         const fmt = new Intl.DateTimeFormat([], {
-          year: 'numeric', month: 'short', day: '2-digit',
-          hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+          year:'numeric', month:'short', day:'2-digit',
+          hour:'2-digit', minute:'2-digit', timeZoneName:'short'
         }).format(dt);
         last.textContent = `Last updated: ${fmt}`;
-      } catch {
+      }catch{
         last.textContent = `Last updated: ${new Date().toLocaleString()}`;
       }
+
+      // Resize responsiveness hint: redraw on resize for crispness
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => draw(), 80);
+      });
     })();
   </script>
 </section>
