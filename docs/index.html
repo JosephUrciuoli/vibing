@@ -73,15 +73,17 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="kaleid" data-theme="lumen" aria-label="Prism Garden — kinetic kaleidoscope">
+<section class="orbits" data-theme="dawn" aria-label="Orbit Studio — generative mural">
   <style>
-    .kaleid{
-      --ink: hsl(232 22% 12%);
-      --muted: hsl(232 12% 42% / .9);
-      --edge: color-mix(in srgb, black, transparent 85%);
+    .orbits{
+      --ink: hsl(230 18% 12%);
+      --muted: hsl(230 12% 42% / .9);
       --paper-a: hsl(210 100% 99%);
       --paper-b: hsl(204 100% 98%);
-      --accent: 268;
+      --edge: color-mix(in srgb, black, transparent 85%);
+      --glow-a: 210 90% 60%;
+      --glow-b: 320 90% 60%;
+      --accent: 252;
       --tempo: 1;
       color: var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Text", Inter, Segoe UI, Roboto, "Helvetica Neue", Arial;
@@ -89,38 +91,38 @@
       padding: clamp(16px, 3vw, 32px);
       border: 1px solid var(--edge);
       background:
-        radial-gradient(1200px 800px at var(--mx, 72%) var(--my, 18%), color-mix(in oklab, hsl(calc(var(--accent) + 24) 86% 74%), transparent 86%), transparent 60%),
+        radial-gradient(1000px 720px at var(--mx, 72%) var(--my, 18%), color-mix(in oklab, hsl(calc(var(--accent) + 24) 86% 74%), transparent 88%), transparent 60%),
         linear-gradient(180deg, var(--paper-a), var(--paper-b));
       position: relative;
-      overflow: clip;
       box-shadow: 0 50px 140px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.7);
+      overflow: clip;
       display: grid; gap: 16px;
       isolation: isolate;
     }
-    .kaleid::after{
+    .orbits::after{
       content:"";
-      position:absolute; inset:-20%;
+      position:absolute; inset:-30%;
       background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='1' type='fractalNoise'/%3E%3CfeColorMatrix values='0 0 0 0 0   0 0 0 0 0   0 0 0 0 0   0 0 0 .028 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      mix-blend-mode: multiply; pointer-events:none;
-      animation: drift 38s linear infinite;
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='1' type='fractalNoise'/%3E%3CfeColorMatrix values='0 0 0 0 0   0 0 0 0 0   0 0 0 0 0   0 0 0 .028 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply; pointer-events:none; opacity:.9;
+      animation: drift 42s linear infinite;
     }
     @keyframes drift { to { transform: translate3d(1%, -1%, 0); } }
 
-    .kaleid[data-theme="obsidian"]{
+    .orbits[data-theme="dusk"]{
       --ink: hsl(0 0% 98%);
-      --muted: hsl(0 0% 78% / .9);
+      --muted: hsl(0 0% 80% / .9);
+      --paper-a: hsl(235 36% 12%);
+      --paper-b: hsl(234 35% 8%);
       --edge: color-mix(in srgb, white, transparent 86%);
-      --paper-a: hsl(234 38% 14%);
-      --paper-b: hsl(232 36% 9%);
       box-shadow: 0 50px 140px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
       background:
-        radial-gradient(1100px 620px at var(--mx, 30%) var(--my, 22%), rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(1000px 720px at var(--mx, 32%) var(--my, 22%), rgba(255,255,255,.06), transparent 60%),
         linear-gradient(180deg, var(--paper-a), var(--paper-b));
     }
 
-    .bar{
-      display:flex; align-items:center; justify-content:space-between; gap:12px; z-index:2;
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; z-index:3;
     }
     .brand{
       display:inline-flex; align-items:center; gap:12px;
@@ -131,184 +133,126 @@
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       box-shadow: 0 10px 30px rgba(0,0,0,.08);
     }
-    .kaleid[data-theme="obsidian"] .brand{
+    .orbits[data-theme="dusk"] .brand{
       background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-      color: var(--ink); text-shadow:none; box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      color: var(--ink); text-shadow: none; box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
-    .glyph{ width:22px; height:22px; display:grid; place-items:center; }
-    .glyph svg{ display:block }
+    .logo{ width:22px; height:22px; display:grid; place-items:center; }
+    .logo svg{ display:block }
+    .controls{ display:flex; flex-wrap:wrap; gap:10px; }
 
-    .actions{ display:flex; flex-wrap:wrap; gap:10px; }
-    .pill{
+    .btn{
       --bg: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.6));
       padding:10px 14px; border-radius:14px; border:1px solid var(--edge);
       background: var(--bg); color: currentColor; cursor:pointer; font-weight:800; letter-spacing:.25px;
       box-shadow: 0 8px 22px rgba(0,0,0,.08); transition: transform .16s ease, filter .24s ease, background .24s ease;
     }
-    .pill:hover{ transform: translateY(-1px); filter: saturate(1.06); }
-    .pill.cta{
-      --bg: linear-gradient(90deg, hsl(calc(var(--accent) - 18) 88% 64%), hsl(calc(var(--accent) + 140) 86% 62%));
+    .btn:hover{ transform: translateY(-1px); filter: saturate(1.06); }
+    .btn.primary{
+      --bg: linear-gradient(90deg, hsl(calc(var(--accent) - 16) 88% 64%), hsl(calc(var(--accent) + 140) 86% 62%));
       color: #0b1022; text-shadow: 0 1px 0 rgba(255,255,255,.45);
       box-shadow: 0 12px 32px rgba(0,0,0,.16);
     }
-    .kaleid[data-theme="obsidian"] .pill{ --bg: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); color: var(--ink); }
+    .btn.ghost{
+      --bg: linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,.35));
+    }
+    .orbits[data-theme="dusk"] .btn{ --bg: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); color: var(--ink); }
 
-    .slider{
+    .range{
       display:inline-flex; align-items:center; gap:9px;
       padding:8px 12px; border-radius:14px; border:1px solid var(--edge);
       background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.6));
       box-shadow: 0 8px 22px rgba(0,0,0,.08); font-weight:800;
     }
-    .kaleid[data-theme="obsidian"] .slider{ background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); }
-    .slider input{
+    .orbits[data-theme="dusk"] .range{ background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); }
+    .range input{
       appearance:none; width:160px; height:8px; border-radius:999px; outline:none; border:1px solid var(--edge);
       background: linear-gradient(90deg, hsl(calc(var(--accent) - 20) 78% 62%), hsl(calc(var(--accent) + 120) 78% 62%));
     }
-    .slider input::-webkit-slider-thumb{
+    .range input::-webkit-slider-thumb{
       appearance:none; width:18px; height:18px; border-radius:50%;
       background:#fff; box-shadow: 0 2px 8px rgba(0,0,0,.25), inset 0 0 0 2px rgba(0,0,0,.08); cursor:pointer;
     }
-    .slider input::-moz-range-thumb{
+    .range input::-moz-range-thumb{
       width:18px; height:18px; border:none; border-radius:50%; background:#fff; cursor:pointer;
       box-shadow: 0 2px 8px rgba(0,0,0,.25), inset 0 0 0 2px rgba(0,0,0,.08);
     }
 
-    .viewport{
+    .stage{
       position: relative;
-      width: min(1120px, 100%);
+      width: min(1200px, 100%);
       aspect-ratio: 21 / 9;
       margin: 6px auto 0;
       border-radius: 28px;
       border: 1px solid var(--edge);
       overflow: hidden;
       background:
-        radial-gradient(1200px 600px at var(--mx,50%) var(--my,30%), color-mix(in oklab, hsl(calc(var(--accent) + 60) 92% 74%), transparent 88%), transparent 60%),
+        radial-gradient(1200px 640px at var(--mx,50%) var(--my,30%), color-mix(in oklab, hsl(calc(var(--accent) + 60) 92% 74%), transparent 88%), transparent 60%),
         linear-gradient(180deg, rgba(255,255,255,.65), transparent 30%),
         conic-gradient(from 0deg at 50% 60%, rgba(0,0,0,.06), transparent 60%);
       box-shadow: 0 30px 80px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.7);
-      display:grid; place-items:center; transform-style: preserve-3d; perspective: 900px;
+      transform-style: preserve-3d; perspective: 900px;
+      display:grid; place-items:center;
     }
-    .kaleid[data-theme="obsidian"] .viewport{
+    .orbits[data-theme="dusk"] .stage{
       background:
-        radial-gradient(900px 560px at var(--mx,50%) var(--my,30%), rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(960px 600px at var(--mx,50%) var(--my,30%), rgba(255,255,255,.06), transparent 60%),
         repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 40px),
         linear-gradient(180deg, hsl(234 35% 14%), hsl(232 35% 10%));
       box-shadow: 0 30px 80px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
     }
-
-    .glass{
-      position:absolute; inset:8px;
+    .stage::before{
+      content:"";
+      position:absolute; inset:10px;
       border-radius: 22px;
       border: 1px solid var(--edge);
+      pointer-events:none;
       background:
-        radial-gradient(800px 500px at var(--mx,70%) var(--my,30%), color-mix(in oklab, hsl(calc(var(--accent) + 180) 80% 60%), transparent 92%), transparent 60%),
+        radial-gradient(900px 540px at var(--mx,70%) var(--my,30%), color-mix(in oklab, hsl(calc(var(--accent) + 180) 80% 60%), transparent 92%), transparent 60%),
         linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.4));
-      backdrop-filter: blur(6px) saturate(1.02);
-      -webkit-backdrop-filter: blur(6px) saturate(1.02);
-      overflow:hidden;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.65);
+      mix-blend-mode: overlay;
+      opacity:.6;
     }
 
-    .rose{
-      position:absolute; inset:0; display:grid; place-items:center; pointer-events:none;
-    }
+    .field{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 
-    .ring{
-      --R: 180; /* radius in px */
-      --T: 10;  /* thickness in px */
-      --dur: 20;
-      --ang: 0deg;
-      position:absolute; top:50%; left:50%;
-      width: calc(var(--R) * 2px); height: calc(var(--R) * 2px);
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      background:
-        repeating-conic-gradient(from var(--ang),
-          hsl(var(--h) var(--s) calc(var(--l) + 8%)) 0deg 10deg,
-          hsl(calc(var(--h) + 36) var(--s) var(--l)) 10deg 20deg,
-          rgba(255,255,255,.12) 20deg 26deg,
-          hsl(calc(var(--h) + 180) var(--s) calc(var(--l) + 4%)) 26deg 36deg
-        );
-      -webkit-mask:
-        radial-gradient(circle at 50% 50%,
-          transparent calc(50% - calc(var(--T) * 1px) - 1px),
-          #000 calc(50% - calc(var(--T) * 1px)),
-          #000 calc(50% + calc(var(--T) * 1px)),
-          transparent calc(50% + calc(var(--T) * 1px) + 1px)
-        );
-      mask:
-        radial-gradient(circle at 50% 50%,
-          transparent calc(50% - calc(var(--T) * 1px) - 1px),
-          #000 calc(50% - calc(var(--T) * 1px)),
-          #000 calc(50% + calc(var(--T) * 1px)),
-          transparent calc(50% + calc(var(--T) * 1px) + 1px)
-        );
-      filter: drop-shadow(0 8px 22px rgba(0,0,0,.12)) saturate(1.08);
-      animation: spin linear infinite;
-      animation-duration: calc((var(--dur) / var(--tempo)) * 1s);
-    }
-    .kaleid[data-theme="obsidian"] .ring{
-      filter: drop-shadow(0 10px 26px rgba(0,0,0,.45)) saturate(1.12);
-    }
-
-    @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
-    .rev{ animation-direction: reverse; }
-
-    .core{
-      position:absolute; top:50%; left:50%; transform: translate(-50%,-50%);
-      width: clamp(44px, 8vmin, 86px); height: clamp(44px, 8vmin, 86px); border-radius:50%;
-      background:
-        radial-gradient(circle at 35% 30%, #fff, hsl(calc(var(--accent) + 12) 90% 66%));
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,.7) inset,
-        0 0 68px hsl(calc(var(--accent) + 12) 90% 66% / .75),
-        0 14px 42px rgba(0,0,0,.22);
-    }
-
-    .grain{
-      position:absolute; inset:-20%; pointer-events:none; mix-blend-mode: multiply; opacity:.6;
-      background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cfilter id='g'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='1' type='fractalNoise'/%3E%3CfeColorMatrix values='0 0 0 0 0   0 0 0 0 0   0 0 0 0 0   0 0 0 .022 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-      animation: drift 40s linear infinite;
-    }
-
-    .title{
-      position:absolute; inset:auto 0 0 0; padding: 20px 20px 22px; text-align:center; z-index:2;
-      display:grid; gap:6px;
-      background: linear-gradient(180deg, transparent, rgba(0,0,0,.06));
-    }
-    .kaleid[data-theme="obsidian"] .title{ background: linear-gradient(180deg, transparent, rgba(0,0,0,.22)); }
-    .title h1{
-      margin:0;
-      font-size: clamp(2.4rem, 7vw, 4.8rem);
-      line-height:1.02; letter-spacing:.2px;
-      background: linear-gradient(90deg, hsl(calc(var(--accent) + 16) 88% 56%), hsl(calc(var(--accent) + 160) 82% 60%));
-      -webkit-background-clip:text; background-clip:text; color: transparent;
-      filter: drop-shadow(0 8px 22px rgba(0,0,0,.15));
-      background-size: 220% 100%; animation: sheen 18s linear infinite;
-    }
-    .title p{ margin:0 auto; max-width:60ch; color: var(--muted); font-size: clamp(1rem, 2vw, 1.12rem); }
-    @keyframes sheen { to { background-position: 200% 0; } }
-
-    .chip{
-      position:absolute; right:14px; top:14px; z-index:3;
+    .hud{
+      position:absolute; right:16px; top:16px; z-index:3;
       display:flex; align-items:center; gap:10px;
       padding:8px 10px; border-radius:12px; border:1px solid var(--edge);
       background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.6));
       color: var(--muted); font-size:.92rem; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       box-shadow: 0 10px 30px rgba(0,0,0,.08);
     }
-    .kaleid[data-theme="obsidian"] .chip{
+    .orbits[data-theme="dusk"] .hud{
       background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
       box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
-    .pulse{
+    .live{
       width:8px; height:8px; border-radius:50%;
       background: radial-gradient(circle at 30% 30%, #fff, hsl(calc(var(--accent) + 120) 85% 60%));
       box-shadow: 0 0 12px hsl(calc(var(--accent) + 120) 85% 60% / .7);
       animation: pulse calc(2000ms * var(--tempo)) ease-in-out infinite;
     }
     @keyframes pulse { 50% { transform: scale(1.35); } }
+
+    .hero{
+      position:absolute; inset:auto 0 0 0; padding: 22px; text-align:center; z-index:2;
+      display:grid; gap:8px;
+      background: linear-gradient(180deg, transparent, rgba(0,0,0,.06));
+    }
+    .orbits[data-theme="dusk"] .hero{ background: linear-gradient(180deg, transparent, rgba(0,0,0,.22)); }
+    .hero h1{
+      margin:0;
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      line-height:1.02; letter-spacing:.2px;
+      background: linear-gradient(90deg, hsl(calc(var(--accent) + 16) 88% 56%), hsl(calc(var(--accent) + 160) 82% 60%));
+      -webkit-background-clip:text; background-clip:text; color: transparent;
+      filter: drop-shadow(0 8px 22px rgba(0,0,0,.15));
+      background-size: 220% 100%; animation: sheen 18s linear infinite;
+    }
+    .hero p{ margin:0 auto; max-width:60ch; color: var(--muted); font-size: clamp(1rem, 2vw, 1.12rem); }
+    @keyframes sheen { to { background-position: 200% 0; } }
 
     .tilt{ transition: transform 260ms ease; will-change: transform; }
 
@@ -321,162 +265,210 @@
 
     @media (max-width: 760px){
       .meta{ flex-direction: column; align-items: flex-start; gap:6px; }
-      .chip{ right:10px; top:10px; }
-      .slider input{ width:120px; }
+      .hud{ right:10px; top:10px; }
+      .range input{ width:120px; }
     }
     @media (prefers-reduced-motion: reduce){
-      .kaleid *, .kaleid *::before, .kaleid *::after{
+      .orbits *, .orbits *::before, .orbits *::after{
         animation: none !important; transition: none !important;
       }
     }
   </style>
 
-  <div class="bar">
+  <div class="topbar">
     <div class="brand">
-      <span class="glyph" aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prism glyph">
+      <span class="logo" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Orbit glyph">
           <defs>
-            <linearGradient id="pg" x1="0" y1="0" x2="22" y2="22">
+            <linearGradient id="og" x1="0" y1="0" x2="22" y2="22">
               <stop offset="0" stop-color="hsl(200 90% 60%)"/><stop offset="1" stop-color="hsl(320 90% 60%)"/>
             </linearGradient>
           </defs>
-          <polygon points="11,2 20,20 2,20" fill="none" stroke="url(#pg)" stroke-width="2" />
+          <circle cx="11" cy="11" r="8" fill="none" stroke="url(#og)" stroke-width="2"/>
           <circle cx="11" cy="11" r="2.2" fill="hsl(44 96% 56%)"/>
         </svg>
       </span>
-      <span>Prism Garden</span>
+      <span>Orbit Studio</span>
     </div>
-    <div class="actions">
-      <button class="pill cta" type="button" data-act="theme"><span class="tlabel">Lumen</span></button>
-      <label class="slider" title="Tempo">
+    <div class="controls">
+      <button class="btn primary" type="button" data-act="theme"><span class="tlabel">Dawn</span></button>
+      <label class="range" title="Tempo">
         <span>Tempo</span>
-        <input type="range" min="0.5" max="3" step="0.1" value="1" data-act="speed" aria-label="Animation speed">
+        <input type="range" min="0.4" max="3" step="0.1" value="1" data-act="tempo" aria-label="Animation speed">
       </label>
-      <button class="pill" type="button" data-act="shuffle">Bloom</button>
+      <button class="btn" type="button" data-act="pulse">Pulse</button>
+      <button class="btn ghost" type="button" data-act="pause"><span class="pstate">Pause</span></button>
     </div>
   </div>
 
-  <div class="viewport tilt" role="img" aria-label="Kaleidoscopic light field">
-    <div class="glass">
-      <div class="rose" aria-hidden="false">
-        <div class="core" aria-hidden="true"></div>
-      </div>
-      <div class="grain" aria-hidden="true"></div>
+  <div class="stage tilt" role="img" aria-label="Orbiting particles with luminous trails">
+    <canvas class="field" aria-hidden="true"></canvas>
+    <div class="hud">
+      <span class="live" aria-hidden="true"></span>
+      <span class="text">24 bodies · flowing</span>
     </div>
-    <div class="chip" aria-live="polite">
-      <span class="pulse" aria-hidden="true"></span>
-      <span class="readout">12 petals · flowing</span>
-    </div>
-    <div class="title">
-      <h1>Light, folded.</h1>
-      <p>Drag to tilt. Bloom to change the tessellation. Quiet geometry, vivid calm.</p>
+    <div class="hero">
+      <h1>Orbits, in ink.</h1>
+      <p>Drag to tilt. Pulse to remix the system. Minimal heat, maximal hush.</p>
     </div>
   </div>
 
   <div class="meta tilt">
-    <span class="hint">Shortcuts: Space pause · T theme · B bloom</span>
-    <span id="last-updated">Last updated: 2026-02-04 10:40:35 EST</span>
+    <span class="keys">Shortcuts: Space pause · T theme · P pulse</span>
+    <span id="last-updated">Last updated: 2026-02-04 11:43:57 EST</span>
   </div>
 
   <script>
     (function(){
       const root = document.currentScript.parentElement;
-      const rose = root.querySelector('.rose');
-      const stage = root.querySelector('.viewport');
+      const stage = root.querySelector('.stage');
+      const canvas = root.querySelector('.field');
+      const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
+      const tBtn = root.querySelector('[data-act="theme"]');
+      const tLabel = tBtn.querySelector('.tlabel');
+      const tempo = root.querySelector('[data-act="tempo"]');
+      const pulseBtn = root.querySelector('[data-act="pulse"]');
+      const pauseBtn = root.querySelector('[data-act="pause"]');
+      const pState = pauseBtn.querySelector('.pstate');
+      const readout = root.querySelector('.hud .text');
       const tilts = root.querySelectorAll('.tilt');
-      const themeBtn = root.querySelector('[data-act="theme"]');
-      const tlabel = themeBtn.querySelector('.tlabel');
-      const speedSlider = root.querySelector('[data-act="speed"]');
-      const bloomBtn = root.querySelector('[data-act="shuffle"]');
-      const readout = root.querySelector('.readout');
 
-      // state
+      let DPR = Math.min(2, window.devicePixelRatio || 1);
       let paused = false;
+      let timeScale = 1;
       let seed = (Math.random()*1e9)>>>0;
-      let rings = [];
-      let speed = 1;
-      let baseHue = 268;
+      let hueBase = 252;
+      let bodies = [];
+      let cx = 0, cy = 0, w = 0, h = 0;
+      let mouse = {x: .5, y: .3};
 
       // restore
-      const S = k => localStorage.getItem('prism:'+k);
-      const N = (x, d) => (x==null?d:+x);
-      const savedTheme = S('theme'); if(savedTheme) root.dataset.theme = savedTheme;
-      const savedSpeed = S('speed'); speed = N(savedSpeed, 1); speedSlider.value = speed; root.style.setProperty('--tempo', speed);
+      const S = (k, d) => localStorage.getItem('orbits:'+k) ?? d;
+      const savedTheme = S('theme', 'dawn');
+      root.dataset.theme = savedTheme;
       reflectTheme();
+      const savedTempo = +S('tempo', '1'); timeScale = savedTempo; tempo.value = savedTempo; root.style.setProperty('--tempo', timeScale);
 
-      function rand(){ // xorshift32
+      function rand(){
         seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5;
         return ((seed>>>0)%1e9)/1e9;
       }
 
-      function buildGarden(){
-        // remove all rings (leave .core)
-        Array.from(rose.querySelectorAll('.ring')).forEach(n => n.remove());
-        rings = [];
-        baseHue = Math.floor(rand()*360);
-        root.style.setProperty('--accent', baseHue);
+      function resize(){
+        const rect = stage.getBoundingClientRect();
+        w = Math.max(2, Math.floor(rect.width));
+        h = Math.max(2, Math.floor(rect.height));
+        DPR = Math.min(2, window.devicePixelRatio || 1);
+        canvas.width = Math.floor(w * DPR);
+        canvas.height = Math.floor(h * DPR);
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        cx = w/2; cy = h/2;
+        build();
+      }
 
-        const size = Math.min(rose.clientWidth, rose.clientHeight) || 600;
-        const count = 8 + Math.floor(rand()*7); // 8..14
-        const minR = size * 0.14;
-        const maxR = size * 0.46;
-        const step = (maxR - minR) / (count - 1);
-        const themeLight = root.dataset.theme === 'obsidian' ? 70 : 52;
-
+      function build(){
+        hueBase = Math.floor(rand()*360);
+        root.style.setProperty('--accent', hueBase);
+        const count = 18 + Math.floor(rand()*18); // 18..35
+        bodies.length = 0;
+        const maxR = Math.min(w, h) * 0.44;
         for(let i=0;i<count;i++){
-          const R = Math.round(minR + step*i + rand()*step*0.25);
-          const T = Math.max(8, Math.round(size * (0.008 + rand()*0.012)));
-          const dur = 16 + i*8 + Math.floor(rand()*12);
-          const hue = (baseHue + i*9 + Math.floor(rand()*28)) % 360;
-          const sat = 74 + Math.floor(rand()*22);
-          const ang = Math.floor(rand()*360) + 'deg';
-
-          const el = document.createElement('div');
-          el.className = 'ring' + (i%2 ? ' rev' : '');
-          el.style.setProperty('--R', R);
-          el.style.setProperty('--T', T);
-          el.style.setProperty('--dur', dur);
-          el.style.setProperty('--h', hue);
-          el.style.setProperty('--s', sat+'%');
-          el.style.setProperty('--l', themeLight+'%');
-          el.style.setProperty('--ang', ang);
-
-          rose.appendChild(el);
-          rings.push({R,T,dur,hue,sat,themeLight,ang});
+          const r = (0.12 + i/(count+3) * 0.86) * maxR * (0.9 + rand()*0.2);
+          const ry = r * (0.6 + rand()*0.6);
+          const rot = rand() * Math.PI * 2;
+          const ang = rand() * Math.PI * 2;
+          const speed = (0.0006 + i*0.00024) * (0.6 + rand()*1.1) * (rand()<.5?-1:1);
+          const size = 2 + Math.pow(i/(count-1), 1.2) * 5 + rand()*1.5;
+          const hue = (hueBase + i*7 + Math.floor(rand()*40)) % 360;
+          bodies.push({r, ry, rot, ang, speed, size, hue});
         }
-        readout.textContent = `${count} petals · ${paused ? 'paused' : 'flowing'}`;
+        readout.textContent = `${bodies.length} bodies · ${paused ? 'paused' : 'flowing'}`;
+        fadeHard();
       }
 
-      function reflectTheme(){
-        tlabel.textContent = root.dataset.theme === 'obsidian' ? 'Obsidian' : 'Lumen';
+      function fadeSoft(alpha){
+        ctx.save();
+        ctx.globalCompositeOperation = 'source-over';
+        const theme = root.dataset.theme;
+        if(theme === 'dusk'){
+          ctx.fillStyle = `rgba(3,6,20,${alpha})`;
+        }else{
+          ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        }
+        ctx.fillRect(0,0,w,h);
+        ctx.restore();
+      }
+      function fadeHard(){
+        ctx.save();
+        ctx.globalCompositeOperation = 'source-over';
+        if(root.dataset.theme === 'dusk'){
+          const g = ctx.createLinearGradient(0,0,0,h);
+          g.addColorStop(0, '#121428'); g.addColorStop(1, '#0b0e1c');
+          ctx.fillStyle = g;
+        }else{
+          const g = ctx.createLinearGradient(0,0,0,h);
+          g.addColorStop(0, '#f8fbff'); g.addColorStop(1, '#eef7ff');
+          ctx.fillStyle = g;
+        }
+        ctx.fillRect(0,0,w,h);
+        ctx.restore();
       }
 
-      themeBtn.addEventListener('click', () => {
-        root.dataset.theme = root.dataset.theme === 'obsidian' ? 'lumen' : 'obsidian';
-        localStorage.setItem('prism:theme', root.dataset.theme);
-        reflectTheme();
-        // re-tint rings to suit theme lightness
-        const light = root.dataset.theme === 'obsidian' ? 70 : 52;
-        rose.querySelectorAll('.ring').forEach(el => el.style.setProperty('--l', light+'%'));
-      });
+      function draw(){
+        if(!paused){
+          // softer persistence trails
+          fadeSoft(root.dataset.theme === 'dusk' ? 0.06 : 0.04);
+          const ox = (mouse.x - .5) * Math.min(60, w*0.06);
+          const oy = (mouse.y - .5) * Math.min(60, h*0.06);
+          ctx.save();
+          ctx.translate(cx + ox, cy + oy);
 
-      speedSlider.addEventListener('input', e => {
-        speed = +e.target.value; root.style.setProperty('--tempo', speed);
-        localStorage.setItem('prism:speed', speed);
-      });
+          for(const b of bodies){
+            b.ang += b.speed * timeScale;
+            const cosr = Math.cos(b.rot), sinr = Math.sin(b.rot);
+            const x0 = Math.cos(b.ang) * b.r;
+            const y0 = Math.sin(b.ang) * b.ry;
+            const x = x0 * cosr - y0 * sinr;
+            const y = x0 * sinr + y0 * cosr;
 
-      bloomBtn.addEventListener('click', () => { seed = (Math.random()*1e9)>>>0; buildGarden(); flash(); });
+            // glowing particle
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.globalCompositeOperation = 'lighter';
+            ctx.shadowBlur = 24;
+            ctx.shadowColor = `hsl(${b.hue} 90% 62% / .65)`;
+            ctx.fillStyle = `hsl(${b.hue} 90% 64%)`;
+            ctx.beginPath();
+            ctx.arc(0,0, b.size, 0, Math.PI*2);
+            ctx.fill();
+            ctx.restore();
 
-      function flash(){
-        rose.style.transition = 'filter 140ms ease'; rose.style.filter = 'brightness(1.25)';
-        setTimeout(()=>{ rose.style.filter = 'none'; }, 140);
+            // faint orbit trace
+            if((Math.abs(b.ang) % 1.2) < 0.012){
+              ctx.save();
+              ctx.globalAlpha = 0.08;
+              ctx.strokeStyle = `hsl(${(b.hue+180)%360} 26% ${root.dataset.theme==='dusk'?72:28}% )`;
+              ctx.lineWidth = 1;
+              ctx.setLineDash([4, 8]);
+              ctx.beginPath();
+              ctx.ellipse(0,0,b.r,b.ry,b.rot,0,Math.PI*2);
+              ctx.stroke();
+              ctx.restore();
+            }
+          }
+          ctx.restore();
+        }
+        requestAnimationFrame(draw);
       }
 
-      // tilt + parallax
+      // interactions
       stage.addEventListener('pointermove', e => {
         const r = stage.getBoundingClientRect();
         const px = (e.clientX - r.left) / r.width;
         const py = (e.clientY - r.top) / r.height;
+        mouse.x = px; mouse.y = py;
         root.style.setProperty('--mx', Math.round(px*100)+'%');
         root.style.setProperty('--my', Math.round(py*100)+'%');
 
@@ -488,29 +480,45 @@
         tilts.forEach(el => el.style.transform = 'none');
       });
 
-      // pause / keyboard
+      tBtn.addEventListener('click', () => {
+        root.dataset.theme = root.dataset.theme === 'dusk' ? 'dawn' : 'dusk';
+        localStorage.setItem('orbits:theme', root.dataset.theme);
+        reflectTheme();
+        fadeHard();
+      });
+      tempo.addEventListener('input', e => {
+        timeScale = +e.target.value;
+        root.style.setProperty('--tempo', timeScale);
+        localStorage.setItem('orbits:tempo', String(timeScale));
+      });
+      pulseBtn.addEventListener('click', () => { seed = (Math.random()*1e9)>>>0; build(); flash(); });
+      pauseBtn.addEventListener('click', () => {
+        paused = !paused;
+        pState.textContent = paused ? 'Resume' : 'Pause';
+        readout.textContent = `${bodies.length} bodies · ${paused ? 'paused' : 'flowing'}`;
+      });
+
       window.addEventListener('keydown', e => {
         const k = e.key.toLowerCase();
         if(k === ' ' || e.code === 'Space'){
           e.preventDefault();
-          paused = !paused;
-          root.style.animationPlayState = paused ? 'paused' : 'running';
-          readout.textContent = `${rings.length} petals · ${paused ? 'paused' : 'flowing'}`;
+          pauseBtn.click();
         }
-        if(k === 't'){ themeBtn.click(); }
-        if(k === 'b'){ bloomBtn.click(); }
-        if(k === 'r'){ bloomBtn.click(); }
+        if(k === 't'){ tBtn.click(); }
+        if(k === 'p'){ pulseBtn.click(); }
       });
 
-      // make animationPlayState cascade to children
-      const obsCss = document.createElement('style');
-      obsCss.textContent = `.kaleid{animation-play-state:inherit}.kaleid *{animation-play-state:inherit}`;
-      root.appendChild(obsCss);
+      function reflectTheme(){
+        tLabel.textContent = root.dataset.theme === 'dusk' ? 'Dusk' : 'Dawn';
+      }
+      function flash(){
+        stage.style.transition = 'filter 140ms ease'; stage.style.filter = 'brightness(1.16)';
+        setTimeout(()=>{ stage.style.filter = 'none'; }, 140);
+      }
 
-      // initial build
-      const boot = () => { buildGarden(); };
-      requestAnimationFrame(boot);
-      window.addEventListener('resize', () => { buildGarden(); });
+      // boot
+      resize(); fadeHard(); build(); requestAnimationFrame(draw);
+      window.addEventListener('resize', resize);
 
       // last updated
       const lastEl = root.querySelector('#last-updated');
