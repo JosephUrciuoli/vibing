@@ -73,502 +73,520 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="orrery" data-theme="nocturne" aria-label="Orbit Garden — a living orrery">
+<section class="loom" data-theme="nocturne" data-mode="silk" aria-label="Lumen Loom — paint with light">
   <style>
-    .orrery{
-      --ink: hsl(0 0% 96%);
-      --sub: hsl(0 0% 82% / .72);
-      --bg-1: hsl(235 50% 8%);
-      --bg-2: hsl(257 48% 13%);
-      --edge: color-mix(in srgb, white, transparent 86%);
+    .loom{
+      --ink: hsl(0 0% 97%);
+      --muted: hsl(0 0% 85% / .78);
+      --bg-1: hsl(235 52% 8%);
+      --bg-2: hsl(260 50% 12%);
+      --edge: color-mix(in srgb, white, transparent 82%);
       --glass-1: rgba(255,255,255,.08);
       --glass-2: rgba(255,255,255,.16);
-      --accent: 208;
+      --accent: 210;
       --mx: 50%;
       --my: 50%;
       --tempo: 1;
+      color: var(--ink);
       position: relative;
       display: grid;
-      gap: 16px;
+      gap: 18px;
       padding: clamp(18px, 3.6vw, 36px);
       border-radius: 28px;
       border: 1px solid var(--edge);
-      color: var(--ink);
       background:
         radial-gradient(1200px 700px at var(--mx) var(--my), rgba(255,255,255,.08), transparent 45%),
         linear-gradient(180deg, var(--bg-1), var(--bg-2));
-      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro", Inter, Segoe UI, Roboto, "Helvetica Neue", Arial;
       box-shadow: 0 40px 120px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
       overflow: clip;
       isolation: isolate;
+      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro", Inter, Segoe UI, Roboto, "Helvetica Neue", Arial;
     }
-    .orrery[data-theme="dawn"]{
-      --ink: hsl(220 24% 14%);
-      --sub: hsl(220 22% 28% / .72);
+    .loom[data-theme="dawn"]{
+      --ink: hsl(225 20% 12%);
+      --muted: hsl(224 8% 30% / .78);
       --bg-1: hsl(210 64% 96%);
-      --bg-2: hsl(220 56% 91%);
-      --edge: color-mix(in srgb, black, transparent 86%);
-      --glass-1: rgba(255,255,255,.70);
-      --glass-2: rgba(255,255,255,.88);
-      --accent: 28;
+      --bg-2: hsl(220 56% 92%);
+      --edge: color-mix(in srgb, black, transparent 84%);
+      --glass-1: rgba(255,255,255,.72);
+      --glass-2: rgba(255,255,255,.9);
+      --accent: 26;
       color: var(--ink);
-      box-shadow: 0 24px 80px rgba(16, 22, 40, .20), inset 0 1px 0 rgba(255,255,255,.70);
+      box-shadow: 0 24px 80px rgba(16,22,40,.2), inset 0 1px 0 rgba(255,255,255,.7);
     }
 
-    /* Subtle paper noise */
-    .orrery::after{
+    /* film grain + aurora halo */
+    .loom::after{
       content:"";
       position:absolute; inset:-12%;
       background:
-        radial-gradient(1000px 380px at 14% 12%, rgba(0,0,0,.06), transparent 60%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.75' numOctaves='2' type='fractalNoise'/%3E%3CfeColorMatrix values='0 0 0 0 0   0 0 0 0 0   0 0 0 0 0   0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        radial-gradient(900px 420px at 18% 12%, rgba(255,255,255,.06), transparent 60%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='2' type='fractalNoise'/%3E%3CfeColorMatrix values='0 0 0 0 0   0 0 0 0 0   0 0 0 0 0   0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       mix-blend-mode: multiply;
       opacity:.9;
       pointer-events:none;
-      animation: drift 30s linear infinite;
+      animation: halo 28s linear infinite;
     }
-    @keyframes drift { to { transform: translate3d(1.5%, -1.5%, 0); } }
+    @keyframes halo { to { transform: translate3d(1.5%, -1.5%, 0); } }
 
-    /* Top bar */
-    .orrery .topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; z-index:2; }
-    .orrery .brand{
-      display:inline-flex; align-items:center; gap:12px; padding:10px 14px;
-      border-radius:999px; border:1px solid var(--edge);
+    .mast{ display:flex; align-items:center; justify-content:space-between; gap:12px; z-index:2; }
+    .logo{
+      display:inline-flex; align-items:center; gap:12px;
+      padding:10px 14px; border-radius:16px; border:1px solid var(--edge);
       background: linear-gradient(180deg, var(--glass-1), transparent);
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       box-shadow: 0 10px 30px rgba(0,0,0,.18);
       user-select:none;
     }
-    .orrery .planet{
-      width:22px; height:22px; border-radius:50%; position:relative; display:inline-block;
+    .gem{
+      width:22px; height:22px; border-radius:8px; position:relative; display:inline-block;
       background:
-        radial-gradient(circle at 35% 30%, hsl(calc(var(--accent) - 0) 85% 72%), transparent 45%),
-        conic-gradient(from 0deg, hsl(calc(var(--accent) - 0) 85% 60%), hsl(calc(var(--accent) + 90) 85% 60%), hsl(calc(var(--accent) + 180) 85% 60%), hsl(calc(var(--accent) + 270) 85% 60%), hsl(calc(var(--accent) - 0) 85% 60%));
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,.65), 0 0 16px hsl(var(--accent) 90% 60% / .45);
-      animation: roll calc(24s * var(--tempo)) linear infinite;
+        radial-gradient(circle at 40% 35%, hsl(calc(var(--accent) + 40) 90% 74%), transparent 40%),
+        conic-gradient(from 0deg, hsl(calc(var(--accent) - 10) 85% 62%), hsl(calc(var(--accent) + 90) 85% 60%), hsl(calc(var(--accent) + 180) 85% 60%), hsl(calc(var(--accent) + 270) 85% 58%), hsl(calc(var(--accent) - 10) 85% 62%));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.7), 0 0 18px hsl(var(--accent) 90% 60% / .45);
+      animation: spin calc(28s * var(--tempo)) linear infinite;
     }
-    @keyframes roll { to { transform: rotate(1turn) hue-rotate(1turn); } }
-    .orrery .name{ font-weight:900; letter-spacing:.2px; font-size:.98rem; }
+    @keyframes spin { to { transform: rotate(1turn) hue-rotate(1turn); } }
+    .brand{ font-weight:900; letter-spacing:.2px; font-size:.98rem; }
 
-    .orrery .controls{ display:flex; flex-wrap: wrap; gap:10px; }
-    .orrery .pill{
-      border:1px solid var(--edge);
-      background: linear-gradient(180deg, var(--glass-1), transparent);
-      color: currentColor;
-      padding:10px 14px; border-radius:14px; cursor:pointer; font-weight:800; letter-spacing:.25px;
-      box-shadow: 0 8px 24px rgba(0,0,0,.14);
+    .controls{ display:flex; flex-wrap:wrap; gap:10px; }
+    .btn{
+      --bg: linear-gradient(180deg, var(--glass-1), transparent);
+      padding:10px 14px; border-radius:14px; border:1px solid var(--edge);
+      background: var(--bg); color: currentColor; cursor:pointer; font-weight:800; letter-spacing:.25px;
+      box-shadow: 0 8px 22px rgba(0,0,0,.14);
       transition: transform .16s ease, filter .24s ease, background .24s ease;
     }
-    .orrery .pill:hover{ transform: translateY(-1px); filter: saturate(1.05); }
-    .orrery .pill.primary{
-      background: linear-gradient(90deg, hsl(calc(var(--accent) - 16) 78% 62%), hsl(calc(var(--accent) + 84) 78% 62%));
+    .btn:hover{ transform: translateY(-1px); filter: saturate(1.05); }
+    .btn.primary{
+      --bg: linear-gradient(90deg, hsl(calc(var(--accent) - 20) 78% 62%), hsl(calc(var(--accent) + 90) 78% 62%));
       color: #0b1022; text-shadow: 0 1px 0 rgba(255,255,255,.45);
       box-shadow: 0 12px 32px rgba(0,0,0,.2);
     }
 
-    /* Hero */
-    .orrery .hero{ display:grid; gap:6px; text-align:center; z-index:2; }
-    .orrery h1{
+    .copy{ text-align:center; display:grid; gap:6px; z-index:2; }
+    .copy h1{
       margin:0;
-      font-size: clamp(2.4rem, 6.2vw, 5rem);
+      font-size: clamp(2.6rem, 6.8vw, 5.4rem);
       line-height:1.02; letter-spacing:.2px;
       background: linear-gradient(90deg, hsl(calc(var(--accent) + 30) 85% 70%), hsl(calc(var(--accent) + 220) 80% 75%));
       -webkit-background-clip:text; background-clip:text; color: transparent;
       filter: drop-shadow(0 6px 18px rgba(0,0,0,.25));
+      background-size: 200% 100%;
+      animation: shine 18s linear infinite;
     }
-    .orrery .sub{ margin:0 auto; max-width:62ch; color: var(--sub); font-size: clamp(1rem, 2.1vw, 1.14rem); }
+    @keyframes shine { to { background-position: 200% 0; } }
+    .copy p{ margin:0 auto; max-width:62ch; color: var(--muted); font-size: clamp(1rem, 2.1vw, 1.14rem); }
 
-    /* Sky (canvas holder) */
-    .orrery .sky{
+    .stage{
       position: relative;
       width: min(980px, 100%);
-      aspect-ratio: 1 / 1;
-      margin: 8px auto 0;
+      aspect-ratio: 16 / 9;
+      margin: 4px auto 0;
       border-radius: 26px;
       border: 1px solid var(--edge);
       overflow: hidden;
       background:
-        radial-gradient(900px 600px at var(--mx) var(--my), rgba(255,255,255,.12), transparent 52%),
-        linear-gradient(180deg, hsl(calc(var(--accent) - 30) 65% 16%), hsl(calc(var(--accent) + 10) 70% 12%));
+        radial-gradient(900px 600px at var(--mx) var(--my), rgba(255,255,255,.12), transparent 50%),
+        linear-gradient(180deg, hsl(calc(var(--accent) - 40) 65% 16%), hsl(calc(var(--accent) + 10) 70% 12%));
       box-shadow: 0 26px 70px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.06);
       transform-style: preserve-3d;
       perspective: 1000px;
     }
-    .orrery[data-theme="dawn"] .sky{
+    .loom[data-theme="dawn"] .stage{
       background:
-        radial-gradient(900px 600px at var(--mx) var(--my), rgba(255,255,255,.45), transparent 52%),
-        linear-gradient(180deg, hsl(calc(var(--accent) - 20) 90% 92%), hsl(calc(var(--accent) + 30) 85% 86%));
+        radial-gradient(900px 600px at var(--mx) var(--my), rgba(255,255,255,.45), transparent 50%),
+        linear-gradient(180deg, hsl(calc(var(--accent) - 10) 90% 92%), hsl(calc(var(--accent) + 30) 85% 86%));
     }
-    .orrery .field{
-      position:absolute; inset:0; width:100%; height:100%; display:block;
-      filter: saturate(1.12) contrast(1.02);
-    }
-    .orrery .stars{
-      position:absolute; inset:-10%;
-      background:
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,.12), transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(255,255,255,.10), transparent 42%),
-        repeating-radial-gradient(circle at 60% 40%, rgba(255,255,255,.12) 0 1px, transparent 1px 28px),
-        repeating-radial-gradient(circle at 20% 80%, rgba(255,255,255,.09) 0 1px, transparent 1px 32px);
-      opacity:.35; mix-blend-mode: overlay; pointer-events:none;
-      animation: pan 22s linear infinite;
-    }
-    @keyframes pan { to { transform: translate3d(1.5%, -1.5%, 0); } }
+    .field{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 
-    /* Click waves */
-    .orrery .wave{
+    .dock{
+      position:absolute; right:14px; bottom:14px;
+      display:flex; align-items:center; gap:10px;
+      padding:8px 10px; border-radius:12px; border:1px solid var(--edge);
+      background: linear-gradient(180deg, var(--glass-1), transparent);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      color: var(--muted); font-size:.92rem;
+      z-index:2;
+    }
+    .dock .dot{
+      width:8px; height:8px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #fff, hsl(calc(var(--accent) + 120) 85% 60%));
+      box-shadow: 0 0 10px hsl(calc(var(--accent) + 120) 85% 60% / .6);
+      animation: pulse calc(2400ms * var(--tempo)) ease-in-out infinite;
+    }
+    @keyframes pulse { 50% { transform: scale(1.3); } }
+
+    .meta{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border-top:1px dashed var(--edge); padding-top:10px; margin-top:2px;
+      font-size:.92rem; color: var(--muted);
+      z-index:2;
+    }
+    .hint{ white-space: nowrap; overflow:hidden; text-overflow: ellipsis; }
+    #last-updated{ font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+    .tilt{ transition: transform 260ms ease; will-change: transform; }
+
+    /* click ring */
+    .ring{
       position:absolute; left:0; top:0; width:18px; height:18px; border-radius:50%;
-      background: radial-gradient(circle, rgba(255,255,255,.8), rgba(255,255,255,0) 62%);
+      background: radial-gradient(circle, rgba(255,255,255,.85), rgba(255,255,255,0) 62%);
       transform: translate(-50%, -50%) scale(.6);
       animation: ring 1100ms ease-out forwards;
-      mix-blend-mode: screen;
-      pointer-events:none;
+      mix-blend-mode: screen; pointer-events:none;
     }
     @keyframes ring {
       60% { transform: translate(-50%, -50%) scale(16); opacity: .28; }
       100%{ transform: translate(-50%, -50%) scale(22); opacity: 0; }
     }
 
-    /* Meta */
-    .orrery .ticker{ min-height:1.4em; margin:2px auto 0; text-align:center; color: var(--sub); font-size:.98rem; transition: opacity .22s ease; z-index:2; }
-    .orrery .status{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      border-top:1px dashed var(--edge); padding-top:10px; margin-top:2px;
-      font-size:.92rem; color: var(--sub);
-      z-index:2;
-    }
-    .orrery #last-updated{ font-variant-numeric: tabular-nums; white-space: nowrap; }
-
-    /* Tilt */
-    .orrery .tilt{ transition: transform 260ms ease; will-change: transform; }
-
     @media (max-width: 760px){
-      .orrery .status{ flex-direction: column; align-items: flex-start; gap:6px; }
+      .meta{ flex-direction: column; align-items: flex-start; gap:6px; }
+      .hint{ white-space: normal; }
     }
     @media (prefers-reduced-motion: reduce){
-      .orrery *, .orrery *::before, .orrery *::after{
+      .loom *, .loom *::before, .loom *::after{
         animation: none !important; transition: none !important;
       }
     }
   </style>
 
-  <div class="topbar">
-    <div class="brand">
-      <span class="planet" aria-hidden="true"></span>
-      <span class="name">Orbit Garden</span>
+  <div class="mast">
+    <div class="logo">
+      <span class="gem" aria-hidden="true"></span>
+      <span class="brand">Lumen Loom</span>
     </div>
     <div class="controls">
-      <button class="pill primary" type="button" data-action="comet">Add Comet</button>
-      <button class="pill" type="button" data-action="pulse">Pulse</button>
-      <button class="pill" type="button" data-action="clear">Clear</button>
-      <button class="pill" type="button" data-action="theme"><span class="ico" aria-hidden="true">◐</span> <span class="lab">Nocturne</span></button>
+      <button class="btn primary" type="button" data-act="mode">Mode: Silk</button>
+      <button class="btn" type="button" data-act="breathe">Breathe</button>
+      <button class="btn" type="button" data-act="reseed">Reseed</button>
+      <button class="btn" type="button" data-act="theme"><span class="lab">Nocturne</span></button>
     </div>
   </div>
 
-  <div class="hero">
-    <h1>Orbits, Breathing</h1>
-    <p class="sub">A living orrery. Move to tilt and coax the dance. Tap the sky to ripple; seed comets to sketch time.</p>
+  <div class="copy">
+    <h1>Paint with Light</h1>
+    <p>Drag to bend the loom. Click to ripple. Shift modes to change the fabric.</p>
   </div>
 
-  <div class="sky tilt" role="img" aria-label="Generative orbital canvas">
+  <div class="stage tilt" role="img" aria-label="Generative light-weaving canvas">
     <canvas class="field" aria-hidden="true"></canvas>
-    <div class="stars" aria-hidden="true"></div>
+    <div class="dock" aria-live="polite">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="msg">Light is elastic.</span>
+    </div>
   </div>
 
-  <div class="ticker" aria-live="polite"></div>
-
-  <div class="status tilt">
-    <span>Tip: Drift your cursor to steer gravity. Comets leave gentle trails.</span>
-    <span id="last-updated">Last updated: 2026-02-04 02:42:18 EST</span>
+  <div class="meta tilt">
+    <span class="hint">Tip: press space to pause · M toggles mode · T toggles theme</span>
+    <span id="last-updated">Last updated: 2026-02-04 03:38:04 EST</span>
   </div>
 
   <script>
     (function(){
       const root = document.currentScript.parentElement;
       const canvas = root.querySelector('.field');
-      const sky = root.querySelector('.sky');
-      const ticker = root.querySelector('.ticker');
-      const themeBtn = root.querySelector('[data-action="theme"]');
+      const stage = root.querySelector('.stage');
+      const msg = root.querySelector('.dock .msg');
+      const modeBtn = root.querySelector('[data-act="mode"]');
+      const breatheBtn = root.querySelector('[data-act="breathe"]');
+      const reseedBtn = root.querySelector('[data-act="reseed"]');
+      const themeBtn = root.querySelector('[data-act="theme"]');
       const lab = themeBtn.querySelector('.lab');
+      const tilts = root.querySelectorAll('.tilt');
 
-      // Theme
-      const saved = localStorage.getItem('orbitTheme');
-      if(saved) root.dataset.theme = saved;
+      // Restore theme and mode
+      const savedTheme = localStorage.getItem('loom:theme');
+      const savedMode  = localStorage.getItem('loom:mode');
+      if(savedTheme){ root.dataset.theme = savedTheme; }
+      if(savedMode){ root.dataset.mode = savedMode; reflectMode(); }
       reflectTheme();
-      themeBtn.addEventListener('click', () => {
-        root.dataset.theme = root.dataset.theme === 'dawn' ? 'nocturne' : 'dawn';
-        localStorage.setItem('orbitTheme', root.dataset.theme);
-        reflectTheme();
-        speak(root.dataset.theme === 'dawn' ? "Dawn opens, soft and lucid." : "Night hums, deep and electric.");
-      });
-      function reflectTheme(){ lab.textContent = root.dataset.theme === 'dawn' ? 'Dawn' : 'Nocturne'; }
 
-      // Canvas setup
+      modeBtn.addEventListener('click', toggleMode);
+      themeBtn.addEventListener('click', toggleTheme);
+      breatheBtn.addEventListener('click', toggleBreathe);
+      reseedBtn.addEventListener('click', reseed);
+
+      function toggleMode(){
+        root.dataset.mode = root.dataset.mode === 'silk' ? 'nebula' : 'silk';
+        localStorage.setItem('loom:mode', root.dataset.mode);
+        reflectMode();
+        speak(root.dataset.mode === 'silk' ? "Threads align, quiet and fine." : "Clouds bloom, soft and bright.");
+      }
+      function reflectMode(){
+        modeBtn.textContent = "Mode: " + (root.dataset.mode === 'silk' ? "Silk" : "Nebula");
+      }
+      function toggleTheme(){
+        root.dataset.theme = root.dataset.theme === 'dawn' ? 'nocturne' : 'dawn';
+        localStorage.setItem('loom:theme', root.dataset.theme);
+        reflectTheme();
+        speak(root.dataset.theme === 'dawn' ? "Morning powder, lucid and kind." : "Night velvet, deep and electric.");
+      }
+      function reflectTheme(){
+        lab.textContent = root.dataset.theme === 'dawn' ? 'Dawn' : 'Nocturne';
+      }
+
+      // Canvas prep
       const ctx = canvas.getContext('2d');
-      let w = 0, h = 0, dpr = Math.max(1, Math.min(2.5, window.devicePixelRatio || 1));
+      let w=0,h=0,dpr=Math.max(1, Math.min(2.5, window.devicePixelRatio||1));
       function fit(){
-        const rect = sky.getBoundingClientRect();
+        const rect = stage.getBoundingClientRect();
         w = Math.max(1, Math.floor(rect.width));
         h = Math.max(1, Math.floor(rect.height));
-        const px = Math.floor(w * dpr);
-        const py = Math.floor(h * dpr);
+        const px = Math.floor(w*dpr), py = Math.floor(h*dpr);
         canvas.width = px; canvas.height = py;
-        canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+        canvas.style.width = w+'px'; canvas.style.height = h+'px';
         ctx.setTransform(dpr,0,0,dpr,0,0);
       }
       fit();
 
-      // System
-      const bodies = [];
-      const comets = [];
-      const rings = 64;
-      let center = { x: w/2, y: h/2 };
-      let target = { x: w/2, y: h/2 };
-      let baseSpeed = 0.0026;
-      let speedMul = 1;
-      let pulsing = false;
-
-      // Build rings
-      let seed = Math.random();
-      function rnd(){ // lightweight PRNG
-        seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5;
-        return ((seed < 0 ? ~seed + 1 : seed) % 1e9) / 1e9;
-      }
-      function rebuild(){
-        bodies.length = 0;
-        for(let i=0;i<rings;i++){
-          const t = (i + 0.5) / rings;
-          const r = Math.min(w,h) * (0.12 + t * 0.42) + (rnd()-0.5)*8;
-          const a = rnd()*Math.PI*2;
-          const dir = rnd() > 0.5 ? 1 : -1;
-          const hueBase = parseFloat(getComputedStyle(root).getPropertyValue('--accent')) || 208;
-          const hue = (hueBase + (t*180) + (rnd()*40-20)) % 360;
-          const sat = 65 + Math.sin(t * Math.PI) * 18;
-          const lit = root.dataset.theme === 'dawn' ? (40 + Math.cos(t*Math.PI/2)*18) : (56 + Math.cos(t*Math.PI/2)*12);
-          bodies.push({
-            r, a, dir,
-            speed: baseSpeed * (0.6 + t*2.2) * (0.8 + rnd()*0.4),
-            hue, sat, lit,
-            size: 1.2 + (1 - t) * 1.8
-          });
-        }
-      }
-      rebuild();
-
-      // Ticker
-      const lines = [
-        "Gravity is choreography.",
-        "Silence is part of the orbit.",
-        "Let trails tell the story.",
-        "A nudge is enough."
-      ];
-      let idx = 0, timer;
-      function cycle(){
-        ticker.style.opacity = 0;
-        setTimeout(() => {
-          ticker.textContent = lines[idx % lines.length];
-          ticker.style.opacity = 1;
-          idx++;
-        }, 160);
-      }
-      function speak(text){
-        clearInterval(timer);
-        ticker.textContent = text;
-        ticker.style.opacity = 1;
-        timer = setInterval(cycle, 5200);
-      }
-      speak(lines[0]);
-
-      // Controls
-      root.querySelector('[data-action="pulse"]').addEventListener('click', () => {
-        pulsing = !pulsing;
-        speedMul = pulsing ? 2.1 : 1;
-        root.style.setProperty('--tempo', pulsing ? 1.8 : 1);
-        speak(pulsing ? "The garden quickens." : "The garden breathes out.");
-      });
-      root.querySelector('[data-action="clear"]').addEventListener('click', () => {
-        comets.length = 0;
-        seed = Math.random();
-        rebuild();
-        flash();
-        speak("Fresh paths, clear sky.");
-      });
-      root.querySelector('[data-action="comet"]').addEventListener('click', () => {
-        addComet();
-      });
-
-      function addComet(x, y, aimX, aimY){
-        const edge = Math.random();
-        let cx, cy, vx, vy;
-        if(x != null && y != null){
-          cx = x; cy = y;
-        }else{
-          if(edge < 0.25){ cx = -40; cy = Math.random()*h; }
-          else if(edge < 0.5){ cx = w+40; cy = Math.random()*h; }
-          else if(edge < 0.75){ cx = Math.random()*w; cy = -40; }
-          else { cx = Math.random()*w; cy = h+40; }
-        }
-        const tx = aimX ?? target.x;
-        const ty = aimY ?? target.y;
-        const ang = Math.atan2(ty - cy, tx - cx) + (Math.random()*0.5-0.25);
-        const speed = 3 + Math.random()*1.5;
-        vx = Math.cos(ang) * speed;
-        vy = Math.sin(ang) * speed;
-        const hueBase = parseFloat(getComputedStyle(root).getPropertyValue('--accent')) || 208;
-        const hue = (hueBase + (Math.random()*80-40)) % 360;
-        comets.push({
-          x: cx, y: cy, vx, vy,
-          life: 1,
-          hue, sat: 90, lit: 70,
-          tail: []
-        });
-        speak("A comet sketches the moment.");
-      }
-
-      // Pointer interactions
-      const tilts = root.querySelectorAll('.tilt');
+      // Interaction state
+      let center = {x: w/2, y: h/2};
+      let target = {x: w/2, y: h/2};
       let dragging = false;
-      sky.addEventListener('pointermove', e => {
+      let paused = false;
+      let breathe = false;
+      let time = 0;
+
+      stage.addEventListener('pointermove', e => {
         const r = root.getBoundingClientRect();
         const px = (e.clientX - r.left) / r.width;
         const py = (e.clientY - r.top) / r.height;
         root.style.setProperty('--mx', Math.round(px*100)+'%');
         root.style.setProperty('--my', Math.round(py*100)+'%');
 
+        const sr = stage.getBoundingClientRect();
+        target.x = e.clientX - sr.left;
+        target.y = e.clientY - sr.top;
+
         const rx = (py - .5) * -8;
         const ry = (px - .5) * 8;
         tilts.forEach(el => el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`);
-
-        target.x = (e.clientX - sky.getBoundingClientRect().left);
-        target.y = (e.clientY - sky.getBoundingClientRect().top);
       });
-      sky.addEventListener('pointerleave', () => {
+      stage.addEventListener('pointerleave', () => {
         root.style.removeProperty('--mx'); root.style.removeProperty('--my');
         tilts.forEach(el => el.style.transform = 'none');
         target.x = w/2; target.y = h/2;
       });
-      sky.addEventListener('pointerdown', e => { dragging = true; });
+      stage.addEventListener('pointerdown', () => { dragging = true; });
       window.addEventListener('pointerup', () => { dragging = false; });
 
-      // Ripples
-      sky.addEventListener('click', e => {
-        const rect = sky.getBoundingClientRect();
-        const x = e.clientX - rect.left, y = e.clientY - rect.top;
-        wave(x, y);
-        if(Math.random() < 0.7) addComet(x, y, w/2, h/2);
+      stage.addEventListener('click', e => {
+        const rect = stage.getBoundingClientRect();
+        ring(e.clientX - rect.left, e.clientY - rect.top);
       });
-      function wave(x,y){
+      function ring(x,y){
         const r = document.createElement('span');
-        r.className = 'wave';
+        r.className = 'ring';
         r.style.left = x + 'px';
         r.style.top = y + 'px';
-        sky.appendChild(r);
+        stage.appendChild(r);
         setTimeout(() => r.remove(), 1200);
       }
-      function flash(){
-        wave(w/2, h/2);
+
+      // Light weaving systems
+      let seed = Math.random() * 1e9 >>> 0;
+      function rand(){ // xorshift
+        seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5;
+        return ((seed<0 ? ~seed+1 : seed) % 1e9) / 1e9;
       }
 
-      // Render loop
-      function step(t){
-        ctx.globalCompositeOperation = 'source-over';
-        const fade = root.dataset.theme === 'dawn'
-          ? 'rgba(255,255,255,0.08)' : 'rgba(2,6,18,0.10)';
+      let ribbons = [];
+      let blobs = [];
+      function reseed(){
+        seed = (Math.random()*1e9)>>>0;
+        build();
+        flash();
+        speak("Fresh thread, new weave.");
+      }
+      function build(){
+        ribbons.length = 0;
+        blobs.length = 0;
+        // silk ribbons
+        for(let i=0;i<7;i++){
+          const t = i/6;
+          const hueBase = parseFloat(getComputedStyle(root).getPropertyValue('--accent')) || 210;
+          const hue = (hueBase + t*160 + (rand()*40-20)) % 360;
+          ribbons.push({
+            y: h*(0.18 + t*0.64),
+            amp: 18 + rand()*28,
+            freq: 0.004 + rand()*0.006,
+            speed: 0.4 + rand()*0.8,
+            thickness: 1.6 + (1-t)*3.2,
+            hue
+          });
+        }
+        // nebula blobs
+        for(let i=0;i<26;i++){
+          const hueBase = parseFloat(getComputedStyle(root).getPropertyValue('--accent')) || 210;
+          blobs.push({
+            x: rand()*w, y: rand()*h,
+            vx: (rand()-0.5)*1.2, vy: (rand()-0.5)*1.2,
+            r: 30 + rand()*120,
+            hue: (hueBase + rand()*360) % 360,
+            life: 0.7 + rand()*0.3
+          });
+        }
+      }
+      build();
+
+      function flash(){ ring(w/2, h/2); }
+
+      // ticker
+      const lines = [
+        "Light is elastic.",
+        "Fold the horizon.",
+        "Weave without haste.",
+        "Silence has a color."
+      ];
+      let idx = 0, tickerTimer;
+      function cycle(){
+        msg.style.opacity = 0;
+        setTimeout(()=>{
+          msg.textContent = lines[idx % lines.length];
+          msg.style.opacity = 1;
+          idx++;
+        }, 160);
+      }
+      function speak(text){
+        clearInterval(tickerTimer);
+        msg.textContent = text;
+        msg.style.opacity = 1;
+        tickerTimer = setInterval(cycle, 5200);
+      }
+      speak(lines[0]);
+
+      function toggleBreathe(){
+        breathe = !breathe;
+        root.style.setProperty('--tempo', breathe ? 1.8 : 1);
+        speak(breathe ? "The loom inhales." : "The loom rests.");
+      }
+
+      // rendering
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function drawSilk(dt){
+        // subtle fade
+        const fade = root.dataset.theme === 'dawn' ? 'rgba(255,255,255,0.08)' : 'rgba(2,6,18,0.10)';
         ctx.fillStyle = fade;
         ctx.fillRect(0,0,w,h);
 
-        // ease center towards target (more when dragging)
+        // ease center
         const ease = dragging ? 0.18 : 0.08;
         center.x += (target.x - center.x) * ease;
         center.y += (target.y - center.y) * ease;
 
-        // bodies
-        for(let i=0;i<bodies.length;i++){
-          const b = bodies[i];
-          b.a += b.speed * b.dir * speedMul * (pulsing ? 1.6 : 1);
-          const x = center.x + Math.cos(b.a) * b.r;
-          const y = center.y + Math.sin(b.a) * b.r;
+        const ampMul = 1 + (breathe ? Math.sin(time*0.0026)*0.55 : 0);
+        ctx.globalCompositeOperation = 'lighter';
 
+        for(const r of ribbons){
+          const baseY = r.y + (center.y - h/2) * 0.08;
           ctx.beginPath();
-          ctx.fillStyle = `hsl(${b.hue.toFixed(1)} ${b.sat}% ${b.lit}%)`;
-          ctx.shadowColor = `hsl(${b.hue.toFixed(1)} 90% 70% / .55)`;
-          ctx.shadowBlur = 16;
-          ctx.arc(x, y, b.size, 0, Math.PI*2);
-          ctx.fill();
-          ctx.shadowBlur = 0;
+          let first = true;
+          for(let x=0; x<=w; x+=6){
+            const warp = 26 * Math.exp(-Math.hypot(x - center.x, baseY - center.y)/240);
+            const y = baseY
+              + Math.sin(x * r.freq + time*0.002 * r.speed) * r.amp * ampMul
+              + warp * Math.sin(time*0.003 + x*0.02);
+            if(first){ ctx.moveTo(x, y); first = false; }
+            else{ ctx.lineTo(x, y); }
+          }
+          ctx.strokeStyle = `hsl(${r.hue.toFixed(1)} 95% ${root.dataset.theme==='dawn'?38:68}%)`;
+          ctx.lineWidth = r.thickness;
+          ctx.shadowColor = `hsl(${r.hue.toFixed(1)} 90% 70% / .6)`;
+          ctx.shadowBlur = 22;
+          ctx.lineCap = 'round';
+          ctx.stroke();
         }
+        ctx.shadowBlur = 0;
+        ctx.globalCompositeOperation = 'source-over';
+      }
 
-        // comets
-        for(let i=comets.length-1;i>=0;i--){
-          const c = comets[i];
-          c.x += c.vx * (0.9 + Math.random()*0.2);
-          c.y += c.vy * (0.9 + Math.random()*0.2);
-          // gentle gravity pull
-          const dx = center.x - c.x, dy = center.y - c.y;
+      function drawNebula(dt){
+        const fade = root.dataset.theme === 'dawn' ? 'rgba(255,255,255,0.08)' : 'rgba(2,6,18,0.10)';
+        ctx.fillStyle = fade;
+        ctx.fillRect(0,0,w,h);
+
+        // ease center
+        const ease = dragging ? 0.18 : 0.08;
+        center.x += (target.x - center.x) * ease;
+        center.y += (target.y - center.y) * ease;
+
+        const pull = 0.012 + (breathe ? 0.01 : 0);
+        for(const b of blobs){
+          // flow
+          const dx = center.x - b.x, dy = center.y - b.y;
           const dist = Math.hypot(dx, dy) + 0.0001;
-          const g = 0.03;
-          c.vx += (dx / dist) * g;
-          c.vy += (dy / dist) * g;
-          c.life *= 0.995;
+          b.vx += (dx / dist) * pull;
+          b.vy += (dy / dist) * pull;
+          b.vx *= 0.992; b.vy *= 0.992;
+          b.x += b.vx; b.y += b.vy;
 
-          // trail
-          c.tail.push({x:c.x, y:c.y});
-          if(c.tail.length > 90) c.tail.shift();
+          // wrap
+          if(b.x < -120) b.x = w+120;
+          if(b.x > w+120) b.x = -120;
+          if(b.y < -120) b.y = h+120;
+          if(b.y > h+120) b.y = -120;
 
-          // draw tail
+          // draw blob
           ctx.globalCompositeOperation = 'lighter';
-          for(let j=0;j<c.tail.length;j+=2){
-            const p = c.tail[j];
-            const alpha = (j / c.tail.length) * 0.35 * c.life;
-            ctx.beginPath();
-            ctx.fillStyle = `hsla(${c.hue} 95% 70% / ${alpha})`;
-            ctx.arc(p.x, p.y, 1.6 + (j/c.tail.length)*2.2, 0, Math.PI*2);
-            ctx.fill();
-          }
-          ctx.globalCompositeOperation = 'source-over';
-
-          // head
           ctx.beginPath();
-          ctx.fillStyle = `hsl(${c.hue} 95% 96%)`;
-          ctx.shadowColor = `hsl(${c.hue} 95% 75% / .8)`;
-          ctx.shadowBlur = 24;
-          ctx.arc(c.x, c.y, 2.4, 0, Math.PI*2);
+          ctx.fillStyle = `hsla(${(b.hue + Math.sin(time*0.0012)*24).toFixed(1)} 95% ${root.dataset.theme==='dawn'?58:70}% / ${0.08 * b.life})`;
+          ctx.shadowColor = `hsla(${(b.hue + 30).toFixed(1)} 95% 70% / .85)`;
+          ctx.shadowBlur = 60;
+          ctx.arc(b.x, b.y, b.r * (0.8 + Math.sin(time*0.001 + b.x*0.002)*0.2), 0, Math.PI*2);
           ctx.fill();
-          ctx.shadowBlur = 0;
-
-          // cull
-          if(c.life < 0.28 || c.x < -100 || c.x > w+100 || c.y < -100 || c.y > h+100){
-            comets.splice(i,1);
-          }
         }
+        ctx.shadowBlur = 0;
+        ctx.globalCompositeOperation = 'source-over';
+      }
+
+      let last = performance.now();
+      function step(now){
+        if(paused || prefersReduced){ return; }
+        const dt = now - last; last = now;
+        time += dt;
+
+        if(root.dataset.mode === 'silk') drawSilk(dt);
+        else drawNebula(dt);
 
         requestAnimationFrame(step);
       }
-      requestAnimationFrame(step);
+      if(!prefersReduced) requestAnimationFrame(step);
+      else {
+        // draw static first frame
+        drawSilk(16);
+      }
 
-      // Resize
-      let resizeTimer;
+      // keyboard
+      window.addEventListener('keydown', e => {
+        if(e.code === 'Space'){ paused = !paused; if(!paused && !prefersReduced) { last = performance.now(); requestAnimationFrame(step); } }
+        if(e.key.toLowerCase() === 'm'){ toggleMode(); }
+        if(e.key.toLowerCase() === 't'){ toggleTheme(); }
+      });
+
+      // resize
+      let rTimer;
       window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          fit();
-          center = { x: w/2, y: h/2 };
-          target = { x: w/2, y: h/2 };
-          rebuild();
+        clearTimeout(rTimer);
+        rTimer = setTimeout(() => {
+          fit(); center = {x:w/2,y:h/2}; target = {x:w/2,y:h/2};
+          build();
         }, 80);
       });
 
-      // Last updated
-      const last = root.querySelector('#last-updated');
+      // last updated
+      const lastEl = root.querySelector('#last-updated');
       try{
         const dt = new Date();
         const fmt = new Intl.DateTimeFormat([], {
           year:'numeric', month:'short', day:'2-digit',
           hour:'2-digit', minute:'2-digit', timeZoneName:'short'
         }).format(dt);
-        last.textContent = `Last updated: ${fmt}`;
+        lastEl.textContent = `Last updated: ${fmt}`;
       }catch{
-        last.textContent = `Last updated: ${new Date().toLocaleString()}`;
+        lastEl.textContent = `Last updated: ${new Date().toLocaleString()}`;
       }
     })();
   </script>
