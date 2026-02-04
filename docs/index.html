@@ -73,13 +73,14 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="loom" data-theme="paper" data-style="lines" aria-label="Lissajous Loom — kinetic ratios">
+<section class="orrery" data-theme="dawn" aria-label="Orrery Studio — kinetic orbits">
   <style>
-    .loom{
-      --paper: hsl(0 0% 99%);
+    .orrery{
       --ink: hsl(222 18% 12%);
-      --muted: hsl(222 12% 40% / .85);
+      --muted: hsl(222 12% 40% / .86);
       --edge: color-mix(in srgb, black, transparent 85%);
+      --bg-a: hsl(214 88% 98%);
+      --bg-b: hsl(206 100% 99%);
       --accent: 210;
       --tempo: 1;
       color: var(--ink);
@@ -88,56 +89,55 @@
       padding: clamp(16px, 3vw, 32px);
       border: 1px solid var(--edge);
       background:
-        radial-gradient(1200px 600px at 85% -10%, color-mix(in oklab, hsl(var(--accent) 90% 65%), transparent 82%), transparent 60%),
-        linear-gradient(180deg, hsl(0 0% 100%), var(--paper));
+        radial-gradient(1200px 800px at 80% -10%, color-mix(in oklab, hsl(calc(var(--accent) + 10) 90% 70%), transparent 84%), transparent 60%),
+        linear-gradient(180deg, var(--bg-a), var(--bg-b));
       position: relative;
       overflow: clip;
       box-shadow: 0 40px 120px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.7);
       display: grid; gap: 16px;
       isolation: isolate;
     }
-    .loom[data-theme="ink"]{
-      --paper: hsl(230 35% 8%);
-      --ink: hsl(0 0% 98%);
-      --muted: hsl(0 0% 80% / .85);
-      --edge: color-mix(in srgb, white, transparent 85%);
-      box-shadow: 0 40px 120px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
-      background:
-        radial-gradient(1100px 600px at 10% -20%, color-mix(in oklab, hsl(calc(var(--accent) + 120) 90% 60%), transparent 85%), transparent 60%),
-        linear-gradient(180deg, hsl(232 35% 12%), hsl(230 35% 8%));
-    }
-    .loom::after{
+    .orrery::after{
       content:"";
       position:absolute; inset:-20%;
       background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='1' type='fractalNoise'/%3E%3CfeColorMatrix values='0 0 0 0 0   0 0 0 0 0   0 0 0 0 0   0 0 0 .032 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='1' type='fractalNoise'/%3E%3CfeColorMatrix values='0 0 0 0 0   0 0 0 0 0   0 0 0 0 0   0 0 0 .03 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       mix-blend-mode: multiply; pointer-events:none;
       animation: drift 36s linear infinite;
     }
     @keyframes drift { to { transform: translate3d(1%, -1%, 0); } }
 
+    .orrery[data-theme="noir"]{
+      --ink: hsl(0 0% 98%);
+      --muted: hsl(0 0% 80% / .85);
+      --edge: color-mix(in srgb, white, transparent 86%);
+      --bg-a: hsl(234 35% 14%);
+      --bg-b: hsl(232 35% 9%);
+      box-shadow: 0 40px 120px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
+      background:
+        radial-gradient(1100px 600px at 10% -20%, color-mix(in oklab, hsl(calc(var(--accent) + 140) 88% 62%), transparent 88%), transparent 60%),
+        linear-gradient(180deg, var(--bg-a), var(--bg-b));
+    }
+
     .top{
       display:flex; align-items:center; justify-content:space-between; gap:12px; z-index:2;
     }
-    .brand{
+    .logo{
       display:inline-flex; align-items:center; gap:12px;
       padding:10px 14px; border-radius:16px; border:1px solid var(--edge);
       background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.6));
-      color: hsl(224 14% 12%);
-      text-shadow: 0 1px 0 rgba(255,255,255,.6);
+      color: hsl(224 14% 12%); text-shadow: 0 1px 0 rgba(255,255,255,.5);
       font-weight: 900; letter-spacing:.2px; user-select:none;
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       box-shadow: 0 10px 30px rgba(0,0,0,.08);
     }
-    .loom[data-theme="ink"] .brand{
+    .orrery[data-theme="noir"] .logo{
       background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
       color: var(--ink); text-shadow:none; box-shadow: 0 10px 30px rgba(0,0,0,.22);
     }
-    .glyph{
-      width:22px; height:22px;
-      display:grid; place-items:center;
-    }
+    .glyph{ width:22px; height:22px; display:grid; place-items:center; }
     .glyph svg{ display:block }
+
     .controls{ display:flex; flex-wrap:wrap; gap:10px; }
     .pill{
       --bg: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.6));
@@ -147,18 +147,19 @@
     }
     .pill:hover{ transform: translateY(-1px); filter: saturate(1.05); }
     .pill.cta{
-      --bg: linear-gradient(90deg, hsl(calc(var(--accent) - 30) 85% 62%), hsl(calc(var(--accent) + 100) 85% 62%));
+      --bg: linear-gradient(90deg, hsl(calc(var(--accent) - 20) 85% 62%), hsl(calc(var(--accent) + 120) 85% 62%));
       color: #0b1022; text-shadow: 0 1px 0 rgba(255,255,255,.45);
       box-shadow: 0 12px 32px rgba(0,0,0,.16);
     }
-    .loom[data-theme="ink"] .pill{ --bg: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); color: var(--ink); }
+    .orrery[data-theme="noir"] .pill{ --bg: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); color: var(--ink); }
+
     .slider{
       display:inline-flex; align-items:center; gap:9px;
       padding:8px 12px; border-radius:14px; border:1px solid var(--edge);
       background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.6));
       box-shadow: 0 8px 22px rgba(0,0,0,.08); font-weight:800;
     }
-    .loom[data-theme="ink"] .slider{ background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); }
+    .orrery[data-theme="noir"] .slider{ background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); }
     .slider input{
       appearance:none; width:160px; height:8px; border-radius:999px; outline:none; border:1px solid var(--edge);
       background: linear-gradient(90deg, hsl(calc(var(--accent) - 20) 78% 62%), hsl(calc(var(--accent) + 120) 78% 62%));
@@ -172,64 +173,107 @@
       box-shadow: 0 2px 8px rgba(0,0,0,.25), inset 0 0 0 2px rgba(0,0,0,.08);
     }
 
-    .hero{
+    .stage{
       position: relative;
-      width: min(1100px, 100%);
-      aspect-ratio: 16 / 10;
+      width: min(1080px, 100%);
+      aspect-ratio: 16 / 9;
       margin: 6px auto 0;
       border-radius: 26px;
       border: 1px solid var(--edge);
       overflow: hidden;
       background:
-        radial-gradient(900px 560px at 50% 50%, rgba(255,255,255,.9), transparent 65%),
-        conic-gradient(from 90deg at 50% 50%, rgba(0,0,0,.06), transparent 60%);
+        radial-gradient(1000px 600px at var(--mx,50%) var(--my,30%), color-mix(in oklab, hsl(calc(var(--accent) + 60) 90% 72%), transparent 85%), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.6), transparent 30%),
+        conic-gradient(from 0deg at 50% 60%, rgba(0,0,0,.06), transparent 60%);
       box-shadow: 0 26px 70px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.7);
       display:grid; place-items:center; transform-style: preserve-3d; perspective: 900px;
     }
-    .loom[data-theme="ink"] .hero{
+    .orrery[data-theme="noir"] .stage{
       background:
-        radial-gradient(900px 560px at 50% 50%, rgba(255,255,255,.075), transparent 60%),
+        radial-gradient(900px 560px at var(--mx,50%) var(--my,30%), rgba(255,255,255,.06), transparent 60%),
         repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 40px),
         linear-gradient(180deg, hsl(234 35% 14%), hsl(232 35% 10%));
       box-shadow: 0 26px 70px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
     }
-    .gridmask{
-      position:absolute; inset:0; pointer-events:none;
+
+    .system{
+      position: relative;
+      width: min(72vmin, 720px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px solid var(--edge);
       background:
-        radial-gradient(1200px 800px at var(--mx,50%) var(--my,50%), rgba(255,255,255,.35), transparent 60%),
-        repeating-linear-gradient(0deg, color-mix(in srgb, var(--ink), transparent 94%) 0 1px, transparent 1px 42px),
-        repeating-linear-gradient(90deg, color-mix(in srgb, var(--ink), transparent 94%) 0 1px, transparent 1px 42px);
-      mask: radial-gradient(600px 360px at 50% 50%, rgba(0,0,0,1), rgba(0,0,0,.6) 60%, transparent);
-      opacity:.35;
+        radial-gradient(60% 60% at 50% 50%, rgba(255,255,255,.65), transparent 70%),
+        radial-gradient(75% 75% at 50% 50%, rgba(0,0,0,.06), transparent 70%),
+        conic-gradient(from 90deg at 50% 50%, rgba(0,0,0,.06), transparent 60%);
+      box-shadow: 0 24px 60px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.65);
+      overflow: visible;
     }
-    .loom[data-theme="ink"] .gridmask{
-      opacity:.22;
+    .orrery[data-theme="noir"] .system{
       background:
-        radial-gradient(1200px 800px at var(--mx,50%) var(--my,50%), rgba(255,255,255,.05), transparent 60%),
-        repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 42px),
-        repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 42px);
+        radial-gradient(60% 60% at 50% 50%, rgba(255,255,255,.08), transparent 70%),
+        conic-gradient(from 90deg at 50% 50%, rgba(255,255,255,.05), transparent 60%);
+      box-shadow: 0 24px 60px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.08);
     }
 
-    canvas.weave{ width:100%; height:100%; display:block; }
+    .orbit{
+      --r: 120px; --h: 210; --s: 80%; --l: 60%; --dur: 28;
+      position:absolute; top:50%; left:50%;
+      width: calc(var(--r) * 2); height: calc(var(--r) * 2);
+      margin-left: calc(var(--r) * -1); margin-top: calc(var(--r) * -1);
+      border-radius: 50%;
+      border: 1px dashed color-mix(in srgb, var(--ink), transparent 78%);
+      animation: spin linear infinite;
+      animation-duration: calc((var(--dur) / var(--tempo)) * 1s);
+      filter: drop-shadow(0 2px 10px rgba(0,0,0,.08));
+      pointer-events:none;
+    }
+    .orrery[data-theme="noir"] .orbit{
+      border-color: rgba(255,255,255,.12);
+      filter: drop-shadow(0 2px 14px rgba(0,0,0,.5));
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    .callouts{
-      position:absolute; inset:auto 0 0; padding: 18px 18px 20px; text-align:center; z-index:2;
+    .orbit.reverse{ animation-direction: reverse; }
+
+    .orbit::after{
+      content:"";
+      position:absolute; top:0%; left:50%;
+      transform: translate(-50%, -50%);
+      width: var(--ps, 12px); height: var(--ps, 12px); border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #fff, hsl(var(--h) var(--s) var(--l)));
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.6) inset,
+        0 0 16px hsl(var(--h) var(--s) calc(var(--l) + 10%)/.65),
+        0 10px 18px rgba(0,0,0,.2);
+    }
+
+    .sun{
+      position:absolute; top:50%; left:50%; transform: translate(-50%,-50%);
+      width: clamp(42px, 7vmin, 72px); height: clamp(42px, 7vmin, 72px); border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #fff, hsl(calc(var(--accent) + 20) 90% 66%));
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.6) inset,
+        0 0 60px hsl(calc(var(--accent) + 20) 90% 66% / .75),
+        0 12px 40px rgba(0,0,0,.2);
+    }
+
+    .title{
+      position:absolute; inset:auto 0 0 0; padding: 18px 18px 20px; text-align:center; z-index:2;
       display:grid; gap:6px;
       background: linear-gradient(180deg, transparent, rgba(0,0,0,.06));
     }
-    .loom[data-theme="ink"] .callouts{ background: linear-gradient(180deg, transparent, rgba(0,0,0,.22)); }
-    .callouts h1{
+    .orrery[data-theme="noir"] .title{ background: linear-gradient(180deg, transparent, rgba(0,0,0,.22)); }
+    .title h1{
       margin:0;
       font-size: clamp(2.2rem, 6vw, 4.4rem);
       line-height:1.04; letter-spacing:.2px;
-      background: linear-gradient(90deg, hsl(calc(var(--accent) + 12) 88% 54%), hsl(calc(var(--accent) + 160) 80% 58%));
+      background: linear-gradient(90deg, hsl(calc(var(--accent) + 18) 88% 54%), hsl(calc(var(--accent) + 160) 80% 58%));
       -webkit-background-clip:text; background-clip:text; color: transparent;
       filter: drop-shadow(0 6px 18px rgba(0,0,0,.15));
       background-size: 200% 100%; animation: sheen 18s linear infinite;
     }
-    .callouts p{
-      margin:0 auto; max-width:60ch; color: var(--muted); font-size: clamp(1rem, 2vw, 1.1rem);
-    }
+    .title p{ margin:0 auto; max-width:60ch; color: var(--muted); font-size: clamp(1rem, 2vw, 1.1rem); }
     @keyframes sheen { to { background-position: 200% 0; } }
 
     .chip{
@@ -240,17 +284,19 @@
       color: var(--muted); font-size:.92rem; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       box-shadow: 0 10px 30px rgba(0,0,0,.08);
     }
-    .loom[data-theme="ink"] .chip{
+    .orrery[data-theme="noir"] .chip{
       background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
       box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
-    .dot{
+    .pulse{
       width:8px; height:8px; border-radius:50%;
       background: radial-gradient(circle at 30% 30%, #fff, hsl(calc(var(--accent) + 120) 85% 60%));
       box-shadow: 0 0 12px hsl(calc(var(--accent) + 120) 85% 60% / .7);
       animation: pulse calc(2000ms * var(--tempo)) ease-in-out infinite;
     }
     @keyframes pulse { 50% { transform: scale(1.35); } }
+
+    .tilt{ transition: transform 260ms ease; will-change: transform; }
 
     .meta{
       display:flex; align-items:center; justify-content:space-between; gap:10px;
@@ -259,291 +305,189 @@
     }
     #last-updated{ font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-    .tilt{ transition: transform 260ms ease; will-change: transform; }
-
     @media (max-width: 760px){
       .meta{ flex-direction: column; align-items: flex-start; gap:6px; }
       .chip{ right:10px; top:10px; }
       .slider input{ width:120px; }
     }
     @media (prefers-reduced-motion: reduce){
-      .loom *, .loom *::before, .loom *::after{
+      .orrery *, .orrery *::before, .orrery *::after{
         animation: none !important; transition: none !important;
       }
     }
   </style>
 
   <div class="top">
-    <div class="brand">
+    <div class="logo">
       <span class="glyph" aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Loom glyph">
-          <circle cx="11" cy="11" r="9" stroke="url(#g1)" stroke-width="2"/>
-          <path d="M3 11 Q11 3 19 11" stroke="url(#g2)" stroke-width="2" fill="none"/>
+        <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Orrery glyph">
           <defs>
-            <linearGradient id="g1" x1="0" y1="0" x2="22" y2="22">
+            <linearGradient id="lg" x1="0" y1="0" x2="22" y2="22">
               <stop offset="0" stop-color="hsl(210 90% 60%)"/><stop offset="1" stop-color="hsl(320 90% 60%)"/>
             </linearGradient>
-            <linearGradient id="g2" x1="3" y1="3" x2="19" y2="19">
-              <stop offset="0" stop-color="hsl(160 90% 60%)"/><stop offset="1" stop-color="hsl(40 90% 60%)"/>
-            </linearGradient>
           </defs>
+          <circle cx="11" cy="11" r="9" stroke="url(#lg)" stroke-width="2" fill="none"/>
+          <circle cx="11" cy="7" r="2" fill="hsl(40 96% 56%)"/>
         </svg>
       </span>
-      <span>Lissajous Loom</span>
+      <span>Orrery Studio</span>
     </div>
     <div class="controls">
-      <button class="pill cta" type="button" data-act="theme"><span class="tlabel">Paper</span></button>
-      <button class="pill" type="button" data-act="style">Style: Lines</button>
+      <button class="pill cta" type="button" data-act="theme"><span class="tlabel">Dawn</span></button>
       <label class="slider" title="Speed">
         <span>Speed</span>
-        <input type="range" min="0.5" max="2.5" step="0.1" value="1" data-act="speed" aria-label="Animation speed">
+        <input type="range" min="0.5" max="3" step="0.1" value="1" data-act="speed" aria-label="Animation speed">
       </label>
-      <button class="pill" type="button" data-act="reseed">Reseed</button>
-      <button class="pill" type="button" data-act="save">Save PNG</button>
+      <button class="pill" type="button" data-act="shuffle">Shuffle</button>
     </div>
   </div>
 
-  <div class="hero tilt" role="img" aria-label="Kinetic Lissajous curves">
-    <canvas class="weave" aria-hidden="true"></canvas>
-    <div class="gridmask" aria-hidden="true"></div>
-    <div class="chip" aria-live="polite">
-      <span class="dot" aria-hidden="true"></span>
-      <span class="ratio">Ratio 3:4 · Δ 0.0</span>
+  <div class="stage tilt" role="img" aria-label="Kinetic orbital sculpture">
+    <div class="system" aria-hidden="false">
+      <div class="sun" aria-hidden="true"></div>
+      <!-- orbits injected by JS -->
     </div>
-    <div class="callouts">
-      <h1>Drawn by ratios.</h1>
-      <p>Move to nudge the loom. Click to reseed. Quiet geometry, fluent light.</p>
+    <div class="chip" aria-live="polite">
+      <span class="pulse" aria-hidden="true"></span>
+      <span class="readout">8 orbits · flowing</span>
+    </div>
+    <div class="title">
+      <h1>Clockwork hush.</h1>
+      <p>Touch to tilt the sky. Shuffle to grow new worlds. Quiet motion, lucid light.</p>
     </div>
   </div>
 
   <div class="meta tilt">
-    <span class="hint">Shortcuts: Space pause · M style · T theme · R reseed · S save</span>
-    <span id="last-updated">Last updated: 2026-02-04 07:55:34 EST</span>
+    <span class="hint">Shortcuts: Space pause · T theme · R shuffle</span>
+    <span id="last-updated">Last updated: 2026-02-04 09:02:24 EST</span>
   </div>
 
   <script>
     (function(){
       const root = document.currentScript.parentElement;
-      const canvas = root.querySelector('canvas.weave');
-      const ctx = canvas.getContext('2d');
-      const hero = root.querySelector('.hero');
+      const system = root.querySelector('.system');
+      const stage = root.querySelector('.stage');
       const tilts = root.querySelectorAll('.tilt');
       const themeBtn = root.querySelector('[data-act="theme"]');
-      const styleBtn = root.querySelector('[data-act="style"]');
-      const speedSlider = root.querySelector('[data-act="speed"]');
-      const reseedBtn = root.querySelector('[data-act="reseed"]');
-      const saveBtn = root.querySelector('[data-act="save"]');
       const tlabel = themeBtn.querySelector('.tlabel');
-      const ratioEl = root.querySelector('.ratio');
+      const speedSlider = root.querySelector('[data-act="speed"]');
+      const shuffleBtn = root.querySelector('[data-act="shuffle"]');
+      const readout = root.querySelector('.readout');
 
       // state
-      let w=0,h=0,dpr=1;
-      let t=0, paused=false;
+      let paused = false;
       let seed = (Math.random()*1e9)>>>0;
-      let pointer = {x:0.5, y:0.5};
-      let baseHue = 210;
-      let a=3, b=4, delta=0;
-      let mode = root.dataset.style || 'lines';
+      let orbits = [];
       let speed = 1;
+      let baseHue = 210;
 
       // restore
-      const S = k => localStorage.getItem('loom:'+k);
+      const S = k => localStorage.getItem('orrery:'+k);
       const N = (x, d) => (x==null?d:+x);
       const savedTheme = S('theme'); if(savedTheme) root.dataset.theme = savedTheme;
-      const savedStyle = S('style'); if(savedStyle) { mode = savedStyle; root.dataset.style = mode; }
-      const savedSpeed = S('speed'); speed = N(savedSpeed, 1); speedSlider.value = speed;
-      reflect();
+      const savedSpeed = S('speed'); speed = N(savedSpeed, 1); speedSlider.value = speed; root.style.setProperty('--tempo', speed);
+      reflectTheme();
 
-      themeBtn.addEventListener('click', toggleTheme);
-      styleBtn.addEventListener('click', toggleStyle);
-      speedSlider.addEventListener('input', e => {
-        speed = +e.target.value; root.style.setProperty('--tempo', speed);
-        localStorage.setItem('loom:speed', speed);
-      });
-      reseedBtn.addEventListener('click', () => { reseed(); flashCenter(); });
-      saveBtn.addEventListener('click', savePNG);
-
-      function toggleTheme(){
-        root.dataset.theme = root.dataset.theme === 'ink' ? 'paper' : 'ink';
-        localStorage.setItem('loom:theme', root.dataset.theme);
-        reflect();
-      }
-      function toggleStyle(){
-        mode = mode === 'lines' ? 'dots' : 'lines';
-        root.dataset.style = mode;
-        localStorage.setItem('loom:style', mode);
-        reflect();
-      }
-      function reflect(){
-        tlabel.textContent = root.dataset.theme === 'ink' ? 'Ink' : 'Paper';
-        styleBtn.textContent = 'Style: ' + (mode === 'lines' ? 'Lines' : 'Dots');
-      }
-
-      // rng
       function rand(){ // xorshift32
         seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5;
         return ((seed>>>0)%1e9)/1e9;
       }
 
-      function chooseRatio(){
-        let x = 2 + Math.floor(rand()*9);
-        let y = 2 + Math.floor(rand()*9);
-        if(x===y) y = (y%9)+2;
-        return [x,y];
-      }
-
-      function reseed(){
-        seed = (Math.random()*1e9)>>>0;
+      function buildSystem(){
+        system.querySelectorAll('.orbit').forEach(n => n.remove());
+        orbits = [];
         baseHue = Math.floor(rand()*360);
-        [a,b] = chooseRatio();
-        delta = rand()*Math.PI*2;
         root.style.setProperty('--accent', baseHue);
-        speakRatio();
-      }
+        const count = 6 + Math.floor(rand()*5); // 6..10
+        const minR = Math.min(system.clientWidth, system.clientHeight) * 0.12;
+        const maxR = Math.min(system.clientWidth, system.clientHeight) * 0.48;
+        const step = (maxR - minR) / count;
 
-      function speakRatio(){
-        ratioEl.textContent = `Ratio ${a}:${b} · Δ ${delta.toFixed(2)}`;
-      }
-
-      function resize(){
-        const r = hero.getBoundingClientRect();
-        dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-        w = Math.floor(r.width * dpr);
-        h = Math.floor(r.height * dpr);
-        canvas.width = w; canvas.height = h;
-        canvas.style.width = r.width + 'px'; canvas.style.height = r.height + 'px';
-        ctx.setTransform(1,0,0,1,0,0);
-        ctx.scale(dpr,dpr);
-      }
-
-      function clear(){
-        const width = canvas.clientWidth, height = canvas.clientHeight;
-        ctx.clearRect(0,0,width,height);
-        if(root.dataset.theme === 'ink'){
-          // very soft glow base
-          const g = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, Math.hypot(width, height)/2);
-          g.addColorStop(0, 'rgba(255,255,255,0.02)');
-          g.addColorStop(1, 'rgba(255,255,255,0.00)');
-          ctx.fillStyle = g;
-          ctx.fillRect(0,0,width,height);
+        for(let i=0;i<count;i++){
+          const r = Math.round(minR + step*i + rand()*step*0.4);
+          const dur = 18 + i*8 + Math.floor(rand()*12);
+          const hue = (baseHue + i*11 + Math.floor(rand()*24))%360;
+          const sat = 76 + Math.floor(rand()*18);
+          const light = root.dataset.theme === 'noir' ? 66 : 52;
+          const ps = 10 + Math.floor(rand()*14);
+          const el = document.createElement('div');
+          el.className = 'orbit' + (i%2 ? ' reverse' : '');
+          el.style.setProperty('--r', r+'px');
+          el.style.setProperty('--dur', dur);
+          el.style.setProperty('--h', hue);
+          el.style.setProperty('--s', sat+'%');
+          el.style.setProperty('--l', light+'%');
+          el.style.setProperty('--ps', ps+'px');
+          system.appendChild(el);
+          orbits.push({r, dur, hue, sat, light, ps});
         }
+        readout.textContent = `${count} orbits · ${paused ? 'paused' : 'flowing'}`;
       }
 
-      function draw(){
-        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if(paused || prefersReduced) return;
-
-        t += 1 * speed;
-        delta += 0.005 * speed + (pointer.x - 0.5) * 0.004;
-
-        clear();
-        const width = canvas.clientWidth, height = canvas.clientHeight;
-        const cx = width/2, cy = height/2;
-        const s = Math.min(width, height);
-        const Ax = s*0.36 * (0.85 + (pointer.x-0.5)*0.2);
-        const Ay = s*0.36 * (0.85 + (pointer.y-0.5)*0.2);
-
-        const layers = 6;
-        const steps = 1500;
-        const loops = Math.PI * 2 * (a*b); // long enough to close figure
-        const themeInk = root.dataset.theme === 'ink';
-
-        for(let k=0;k<layers;k++){
-          const hue = (baseHue + k*12) % 360;
-          const sat = themeInk ? 92 : 86;
-          const light = themeInk ? 66 : 46;
-          ctx.globalCompositeOperation = themeInk ? 'screen' : 'multiply';
-
-          if(mode === 'lines'){
-            ctx.lineWidth = themeInk ? (1.0 + k*0.1) : (1.2 + k*0.12);
-            ctx.strokeStyle = `hsla(${hue}, ${sat}%, ${light}%, ${themeInk?0.7:0.55})`;
-            ctx.beginPath();
-            for(let i=0;i<=steps;i++){
-              const p = i/steps;
-              const ang = p*loops + k*0.12 + t*0.002*speed;
-              const x = cx + Ax*Math.sin(a*ang + delta + k*0.2);
-              const y = cy + Ay*Math.sin(b*ang + k*0.15);
-              if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-            }
-            ctx.stroke();
-
-            // soft glow pass
-            if(themeInk){
-              ctx.strokeStyle = `hsla(${(hue+40)%360}, ${sat}%, 70%, 0.18)`;
-              ctx.lineWidth *= 2.2;
-              ctx.stroke();
-            }
-          }else{ // dots
-            const dotMax = 900;
-            for(let i=0;i<=dotMax;i++){
-              const p = i/dotMax;
-              const ang = p*loops + k*0.16 + t*0.002*speed;
-              const x = cx + Ax*Math.sin(a*ang + delta + k*0.25);
-              const y = cy + Ay*Math.sin(b*ang + k*0.12);
-              const tw = (1 + Math.sin(ang*2 + k)) * 0.5;
-              const r = 0.6 + tw*1.6;
-              ctx.fillStyle = `hsla(${hue}, ${sat}%, ${themeInk?72:36}%, ${themeInk?0.55:0.65})`;
-              ctx.beginPath();
-              ctx.arc(x, y, r, 0, Math.PI*2);
-              ctx.fill();
-            }
-          }
-        }
-
-        requestAnimationFrame(draw);
+      function reflectTheme(){
+        tlabel.textContent = root.dataset.theme === 'noir' ? 'Noir' : 'Dawn';
       }
 
-      // interactions
-      hero.addEventListener('pointermove', e => {
-        const r = hero.getBoundingClientRect();
+      themeBtn.addEventListener('click', () => {
+        root.dataset.theme = root.dataset.theme === 'noir' ? 'dawn' : 'noir';
+        localStorage.setItem('orrery:theme', root.dataset.theme);
+        reflectTheme();
+        // re-tint planets to suit theme lightness
+        orbits.forEach((o, i) => {
+          const el = system.children[i+1]; // +1 to skip .sun
+          const light = root.dataset.theme === 'noir' ? 68 : 52;
+          el && el.style.setProperty('--l', light+'%');
+        });
+      });
+
+      speedSlider.addEventListener('input', e => {
+        speed = +e.target.value; root.style.setProperty('--tempo', speed);
+        localStorage.setItem('orrery:speed', speed);
+      });
+
+      shuffleBtn.addEventListener('click', () => { seed = (Math.random()*1e9)>>>0; buildSystem(); flash(); });
+
+      function flash(){
+        system.style.transition = 'filter 140ms ease'; system.style.filter = 'brightness(1.25)';
+        setTimeout(()=>{ system.style.filter = 'none'; }, 140);
+      }
+
+      // tilt + parallax
+      stage.addEventListener('pointermove', e => {
+        const r = stage.getBoundingClientRect();
         const px = (e.clientX - r.left) / r.width;
         const py = (e.clientY - r.top) / r.height;
-        pointer.x = Math.min(1, Math.max(0, px));
-        pointer.y = Math.min(1, Math.max(0, py));
         root.style.setProperty('--mx', Math.round(px*100)+'%');
         root.style.setProperty('--my', Math.round(py*100)+'%');
 
-        // tilt based on hero bounds
-        const rl = px, rt = py;
-        const rx = (rt - .5) * -8;
-        const ry = (rl - .5) * 8;
-        tilts.forEach(el => el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`);
+        const rx = (py - .5) * -8;
+        const ry = (px - .5) * 8;
+        document.querySelectorAll('.tilt').forEach(el => el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`);
       });
-      hero.addEventListener('pointerleave', () => {
-        tilts.forEach(el => el.style.transform = 'none');
+      stage.addEventListener('pointerleave', () => {
+        document.querySelectorAll('.tilt').forEach(el => el.style.transform = 'none');
       });
-      hero.addEventListener('click', () => { reseed(); });
 
-      function flashCenter(){
-        ratioEl.style.opacity = 0;
-        setTimeout(()=>{ ratioEl.style.opacity = 1; }, 120);
-      }
-
-      function savePNG(){
-        const link = document.createElement('a');
-        const now = new Date();
-        const stamp = now.toISOString().replace(/[:.]/g,'-');
-        link.download = `loom-${a}x${b}-${stamp}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      }
-
-      // keyboard
+      // pause / keyboard
       window.addEventListener('keydown', e => {
         const k = e.key.toLowerCase();
-        if(k === ' ' || e.code === 'Space'){ e.preventDefault(); paused = !paused; if(!paused) requestAnimationFrame(draw); }
-        if(k === 't'){ toggleTheme(); }
-        if(k === 'm'){ toggleStyle(); }
-        if(k === 'r'){ reseed(); flashCenter(); }
-        if(k === 's'){ savePNG(); }
+        if(k === ' ' || e.code === 'Space'){ e.preventDefault(); paused = !paused; root.style.animationPlayState = paused ? 'paused' : 'running'; readout.textContent = `${orbits.length} orbits · ${paused ? 'paused' : 'flowing'}`; }
+        if(k === 't'){ themeBtn.click(); }
+        if(k === 'r'){ shuffleBtn.click(); }
       });
 
-      // boot
-      resize();
-      reseed();
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(!prefersReduced) requestAnimationFrame(draw); else { clear(); draw(); }
-      window.addEventListener('resize', resize);
+      // make animationPlayState cascade to children
+      const obsCss = document.createElement('style');
+      obsCss.textContent = `.orrery{animation-play-state:inherit}.orrery *{animation-play-state:inherit}`;
+      root.appendChild(obsCss);
+
+      // initial build
+      const boot = () => {
+        buildSystem();
+      };
+      // wait for layout to size system correctly
+      requestAnimationFrame(boot);
+      window.addEventListener('resize', () => { buildSystem(); });
 
       // last updated
       const lastEl = root.querySelector('#last-updated');
