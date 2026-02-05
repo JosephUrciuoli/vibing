@@ -73,7 +73,421 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-02-04 23:16:51 EST</span></div>
+<section id="vibe2400" data-theme="dusk" aria-label="Vibe Surface">
+  <style>
+    /* Scoped styles for #vibe2400 only */
+    #vibe2400 {
+      --hue: 210;
+      --glow: 40;
+      --radius: 24px;
+      --pad: clamp(20px, 4vw, 44px);
+      --fg: hsl(0 0% 98%);
+      --fg-muted: hsl(0 0% 86% / 0.9);
+      --bg: hsl(230 18% 9%);
+      --panel: hsl(0 0% 100% / 0.06);
+      --stroke: hsl(0 0% 100% / 0.14);
+      --accent: hsl(var(--hue) 90% 62%);
+      --accent-2: hsl(calc(var(--hue) + 50) 85% 60%);
+      position: relative;
+      isolation: isolate;
+      border-radius: var(--radius);
+      overflow: hidden;
+      color: var(--fg);
+      background: radial-gradient(1200px 800px at 10% -10%, hsl(225 90% 20% / 0.35), transparent 60%),
+                  radial-gradient(800px 600px at 110% 120%, hsl(185 90% 30% / 0.25), transparent 60%),
+                  var(--bg);
+      border: 1px solid var(--stroke);
+      box-shadow: 0 10px 40px hsl(0 0% 0% / 0.5), inset 0 0 0 1px hsl(0 0% 100% / 0.04);
+      padding: var(--pad);
+      min-height: 64vh;
+      font: 400 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      letter-spacing: 0.02em;
+    }
+    /* Soft aurora glow */
+    #vibe2400::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background:
+        conic-gradient(from 210deg at 70% 30%, hsl(var(--hue) 85% 65% / 0.25), transparent 40%),
+        conic-gradient(from 10deg at 30% 70%, hsl(calc(var(--hue) + 70) 85% 65% / 0.25), transparent 55%);
+      filter: blur(50px) saturate(120%);
+      transform: translate3d(0,0,0);
+      animation: vibe2400-drift 28s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* Subtle technical texture */
+    #vibe2400 .texture {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, hsl(0 0% 100% / 0.06), transparent 40%),
+        repeating-linear-gradient(90deg, hsl(0 0% 100% / 0.05) 0 1px, transparent 1px 40px),
+        repeating-linear-gradient(0deg, hsl(0 0% 100% / 0.035) 0 1px, transparent 1px 32px);
+      mix-blend-mode: overlay;
+      mask: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Floating orbs */
+    #vibe2400 .orb {
+      position: absolute;
+      width: 360px; height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(closest-side, hsl(var(--hue) 90% 62% / 0.28), transparent 70%);
+      filter: blur(18px) saturate(130%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 0;
+      animation: vibe2400-float 22s ease-in-out infinite alternate;
+    }
+    #vibe2400 .orb.b { width: 260px; height: 260px; left: 70%; top: 10%; animation-duration: 26s; background: radial-gradient(closest-side, hsl(calc(var(--hue) + 40) 90% 60% / 0.25), transparent 70%); }
+    #vibe2400 .orb.a { left: -8%; bottom: -6%; }
+
+    /* Top bar */
+    #vibe2400 .topbar {
+      position: relative;
+      z-index: 2;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: clamp(16px, 2.5vw, 32px);
+    }
+    #vibe2400 .brand {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: hsl(0 0% 100% / 0.06);
+      border: 1px solid hsl(0 0% 100% / 0.12);
+      backdrop-filter: blur(8px);
+    }
+    #vibe2400 .brand svg { width: 20px; height: 20px; display: block; }
+    #vibe2400 .brand span { font-weight: 600; letter-spacing: 0.04em; font-size: 14px; }
+    #vibe2400 .controls { display: flex; align-items: center; gap: 10px; }
+
+    #vibe2400 .btn {
+      -webkit-tap-highlight-color: transparent;
+      appearance: none;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, hsl(0 0% 100% / 0.08), hsl(0 0% 0% / 0.08));
+      color: var(--fg);
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      box-shadow: 0 2px 10px hsl(0 0% 0% / 0.35), inset 0 0 0 1px hsl(0 0% 100% / 0.03);
+    }
+    #vibe2400 .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    #vibe2400 .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px hsl(var(--hue) 90% 60% / 0.25); }
+    #vibe2400 .btn .icon {
+      width: 16px; height: 16px; display: grid; place-items: center;
+      color: var(--accent);
+      filter: drop-shadow(0 0 6px hsl(var(--hue) 90% 60% / 0.4));
+    }
+
+    /* Hero Card */
+    #vibe2400 .hero {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      padding: clamp(10px, 2vw, 20px) 0;
+    }
+    #vibe2400 .card {
+      position: relative;
+      width: min(920px, 100%);
+      background: linear-gradient(180deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.04)) padding-box;
+      border: 1px solid var(--stroke);
+      border-radius: calc(var(--radius) + 6px);
+      padding: clamp(20px, 4vw, 48px);
+      backdrop-filter: blur(16px) saturate(140%);
+      box-shadow:
+        0 20px 60px hsl(0 0% 0% / 0.45),
+        inset 0 0 0 1px hsl(0 0% 100% / 0.05),
+        0 0 calc(var(--glow) * 0.6px) hsl(var(--hue) 90% 60% / 0.25);
+      transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+      transition: box-shadow 0.3s ease;
+    }
+    #vibe2400 .card::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(240px 140px at var(--px, 50%) var(--py, 50%), hsl(var(--hue) 100% 65% / 0.20), transparent 60%);
+      pointer-events: none; border-radius: inherit; mix-blend-mode: screen;
+      transition: opacity 0.25s ease;
+    }
+    #vibe2400 .headline {
+      margin: 0 0 8px 0;
+      font-size: clamp(34px, 8vw, 72px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      font-weight: 750;
+      text-wrap: balance;
+      background: linear-gradient(90deg, hsl(0 0% 100%), hsl(0 0% 100% / 0.85));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 1px 0 hsl(0 0% 100% / 0.08);
+    }
+    #vibe2400 .sub {
+      margin: 0 0 22px 0;
+      font-size: clamp(16px, 2.2vw, 22px);
+      color: var(--fg-muted);
+      text-wrap: pretty;
+    }
+    #vibe2400 .knobs {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      margin: 18px 0 10px;
+    }
+    #vibe2400 .knobs label {
+      display: grid; gap: 8px; font-size: 12px; color: var(--fg-muted); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    #vibe2400 input[type="range"] {
+      -webkit-appearance: none; appearance: none; height: 10px; border-radius: 999px; width: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border: 1px solid hsl(0 0% 100% / 0.18);
+      box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.25), 0 2px 8px hsl(var(--hue) 90% 60% / 0.25);
+      outline: none;
+    }
+    #vibe2400 input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, hsl(0 0% 100%), hsl(0 0% 86%));
+      border: 1px solid hsl(0 0% 100% / 0.65);
+      box-shadow: 0 2px 8px hsl(0 0% 0% / 0.35), 0 0 0 6px hsl(var(--hue) 90% 60% / 0.20);
+      cursor: grab;
+    }
+    #vibe2400 input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, hsl(0 0% 100%), hsl(0 0% 86%));
+      border: 1px solid hsl(0 0% 100% / 0.65);
+      box-shadow: 0 2px 8px hsl(0 0% 0% / 0.35), 0 0 0 6px hsl(var(--hue) 90% 60% / 0.20);
+      cursor: grab;
+    }
+
+    #vibe2400 .chips {
+      display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 10px;
+    }
+    #vibe2400 .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 999px;
+      background: hsl(0 0% 100% / 0.08);
+      border: 1px solid hsl(0 0% 100% / 0.14);
+      color: var(--fg);
+      font-weight: 600; font-size: 13px;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    #vibe2400 .chip::before {
+      content: "";
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, var(--accent), hsl(var(--hue) 90% 55%));
+      box-shadow: 0 0 12px hsl(var(--hue) 90% 60% / 0.55);
+    }
+    #vibe2400 .chip:hover { transform: translateY(-1px) scale(1.02); background: hsl(0 0% 100% / 0.12); }
+
+    #vibe2400 .meta {
+      margin-top: 18px;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+      color: var(--fg-muted);
+      font-size: 12px;
+    }
+    #vibe2400 .meta .hint {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 10px; border-radius: 8px; border: 1px dashed hsl(0 0% 100% / 0.18);
+      background: hsl(0 0% 100% / 0.04);
+    }
+
+    /* Footer quote */
+    #vibe2400 .foot {
+      position: relative; z-index: 2;
+      display: grid; place-items: center;
+      margin-top: clamp(16px, 4vw, 36px);
+      color: var(--fg-muted);
+      text-align: center;
+    }
+    #vibe2400 .foot small {
+      font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
+      border: 1px solid hsl(0 0% 100% / 0.12);
+      padding: 8px 12px; border-radius: 10px;
+      background: hsl(0 0% 100% / 0.05);
+    }
+
+    /* Dawn theme override */
+    #vibe2400[data-theme="dawn"] {
+      --bg: hsl(40 25% 96%);
+      --fg: hsl(240 10% 9%);
+      --fg-muted: hsl(240 10% 30% / 0.85);
+      --panel: hsl(0 0% 100% / 0.7);
+      --stroke: hsl(240 10% 20% / 0.12);
+    }
+    #vibe2400[data-theme="dawn"] .card {
+      background: linear-gradient(180deg, hsl(0 0% 100% / 0.85), hsl(0 0% 100% / 0.7));
+      box-shadow: 0 20px 60px hsl(0 0% 0% / 0.08), inset 0 0 0 1px hsl(0 0% 100% / 0.6);
+    }
+    #vibe2400[data-theme="dawn"] .brand { background: hsl(0 0% 100% / 0.9); border-color: hsl(240 10% 20% / 0.12); }
+    #vibe2400[data-theme="dawn"] .btn { background: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 96%)); color: var(--fg); }
+    #vibe2400[data-theme="dawn"] .chip { background: hsl(0 0% 100% / 0.9); border-color: hsl(240 10% 20% / 0.12); }
+
+    /* Animations */
+    @keyframes vibe2400-drift {
+      0% { transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1); }
+      50% { transform: translate3d(2%, 1%, 0) rotate(10deg) scale(1.05); }
+      100% { transform: translate3d(-1%, 2%, 0) rotate(20deg) scale(1.02); }
+    }
+    @keyframes vibe2400-float {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(4%, -6%, 0); }
+    }
+
+    /* Reduced motion */
+    #vibe2400.reduce-motion::before,
+    #vibe2400.reduce-motion .orb { animation: none !important; }
+  </style>
+
+  <div class="texture" aria-hidden="true"></div>
+  <div class="orb a" aria-hidden="true"></div>
+  <div class="orb b" aria-hidden="true"></div>
+
+  <div class="topbar">
+    <div class="brand" aria-label="Quiet Systems">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <defs>
+          <linearGradient id="vibeGrad" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="hsl(var(--hue) 90% 65%)"/>
+            <stop offset="100%" stop-color="hsl(calc(var(--hue) + 60) 85% 60%)"/>
+          </linearGradient>
+        </defs>
+        <circle cx="16" cy="16" r="12" fill="url(#vibeGrad)" opacity="0.9"/>
+        <circle cx="12" cy="12" r="5" fill="white" opacity="0.85"/>
+      </svg>
+      <span>Quiet Systems</span>
+    </div>
+    <div class="controls">
+      <button class="btn theme" type="button" aria-pressed="false" aria-label="Toggle theme">
+        <span class="icon" aria-hidden="true">☾</span>
+        <span class="label">Dusk</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="card" tabindex="0" aria-label="Interactive display card">
+      <h1 class="headline">Poised & Playful</h1>
+      <p class="sub">Interfaces that breathe—calm when idle, alive when invited. Slide the mood. Tilt the card. Enjoy the hush.</p>
+
+      <div class="knobs">
+        <label for="vibe-hue">Hue
+          <input id="vibe-hue" type="range" min="0" max="360" value="210" aria-valuemin="0" aria-valuemax="360" aria-valuenow="210" aria-label="Adjust hue">
+        </label>
+        <label for="vibe-glow">Glow
+          <input id="vibe-glow" type="range" min="10" max="90" value="40" aria-valuemin="10" aria-valuemax="90" aria-valuenow="40" aria-label="Adjust glow">
+        </label>
+      </div>
+
+      <div class="chips" aria-label="Principles">
+        <span class="chip">Clarity</span>
+        <span class="chip">Balance</span>
+        <span class="chip">Delight</span>
+        <span class="chip">Rhythm</span>
+      </div>
+
+      <div class="meta">
+        <span class="hint">Tip: Move your cursor (or focus) to light the panel.</span>
+        <span id="last-updated">Last updated: 2026-02-05 00:54:05 EST</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <small>Make it simple, then significant.</small>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById('vibe2400');
+      const hue = root.querySelector('#vibe-hue');
+      const glow = root.querySelector('#vibe-glow');
+      const btn = root.querySelector('.theme');
+      const card = root.querySelector('.card');
+      const updated = root.querySelector('#last-updated');
+
+      // Set last updated with locale date/time
+      try {
+        const now = new Date();
+        const fmt = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'medium' });
+        updated.textContent = 'Last updated: ' + fmt.format(now);
+      } catch (e) {
+        updated.textContent = 'Last updated: just now';
+      }
+
+      // Initialize sliders -> CSS variables
+      const syncHue = (v) => {
+        root.style.setProperty('--hue', v);
+        hue.setAttribute('aria-valuenow', v);
+      };
+      const syncGlow = (v) => {
+        root.style.setProperty('--glow', v);
+        glow.setAttribute('aria-valuenow', v);
+      };
+      syncHue(hue.value);
+      syncGlow(glow.value);
+
+      hue.addEventListener('input', (e) => syncHue(e.target.value));
+      glow.addEventListener('input', (e) => syncGlow(e.target.value));
+
+      // Theme toggle
+      const reflectTheme = () => {
+        const dawn = root.dataset.theme === 'dawn';
+        btn.setAttribute('aria-pressed', dawn ? 'true' : 'false');
+        btn.querySelector('.icon').textContent = dawn ? '☀︎' : '☾';
+        btn.querySelector('.label').textContent = dawn ? 'Dawn' : 'Dusk';
+      };
+      btn.addEventListener('click', () => {
+        root.dataset.theme = root.dataset.theme === 'dawn' ? 'dusk' : 'dawn';
+        reflectTheme();
+      });
+      reflectTheme();
+
+      // Pointer-driven tilt and highlight
+      const setTilt = (x, y, rect) => {
+        const mx = (x - rect.left) / rect.width;
+        const my = (y - rect.top) / rect.height;
+        const rx = (0.5 - my) * 10; // rotateX
+        const ry = (mx - 0.5) * 10; // rotateY
+        card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+        card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+        card.style.setProperty('--px', (mx * 100).toFixed(2) + '%');
+        card.style.setProperty('--py', (my * 100).toFixed(2) + '%');
+      };
+
+      root.addEventListener('pointermove', (e) => {
+        const rect = card.getBoundingClientRect();
+        setTilt(e.clientX, e.clientY, rect);
+      });
+      root.addEventListener('pointerleave', () => {
+        card.style.removeProperty('--rx');
+        card.style.removeProperty('--ry');
+      });
+
+      // Keyboard focus glow
+      card.addEventListener('focus', () => {
+        card.style.setProperty('--px', '50%');
+        card.style.setProperty('--py', '35%');
+      });
+
+      // Reduced motion handling
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (reduce && reduce.matches) {
+        root.classList.add('reduce-motion');
+      }
+      if (reduce) {
+        reduce.addEventListener('change', (e) => {
+          root.classList.toggle('reduce-motion', e.matches);
+        });
+      }
+    })();
+  </script>
+</section>
       </section>
       <!-- END_EDITABLE -->
     <script>
