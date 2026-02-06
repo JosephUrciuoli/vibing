@@ -73,338 +73,361 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div class="vibe2426" role="region" aria-label="Daybreak kinetic garden">
+<div class="vibe2427" role="region" aria-label="Orbit Studio — generative poster">
   <style>
-    .vibe2426 {
-      /* Theme tokens */
-      --h: 18;                     /* accent hue */
-      --ink: 235 16% 14%;          /* text color (HSL no slash) */
-      --muted: 235 12% 40%;
-      --bg0: #fbfcff;
+    .vibe2427 {
+      --radius: 26px;
+      --ink: 230 14% 14%;
+      --muted: 226 10% 40%;
+      --panel: 255 100% 100% / 0.7;
+      --panel-stroke: 228 22% 90%;
+      --bg0: #f7f9ff;
       --bg1: #ffffff;
-      --stroke: #e7e9f3;
-      --mx: 50%;
+      --accent-h: 210; /* 0..360 */
+      --accent-s: 88%;
+      --accent-l: 54%;
+      --mx: 60%;
       --my: 40%;
-      --vx: 50%;
-      --vy: 50%;
-      --breeze: 0.6;               /* 0..1 */
-      --radius: 28px;
 
       position: relative;
       isolation: isolate;
-      padding: clamp(20px, 4.6vw, 54px);
+      padding: clamp(18px, 4.6vw, 56px);
       border-radius: var(--radius);
       background:
-        radial-gradient(900px 680px at var(--mx) var(--my), hsl(var(--h) 100% 60% / 0.12), transparent 55%),
+        radial-gradient(900px 600px at var(--mx) var(--my), hsl(var(--accent-h) 90% 60% / 0.12), transparent 55%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
-      border: 1px solid var(--stroke);
+      border: 1px solid hsl(var(--panel-stroke));
       box-shadow:
-        0 20px 80px rgba(8, 11, 30, 0.08),
-        inset 0 1px 0 rgba(255,255,255,0.6);
+        0 22px 90px rgba(10, 16, 36, 0.09),
+        inset 0 1px 0 rgba(255,255,255,0.7);
       color: hsl(var(--ink));
       color-scheme: light;
-      overflow: hidden;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      overflow: hidden;
     }
-    .vibe2426 * { box-sizing: border-box; }
+    .vibe2427 * { box-sizing: border-box; }
 
-    .vibe2426.night {
-      --ink: 230 15% 92%;
-      --muted: 230 12% 70%;
-      --bg0: #0d1018;
-      --bg1: #121727;
-      --stroke: #232a3e;
+    .vibe2427::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      z-index: 0;
       background:
-        radial-gradient(900px 680px at var(--mx) var(--my), hsl(var(--h) 95% 62% / 0.16), transparent 55%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
+        conic-gradient(from 0deg,
+          hsl(calc(var(--accent-h) + 0) 92% 65% / 0.18),
+          hsl(calc(var(--accent-h) + 60) 92% 65% / 0.0),
+          hsl(calc(var(--accent-h) + 120) 92% 65% / 0.18),
+          hsl(calc(var(--accent-h) + 180) 92% 65% / 0.0),
+          hsl(calc(var(--accent-h) + 240) 92% 65% / 0.18),
+          hsl(calc(var(--accent-h) + 300) 92% 65% / 0.0),
+          hsl(calc(var(--accent-h) + 360) 92% 65% / 0.18)
+        );
+      filter: blur(36px) saturate(120%);
+      animation: v2427_spin 22s linear infinite;
+      transform-origin: 50% 50%;
+      pointer-events: none;
+    }
+    @keyframes v2427_spin { to { transform: rotate(360deg); } }
+
+    .vibe2427.night {
+      --ink: 220 15% 92%;
+      --muted: 220 12% 72%;
+      --panel: 0 0% 12% / 0.45;
+      --panel-stroke: 225 16% 26%;
+      --bg0: #090c14;
+      --bg1: #0c1222;
       color-scheme: dark;
       box-shadow:
-        0 24px 90px rgba(0, 0, 0, 0.55),
-        inset 0 1px 0 rgba(255,255,255,0.05);
+        0 28px 100px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 rgba(255,255,255,0.06);
     }
+    .vibe2427.night::before { filter: blur(42px) saturate(140%); }
 
-    .vibe2426 .layout {
+    .vibe2427 .grid {
       position: relative;
       z-index: 2;
       display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      gap: clamp(18px, 4vw, 42px);
+      grid-template-columns: 1fr 1.05fr;
+      gap: clamp(18px, 3.6vw, 40px);
       align-items: center;
     }
-    @media (max-width: 900px) {
-      .vibe2426 .layout { grid-template-columns: 1fr; }
-      .vibe2426 .visual { order: -1; }
+    @media (max-width: 980px) {
+      .vibe2427 .grid { grid-template-columns: 1fr; }
+      .vibe2427 .scene { order: -1; }
     }
 
-    /* Copy */
-    .vibe2426 .eyebrow {
+    /* Left: copy panel */
+    .vibe2427 .panel {
+      background: linear-gradient(180deg, hsl(var(--panel)), hsl(var(--panel) / 0.85));
+      border: 1px solid hsl(var(--panel-stroke));
+      border-radius: calc(var(--radius) - 8px);
+      padding: clamp(16px, 3.2vw, 28px);
+      backdrop-filter: blur(10px);
+      box-shadow:
+        0 16px 50px rgba(15, 20, 40, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+    .vibe2427.night .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow:
+        0 18px 60px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.07);
+    }
+
+    .vibe2427 .tag {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
+      gap: 10px;
+      padding: 8px 12px;
       border-radius: 999px;
-      border: 1px solid color-mix(in oklab, #fff, var(--stroke) 55%);
-      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.5));
+      border: 1px solid hsl(var(--panel-stroke));
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
       color: hsl(var(--muted));
       font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      backdrop-filter: blur(6px);
     }
-    .vibe2426.night .eyebrow {
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    .vibe2427.night .tag {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
       border-color: rgba(255,255,255,0.14);
     }
-    .vibe2426 .eyebrow::before {
-      content: "";
+    .vibe2427 .tag i {
       width: 8px; height: 8px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff, hsl(var(--h) 90% 55%) 70%);
-      box-shadow: 0 0 12px hsl(var(--h) 95% 55% / 0.7);
+      background: radial-gradient(circle at 35% 35%, #fff, hsl(var(--accent-h) var(--accent-s) var(--accent-l)) 70%);
+      box-shadow: 0 0 12px hsl(var(--accent-h) 95% 55% / 0.6);
+      display: inline-block;
       flex: none;
     }
-    .vibe2426 .title {
-      margin: 14px 0 10px;
-      font-size: clamp(30px, 6.2vw, 64px);
-      line-height: 1.02;
+
+    .vibe2427 .title {
+      margin: clamp(10px, 1.4vw, 16px) 0 6px;
+      font-size: clamp(32px, 7vw, 72px);
+      line-height: 0.95;
       letter-spacing: -0.02em;
-      background: linear-gradient(92deg,
-        hsl(var(--h) 90% 46%) 0%,
-        hsl(calc(var(--h) + 44) 85% 52%) 45%,
-        hsl(calc(var(--h) + 90) 80% 46%) 100%);
+      background:
+        linear-gradient(94deg,
+          hsl(calc(var(--accent-h) + 10) 95% 46%),
+          hsl(calc(var(--accent-h) + 70) 92% 52%),
+          hsl(calc(var(--accent-h) + 120) 85% 50%));
       -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 10px 28px rgba(0,0,0,0.06));
       text-wrap: balance;
-      filter: drop-shadow(0 6px 20px rgba(0,0,0,0.06));
     }
-    .vibe2426.night .title {
-      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
-    }
-    .vibe2426 .lede {
-      margin: 0 0 14px;
+    .vibe2427 .lede {
+      margin: 0 0 12px;
       color: hsl(var(--muted));
-      font-size: clamp(14px, 2.1vw, 18px);
+      font-size: clamp(14px, 1.9vw, 18px);
       line-height: 1.7;
-      max-width: 68ch;
       text-wrap: pretty;
+      max-width: 70ch;
     }
-    .vibe2426 .chips {
+
+    .vibe2427 .pills {
       display: flex; flex-wrap: wrap; gap: 10px;
-      list-style: none; padding: 0; margin: 10px 0 18px;
+      list-style: none; padding: 0; margin: 10px 0 14px;
     }
-    .vibe2426 .chips li {
+    .vibe2427 .pills li {
       padding: 10px 12px;
       border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
-      color: hsl(var(--ink) / 0.8);
-      font-weight: 600;
-      box-shadow: 0 10px 24px rgba(20,30,80,0.06), inset 0 1px 0 #fff;
-    }
-    .vibe2426.night .chips li {
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
-      border-color: rgba(255,255,255,0.12);
+      border: 1px solid hsl(var(--panel-stroke));
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.7));
       color: hsl(var(--ink) / 0.9);
+      font-weight: 600;
+      box-shadow: 0 10px 24px rgba(20,30,80,0.07), inset 0 1px 0 #fff;
+    }
+    .vibe2427.night .pills li {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border-color: rgba(255,255,255,0.14);
+      color: hsl(var(--ink) / 0.95);
       box-shadow: 0 12px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
     }
 
-    /* Controls */
-    .vibe2426 .toolbar {
+    .vibe2427 .controls {
       display: flex; flex-wrap: wrap; gap: 12px;
-      align-items: center;
       margin-top: 6px;
-    }
-    .vibe2426 .knob {
-      display: inline-flex;
       align-items: center;
-      gap: 10px;
+    }
+    .vibe2427 .knob {
+      display: inline-flex; align-items: center; gap: 10px;
       padding: 8px 10px;
       border-radius: 12px;
-      border: 1px solid var(--stroke);
-      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
+      border: 1px solid hsl(var(--panel-stroke));
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.55));
       color: hsl(var(--ink) / 0.85);
       font-size: 13px;
       backdrop-filter: blur(6px);
     }
-    .vibe2426.night .knob {
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
-      border-color: rgba(255,255,255,0.12);
-      color: hsl(var(--ink) / 0.9);
+    .vibe2427.night .knob {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border-color: rgba(255,255,255,0.14);
+      color: hsl(var(--ink) / 0.92);
     }
-    .vibe2426 input[type="range"] {
+    .vibe2427 input[type="range"] {
       appearance: none;
-      inline-size: 160px;
+      inline-size: 170px;
       block-size: 8px;
       background: rgba(0,0,0,0.06);
       border-radius: 999px;
+      border: 1px solid hsl(var(--panel-stroke));
       outline: none;
-      border: 1px solid var(--stroke);
     }
-    .vibe2426.night input[type="range"] {
+    .vibe2427.night input[type="range"] {
       background: rgba(255,255,255,0.09);
-      border-color: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.14);
     }
-    .vibe2426 input[type="range"]::-webkit-slider-thumb {
+    .vibe2427 input[type="range"]::-webkit-slider-thumb {
       appearance: none;
       width: 18px; height: 18px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff, hsl(var(--h) 90% 55%) 60%);
-      border: 1px solid color-mix(in oklab, #fff, var(--stroke) 35%);
-      box-shadow: 0 6px 16px hsl(var(--h) 90% 55% / 0.35);
+      background: radial-gradient(circle at 35% 35%, #fff, hsl(var(--accent-h) var(--accent-s) var(--accent-l)) 60%);
+      border: 1px solid color-mix(in oklab, #fff, hsl(var(--panel-stroke)) 35%);
+      box-shadow: 0 6px 16px hsl(var(--accent-h) 90% 55% / 0.35);
       cursor: pointer;
     }
-    .vibe2426 input[type="range"]::-moz-range-thumb {
+    .vibe2427 input[type="range"]::-moz-range-thumb {
       width: 18px; height: 18px; border: none; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff, hsl(var(--h) 90% 55%) 60%);
-      box-shadow: 0 6px 16px hsl(var(--h) 90% 55% / 0.35);
+      background: radial-gradient(circle at 35% 35%, #fff, hsl(var(--accent-h) var(--accent-s) var(--accent-l)) 60%);
+      box-shadow: 0 6px 16px hsl(var(--accent-h) 90% 55% / 0.35);
       cursor: pointer;
     }
-    .vibe2426 .btn {
+
+    .vibe2427 .btn {
       appearance: none;
       cursor: pointer;
-      border: 1px solid var(--stroke);
+      border: 1px solid hsl(var(--panel-stroke));
       border-radius: 12px;
       padding: 10px 14px;
       font-weight: 700;
       letter-spacing: 0.2px;
       color: hsl(var(--ink));
-      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.7));
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.72));
       box-shadow: 0 10px 28px rgba(20,30,80,0.08), inset 0 1px 0 #fff;
       transition: transform .15s ease, box-shadow .25s ease, background .25s ease, color .2s ease, border-color .2s ease;
     }
-    .vibe2426 .btn:hover { transform: translateY(-1px); box-shadow: 0 18px 44px rgba(20,30,80,0.15); }
-    .vibe2426 .btn:active { transform: translateY(0); }
-    .vibe2426 .btn[aria-pressed="true"] {
-      color: #0f1220;
-      background: linear-gradient(180deg, hsl(var(--h) 92% 64%), hsl(var(--h) 92% 56%));
-      box-shadow: 0 12px 30px hsl(var(--h) 90% 55% / 0.4);
+    .vibe2427 .btn:hover { transform: translateY(-1px); box-shadow: 0 18px 44px rgba(20,30,80,0.15); }
+    .vibe2427 .btn:active { transform: translateY(0); }
+    .vibe2427 .btn[aria-pressed="true"] {
+      color: #0b0f18;
+      background: linear-gradient(180deg, hsl(var(--accent-h) 92% 64%), hsl(var(--accent-h) 92% 56%));
       border-color: transparent;
+      box-shadow: 0 12px 30px hsl(var(--accent-h) 90% 55% / 0.4);
     }
-    .vibe2426.night .btn {
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+    .vibe2427.night .btn {
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
       border-color: rgba(255,255,255,0.14);
       color: hsl(var(--ink));
       box-shadow: 0 12px 34px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
     }
 
-    .vibe2426 .btn:focus-visible,
-    .vibe2426 input[type="range"]:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 3px hsl(var(--h) 90% 60% / 0.35);
+    .vibe2427 .meta {
+      margin-top: 12px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+      color: hsl(var(--muted));
+      font-size: 12px;
     }
 
-    /* Visual */
-    .vibe2426 .visual {
+    /* Right: scene */
+    .vibe2427 .scene {
       position: relative;
-      min-height: clamp(280px, 36vw, 520px);
-      border-radius: calc(var(--radius) - 10px);
-      border: 1px solid var(--stroke);
-      overflow: hidden;
+      min-height: clamp(320px, 36vw, 560px);
+      border-radius: calc(var(--radius) - 8px);
+      border: 1px solid hsl(var(--panel-stroke));
       background:
-        radial-gradient(480px 360px at var(--vx) var(--vy), hsl(var(--h) 90% 65% / 0.14), transparent 55%),
-        linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+        radial-gradient(520px 380px at var(--mx) var(--my), hsl(var(--accent-h) 90% 65% / 0.16), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.7));
       box-shadow:
         inset 0 1px 0 #fff,
-        0 16px 60px rgba(20,30,80,0.08);
+        0 18px 60px rgba(20,30,80,0.09);
+      overflow: hidden;
     }
-    .vibe2426.night .visual {
+    .vibe2427.night .scene {
       background:
-        radial-gradient(560px 420px at var(--vx) var(--vy), hsl(var(--h) 90% 60% / 0.18), transparent 60%),
-        linear-gradient(180deg, rgba(10,12,20,0.8), rgba(10,12,20,0.6));
+        radial-gradient(580px 420px at var(--mx) var(--my), hsl(var(--accent-h) 90% 60% / 0.18), transparent 60%),
+        linear-gradient(180deg, rgba(9,11,18,0.8), rgba(9,11,18,0.6));
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,0.06),
-        0 16px 60px rgba(0,0,0,0.45);
+        0 18px 60px rgba(0,0,0,0.45);
     }
-    .vibe2426 .ribbons {
-      position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
-      display: block;
+    .vibe2427 .orb {
+      position: absolute; inset: 0;
       filter: saturate(115%);
     }
-    .vibe2426 .halo {
-      position: absolute;
-      inset: -15%;
+    .vibe2427 .ring {
+      position: absolute; inset: -12%;
       background:
-        radial-gradient(60% 60% at var(--vx) var(--vy), hsl(var(--h) 95% 60% / 0.20), transparent 70%);
-      filter: blur(30px);
+        radial-gradient(60% 60% at var(--mx) var(--my), hsl(var(--accent-h) 95% 60% / 0.18), transparent 70%);
+      filter: blur(34px);
       mix-blend-mode: multiply;
       pointer-events: none;
     }
-    .vibe2426.night .halo { mix-blend-mode: screen; filter: blur(36px); }
+    .vibe2427.night .ring { mix-blend-mode: screen; filter: blur(38px); }
 
-    .vibe2426 .meta {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; flex-wrap: wrap;
-      margin-top: 14px; color: hsl(var(--muted)); font-size: 12px;
-    }
+    .vibe2427.paused .orb { filter: saturate(98%); }
 
-    /* Pause state */
-    .vibe2426.paused .visual { filter: saturate(95%); }
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      .vibe2426 .halo { display: none; }
+    .vibe2427 .btn:focus-visible,
+    .vibe2427 input[type="range"]:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px hsl(var(--accent-h) 90% 60% / 0.35);
     }
   </style>
 
-  <div class="layout">
-    <div class="copy">
-      <span class="eyebrow">Edition 2426 — Daybreak</span>
-      <h1 class="title">Kinetic Paper Garden</h1>
-      <p class="lede">A bright departure from midnight glass: ribbons of color breathe across a sunlit field. Minimal, tactile, and calm—made to be guided by your cursor like a morning breeze.</p>
-      <ul class="chips" aria-label="Design values">
-        <li>Sunlit contrast</li>
-        <li>Gentle kinetics</li>
-        <li>Paper clarity</li>
+  <div class="grid">
+    <div class="panel">
+      <span class="tag"><i aria-hidden="true"></i> Edition 2427 — Orbit Studio</span>
+      <h1 class="title">Lunar<br>Orbit<br>Studio</h1>
+      <p class="lede">A kinetic poster machine. Orbits weave light, your pointer bends space, and color drifts with time. Quietly maximal; unapologetically crisp.</p>
+      <ul class="pills" aria-label="Design tenets">
+        <li>Cosmic minimalism</li>
+        <li>Parametric play</li>
+        <li>Tactile light</li>
       </ul>
-
-      <div class="toolbar" role="group" aria-label="Controls">
+      <div class="controls" role="group" aria-label="Controls">
         <label class="knob">Hue
-          <input type="range" min="0" max="360" value="18" aria-label="Hue">
+          <input type="range" min="0" max="360" value="210" aria-label="Hue">
         </label>
-        <label class="knob">Breeze
-          <input type="range" min="0" max="100" value="60" aria-label="Breeze">
+        <label class="knob">Flow
+          <input type="range" min="0" max="100" value="55" aria-label="Flow">
         </label>
         <button class="btn toggle" data-k="pause" aria-pressed="false">Pause</button>
         <button class="btn toggle" data-k="theme" aria-pressed="false">Night</button>
-        <button class="btn" data-k="save">Save Frame</button>
+        <button class="btn" data-k="save">Save Poster</button>
       </div>
-
-      <footer class="meta">
-        <span class="hint">Tip: drag across the canvas to steer the wind. Try Night.</span>
-        <span id="last-updated">Last updated: 2026-02-06 06:31:55 EST</span>
-      </footer>
+      <div class="meta">
+        <span class="hint">Tip: drag across the cosmos to warp gravity. Try Night.</span>
+        <span id="last-updated">Last updated: 2026-02-06 07:55:36 EST</span>
+      </div>
     </div>
 
-    <div class="visual" aria-label="Wind-painted ribbons" role="img">
-      <canvas class="ribbons"></canvas>
-      <div class="halo" aria-hidden="true"></div>
+    <div class="scene" role="img" aria-label="Generative orbits">
+      <canvas class="orb"></canvas>
+      <div class="ring" aria-hidden="true"></div>
     </div>
   </div>
 
   <script>
     (function(){
-      const root = document.currentScript.closest('.vibe2426');
-      const visual = root.querySelector('.visual');
-      const canvas = root.querySelector('.ribbons');
+      const root = document.currentScript.closest('.vibe2427');
+      const scene = root.querySelector('.scene');
+      const canvas = root.querySelector('.orb');
       const ctx = canvas.getContext('2d', { alpha: true });
       const hueInput = root.querySelector('input[aria-label="Hue"]');
-      const breezeInput = root.querySelector('input[aria-label="Breeze"]');
+      const flowInput = root.querySelector('input[aria-label="Flow"]');
       const btnPause = root.querySelector('.btn.toggle[data-k="pause"]');
       const btnTheme = root.querySelector('.btn.toggle[data-k="theme"]');
       const btnSave = root.querySelector('.btn[data-k="save"]');
       const updated = root.querySelector('#last-updated');
 
-      // Last updated
+      // update timestamp
       try {
         const fmt = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' });
         updated.textContent = 'Last updated: ' + fmt.format(new Date());
-      } catch (_) {
+      } catch(_) {
         updated.textContent = 'Last updated: ' + new Date().toLocaleString();
       }
 
-      // DPR-safe sizing
+      // Size / DPR
       let dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
       function sizeCanvas(){
-        const r = visual.getBoundingClientRect();
+        const r = scene.getBoundingClientRect();
         canvas.width = Math.max(1, Math.floor(r.width * dpr));
         canvas.height = Math.max(1, Math.floor(r.height * dpr));
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -412,55 +435,74 @@
 
       // State
       let running = true;
-      let rafId = null;
-      let t = 0;
-      let pointer = { x: 0.5, y: 0.5, down: false };
-      let breeze = (Number(breezeInput.value) || 60) / 100;
+      let flow = (Number(flowInput.value) || 55) / 100;
+      let t0 = performance.now();
+      const pointer = { x: 0.5, y: 0.5 };
 
-      // Drawing
-      function draw() {
-        const r = visual.getBoundingClientRect();
-        const w = r.width;
-        const h = r.height;
+      // System: Lissajous orbits + attractor
+      let orbits = [];
+      function initOrbits() {
+        const r = scene.getBoundingClientRect();
+        const base = Math.max(120, Math.min(r.width, r.height) * 0.68);
+        const count = 48;
+        orbits = Array.from({ length: count }, (_, i) => {
+          const p = (i + 1) / (count + 1);
+          return {
+            ax: base * (0.25 + 0.65 * p),
+            ay: base * (0.18 + 0.54 * (1 - p)),
+            fx: 2 + (i % 5),
+            fy: 3 + ((i * 2) % 5),
+            phase: Math.random() * Math.PI * 2,
+            weight: 0.7 + p * 1.4
+          };
+        });
+      }
 
+      function hue(i, total) {
+        const base = Number(getComputedStyle(root).getPropertyValue('--accent-h')) || 210;
+        return (base + (i / total) * 120) % 360;
+      }
+
+      function draw(now){
+        const r = scene.getBoundingClientRect();
+        const w = r.width, h = r.height;
         ctx.clearRect(0, 0, w, h);
 
-        const baseHue = Number(getComputedStyle(root).getPropertyValue('--h')) || 18;
-        const strands = 7;
-        const scale = Math.max(80, w * 0.28);
-        const speed = 0.0006 + breeze * 0.0012;
-        const ampBase = 10 + breeze * Math.min(h * 0.16, 80);
-        const px = pointer.x, py = pointer.y;
+        const cx = w * (0.5 + (pointer.x - 0.5) * 0.16);
+        const cy = h * (0.5 + (pointer.y - 0.5) * 0.16);
+
+        const dt = (now - t0) * (0.0008 + flow * 0.004);
+        const N = orbits.length;
 
         ctx.globalCompositeOperation = 'lighter';
 
-        for (let i = 0; i < strands; i++) {
-          const p = (i + 1) / (strands + 1);
-          const baseY = h * p;
-          const amp = ampBase * (0.5 + i / strands);
-          const phase = (i * 0.9) + t * (1 + i * 0.07);
+        for (let i = 0; i < N; i++) {
+          const o = orbits[i];
+          const T = dt * (1 + i * 0.02) + o.phase;
+          const x = cx + Math.sin(T * o.fx) * o.ax;
+          const y = cy + Math.cos(T * o.fy) * o.ay;
 
-          // Color per strand
-          const hue = baseHue + i * 12;
-          const sat = 82;
-          const light = 52 - i * 2;
-          ctx.strokeStyle = `hsla(${hue}, ${sat}%, ${light}%, 0.7)`;
-          ctx.lineWidth = 1.2 + i * 0.35;
+          // subtle attraction toward pointer
+          const dx = (pointer.x * w - x) * 0.02 * flow;
+          const dy = (pointer.y * h - y) * 0.02 * flow;
+
+          const px = x + dx;
+          const py = y + dy;
+
+          const sat = 86;
+          const light = 55 - (i / N) * 12;
+          ctx.strokeStyle = `hsla(${hue(i, N)}, ${sat}%, ${light}%, 0.75)`;
+          ctx.lineWidth = 0.6 + o.weight * 0.5;
 
           ctx.beginPath();
-          for (let x = 0; x <= w; x += 5) {
-            const nx = x / w;
-            // Pull toward pointer with exponential falloff
-            const fall = Math.exp(-Math.abs(nx - px) * 8);
-            const pull = (py * h - baseY) * fall * 0.18;
-
-            const y =
-              baseY +
-              Math.sin((x / scale) + phase) * amp * (0.6 + 0.4 * Math.sin(nx * Math.PI)) +
-              pull;
-
-            if (x === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
+          // small rosette at each head
+          const petals = 18;
+          const radius = 0.4 + o.weight * 0.6;
+          for (let k = 0; k <= petals; k++) {
+            const a = (k / petals) * Math.PI * 2;
+            const rx = px + Math.cos(a) * radius * (1 + 0.3 * Math.sin(T + a * 3));
+            const ry = py + Math.sin(a) * radius * (1 + 0.3 * Math.cos(T + a * 2));
+            if (k === 0) ctx.moveTo(rx, ry); else ctx.lineTo(rx, ry);
           }
           ctx.stroke();
         }
@@ -468,23 +510,10 @@
         ctx.globalCompositeOperation = 'source-over';
       }
 
-      function loop(now){
+      function loop(now) {
         if (!running) return;
-        t = now * (0.0012 + breeze * 0.0008);
-        draw();
-        rafId = requestAnimationFrame(loop);
-      }
-
-      function start(){
-        if (!running) {
-          running = true;
-          rafId = requestAnimationFrame(loop);
-        }
-      }
-      function stop(){
-        running = false;
-        if (rafId) cancelAnimationFrame(rafId);
-        rafId = null;
+        draw(now);
+        requestAnimationFrame(loop);
       }
 
       // Interactions
@@ -495,42 +524,37 @@
         root.style.setProperty('--mx', x + 'px');
         root.style.setProperty('--my', y + 'px');
       }
-      function setSpotFromVisual(e) {
-        const rv = visual.getBoundingClientRect();
-        const x = e.clientX - rv.left;
-        const y = e.clientY - rv.top;
-        const px = Math.max(0, Math.min(1, x / rv.width));
-        const py = Math.max(0, Math.min(1, y / rv.height));
-        pointer.x = px;
-        pointer.y = py;
-        root.style.setProperty('--vx', (px * 100).toFixed(2) + '%');
-        root.style.setProperty('--vy', (py * 100).toFixed(2) + '%');
+      function setPointer(e) {
+        const rs = scene.getBoundingClientRect();
+        const x = Math.max(0, Math.min(1, (e.clientX - rs.left) / rs.width));
+        const y = Math.max(0, Math.min(1, (e.clientY - rs.top) / rs.height));
+        pointer.x = x; pointer.y = y;
       }
 
       root.addEventListener('pointermove', setSpotFromRoot);
-      visual.addEventListener('pointerdown', (e) => { pointer.down = true; setSpotFromVisual(e); });
-      visual.addEventListener('pointermove', (e) => { if (pointer.down) setSpotFromVisual(e); else setSpotFromVisual(e); });
-      window.addEventListener('pointerup', () => { pointer.down = false; });
+      scene.addEventListener('pointermove', setPointer);
 
       // Controls
       hueInput.addEventListener('input', () => {
-        root.style.setProperty('--h', hueInput.value);
-        draw();
+        root.style.setProperty('--accent-h', hueInput.value);
+        draw(performance.now());
       });
-      breezeInput.addEventListener('input', () => {
-        breeze = (Number(breezeInput.value) || 0) / 100;
-        root.style.setProperty('--breeze', breeze.toFixed(2));
+      flowInput.addEventListener('input', () => {
+        flow = (Number(flowInput.value) || 0) / 100;
       });
+
       function syncPauseBtn() {
         btnPause.setAttribute('aria-pressed', String(!running));
         btnPause.textContent = running ? 'Pause' : 'Resume';
       }
       btnPause.addEventListener('click', () => {
-        if (running) { root.classList.add('paused'); stop(); }
-        else { root.classList.remove('paused'); start(); }
+        running = !running;
+        if (running) requestAnimationFrame(loop);
+        root.classList.toggle('paused', !running);
         syncPauseBtn();
       });
-      function syncThemeBtn(){
+
+      function syncThemeBtn() {
         const night = root.classList.contains('night');
         btnTheme.setAttribute('aria-pressed', String(night));
         btnTheme.textContent = night ? 'Day' : 'Night';
@@ -538,62 +562,62 @@
       btnTheme.addEventListener('click', () => {
         root.classList.toggle('night');
         syncThemeBtn();
-        draw();
+        draw(performance.now());
       });
+
       btnSave.addEventListener('click', () => {
         try {
-          const r = visual.getBoundingClientRect();
+          const r = scene.getBoundingClientRect();
           const tmp = document.createElement('canvas');
           const tdpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
           tmp.width = Math.floor(r.width * tdpr);
           tmp.height = Math.floor(r.height * tdpr);
           const tctx = tmp.getContext('2d');
           tctx.setTransform(tdpr, 0, 0, tdpr, 0, 0);
-          // Re-draw current frame into tmp
-          const base = ctx.getImageData(0, 0, r.width * dpr, r.height * dpr);
-          // If DPR differs, draw via drawImage from original canvas
+          tctx.fillStyle = getComputedStyle(root).colorScheme === 'dark' ? '#0c1222' : '#ffffff';
+          tctx.fillRect(0,0,r.width,r.height);
           tctx.drawImage(canvas, 0, 0, r.width, r.height);
-
           const link = document.createElement('a');
-          link.download = 'kinetic-paper-' + Date.now() + '.png';
+          link.download = 'orbit-studio-' + Date.now() + '.png';
           link.href = tmp.toDataURL('image/png');
           link.click();
-        } catch (e) {
-          // graceful no-op
-        }
+        } catch (e) { /* noop */ }
       });
 
-      // Init sizes and observers
+      // Init
       sizeCanvas();
-      draw();
+      initOrbits();
+      draw(performance.now());
+      t0 = performance.now();
 
-      const ro = new ResizeObserver(() => { dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1)); sizeCanvas(); draw(); });
-      ro.observe(visual);
+      const ro = new ResizeObserver(() => {
+        dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+        sizeCanvas();
+        initOrbits();
+        draw(performance.now());
+      });
+      ro.observe(scene);
 
       // Reduced motion
       const mql = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
       if (mql && mql.matches) {
-        root.classList.add('paused');
-        stop();
-        syncPauseBtn();
+        running = false; root.classList.add('paused'); syncPauseBtn();
       } else {
-        start();
-        syncPauseBtn();
+        running = true; requestAnimationFrame(loop); syncPauseBtn();
       }
       if (mql && mql.addEventListener) {
         mql.addEventListener('change', (e) => {
-          if (e.matches) { root.classList.add('paused'); stop(); }
-          else { root.classList.remove('paused'); start(); }
+          running = !e.matches;
+          root.classList.toggle('paused', e.matches);
           syncPauseBtn();
+          if (running) requestAnimationFrame(loop);
         });
       }
 
-      // Initial spot position
+      // initial hot spots
       const rr = root.getBoundingClientRect();
-      root.style.setProperty('--mx', (rr.width * 0.5) + 'px');
-      root.style.setProperty('--my', (rr.height * 0.35) + 'px');
-      root.style.setProperty('--vx', '50%');
-      root.style.setProperty('--vy', '50%');
+      root.style.setProperty('--mx', (rr.width * 0.55) + 'px');
+      root.style.setProperty('--my', (rr.height * 0.38) + 'px');
       syncThemeBtn();
     })();
   </script>
