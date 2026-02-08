@@ -73,7 +73,401 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-02-08 06:21:19 EST</span></div>
+<div class="vibe-aurora" data-theme="dusk" aria-label="Aurora Note">
+  <style>
+    .vibe-aurora {
+      --bg1: #0b1120;
+      --bg2: #101631;
+      --glow-a: #74e0ff;
+      --glow-b: #b09cff;
+      --text: #f6f8ff;
+      --muted: #c9d6ffcc;
+      --ring: #c1f2ff;
+      --beat: 8s;
+      --intensity: 68; /* 0–100 */
+      --mx: 50%;
+      --my: 50%;
+      position: relative;
+      color: var(--text);
+      border-radius: 28px;
+      overflow: hidden;
+      padding: 26px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(176,156,255,0.20), transparent 60%),
+        radial-gradient(1000px 520px at 120% 10%, rgba(116,224,255,0.20), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.02),
+        0 20px 50px -20px rgba(0,0,0,0.6),
+        0 2px 10px rgba(0,0,0,0.3);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      isolation: isolate;
+    }
+    /* Theme variations */
+    .vibe-aurora[data-theme="dawn"] {
+      --bg1: #1b1030; --bg2: #1d2449; --glow-a: #ffb2d6; --glow-b: #ffd9a3; --ring: #ffe3b8;
+      background:
+        radial-gradient(1200px 600px at 15% -10%, rgba(255,178,214,0.22), transparent 60%),
+        radial-gradient(1000px 520px at 115% 10%, rgba(255,217,163,0.20), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+    .vibe-aurora[data-theme="noon"] {
+      --bg1: #102530; --bg2: #0a1c24; --glow-a: #78ffd6; --glow-b: #7ad3ff; --ring: #92ffe4;
+      background:
+        radial-gradient(1200px 600px at 15% -10%, rgba(120,255,214,0.22), transparent 60%),
+        radial-gradient(1000px 520px at 115% 10%, rgba(122,211,255,0.22), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+    .vibe-aurora::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      pointer-events: none;
+      background:
+        radial-gradient(420px 320px at var(--mx) var(--my), rgba(255,255,255,0.10), transparent 60%),
+        conic-gradient(from 200deg at 70% 20%, rgba(255,255,255,0.06), transparent 40%, rgba(255,255,255,0.03), transparent 70%, rgba(255,255,255,0.05), transparent 100%);
+      mix-blend-mode: screen;
+      transition: opacity 0.25s ease;
+      opacity: 0.9;
+      z-index: 0;
+    }
+    .vibe-aurora .tilt {
+      position: relative;
+      z-index: 1;
+      will-change: transform;
+      transform-style: preserve-3d;
+      transition: transform 220ms ease, filter 200ms ease;
+    }
+    .vibe-aurora .decor {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    }
+    .vibe-aurora .orb {
+      position: absolute;
+      width: 40vmax; height: 40vmax;
+      filter: blur(calc((var(--intensity) / 100) * 40px + 10px));
+      opacity: 0.22;
+      border-radius: 50%;
+      background: radial-gradient(circle at 45% 55%, var(--glow-a), transparent 60%);
+      animation: floatA var(--beat) ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+    }
+    .vibe-aurora .o1 { top: -20%; left: -10%; transform: translateZ(0); }
+    .vibe-aurora .o2 { bottom: -30%; right: -20%; background: radial-gradient(circle at 50% 50%, var(--glow-b), transparent 60%); animation-name: floatB; }
+    .vibe-aurora .grain {
+      position: absolute; inset: -20%;
+      opacity: 0.05; mix-blend-mode: overlay;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.1) 0 2px, transparent 2px 4px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0 2px, transparent 2px 4px);
+      transform: translateZ(0);
+      animation: drift 40s linear infinite;
+    }
+
+    .vibe-aurora .inner {
+      display: grid;
+      gap: 22px;
+      grid-template-columns: 1fr;
+      align-items: center;
+    }
+    @media (min-width: 780px) {
+      .vibe-aurora .inner { grid-template-columns: 1.1fr 1fr; }
+      .vibe-aurora .controls { grid-column: 1 / -1; }
+    }
+
+    .vibe-aurora .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      padding: 8px 10px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(6px);
+    }
+    .vibe-aurora .badge-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle, var(--glow-a), var(--glow-b));
+      box-shadow: 0 0 12px var(--glow-a), 0 0 20px var(--glow-b);
+    }
+
+    .vibe-aurora h1 {
+      margin: 8px 0 6px;
+      font-size: clamp(28px, 4.4vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #fff, #dfe7ff 30%, #f9fbff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .vibe-aurora .kicker {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .vibe-aurora .dial-wrap {
+      justify-self: center;
+      position: relative;
+      width: min(62vw, 280px);
+      aspect-ratio: 1;
+      display: grid; place-items: center;
+      border-radius: 24px;
+      background: radial-gradient(120% 120% at 50% 30%, rgba(255,255,255,0.06), rgba(255,255,255,0.0));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 8px 30px rgba(255,255,255,0.04);
+    }
+    .vibe-aurora svg.dial { width: 84%; height: 84%; }
+    .vibe-aurora .track {
+      stroke: rgba(255,255,255,0.16);
+      stroke-width: 8;
+    }
+    .vibe-aurora .progress {
+      --circ: 326.7256;
+      --p: 0.72;
+      stroke-width: 8;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.14));
+      animation: breathe var(--beat) ease-in-out infinite;
+      stroke-dasharray: calc(var(--circ) * var(--p)) var(--circ);
+      transform: rotate(-90deg);
+      transform-origin: 60px 60px;
+    }
+    .vibe-aurora .dots { transform-origin: 60px 60px; animation: spin calc(var(--beat) * 1.2) linear infinite; }
+    .vibe-aurora .dot { filter: drop-shadow(0 0 6px rgba(255,255,255,0.5)); }
+
+    .vibe-aurora .controls {
+      display: grid;
+      gap: 14px;
+      margin-top: 4px;
+    }
+    .vibe-aurora .chips {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .vibe-aurora .chip {
+      appearance: none; border: 1px solid rgba(255,255,255,0.18);
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+      color: var(--text);
+      border-radius: 999px; padding: 10px 14px; font-size: 13px;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 200ms ease, background 200ms ease, color 200ms ease, box-shadow 200ms ease;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.08) inset, 0 6px 16px rgba(0,0,0,0.25);
+    }
+    .vibe-aurora .chip:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.36); }
+    .vibe-aurora .chip.active {
+      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.08));
+      border-color: rgba(255,255,255,0.44);
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.06) inset, 0 10px 26px rgba(0,0,0,0.35);
+    }
+    .vibe-aurora .slider {
+      display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 12px 14px; border-radius: 16px;
+    }
+    .vibe-aurora .slider label { font-size: 13px; color: var(--muted); }
+    .vibe-aurora input[type="range"] {
+      -webkit-appearance: none; appearance: none; height: 6px; border-radius: 999px; width: 100%;
+      background: linear-gradient(90deg, var(--glow-a), var(--glow-b));
+      outline: none; border: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18), 0 2px 8px rgba(0,0,0,0.25);
+    }
+    .vibe-aurora input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: #fff; border: 2px solid rgba(0,0,0,0.18);
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.25), 0 6px 14px rgba(0,0,0,0.35);
+      cursor: grab;
+    }
+    .vibe-aurora input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #fff; border: 2px solid rgba(0,0,0,0.18);
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.25), 0 6px 14px rgba(0,0,0,0.35);
+      cursor: grab;
+    }
+    .vibe-aurora .slider output {
+      font-variant-numeric: tabular-nums; font-size: 13px; color: var(--text);
+      background: rgba(255,255,255,0.1); padding: 6px 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .vibe-aurora .themes {
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    }
+    .vibe-aurora .theme {
+      width: 34px; height: 24px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.18);
+      background: linear-gradient(90deg, var(--glow-a), var(--glow-b));
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 200ms ease, box-shadow 200ms ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 6px 16px rgba(0,0,0,0.25);
+    }
+    .vibe-aurora .theme[aria-pressed="true"] { border-color: rgba(255,255,255,0.44); transform: translateY(-1px); }
+
+    .vibe-aurora .foot {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px;
+      color: var(--muted); font-size: 12px;
+    }
+    .vibe-aurora .credit { opacity: 0.9; }
+    .vibe-aurora a { color: inherit; text-decoration: none; border-bottom: 1px dashed rgba(255,255,255,0.25); }
+    .vibe-aurora a:focus-visible, .vibe-aurora .chip:focus-visible, .vibe-aurora .theme:focus-visible, .vibe-aurora input[type="range"]:focus-visible {
+      outline: 2px solid var(--glow-a); outline-offset: 2px;
+    }
+
+    /* Animations */
+    @keyframes floatA { from { transform: translate(-2%, -2%) scale(1); } to { transform: translate(2%, 2%) scale(1.06); } }
+    @keyframes floatB { from { transform: translate(2%, 4%) scale(1.04); } to { transform: translate(-2%, -1%) scale(1); } }
+    @keyframes drift { from { transform: translate3d(-2%,0,0) rotate(0deg); } to { transform: translate3d(2%,0,0) rotate(360deg); } }
+    @keyframes breathe { 0% { --p: 0.35; } 50% { --p: 0.88; } 100% { --p: 0.35; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .vibe-aurora *, .vibe-aurora::before { animation: none !important; transition: none !important; }
+      .vibe-aurora .tilt { transform: none !important; }
+    }
+  </style>
+
+  <div class="tilt">
+    <div class="decor">
+      <span class="orb o1"></span>
+      <span class="orb o2"></span>
+      <span class="grain" aria-hidden="true"></span>
+    </div>
+
+    <div class="inner">
+      <section class="lead">
+        <div class="badge"><span class="badge-dot" aria-hidden="true"></span> Aurora Note 2466</div>
+        <h1>Quiet Momentum</h1>
+        <p class="kicker">A pocket of calm with a pulse—soft gradients, gentle motion, and focus when you want it.</p>
+      </section>
+
+      <div class="dial-wrap" aria-hidden="true">
+        <svg class="dial" viewBox="0 0 120 120">
+          <defs>
+            <linearGradient id="va-grad-2466" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="var(--glow-a)" />
+              <stop offset="100%" stop-color="var(--glow-b)" />
+            </linearGradient>
+          </defs>
+          <circle class="track" cx="60" cy="60" r="52" fill="none" />
+          <circle class="progress" cx="60" cy="60" r="52" fill="none" stroke="url(#va-grad-2466)" />
+          <g class="dots">
+            <g style="transform-origin:60px 60px; transform: rotate(0deg);">
+              <circle class="dot" cx="60" cy="8" r="2.6" fill="var(--ring)"/>
+            </g>
+            <g style="transform-origin:60px 60px; transform: rotate(120deg);">
+              <circle class="dot" cx="60" cy="8" r="2.2" fill="var(--glow-a)"/>
+            </g>
+            <g style="transform-origin:60px 60px; transform: rotate(240deg);">
+              <circle class="dot" cx="60" cy="8" r="2.2" fill="var(--glow-b)"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <div class="controls">
+        <div class="chips" role="group" aria-label="Mode">
+          <button class="chip" data-beat="14s" aria-pressed="false">Focus</button>
+          <button class="chip active" data-beat="8s" aria-pressed="true">Breathe</button>
+          <button class="chip" data-beat="4s" aria-pressed="false">Play</button>
+        </div>
+
+        <div class="slider">
+          <label for="glow">Glow intensity</label>
+          <output id="glow-out" for="glow" aria-live="polite">68%</output>
+          <input id="glow" type="range" min="0" max="100" value="68" aria-label="Glow intensity">
+        </div>
+
+        <div class="themes" role="group" aria-label="Palette">
+          <button class="theme" data-theme="dawn" aria-pressed="false" title="Dawn"></button>
+          <button class="theme" data-theme="noon" aria-pressed="false" title="Noon"></button>
+          <button class="theme" data-theme="dusk" aria-pressed="true" title="Dusk"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span id="last-updated">Last updated: 2026-02-08 07:45:41 EST</span>
+      <span class="credit">Made to soothe, built to spark.</span>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.currentScript.closest('.vibe-aurora');
+      const tilt = root.querySelector('.tilt');
+      const chips = root.querySelectorAll('.chip');
+      const themes = root.querySelectorAll('.theme');
+      const range = root.querySelector('#glow');
+      const out = root.querySelector('#glow-out');
+      const updated = root.querySelector('#last-updated');
+
+      // Last updated: locale-aware
+      try {
+        const now = new Date();
+        updated.textContent = "Last updated: " + now.toLocaleString([], {
+          year: 'numeric', month: '2-digit', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          hour12: false, timeZoneName: 'short'
+        });
+      } catch (e) { updated.textContent = "Last updated just now"; }
+
+      // Mode chips: adjust beat (animation tempo)
+      chips.forEach(btn => {
+        btn.addEventListener('click', () => {
+          chips.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+          btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
+          root.style.setProperty('--beat', btn.dataset.beat || '8s');
+        });
+      });
+
+      // Theme buttons
+      themes.forEach(sw => {
+        sw.addEventListener('click', () => {
+          themes.forEach(x => x.setAttribute('aria-pressed','false'));
+          sw.setAttribute('aria-pressed','true');
+          root.setAttribute('data-theme', sw.getAttribute('data-theme'));
+        });
+      });
+
+      // Glow range
+      function setGlow(val) {
+        root.style.setProperty('--intensity', val);
+        out.textContent = val + "%";
+      }
+      range.addEventListener('input', (e) => setGlow(e.target.value));
+      setGlow(range.value);
+
+      // Pointer-driven parallax + light
+      const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!prefersReduced) {
+        let raf = null;
+        let tx = 0, ty = 0;
+        root.addEventListener('pointermove', (e) => {
+          const r = root.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width;
+          const py = (e.clientY - r.top) / r.height;
+          root.style.setProperty('--mx', (px * 100) + '%');
+          root.style.setProperty('--my', (py * 100) + '%');
+
+          const rx = (0.5 - py) * 8; // tilt degrees
+          const ry = (px - 0.5) * 10;
+          tx = rx; ty = ry;
+          if (!raf) {
+            raf = requestAnimationFrame(() => {
+              tilt.style.transform = 'perspective(900px) rotateX(' + tx.toFixed(2) + 'deg) rotateY(' + ty.toFixed(2) + 'deg)';
+              raf = null;
+            });
+          }
+        }, { passive: true });
+
+        root.addEventListener('pointerleave', () => {
+          tilt.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+          root.style.setProperty('--mx', '50%');
+          root.style.setProperty('--my', '50%');
+        });
+      }
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
