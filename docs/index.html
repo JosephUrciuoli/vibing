@@ -73,7 +73,398 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-02-07 18:27:37 EST</span></div>
+<section id="vibe2458" data-theme="dark" aria-label="Aurora Surface">
+  <div class="aurora a1" aria-hidden="true"></div>
+  <div class="aurora a2" aria-hidden="true"></div>
+  <div class="grid" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="panel" id="card" tabindex="0" aria-label="Showcase card">
+      <div class="eyebrow">Iteration 2458 • Quietly vibrant</div>
+      <h1>Drift, then Focus.</h1>
+      <p class="lede">A serene canvas with playful depth. Move your cursor—watch the light follow.</p>
+
+      <div class="chips" role="list" aria-label="Palette chips">
+        <button class="chip c1" role="listitem" title="Indigo → Violet" aria-label="Indigo to Violet"></button>
+        <button class="chip c2" role="listitem" title="Cyan → Teal" aria-label="Cyan to Teal"></button>
+        <button class="chip c3" role="listitem" title="Peach → Rose" aria-label="Peach to Rose"></button>
+        <button class="chip c4" role="listitem" title="Lime → Mint" aria-label="Lime to Mint"></button>
+      </div>
+
+      <div class="cta">
+        <button id="theme-toggle" class="primary" aria-pressed="false">Toggle theme</button>
+        <button class="ghost" id="breathe">Breathe again</button>
+      </div>
+
+      <footer class="meta">
+        <span class="note">Crafted for calm</span>
+        <span id="last-updated">Last updated: 2026-02-07 21:25:45 EST</span>
+      </footer>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  const root = document.getElementById('vibe2458');
+  const card = root.querySelector('#card');
+  const updated = root.querySelector('#last-updated');
+  const toggle = root.querySelector('#theme-toggle');
+  const breathe = root.querySelector('#breathe');
+
+  // Last updated
+  try {
+    const now = new Date();
+    updated.textContent = `Last updated: ${now.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}`;
+  } catch(e) {
+    updated.textContent = 'Last updated: just now';
+  }
+
+  // Respect reduced motion
+  const rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  const setRM = () => { root.dataset.reduced = rm && rm.matches ? 'true' : 'false'; };
+  setRM();
+  if (rm && rm.addEventListener) rm.addEventListener('change', setRM);
+
+  // Theme persistence
+  const KEY = 'vibe2458-theme';
+  const saved = localStorage.getItem(KEY);
+  if (saved === 'light' || saved === 'dark') root.dataset.theme = saved;
+  if (toggle) {
+    toggle.setAttribute('aria-pressed', root.dataset.theme === 'light' ? 'true' : 'false');
+    toggle.addEventListener('click', () => {
+      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem(KEY, root.dataset.theme);
+      toggle.setAttribute('aria-pressed', root.dataset.theme === 'light' ? 'true' : 'false');
+    });
+  }
+
+  // Spotlight that follows the pointer
+  const spotlight = document.createElement('div');
+  spotlight.className = 'spotlight';
+  spotlight.setAttribute('aria-hidden', 'true');
+  root.appendChild(spotlight);
+
+  function onPointerMove(e) {
+    const b = root.getBoundingClientRect();
+    const x = ((e.clientX - b.left) / b.width) * 100;
+    const y = ((e.clientY - b.top) / b.height) * 100;
+    root.style.setProperty('--mx', x + '%');
+    root.style.setProperty('--my', y + '%');
+
+    if (card && root.dataset.reduced !== 'true') {
+      const cb = card.getBoundingClientRect();
+      const cx = (e.clientX - cb.left) / cb.width - 0.5;
+      const cy = (e.clientY - cb.top) / cb.height - 0.5;
+      const rx = (-cy * 8).toFixed(2);
+      const ry = (cx * 8).toFixed(2);
+      card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+    }
+  }
+  function onPointerLeave() {
+    root.style.removeProperty('--mx');
+    root.style.removeProperty('--my');
+    if (card) card.style.transform = '';
+  }
+  root.addEventListener('pointermove', onPointerMove);
+  root.addEventListener('pointerleave', onPointerLeave);
+
+  // A gentle pulse on demand
+  if (breathe) {
+    breathe.addEventListener('click', () => {
+      card.classList.remove('pulse');
+      // trigger reflow to restart animation
+      void card.offsetWidth;
+      card.classList.add('pulse');
+    });
+  }
+})();
+</script>
+
+<style>
+/* Scoped styles */
+#vibe2458 {
+  --ink: #eaf1ff;
+  --muted: #b6c1d6;
+  --surface: rgba(255, 255, 255, 0.10);
+  --border: rgba(255, 255, 255, 0.22);
+  --accent: #83f0ff;
+  color: var(--ink);
+  position: relative;
+  border-radius: 18px;
+  padding: clamp(24px, 5vw, 42px);
+  overflow: clip;
+  isolation: isolate;
+  background:
+    radial-gradient(1200px 800px at 10% 20%, #0f1533 0%, #0b122a 40%, #060a19 100%);
+  box-shadow: 0 10px 40px rgba(5, 8, 20, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+#vibe2458[data-theme="light"] {
+  --ink: #17202b;
+  --muted: #4a5666;
+  --surface: rgba(255, 255, 255, 0.75);
+  --border: rgba(17, 30, 55, 0.18);
+  --accent: #0db1bf;
+  color: var(--ink);
+  background:
+    radial-gradient(1400px 900px at 85% 10%, #ffffff 0%, #f6f9ff 40%, #ecf3ff 100%);
+}
+
+/* Aurora blobs */
+#vibe2458 .aurora {
+  position: absolute;
+  inset: -20% -30%;
+  filter: blur(60px) saturate(120%);
+  opacity: 0.6;
+  mix-blend-mode: screen;
+  z-index: 0;
+  animation: drift 24s ease-in-out infinite;
+  pointer-events: none;
+}
+#vibe2458 .aurora.a1 {
+  background:
+    radial-gradient(50% 60% at 15% 30%, rgba(92, 170, 255, 0.55), transparent 60%),
+    radial-gradient(40% 50% at 70% 20%, rgba(209, 96, 255, 0.45), transparent 60%),
+    radial-gradient(50% 55% at 60% 80%, rgba(0, 255, 204, 0.35), transparent 60%);
+}
+#vibe2458 .aurora.a2 {
+  animation-duration: 32s;
+  animation-direction: alternate;
+  background:
+    radial-gradient(45% 50% at 80% 65%, rgba(255, 153, 204, 0.35), transparent 60%),
+    radial-gradient(35% 45% at 25% 75%, rgba(99, 255, 212, 0.35), transparent 60%);
+}
+#vibe2458[data-theme="light"] .aurora {
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+  filter: blur(70px) saturate(110%);
+}
+
+/* Grid overlay */
+#vibe2458 .grid {
+  position: absolute;
+  inset: -1px;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, transparent 94%, rgba(255,255,255,0.06) 96%) 0 0/100% 26px repeat-y,
+    linear-gradient(to right,  transparent 94%, rgba(255,255,255,0.06) 96%) 0 0/26px 100% repeat-x;
+  -webkit-mask-image: radial-gradient(160% 140% at 50% 50%, #000 55%, transparent 80%);
+          mask-image: radial-gradient(160% 140% at 50% 50%, #000 55%, transparent 80%);
+}
+#vibe2458[data-theme="light"] .grid {
+  background:
+    linear-gradient(to bottom, transparent 94%, rgba(17,30,55,0.06) 96%) 0 0/100% 26px repeat-y,
+    linear-gradient(to right,  transparent 94%, rgba(17,30,55,0.06) 96%) 0 0/26px 100% repeat-x;
+}
+
+/* Spotlight follows pointer */
+#vibe2458 .spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(420px 420px at var(--mx, 50%) var(--my, 50%),
+      rgba(255,255,255,0.10),
+      rgba(255,255,255,0.0) 60%);
+  mix-blend-mode: soft-light;
+  transition: opacity .35s ease;
+  opacity: 0.9;
+}
+
+/* Layout */
+#vibe2458 .wrap {
+  position: relative;
+  z-index: 3;
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+}
+
+#vibe2458 .panel {
+  width: min(880px, 100%);
+  background:
+    linear-gradient(180deg, var(--surface), rgba(255,255,255,0.06));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: clamp(20px, 3.4vw, 28px);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  transform-style: preserve-3d;
+  transition: transform .2s ease, background .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+#vibe2458 .panel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Eyebrow */
+#vibe2458 .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: var(--muted);
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+}
+
+/* Typography */
+#vibe2458 h1 {
+  margin: 10px 0 6px;
+  font-size: clamp(28px, 5vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #cfe2ff 0%, #a6fff7 35%, #ffd6f5 80%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.18));
+}
+#vibe2458[data-theme="light"] h1 {
+  background: linear-gradient(90deg, #243a6b 0%, #0db1bf 45%, #b12e8f 90%);
+}
+
+#vibe2458 .lede {
+  margin: 0 0 12px;
+  color: var(--ink);
+  opacity: 0.9;
+  font-size: clamp(14px, 2.2vw, 18px);
+}
+
+/* Chips */
+#vibe2458 .chips {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 14px 0 8px;
+}
+#vibe2458 .chip {
+  width: clamp(72px, 14vw, 96px);
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.12);
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  position: relative;
+  outline: none;
+}
+#vibe2458 .chip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent 60%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+#vibe2458 .chip:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 60%, transparent), 0 8px 20px rgba(0,0,0,0.28);
+}
+#vibe2458 .chip:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12);
+  filter: brightness(1.04);
+}
+#vibe2458 .chip.c1 { background: linear-gradient(135deg, #5d66ff, #b86aff); }
+#vibe2458 .chip.c2 { background: linear-gradient(135deg, #28dcff, #1be6b6); }
+#vibe2458 .chip.c3 { background: linear-gradient(135deg, #ffb199, #ff7ac8); }
+#vibe2458 .chip.c4 { background: linear-gradient(135deg, #b7fb73, #8ef7d0); }
+#vibe2458 .chip:nth-child(odd) { animation: float 7s ease-in-out infinite; }
+#vibe2458 .chip:nth-child(even) { animation: float 8.5s ease-in-out infinite reverse; }
+
+/* CTAs */
+#vibe2458 .cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+#vibe2458 .primary,
+#vibe2458 .ghost {
+  font: inherit;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background .25s ease, color .25s ease, border-color .25s ease;
+  color: var(--ink);
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+}
+#vibe2458 .primary {
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--accent) 80%, #ffffff 0%) 0%, #fff7 120%),
+    linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+  color: #0c1a1f;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  border-color: color-mix(in oklab, var(--accent) 50%, #0000);
+}
+#vibe2458 .ghost {
+  background: transparent;
+}
+#vibe2458 .primary:hover,
+#vibe2458 .ghost:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+}
+#vibe2458 .primary:focus-visible,
+#vibe2458 .ghost:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Meta */
+#vibe2458 .meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+#vibe2458 .note {
+  opacity: 0.85;
+}
+
+/* Motion + micro-animations */
+@keyframes drift {
+  0%   { transform: translate(-8%, -6%) rotate(0deg) scale(1); }
+  50%  { transform: translate(6%, 8%) rotate(24deg) scale(1.06); }
+  100% { transform: translate(-8%, -6%) rotate(0deg) scale(1); }
+}
+@keyframes float {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+#vibe2458 .pulse {
+  animation: pulseCard 820ms ease-out;
+}
+@keyframes pulseCard {
+  0%   { transform: scale(1); box-shadow: 0 12px 40px rgba(0,0,0,0.38); }
+  30%  { transform: scale(1.012); box-shadow: 0 18px 48px rgba(0,0,0,0.42); }
+  100% { transform: scale(1); box-shadow: 0 12px 40px rgba(0,0,0,0.38); }
+}
+
+/* Accessibility: reduced motion */
+#vibe2458[data-reduced="true"] * {
+  animation: none !important;
+  transition-duration: 0ms !important;
+}
+</style>
       </section>
       <!-- END_EDITABLE -->
     <script>
