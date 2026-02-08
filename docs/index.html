@@ -73,7 +73,347 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<div style="padding:24px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);"><h2 style="margin:0 0 8px 0;">A Small, Gentle Refresh</h2><p style="margin:0 0 12px 0;opacity:0.85;">Subtle textures, soft borders, and a calm palette.</p><span id="last-updated">Last updated: 2026-02-08 17:24:37 EST</span></div>
+<div class="aurora-wrap" role="region" aria-label="Aurora vignette">
+  <style>
+    .aurora-wrap {
+      --hue: 210;
+      --sat: 82%;
+      --light: 58%;
+      --bg: radial-gradient(1600px 800px at 20% -10%, hsl(var(--hue) var(--sat) 14% / 1) 0%, hsl(calc(var(--hue) + 40) 70% 10% / 0.8) 35%, hsl(calc(var(--hue) + 140) 60% 6% / 1) 100%);
+      --glow: 0 10px 40px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.25);
+      --radius: 18px;
+      --mx: 0.5;
+      --my: 0.5;
+      position: relative;
+      isolation: isolate;
+      color: #f4f7fb;
+      font: 400 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+      border-radius: 22px;
+      overflow: hidden;
+      padding: clamp(18px, 3.5vw, 28px);
+      background: var(--bg);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 30px 80px rgba(0,0,0,0.45);
+    }
+
+    /* Animated aurora veil */
+    .aurora-wrap .veil {
+      position: absolute;
+      inset: -20% -10%;
+      background:
+        radial-gradient(1200px 600px at calc(100% * var(--mx)) calc(100% * var(--my)),
+          hsl(var(--hue) var(--sat) 65% / 0.18),
+          transparent 60%),
+        conic-gradient(from 180deg at 30% -10%,
+          hsl(calc(var(--hue) - 20) 70% 60% / 0.08),
+          transparent 30%,
+          hsl(calc(var(--hue) + 40) 70% 55% / 0.08),
+          transparent 60%,
+          hsl(calc(var(--hue) + 140) 70% 60% / 0.08),
+          transparent 100%);
+      filter: blur(32px) saturate(120%);
+      mix-blend-mode: screen;
+      animation: drift 18s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes drift {
+      0% { transform: translate3d(-2%, -1%, 0) rotate(0.2deg) scale(1.02); opacity: 0.85; }
+      50% { transform: translate3d(1%, 2%, 0) rotate(-0.2deg) scale(1.03); opacity: 0.95; }
+      100% { transform: translate3d(3%, -2%, 0) rotate(0.4deg) scale(1.04); opacity: 0.9; }
+    }
+
+    /* Floating orbs */
+    .aurora-wrap .orbs { position: absolute; inset: 0; pointer-events: none; }
+    .aurora-wrap .orb {
+      position: absolute;
+      width: clamp(120px, 18vw, 220px);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, hsl(var(--hue) 90% 75% / 0.6), transparent 55%),
+                  radial-gradient(circle at 70% 70%, hsl(calc(var(--hue) + 90) 90% 70% / 0.45), transparent 60%);
+      filter: blur(2px) saturate(130%);
+      opacity: 0.5;
+      box-shadow: 0 0 140px hsl(var(--hue) 90% 60% / 0.2);
+      animation: floaty 16s ease-in-out infinite;
+    }
+    .aurora-wrap .orb.o1 { top: 8%; left: 6%; animation-delay: -3s; }
+    .aurora-wrap .orb.o2 { bottom: 6%; right: 8%; animation-delay: -10s; }
+    .aurora-wrap .orb.o3 { top: 40%; right: 28%; animation-delay: -6s; }
+    @keyframes floaty {
+      0% { transform: translateY(0) translateX(0) scale(1); }
+      50% { transform: translateY(-12px) translateX(6px) scale(1.06); }
+      100% { transform: translateY(0) translateX(0) scale(1); }
+    }
+
+    /* Top controls */
+    .aurora-wrap .topbar {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      z-index: 2;
+      margin-bottom: clamp(10px, 2.5vw, 16px);
+    }
+    .aurora-wrap .swatches {
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .aurora-wrap .pill {
+      --p: hsl(var(--h) 85% 60%);
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12.5px;
+      letter-spacing: 0.2px;
+      color: #0d0f12;
+      background:
+        linear-gradient(180deg, #fff, #f3f6ff) padding-box,
+        linear-gradient(90deg, var(--p), hsl(calc(var(--h) + 50) 80% 60%)) border-box;
+      border: 1px solid transparent;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.8);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.4s ease;
+    }
+    .aurora-wrap .pill:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.9); }
+    .aurora-wrap .pill.active { outline: 2px solid rgba(255,255,255,0.8); outline-offset: 2px; }
+
+    .aurora-wrap .right-tools {
+      display: inline-flex; gap: 8px; align-items: center;
+    }
+    .aurora-wrap .toggle {
+      appearance: none; border: 0; cursor: pointer;
+      padding: 8px 12px; border-radius: 10px;
+      font-size: 12.5px; color: #eaf1ff;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18), 0 8px 20px rgba(0,0,0,0.25);
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+    .aurora-wrap .toggle:hover { transform: translateY(-1px); }
+    .aurora-wrap.calm .orb,
+    .aurora-wrap.calm .veil { animation-play-state: paused; }
+
+    /* Hero card */
+    .aurora-wrap .hero {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+      border-radius: var(--radius);
+      box-shadow: var(--glow);
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: clamp(18px, 3.5vw, 28px);
+      transform-style: preserve-3d;
+      transform: perspective(900px)
+        rotateX(calc((var(--my) - 0.5) * 10deg))
+        rotateY(calc((0.5 - var(--mx)) * 14deg));
+      transition: box-shadow 0.3s ease, background 0.4s ease;
+    }
+    .aurora-wrap .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; letter-spacing: 0.3px; opacity: 0.85;
+      padding: 6px 10px; border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.08));
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    .aurora-wrap .dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, hsl(var(--h) 85% 50%));
+      box-shadow: 0 0 12px hsl(var(--h) 95% 65% / 0.8);
+    }
+    .aurora-wrap h1 {
+      margin: 10px 0 6px 0;
+      font-size: clamp(28px, 6vw, 52px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      text-shadow: 0 2px 22px rgba(0,0,0,0.35);
+    }
+    .aurora-wrap .sub {
+      margin: 0 0 16px 0;
+      font-size: clamp(14px, 2.2vw, 18px);
+      color: rgba(235,242,255,0.86);
+    }
+    .aurora-wrap .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .aurora-wrap .btn {
+      --start: hsl(var(--h) 95% 68%);
+      --end: hsl(calc(var(--h) + 60) 90% 55%);
+      appearance: none; border: 0; cursor: pointer; user-select: none;
+      position: relative; overflow: hidden;
+      padding: 12px 16px; border-radius: 12px;
+      color: #0b0f14; font-weight: 600; letter-spacing: 0.2px;
+      background: linear-gradient(90deg, var(--start), var(--end));
+      box-shadow: 0 10px 26px hsl(var(--h) 95% 55% / 0.35), inset 0 1px 0 rgba(255,255,255,0.8);
+      transition: transform 0.18s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    }
+    .aurora-wrap .btn:hover { transform: translateY(-1px); filter: saturate(1.1); }
+    .aurora-wrap .btn.ghost {
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+      color: #e7f0ff;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.22), 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    /* Ripple effect element */
+    .aurora-wrap .ripple {
+      position: absolute; pointer-events: none; inset: 0;
+      background: radial-gradient(220px circle at var(--x) var(--y),
+        rgba(255,255,255,0.35), rgba(255,255,255,0) 60%);
+      transform: translateZ(1px);
+      animation: ping 700ms ease-out forwards;
+      mix-blend-mode: screen;
+    }
+    @keyframes ping {
+      from { opacity: 0.9; }
+      to { opacity: 0; background-size: 200% 200%; }
+    }
+
+    /* Bottom meta */
+    .aurora-wrap .meta {
+      position: relative;
+      z-index: 2;
+      display: flex; gap: 12px; align-items: center; justify-content: space-between;
+      margin-top: clamp(12px, 2.5vw, 18px);
+      font-size: 12.5px; color: rgba(230,238,255,0.8);
+    }
+    .aurora-wrap .meta .bits { display: inline-flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .aurora-wrap .chip {
+      padding: 6px 10px; border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(235,242,255,0.9);
+    }
+
+    /* Accessibility + reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .aurora-wrap .orb,
+      .aurora-wrap .veil { animation: none; }
+      .aurora-wrap .hero { transform: none !important; }
+    }
+  </style>
+
+  <div class="veil" aria-hidden="true"></div>
+  <div class="orbs" aria-hidden="true">
+    <span class="orb o1"></span>
+    <span class="orb o2"></span>
+    <span class="orb o3"></span>
+  </div>
+
+  <div class="topbar">
+    <div class="swatches" aria-label="Color themes">
+      <button class="pill active" data-h="210" aria-pressed="true" style="--h:210">Breeze</button>
+      <button class="pill" data-h="330" aria-pressed="false" style="--h:330">Dawn</button>
+      <button class="pill" data-h="140" aria-pressed="false" style="--h:140">Moss</button>
+      <button class="pill" data-h="265" aria-pressed="false" style="--h:265">Violet</button>
+    </div>
+    <div class="right-tools">
+      <button class="toggle" data-mode="calm" aria-pressed="false" title="Pause motion">Calm mode</button>
+    </div>
+  </div>
+
+  <div class="hero" tabindex="0" aria-label="Showcase card">
+    <span class="badge"><span class="dot" style="--h: var(--hue)"></span> Studio of Quiet Motion</span>
+    <h1>Serene Velocity</h1>
+    <p class="sub">A living canvas of light—minimal, focused, and gently alive. Glide, pause, or change the hue; the page listens.</p>
+    <div class="cta">
+      <button class="btn" id="ripple-btn" aria-label="Create a ripple">Make it ripple</button>
+      <button class="btn ghost" id="surprise" aria-label="Surprise theme">Surprise me</button>
+    </div>
+  </div>
+
+  <div class="meta" aria-live="polite">
+    <div class="bits">
+      <span class="chip" title="Build version">v2477</span>
+      <span class="chip">High contrast • Low noise</span>
+    </div>
+    <span id="last-updated">Last updated: 2026-02-08 18:29:05 EST</span>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.currentScript.closest('.aurora-wrap');
+      const hero = root.querySelector('.hero');
+      const veil = root.querySelector('.veil');
+      const pills = root.querySelectorAll('.pill');
+      const toggle = root.querySelector('.toggle');
+      const rippleBtn = root.querySelector('#ripple-btn');
+      const surprise = root.querySelector('#surprise');
+      const last = root.querySelector('#last-updated');
+
+      // Time stamp
+      try {
+        const fmt = new Intl.DateTimeFormat([], {
+          year: 'numeric', month: 'short', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+        last.textContent = 'Last updated: ' + fmt.format(new Date());
+      } catch (e) {
+        last.textContent = 'Last updated: ' + new Date().toLocaleString();
+      }
+
+      // Pointer parallax
+      const move = (x, y, rect) => {
+        const mx = Math.max(0, Math.min(1, (x - rect.left) / rect.width));
+        const my = Math.max(0, Math.min(1, (y - rect.top) / rect.height));
+        root.style.setProperty('--mx', mx.toFixed(4));
+        root.style.setProperty('--my', my.toFixed(4));
+      };
+      const onPointer = (e) => move(e.clientX, e.clientY, root.getBoundingClientRect());
+      root.addEventListener('pointermove', onPointer);
+      root.addEventListener('pointerleave', () => {
+        root.style.setProperty('--mx', 0.5);
+        root.style.setProperty('--my', 0.5);
+      });
+
+      // Theme switching
+      function setHue(h) {
+        root.style.setProperty('--hue', h);
+        root.querySelectorAll('.dot').forEach(d => d.style.setProperty('--h', h));
+      }
+      pills.forEach(b => {
+        b.addEventListener('click', () => {
+          pills.forEach(p => { p.classList.remove('active'); p.setAttribute('aria-pressed','false'); });
+          b.classList.add('active'); b.setAttribute('aria-pressed','true');
+          setHue(b.dataset.h);
+        });
+      });
+
+      // Calm mode
+      toggle.addEventListener('click', () => {
+        const calm = root.classList.toggle('calm');
+        toggle.setAttribute('aria-pressed', calm ? 'true' : 'false');
+        toggle.textContent = calm ? 'Resume motion' : 'Calm mode';
+      });
+
+      // Ripple effect on hero and button
+      function ripple(target, x, y) {
+        const rect = target.getBoundingClientRect();
+        const r = document.createElement('span');
+        r.className = 'ripple';
+        r.style.setProperty('--x', (x - rect.left) + 'px');
+        r.style.setProperty('--y', (y - rect.top) + 'px');
+        target.appendChild(r);
+        r.addEventListener('animationend', () => r.remove());
+      }
+      hero.addEventListener('pointerdown', (e) => ripple(hero, e.clientX, e.clientY));
+      rippleBtn.addEventListener('click', (e) => {
+        const r = rippleBtn.getBoundingClientRect();
+        ripple(hero, r.left + r.width / 2, r.top + r.height / 2);
+      });
+
+      surprise.addEventListener('click', () => {
+        const hues = [200, 225, 250, 285, 330, 20, 140];
+        const h = hues[Math.floor(Math.random() * hues.length)];
+        setHue(h);
+        pills.forEach(p => { p.classList.toggle('active', +p.dataset.h === h); p.setAttribute('aria-pressed', (+p.dataset.h === h) ? 'true' : 'false'); });
+      });
+
+      // Initial hue sync
+      setHue(210);
+    })();
+  </script>
+</div>
       </section>
       <!-- END_EDITABLE -->
     <script>
