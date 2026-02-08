@@ -73,394 +73,387 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section id="vibe2458" data-theme="dark" aria-label="Aurora Surface">
-  <div class="aurora a1" aria-hidden="true"></div>
-  <div class="aurora a2" aria-hidden="true"></div>
-  <div class="grid" aria-hidden="true"></div>
+<section id="vibe2459" data-theme="noir" aria-label="Kinetic Halo">
+  <div class="backdrop" aria-hidden="true">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="mesh"></div>
+    <div class="pointerlight"></div>
+  </div>
 
-  <div class="wrap">
-    <div class="panel" id="card" tabindex="0" aria-label="Showcase card">
-      <div class="eyebrow">Iteration 2458 • Quietly vibrant</div>
-      <h1>Drift, then Focus.</h1>
-      <p class="lede">A serene canvas with playful depth. Move your cursor—watch the light follow.</p>
-
-      <div class="chips" role="list" aria-label="Palette chips">
-        <button class="chip c1" role="listitem" title="Indigo → Violet" aria-label="Indigo to Violet"></button>
-        <button class="chip c2" role="listitem" title="Cyan → Teal" aria-label="Cyan to Teal"></button>
-        <button class="chip c3" role="listitem" title="Peach → Rose" aria-label="Peach to Rose"></button>
-        <button class="chip c4" role="listitem" title="Lime → Mint" aria-label="Lime to Mint"></button>
-      </div>
-
-      <div class="cta">
-        <button id="theme-toggle" class="primary" aria-pressed="false">Toggle theme</button>
-        <button class="ghost" id="breathe">Breathe again</button>
-      </div>
-
-      <footer class="meta">
-        <span class="note">Crafted for calm</span>
-        <span id="last-updated">Last updated: 2026-02-07 21:25:45 EST</span>
-      </footer>
+  <div class="content">
+    <div class="head">
+      <div class="eyebrow">Iteration 2459 • Orbital Calm</div>
+      <h1>Orbit your ideas</h1>
+      <p class="lede">A kinetic halo that steadies the mind. Hover to steer, click to ripple.</p>
     </div>
+
+    <div id="stage" class="stage" tabindex="0" role="img" aria-label="Rotating rings with orbiting points">
+      <div class="halo h1"><span class="node"></span></div>
+      <div class="halo h2"><span class="node"></span></div>
+      <div class="halo h3"><span class="node"></span></div>
+      <div class="center" aria-hidden="true"></div>
+      <div class="ripples" aria-hidden="true"></div>
+    </div>
+
+    <div class="controls">
+      <button id="tgl" class="primary" aria-pressed="false">Switch theme</button>
+      <button id="center" class="ghost">Center + breathe</button>
+    </div>
+
+    <footer class="meta">
+      <span class="note">Hand‑tuned motion</span>
+      <span id="last-updated">Last updated: 2026-02-08 00:01:45 EST</span>
+    </footer>
   </div>
 </section>
 
 <script>
 (function () {
-  const root = document.getElementById('vibe2458');
-  const card = root.querySelector('#card');
+  const root = document.getElementById('vibe2459');
+  const stage = root.querySelector('#stage');
   const updated = root.querySelector('#last-updated');
-  const toggle = root.querySelector('#theme-toggle');
-  const breathe = root.querySelector('#breathe');
+  const toggle = root.querySelector('#tgl');
+  const centerBtn = root.querySelector('#center');
+  const ripples = root.querySelector('.ripples');
 
   // Last updated
   try {
     const now = new Date();
     updated.textContent = `Last updated: ${now.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}`;
-  } catch(e) {
+  } catch (_) {
     updated.textContent = 'Last updated: just now';
   }
 
-  // Respect reduced motion
+  // Reduced motion
   const rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
   const setRM = () => { root.dataset.reduced = rm && rm.matches ? 'true' : 'false'; };
   setRM();
   if (rm && rm.addEventListener) rm.addEventListener('change', setRM);
 
   // Theme persistence
-  const KEY = 'vibe2458-theme';
+  const KEY = 'vibe2459-theme';
   const saved = localStorage.getItem(KEY);
-  if (saved === 'light' || saved === 'dark') root.dataset.theme = saved;
-  if (toggle) {
-    toggle.setAttribute('aria-pressed', root.dataset.theme === 'light' ? 'true' : 'false');
-    toggle.addEventListener('click', () => {
-      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-      localStorage.setItem(KEY, root.dataset.theme);
-      toggle.setAttribute('aria-pressed', root.dataset.theme === 'light' ? 'true' : 'false');
-    });
-  }
+  if (saved === 'noir' || saved === 'luma') root.dataset.theme = saved || 'noir';
+  toggle.setAttribute('aria-pressed', root.dataset.theme === 'luma' ? 'true' : 'false');
+  toggle.addEventListener('click', () => {
+    const next = root.dataset.theme === 'noir' ? 'luma' : 'noir';
+    root.dataset.theme = next;
+    localStorage.setItem(KEY, next);
+    toggle.setAttribute('aria-pressed', next === 'luma' ? 'true' : 'false');
+  });
 
-  // Spotlight that follows the pointer
-  const spotlight = document.createElement('div');
-  spotlight.className = 'spotlight';
-  spotlight.setAttribute('aria-hidden', 'true');
-  root.appendChild(spotlight);
-
-  function onPointerMove(e) {
+  // Pointer tracking + parallax + speed dial
+  function updateFromPointer(clientX, clientY) {
     const b = root.getBoundingClientRect();
-    const x = ((e.clientX - b.left) / b.width) * 100;
-    const y = ((e.clientY - b.top) / b.height) * 100;
-    root.style.setProperty('--mx', x + '%');
-    root.style.setProperty('--my', y + '%');
+    const sx = ((clientX - b.left) / b.width) * 100;
+    const sy = ((clientY - b.top) / b.height) * 100;
+    root.style.setProperty('--mx', sx + '%');
+    root.style.setProperty('--my', sy + '%');
 
-    if (card && root.dataset.reduced !== 'true') {
-      const cb = card.getBoundingClientRect();
-      const cx = (e.clientX - cb.left) / cb.width - 0.5;
-      const cy = (e.clientY - cb.top) / cb.height - 0.5;
-      const rx = (-cy * 8).toFixed(2);
-      const ry = (cx * 8).toFixed(2);
-      card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
-    }
+    if (!stage || root.dataset.reduced === 'true') return;
+
+    const sb = stage.getBoundingClientRect();
+    const cx = clientX - (sb.left + sb.width / 2);
+    const cy = clientY - (sb.top + sb.height / 2);
+    const nx = cx / (sb.width / 2);
+    const ny = cy / (sb.height / 2);
+    const tiltX = Math.max(-1, Math.min(1, ny)) * -6;
+    const tiltY = Math.max(-1, Math.min(1, nx)) * 6;
+    stage.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+
+    // speed map: closer to edge -> faster
+    const dist = Math.min(1, Math.hypot(nx, ny));
+    const d1 = (26 - 12 * dist).toFixed(2) + 's';
+    const d2 = (38 - 16 * dist).toFixed(2) + 's';
+    const d3 = (52 - 20 * dist).toFixed(2) + 's';
+    root.style.setProperty('--d1', d1);
+    root.style.setProperty('--d2', d2);
+    root.style.setProperty('--d3', d3);
   }
-  function onPointerLeave() {
+
+  function resetParallax() {
     root.style.removeProperty('--mx');
     root.style.removeProperty('--my');
-    if (card) card.style.transform = '';
+    stage && (stage.style.transform = '');
   }
-  root.addEventListener('pointermove', onPointerMove);
-  root.addEventListener('pointerleave', onPointerLeave);
 
-  // A gentle pulse on demand
-  if (breathe) {
-    breathe.addEventListener('click', () => {
-      card.classList.remove('pulse');
-      // trigger reflow to restart animation
-      void card.offsetWidth;
-      card.classList.add('pulse');
-    });
+  root.addEventListener('pointermove', (e) => updateFromPointer(e.clientX, e.clientY));
+  root.addEventListener('pointerleave', resetParallax);
+
+  // Ripples on click/keyboard
+  function addRipple(x, y) {
+    if (!ripples) return;
+    const r = document.createElement('span');
+    r.className = 'ripple';
+    const b = stage.getBoundingClientRect();
+    const rx = ((x - b.left) / b.width) * 100;
+    const ry = ((y - b.top) / b.height) * 100;
+    r.style.left = rx + '%';
+    r.style.top = ry + '%';
+    ripples.appendChild(r);
+    r.addEventListener('animationend', () => r.remove());
   }
+  stage.addEventListener('pointerdown', (e) => { addRipple(e.clientX, e.clientY); });
+  stage.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      const sb = stage.getBoundingClientRect();
+      addRipple(sb.left + sb.width / 2, sb.top + sb.height / 2);
+      e.preventDefault();
+    }
+  });
+
+  // Center and breathe
+  centerBtn.addEventListener('click', () => {
+    stage.classList.remove('breathe');
+    void stage.offsetWidth;
+    stage.classList.add('breathe');
+    resetParallax();
+  });
 })();
 </script>
 
 <style>
-/* Scoped styles */
-#vibe2458 {
-  --ink: #eaf1ff;
-  --muted: #b6c1d6;
-  --surface: rgba(255, 255, 255, 0.10);
-  --border: rgba(255, 255, 255, 0.22);
-  --accent: #83f0ff;
-  color: var(--ink);
+/* Scoped styles for the Halo Machine */
+#vibe2459 {
+  --ink: #e9f1ff;
+  --muted: #a8b3c8;
+  --accent: #86ffe0;
+  --panel: rgba(255,255,255,0.06);
+  --edge: rgba(255,255,255,0.16);
+  --bg0: #070a16;
+  --bg1: #0c1329;
+  --bg2: #0a0f20;
   position: relative;
-  border-radius: 18px;
-  padding: clamp(24px, 5vw, 42px);
-  overflow: clip;
+  border-radius: 20px;
+  padding: clamp(24px, 4vw, 40px);
+  color: var(--ink);
   isolation: isolate;
+  overflow: clip;
+  box-shadow: 0 12px 40px rgba(3, 6, 16, 0.6), inset 0 1px 0 rgba(255,255,255,0.05);
   background:
-    radial-gradient(1200px 800px at 10% 20%, #0f1533 0%, #0b122a 40%, #060a19 100%);
-  box-shadow: 0 10px 40px rgba(5, 8, 20, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    radial-gradient(140% 120% at 85% 10%, #0b1535 0%, transparent 60%),
+    radial-gradient(130% 110% at 15% 120%, #0a1a28 0%, transparent 60%),
+    conic-gradient(from 220deg at 60% 40%, #0a1226, #0b0f1d, #0b1428, #0a1226);
 }
 
-#vibe2458[data-theme="light"] {
-  --ink: #17202b;
-  --muted: #4a5666;
-  --surface: rgba(255, 255, 255, 0.75);
-  --border: rgba(17, 30, 55, 0.18);
-  --accent: #0db1bf;
-  color: var(--ink);
+#vibe2459[data-theme="luma"] {
+  --ink: #0e1b2a;
+  --muted: #4a5a6b;
+  --accent: #10bea9;
+  --panel: rgba(255,255,255,0.78);
+  --edge: rgba(17,30,55,0.18);
+  --bg0: #f4f9ff;
+  --bg1: #f0f7ff;
+  --bg2: #eaf4ff;
   background:
-    radial-gradient(1400px 900px at 85% 10%, #ffffff 0%, #f6f9ff 40%, #ecf3ff 100%);
+    radial-gradient(140% 120% at 85% 10%, #ffffff 0%, transparent 60%),
+    radial-gradient(130% 110% at 10% 120%, #eaf3ff 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
 }
 
-/* Aurora blobs */
-#vibe2458 .aurora {
-  position: absolute;
-  inset: -20% -30%;
-  filter: blur(60px) saturate(120%);
-  opacity: 0.6;
-  mix-blend-mode: screen;
-  z-index: 0;
-  animation: drift 24s ease-in-out infinite;
-  pointer-events: none;
+/* Decorative environment */
+#vibe2459 .backdrop { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+#vibe2459 .orb {
+  position: absolute; filter: blur(70px) saturate(120%); opacity: .55; mix-blend-mode: screen;
+  inset: -25% -35%;
+  animation: drift-blob 28s ease-in-out infinite;
 }
-#vibe2458 .aurora.a1 {
+#vibe2459 .orb.o1 { background:
+  radial-gradient(35% 40% at 25% 30%, rgba(128, 179, 255, .45), transparent 60%),
+  radial-gradient(40% 35% at 75% 20%, rgba(118, 255, 220, .35), transparent 60%); }
+#vibe2459 .orb.o2 { animation-duration: 36s; animation-direction: alternate; background:
+  radial-gradient(35% 35% at 75% 70%, rgba(255, 167, 211, .38), transparent 60%),
+  radial-gradient(30% 30% at 20% 80%, rgba(187, 255, 123, .30), transparent 60%); }
+
+#vibe2459[data-theme="luma"] .orb { mix-blend-mode: multiply; opacity: .5; filter: blur(80px) saturate(105%); }
+
+#vibe2459 .mesh {
+  position: absolute; inset: -2px; opacity: .25;
   background:
-    radial-gradient(50% 60% at 15% 30%, rgba(92, 170, 255, 0.55), transparent 60%),
-    radial-gradient(40% 50% at 70% 20%, rgba(209, 96, 255, 0.45), transparent 60%),
-    radial-gradient(50% 55% at 60% 80%, rgba(0, 255, 204, 0.35), transparent 60%);
+    linear-gradient(to right, transparent 96%, rgba(255,255,255,.06) 96%) 0 0/24px 100%,
+    linear-gradient(to bottom, transparent 96%, rgba(255,255,255,.06) 96%) 0 0/100% 24px;
+  -webkit-mask-image: radial-gradient(140% 120% at 50% 50%, #000 55%, transparent 80%);
+          mask-image: radial-gradient(140% 120% at 50% 50%, #000 55%, transparent 80%);
 }
-#vibe2458 .aurora.a2 {
-  animation-duration: 32s;
-  animation-direction: alternate;
+#vibe2459[data-theme="luma"] .mesh {
   background:
-    radial-gradient(45% 50% at 80% 65%, rgba(255, 153, 204, 0.35), transparent 60%),
-    radial-gradient(35% 45% at 25% 75%, rgba(99, 255, 212, 0.35), transparent 60%);
-}
-#vibe2458[data-theme="light"] .aurora {
-  mix-blend-mode: multiply;
-  opacity: 0.5;
-  filter: blur(70px) saturate(110%);
+    linear-gradient(to right, transparent 96%, rgba(17,30,55,.06) 96%) 0 0/24px 100%,
+    linear-gradient(to bottom, transparent 96%, rgba(17,30,55,.06) 96%) 0 0/100% 24px;
 }
 
-/* Grid overlay */
-#vibe2458 .grid {
-  position: absolute;
-  inset: -1px;
-  z-index: 1;
-  pointer-events: none;
+#vibe2459 .pointerlight {
+  position: absolute; inset: 0; opacity: .9; transition: opacity .35s ease;
   background:
-    linear-gradient(to bottom, transparent 94%, rgba(255,255,255,0.06) 96%) 0 0/100% 26px repeat-y,
-    linear-gradient(to right,  transparent 94%, rgba(255,255,255,0.06) 96%) 0 0/26px 100% repeat-x;
-  -webkit-mask-image: radial-gradient(160% 140% at 50% 50%, #000 55%, transparent 80%);
-          mask-image: radial-gradient(160% 140% at 50% 50%, #000 55%, transparent 80%);
-}
-#vibe2458[data-theme="light"] .grid {
-  background:
-    linear-gradient(to bottom, transparent 94%, rgba(17,30,55,0.06) 96%) 0 0/100% 26px repeat-y,
-    linear-gradient(to right,  transparent 94%, rgba(17,30,55,0.06) 96%) 0 0/26px 100% repeat-x;
-}
-
-/* Spotlight follows pointer */
-#vibe2458 .spotlight {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background:
-    radial-gradient(420px 420px at var(--mx, 50%) var(--my, 50%),
-      rgba(255,255,255,0.10),
-      rgba(255,255,255,0.0) 60%);
+    radial-gradient(420px 420px at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.10), rgba(255,255,255,0) 60%);
   mix-blend-mode: soft-light;
-  transition: opacity .35s ease;
-  opacity: 0.9;
 }
 
-/* Layout */
-#vibe2458 .wrap {
-  position: relative;
-  z-index: 3;
-  min-height: 360px;
-  display: grid;
+/* Content layout */
+#vibe2459 .content {
+  position: relative; z-index: 2;
+  display: grid; gap: clamp(16px, 3vw, 22px);
   place-items: center;
+  min-height: clamp(360px, 54vh, 680px);
+}
+#vibe2459 .head { text-align: center; max-width: 820px; }
+
+#vibe2459 .eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted); border: 1px solid var(--edge);
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+}
+#vibe2459[data-theme="luma"] .eyebrow { background: linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.3)); }
+
+#vibe2459 h1 {
+  margin: 10px 0 6px;
+  font-size: clamp(30px, 6.4vw, 56px);
+  line-height: 1.05; letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #cfe2ff 0%, #86ffe0 40%, #ffd6f5 85%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,.18));
+}
+#vibe2459[data-theme="luma"] h1 {
+  background: linear-gradient(90deg, #18345a 0%, #10bea9 45%, #b62b90 90%);
+}
+#vibe2459 .lede {
+  margin: 0; opacity: .9; color: var(--ink);
+  font-size: clamp(14px, 2.4vw, 18px);
 }
 
-#vibe2458 .panel {
-  width: min(880px, 100%);
-  background:
-    linear-gradient(180deg, var(--surface), rgba(255,255,255,0.06));
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: clamp(20px, 3.4vw, 28px);
-  box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.38),
-    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+/* Stage: the kinetic halo */
+#vibe2459 .stage {
+  width: min(72vmin, 680px);
+  aspect-ratio: 1 / 1;
+  position: relative;
+  border-radius: 24px;
+  padding: clamp(14px, 2.2vw, 18px);
+  background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.04));
+  border: 1px solid var(--edge);
   backdrop-filter: blur(14px) saturate(120%);
   -webkit-backdrop-filter: blur(14px) saturate(120%);
+  box-shadow: 0 16px 44px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.08);
   transform-style: preserve-3d;
-  transition: transform .2s ease, background .3s ease, border-color .3s ease, box-shadow .3s ease;
-}
-#vibe2458 .panel:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-/* Eyebrow */
-#vibe2458 .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: .18em;
-  color: var(--muted);
-  padding: 6px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
-}
-
-/* Typography */
-#vibe2458 h1 {
-  margin: 10px 0 6px;
-  font-size: clamp(28px, 5vw, 48px);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  background: linear-gradient(90deg, #cfe2ff 0%, #a6fff7 35%, #ffd6f5 80%);
-  -webkit-background-clip: text;
-          background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 1px 0 rgba(255,255,255,0.18));
-}
-#vibe2458[data-theme="light"] h1 {
-  background: linear-gradient(90deg, #243a6b 0%, #0db1bf 45%, #b12e8f 90%);
-}
-
-#vibe2458 .lede {
-  margin: 0 0 12px;
-  color: var(--ink);
-  opacity: 0.9;
-  font-size: clamp(14px, 2.2vw, 18px);
-}
-
-/* Chips */
-#vibe2458 .chips {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 14px 0 8px;
-}
-#vibe2458 .chip {
-  width: clamp(72px, 14vw, 96px);
-  height: 44px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.12);
-  cursor: pointer;
-  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
-  position: relative;
+  transition: transform .25s ease, background .3s ease, border-color .3s ease;
   outline: none;
 }
-#vibe2458 .chip::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent 60%);
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-#vibe2458 .chip:focus-visible {
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 60%, transparent), 0 8px 20px rgba(0,0,0,0.28);
-}
-#vibe2458 .chip:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 14px 28px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12);
-  filter: brightness(1.04);
-}
-#vibe2458 .chip.c1 { background: linear-gradient(135deg, #5d66ff, #b86aff); }
-#vibe2458 .chip.c2 { background: linear-gradient(135deg, #28dcff, #1be6b6); }
-#vibe2458 .chip.c3 { background: linear-gradient(135deg, #ffb199, #ff7ac8); }
-#vibe2458 .chip.c4 { background: linear-gradient(135deg, #b7fb73, #8ef7d0); }
-#vibe2458 .chip:nth-child(odd) { animation: float 7s ease-in-out infinite; }
-#vibe2458 .chip:nth-child(even) { animation: float 8.5s ease-in-out infinite reverse; }
+#vibe2459 .stage:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-/* CTAs */
-#vibe2458 .cta {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 16px;
+#vibe2459 .center {
+  position: absolute; left: 50%; top: 50%;
+  width: 12px; height: 12px; border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 30% 30%, #fff, color-mix(in oklab, var(--accent) 70%, #0000));
+  box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 18%, #0000), 0 14px 30px rgba(0,0,0,.35);
 }
-#vibe2458 .primary,
-#vibe2458 .ghost {
+
+/* Halos */
+#vibe2459 .halo {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  animation: spin var(--d, 28s) linear infinite;
+  box-shadow: inset 0 0 0 1px var(--edge), inset 0 0 60px rgba(255,255,255,.08);
+  background:
+    conic-gradient(from 0deg,
+      color-mix(in oklab, var(--accent) 40%, #ffffff 0%) 0%,
+      transparent 20% 80%,
+      color-mix(in oklab, var(--accent) 30%, #ffffff 0%) 100%);
+}
+#vibe2459 .halo.h1 { width: 86%; height: 86%; --d: var(--d1, 24s); }
+#vibe2459 .halo.h2 { width: 64%; height: 64%; --d: var(--d2, 36s); }
+#vibe2459 .halo.h3 { width: 44%; height: 44%; --d: var(--d3, 48s); }
+
+#vibe2459 .halo::after {
+  content: ""; position: absolute; inset: 8%; border-radius: 50%;
+  -webkit-mask: radial-gradient(circle, transparent calc(50% - 2px), #000 calc(50% - 1px));
+          mask: radial-gradient(circle, transparent calc(50% - 2px), #000 calc(50% - 1px));
+  background: radial-gradient(closest-side, rgba(255,255,255,.20), transparent 70%);
+  opacity: .4;
+}
+
+#vibe2459 .node {
+  position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%);
+  width: clamp(10px, 1.8vmin, 14px); height: clamp(10px, 1.8vmin, 14px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff, color-mix(in oklab, var(--accent) 70%, #0000) 60%);
+  box-shadow:
+    0 0 0 5px color-mix(in oklab, var(--accent) 20%, #0000),
+    0 10px 24px rgba(0,0,0,.45);
+  filter: saturate(110%);
+}
+
+/* Ripples */
+#vibe2459 .ripples { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; pointer-events: none; }
+#vibe2459 .ripple {
+  position: absolute; width: 4px; height: 4px; border-radius: 999px; transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255,255,255,.65), rgba(255,255,255,0) 60%);
+  animation: ring 1400ms ease-out forwards;
+  mix-blend-mode: screen;
+  opacity: .9;
+}
+
+/* Controls */
+#vibe2459 .controls { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+#vibe2459 .primary,
+#vibe2459 .ghost {
   font: inherit;
   padding: 10px 14px;
   border-radius: 12px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--edge);
   cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease, background .25s ease, color .25s ease, border-color .25s ease;
   color: var(--ink);
-  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  transition: transform .2s ease, box-shadow .2s ease, background .25s ease, color .25s ease, border-color .25s ease;
 }
-#vibe2458 .primary {
+#vibe2459 .primary {
   background:
-    linear-gradient(90deg, color-mix(in oklab, var(--accent) 80%, #ffffff 0%) 0%, #fff7 120%),
-    linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+    linear-gradient(90deg, color-mix(in oklab, var(--accent) 88%, #ffffff 0%) 0%, #fff7 130%),
+    linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
   color: #0c1a1f;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-  border-color: color-mix(in oklab, var(--accent) 50%, #0000);
+  text-shadow: 0 1px 0 rgba(255,255,255,.4);
 }
-#vibe2458 .ghost {
-  background: transparent;
+#vibe2459 .ghost { background: transparent; }
+#vibe2459 .primary:hover, #vibe2459 .ghost:hover {
+  transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.28);
 }
-#vibe2458 .primary:hover,
-#vibe2458 .ghost:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
-}
-#vibe2458 .primary:focus-visible,
-#vibe2458 .ghost:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+#vibe2459 .primary:focus-visible, #vibe2459 .ghost:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 3px;
 }
 
 /* Meta */
-#vibe2458 .meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 16px;
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-  font-size: 12.5px;
-  color: var(--muted);
-}
-#vibe2458 .note {
-  opacity: 0.85;
+#vibe2459 .meta {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%; max-width: 860px; margin-top: 8px; padding-top: 12px;
+  border-top: 1px solid var(--edge);
+  font-size: 12.5px; color: var(--muted);
 }
 
-/* Motion + micro-animations */
-@keyframes drift {
-  0%   { transform: translate(-8%, -6%) rotate(0deg) scale(1); }
-  50%  { transform: translate(6%, 8%) rotate(24deg) scale(1.06); }
-  100% { transform: translate(-8%, -6%) rotate(0deg) scale(1); }
+/* Motion */
+@keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+@keyframes ring {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: .9; }
+  60%  { opacity: .45; }
+  100% { transform: translate(-50%, -50%) scale(45); opacity: 0; }
 }
-@keyframes float {
-  0%   { transform: translateY(0px); }
-  50%  { transform: translateY(-6px); }
-  100% { transform: translateY(0px); }
+@keyframes drift-blob {
+  0%   { transform: translate(-8%, -6%) scale(1); }
+  50%  { transform: translate(6%, 8%) scale(1.06); }
+  100% { transform: translate(-8%, -6%) scale(1); }
 }
-#vibe2458 .pulse {
-  animation: pulseCard 820ms ease-out;
+#vibe2459 .stage.breathe {
+  animation: breathe 900ms ease-out;
 }
-@keyframes pulseCard {
-  0%   { transform: scale(1); box-shadow: 0 12px 40px rgba(0,0,0,0.38); }
-  30%  { transform: scale(1.012); box-shadow: 0 18px 48px rgba(0,0,0,0.42); }
-  100% { transform: scale(1); box-shadow: 0 12px 40px rgba(0,0,0,0.38); }
+@keyframes breathe {
+  0%   { transform: scale(1); box-shadow: 0 16px 44px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.08); }
+  35%  { transform: scale(1.012); box-shadow: 0 22px 56px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.10); }
+  100% { transform: scale(1); box-shadow: 0 16px 44px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.08); }
 }
 
 /* Accessibility: reduced motion */
-#vibe2458[data-reduced="true"] * {
+#vibe2459[data-reduced="true"] * {
   animation: none !important;
   transition-duration: 0ms !important;
 }
