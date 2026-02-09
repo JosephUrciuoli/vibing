@@ -73,126 +73,133 @@
   <body>
     <!-- BEGIN_EDITABLE -->
       <section id="content">
-<section class="halo" role="region" aria-label="Halo Orrery Studio" data-build="v2480" data-theme="quartz">
+<section class="murmur" role="region" aria-label="Murmuration Atelier" data-build="v2481" data-theme="night" style="--mx:.5; --my:.5;">
   <style>
-    .halo {
-      --ink: #0b1020;
-      --muted: color-mix(in oklab, var(--ink), white 60%);
-      --glass: rgba(255,255,255,0.6);
-      --panel: linear-gradient(180deg, #ffffffe6, #ffffffc4);
-      --ring: #0b1020;
-      --mx: 0.5; --my: 0.5;
+    .murmur {
+      --ink: #e9f3ff;
+      --muted: color-mix(in oklab, var(--ink), black 35%);
+      --glass: rgba(255,255,255,0.08);
+      --panel: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      --p1: oklch(80% .16 250);
+      --p2: oklch(75% .20 320);
+      --p3: oklch(78% .18 120);
+      --bg1: #070a13;
+      --bg2: #0d1020;
 
-      /* quartz (light) */
-      --bg1: oklch(98% 0.01 90);
-      --bg2: oklch(96% 0.02 220);
-      --glow1: oklch(87% 0.12 210 / 0.35);
-      --glow2: oklch(90% 0.14 30 / 0.35);
-      --a: oklch(58% 0.20 205);
-      --b: oklch(62% 0.20 310);
-      --c: oklch(66% 0.20 100);
-
-      font: 400 15px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
       color: var(--ink);
-      border-radius: 28px;
-      padding: clamp(14px, 3.4vw, 28px);
+      font: 400 15px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
+      border-radius: 30px;
+      padding: clamp(16px, 4vw, 32px);
       position: relative;
       overflow: clip;
       background:
-        radial-gradient(1200px 800px at 0% 0%, var(--glow1), transparent 55%),
-        radial-gradient(1000px 700px at 100% 100%, var(--glow2), transparent 55%),
+        radial-gradient(1400px 900px at 10% -10%, color-mix(in oklab, var(--p2), white 8%) 4%, #0000 45%),
+        radial-gradient(1200px 900px at 110% 110%, color-mix(in oklab, var(--p3), white 10%) 4%, #0000 45%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
-      box-shadow:
-        inset 0 0 0 1px rgba(0,0,0,0.06),
-        0 40px 120px rgba(0, 14, 40, 0.18);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 40px 120px rgba(5,10,25,0.5);
       isolation: isolate;
     }
-    .halo::after {
+    .murmur::before, .murmur::after {
       content:"";
-      position: absolute; inset: -12%;
-      pointer-events: none;
+      position: absolute; inset: -30% -10%;
       background:
-        radial-gradient(1px 1px at 20% 30%, #0002, #0000 60%),
-        radial-gradient(1px 1px at 80% 10%, #0001, #0000 60%),
-        radial-gradient(1px 1px at 60% 70%, #0002, #0000 60%),
-        linear-gradient(180deg, transparent, #00000007 60%, transparent);
-      mix-blend-mode: multiply;
-      opacity: 0.5;
-      animation: grain 16s ease-in-out infinite alternate;
+        radial-gradient(60% 120% at 30% 40%, color-mix(in oklab, var(--p1), transparent 70%) 2%, #0000 60%),
+        radial-gradient(80% 90% at 75% 60%, color-mix(in oklab, var(--p2), transparent 70%) 0%, #0000 52%);
+      filter: blur(40px) saturate(1.2);
+      mix-blend-mode: screen;
+      opacity: 0.38;
+      animation: drift 22s ease-in-out infinite alternate;
+      pointer-events: none;
     }
-    @keyframes grain { from { transform: translateY(0); } to { transform: translateY(-1%); } }
+    .murmur::after {
+      inset: -25% -15%;
+      background:
+        radial-gradient(70% 110% at 70% 30%, color-mix(in oklab, var(--p3), transparent 70%) 0%, #0000 60%);
+      animation-duration: 28s;
+      animation-direction: alternate-reverse;
+      opacity: 0.32;
+    }
+    @keyframes drift {
+      0% { transform: translate3d(-2%, -1%, 0) rotate(0.5deg) scale(1.02); }
+      100% { transform: translate3d(2%, 1%, 0) rotate(-0.6deg) scale(1.04); }
+    }
 
-    /* Masthead */
-    .halo .mast {
+    /* Mast */
+    .murmur .mast {
       display: grid;
       grid-template-columns: 1fr auto;
+      gap: 14px;
       align-items: center;
-      gap: 12px;
-      margin-bottom: clamp(10px, 2.4vw, 18px);
-      z-index: 2; position: relative;
+      margin-bottom: clamp(12px, 2.8vw, 22px);
+      position: relative; z-index: 2;
     }
-    .halo .brand {
-      display: inline-flex; gap: 12px; align-items: center;
-      text-transform: uppercase; letter-spacing: 0.16em; font-weight: 800; font-size: 12px;
-      color: var(--muted);
+    .murmur .brand {
+      display: inline-flex; align-items: center; gap: 12px;
+      letter-spacing: .14em; text-transform: uppercase; font-weight: 800; font-size: 12px;
+      color: color-mix(in oklab, var(--ink), black 40%);
     }
-    .halo .sigil {
-      width: 18px; height: 18px; border-radius: 50%;
+    .murmur .glyph {
+      width: 22px; height: 22px; border-radius: 6px;
       background:
-        radial-gradient(circle at 35% 35%, white, #fff0 50%) padding-box,
-        conic-gradient(from 0deg, var(--a), var(--b), var(--c), var(--a)) border-box;
-      border: 2px solid transparent;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 0 22px color-mix(in oklab, var(--b), white 40%);
-      transform: rotate(22deg);
+        conic-gradient(from 0deg, var(--p1), var(--p2), var(--p3), var(--p1));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.18), 0 0 28px color-mix(in oklab, var(--p2), white 20%);
+      transform: rotate(12deg);
     }
-
-    .halo .tools { display:flex; gap:8px; flex-wrap: wrap; justify-content: flex-end; }
-    .halo .chip {
-      --p1: var(--a); --p2: var(--b);
+    .murmur .tools { display:flex; gap:10px; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+    .murmur .chip, .murmur .btn {
       appearance: none; border: 0; cursor: pointer;
-      padding: 8px 12px; border-radius: 999px; font-weight: 700; font-size: 12.5px; color: #0b1020;
+      font-weight: 700; font-size: 12.5px; color: var(--ink);
+      border-radius: 999px; padding: 8px 12px;
       background:
-        linear-gradient(180deg, #fff, #f4f7ff) padding-box,
+        linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06)) padding-box,
         linear-gradient(90deg, var(--p1), var(--p2)) border-box;
       border: 1px solid transparent;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
-      transition: transform .18s ease, filter .18s ease, box-shadow .28s ease;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.20);
+      transition: transform .18s ease, filter .2s ease, box-shadow .28s ease, background .4s ease;
     }
-    .halo .chip:hover { transform: translateY(-1px); filter: saturate(1.08); box-shadow: 0 10px 28px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.95); }
-    .halo .chip[aria-pressed="true"] { outline: 2px solid rgba(0,0,0,0.8); outline-offset: 2px; }
-
-    .halo .btn {
-      appearance: none; border: 0; cursor: pointer; user-select: none;
-      padding: 8px 12px; border-radius: 12px; font-weight: 700; font-size: 12.5px; color: var(--ink);
-      background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.55));
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1), 0 10px 26px rgba(0,0,0,0.12);
-      transition: transform .18s ease, background .28s ease;
+    .murmur .chip:hover, .murmur .btn:hover { transform: translateY(-1px); filter: saturate(1.12); }
+    .murmur .chip[aria-pressed="true"] {
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.35), 0 8px 22px rgba(0,0,0,0.28);
     }
-    .halo .btn:hover { transform: translateY(-1px); }
+    .murmur .btn { background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.08)); }
+    .murmur .slider {
+      display:inline-flex; align-items:center; gap:8px; color: color-mix(in oklab, var(--ink), black 30%); font-size:12px; font-weight:700;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 6px 10px; border-radius: 999px;
+    }
+    .murmur input[type="range"] {
+      appearance: none; width: 120px; height: 6px; background: rgba(255,255,255,0.14);
+      border-radius: 999px; outline: none;
+    }
+    .murmur input[type="range"]::-webkit-slider-thumb {
+      appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff, #fff0 60%) padding-box,
+                  linear-gradient(90deg, var(--p1), var(--p2)) border-box;
+      border: 2px solid transparent; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      cursor: pointer;
+    }
 
     /* Hero */
-    .halo .hero { display:grid; gap: 6px; z-index: 2; position: relative; }
-    .halo h1 {
+    .murmur .hero { position: relative; z-index:2; display:grid; gap: 6px; }
+    .murmur h1 {
       margin: 0;
       font-weight: 900; letter-spacing: -0.02em;
-      font-size: clamp(28px, 6.5vw, 64px);
+      font-size: clamp(28px, 7vw, 64px);
       line-height: 1.04;
-      background: linear-gradient(90deg, var(--ink), color-mix(in oklab, var(--a), black 8%), color-mix(in oklab, var(--b), black 8%));
+      background: linear-gradient(90deg, #fff, color-mix(in oklab, var(--p2), white 30%));
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      text-shadow: 0 1px 0 #fff8;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.08);
     }
-    .halo .sub { margin: 0; color: color-mix(in oklab, var(--ink), white 40%); font-size: clamp(13px, 2.2vw, 18px); }
+    .murmur .sub { margin: 0; color: color-mix(in oklab, var(--ink), black 35%); font-size: clamp(13px, 2.2vw, 18px); }
 
-    /* Stage (canvas) */
-    .halo .stage {
-      position: relative; margin-top: clamp(8px, 2vw, 14px);
-      border-radius: 22px; overflow: hidden;
-      min-height: clamp(280px, 46vw, 560px);
+    /* Stage */
+    .murmur .stage {
+      margin-top: clamp(10px, 2.2vw, 16px);
+      position: relative; border-radius: 24px; overflow: hidden; min-height: clamp(300px, 48vw, 600px);
       background: var(--panel);
-      border: 1px solid rgba(0,0,0,0.08);
-      box-shadow:
-        0 18px 44px rgba(0,0,0,0.16),
-        inset 0 0 0 1px rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 22px 60px rgba(0,0,0,0.36), inset 0 0 0 1px rgba(255,255,255,0.06);
       transform-style: preserve-3d;
       transform:
         perspective(1000px)
@@ -200,115 +207,102 @@
         rotateY(calc((0.5 - var(--mx)) * 16deg));
       transition: transform .35s ease;
     }
-    .halo .stage::before {
-      content:"";
-      position: absolute; inset: -20% -40% 55% -40%;
-      background: linear-gradient(105deg, rgba(255,255,255,0.35), rgba(255,255,255,0.04) 65%);
-      transform: translateX(calc((var(--mx) - 0.5) * 8%)) rotate(2deg);
+    .murmur .stage::before {
+      content:""; position:absolute; inset: -30% -10% 50% -10%;
+      background: linear-gradient(105deg, rgba(255,255,255,0.22), rgba(255,255,255,0.02) 65%);
+      transform: translateX(calc((var(--mx) - .5) * 8%)) rotate(2deg);
       pointer-events: none;
+      mix-blend-mode: screen;
     }
-    .halo canvas { position:absolute; inset:0; width:100%; height:100%; display:block; filter: saturate(1.05) contrast(1.02); }
+    .murmur canvas { position:absolute; inset:0; width:100%; height:100%; display:block; filter: saturate(1.1) contrast(1.02); }
 
-    .halo .hud {
-      position: absolute; top: 10px; left: 10px; z-index: 3;
-      display:flex; gap:8px; align-items:center; flex-wrap: wrap;
+    .murmur .hud {
+      position: absolute; top: 10px; left: 10px; z-index: 3; display:flex; gap:8px; flex-wrap: wrap; align-items: center;
     }
-    .halo .pill {
+    .murmur .pill {
       font: 600 12px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      color: #0c1830;
+      color: #eaf2ff;
       padding: 6px 8px; border-radius: 999px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+      background: linear-gradient(180deg, rgba(8,12,22,0.6), rgba(8,12,22,0.4));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14), 0 6px 16px rgba(0,0,0,0.35);
+      backdrop-filter: blur(4px);
     }
 
     /* Footer */
-    .halo .meta {
+    .murmur .meta {
       margin-top: clamp(12px, 2.4vw, 18px);
       display:flex; align-items:center; justify-content: space-between; gap: 12px;
-      color: color-mix(in oklab, var(--ink), white 30%);
+      color: color-mix(in oklab, var(--ink), black 35%);
       font-size: 12.5px; z-index:2; position:relative;
     }
-    .halo .badges { display:flex; gap:10px; flex-wrap: wrap; align-items:center; }
-    .halo .badge {
+    .murmur .badges { display:flex; gap:10px; flex-wrap: wrap; align-items:center; }
+    .murmur .badge {
       padding: 6px 10px; border-radius: 999px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
-      border: 1px solid rgba(0,0,0,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.22);
     }
 
     /* Themes */
-    .halo[data-theme="quartz"] {
-      --ink: #0b1020;
-      --bg1: oklch(98% 0.01 90);
-      --bg2: oklch(96% 0.02 220);
-      --glow1: oklch(87% 0.12 210 / 0.35);
-      --glow2: oklch(90% 0.14 30 / 0.35);
-      --a: oklch(58% 0.20 205);
-      --b: oklch(62% 0.20 310);
-      --c: oklch(66% 0.20 100);
+    .murmur[data-theme="night"] {
+      --ink: #e9f3ff;
+      --bg1: #060914;
+      --bg2: #10142a;
+      --p1: oklch(82% .18 255);
+      --p2: oklch(78% .22 320);
+      --p3: oklch(78% .20 170);
+      --panel: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
     }
-    .halo[data-theme="ink"] {
-      --ink: #eaf2ff;
-      --bg1: oklch(16% 0.03 250);
-      --bg2: oklch(12% 0.03 250);
-      --glow1: oklch(60% 0.18 250 / 0.36);
-      --glow2: oklch(60% 0.20 20 / 0.36);
-      --a: oklch(72% 0.20 260);
-      --b: oklch(72% 0.18 330);
-      --c: oklch(72% 0.18 170);
-      --panel: linear-gradient(180deg, #ffffff1a, #ffffff0f);
-      --ring: #dfe8ff;
+    .murmur[data-theme="dawn"] {
+      --ink: #1a0f10;
+      --bg1: oklch(97% .03 30);
+      --bg2: oklch(93% .04 70);
+      --p1: oklch(68% .20 35);
+      --p2: oklch(62% .20 320);
+      --p3: oklch(66% .20 110);
+      --panel: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.70));
     }
-    .halo[data-theme="bloom"] {
-      --ink: #201019;
-      --bg1: oklch(96% 0.04 330);
-      --bg2: oklch(93% 0.05 0);
-      --glow1: oklch(86% 0.20 340 / 0.32);
-      --glow2: oklch(88% 0.20 80 / 0.32);
-      --a: oklch(62% 0.24 340);
-      --b: oklch(64% 0.22 20);
-      --c: oklch(64% 0.22 120);
-    }
-    .halo[data-theme="citrus"] {
-      --ink: #0f160b;
-      --bg1: oklch(97% 0.05 110);
-      --bg2: oklch(94% 0.06 75);
-      --glow1: oklch(90% 0.20 110 / 0.28);
-      --glow2: oklch(90% 0.20 65 / 0.28);
-      --a: oklch(60% 0.22 110);
-      --b: oklch(62% 0.22 70);
-      --c: oklch(62% 0.22 30);
+    .murmur[data-theme="bloom"] {
+      --ink: #1a1018;
+      --bg1: oklch(96% .05 330);
+      --bg2: oklch(92% .06 10);
+      --p1: oklch(64% .24 340);
+      --p2: oklch(62% .22 15);
+      --p3: oklch(64% .22 130);
+      --panel: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.72));
     }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      .halo::after { animation: none !important; }
-      .halo .stage { transform: none !important; }
+      .murmur::before, .murmur::after { animation: none !important; }
+      .murmur .stage { transform: none !important; }
     }
-
-    /* Dark-mode focus ring visibility tweaks */
-    .halo[data-theme="ink"] .chip[aria-pressed="true"] { outline-color: rgba(255,255,255,0.95); }
-    .halo.paused .stage { filter: saturate(0.9) brightness(0.98); }
+    .murmur.paused .stage { filter: saturate(0.9) brightness(0.98); }
   </style>
 
   <div class="mast">
-    <div class="brand"><span class="sigil" aria-hidden="true"></span> HALO</div>
-    <div class="tools" aria-label="Appearance">
-      <button class="chip" data-theme="quartz" aria-pressed="true">Quartz</button>
-      <button class="chip" data-theme="ink" aria-pressed="false">Ink</button>
-      <button class="chip" data-theme="bloom" aria-pressed="false">Bloom</button>
-      <button class="chip" data-theme="citrus" aria-pressed="false">Citrus</button>
-      <button class="btn" id="pause" aria-pressed="false" title="Pause animation">Pause motion</button>
+    <div class="brand"><span class="glyph" aria-hidden="true"></span>MURMURATION</div>
+    <div class="tools" aria-label="Controls">
+      <button class="chip" data-theme="night" aria-pressed="true" title="Night">Night</button>
+      <button class="chip" data-theme="dawn" aria-pressed="false" title="Dawn">Dawn</button>
+      <button class="chip" data-theme="bloom" aria-pressed="false" title="Bloom">Bloom</button>
+      <span class="slider" title="Flock size">
+        Density
+        <input id="density" type="range" min="40" max="260" step="10" value="140" />
+      </span>
+      <button class="btn" id="pause" aria-pressed="false" title="Pause animation">Pause</button>
     </div>
   </div>
 
   <div class="hero">
-    <h1>Orbital calm</h1>
-    <p class="sub">A living orrery of light. Move to steer gravity. Tap to send ripples through space.</p>
+    <h1>Murmuration</h1>
+    <p class="sub">Flocks that fold like silk. Move to guide. Tap to scatter the sky.</p>
   </div>
 
-  <div class="stage" id="stage" tabindex="0" aria-label="Interactive orbit field">
-    <canvas id="orbits" aria-hidden="true"></canvas>
+  <div class="stage" id="stage" tabindex="0" aria-label="Interactive flock field">
+    <canvas id="flock" aria-hidden="true"></canvas>
     <div class="hud" aria-hidden="true">
+      <div class="pill" id="count">-- dots</div>
       <div class="pill" id="time">--:--:--</div>
       <div class="pill" id="fps">-- fps</div>
     </div>
@@ -316,22 +310,24 @@
 
   <div class="meta">
     <div class="badges">
-      <span class="badge">v2480</span>
-      <span class="badge">Orrery • Glass • High contrast</span>
+      <span class="badge">v2481</span>
+      <span class="badge">Boids • Aurora • Glass</span>
     </div>
-    <span id="last-updated">Last updated: 2026-02-09 01:09:40 EST</span>
+    <span id="last-updated">Last updated: 2026-02-09 02:56:13 EST</span>
   </div>
 
   <script>
     (function () {
-      const root = document.currentScript.closest('.halo');
-      const canvas = root.querySelector('#orbits');
+      const root = document.currentScript.closest('.murmur');
+      const canvas = root.querySelector('#flock');
       const ctx = canvas.getContext('2d', { alpha: true });
       const stage = root.querySelector('#stage');
       const chips = root.querySelectorAll('.chip');
       const pauseBtn = root.querySelector('#pause');
+      const dens = root.querySelector('#density');
       const timeEl = root.querySelector('#time');
       const fpsEl = root.querySelector('#fps');
+      const countEl = root.querySelector('#count');
       const last = root.querySelector('#last-updated');
 
       // Timestamp
@@ -348,7 +344,7 @@
         root.setAttribute('data-theme', th);
         chips.forEach(x => x.setAttribute('aria-pressed', x.dataset.theme === th ? 'true' : 'false'));
         refreshPalette();
-        fadeBg();
+        softFade();
       };
       chips.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.theme)));
 
@@ -357,21 +353,19 @@
       pauseBtn.addEventListener('click', () => {
         paused = !paused;
         pauseBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
-        pauseBtn.textContent = paused ? 'Resume motion' : 'Pause motion';
+        pauseBtn.textContent = paused ? 'Resume' : 'Pause';
         root.classList.toggle('paused', paused);
         if (!paused) rafId = requestAnimationFrame(tick);
       });
 
       // Clock
-      function tickClock() {
-        const d = new Date();
-        timeEl.textContent = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      }
+      const tickClock = () => {
+        timeEl.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      };
       tickClock(); setInterval(tickClock, 1000);
 
-      // Parallax + gravity target
+      // Parallax + pointer
       let target = { x: 0.5, y: 0.5 };
-      let grav = { x: 0.5, y: 0.5 };
       function move(x, y) {
         const r = root.getBoundingClientRect();
         const mx = Math.max(0, Math.min(1, (x - r.left) / r.width));
@@ -384,7 +378,7 @@
       root.addEventListener('pointerleave', () => { target.x = 0.5; target.y = 0.5; root.style.setProperty('--mx', 0.5); root.style.setProperty('--my', 0.5); });
 
       // Canvas sizing
-      let W = 0, H = 0, DPR = Math.min(2, window.devicePixelRatio || 1);
+      let W = 1, H = 1, DPR = Math.min(2, window.devicePixelRatio || 1);
       const ro = new ResizeObserver(resize); ro.observe(stage);
       function resize() {
         const rect = stage.getBoundingClientRect();
@@ -393,79 +387,211 @@
         canvas.width = W * DPR; canvas.height = H * DPR;
         canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
         ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-        refreshPalette();
+        softFade();
       }
 
       // Palette
-      let pal = { a: '#5ea8ff', b: '#c697ff', c: '#90e47b', ring: '#0b1020' };
+      let pal = { p1: '#7aa7ff', p2: '#d28bff', p3: '#8be07a', ink: '#e9f3ff' };
       function refreshPalette() {
-        pal.a = cssVar('--a') || pal.a;
-        pal.b = cssVar('--b') || pal.b;
-        pal.c = cssVar('--c') || pal.c;
-        pal.ring = cssVar('--ring') || pal.ring;
+        pal.p1 = cssVar('--p1') || pal.p1;
+        pal.p2 = cssVar('--p2') || pal.p2;
+        pal.p3 = cssVar('--p3') || pal.p3;
+        pal.ink = cssVar('--ink') || pal.ink;
       }
+      refreshPalette();
 
-      // Orbits + bodies
-      const rings = [];
-      const bodies = [];
-      const pulses = [];
-
-      function initSystem() {
-        rings.length = 0; bodies.length = 0;
-        const R = Math.min(W, H) * 0.44;
-        const count = 8;
-        for (let i = 0; i < count; i++) {
-          const r = R * (0.18 + (i / (count - 1)) * 0.78);
-          rings.push({ r, jitter: (Math.random() * 0.6 + 0.4), hue: i / (count - 1) });
-          const nBodies = 3 + (i % 2);
-          for (let j = 0; j < nBodies; j++) {
-            bodies.push({
-              ringIndex: i,
-              theta: Math.random() * Math.PI * 2,
-              vel: (0.0008 + i * 0.00045) * (Math.random() > 0.5 ? 1 : -1),
-              size: 1.2 + Math.random() * (i * 0.14 + 1.6),
-              alpha: 0.5 + Math.random() * 0.4
-            });
-          }
-        }
+      // Flock
+      let BOIDS = [];
+      let desired = Number(dens.value);
+      function makeBoid() {
+        const a = Math.random() * Math.PI * 2;
+        const sp = 0.6 + Math.random() * 0.6;
+        return {
+          x: Math.random()*W, y: Math.random()*H,
+          vx: Math.cos(a)*sp, vy: Math.sin(a)*sp,
+          hue: Math.random(),
+          size: 1 + Math.random()*1.8
+        };
       }
+      function fillTo(n) {
+        while (BOIDS.length < n) BOIDS.push(makeBoid());
+        while (BOIDS.length > n) BOIDS.pop();
+        countEl.textContent = BOIDS.length + ' dots';
+      }
+      fillTo(desired);
 
-      // Ripples on click/tap
-      stage.addEventListener('pointerdown', e => {
-        const r = canvas.getBoundingClientRect();
-        pulses.push({ x: (e.clientX - r.left), y: (e.clientY - r.top), t: performance.now(), life: 1400 });
+      dens.addEventListener('input', () => {
+        desired = Number(dens.value);
+        fillTo(desired);
       });
 
-      // Background fade to avoid hard clears
-      function fadeBg() {
+      // Scatter on tap/click
+      stage.addEventListener('pointerdown', (e) => {
+        const r = canvas.getBoundingClientRect();
+        const px = (e.clientX - r.left);
+        const py = (e.clientY - r.top);
+        for (let i=0;i<BOIDS.length;i++) {
+          const b = BOIDS[i];
+          const dx = b.x - px, dy = b.y - py;
+          const d2 = Math.max(60, Math.hypot(dx,dy));
+          const f = 2.8 / d2;
+          b.vx += (dx * f) + (Math.random()*0.6 - 0.3);
+          b.vy += (dy * f) + (Math.random()*0.6 - 0.3);
+        }
+      });
+
+      // Background gentle fade for trails
+      function softFade() {
         ctx.save();
         ctx.globalCompositeOperation = 'source-over';
-        const g = ctx.createLinearGradient(0, 0, 0, H);
-        const c1 = 'rgba(255,255,255,' + (root.dataset.theme === 'ink' ? 0.06 : 0.18) + ')';
-        const c2 = 'rgba(255,255,255,0)';
-        g.addColorStop(0, c1);
-        g.addColorStop(1, c2);
-        ctx.fillStyle = g;
-        ctx.fillRect(0, 0, W, H);
+        const t = root.dataset.theme;
+        const op = t === 'night' ? 0.14 : 0.18;
+        ctx.fillStyle = t === 'night' ? `rgba(4,8,18,${op})` : `rgba(255,255,255,${op})`;
+        ctx.fillRect(0,0,W,H);
         ctx.restore();
       }
-
-      // Prepare
-      resize(); initSystem();
 
       // Motion preferences
       let rafId = 0;
       const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduce) { paused = true; root.classList.add('paused'); pauseBtn.setAttribute('aria-pressed', 'true'); pauseBtn.textContent = 'Resume motion'; }
+      if (reduce) { paused = true; root.classList.add('paused'); pauseBtn.setAttribute('aria-pressed', 'true'); pauseBtn.textContent = 'Resume'; }
 
       // FPS
-      let lastT = performance.now(); let frames = 0; let lastFPS = lastT;
+      let frames = 0, lastFPS = performance.now();
 
-      function lerp(a, b, t) { return a + (b - a) * t; }
+      // Sim params
+      const params = {
+        perception: 38,
+        separation: 18,
+        maxSpeed: 2.2,
+        maxForce: 0.04,
+        alignWt: 0.7,
+        cohWt: 0.48,
+        sepWt: 0.95
+      };
+
+      function limit(vx, vy, max) {
+        const s = Math.hypot(vx, vy);
+        if (s > max) { const m = max / (s || 1); return [vx*m, vy*m]; }
+        return [vx, vy];
+      }
+
+      let lastT = performance.now();
 
       function tick(now) {
         if (paused) return;
 
+        // dt
+        const dt = Math.min(0.033, (now - lastT) / 1000);
+        lastT = now;
+
+        // fade trail
+        softFade();
+
+        // pointer field target
+        const cx = W * target.x, cy = H * target.y;
+
+        // update boids
+        for (let i=0;i<BOIDS.length;i++) {
+          const b = BOIDS[i];
+          let ax=0, ay=0;
+
+          // neighborhood
+          let count=0, avx=0, avy=0, cxn=0, cyn=0, sfx=0, sfy=0;
+          for (let j=0;j<BOIDS.length;j++) {
+            if (i===j) continue;
+            const o = BOIDS[j];
+            const dx = o.x - b.x, dy = o.y - b.y;
+            const d = Math.hypot(dx, dy);
+            if (d < params.perception) {
+              count++;
+              avx += o.vx; avy += o.vy;
+              cxn += o.x;  cyn += o.y;
+              if (d < params.separation) {
+                sfx -= (dx / (d || 1));
+                sfy -= (dy / (d || 1));
+              }
+            }
+          }
+          if (count > 0) {
+            // alignment
+            avx /= count; avy /= count;
+            let [alx, aly] = limit(avx, avy, params.maxSpeed);
+            alx -= b.vx; aly -= b.vy;
+            [alx, aly] = limit(alx, aly, params.maxForce);
+            ax += alx * params.alignWt; ay += aly * params.alignWt;
+
+            // cohesion
+            cxn = (cxn / count) - b.x; cyn = (cyn / count) - b.y;
+            let [chx, chy] = limit(cxn, cyn, params.maxSpeed);
+            chx -= b.vx; chy -= b.vy;
+            [chx, chy] = limit(chx, chy, params.maxForce);
+            ax += chx * params.cohWt; ay += chy * params.cohWt;
+
+            // separation
+            let [sx, sy] = limit(sfx, sfy, params.maxSpeed);
+            sx -= b.vx; sy -= b.vy;
+            [sx, sy] = limit(sx, sy, params.maxForce);
+            ax += sx * params.sepWt; ay += sy * params.sepWt;
+          }
+
+          // subtle attraction to pointer
+          const pdx = cx - b.x, pdy = cy - b.y;
+          const pd = Math.hypot(pdx, pdy) || 1;
+          const pull = 0.0008 * (root.dataset.theme === 'night' ? 1.2 : 1.0);
+          ax += (pdx / pd) * pull;
+          ay += (pdy / pd) * pull;
+
+          // integrate
+          b.vx += ax; b.vy += ay;
+          [b.vx, b.vy] = limit(b.vx, b.vy, params.maxSpeed);
+          b.x += b.vx * (dt * 60);
+          b.y += b.vy * (dt * 60);
+
+          // wrap edges with softness
+          const m = 6;
+          if (b.x < -m) b.x = W + m; else if (b.x > W + m) b.x = -m;
+          if (b.y < -m) b.y = H + m; else if (b.y > H + m) b.y = -m;
+        }
+
+        // draw boids
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i=0;i<BOIDS.length;i++) {
+          const b = BOIDS[i];
+          const ang = Math.atan2(b.vy, b.vx);
+          const len = 10 + b.size * 4;
+          const w = 1.6 + b.size * 0.6;
+
+          // trail glow
+          ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+          ctx.lineWidth = w * 1.2;
+          ctx.beginPath();
+          ctx.moveTo(b.x - Math.cos(ang)*len*0.6, b.y - Math.sin(ang)*len*0.6);
+          ctx.lineTo(b.x + Math.cos(ang)*len*0.6, b.y + Math.sin(ang)*len*0.6);
+          ctx.stroke();
+
+          // color swap across flock
+          const t = (i / BOIDS.length);
+          const col = t < 0.5 ? pal.p1 : pal.p2;
+          ctx.strokeStyle = col;
+          ctx.lineWidth = w;
+          ctx.beginPath();
+          ctx.moveTo(b.x - Math.cos(ang)*len*0.5, b.y - Math.sin(ang)*len*0.5);
+          ctx.lineTo(b.x + Math.cos(ang)*len*0.9, b.y + Math.sin(ang)*len*0.9);
+          ctx.stroke();
+
+          // head sparkle
+          ctx.fillStyle = '#fff';
+          ctx.globalAlpha = 0.8;
+          ctx.beginPath();
+          ctx.arc(b.x + Math.cos(ang)*len*0.55, b.y + Math.sin(ang)*len*0.55, 0.7 + b.size*0.35, 0, Math.PI*2);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+        ctx.restore();
+
+        // FPS
         frames++;
         if (now - lastFPS > 500) {
           const fps = Math.round((frames * 1000) / (now - lastFPS));
@@ -473,112 +599,17 @@
           frames = 0; lastFPS = now;
         }
 
-        // gravity follows target
-        grav.x = lerp(grav.x, target.x, 0.05);
-        grav.y = lerp(grav.y, target.y, 0.05);
-
-        // subtle breathing
-        const breath = (Math.sin(now / 1800) + 1) * 0.5;
-
-        // trail fade
-        ctx.save();
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.fillStyle = root.dataset.theme === 'ink' ? 'rgba(0,0,16,0.18)' : 'rgba(255,255,255,0.22)';
-        ctx.fillRect(0, 0, W, H);
-        ctx.restore();
-
-        const cx = W * 0.5 + (grav.x - 0.5) * 40;
-        const cy = H * 0.5 + (grav.y - 0.5) * 40;
-
-        // draw faint rings
-        ctx.save();
-        ctx.globalCompositeOperation = 'lighter';
-        for (let i = 0; i < rings.length; i++) {
-          const r = rings[i];
-          const wobble = Math.sin(now * 0.0012 + i) * r.jitter * 2 + breath * (i * 0.25);
-          const rad = Math.max(6, r.r + wobble);
-          const grd = ctx.createRadialGradient(cx, cy, rad * 0.94, cx, cy, rad * 1.08);
-          grd.addColorStop(0, 'rgba(255,255,255,0.01)');
-          grd.addColorStop(1, 'rgba(255,255,255,0.0)');
-          ctx.strokeStyle = pal.ring;
-          ctx.globalAlpha = root.dataset.theme === 'ink' ? 0.18 : 0.16;
-          ctx.lineWidth = 0.8;
-          ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI * 2); ctx.stroke();
-          ctx.globalAlpha = 1;
-          ctx.fillStyle = grd;
-          ctx.beginPath(); ctx.arc(cx, cy, rad * 1.08, 0, Math.PI * 2); ctx.fill();
-        }
-        ctx.restore();
-
-        // Bodies
-        ctx.save();
-        ctx.globalCompositeOperation = 'lighter';
-        for (let i = 0; i < bodies.length; i++) {
-          const b = bodies[i];
-          const r = rings[b.ringIndex].r;
-          b.theta += b.vel;
-          // gravity tug toward mouse
-          const gx = (grav.x - 0.5) * 0.002;
-          const gy = (grav.y - 0.5) * 0.002;
-          b.theta += gx - gy;
-
-          const x = cx + Math.cos(b.theta) * r;
-          const y = cy + Math.sin(b.theta) * r;
-
-          // gradient color per orbit position
-          const t = (Math.sin(b.theta + i) + 1) * 0.5;
-          const col = ctx.createRadialGradient(x, y, 0, x, y, 16 + b.size * 2);
-          const mix1 = t;
-          const mix2 = 1 - t;
-          // quick mix between a/b/c
-          col.addColorStop(0, `rgba(255,255,255,${0.3 + b.alpha * 0.6})`);
-          col.addColorStop(0.15, `color-mix(in oklab, ${pal.a} ${Math.round(mix1*100)}%, ${pal.b})`);
-          col.addColorStop(1, 'rgba(255,255,255,0)');
-
-          ctx.fillStyle = col;
-          ctx.beginPath(); ctx.arc(x, y, 16 + b.size * 2, 0, Math.PI * 2); ctx.fill();
-
-          // core
-          ctx.globalAlpha = 0.9;
-          ctx.fillStyle = '#fff';
-          ctx.beginPath(); ctx.arc(x, y, 0.6 + b.size * 0.5, 0, Math.PI * 2); ctx.fill();
-          ctx.globalAlpha = 1;
-
-          // tether spark line to center
-          ctx.strokeStyle = `color-mix(in oklab, ${pal.a}, ${pal.c} 50%)`;
-          ctx.globalAlpha = 0.08 + (b.size * 0.02);
-          ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x, y); ctx.stroke();
-          ctx.globalAlpha = 1;
-        }
-        ctx.restore();
-
-        // Pulses
-        for (let i = pulses.length - 1; i >= 0; i--) {
-          const p = pulses[i];
-          const life = now - p.t; const prog = life / p.life;
-          if (prog >= 1) { pulses.splice(i, 1); continue; }
-          const r = prog * (Math.min(W, H) * 0.6);
-          const a = (1 - prog) * (root.dataset.theme === 'ink' ? 0.25 : 0.22);
-          const grad = ctx.createRadialGradient(p.x, p.y, r * 0.18, p.x, p.y, r);
-          grad.addColorStop(0, 'rgba(255,255,255,' + (a * 0.7) + ')');
-          grad.addColorStop(0.6, 'rgba(255,255,255,' + (a * 0.2) + ')');
-          grad.addColorStop(1, 'rgba(255,255,255,0)');
-          ctx.fillStyle = grad;
-          ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); ctx.fill();
-        }
-
         rafId = requestAnimationFrame(tick);
       }
 
       // Kick
-      refreshPalette();
+      resize();
+      fillTo(desired);
       if (!reduce) rafId = requestAnimationFrame(tick);
 
-      // Re-init on resize
-      function fullReset() { resize(); initSystem(); fadeBg(); }
-      window.addEventListener('resize', () => { DPR = Math.min(2, window.devicePixelRatio || 1); fullReset(); });
-      fullReset();
+      // Re-init on resize / DPR change
+      function fullReset() { DPR = Math.min(2, window.devicePixelRatio || 1); resize(); softFade(); }
+      window.addEventListener('resize', fullReset);
 
       // Keyboard: Space toggles
       root.addEventListener('keydown', (e) => {
